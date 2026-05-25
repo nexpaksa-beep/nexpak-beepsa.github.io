@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Subscribe to Nexpak Solutions marketing campaigns and get exclusive deals on packaging materials">
+    <title>Marketing Subscriptions | Nexpak Solutions</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .marketing-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .marketing-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .marketing-header h1 {
+            color: #2563eb;
+            margin-bottom: 0.5rem;
+        }
+
+        .subscription-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .subscription-card {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .subscription-card:hover {
+            border-color: #2563eb;
+            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .subscription-card h3 {
+            color: #2563eb;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .subscription-card p {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .subscription-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .subscription-features li {
+            color: #555;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .subscription-features i {
+            color: #10b981;
+        }
+
+        .subscription-form {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            margin: 0;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .success-message {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .error-message {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .email-campaigns-section {
+            background: #f3f4f6;
+            padding: 3rem 1rem;
+            border-radius: 12px;
+            margin-top: 3rem;
+        }
+
+        .campaigns-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .campaign-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #2563eb;
+        }
+
+        .campaign-item h4 {
+            color: #2563eb;
+            margin-bottom: 0.5rem;
+        }
+
+        .campaign-item p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .campaign-badge {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .subscription-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .campaigns-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-cube"></i>
+                <h1>Nexpak Solutions</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="marketing.html" class="nav-link active">Marketing</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="marketing-container">
+        <div class="marketing-header">
+            <h1>📧 Join Our Marketing Community</h1>
+            <p>Get exclusive deals, product updates, and industry insights delivered to your inbox</p>
+        </div>
+
+        <!-- Subscription Cards -->
+        <div class="subscription-grid">
+            <!-- Email Marketing Subscription -->
+            <div class="subscription-card">
+                <h3><i class="fas fa-envelope"></i> Email Newsletter</h3>
+                <p>Weekly updates on new products, special offers, and industry news</p>
+                <ul class="subscription-features">
+                    <li><i class="fas fa-check"></i> Weekly newsletters</li>
+                    <li><i class="fas fa-check"></i> Exclusive discounts</li>
+                    <li><i class="fas fa-check"></i> New product launches</li>
+                    <li><i class="fas fa-check"></i> Industry tips & tricks</li>
+                </ul>
+                <div class="subscription-form">
+                    <div class="success-message" id="emailSuccess">✓ Successfully subscribed to email newsletter!</div>
+                    <div class="error-message" id="emailError"></div>
+                    <form id="emailForm" onsubmit="handleEmailSubscription(event)">
+                        <div class="form-group">
+                            <label for="emailName">Full Name</label>
+                            <input type="text" id="emailName" name="name" required placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="emailAddress">Email Address</label>
+                            <input type="email" id="emailAddress" name="email" required placeholder="you@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="emailCompany">Company Name (Optional)</label>
+                            <input type="text" id="emailCompany" name="company" placeholder="Your Company">
+                        </div>
+                        <button type="submit" class="submit-btn">Subscribe Now</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- SMS Marketing Subscription -->
+            <div class="subscription-card">
+                <h3><i class="fas fa-comments"></i> SMS Alerts</h3>
+                <p>Get flash sales, stock updates, and urgent notifications via SMS</p>
+                <ul class="subscription-features">
+                    <li><i class="fas fa-check"></i> Flash sales alerts</li>
+                    <li><i class="fas fa-check"></i> Stock notifications</li>
+                    <li><i class="fas fa-check"></i> Limited-time offers</li>
+                    <li><i class="fas fa-check"></i> Order updates</li>
+                </ul>
+                <div class="subscription-form">
+                    <div class="success-message" id="smsSuccess">✓ Successfully subscribed to SMS alerts!</div>
+                    <div class="error-message" id="smsError"></div>
+                    <form id="smsForm" onsubmit="handleSmsSubscription(event)">
+                        <div class="form-group">
+                            <label for="smsName">Full Name</label>
+                            <input type="text" id="smsName" name="name" required placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="smsPhone">Phone Number (with country code)</label>
+                            <input type="tel" id="smsPhone" name="phone" required placeholder="+27 83 630 8249">
+                        </div>
+                        <div class="form-group">
+                            <label for="smsCompany">Company Name (Optional)</label>
+                            <input type="text" id="smsCompany" name="company" placeholder="Your Company">
+                        </div>
+                        <button type="submit" class="submit-btn">Subscribe Now</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Social Media Marketing -->
+            <div class="subscription-card">
+                <h3><i class="fas fa-share-alt"></i> Social Media</h3>
+                <p>Follow us on social media for daily tips, behind-the-scenes content, and contests</p>
+                <ul class="subscription-features">
+                    <li><i class="fas fa-check"></i> Daily content updates</li>
+                    <li><i class="fas fa-check"></i> Exclusive social contests</li>
+                    <li><i class="fas fa-check"></i> User-generated content</li>
+                    <li><i class="fas fa-check"></i> Community engagement</li>
+                </ul>
+                <div class="subscription-form">
+                    <div class="success-message" id="socialSuccess">✓ Thanks for following us!</div>
+                    <form id="socialForm" onsubmit="handleSocialSubscription(event)">
+                        <div class="form-group">
+                            <label>Follow us on:</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="facebook" name="platform" value="facebook">
+                                    <label for="facebook"><i class="fab fa-facebook"></i> Facebook</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="instagram" name="platform" value="instagram">
+                                    <label for="instagram"><i class="fab fa-instagram"></i> Instagram</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="linkedin" name="platform" value="linkedin">
+                                    <label for="linkedin"><i class="fab fa-linkedin"></i> LinkedIn</label>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="https://www.facebook.com/nexpaksolutions" class="submit-btn" style="display: inline-block; text-align: center; text-decoration: none;">Visit Our Social Pages</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Email Campaigns Section -->
+        <div class="email-campaigns-section">
+            <h2>📅 Our Automated Campaigns</h2>
+            <p>We automatically send personalized campaigns to keep you updated:</p>
+            
+            <div class="campaigns-grid">
+                <div class="campaign-item">
+                    <h4>Monday Deals</h4>
+                    <p>Every Monday morning, exclusive discounts on selected products</p>
+                    <span class="campaign-badge">Automated Weekly</span>
+                </div>
+                
+                <div class="campaign-item">
+                    <h4>Wednesday Updates</h4>
+                    <p>New product announcements and industry news</p>
+                    <span class="campaign-badge">Automated Weekly</span>
+                </div>
+                
+                <div class="campaign-item">
+                    <h4>Friday Flash Sales</h4>
+                    <p>End-of-week clearance and special promotions</p>
+                    <span class="campaign-badge">Automated Weekly</span>
+                </div>
+                
+                <div class="campaign-item">
+                    <h4>Birthday Specials</h4>
+                    <p>Special discount on your birthday month</p>
+                    <span class="campaign-badge">Personalized</span>
+                </div>
+                
+                <div class="campaign-item">
+                    <h4>Re-engagement Campaigns</h4>
+                    <p>Win-back offers for inactive subscribers</p>
+                    <span class="campaign-badge">Triggered</span>
+                </div>
+                
+                <div class="campaign-item">
+                    <h4>Welcome Series</h4>
+                    <p>3-email welcome sequence for new subscribers</p>
+                    <span class="campaign-badge">Automated</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Nexpak Solutions PTY Ltd</h3>
+                <p>Your trusted partner for premium packaging materials and PPE workwear solutions across South Africa.</p>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/nexpaksolutions" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/nexpaksolutions" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul>
+                    <li><a href="mailto:nexpaksa@outlook.com">nexpaksa@outlook.com</a></li>
+                    <li><a href="https://wa.me/27836308249">+27 83 630 8249</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Nexpak Solutions PTY Ltd. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="marketing.js"></script>
+</body>
+</html>
