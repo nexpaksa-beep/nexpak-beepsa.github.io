@@ -1,264 +1,233 @@
-// ===========================
-// NEXPAK SOLUTIONS JAVASCRIPT
-// Interactive Features & Form Handling
-// ===========================
+// Google Analytics Event Tracking
+function trackEvent(eventName, eventParams) {
+    if (typeof gtag !== 'undefined') {
+        gtag('event', eventName, eventParams);
+    }
+}
 
 // Mobile Menu Toggle
-const hamburger = document.querySelector('.hamburger');
+const navToggle = document.querySelector('.nav-toggle');
 const navMenu = document.querySelector('.nav-menu');
 
-if (hamburger) {
-    hamburger.addEventListener('click', () => {
+if (navToggle) {
+    navToggle.addEventListener('click', () => {
         navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+        trackEvent('menu_toggle', { 'menu_state': navMenu.style.display });
     });
 }
 
-// Close mobile menu when a link is clicked
-document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-        if (navMenu) navMenu.style.display = 'none';
-    });
-});
+// Carousel Functionality
+let currentCarouselIndex = 0;
+const carouselTrack = document.getElementById('carouselTrack');
+const carouselDots = document.getElementById('carouselDots');
 
-// Form Submission Handler
+if (carouselTrack) {
+    const items = carouselTrack.querySelectorAll('.carousel-item');
+    const itemCount = items.length;
+    const itemsPerView = 4;
+    const maxIndex = Math.max(0, itemCount - itemsPerView);
+
+    // Create dots
+    for (let i = 0; i <= maxIndex; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        dot.onclick = () => goToCarousel(i);
+        carouselDots.appendChild(dot);
+    }
+
+    window.moveCarousel = function(direction) {
+        currentCarouselIndex += direction;
+        if (currentCarouselIndex > maxIndex) currentCarouselIndex = 0;
+        if (currentCarouselIndex < 0) currentCarouselIndex = maxIndex;
+        updateCarousel();
+        trackEvent('carousel_navigate', { 'direction': direction > 0 ? 'next' : 'prev' });
+    };
+
+    window.goToCarousel = function(index) {
+        currentCarouselIndex = index;
+        updateCarousel();
+        trackEvent('carousel_dot_click', { 'index': index });
+    };
+
+    function updateCarousel() {
+        const itemWidth = 25;
+        const scrollAmount = currentCarouselIndex * itemWidth;
+        carouselTrack.style.transform = `translateX(-${scrollAmount}%)`;
+
+        document.querySelectorAll('.dot').forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentCarouselIndex);
+        });
+    }
+
+    setInterval(() => {
+        if (currentCarouselIndex < maxIndex) {
+            currentCarouselIndex++;
+        } else {
+            currentCarouselIndex = 0;
+        }
+        updateCarousel();
+    }, 5000);
+}
+
+// Contact Form Submission
 const contactForm = document.getElementById('contactForm');
 
 if (contactForm) {
-    contactForm.addEventListener('submit', async function(e) {
+    contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        trackEvent('form_submit', { 'form_type': 'contact' });
 
-        // Get form data
-        const formData = new FormData(this);
-        const data = Object.fromEntries(formData);
-
-        // Validate form
-        if (!data.name || !data.email || !data.phone || !data.subject || !data.message) {
-            showNotification('Please fill in all required fields', 'error');
-            return;
-        }
-
-        // Validate email
-        if (!isValidEmail(data.email)) {
-            showNotification('Please enter a valid email address', 'error');
-            return;
-        }
-
-        // Show loading state
-        const submitBtn = contactForm.querySelector('button[type="submit"]');
-        const originalBtnText = submitBtn.textContent;
-        submitBtn.textContent = 'Sending...';
-        submitBtn.disabled = true;
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            company: document.getElementById('company').value,
+            subject: document.getElementById('subject').value,
+            message: document.getElementById('message').value,
+            product: document.getElementById('product').value,
+            timestamp: new Date().toISOString()
+        };
 
         try {
-            // Send email via FormSubmit service (free service)
-            const response = await fetch('https://formspree.io/f/meozvejl', {
+            const response = await fetch('https://api.resend.com/emails', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': 'Bearer re_iEC5ef1V_MavtXftPG1wEa2DvCd2hxcHa'
                 },
                 body: JSON.stringify({
-                    name: data.name,
-                    email: data.email,
-                    phone: data.phone,
-                    company: data.company,
-                    subject: data.subject,
-                    product: data.product,
-                    message: data.message,
-                    _replyto: data.email,
+                    from: 'contact@nexpaksolutions.co.za',
+                    to: 'nexpaksa@outlook.com',
+                    subject: `New Contact Form Submission: ${formData.subject}`,
+                    html: `
+                        <h2>New Contact Form Submission</h2>
+                        <p><strong>Name:</strong> ${formData.name}</p>
+                        <p><strong>Email:</strong> ${formData.email}</p>
+                        <p><strong>Phone:</strong> ${formData.phone || 'Not provided'}</p>
+                        <p><strong>Company:</strong> ${formData.company || 'Not provided'}</p>
+                        <p><strong>Subject:</strong> ${formData.subject}</p>
+                        <p><strong>Product Interest:</strong> ${formData.product || 'Not specified'}</p>
+                        <h3>Message:</h3>
+                        <p>${formData.message.replace(/\n/g, '<br>')}</p>
+                        <p><em>Submitted on: ${new Date(formData.timestamp).toLocaleString()}</em></p>
+                    `
                 })
             });
 
             if (response.ok) {
-                showNotification('Message sent successfully! We will contact you soon.', 'success');
+                const formMessage = document.getElementById('formMessage');
+                formMessage.textContent = '✓ Message sent successfully! We\'ll get back to you soon.';
+                formMessage.classList.add('success');
+                formMessage.classList.remove('error');
                 contactForm.reset();
+                trackEvent('form_success', { 'form_type': 'contact' });
+
+                setTimeout(() => {
+                    formMessage.textContent = '';
+                    formMessage.classList.remove('success');
+                }, 5000);
             } else {
                 throw new Error('Failed to send message');
             }
         } catch (error) {
+            const formMessage = document.getElementById('formMessage');
+            formMessage.textContent = '✗ Failed to send message. Please try via email or WhatsApp.';
+            formMessage.classList.add('error');
+            formMessage.classList.remove('success');
+            trackEvent('form_error', { 'form_type': 'contact', 'error': error.message });
             console.error('Error:', error);
-            
-            // Fallback: Show email client or copy email
-            showNotification(`Message preparation error. Please email us directly at nexpaksa@outlook.com with your details.`, 'warning');
-            
-            // Alternative: Use mailto
-            const mailtoLink = `mailto:nexpaksa@outlook.com?subject=${encodeURIComponent(data.subject)}&body=${encodeURIComponent(
-                `Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone}\nCompany: ${data.company}\nProduct Inquiry: ${data.product}\n\nMessage:\n${data.message}`
-            )}`;
-            window.location.href = mailtoLink;
-        } finally {
-            // Restore button state
-            submitBtn.textContent = originalBtnText;
-            submitBtn.disabled = false;
         }
     });
 }
 
-// Email validation helper
-function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
-
-// Notification system
-function showNotification(message, type = 'info') {
-    // Remove existing notifications
-    const existingNotifications = document.querySelectorAll('.notification');
-    existingNotifications.forEach(notif => notif.remove());
-
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.textContent = message;
-
-    // Style the notification
-    const styles = {
-        position: 'fixed',
-        top: '80px',
-        right: '20px',
-        padding: '20px 30px',
-        borderRadius: '5px',
-        color: 'white',
-        fontWeight: 'bold',
-        zIndex: '10000',
-        maxWidth: '400px',
-        boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-        animation: 'slideInRight 0.3s ease-out'
-    };
-
-    if (type === 'success') {
-        notification.style.backgroundColor = '#27ae60';
-    } else if (type === 'error') {
-        notification.style.backgroundColor = '#e74c3c';
-    } else if (type === 'warning') {
-        notification.style.backgroundColor = '#f39c12';
-    } else {
-        notification.style.backgroundColor = '#3498db';
-    }
-
-    Object.assign(notification.style, styles);
-    document.body.appendChild(notification);
-
-    // Remove notification after 5 seconds
-    setTimeout(() => {
-        notification.style.animation = 'slideOutRight 0.3s ease-out';
-        setTimeout(() => notification.remove(), 300);
-    }, 5000);
-}
-
-// Add slide animations
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes slideInRight {
-        from {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-
-    @keyframes slideOutRight {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
-
-// Smooth scroll for anchor links
+// Smooth Scrolling
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        if (href !== '#' && document.querySelector(href)) {
-            e.preventDefault();
-            const target = document.querySelector(href);
-            const offsetTop = target.offsetTop - 80;
-            window.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth'
-            });
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            trackEvent('smooth_scroll', { 'target': this.getAttribute('href') });
         }
     });
 });
 
-// Add scroll animation to elements
+// Intersection Observer for animations
 const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -100px 0px'
 };
 
-const observer = new IntersectionObserver(function(entries) {
+const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('fade-in');
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
             observer.unobserve(entry.target);
         }
     });
 }, observerOptions);
 
-// Observe product cards and other elements
-document.querySelectorAll('.product-card, .benefit, .detail-item').forEach(el => {
+document.querySelectorAll('.carousel-card, .price-category, .badge-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
     observer.observe(el);
 });
 
-// WhatsApp integration - Open WhatsApp with pre-filled message
-document.querySelectorAll('[href*="wa.me"]').forEach(link => {
-    link.addEventListener('click', function(e) {
-        const message = `Hello Nexpak Solutions, I'm interested in your packaging and PPE products. Can you please provide more information?`;
-        const encodedMessage = encodeURIComponent(message);
-        const phoneNumber = '27836308249';
-        this.href = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+// Track button clicks
+document.querySelectorAll('.btn, .carousel-link, .view-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        trackEvent('button_click', {
+            'button_text': btn.textContent,
+            'button_url': btn.href
+        });
     });
 });
 
-// Keyboard navigation
-document.addEventListener('keydown', function(e) {
-    // Close mobile menu with Escape key
-    if (e.key === 'Escape' && navMenu) {
-        navMenu.style.display = 'none';
+// Track product views
+document.querySelectorAll('.carousel-link').forEach(link => {
+    link.addEventListener('click', () => {
+        const productName = link.closest('.carousel-card').querySelector('h3').textContent;
+        trackEvent('product_view', { 'product': productName });
+    });
+});
+
+// Track WhatsApp clicks
+document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
+    link.addEventListener('click', () => {
+        trackEvent('whatsapp_click', {
+            'source': link.closest('section')?.querySelector('h2')?.textContent || 'unknown'
+        });
+    });
+});
+
+// Page load tracking
+window.addEventListener('load', () => {
+    trackEvent('page_view', {
+        'page_title': document.title,
+        'page_url': window.location.href
+    });
+});
+
+// Scroll depth tracking
+let maxScroll = 0;
+window.addEventListener('scroll', () => {
+    const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+    if (scrollPercent > maxScroll) {
+        maxScroll = scrollPercent;
+        if (maxScroll % 25 === 0) {
+            trackEvent('scroll_depth', { 'scroll_percent': Math.round(maxScroll) });
+        }
     }
 });
 
-// Check if form should use FormSubmit or alternative method
-// This ensures the form works with email submission
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Nexpak Solutions website loaded successfully');
-    
-    // Verify all external resources loaded
-    const images = document.querySelectorAll('img');
-    console.log(`${images.length} images loaded`);
-});
-
-// Product filtering (optional enhancement)
-function filterProducts(category) {
-    const products = document.querySelectorAll('.product-card');
-    products.forEach(product => {
-        if (category === 'all' || product.dataset.category === category) {
-            product.style.display = 'flex';
-        } else {
-            product.style.display = 'none';
-        }
+// Form field tracking
+if (contactForm) {
+    const formInputs = contactForm.querySelectorAll('input, textarea, select');
+    formInputs.forEach(input => {
+        input.addEventListener('focus', () => {
+            trackEvent('form_focus', { 'field': input.name });
+        });
     });
 }
-
-// Copy email to clipboard (utility function)
-function copyEmail() {
-    const email = 'nexpaksa@outlook.com';
-    navigator.clipboard.writeText(email).then(() => {
-        showNotification('Email copied to clipboard!', 'success');
-    });
-}
-
-// Export functions for global use
-window.filterProducts = filterProducts;
-window.copyEmail = copyEmail;
-window.showNotification = showNotification;
-
-console.log('Nexpak Solutions - Interactive features initialized');
