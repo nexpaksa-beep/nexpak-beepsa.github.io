@@ -1,0 +1,21 @@
+{
+  "name": "nexpak-beepsa-github-io",
+  "version": "1.0.0",
+  "description": "Nexpak Solutions - Premium Packaging & PPE Suppliers",
+  "type": "module",
+  "scripts": {
+    "dev": "npx http-server -p 3000",
+    "build": "echo 'Static site - no build step required'",
+    "lint": "echo 'No linting configured for static HTML site'"
+  },
+  "keywords": [
+    "packaging",
+    "ppe",
+    "south-africa"
+  ],
+  "author": "Nexpak Solutions PTY Ltd",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
+}
