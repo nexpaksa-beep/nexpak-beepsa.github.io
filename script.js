@@ -1,3 +1,17 @@
+// Vercel Speed Insights - Initialize
+(function() {
+    // Create and inject the Speed Insights script
+    const script = document.createElement('script');
+    script.src = '/_vercel/speed-insights/script.js';
+    script.defer = true;
+    script.dataset.sdkn = '@vercel/speed-insights';
+    script.dataset.sdkv = '1.3.1';
+    script.onerror = function() {
+        console.log('[Vercel Speed Insights] Failed to load. This is normal in local development.');
+    };
+    document.head.appendChild(script);
+})();
+
 // Google Analytics Event Tracking
 function trackEvent(eventName, eventParams) {
     if (typeof gtag !== 'undefined') {

@@ -1,0 +1,18 @@
+{
+  "name": "nexpak-beepsa-github-io",
+  "version": "1.0.0",
+  "description": "Nexpak Solutions - Premium packaging materials and PPE workwear suppliers",
+  "scripts": {
+    "test": "echo \"No tests specified\""
+  },
+  "keywords": [
+    "packaging",
+    "ppe",
+    "south-africa"
+  ],
+  "author": "Nexpak Solutions PTY Ltd",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/speed-insights": "^1.0.12"
+  }
+}
