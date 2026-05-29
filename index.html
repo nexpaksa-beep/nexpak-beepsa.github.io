@@ -1,12 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Nexpak V5 Cloud System</title>
-
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
+<title>Nexpak Company System V6</title>
 
 <style>
 body {
@@ -16,172 +12,217 @@ body {
     color: white;
 }
 
-.login-box, .dashboard {
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
-}
-
-.login-box {
-    margin-top: 100px;
+/* TOP BAR */
+header {
     background: #111827;
-    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
 }
 
-input {
+/* LAYOUT */
+.container {
+    padding: 20px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+/* INPUTS */
+input, select {
     width: 100%;
     padding: 10px;
-    margin: 10px 0;
+    margin: 5px 0;
 }
 
+/* BUTTON */
 button {
     padding: 10px;
     background: #38bdf8;
     border: none;
-    cursor: pointer;
     font-weight: bold;
+    cursor: pointer;
 }
 
+/* CARDS */
 .card {
     background: #111827;
-    padding: 15px;
-    margin-top: 10px;
+    padding: 10px;
+    margin: 10px 0;
     border-radius: 8px;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
-    gap: 10px;
+/* ADMIN */
+.admin {
+    display: none;
 }
 
-.hidden { display: none; }
+.badge {
+    background: #38bdf8;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+}
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div class="login-box" id="loginBox">
-    <h2>Admin Login</h2>
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="login()">Login</button>
+<header>
+    <div><b>Nexpak System V6</b></div>
+    <div>
+        <span class="badge" onclick="toggleAdmin()">ADMIN</span>
+    </div>
+</header>
+
+<div class="container">
+
+<!-- PUBLIC SECTION -->
+<div id="public">
+
+<h2>Request Instant Quote</h2>
+
+<input id="name" placeholder="Your Name">
+<input id="phone" placeholder="Phone Number">
+
+<select id="product"></select>
+
+<input id="qty" placeholder="Quantity">
+
+<button onclick="sendQuote()">Send WhatsApp Quote</button>
+
+<hr>
+
+<h3>Products</h3>
+<div id="productList"></div>
+
 </div>
 
-<!-- DASHBOARD -->
-<div class="dashboard hidden" id="dashboard">
+<!-- ADMIN SECTION -->
+<div id="admin" class="admin">
 
-    <h2>📊 Nexpak Cloud CRM V5</h2>
+<h2>Admin Dashboard</h2>
 
-    <button onclick="logout()">Logout</button>
+<h3>Leads</h3>
+<div id="leads"></div>
 
-    <h3>New Lead</h3>
+<h3>Analytics</h3>
+<div id="stats"></div>
 
-    <input id="name" placeholder="Customer Name">
-    <input id="phone" placeholder="Phone">
-    <input id="product" placeholder="Product">
-    <input id="qty" placeholder="Quantity">
-
-    <button onclick="addLead()">Save Lead</button>
-
-    <h3>Live Leads</h3>
-    <div class="grid" id="leads"></div>
+</div>
 
 </div>
 
 <script>
 
-// FIREBASE CONFIG (YOU REPLACE THIS)
-const firebaseConfig = {
-  apiKey: "YOUR_KEY",
-  authDomain: "YOUR_DOMAIN",
-  projectId: "YOUR_PROJECT",
-};
+// PRODUCT DATABASE
+const PRODUCTS = [
+  {name:"Fire Seals Branded", price:1.45},
+  {name:"Fire Seals Unbranded", price:1.25},
+  {name:"Stretch Film", price:25},
+  {name:"Bubble Wrap", price:30},
+  {name:"Long Straps 280mm", price:1.19},
+  {name:"Short Straps", price:0.90}
+];
 
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
+// LOAD DROPDOWN + PRODUCTS
+let select = document.getElementById("product");
+let list = document.getElementById("productList");
 
-// LOGIN
-function login(){
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
-
-    auth.signInWithEmailAndPassword(email, password)
-    .then(() => {
-        document.getElementById("loginBox").classList.add("hidden");
-        document.getElementById("dashboard").classList.remove("hidden");
-        loadLeads();
-    })
-    .catch(err => alert(err.message));
-}
-
-// LOGOUT
-function logout(){
-    auth.signOut();
-    location.reload();
-}
-
-// ADD LEAD (CLOUD)
-function addLead(){
-
-    db.collection("leads").add({
-        name: name.value,
-        phone: phone.value,
-        product: product.value,
-        qty: qty.value,
-        time: new Date()
-    });
-
-    alert("Lead saved to cloud!");
-}
-
-// LOAD LEADS REALTIME
-function loadLeads(){
-
-    db.collection("leads").orderBy("time", "desc")
-    .onSnapshot(snapshot => {
-
-        let html = "";
-
-        snapshot.forEach(doc => {
-
-            let d = doc.data();
-
-            html += `
-            <div class="card">
-                <b>${d.name}</b><br>
-                ${d.phone}<br>
-                ${d.product} (${d.qty})<br><br>
-
-                <button onclick="sendWhatsApp('${d.phone}','${d.product}','${d.qty}')">
-                    WhatsApp
-                </button>
-            </div>
-            `;
-        });
-
-        document.getElementById("leads").innerHTML = html;
-    });
-}
-
-// WHATSAPP AUTO MESSAGE
-function sendWhatsApp(phone, product, qty){
-
-    let msg = `Hi, regarding your order: ${product} x${qty}`;
-
-    window.open("https://wa.me/27" + phone + "?text=" + encodeURIComponent(msg));
-}
-
-// AUTH STATE
-auth.onAuthStateChanged(user => {
-    if(user){
-        document.getElementById("loginBox").classList.add("hidden");
-        document.getElementById("dashboard").classList.remove("hidden");
-        loadLeads();
-    }
+PRODUCTS.forEach(p => {
+    select.innerHTML += `<option>${p.name}</option>`;
+    list.innerHTML += `
+        <div class="card">
+            <b>${p.name}</b><br>
+            Price: R${p.price}
+        </div>
+    `;
 });
+
+// SEND QUOTE (WHATSAPP + SAVE LEAD)
+function sendQuote(){
+
+    let name = document.getElementById("name").value;
+    let phone = document.getElementById("phone").value;
+    let product = document.getElementById("product").value;
+    let qty = document.getElementById("qty").value;
+
+    if(!name || !phone || !product || !qty){
+        alert("Fill all fields");
+        return;
+    }
+
+    let msg =
+`NEW QUOTE REQUEST:
+Name: ${name}
+Phone: ${phone}
+Product: ${product}
+Qty: ${qty}`;
+
+    window.open("https://wa.me/27YOURNUMBER?text=" + encodeURIComponent(msg));
+
+    // SAVE LEAD
+    let leads = JSON.parse(localStorage.getItem("leads") || "[]");
+
+    leads.push({
+        name,
+        phone,
+        product,
+        qty,
+        date: new Date()
+    });
+
+    localStorage.setItem("leads", JSON.stringify(leads));
+}
+
+// TOGGLE ADMIN
+function toggleAdmin(){
+    let pass = prompt("Enter Admin Password");
+
+    if(pass === "1234"){
+        document.getElementById("admin").style.display = "block";
+        loadAdmin();
+    } else {
+        alert("Wrong password");
+    }
+}
+
+// LOAD ADMIN DATA
+function loadAdmin(){
+
+    let leads = JSON.parse(localStorage.getItem("leads") || "[]");
+
+    let leadHTML = "";
+
+    leads.forEach((l,i)=>{
+        leadHTML += `
+        <div class="card">
+            <b>${l.name}</b><br>
+            ${l.phone}<br>
+            ${l.product} x${l.qty}<br>
+            <button onclick="deleteLead(${i})">Delete</button>
+        </div>`;
+    });
+
+    document.getElementById("leads").innerHTML = leadHTML;
+
+    // ANALYTICS
+    let stats = {};
+
+    leads.forEach(l=>{
+        stats[l.product] = (stats[l.product] || 0) + 1;
+    });
+
+    document.getElementById("stats").innerHTML =
+        JSON.stringify(stats, null, 2);
+}
+
+// DELETE LEAD
+function deleteLead(i){
+    let leads = JSON.parse(localStorage.getItem("leads") || "[]");
+    leads.splice(i,1);
+    localStorage.setItem("leads", JSON.stringify(leads));
+    loadAdmin();
+}
 
 </script>
 
