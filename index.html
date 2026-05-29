@@ -2,84 +2,87 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Nexpak Company System V6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nexpak Solutions | Business System</title>
 
 <style>
 body {
-    margin: 0;
-    font-family: Arial;
-    background: #0b1220;
-    color: white;
+    margin:0;
+    font-family:Arial;
+    background:#0b1220;
+    color:white;
 }
 
-/* TOP BAR */
+/* HEADER */
 header {
-    background: #111827;
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
+    background:#111827;
+    padding:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
-/* LAYOUT */
+/* SECTIONS */
 .container {
-    padding: 20px;
-    max-width: 1000px;
-    margin: auto;
-}
-
-/* INPUTS */
-input, select {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-}
-
-/* BUTTON */
-button {
-    padding: 10px;
-    background: #38bdf8;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
+    padding:20px;
+    max-width:1000px;
+    margin:auto;
 }
 
 /* CARDS */
 .card {
-    background: #111827;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 8px;
+    background:#111827;
+    padding:12px;
+    margin:10px 0;
+    border-radius:8px;
+}
+
+/* INPUTS */
+input, select {
+    width:100%;
+    padding:10px;
+    margin:6px 0;
+}
+
+/* BUTTON */
+button {
+    padding:10px;
+    background:#38bdf8;
+    border:none;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 /* ADMIN */
-.admin {
-    display: none;
+#adminPanel {
+    display:none;
 }
 
+/* BADGE */
 .badge {
-    background: #38bdf8;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 12px;
+    background:#38bdf8;
+    padding:5px 10px;
+    border-radius:6px;
+    cursor:pointer;
 }
 </style>
+
 </head>
 
 <body>
 
 <header>
-    <div><b>Nexpak System V6</b></div>
-    <div>
-        <span class="badge" onclick="toggleAdmin()">ADMIN</span>
-    </div>
+    <div><b>Nexpak Business System V7</b></div>
+    <div class="badge" onclick="openAdmin()">ADMIN</div>
 </header>
 
 <div class="container">
 
-<!-- PUBLIC SECTION -->
+<!-- PUBLIC SYSTEM -->
 <div id="public">
 
-<h2>Request Instant Quote</h2>
+<h2>Get Instant Quote</h2>
 
 <input id="name" placeholder="Your Name">
 <input id="phone" placeholder="Phone Number">
@@ -93,20 +96,21 @@ button {
 <hr>
 
 <h3>Products</h3>
-<div id="productList"></div>
+<div id="products"></div>
 
 </div>
 
-<!-- ADMIN SECTION -->
-<div id="admin" class="admin">
+<!-- ADMIN SYSTEM -->
+<div id="adminPanel">
 
 <h2>Admin Dashboard</h2>
 
-<h3>Leads</h3>
 <div id="leads"></div>
 
 <h3>Analytics</h3>
-<div id="stats"></div>
+<pre id="stats"></pre>
+
+<button onclick="clearLeads()">Clear All Leads</button>
 
 </div>
 
@@ -114,7 +118,9 @@ button {
 
 <script>
 
-// PRODUCT DATABASE
+/* =========================
+PRODUCT DATABASE
+========================= */
 const PRODUCTS = [
   {name:"Fire Seals Branded", price:1.45},
   {name:"Fire Seals Unbranded", price:1.25},
@@ -124,86 +130,94 @@ const PRODUCTS = [
   {name:"Short Straps", price:0.90}
 ];
 
-// LOAD DROPDOWN + PRODUCTS
+/* =========================
+LOAD PRODUCTS
+========================= */
 let select = document.getElementById("product");
-let list = document.getElementById("productList");
+let productBox = document.getElementById("products");
 
-PRODUCTS.forEach(p => {
+PRODUCTS.forEach(p=>{
     select.innerHTML += `<option>${p.name}</option>`;
-    list.innerHTML += `
+    productBox.innerHTML += `
         <div class="card">
             <b>${p.name}</b><br>
-            Price: R${p.price}
+            R${p.price}
         </div>
     `;
 });
 
-// SEND QUOTE (WHATSAPP + SAVE LEAD)
+/* =========================
+SEND QUOTE (WHATSAPP + SAVE)
+========================= */
 function sendQuote(){
 
-    let name = document.getElementById("name").value;
-    let phone = document.getElementById("phone").value;
-    let product = document.getElementById("product").value;
-    let qty = document.getElementById("qty").value;
-
-    if(!name || !phone || !product || !qty){
+    if(!name.value || !phone.value || !product.value || !qty.value){
         alert("Fill all fields");
         return;
     }
 
-    let msg =
+    let message =
 `NEW QUOTE REQUEST:
-Name: ${name}
-Phone: ${phone}
-Product: ${product}
-Qty: ${qty}`;
+Name: ${name.value}
+Phone: ${phone.value}
+Product: ${product.value}
+Quantity: ${qty.value}`;
 
-    window.open("https://wa.me/27YOURNUMBER?text=" + encodeURIComponent(msg));
+    window.open("https://wa.me/27YOURNUMBER?text=" + encodeURIComponent(message));
 
-    // SAVE LEAD
     let leads = JSON.parse(localStorage.getItem("leads") || "[]");
 
     leads.push({
-        name,
-        phone,
-        product,
-        qty,
-        date: new Date()
+        name:name.value,
+        phone:phone.value,
+        product:product.value,
+        qty:qty.value,
+        date:new Date()
     });
 
     localStorage.setItem("leads", JSON.stringify(leads));
+
+    alert("Quote sent!");
 }
 
-// TOGGLE ADMIN
-function toggleAdmin(){
+/* =========================
+ADMIN ACCESS
+========================= */
+function openAdmin(){
+
     let pass = prompt("Enter Admin Password");
 
-    if(pass === "1234"){
-        document.getElementById("admin").style.display = "block";
-        loadAdmin();
-    } else {
+    if(pass !== "1234"){
         alert("Wrong password");
+        return;
     }
+
+    document.getElementById("public").style.display = "none";
+    document.getElementById("adminPanel").style.display = "block";
+
+    loadAdmin();
 }
 
-// LOAD ADMIN DATA
+/* =========================
+LOAD ADMIN DATA
+========================= */
 function loadAdmin(){
 
     let leads = JSON.parse(localStorage.getItem("leads") || "[]");
 
-    let leadHTML = "";
+    let html = "";
 
     leads.forEach((l,i)=>{
-        leadHTML += `
+        html += `
         <div class="card">
             <b>${l.name}</b><br>
             ${l.phone}<br>
-            ${l.product} x${l.qty}<br>
+            ${l.product} x ${l.qty}<br>
             <button onclick="deleteLead(${i})">Delete</button>
         </div>`;
     });
 
-    document.getElementById("leads").innerHTML = leadHTML;
+    document.getElementById("leads").innerHTML = html;
 
     // ANALYTICS
     let stats = {};
@@ -212,16 +226,34 @@ function loadAdmin(){
         stats[l.product] = (stats[l.product] || 0) + 1;
     });
 
-    document.getElementById("stats").innerHTML =
+    document.getElementById("stats").innerText =
         JSON.stringify(stats, null, 2);
 }
 
-// DELETE LEAD
+/* =========================
+DELETE LEAD
+========================= */
 function deleteLead(i){
+
     let leads = JSON.parse(localStorage.getItem("leads") || "[]");
+
     leads.splice(i,1);
+
     localStorage.setItem("leads", JSON.stringify(leads));
+
     loadAdmin();
+}
+
+/* =========================
+CLEAR ALL LEADS
+========================= */
+function clearLeads(){
+
+    if(confirm("Delete all leads?")){
+
+        localStorage.removeItem("leads");
+        loadAdmin();
+    }
 }
 
 </script>
