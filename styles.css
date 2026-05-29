@@ -5,14 +5,14 @@
 }
 
 :root {
-    --primary-color: #2563eb;
-    --secondary-color: #10b981;
-    --dark-color: #1f2937;
-    --light-color: #f3f4f6;
-    --text-color: #374151;
-    --border-radius: 8px;
+    --primary-color: #0f172a;
+    --secondary-color: #f97316;
+    --dark-color: #020617;
+    --light-color: #f8fafc;
+    --text-color: #334155;
+    --border-radius: 10px;
     --transition: all 0.3s ease;
-    --shadow: 0 4px 15px rgba(0,0,0,0.1);
+    --shadow: 0 6px 20px rgba(0,0,0,0.12);
 }
 
 html {
