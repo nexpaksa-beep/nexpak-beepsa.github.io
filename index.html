@@ -2,261 +2,287 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Nexpak Solutions | Business System</title>
+<title>Nexpak Solutions | Industrial Packaging & Logistics</title>
 
 <style>
-body {
+
+/* =========================
+GLOBAL RESET
+========================= */
+* {
     margin:0;
-    font-family:Arial;
-    background:#0b1220;
-    color:white;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-/* HEADER */
+body {
+    background:#f4f7fb;
+    color:#1f2937;
+}
+
+/* =========================
+TOP NAV
+========================= */
 header {
-    background:#111827;
-    padding:15px;
+    background:#0f172a;
+    padding:18px 40px;
     display:flex;
     justify-content:space-between;
     align-items:center;
+    position:sticky;
+    top:0;
+    z-index:1000;
 }
 
-/* SECTIONS */
-.container {
-    padding:20px;
-    max-width:1000px;
-    margin:auto;
-}
-
-/* CARDS */
-.card {
-    background:#111827;
-    padding:12px;
-    margin:10px 0;
-    border-radius:8px;
-}
-
-/* INPUTS */
-input, select {
-    width:100%;
-    padding:10px;
-    margin:6px 0;
-}
-
-/* BUTTON */
-button {
-    padding:10px;
-    background:#38bdf8;
-    border:none;
+.logo {
+    color:#ffffff;
     font-weight:bold;
-    cursor:pointer;
+    font-size:20px;
+    letter-spacing:1px;
 }
 
-/* ADMIN */
-#adminPanel {
-    display:none;
+nav a {
+    color:#cbd5e1;
+    margin-left:20px;
+    text-decoration:none;
+    font-size:14px;
 }
 
-/* BADGE */
-.badge {
+nav a:hover {
+    color:#38bdf8;
+}
+
+/* =========================
+HERO SECTION (DHL STYLE)
+========================= */
+.hero {
+    background: linear-gradient(120deg, #0f172a, #1e293b);
+    color:white;
+    padding:100px 40px;
+    text-align:left;
+}
+
+.hero h1 {
+    font-size:42px;
+    max-width:700px;
+}
+
+.hero p {
+    margin-top:15px;
+    max-width:600px;
+    color:#cbd5e1;
+    line-height:1.6;
+}
+
+.btn {
+    display:inline-block;
+    margin-top:25px;
     background:#38bdf8;
-    padding:5px 10px;
-    border-radius:6px;
-    cursor:pointer;
+    color:#000;
+    padding:12px 22px;
+    font-weight:bold;
+    text-decoration:none;
+    border-radius:4px;
 }
-</style>
 
+/* =========================
+SECTIONS
+========================= */
+.section {
+    padding:70px 40px;
+}
+
+/* =========================
+GRID SYSTEM
+========================= */
+.grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
+    gap:20px;
+}
+
+/* =========================
+CARDS (CLEAN CORPORATE)
+========================= */
+.card {
+    background:white;
+    border:1px solid #e5e7eb;
+    padding:20px;
+    border-radius:6px;
+    transition:0.3s;
+}
+
+.card:hover {
+    transform:translateY(-5px);
+    box-shadow:0 10px 20px rgba(0,0,0,0.08);
+}
+
+/* =========================
+HEADINGS
+========================= */
+h2 {
+    font-size:28px;
+    margin-bottom:20px;
+    color:#0f172a;
+}
+
+/* =========================
+QUOTE SECTION
+========================= */
+.quote {
+    background:#0f172a;
+    color:white;
+    padding:60px 40px;
+    text-align:center;
+}
+
+.quote input, .quote textarea, .quote select {
+    width:100%;
+    max-width:500px;
+    padding:12px;
+    margin:8px 0;
+    border:none;
+}
+
+/* =========================
+FOOTER
+========================= */
+footer {
+    background:#0f172a;
+    color:#cbd5e1;
+    text-align:center;
+    padding:30px;
+    margin-top:40px;
+}
+
+.small {
+    font-size:12px;
+    color:#94a3b8;
+}
+
+</style>
 </head>
 
 <body>
 
 <header>
-    <div><b>Nexpak Business System V7</b></div>
-    <div class="badge" onclick="openAdmin()">ADMIN</div>
+    <div class="logo">NEXPAK SOLUTIONS</div>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#services">Services</a>
+        <a href="#products">Products</a>
+        <a href="#quote">Get Quote</a>
+    </nav>
 </header>
 
-<div class="container">
+<!-- HERO -->
+<section class="hero">
+    <h1>Industrial Packaging & Supply Chain Solutions for Modern Business</h1>
+    <p>
+        We supply high-performance packaging materials including bubble wrap, stretch film, shrink wrap,
+        corrugated cartons, strapping systems, PPE safety gear, wooden pallets, and industrial tapes across South Africa.
+    </p>
 
-<!-- PUBLIC SYSTEM -->
-<div id="public">
+    <a class="btn" href="#quote">Request a Quote</a>
+</section>
 
-<h2>Get Instant Quote</h2>
+<!-- SERVICES -->
+<section class="section" id="services">
+    <h2>Core Services</h2>
 
-<input id="name" placeholder="Your Name">
-<input id="phone" placeholder="Phone Number">
+    <div class="grid">
 
-<select id="product"></select>
+        <div class="card">
+            <h3>Packaging Supply</h3>
+            <p>Full range industrial packaging materials for warehousing and logistics.</p>
+        </div>
 
-<input id="qty" placeholder="Quantity">
+        <div class="card">
+            <h3>Logistics Consumables</h3>
+            <p>Stretch film, strapping, pallets and transport protection materials.</p>
+        </div>
 
-<button onclick="sendQuote()">Send WhatsApp Quote</button>
+        <div class="card">
+            <h3>Industrial Safety PPE</h3>
+            <p>Certified protective equipment for warehouse and factory environments.</p>
+        </div>
 
-<hr>
+        <div class="card">
+            <h3>Wholesale Distribution</h3>
+            <p>Bulk supply pricing for businesses and industrial clients nationwide.</p>
+        </div>
 
-<h3>Products</h3>
-<div id="products"></div>
+    </div>
+</section>
 
-</div>
+<!-- PRODUCTS -->
+<section class="section" id="products">
 
-<!-- ADMIN SYSTEM -->
-<div id="adminPanel">
+    <h2>Product Categories</h2>
 
-<h2>Admin Dashboard</h2>
+    <div class="grid">
 
-<div id="leads"></div>
+        <div class="card">Bubble Wrap & Protective Packaging</div>
+        <div class="card">Stretch & Shrink Film</div>
+        <div class="card">Corrugated & Cardboard Boxes</div>
+        <div class="card">Packaging Tapes & Adhesives</div>
+        <div class="card">PPE Safety Equipment</div>
+        <div class="card">Wooden Pallets & Crates</div>
+        <div class="card">Strapping Systems (Plastic & Steel)</div>
 
-<h3>Analytics</h3>
-<pre id="stats"></pre>
+    </div>
+</section>
 
-<button onclick="clearLeads()">Clear All Leads</button>
+<!-- QUOTE -->
+<section class="quote" id="quote">
 
-</div>
+    <h2 style="color:white;">Request a Business Quote</h2>
 
-</div>
+    <input id="name" placeholder="Full Name">
+    <input id="phone" placeholder="Phone Number">
+
+    <select id="product">
+        <option>Bubble Wrap</option>
+        <option>Stretch Film</option>
+        <option>Corrugated Boxes</option>
+        <option>PPE Safety Gear</option>
+        <option>Wooden Pallets</option>
+    </select>
+
+    <input id="qty" placeholder="Quantity">
+
+    <button onclick="send()">Send WhatsApp Quote</button>
+
+    <p class="small">We respond within business hours</p>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <p><b>Nexpak Solutions</b></p>
+    <p>📞 083 630 8249 | ✉ info@nexpaksolutions.co.za | daryll@nexpaksolutions.co.za</p>
+    <p class="small">Industrial Packaging Supplier | South Africa</p>
+</footer>
 
 <script>
 
-/* =========================
-PRODUCT DATABASE
-========================= */
-const PRODUCTS = [
-  {name:"Fire Seals Branded", price:1.45},
-  {name:"Fire Seals Unbranded", price:1.25},
-  {name:"Stretch Film", price:25},
-  {name:"Bubble Wrap", price:30},
-  {name:"Long Straps 280mm", price:1.19},
-  {name:"Short Straps", price:0.90}
-];
+function send(){
 
-/* =========================
-LOAD PRODUCTS
-========================= */
-let select = document.getElementById("product");
-let productBox = document.getElementById("products");
-
-PRODUCTS.forEach(p=>{
-    select.innerHTML += `<option>${p.name}</option>`;
-    productBox.innerHTML += `
-        <div class="card">
-            <b>${p.name}</b><br>
-            R${p.price}
-        </div>
-    `;
-});
-
-/* =========================
-SEND QUOTE (WHATSAPP + SAVE)
-========================= */
-function sendQuote(){
-
-    if(!name.value || !phone.value || !product.value || !qty.value){
-        alert("Fill all fields");
-        return;
-    }
-
-    let message =
-`NEW QUOTE REQUEST:
+    let msg =
+`QUOTE REQUEST:
 Name: ${name.value}
 Phone: ${phone.value}
 Product: ${product.value}
-Quantity: ${qty.value}`;
+Qty: ${qty.value}`;
 
-    window.open("https://wa.me/27YOURNUMBER?text=" + encodeURIComponent(message));
+    window.open("https://wa.me/27836308249?text=" + encodeURIComponent(msg));
 
-    let leads = JSON.parse(localStorage.getItem("leads") || "[]");
-
-    leads.push({
-        name:name.value,
-        phone:phone.value,
-        product:product.value,
-        qty:qty.value,
-        date:new Date()
-    });
-
-    localStorage.setItem("leads", JSON.stringify(leads));
-
-    alert("Quote sent!");
-}
-
-/* =========================
-ADMIN ACCESS
-========================= */
-function openAdmin(){
-
-    let pass = prompt("Enter Admin Password");
-
-    if(pass !== "1234"){
-        alert("Wrong password");
-        return;
-    }
-
-    document.getElementById("public").style.display = "none";
-    document.getElementById("adminPanel").style.display = "block";
-
-    loadAdmin();
-}
-
-/* =========================
-LOAD ADMIN DATA
-========================= */
-function loadAdmin(){
-
-    let leads = JSON.parse(localStorage.getItem("leads") || "[]");
-
-    let html = "";
-
-    leads.forEach((l,i)=>{
-        html += `
-        <div class="card">
-            <b>${l.name}</b><br>
-            ${l.phone}<br>
-            ${l.product} x ${l.qty}<br>
-            <button onclick="deleteLead(${i})">Delete</button>
-        </div>`;
-    });
-
-    document.getElementById("leads").innerHTML = html;
-
-    // ANALYTICS
-    let stats = {};
-
-    leads.forEach(l=>{
-        stats[l.product] = (stats[l.product] || 0) + 1;
-    });
-
-    document.getElementById("stats").innerText =
-        JSON.stringify(stats, null, 2);
-}
-
-/* =========================
-DELETE LEAD
-========================= */
-function deleteLead(i){
-
-    let leads = JSON.parse(localStorage.getItem("leads") || "[]");
-
-    leads.splice(i,1);
-
-    localStorage.setItem("leads", JSON.stringify(leads));
-
-    loadAdmin();
-}
-
-/* =========================
-CLEAR ALL LEADS
-========================= */
-function clearLeads(){
-
-    if(confirm("Delete all leads?")){
-
-        localStorage.removeItem("leads");
-        loadAdmin();
-    }
 }
 
 </script>
 
 </body>
-</html>
+    </html>
