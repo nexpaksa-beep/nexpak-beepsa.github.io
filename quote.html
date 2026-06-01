@@ -101,5 +101,10 @@ if(product){
 }
 </script>
 
-</body>
+</body>const params = new URLSearchParams(window.location.search);
+const product = params.get("product");
+
+if(product){
+  document.getElementById("product").value = product;
+}
 </html>
