@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Catalogue | Nexpak Solutions</title>
+
+<title>Products | Nexpak Solutions</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -18,80 +19,62 @@
 
 body {
   margin:0;
-  font-family:Inter;
+  font-family:Inter, sans-serif;
   background:var(--light);
   color:#1f2937;
 }
-  .thumb-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 15px;
-}
 
-.thumb {
-  background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  padding: 10px;
-  text-align: center;
-}
-
-.thumb img {
-  width: 100%;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 8px;
-}
-
-/* HEADER */
+/* NAV */
 header {
   background:var(--dark);
   color:white;
-  padding:20px;
+  padding:15px 20px;
   display:flex;
   justify-content:space-between;
   align-items:center;
+  flex-wrap:wrap;
 }
 
-header a {
+.logo {
+  font-weight:700;
+  font-size:18px;
+}
+
+nav a {
   color:white;
   text-decoration:none;
-  font-weight:600;
+  margin-left:15px;
+  font-weight:500;
+}
+
+nav a:hover {
+  color:var(--accent);
 }
 
 /* HERO */
 .hero {
-  background:linear-gradient(135deg,var(--dark),var(--primary));
+  background:linear-gradient(rgba(15,23,42,0.75), rgba(37,99,235,0.75)),
+             url('warehousestock.jpeg');
+  background-size:cover;
+  background-position:center;
   color:white;
   text-align:center;
-  padding:60px 20px;
+  padding:80px 20px;
 }
 
 .hero h1 {
-  font-size:40px;
+  font-size:42px;
+  margin-bottom:10px;
 }
 
-/* CONTAINER */
-.container {
-  max-width:1100px;
-  margin:auto;
-  padding:40px 20px;
-}
-
-/* CARD STYLE */
-.card {
-  background:white;
-  padding:20px;
-  border-radius:10px;
-  border:1px solid #e5e7eb;
-  box-shadow:0 2px 10px rgba(0,0,0,0.05);
-  margin-bottom:20px;
+.hero p {
+  opacity:0.9;
 }
 
 /* BUTTONS */
 .btn {
   display:inline-block;
-  padding:12px 18px;
+  padding:10px 16px;
   border-radius:6px;
   font-weight:600;
   text-decoration:none;
@@ -105,28 +88,89 @@ header a {
 
 .btn.accent {
   background:var(--accent);
-  color:black;
+  color:#111;
 }
 
-/* TRUST SECTION */
-.grid {
+/* SECTION */
+.section {
+  max-width:1100px;
+  margin:auto;
+  padding:40px 20px;
+}
+
+/* CATEGORY TITLE */
+.category-title {
+  font-size:22px;
+  margin:30px 0 15px;
+  color:var(--dark);
+  font-weight:700;
+}
+
+/* PRODUCT GRID */
+.product-grid {
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:15px;
+  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+  gap:20px;
 }
 
-.small {
+/* PRODUCT CARD */
+.product-card {
+  background:white;
+  border-radius:12px;
+  border:1px solid #e5e7eb;
+  overflow:hidden;
+  transition:0.3s;
+}
+
+.product-card:hover {
+  transform:translateY(-5px);
+  box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+
+.product-card img {
+  width:100%;
+  height:160px;
+  object-fit:cover;
+}
+
+.product-card h3 {
+  margin:10px;
+}
+
+.product-card p {
+  margin:0 10px 10px;
   font-size:14px;
   opacity:0.8;
 }
 
 /* FOOTER */
 footer {
+  background:var(--dark);
+  color:white;
   text-align:center;
   padding:30px;
-  background:#0f172a;
-  color:white;
   margin-top:40px;
+}
+
+/* MOBILE */
+@media (max-width:768px) {
+  header {
+    flex-direction:column;
+    text-align:center;
+  }
+
+  nav {
+    margin-top:10px;
+  }
+
+  nav a {
+    display:inline-block;
+    margin:5px;
+  }
+
+  .hero h1 {
+    font-size:28px;
+  }
 }
 
 </style>
@@ -135,84 +179,107 @@ footer {
 
 <body>
 
+<!-- NAV -->
 <header>
-  <a href="index.html">← Back to Home</a>
-  <div>Catalogue</div>
+  <div class="logo">Nexpak Solutions</div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="aboutus.html">About Us</a>
+    <a href="catalogue.html">Products</a>
+    <a href="pricelist.html">Price List</a>
+    <a href="contact.html">Contact</a>
+  </nav>
 </header>
 
+<!-- HERO -->
 <section class="hero">
-  <h1>Product Catalogue</h1>
-  <p>Premium packaging solutions across South Africa</p>
+  <h1>Our Products</h1>
+  <p>Complete packaging solutions for warehousing and logistics</p>
+
+  <a href="catalogue.pdf" target="_blank" class="btn primary">View Catalogue</a>
+  <a href="catalogue.pdf" download class="btn accent">Download Catalogue</a>
 </section>
 
-<div class="container">
+<!-- PRODUCTS -->
+<div class="section">
 
-  <div class="card">
-    <h2>📖 Interactive Catalogue</h2>
-    <p>Browse our full range of packaging products.</p>
+  <!-- WRAP CATEGORY -->
+  <div class="category-title">Stretch & Wrap</div>
 
-    <a href="catalogue.pdf" class="btn primary" target="_blank">View Catalogue</a>
-    <a href="catalogue.pdf" class="btn accent" download>Download PDF</a>
+  <div class="product-grid">
+
+    <div class="product-card">
+      <img src="images/palletwrap.png">
+      <h3>Pallet Wrap</h3>
+      <p>Strong stretch film for pallet securing.</p>
+      <a href="pricelist.html?product=pallet-wrap" class="btn primary">Price List</a>
+    </div>
+
+    <div class="product-card">
+      <img src="images/pallet.jpg">
+      <h3>Pallet Film</h3>
+      <p>Industrial wrapping solution for logistics.</p>
+      <a href="pricelist.html?product=pallet-film" class="btn primary">Price List</a>
+    </div>
+
   </div>
 
-  <div class="card">
-    <h2>Ready to Order?</h2>
-    <p>Get wholesale pricing and bulk order support instantly.</p>
+  <!-- TAPE CATEGORY -->
+  <div class="category-title">Tapes</div>
 
-    <a href="quote.html" class="btn primary">Request Quote</a>
-    <a href="https://wa.me/27836308249?text=Hi%20Nexpak%20Solutions,%20I%20am%20interested%20in%20your%20packaging%20products." class="btn accent">
-WhatsApp Us
-    </a>
-  </div>
-<div class="card">
-  <h2>Why Buy From Nexpak</h2>
+  <div class="product-grid">
 
-  <div class="groups>
-    <div>✓ Competitive pricing</div>
-    <div>✓ Fast delivery</div>
-    <div>✓ Bulk discounts</div>
-    <div>✓ Reliable supply</div>
-    <div>✓ Quality guaranteed</div>
-    <div>✓ Account support</div>
+    <div class="product-card">
+      <img src="images/ducttape.png">
+      <h3>Duct Tape</h3>
+      <p>Heavy duty adhesive tape for industrial use.</p>
+      <a href="pricelist.html?product=duct-tape" class="btn primary">Price List</a>
+    </div>
+
+    <div class="product-card">
+      <img src="images/packagingtape.jpg">
+      <h3>Packaging Tape</h3>
+      <p>General carton sealing tape.</p>
+      <a href="pricelist.html?product=packaging-tape" class="btn primary">Price List</a>
+    </div>
+
+    <div class="product-card">
+      <img src="images/pvctape.jpeg">
+      <h3>PVC Tape</h3>
+      <p>Strong insulation and sealing tape.</p>
+      <a href="pricelist.html?product=pvc-tape" class="btn primary">Price List</a>
+    </div>
+
   </div>
+
+  <!-- PROTECTIVE CATEGORY -->
+  <div class="category-title">Protective Packaging</div>
+
+  <div class="product-grid">
+
+    <div class="product-card">
+      <img src="images/bubble2.jpg">
+      <h3>Bubble Wrap</h3>
+      <p>Protect fragile goods during transport.</p>
+      <a href="pricelist.html?product=bubble-wrap" class="btn primary">Price List</a>
+    </div>
+
+    <div class="product-card">
+      <img src="images/honeycomb.jpeg">
+      <h3>Honeycomb Wrap</h3>
+      <p>Eco-friendly protective packaging.</p>
+      <a href="pricelist.html?product=honeycomb" class="btn primary">Price List</a>
+    </div>
+
+  </div>
+
 </div>
 
-    <div class="card">
-  <h2>📦 Featured Products</h2>
-  <p>Click a product to view details or request a quote instantly.</p>
-
-  <div class="thumb-grid">
-
-    <div class="thumb">
-      <img src="images/stretch-wrap.jpg" alt="Stretch Wrap">
-      <p>Stretch Wrap</p>
-
-      <a href="stretch-wraps.html" class="btn primary">View</a>
-      <a href="quote.html?product=stretch-wrap" class="btn accent">Quote</a>
-    </div>
-
-    <div class="thumb">
-      <img src="images/clear-tape.jpg" alt="Packaging Tape">
-      <p>Packaging Tape</p>
-
-      <a href="quote.html?product=tape" class="btn primary">View Details</a>
-    </div>
-
-    <div class="thumb">
-      <a href="quote.html?product=pallet-wrap" class="btn primary">View Details</a>
-      <p>Pallet Wrap</p>
-
-      <a href="quote.html?product=stretch-wrap" class="btn primary">View Details</a>
-    </div>
-</div> <!-- closes thumb-grid -->
-
-</div> <!-- closes Featured Products card -->
-
-</div> <!-- closes container -->
-
+<!-- FOOTER -->
 <footer>
   © 2024-2026 Nexpak Solutions PTY Ltd
 </footer>
 
-</script>
-</html>
+</body>
+  </html>
