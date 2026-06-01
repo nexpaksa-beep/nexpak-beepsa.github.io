@@ -2,381 +2,201 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Nexpak Solutions PTY LTD| Industrial Packaging & Logistics</title>
+<title>Nexpak Solutions | Packaging Supplier</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-.whatsapp-float {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    background: #25D366;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 30px;
-    text-decoration: none;
-    z-index: 9999;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-/* =========================
-GLOBAL RESET
-========================= */
-* {
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family: Arial, Helvetica, sans-serif;
-}
-    :root {
-    --primary: #0F1C2E;
-    --secondary: #233B5E;
-    --accent: #4F6580;
-    --light: #D9E1EA;
-    --white: #FFFFFF;
-    }
-body {
-    background: #f8fafc;
-    color: #333;
+
+:root {
+  --primary:#2563eb;
+  --dark:#0f172a;
+  --light:#f8fafc;
+  --accent:#f59e0b;
 }
 
-/* =========================
-TOP NAV
-========================= */
+body {
+  margin:0;
+  font-family:Inter, sans-serif;
+  background:var(--light);
+  color:#1f2937;
+}
+
+/* NAVIGATION */
 header {
-    background: linear-gradient(
-        135deg,
-        #0F1C2E,
-        #233B5E,
-        #4F6580
-    );
-    padding:18px 40px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    position:sticky;
-    top:0;
-    z-index:1000;
+  background:var(--dark);
+  color:white;
+  padding:15px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
 }
 
 .logo {
-    color:#ffffff;
-    font-weight:bold;
-    font-size:20px;
-    letter-spacing:1px;
+  font-weight:700;
+  font-size:18px;
 }
 
 nav a {
-    color:#cbd5e1;
-    margin-left:20px;
-    text-decoration:none;
-    font-size:14px;
+  color:white;
+  text-decoration:none;
+  margin-left:15px;
+  font-weight:500;
 }
 
 nav a:hover {
-    color:#38bdf8;
+  color:var(--accent);
 }
 
-/* =========================
-HERO SECTION (DHL STYLE)
-========================= */.hero {
-    background:
-        linear-gradient(
-            rgba(15,28,46,0.75),
-            rgba(35,59,94,0.75)
-        ),
-        url('warehouse.jpg');
-
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    min-height: 70vh;
-    padding: 120px 40px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    color: white;
+/* HERO */
+.hero {
+  background:linear-gradient(rgba(15,23,42,0.75), rgba(37,99,235,0.75)),
+             url('images/warehouse.jpeg');
+  background-size:cover;
+  background-position:center;
+  color:white;
+  text-align:center;
+  padding:100px 20px;
 }
 
-/* =========================
-SECTIONS
-========================= */
+.hero h1 {
+  font-size:42px;
+  margin-bottom:10px;
+}
+
+.hero p {
+  font-size:18px;
+  opacity:0.9;
+}
+
+/* BUTTONS */
+.btn {
+  display:inline-block;
+  padding:12px 18px;
+  border-radius:6px;
+  text-decoration:none;
+  font-weight:600;
+  margin:10px 5px;
+}
+
+.btn.primary {
+  background:var(--primary);
+  color:white;
+}
+
+.btn.accent {
+  background:var(--accent);
+  color:black;
+}
+
+/* SECTION */
 .section {
-    padding:70px 40px;
+  max-width:1000px;
+  margin:auto;
+  padding:60px 20px;
+  text-align:center;
 }
 
-/* =========================
-GRID SYSTEM
-========================= */
+/* GRID */
 .grid {
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(260px,1fr));
-    gap:20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+  gap:20px;
+  max-width:1000px;
+  margin:auto;
+  padding:0 20px 60px;
 }
 
-/* =========================
-CARDS (CLEAN CORPORATE)
-========================= */
-.card {
-    background: white;
-    padding: 25px;
-    border-left: 4px solid #4F6580;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    transition: 0.3s;
+.grid div {
+  background:white;
+  padding:20px;
+  border-radius:10px;
+  border:1px solid #e5e7eb;
+  font-weight:600;
+  text-align:center;
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.08); 
-}
-
-/* =========================
-HEADINGS
-========================= */
-h2 {
-    font-size:28px;
-    margin-bottom:20px;
-    color:#0f172a;
-}
-
-/* =========================
-QUOTE SECTION
-========================= */
-.quote {
-    background:#0f172a;
-    color:white;
-    padding:60px 40px;
-    text-align:center;
-}
-
-.quote input, .quote textarea, .quote select {
-    width:100%;
-    max-width:500px;
-    padding:12px;
-    margin:8px 0;
-    border:none;
-}
-
-/* =========================
-FOOTER
-========================= */
+/* FOOTER */
 footer {
-    background: #0F1C2E;
-    color: white;
+  background:var(--dark);
+  color:white;
+  text-align:center;
+  padding:30px;
+  margin-top:40px;
+}
+
+/* MOBILE */
+@media (max-width:768px) {
+  header {
+    flex-direction:column;
+    text-align:center;
+  }
+
+  nav {
+    margin-top:10px;
+  }
+
+  nav a {
+    display:inline-block;
+    margin:5px;
+  }
+
+  .hero h1 {
+    font-size:30px;
+  }
 }
 
 </style>
+
 </head>
 
 <body>
 
+<!-- NAV -->
 <header>
-    <div class="logo">NEXPAK SOLUTIONS PTY LTD</div>
-   <nav>
+  <div class="logo">Nexpak Solutions</div>
+
+  <nav>
     <a href="index.html">Home</a>
-    <a href="about.html">About Us</a>
-    <a href="marketing.html">Solutions</a>
-    <a href="catalogue.html">Catalogue</a>
-    <a href="pricelist.html">Price List</a>
-    <a href="contact.html">Contact Us</a>
-   </nav>
+    <a href="aboutus.html">About Us</a>
+    <a href="catalogue.html">Products</a>
+    <a href="quote.html">Request Quote</a>
+    <a href="contact.html">Contact</a>
+  </nav>
 </header>
 
 <!-- HERO -->
 <section class="hero">
-    <h1>Industrial Packaging & Supply Chain Solutions for Modern Business</h1>
-    <p>
-        We supply high-performance packaging materials including bubble wrap, stretch film, shrink wrap,
-        corrugated cartons, strapping systems, PPE safety gear, wooden pallets, and industrial tapes across South Africa.
-    </p>
+  <h1>Packaging Solutions That Deliver</h1>
+  <p>Wholesale packaging supplier across South Africa</p>
 
-    <a class="btn" href="#quote">Request a Quote</a>
+  <a href="catalogue.html" class="btn primary">View Products</a>
+  <a href="quote.html" class="btn accent">Request Quote</a>
 </section>
 
-<!-- About us -->
-<section class="section" id="services">
-    <h2>Core Services</h2>
-
-    <div class="grid">
-
-        <div class="card">
-            <h3>Packaging Supply</h3>
-            <p>Full range industrial packaging materials for warehousing and logistics.</p>
-        </div>
-
-        <div class="card">
-            <h3>Logistics Consumables</h3>
-            <p>Stretch film, strapping, pallets and transport protection materials.</p>
-        </div>
-
-        <div class="card">
-            <h3>Industrial Safety PPE</h3>
-            <p>Certified protective equipment for warehouse and factory environments.</p>
-        </div>
-
-        <div class="card">
-            <h3>Wholesale Distribution</h3>
-            <p>Bulk supply pricing for businesses and industrial clients nationwide.</p>
-        </div>
-
-    </div>
+<!-- ABOUT SHORT -->
+<section class="section">
+  <h2>Who We Are</h2>
+  <p>
+    Nexpak Solutions is a trusted packaging supplier providing quality materials,
+    fast delivery, and wholesale pricing across South Africa.
+  </p>
 </section>
 
-<!-- PRODUCTS -->
-    <section class="product-preview">
-
-  <h2>Our Packaging Solutions</h2>
-
-  <div class="product-grid">
-
-    <div class="product-card">
-      <img src="images/clear.jpg" alt="Clear Packaging Film">
-      <h3>Clear Film</h3>
-    </div>
-
-    <div class="product-card">
-      <img src="images/packaging.jpg" alt="Packaging Materials">
-      <h3>Packaging Supplies</h3>
-    </div>
-
-    <div class="product-card">
-      <img src="images/pallet.jpg" alt="Pallet Wrap">
-      <h3>Pallet Wrap</h3>
-    </div>
-
-    <div class="product-card">
-      <img src="images/pallets.jpg" alt="Pallets">
-      <h3>Pallet Solutions</h3>
-    </div>
-
-    <div class="product-card">
-      <img src="images/stretch-wrap.jpg" alt="Stretch Wrap">
-      <h3>Stretch Wrap</h3>
-    </div>
-
-    <div class="product-card">
-      <img src="images/bubblewrap.jpg" alt="Clear Tape">
-      <h3>Packaging Tape</h3>
-    </div>
-      <div class="catalogue-download">
-  <h2>Full Product Catalogue</h2>
-  <p>Download our complete packaging catalogue for full specifications and product range.</p>
-
-  <a href="catalogue.pdf" download class="download-btn">
-    Download Catalogue (PDF)
-  </a>
-      </div>
-
-  </div>
-
-    </section>
-<section class="section" id="products">
-
-    <h2>Product Categories</h2>
-
-    <div class="grid">
-
-        <div class="card">Bubble Wrap & Protective Packaging</div>
-        <div class="card">Stretch & Shrink Film</div>
-        <div class="card">Corrugated & Cardboard Boxes</div>
-        <div class="card">Packaging Tapes & Adhesives</div>
-        <div class="card">PPE Safety Equipment</div>
-        <div class="card">Wooden Pallets & Crates</div>
-        <div class="card">Strapping Systems (Plastic & Steel)</div>
-        <form action="https://formsubmit.co/info@nexpaksolutions.co.za" method="POST">
-
-  <input type="hidden" name="_captcha" value="false">
-  <input type="hidden" name="_subject" value="New Nexpak Website Enquiry">
-  <input type="hidden" name="_template" value="table">
-
-  <input type="text" name="name" placeholder="Your Name" required>
-  <input type="email" name="email" placeholder="Email Address" required>
-  <input type="text" name="phone" placeholder="Phone Number">
-
-  <textarea name="message" rows="5" placeholder="Your Message"></textarea>
-
-  <button type="submit">Send Enquiry</button>
-
-        </form>
-
-    </div>
-</section>
-
-<!-- CONTACT US-->
-<section class="contact" id="contact">
-
-    <h2 style="color:white;">Request a Business Quote</h2>
-
-    <input id="name" placeholder="Full Name">
-    <input id="phone" placeholder="Phone Number">
-
-    <select id="product">
-        <option>Bubble Wrap</option>
-        <option>Stretch Film</option>
-        <option>Corrugated Boxes</option>
-        <option>PPE Safety Gear</option>
-        <option>Wooden Pallets</option>
-    </select>
-
-    <input id="qty" placeholder="Quantity">
-
-    <button onclick="send()">Send WhatsApp Quote</button>
-
-    <p class="small">We respond within business hours</p>
-
-</section>
-    <form action="https://formsubmit.co/info@nexpaksolutions.co.za" method="POST">
-
-  <input type="hidden" name="_captcha" value="false">
-  <input type="hidden" name="_subject" value="New Nexpak Website Enquiry">
-  <input type="hidden" name="_template" value="table">
-
-  <input type="text" name="name" placeholder="Your Name" required>
-  <input type="email" name="email" placeholder="Email Address" required>
-  <input type="text" name="phone" placeholder="Phone Number">
-
-  <textarea name="message" rows="5" placeholder="Your Message"></textarea>
-
-  <button type="submit">Send Enquiry</button>
-
-    </form>
+<!-- HIGHLIGHTS -->
+<div class="grid">
+  <div>📦 Packaging Supplies</div>
+  <div>🚚 Fast Delivery</div>
+  <div>💰 Wholesale Pricing</div>
+</div>
 
 <!-- FOOTER -->
 <footer>
-    <p><b>Nexpak Solutions</b></p>
-    <p>📞 083 630 8249 | ✉ info@nexpaksolutions.co.za | daryll@nexpaksolutions.co.za</p>
-    <p class="small">Industrial Packaging Supplier | South Africa</p>
+  © 2024-2026 Nexpak Solutions PTY Ltd
 </footer>
 
-<script>
-
-function send(){
-
-    let msg =
-`QUOTE REQUEST:
-Name: ${name.value}
-Phone: ${phone.value}
-Product: ${product.value}
-Qty: ${qty.value}`;
-
-    window.open("https://wa.me/27836308249?text=" + encodeURIComponent(msg));
-
-}
-
-</script>
-<a href="https://wa.me/27836308249"
-   class="whatsapp-float"
-   target="_blank">
-   💬
-</a>
 </body>
-    </html>
+</html>
