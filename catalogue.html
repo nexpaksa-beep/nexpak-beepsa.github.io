@@ -213,14 +213,24 @@ footer {
       <img src="images/palletwrap.png">
       <h3>Pallet Wrap</h3>
       <p>Strong stretch film for pallet securing.</p>
+
       <a href="pricelist.html?product=pallet-wrap" class="btn primary">Price List</a>
+
+      <a class="btn accent wa-btn" data-product="Pallet Wrap">
+        💬 WhatsApp Quote
+      </a>
     </div>
 
     <div class="product-card">
       <img src="images/pallet.jpg">
       <h3>Pallet Film</h3>
       <p>Industrial wrapping solution for logistics.</p>
+
       <a href="pricelist.html?product=pallet-film" class="btn primary">Price List</a>
+
+      <a class="btn accent wa-btn" data-product="Pallet Film">
+        💬 WhatsApp Quote
+      </a>
     </div>
 
   </div>
@@ -234,21 +244,36 @@ footer {
       <img src="images/ducttape.png">
       <h3>Duct Tape</h3>
       <p>Heavy duty adhesive tape for industrial use.</p>
+
       <a href="pricelist.html?product=duct-tape" class="btn primary">Price List</a>
+
+      <a class="btn accent wa-btn" data-product="Duct Tape">
+        💬 WhatsApp Quote
+      </a>
     </div>
 
     <div class="product-card">
       <img src="images/packagingtape.jpg">
       <h3>Packaging Tape</h3>
       <p>General carton sealing tape.</p>
+
       <a href="pricelist.html?product=packaging-tape" class="btn primary">Price List</a>
+
+      <a class="btn accent wa-btn" data-product="Packaging Tape">
+        💬 WhatsApp Quote
+      </a>
     </div>
 
     <div class="product-card">
       <img src="images/pvctape.jpeg">
       <h3>PVC Tape</h3>
       <p>Strong insulation and sealing tape.</p>
+
       <a href="pricelist.html?product=pvc-tape" class="btn primary">Price List</a>
+
+      <a class="btn accent wa-btn" data-product="PVC Tape">
+        💬 WhatsApp Quote
+      </a>
     </div>
 
   </div>
@@ -262,14 +287,24 @@ footer {
       <img src="images/bubble2.jpg">
       <h3>Bubble Wrap</h3>
       <p>Protect fragile goods during transport.</p>
+
       <a href="pricelist.html?product=bubble-wrap" class="btn primary">Price List</a>
+
+      <a class="btn accent wa-btn" data-product="Bubble Wrap">
+        💬 WhatsApp Quote
+      </a>
     </div>
 
     <div class="product-card">
       <img src="images/honeycomb.jpeg">
       <h3>Honeycomb Wrap</h3>
       <p>Eco-friendly protective packaging.</p>
+
       <a href="pricelist.html?product=honeycomb" class="btn primary">Price List</a>
+
+      <a class="btn accent wa-btn" data-product="Honeycomb Wrap">
+        💬 WhatsApp Quote
+      </a>
     </div>
 
   </div>
@@ -280,6 +315,24 @@ footer {
 <footer>
   © 2024-2026 Nexpak Solutions PTY Ltd
 </footer>
+
+<!-- WHATSAPP DYNAMIC SCRIPT -->
+<script>
+const phone = "27836308249";
+
+document.querySelectorAll(".wa-btn").forEach(button => {
+  button.addEventListener("click", function () {
+
+    const product = this.getAttribute("data-product");
+
+    const message = `Hi Nexpak, I am interested in ${product} and would like a quote.`;
+
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+
+    window.open(url, "_blank");
+  });
+});
+</script>
 
 </body>
   </html>
