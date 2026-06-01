@@ -70,6 +70,12 @@ nav a:hover {
 HERO SECTION (DHL STYLE)
 ========================= */
 .hero {
+    min-height: 70vh;
+    padding: 120px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
     background:
         linear-gradient(
             rgba(15,28,46,0.8),
@@ -78,29 +84,8 @@ HERO SECTION (DHL STYLE)
         url('images/warehouse.jpg');
 
     background-size: cover;
+    background-position: center;
     color: white;
-}
-
-.hero h1 {
-    font-size:42px;
-    max-width:700px;
-}
-
-.hero p {
-    margin-top:15px;
-    max-width:600px;
-    color:#cbd5e1;
-    line-height:1.6;
-}
-
-.btn {
-    background: #4F6580;
-    color: white;
-    border-radius: 6px;
-}
-
-.btn:hover {
-    background: #233B5E;
 }
 
 /* =========================
@@ -179,9 +164,9 @@ footer {
     <div class="logo">NEXPAK SOLUTIONS</div>
     <nav>
         <a href="#">Home</a>
-        <a href="#services">Services</a>
+        <a href="#services">About us</a>
         <a href="#products">Products</a>
-        <a href="#quote">Get Quote</a>
+        <a href="#quote">Contact us</a>
     </nav>
 </header>
 
