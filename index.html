@@ -19,15 +19,25 @@ GLOBAL RESET
 }
 
 body {
-    background:#f4f7fb;
-    color:#1f2937;
+    :root {
+    --primary: #0F1C2E;
+    --secondary: #233B5E;
+    --accent: #4F6580;
+    --light: #D9E1EA;
+    --white: #FFFFFF;
+    }
 }
 
 /* =========================
 TOP NAV
 ========================= */
 header {
-    background:#0f172a;
+    background: linear-gradient(
+        135deg,
+        #0F1C2E,
+        #233B5E,
+        #4F6580
+    );
     padding:18px 40px;
     display:flex;
     justify-content:space-between;
@@ -59,10 +69,15 @@ nav a:hover {
 HERO SECTION (DHL STYLE)
 ========================= */
 .hero {
-    background: linear-gradient(120deg, #0f172a, #1e293b);
-    color:white;
-    padding:100px 40px;
-    text-align:left;
+    background:
+        linear-gradient(
+            rgba(15,28,46,0.8),
+            rgba(35,59,94,0.8)
+        ),
+        url('images/warehouse.jpg');
+
+    background-size: cover;
+    color: white;
 }
 
 .hero h1 {
@@ -78,14 +93,13 @@ HERO SECTION (DHL STYLE)
 }
 
 .btn {
-    display:inline-block;
-    margin-top:25px;
-    background:#38bdf8;
-    color:#000;
-    padding:12px 22px;
-    font-weight:bold;
-    text-decoration:none;
-    border-radius:4px;
+    background: #4F6580;
+    color: white;
+    border-radius: 6px;
+}
+
+.btn:hover {
+    background: #233B5E;
 }
 
 /* =========================
@@ -107,12 +121,10 @@ GRID SYSTEM
 /* =========================
 CARDS (CLEAN CORPORATE)
 ========================= */
-.card {
-    background:white;
-    border:1px solid #e5e7eb;
-    padding:20px;
-    border-radius:6px;
-    transition:0.3s;
+.product-item {
+    background: white;
+    border-left: 4px solid #4F6580;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .card:hover {
@@ -151,16 +163,8 @@ QUOTE SECTION
 FOOTER
 ========================= */
 footer {
-    background:#0f172a;
-    color:#cbd5e1;
-    text-align:center;
-    padding:30px;
-    margin-top:40px;
-}
-
-.small {
-    font-size:12px;
-    color:#94a3b8;
+    background: #0F1C2E;
+    color: white;
 }
 
 </style>
