@@ -28,7 +28,10 @@
 
   /* HERO */
   .hero {
-    background: linear-gradient(135deg, var(--dark), var(--primary));
+    background: linear-gradient(rgba(15,23,42,0.75), rgba(37,99,235,0.75)),
+                url('warehouse3.jpeg');
+    background-size: cover;
+    background-position: center;
     color: white;
     text-align: center;
     padding: 80px 20px;
@@ -97,6 +100,7 @@
     border-radius: 6px;
   }
 
+  /* WHATSAPP BUTTON */
   .whatsapp {
     background: #25D366;
     color: white;
@@ -111,6 +115,15 @@
 
   .whatsapp:hover {
     background: #1ebe5d;
+  }
+
+  /* MAP */
+  iframe {
+    width: 100%;
+    height: 300px;
+    border: 0;
+    border-radius: 10px;
+    margin-top: 15px;
   }
 
 </style>
@@ -140,7 +153,8 @@
       <button type="submit">Send Enquiry</button>
     </form>
 
-    <a class="whatsapp" href="https://wa.me/27YOURNUMBERHERE" target="_blank">
+    <!-- WHATSAPP -->
+    <a class="whatsapp" href="https://wa.me/27836308249?text=Hi%20Nexpak%2C%20I%20need%20assistance%20with%20packaging%20solutions" target="_blank">
       Chat on WhatsApp
     </a>
 
@@ -154,13 +168,27 @@
     </div>
 
     <div class="info-box">
-      <strong>Phone:</strong> +27 XXX XXX XXXX
+      <strong>Phone:</strong> +27 83 630 8249
+    </div>
+
+    <div class="info-box">
+      <strong>Location:</strong> East Rand, Johannesburg, Gauteng, South Africa
     </div>
 
     <div class="info-box">
       <strong>Response Time:</strong> Within 1–2 business hours
     </div>
 
+  </div>
+
+  <!-- MAP -->
+  <div class="card" style="margin-top:30px;">
+    <h2>Find Us</h2>
+    <p>East Rand, Johannesburg, Gauteng</p>
+
+    <iframe
+      src="https://www.google.com/maps?q=East%20Rand%20Johannesburg%20Gauteng&output=embed">
+    </iframe>
   </div>
 
 </div>
