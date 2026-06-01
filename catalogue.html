@@ -1,340 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Nexpak Solutions Product Catalogue - Browse our complete range of packaging and PPE products">
-    <meta name="keywords" content="product catalogue, packaging products, PPE safety wear, nexpak solutions">
-    <title>Nexpak Solutions - Product Catalogue | Magazine Flip View</title>
-    <link rel="stylesheet" href="catalogue-style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    
-    <!-- Vercel Speed Insights -->
-    <script defer src="dist/speed-insights.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catalogue | Nexpak Solutions</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+  --primary:#2563eb;
+  --dark:#0f172a;
+  --light:#f8fafc;
+  --accent:#f59e0b;
+}
+
+body {
+  margin:0;
+  font-family:Inter;
+  background:var(--light);
+  color:#1f2937;
+}
+
+/* HEADER */
+header {
+  background:var(--dark);
+  color:white;
+  padding:20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+header a {
+  color:white;
+  text-decoration:none;
+  font-weight:600;
+}
+
+/* HERO */
+.hero {
+  background:linear-gradient(135deg,var(--dark),var(--primary));
+  color:white;
+  text-align:center;
+  padding:60px 20px;
+}
+
+.hero h1 {
+  font-size:40px;
+}
+
+/* CONTAINER */
+.container {
+  max-width:1100px;
+  margin:auto;
+  padding:40px 20px;
+}
+
+/* CARD STYLE */
+.card {
+  background:white;
+  padding:20px;
+  border-radius:10px;
+  border:1px solid #e5e7eb;
+  box-shadow:0 2px 10px rgba(0,0,0,0.05);
+  margin-bottom:20px;
+}
+
+/* BUTTONS */
+.btn {
+  display:inline-block;
+  padding:12px 18px;
+  border-radius:6px;
+  font-weight:600;
+  text-decoration:none;
+  margin:5px;
+}
+
+.btn.primary {
+  background:var(--primary);
+  color:white;
+}
+
+.btn.accent {
+  background:var(--accent);
+  color:black;
+}
+
+/* TRUST SECTION */
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+}
+
+.small {
+  font-size:14px;
+  opacity:0.8;
+}
+
+/* FOOTER */
+footer {
+  text-align:center;
+  padding:30px;
+  background:#0f172a;
+  color:white;
+  margin-top:40px;
+}
+
+</style>
+
 </head>
+
 <body>
-    <!-- HEADER & NAVIGATION -->
-    <header>
-        <div class="header-container">
-            <div class="logo">Nexpak Solutions</div>
-            <nav>
-                <ul class="nav-menu">
-                    <li><a href="index.html" class="nav-link">← Back to Home</a></li>
-                    <li><a href="#catalogue" class="nav-link">Catalogue</a></li>
-                    <li><a href="#contact-cta" class="nav-link">Order Now</a></li>
-                </ul>
-            </nav>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </header>
 
-    <!-- WHATSAPP BUTTON -->
-    <a href="https://wa.me/27836308249?text=Hello%20Nexpak%20Solutions%20I%27m%20interested%20in%20your%20products" 
-       class="whatsapp-btn" target="_blank" title="Chat with us on WhatsApp - Packaging and PPE Supplies">
-        💬
-    </a>
+<header>
+  <a href="index.html">← Back to Home</a>
+  <div>Catalogue</div>
+</header>
 
-    <!-- HERO SECTION -->
-    <section class="hero" id="catalogue">
-        <div class="hero-content">
-            <h1>📖 Nexpak Solutions Product Catalogue</h1>
-            <p>Browse our complete range of premium packaging and PPE products with interactive flip pages</p>
-        </div>
-    </section>
-
-    <!-- MAGAZINE FLIP CATALOGUE -->
-    <section class="catalogue-section">
-        <div class="container">
-            <div class="flip-book-container">
-                <!-- Controls -->
-                <div class="flip-controls">
-                    <button class="flip-btn prev-btn" onclick="previousPage()" title="Previous Page">
-                        <i class="fas fa-chevron-left"></i> Previous
-                    </button>
-                    <div class="page-indicator">
-                        <span id="current-page">1</span> / <span id="total-pages">6</span>
-                    </div>
-                    <button class="flip-btn next-btn" onclick="nextPage()" title="Next Page">
-                        Next <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
-
-                <!-- Flip Book Pages -->
-                <div class="flip-book" id="flipBook">
-                    <!-- COVER PAGE -->
-                    <div class="flip-page cover-page active" data-page="1">
-                        <div class="page-content">
-                            <div class="page-inner">
-                                <h1 class="catalogue-title">Nexpak Solutions</h1>
-                                <p class="catalogue-subtitle">Premium Packaging & PPE Supplier</p>
-                                <div class="cover-image">📦</div>
-                                <p class="cover-text">Your trusted partner for quality packaging materials and personal protective equipment across South Africa</p>
-                                <button class="cta-btn" onclick="scrollToPage(2)">Start Browsing →</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PAGE 1: WRAPPING FILMS -->
-                    <div class="flip-page" data-page="2">
-                        <div class="page-content">
-                            <div class="page-inner">
-                                <h2 class="page-title">📦 Wrapping Films & Protective Materials</h2>
-                                <div class="product-list">
-                                    <div class="product-item">
-                                        <h3>🫧 Premium Bubble Wrap</h3>
-                                        <p>High-quality protective bubble wrap for fragile items. Air-cushioned protection prevents shipping damage.</p>
-                                        <p class="spec"><strong>1250mm x 80m 
-                                                                1250mm x 100m</p></p>
-                                            <a href="products/bubble-wrap.html" class="product-btn">
-                                              View Product
-                                            </a>
-                                    </div>
-                                    <div class="product-item">
-                                        <h3>📏 Heat Shrink Wrap Film</h3>
-                                        <p>Professional heat-shrink plastic film for bundling and protecting retail products.</p>
-                                        <p class="spec"><strong>Sizes:</strong> 250mm, 400mm, 600mm widths</p>
-                                    </div>
-                                    <a href="products/pallet-wrap.html" class="product-btn">
-                                      View Product
-                                    </a>
-                                    <div class="product-item">
-                                        <h3>📦 Industrial Pallet Wrap</h3>
-                                        <p>Heavy-duty stretch wrap designed for pallet loads and warehouse storage.</p>
-                                        <p class="spec">
-                                                       <strong>Hand Rolls:</strong><br>
-                                                                450mm x 400m x 10mic<br>
-                                                                450mm x 400m x 13mic<br>
-                                                                450mm x 400m x 15mic<br>
-                                                                450mm x 400m x 17mic<br>
-                                                                450mm x 400m x 20mic<br>
-                                                                450mm x 400m x 25mic<br>
-                                                                450mm x 400m x 30mic
-                                            <a href="products/pallet-wrap.html" class="product-btn">
-                                              View Product
-                                            </a>
-                                    </div>
-                                </div>
-                                <button class="product-btn" onclick="contactAbout('Wrapping Films')">Inquire Now</button>
-                            </div>
-                        </div>
-                    </div><a href="https://wa.me/27836308249?text=Please%20send%20me%20a%20quote%20for%20Stretch%20Film"
-class="btn btn-primary"
-target="_blank">
-Request Quote
-                    </a>
-
-                    <!-- PAGE 2: PACKAGING TAPES -->
-                    <div class="flip-page" data-page="3">
-                        <div class="page-content">
-                            <div class="page-inner">
-                                <h2 class="page-title">📋 Professional Packaging Tapes</h2>
-                                <div class="product-list">
-                                    <div class="product-item">
-                                        <h3>📦 Strong Packaging Tape</h3>
-                                        <p>Heavy-duty adhesive tape for securely sealing boxes. Weather-resistant formula.</p>
-                                        <p class="spec"><strong>Widths:</strong> 24mm, 36mm, 48mm | Rolls: 40m-66m</p>
-                                    </div>
-                                    <div class="product-item">
-                                        <h3>⚡ Electrical Tape</h3>
-                                        <p>Flame-retardant for insulation of electrical cables. Temperature resistant -18°C to 82°C.</p>
-                                        <p class="spec"><strong>Width:</strong> 18mm | Colors: Black & assorted</p>
-                                    </div>
-                                    <div class="product-item">
-                                        <h3>❄️ Freezer Grade Tape</h3>
-                                        <p>Specialized for low-temperature and cold storage applications. Water and frost-resistant.</p>
-                                        <p class="spec"><strong>Widths:</strong> 24mm, 48mm | Cold-resistant adhesive</>
-                                    <a href="products/tapes-wrap.html" class="product-btn">
-                                     View Product
-                                    </a>
-                                </div>
-                                <button class="product-btn" onclick="contactAbout('Packaging Tapes')">Inquire Now</button>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="https://wa.me/27836308249?text=Please%20send%20me%20a%20quote%20for%20Stretch%20Film"
-class="btn btn-primary"
-target="_blank">
-Request Quote
-                    </a>
-
-                    <!-- PAGE 3: BOXES & PALLETS -->
-                    <div class="flip-page" data-page="4">
-                        <div class="page-content">
-                            <div class="page-inner">
-                                <h2 class="page-title">📦 Corrugated Boxes & Wooden Pallets</h2>
-                                <div class="product-list">
-                                    <div class="product-item">
-                                        <h3>📫 Corrugated Cardboard Boxes</h3>
-                                        <p>Durable boxes for shipping, storage, and moving. Protective fluting prevents crushing.</p>
-                                        <p class="spec"><strong>Sizes:</strong> A4 to 600x400x400mm | Custom sizes | Single, double & triple wall</p>
-                                        <a href="products/corrugated-boxes.html" class="product-btn">
-                                         View Product
-                                        </a>
-                                    </div>
-                                    <div class="product-item">
-                                        <h3>📦 Industrial Wooden Pallets</h3>
-                                        <p>Heavy-duty pallets for material handling and storage. Pressure-treated for durability.</p>
-                                        <p class="spec"><strong>Sizes:</strong> 1000x1200mm, 1200x1000mm | ISPM-15 certified</p>
-                                        <a href="products/wooden-pallets.html" class="product-btn">
-                                           View Product
-                                        </a>
-                                    </div>
-                                </div>
-                                <button class="product-btn" onclick="contactAbout('Boxes & Pallets')">Inquire Now</button>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="https://wa.me/27836308249?text=Please%20send%20me%20a%20quote%20for%20Stretch%20Film"
-class="btn btn-primary"
-target="_blank">
-Request Quote
-                    </a>
-
-                    <!-- PAGE 4: PPE SAFETY WEAR -->
-                    <div class="flip-page" data-page="5">
-                        <div class="page-content">
-                            <div class="page-inner">
-                                <h2 class="page-title">🛡️ PPE Safety Wear & Protection</h2>
-                                <div class="product-list">
-                                    <div class="product-item">
-                                        <h3>🪖 Safety Hard Hats</h3>
-                                        <p>SANS certified hard hats for construction and industrial head protection.</p>
-                                        <p class="spec"><strong>Colors:</strong> Yellow, White, Orange, Blue | Chin straps available</p>
-                                    </div>
-                                    <div class="product-item">
-                                        <h3>👢 Steel-Toed Safety Boots</h3>
-                                        <p>Professional boots with oil-resistant, slip-resistant soles for industrial work.</p>
-                                        <p class="spec"><strong>Sizes:</strong> Unisex 4-13 | Steel toe & puncture resistant</p>
-                                    </div>
-                                    <div class="product-item">
-                                        <h3>🧤 Protective Work Gloves</h3>
-                                        <p>Durable gloves for hand protection. Cut-resistant, oil-resistant, chemical-resistant.</p>
-                                        <p class="spec"><strong>Types:</strong> Latex, Nitrile, Leather, Kevlar | XS-XXL sizes</p>
-                                    </div>
-                                </div>
-                                <button class="product-btn" onclick="contactAbout('PPE Safety Wear')">Inquire Now</button>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="https://wa.me/27836308249?text=Please%20send%20me%20a%20quote%20for%20Stretch%20Film"
-class="btn btn-primary"
-target="_blank">
-Request Quote
-                    </a>
-
-                    <!-- PAGE 5: BRANDED WORKWEAR -->
-                    <div class="flip-page" data-page="6">
-                        <div class="page-content">
-                            <div class="page-inner">
-                                <h2 class="page-title">👔 Custom Branded Corporate Workwear</h2>
-                                <div class="product-list">
-                                    <div class="product-item">
-                                        <h3>👕 Custom Branded T-Shirts</h3>
-                                        <p>Premium quality t-shirts with company logo embroidery or printing. 100% cotton.</p>
-                                        <p class="spec"><strong>Sizes:</strong> XS-3XL | Custom embroidery & logos</p>
-                                    </div>
-                                    <div class="product-item">
-                                        <h3>👕 Branded Polo Shirts</h3>
-                                        <p>Professional embroidered polos for corporate branding and professional appearance.</p>
-                                        <p class="spec"><strong>Sizes:</strong> XS-3XL | Multiple colors | Short & long sleeve</p>
-                                    </div>
-                                    <div class="product-item">
-                                        <h3>🧥 Branded Jackets & Hoodies</h3>
-                                        <p>Water-resistant, windproof materials for winter wear and outdoor events.</p>
-                                        <p class="spec"><strong>Sizes:</strong> XS-3XL | Various styles & colors</p>
-                                    </div>
-                                </div>
-                                <button class="product-btn" onclick="contactAbout('Branded Workwear')">Inquire Now</button>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="https://wa.me/27836308249?text=Please%20send%20me%20a%20quote%20for%20Stretch%20Film"
-class="btn btn-primary"
-target="_blank">
-Request Quote
-                    </a>
-
-                    <!-- BACK COVER -->
-                    <div class="flip-page back-cover" data-page="7">
-                        <div class="page-content">
-                            <div class="page-inner back-cover-content">
-                                <h2>Get In Touch</h2>
-                                <div class="contact-details">
-                                    <div class="detail">
-                                        <p><strong>📧 Email:</strong></p>
-                                        <p><a href="mailto:info@nexpaksolutions.co.za">
-                                            <p><a href="mailto:info@nexpaksolutions.co.za">info@nexpaksolutions.co.za</a></p>
-                                    </div>
-                                    <div class="detail">
-                                        <p><strong>📱 WhatsApp:</strong></p>
-                                        <p><a href="https://wa.me/27836308249" target="_blank">083 630 8249</a></p>
-                                    </div>
-                                    <div class="detail">
-                                        <p><strong>⏰ Business Hours:</strong></p>
-                                        <p>Monday - Friday: 8:00 AM - 5:00 PM SAST</p>
-                                        <p>Saturday: 9:00 AM - 1:00 PM SAST</p>
-                                    </div>
-                                </div>
-                                <div class="download-section">
-                                    <p>Download our full catalogue:</p>
-                                    <a href="catalogue.pdf">
-                                        📥 Download Catalogue
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Mobile Swipe Instructions -->
-            <div class="mobile-instructions">
-                <p>💡 Tip: Swipe left or right to navigate through pages</p>
-            </div>
-        </div>
-    </section>
-<section class="bulk-pricing">
-    <h2>Why Buy From Nexpak Solutions?</h2>
-
-    <ul>
-        <li>✓ Competitive wholesale pricing</li>
-        <li>✓ Fast Johannesburg & Gauteng delivery</li>
-        <li>✓ Bulk order discounts</li>
-        <li>✓ Custom manufacturing available</li>
-        <li>✓ Dedicated account support</li>
-        <li>✓ Quality guaranteed products</li>
-    </ul>
+<section class="hero">
+  <h1>Product Catalogue</h1>
+  <p>Premium packaging solutions across South Africa</p>
 </section>
-    <!-- CONTACT CTA SECTION -->
-    <section class="contact-cta" id="contact-cta">
-        <div class="container">
-            <h2>Ready to Order?</h2>
-            <p>Contact us today for wholesale pricing and bulk orders</p>
-            <div class="cta-buttons">
-                <a href="https://wa.me/27836308249?text=I%20would%20like%20to%20place%20an%20order" class="btn btn-primary" target="_blank">
-                    📱 Chat on WhatsApp
-                </a>
-                <a href="mailto:info@nexpaksolutions.co.za" class="btn btn-secondary">
-                    <p><a href="mailto:info@nexpaksolutions.co.za">info@nexpaksolutions.co.za</a></p>
-                    📧 Send Email
-                </a>
-                <a href="index.html" class="btn btn-tertiary">
-                    ← Back to Home
-                </a>
-            </div>
-        </div>
-    </section>
 
-    <!-- FOOTER -->
-    <footer>
-        <p>&copy; 2024-2026 Nexpak Solutions PTY Ltd. All rights reserved.</p>
-        <p>Your trusted partner for quality packaging supplies and personal protective equipment solutions</p>
-    </footer>
+<div class="container">
 
-    <script src="catalogue-script.js"></script>
+  <div class="card">
+    <h2>📖 Interactive Catalogue</h2>
+    <p>Browse our full range of packaging products.</p>
+
+    <a href="catalogue.pdf" class="btn primary" target="_blank">View Catalogue</a>
+    <a href="catalogue.pdf" class="btn accent" download>Download PDF</a>
+  </div>
+
+  <div class="card">
+    <h2>Ready to Order?</h2>
+    <p>Get wholesale pricing and bulk order support instantly.</p>
+
+    <a href="quote.html" class="btn primary">Request Quote</a>
+    <a href="https://wa.me/27YOURNUMBER" class="btn accent">WhatsApp Us</a>
+  </div>
+
+  <div class="card">
+    <h2>Why Buy From Nexpak</h2>
+
+    <div class="grid">
+      <div>✓ Competitive pricing</div>
+      <div>✓ Fast delivery</div>
+      <div>✓ Bulk discounts</div>
+      <div>✓ Reliable supply</div>
+      <div>✓ Quality guaranteed</div>
+      <div>✓ Account support</div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  © 2024-2026 Nexpak Solutions PTY Ltd
+</footer>
+
 </body>
 </html>
