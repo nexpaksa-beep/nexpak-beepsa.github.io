@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Request a Quote | Nexpak Solutions</title>
+
+<style>
+:root{
+  --primary:#2563eb;
+  --dark:#0f172a;
+  --light:#f8fafc;
+  --accent:#f59e0b;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:var(--light);
+}
+
+.hero{
+  background:linear-gradient(135deg,var(--dark),var(--primary));
+  color:white;
+  text-align:center;
+  padding:60px 20px;
+}
+
+.container{
+  max-width:800px;
+  margin:40px auto;
+  padding:20px;
+}
+
+.card{
+  background:white;
+  padding:25px;
+  border-radius:10px;
+  border:1px solid #e5e7eb;
+}
+
+input, textarea{
+  width:100%;
+  padding:12px;
+  margin-bottom:15px;
+  border:1px solid #d1d5db;
+  border-radius:6px;
+  box-sizing:border-box;
+}
+
+button{
+  background:var(--primary);
+  color:white;
+  border:none;
+  padding:12px 20px;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#1d4ed8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="hero">
+  <h1>Request a Quote</h1>
+  <p>Tell us what packaging products you need and we'll get back to you.</p>
+</div>
+
+<div class="container">
+  <div class="card">
+
+    <form>
+
+      <input type="text" id="product" name="product" placeholder="Product Interested In">
+
+      <input type="text" name="name" placeholder="Your Name" required>
+
+      <input type="email" name="email" placeholder="Email Address" required>
+
+      <input type="text" name="phone" placeholder="Phone Number">
+
+      <textarea name="message" rows="5" placeholder="Quantity, specifications or requirements"></textarea>
+
+      <button type="submit">Request Quote</button>
+
+    </form>
+
+  </div>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const product = params.get("product");
+
+if(product){
+  document.getElementById("product").value = product;
+}
+</script>
+
+</body>
+</html>
