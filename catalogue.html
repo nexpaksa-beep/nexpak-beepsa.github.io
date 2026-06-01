@@ -216,5 +216,12 @@ WhatsApp Us
   © 2024-2026 Nexpak Solutions PTY Ltd
 </footer>
 
-</body>
+</body><script>
+const params = new URLSearchParams(window.location.search);
+const product = params.get("product");
+
+if(product){
+  document.getElementById("product").value = product;
+}
+</script>
 </html>
