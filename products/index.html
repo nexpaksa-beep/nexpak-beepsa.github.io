@@ -1,9 +1,64 @@
 <h1>Our Products</h1>
+<p>Complete packaging solutions for warehousing, logistics, and industrial use.</p>
 
-<ul>
-  <li><a href="bubble-wrap.html">Bubble Wrap</a></li>
-  <li><a href="corrugated-boxes.html">Corrugated Boxes</a></li>
-  <li><a href="hard-hats.html">Hard Hats</a></li>
-  <li><a href="packaging-tapes.html">Packaging Tapes</a></li>
-  <li><a href="shrink-wraps.html">Shrink Wraps</a></li>
-</ul>
+<div class="product-grid">
+
+  <div class="product-card">
+    <h3>Bubble Wrap</h3>
+    <p>Protect fragile goods during transport and storage.</p>
+    <a href="bubble-wrap.html">View Product</a>
+  </div>
+
+  <div class="product-card">
+    <h3>Corrugated Boxes</h3>
+    <p>Strong, durable cartons for shipping and storage.</p>
+    <a href="corrugated-boxes.html">View Product</a>
+  </div>
+
+  <div class="product-card">
+    <h3>Packaging Tapes</h3>
+    <p>Secure sealing solutions for all packaging needs.</p>
+    <a href="packaging-tapes.html">View Product</a>
+  </div>
+
+  <div class="product-card">
+    <h3>Shrink Wrap</h3>
+    <p>High-strength film for pallet and product protection.</p>
+    <a href="shrink-wraps.html">View Product</a>
+  </div>
+
+</div>
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.product-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: 0.3s;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-card h3 {
+  color: #2563eb;
+}
+
+.product-card a {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 15px;
+  background: #f59e0b;
+  color: black;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+}
