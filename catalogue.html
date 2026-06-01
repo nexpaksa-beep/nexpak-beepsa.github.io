@@ -4,12 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Products | Nexpak Solutions</title>
+<title>Catalogue | Nexpak Solutions</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-
 :root {
   --primary:#2563eb;
   --dark:#0f172a;
@@ -24,7 +23,7 @@ body {
   color:#1f2937;
 }
 
-/* NAV */
+/* HEADER */
 header {
   background:var(--dark);
   color:white;
@@ -35,349 +34,200 @@ header {
   flex-wrap:wrap;
 }
 
-.logo {
-  font-weight:700;
-  font-size:18px;
-}
-
 nav a {
   color:white;
   text-decoration:none;
   margin-left:15px;
-  font-weight:500;
 }
 
-nav a:hover {
-  color:var(--accent);
+/* FLIPBOOK */
+#flipBook {
+  max-width:900px;
+  margin:40px auto;
+  position:relative;
 }
 
-/* HERO */
-.hero {
-  background:linear-gradient(rgba(15,23,42,0.75), rgba(37,99,235,0.75)),
-             url('warehousestock.jpeg');
-  background-size:cover;
-  background-position:center;
-  color:white;
-  text-align:center;
-  padding:80px 20px;
+/* PAGES */
+.flip-page {
+  display:none;
+  background:white;
+  padding:40px;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  min-height:400px;
+  transition: all 0.6s ease;
 }
 
-.hero h1 {
-  font-size:42px;
-  margin-bottom:10px;
+.flip-page.active {
+  display:block;
 }
 
-.hero p {
-  opacity:0.9;
+/* PRODUCT BOX */
+.product-box {
+  background:#f1f5f9;
+  padding:15px;
+  margin:10px 0;
+  border-radius:8px;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.product-box:hover {
+  background:#e2e8f0;
 }
 
 /* BUTTONS */
-.btn {
-  display:inline-block;
-  padding:10px 16px;
-  border-radius:6px;
-  font-weight:600;
-  text-decoration:none;
-  margin:5px;
-}
-
-.btn.primary {
+button {
   background:var(--primary);
   color:white;
-}
-
-.btn.accent {
-  background:var(--accent);
-  color:#111;
-}
-
-/* SECTION */
-.section {
-  max-width:1100px;
-  margin:auto;
-  padding:40px 20px;
-}
-
-/* CATEGORY TITLE */
-.category-title {
-  font-size:22px;
-  margin:30px 0 15px;
-  color:var(--dark);
-  font-weight:700;
-}
-
-/* PRODUCT GRID */
-.product-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
-  gap:20px;
-}
-
-/* PRODUCT CARD */
-.product-card {
-  background:white;
-  border-radius:12px;
-  border:1px solid #e5e7eb;
-  overflow:hidden;
-  transition:0.3s;
-  padding-bottom:10px;
-}
-
-.product-card:hover {
-  transform:translateY(-5px);
-  box-shadow:0 10px 25px rgba(0,0,0,0.1);
-}
-
-.product-card img {
-  width:100%;
-  height:160px;
-  object-fit:cover;
-}
-
-.product-card h3 {
-  margin:10px;
-}
-
-.product-card p {
-  margin:0 10px 10px;
-  font-size:14px;
-  opacity:0.8;
-}
-
-/* FOOTER */
-footer {
-  background:var(--dark);
-  color:white;
-  text-align:center;
-  padding:30px;
-  margin-top:40px;
-}
-
-/* STICKY WHATSAPP */
-.sticky-wa {
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#25D366;
-  color:white;
-  padding:14px 18px;
-  border-radius:50px;
-  font-weight:700;
-  text-decoration:none;
-  z-index:999;
-}
-
-/* QUOTE SECTION */
-.quote-box {
-  text-align:center;
-  margin:30px 0;
-}
-
-.quote-btn {
-  background:var(--primary);
-  color:white;
-  padding:12px 18px;
   border:none;
-  border-radius:8px;
-  font-weight:600;
+  padding:10px 16px;
+  margin:10px 5px;
+  border-radius:6px;
   cursor:pointer;
 }
 
-/* MOBILE */
-@media (max-width:768px) {
-  header {
-    flex-direction:column;
-    text-align:center;
-  }
-
-  nav {
-    margin-top:10px;
-  }
-
-  nav a {
-    display:inline-block;
-    margin:5px;
-  }
-
-  .hero h1 {
-    font-size:28px;
-  }
+button:hover {
+  opacity:0.9;
 }
 
+/* WHATSAPP */
+.whatsapp-btn {
+  position:fixed;
+  bottom:25px;
+  right:25px;
+  background:#25d366;
+  color:white;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  text-decoration:none;
+}
 </style>
-
 </head>
 
 <body>
 
-<!-- NAV -->
+<!-- HEADER -->
 <header>
-  <div class="logo">Nexpak Solutions</div>
-
+  <div><strong>Nexpak Catalogue</strong></div>
   <nav>
     <a href="index.html">Home</a>
-    <a href="aboutus.html">About Us</a>
-    <a href="catalogue.html">Products</a>
+    <a href="catalogue.html">Catalogue</a>
     <a href="pricelist.html">Price List</a>
-    <a href="contact.html">Contact</a>
   </nav>
 </header>
 
-<!-- HERO -->
-<section class="hero">
-  <h1>Our Products</h1>
-  <p>Complete packaging solutions for warehousing and logistics</p>
+<!-- FLIPBOOK -->
+<div id="flipBook">
 
-  <a href="catalogue.pdf" target="_blank" class="btn primary">View Catalogue</a>
-  <a href="catalogue.pdf" download class="btn accent">Download Catalogue</a>
-</section>
-
-<!-- PRODUCTS -->
-<div class="section">
-
-  <!-- WRAP CATEGORY -->
-  <div class="category-title">Stretch & Wrap</div>
-
-  <div class="product-grid">
-
-    <div class="product-card">
-      <img src="images/palletwrap.png">
-      <h3>Pallet Wrap</h3>
-      <p>Strong stretch film for pallet securing.</p>
-
-      <a href="pricelist.html?product=pallet-wrap" class="btn primary">Price List</a>
-
-      <a class="btn accent wa-btn" data-product="Pallet Wrap">💬 WhatsApp Quote</a>
-    </div>
-
-    <div class="product-card">
-      <img src="images/pallet.jpg">
-      <h3>Pallet Film</h3>
-      <p>Industrial wrapping solution for logistics.</p>
-
-      <a href="pricelist.html?product=pallet-film" class="btn primary">Price List</a>
-
-      <a class="btn accent wa-btn" data-product="Pallet Film">💬 WhatsApp Quote</a>
-    </div>
-
+  <!-- PAGE 1 -->
+  <div class="flip-page active" data-page="1">
+    <h1>Welcome to Nexpak</h1>
+    <p>Premium Packaging Solutions</p>
+    <button onclick="nextPage()">Start</button>
   </div>
 
-  <!-- TAPE CATEGORY -->
-  <div class="category-title">Tapes</div>
+  <!-- PAGE 2 -->
+  <div class="flip-page" data-page="2">
+    <h2>Stretch & Wrap</h2>
 
-  <div class="product-grid">
-
-    <div class="product-card">
-      <img src="images/ducttape.png">
-      <h3>Duct Tape</h3>
-      <p>Heavy duty adhesive tape for industrial use.</p>
-
-      <a href="pricelist.html?product=duct-tape" class="btn primary">Price List</a>
-
-      <a class="btn accent wa-btn" data-product="Duct Tape">💬 WhatsApp Quote</a>
+    <div class="product-box" onclick="contactAbout('Pallet Wrap')">
+      📦 Pallet Wrap – WhatsApp Quote
     </div>
 
-    <div class="product-card">
-      <img src="images/packagingtape.jpg">
-      <h3>Packaging Tape</h3>
-      <p>General carton sealing tape.</p>
-
-      <a href="pricelist.html?product=packaging-tape" class="btn primary">Price List</a>
-
-      <a class="btn accent wa-btn" data-product="Packaging Tape">💬 WhatsApp Quote</a>
+    <div class="product-box" onclick="contactAbout('Stretch Film')">
+      📦 Stretch Film – WhatsApp Quote
     </div>
 
-    <div class="product-card">
-      <img src="images/pvctape.jpeg">
-      <h3>PVC Tape</h3>
-      <p>Strong insulation and sealing tape.</p>
-
-      <a href="pricelist.html?product=pvc-tape" class="btn primary">Price List</a>
-
-      <a class="btn accent wa-btn" data-product="PVC Tape">💬 WhatsApp Quote</a>
-    </div>
-
+    <button onclick="previousPage()">Back</button>
+    <button onclick="nextPage()">Next</button>
   </div>
 
-  <!-- PROTECTIVE CATEGORY -->
-  <div class="category-title">Protective Packaging</div>
+  <!-- PAGE 3 -->
+  <div class="flip-page" data-page="3">
+    <h2>Tapes</h2>
 
-  <div class="product-grid">
-
-    <div class="product-card">
-      <img src="images/bubble2.jpg">
-      <h3>Bubble Wrap</h3>
-      <p>Protect fragile goods during transport.</p>
-
-      <a href="pricelist.html?product=bubble-wrap" class="btn primary">Price List</a>
-
-      <a class="btn accent wa-btn" data-product="Bubble Wrap">💬 WhatsApp Quote</a>
+    <div class="product-box" onclick="contactAbout('Packaging Tape')">
+      📦 Packaging Tape – WhatsApp Quote
     </div>
 
-    <div class="product-card">
-      <img src="images/honeycomb.jpeg">
-      <h3>Honeycomb Wrap</h3>
-      <p>Eco-friendly protective packaging.</p>
-
-      <a href="pricelist.html?product=honeycomb" class="btn primary">Price List</a>
-
-      <a class="btn accent wa-btn" data-product="Honeycomb Wrap">💬 WhatsApp Quote</a>
+    <div class="product-box" onclick="contactAbout('Duct Tape')">
+      📦 Duct Tape – WhatsApp Quote
     </div>
 
+    <button onclick="previousPage()">Back</button>
+    <button onclick="nextPage()">Next</button>
   </div>
 
-  <!-- QUOTE BUTTON -->
-  <div class="quote-box">
-    <button class="quote-btn" onclick="sendQuote()">
-      📦 Send Selected Quote on WhatsApp
+  <!-- PAGE 4 -->
+  <div class="flip-page" data-page="4">
+    <h2>Protective Packaging</h2>
+
+    <div class="product-box" onclick="contactAbout('Bubble Wrap')">
+      📦 Bubble Wrap – WhatsApp Quote
+    </div>
+
+    <div class="product-box" onclick="contactAbout('Honeycomb Wrap')">
+      📦 Honeycomb Wrap – WhatsApp Quote
+    </div>
+
+    <button onclick="previousPage()">Back</button>
+    <button onclick="nextPage()">Next</button>
+  </div>
+
+  <!-- PAGE 5 -->
+  <div class="flip-page" data-page="5">
+    <h2>Bulk Orders</h2>
+    <p>We respond fast on WhatsApp</p>
+
+    <button onclick="contactAbout('Bulk Quote Request')">
+      💬 Request Full Quote
     </button>
+
+    <button onclick="previousPage()">Back</button>
   </div>
 
 </div>
 
-<!-- STICKY WHATSAPP -->
-<a href="https://wa.me/27836308249" class="sticky-wa" target="_blank">
-💬 WhatsApp
+<!-- WHATSAPP BUTTON -->
+<a class="whatsapp-btn" href="https://wa.me/27836308249" target="_blank">
+💬
 </a>
-
-<!-- FOOTER -->
-<footer>
-  © 2024-2026 Nexpak Solutions PTY Ltd
-</footer>
 
 <!-- SCRIPT -->
 <script>
-const phone = "27836308249";
+let currentPage = 1;
+const totalPages = 5;
 
-/* SINGLE PRODUCT */
-document.querySelectorAll(".wa-btn").forEach(button => {
-  button.addEventListener("click", function () {
-    const product = this.getAttribute("data-product");
-    const message = `Hi Nexpak, I am interested in ${product} and would like a quote.`;
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
-  });
-});
+function showPage(page) {
+  const pages = document.querySelectorAll('.flip-page');
 
-/* MULTI PRODUCT */
-function sendQuote() {
-  let selected = [];
+  pages.forEach(p => p.classList.remove('active'));
 
-  document.querySelectorAll(".quote-item input:checked").forEach(item => {
-    selected.push(item.getAttribute("data-product"));
-  });
+  const active = document.querySelector(`[data-page="${page}"]`);
+  if (active) active.classList.add('active');
 
-  if(selected.length === 0) {
-    alert("Please select products first.");
-    return;
-  }
+  currentPage = page;
+}
 
-  let message = "Hi Nexpak, I would like a quote for:\n\n";
+function nextPage() {
+  if (currentPage < totalPages) showPage(currentPage + 1);
+}
 
-  selected.forEach(p => message += "• " + p + "\n");
+function previousPage() {
+  if (currentPage > 1) showPage(currentPage - 1);
+}
 
-  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
+function contactAbout(product) {
+  const message = `Hi Nexpak, I am interested in ${product}. Please send me a quote.`;
+  window.open(`https://wa.me/27836308249?text=${encodeURIComponent(message)}`, "_blank");
 }
 </script>
 
 </body>
-      </html>
+</html>
