@@ -120,6 +120,7 @@ nav a:hover {
   border:1px solid #e5e7eb;
   overflow:hidden;
   transition:0.3s;
+  padding-bottom:10px;
 }
 
 .product-card:hover {
@@ -150,6 +151,36 @@ footer {
   text-align:center;
   padding:30px;
   margin-top:40px;
+}
+
+/* STICKY WHATSAPP */
+.sticky-wa {
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25D366;
+  color:white;
+  padding:14px 18px;
+  border-radius:50px;
+  font-weight:700;
+  text-decoration:none;
+  z-index:999;
+}
+
+/* QUOTE SECTION */
+.quote-box {
+  text-align:center;
+  margin:30px 0;
+}
+
+.quote-btn {
+  background:var(--primary);
+  color:white;
+  padding:12px 18px;
+  border:none;
+  border-radius:8px;
+  font-weight:600;
+  cursor:pointer;
 }
 
 /* MOBILE */
@@ -216,9 +247,7 @@ footer {
 
       <a href="pricelist.html?product=pallet-wrap" class="btn primary">Price List</a>
 
-      <a class="btn accent wa-btn" data-product="Pallet Wrap">
-        💬 WhatsApp Quote
-      </a>
+      <a class="btn accent wa-btn" data-product="Pallet Wrap">💬 WhatsApp Quote</a>
     </div>
 
     <div class="product-card">
@@ -228,9 +257,7 @@ footer {
 
       <a href="pricelist.html?product=pallet-film" class="btn primary">Price List</a>
 
-      <a class="btn accent wa-btn" data-product="Pallet Film">
-        💬 WhatsApp Quote
-      </a>
+      <a class="btn accent wa-btn" data-product="Pallet Film">💬 WhatsApp Quote</a>
     </div>
 
   </div>
@@ -247,9 +274,7 @@ footer {
 
       <a href="pricelist.html?product=duct-tape" class="btn primary">Price List</a>
 
-      <a class="btn accent wa-btn" data-product="Duct Tape">
-        💬 WhatsApp Quote
-      </a>
+      <a class="btn accent wa-btn" data-product="Duct Tape">💬 WhatsApp Quote</a>
     </div>
 
     <div class="product-card">
@@ -259,9 +284,7 @@ footer {
 
       <a href="pricelist.html?product=packaging-tape" class="btn primary">Price List</a>
 
-      <a class="btn accent wa-btn" data-product="Packaging Tape">
-        💬 WhatsApp Quote
-      </a>
+      <a class="btn accent wa-btn" data-product="Packaging Tape">💬 WhatsApp Quote</a>
     </div>
 
     <div class="product-card">
@@ -271,9 +294,7 @@ footer {
 
       <a href="pricelist.html?product=pvc-tape" class="btn primary">Price List</a>
 
-      <a class="btn accent wa-btn" data-product="PVC Tape">
-        💬 WhatsApp Quote
-      </a>
+      <a class="btn accent wa-btn" data-product="PVC Tape">💬 WhatsApp Quote</a>
     </div>
 
   </div>
@@ -290,9 +311,7 @@ footer {
 
       <a href="pricelist.html?product=bubble-wrap" class="btn primary">Price List</a>
 
-      <a class="btn accent wa-btn" data-product="Bubble Wrap">
-        💬 WhatsApp Quote
-      </a>
+      <a class="btn accent wa-btn" data-product="Bubble Wrap">💬 WhatsApp Quote</a>
     </div>
 
     <div class="product-card">
@@ -302,37 +321,63 @@ footer {
 
       <a href="pricelist.html?product=honeycomb" class="btn primary">Price List</a>
 
-      <a class="btn accent wa-btn" data-product="Honeycomb Wrap">
-        💬 WhatsApp Quote
-      </a>
+      <a class="btn accent wa-btn" data-product="Honeycomb Wrap">💬 WhatsApp Quote</a>
     </div>
 
   </div>
 
+  <!-- QUOTE BUTTON -->
+  <div class="quote-box">
+    <button class="quote-btn" onclick="sendQuote()">
+      📦 Send Selected Quote on WhatsApp
+    </button>
+  </div>
+
 </div>
+
+<!-- STICKY WHATSAPP -->
+<a href="https://wa.me/27836308249" class="sticky-wa" target="_blank">
+💬 WhatsApp
+</a>
 
 <!-- FOOTER -->
 <footer>
   © 2024-2026 Nexpak Solutions PTY Ltd
 </footer>
 
-<!-- WHATSAPP DYNAMIC SCRIPT -->
+<!-- SCRIPT -->
 <script>
 const phone = "27836308249";
 
+/* SINGLE PRODUCT */
 document.querySelectorAll(".wa-btn").forEach(button => {
   button.addEventListener("click", function () {
-
     const product = this.getAttribute("data-product");
-
     const message = `Hi Nexpak, I am interested in ${product} and would like a quote.`;
-
-    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-
-    window.open(url, "_blank");
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
   });
 });
+
+/* MULTI PRODUCT */
+function sendQuote() {
+  let selected = [];
+
+  document.querySelectorAll(".quote-item input:checked").forEach(item => {
+    selected.push(item.getAttribute("data-product"));
+  });
+
+  if(selected.length === 0) {
+    alert("Please select products first.");
+    return;
+  }
+
+  let message = "Hi Nexpak, I would like a quote for:\n\n";
+
+  selected.forEach(p => message += "• " + p + "\n");
+
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
+}
 </script>
 
 </body>
-  </html>
+      </html>
