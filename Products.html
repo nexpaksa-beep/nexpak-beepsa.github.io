@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nexpak Solutions | Products</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --primary:#2563eb;
+    --dark:#0f172a;
+    --light:#f8fafc;
+    --accent:#f59e0b;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+    background:var(--light);
+}
+
+/* HEADER */
+
+header{
+    background:var(--dark);
+    color:white;
+    padding:15px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:22px;
+    font-weight:700;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin-left:20px;
+}
+
+nav a:hover{
+    color:var(--accent);
+}
+
+/* HERO */
+
+.hero{
+    background:
+    linear-gradient(rgba(15,23,42,.8),rgba(37,99,235,.8)),
+    url('warehouse3.jpeg');
+
+    background-size:cover;
+    background-position:center;
+
+    color:white;
+    text-align:center;
+    padding:100px 20px;
+}
+
+.hero h1{
+    font-size:48px;
+    margin-bottom:10px;
+}
+
+.hero p{
+    font-size:18px;
+}
+
+/* PRODUCTS */
+
+.products{
+    max-width:1200px;
+    margin:auto;
+    padding:50px 20px;
+}
+
+.product-card{
+    background:white;
+    margin-bottom:40px;
+    border-radius:12px;
+    overflow:hidden;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.product-card img{
+    width:100%;
+    height:400px;
+    object-fit:cover;
+}
+
+.product-content{
+    padding:25px;
+}
+
+.product-content h2{
+    color:var(--primary);
+    margin-bottom:10px;
+}
+
+.product-content p{
+    line-height:1.8;
+    color:#444;
+}
+
+.quote-btn{
+    display:inline-block;
+    margin-top:20px;
+    background:#25D366;
+    color:white;
+    text-decoration:none;
+    padding:12px 20px;
+    border-radius:8px;
+    font-weight:600;
+}
+
+.quote-btn:hover{
+    opacity:.9;
+}
+
+/* FLOATING WHATSAPP */
+
+.float-wa{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#25D366;
+    color:white;
+    text-decoration:none;
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:28px;
+    box-shadow:0 5px 20px rgba(0,0,0,.3);
+}
+
+/* FOOTER */
+
+footer{
+    background:var(--dark);
+    color:white;
+    text-align:center;
+    padding:30px;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.hero h1{
+font-size:34px;
+}
+
+.product-card img{
+height:250px;
+}
+
+header{
+flex-direction:column;
+}
+
+nav{
+margin-top:10px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">Nexpak Solutions</div>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="aboutus.html">About</a>
+<a href="Products.html">Products</a>
+<a href="contact.html">Contact</a>
+</nav>
+
+</header>
+
+<section class="hero">
+
+<h1>Our Product Range</h1>
+
+<p>
+Industrial Packaging Solutions For Warehousing,
+Logistics, Manufacturing & Retail.
+</p>
+
+</section>
+
+<div class="products">
+
+<!-- BUBBLE WRAP -->
+
+<div class="product-card">
+
+<img src="bobble.jpeg" alt="Bubble Wrap">
+
+<div class="product-content">
+
+<h2>Bubble Wrap</h2>
+
+<p>
+Premium protective bubble wrap used for protecting fragile goods during transport,
+shipping and storage. Available in standard, anti-static and kraft-backed options.
+Ideal for warehousing, logistics and ecommerce operations.
+</p>
+
+<a class="quote-btn"
+href="https://wa.me/27836308249?text=Quote%20for%20Bubble%20Wrap">
+Request Quote
+</a>
+
+</div>
+</div>
+
+<!-- PALLET WRAP -->
+
+<div class="product-card">
+
+<img src="pallet.jpeg" alt="Pallet Wrap">
+
+<div class="product-content">
+
+<h2>Pallet Wrap</h2>
+
+<p>
+High-performance stretch film available in hand rolls,
+extended core rolls and machine rolls.
+Provides maximum load stability and protection during transport.
+</p>
+
+<a class="quote-btn"
+href="https://wa.me/27836308249?text=Quote%20for%20Pallet%20Wrap">
+Request Quote
+</a>
+
+</div>
+</div>
+
+<!-- STRAPPING -->
+
+<div class="product-card">
+
+<img src="strap.jpeg">
+
+<div class="product-content">
+
+<h2>Strapping Products</h2>
+
+<p>
+Polypropylene and polyester strapping solutions
+for securing cartons, pallets and industrial loads.
+Available with seals, buckles and tensioning tools.
+</p>
+
+<a class="quote-btn"
+href="https://wa.me/27836308249?text=Quote%20for%20Strapping">
+Request Quote
+</a>
+
+</div>
+</div>
+
+<!-- TVL -->
+
+<div class="product-card">
+
+<img src="tvl.jpeg">
+
+<div class="product-content">
+
+<h2>TVL Stock Boxes</h2>
+
+<p>
+Heavy-duty transit and logistics boxes manufactured
+for warehousing, ecommerce and courier distribution.
+Available in multiple standard sizes.
+</p>
+
+<a class="quote-btn"
+href="https://wa.me/27836308249?text=Quote%20for%20TVL%20Boxes">
+Request Quote
+</a>
+
+</div>
+</div>
+
+<!-- SWB -->
+
+<div class="product-card">
+
+<img src="slb.jpeg">
+
+<div class="product-content">
+
+<h2>Single Wall Board Boxes</h2>
+
+<p>
+Cost-effective carton solutions suitable for retail,
+storage and light industrial packaging applications.
+</p>
+
+<a class="quote-btn"
+href="https://wa.me/27836308249?text=Quote%20for%20SWB%20Boxes">
+Request Quote
+</a>
+
+</div>
+</div>
+
+<!-- DWB -->
+
+<div class="product-card">
+
+<img src="dlb.jpeg">
+
+<div class="product-content">
+
+<h2>Double Wall Board Boxes</h2>
+
+<p>
+Heavy-duty corrugated cartons designed for industrial
+and export packaging where additional strength is required.
+</p>
+
+<a class="quote-btn"
+href="https://wa.me/27836308249?text=Quote%20for%20DWB%20Boxes">
+Request Quote
+</a>
+
+</div>
+</div>
+
+<!-- TAPES -->
+
+<div class="product-card">
+
+<img src="tape.jpeg">
+
+<div class="product-content">
+
+<h2>Packaging Tapes</h2>
+
+<p>
+Buff tape, clear tape, masking tape,
+duct tape, filament tape, printed tapes,
+warning tapes and custom branded tape solutions.
+</p>
+
+<a class="quote-btn"
+href="https://wa.me/27836308249?text=Quote%20for%20Packaging%20Tape">
+Request Quote
+</a>
+
+</div>
+</div>
+
+<!-- FIRE SEALS -->
+
+<div class="product-card">
+
+<img src="seal.jpeg">
+
+<div class="product-content">
+
+<h2>Fire & Security Seals</h2>
+
+<p>
+Tamper-evident seals for fire extinguishers,
+logistics operations, warehouses and transport security.
+</p>
+
+<a class="quote-btn"
+href="https://wa.me/27836308249?text=Quote%20for%20Fire%20Seals">
+Request Quote
+</a>
+
+</div>
+</div>
+
+<!-- PPE -->
+
+<div class="product-card">
+
+<img src="ppe.jpeg">
+
+<div class="product-content">
+
+<h2>PPE Safety Wear</h2>
+
+<p>
+Safety boots, gloves, reflective jackets,
+hard hats, goggles and workplace safety equipment
+for industrial environments.
+</p>
+
+<a class="quote-btn"
+href="https://wa.me/27836308249?text=Quote%20for%20PPE">
+Request Quote
+</a>
+
+</div>
+</div>
+
+<!-- CUSTOM BRANDING -->
+
+<div class="product-card">
+
+<img src="branding.jpeg">
+
+<div class="product-content">
+
+<h2>Custom Branded Packaging</h2>
+
+<p>
+Custom printed cartons, branded tape,
+labels, shrink sleeves and promotional packaging
+tailored to your company requirements.
+</p>
+
+<a class="quote-btn"
+href="https://wa.me/27836308249?text=Quote%20for%20Custom%20Branding">
+Request Quote
+</a>
+
+</div>
+</div>
+
+</div>
+
+<footer>
+
+© 2026 Nexpak Solutions PTY Ltd<br>
+Free Delivery On Orders Over R5000
+
+</footer>
+
+<a class="float-wa"
+href="https://wa.me/27836308249"
+target="_blank">
+💬
+</a>
+
+</body>
+  </html>
