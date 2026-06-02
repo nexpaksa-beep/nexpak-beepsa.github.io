@@ -108,7 +108,7 @@ footer {
     <div>
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
-        <a href="catalogue.html">Products</a>
+        <a href="Products.html">Products</a>
         <a href="products1.html">Price List</a>
         <a href="contact.html">Contact</a>
     </div>
@@ -120,23 +120,15 @@ footer {
     <p>No fixed prices shown — get instant wholesale quote</p>
 </section><nav>
   <a href="index.html">Home</a>
-  <a href="products1.html">Products</a>
-  <a href="pricelist.html">Price List</a>
+  <a href="Products.html">Products</a>
+  <a href="products1.html">Price List</a>
 </nav>
-    
-
-<!-- PPE -->
-<div class="price-category">
-    <h2>PPE & Safety Workwear</h2>
-    <p>Safety gear and industrial protection.</p>
-    <button class="btn btn-wa wa-btn" data-product="PPE Workwear">WhatsApp Quote</button>
-</div>
 
 <!-- CTA -->
 <div class="price-category" style="text-align:center;">
-    <h2>Need Full Pricing Sheet?</h2>
-    <p>We’ll send full wholesale catalogue instantly</p>
-    <a class="btn btn-primary" href="catalogue.pdf" target="_blank">View Catalogue</a>
+    <h2>Dont find it here? we will source it.</h2>
+    <p>Request a quote</p>
+    <a class="btn btn-primary" href="pricelist.html" target="_blank">View Catalogue</a>
 </div>
 
 <!-- WHATSAPP FLOAT -->
@@ -159,7 +151,7 @@ document.querySelectorAll(".wa-btn").forEach(btn => {
 
 /* floating button */
 document.querySelector(".wa-global").addEventListener("click", () => {
-    const msg = "Hi Nexpak, I need a full price list / wholesale quote.";
+    const msg = "Hi Nexpak, I need a full price list.";
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
 });
 </script>
