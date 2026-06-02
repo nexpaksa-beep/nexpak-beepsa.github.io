@@ -204,6 +204,35 @@
   </div>
 
 </div>
+<script>
 
+function sendWhatsApp() {
+
+  let name = document.getElementById("name").value;
+  let email = document.getElementById("email").value;
+  let phone = document.getElementById("phone").value;
+  let message = document.getElementById("message").value;
+
+  let whatsappMessage =
+`New Website Enquiry
+
+Name: ${name}
+
+Email: ${email}
+
+Phone: ${phone}
+
+Message:
+${message}`;
+
+  window.open(
+    "https://wa.me/27836308249?text=" +
+    encodeURIComponent(whatsappMessage),
+    "_blank"
+  );
+
+}
+
+</script>
 </body>
 </html>
