@@ -1,1 +1,58 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRM System</title>
+
+<style>
+body {
+    font-family:Arial;
+    background:#0f172a;
+    color:white;
+    padding:20px;
+}
+
+.box {
+    background:#1f2937;
+    padding:15px;
+    border-radius:10px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🧠 CRM SYSTEM</h1>
+
+<div class="box">
+    <h3>Latest Quote from Catalogue</h3>
+    <div id="deal"></div>
+</div>
+
+<script>
+
+let deal = JSON.parse(localStorage.getItem("latestDeal"));
+
+if(deal && deal.items.length > 0){
+
+    let html = "";
+    deal.items.forEach(i=>{
+        html += "• " + i.name + " - R" + i.price + "<br>";
+    });
+
+    document.getElementById("deal").innerHTML = `
+        <p><b>Date:</b> ${deal.date}</p>
+        <p><b>Items:</b><br>${html}</p>
+        <p style="color:#25D366;">Status: NEW LEAD</p>
+    `;
+
+} else {
+    document.getElementById("deal").innerHTML =
+    "No recent quotes found.";
+}
+
+</script>
+
+</body>
+</html>
