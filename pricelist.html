@@ -1,283 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Nexpak Solutions | Packaging & PPE</title>
-
-<style>
-body {
-    margin:0;
-    font-family:Inter, sans-serif;
-    background:#f8fafc;
-    color:#1f2937;
-}
-
-/* NAV */
-.navbar {
-    background:#0f172a;
-    color:white;
-    padding:15px 20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    flex-wrap:wrap;
-}
-
-.navbar a {
-    color:white;
-    margin:0 10px;
-    text-decoration:none;
-}
-
-/* HEADER */
-.page-header {
-    text-align:center;
-    padding:60px 20px;
-    background:linear-gradient(135deg,#0f172a,#2563eb);
-    color:white;
-}
-
-/* CTA BOX */
-.price-category {
-    background:white;
-    margin:20px auto;
-    padding:20px;
-    border-radius:10px;
-    max-width:1000px;
-    border:1px solid #e5e7eb;
-    text-align:center;
-}
-
-/* BUTTONS */
-.btn {
-    display:inline-block;
-    padding:10px 16px;
-    border-radius:6px;
-    font-weight:600;
-    text-decoration:none;
-    margin:5px;
-    cursor:pointer;
-}
-
-.btn-primary { background:#2563eb; color:white; }
-.btn-wa { background:#25D366; color:white; }
-
-/* FLOAT */
-.whatsapp-float {
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    background:#25D366;
-    color:white;
-    padding:15px;
-    border-radius:50%;
-    font-size:22px;
-    text-decoration:none;
-}
-
-/* ADMIN PANEL (CRM + QUOTES) */
-#adminPanel {
-    display:none;
-    padding:20px;
-    max-width:1100px;
-    margin:auto;
-}
-
-.admin-box {
-    background:#111827;
-    color:white;
-    padding:20px;
-    border-radius:10px;
-    margin-top:20px;
-}
-
-input, select {
-    width:100%;
-    padding:10px;
-    margin:5px 0;
-    border-radius:5px;
-    border:none;
-}
-
-button {
-    background:#2563eb;
-    color:white;
-    border:none;
-    padding:10px;
-    width:100%;
-    margin-top:10px;
-    cursor:pointer;
-}
-
-.lead {
-    background:#1f2937;
-    padding:10px;
-    margin-top:10px;
-    border-left:4px solid #25D366;
-}
-
-.status {
-    font-size:12px;
-    color:#25D366;
-}
-
-.quote-box {
-    background:#1f2937;
-    padding:10px;
-    margin-top:10px;
-}
-</style>
-</head>
-
-<body>
-
-<!-- NAV -->
-<div class="navbar">
-    <div><b>Nexpak Solutions</b></div>
-    <div>
-        <a href="index.html">Home</a>
-        <a href="#products">Products</a>
-        <a href="#contact">Contact</a>
-        <a href="#admin" onclick="openAdmin()">Admin</a>
-    </div>
-</div>
-
-<!-- HEADER -->
-<section class="page-header">
-    <h1>Packaging & PPE Supplier</h1>
-    <p>Fast quotes • Reliable supply • Gauteng delivery</p>
-</section>
-
-<!-- CTA -->
-<div class="price-category">
-    <h2>Need Pricing?</h2>
-    <p>Get instant WhatsApp quotes</p>
-
-    <a class="btn btn-wa" href="https://wa.me/27836308249">WhatsApp Us</a>
-    <a class="btn btn-primary" href="#admin" onclick="openAdmin()">Open CRM System</a>
-</div>
-
-<!-- FLOAT -->
-<a class="whatsapp-float" href="https://wa.me/27836308249">💬</a>
-
-<!-- ================= ADMIN PANEL ================= -->
-<div id="adminPanel">
-
-    <h2>🧠 CRM + AUTO QUOTE SYSTEM</h2>
-
-    <!-- CRM -->
-    <div class="admin-box">
-        <h3>📊 CRM</h3>
-
-        <input id="name" placeholder="Client Name">
-        <input id="company" placeholder="Company">
-        <input id="contact" placeholder="Contact">
-
-        <button onclick="addLead()">Add Lead</button>
-
-        <div id="leads"></div>
-    </div>
-
-    <!-- QUOTES -->
-    <div class="admin-box">
-        <h3>🧾 Auto Quote</h3>
-
-        <select id="product">
-            <option value="Bubble Wrap|65">Bubble Wrap - R65</option>
-            <option value="Pallet Wrap|720">Pallet Wrap - R720</option>
-            <option value="Boxes|25">Boxes - R25</option>
-        </select>
-
-        <input id="qty" type="number" placeholder="Quantity">
-
-        <button onclick="generateQuote()">Generate Quote</button>
-
-        <div id="quoteResult"></div>
-    </div>
-
-</div>
-
-<script>
-
-let leads = JSON.parse(localStorage.getItem("leads")) || [];
-
-/* OPEN ADMIN */
-function openAdmin() {
-    document.getElementById("adminPanel").style.display = "block";
-    window.scrollTo(0, document.body.scrollHeight);
-}
-
-/* CRM */
-function addLead() {
-    let lead = {
-        name: name.value,
-        company: company.value,
-        contact: contact.value,
-        status: "NEW"
-    };
-
-    leads.push(lead);
-    localStorage.setItem("leads", JSON.stringify(leads));
-    renderLeads();
-}
-
-function renderLeads() {
-    let container = document.getElementById("leads");
-    container.innerHTML = "";
-
-    leads.forEach((l, i) => {
-        container.innerHTML += `
-        <div class="lead">
-            <b>${l.name}</b><br>
-            ${l.company}<br>
-            ${l.contact}<br>
-            <div class="status">${l.status}</div>
-            <button onclick="nextStatus(${i})">Change Status</button>
-        </div>`;
-    });
-}
-
-function nextStatus(i) {
-    let steps = ["NEW","QUOTED","WON","LOST"];
-    let current = leads[i].status;
-    leads[i].status = steps[(steps.indexOf(current)+1)%steps.length];
-
-    localStorage.setItem("leads", JSON.stringify(leads));
-    renderLeads();
-}
-
-/* QUOTES */
-function generateQuote() {
-    let data = product.value.split("|");
-    let total = parseFloat(data[1]) * parseInt(qty.value);
-
-    quoteResult.innerHTML = `
-    <div class="quote-box">
-        <h3>QUOTE</h3>
-        Product: ${data[0]}<br>
-        Total: <b>R${total}</b><br><br>
-
-        <a class="btn btn-wa"
-        href="https://wa.me/27836308249?text=Quote:%20${data[0]}%20Total:%20R${total}">
-        Send Quote on WhatsApp
-        </a>
-    </div>`;
-}
-<!DOCTYPE html>
-<html lang="en">
-<head>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nexpak Catalogue | Mini Shop</title>
+<title>Nexpak Catalogue + Pricing</title>
 
 <style>
 body {
     margin:0;
     font-family:Arial;
     background:#f3f4f6;
-    color:#111;
 }
 
 /* NAV */
@@ -286,25 +18,25 @@ body {
     color:white;
     display:flex;
     justify-content:space-between;
-    padding:15px 20px;
+    padding:15px;
     flex-wrap:wrap;
 }
 
 .navbar a {
     color:white;
-    text-decoration:none;
     margin:0 10px;
+    text-decoration:none;
 }
 
 /* HEADER */
 .header {
     text-align:center;
-    padding:40px 20px;
+    padding:40px;
     background:linear-gradient(135deg,#0f172a,#2563eb);
     color:white;
 }
 
-/* PRODUCT GRID */
+/* PRODUCT LIST */
 .container {
     max-width:1000px;
     margin:auto;
@@ -313,79 +45,46 @@ body {
 
 .product {
     background:white;
-    border-radius:10px;
     padding:15px;
-    margin-bottom:15px;
+    margin-bottom:10px;
     border-left:5px solid #2563eb;
     display:flex;
     justify-content:space-between;
-    align-items:center;
     flex-wrap:wrap;
 }
 
-.product h3 {
-    margin:0;
-    color:#0f172a;
-}
-
 .btn {
-    padding:10px 12px;
+    padding:10px;
     border-radius:6px;
-    border:none;
-    cursor:pointer;
     font-weight:bold;
+    cursor:pointer;
+    border:none;
 }
 
-.btn-add {
-    background:#2563eb;
-    color:white;
-}
-
-.btn-wa {
-    background:#25D366;
-    color:#000;
-    text-decoration:none;
-    display:inline-block;
-    padding:10px 12px;
-    border-radius:6px;
-}
+.btn-add { background:#2563eb; color:white; }
+.btn-wa { background:#25D366; color:#000; text-decoration:none; }
 
 /* CART */
 .cart {
     position:fixed;
-    right:20px;
-    bottom:20px;
+    right:15px;
+    bottom:15px;
+    width:260px;
     background:#0f172a;
     color:white;
     padding:15px;
     border-radius:10px;
-    width:260px;
 }
 
-.cart h4 {
-    margin:0 0 10px 0;
-}
-
-.cart-items {
-    font-size:13px;
-    margin-bottom:10px;
-}
-
-.cart-total {
-    font-weight:bold;
-    margin-bottom:10px;
-}
-
-/* FLOAT WHATSAPP */
+/* FLOAT */
 .float {
     position:fixed;
     bottom:110px;
-    right:20px;
+    right:15px;
     background:#25D366;
     color:white;
     padding:15px;
     border-radius:50%;
-    font-size:20px;
     text-decoration:none;
 }
 </style>
@@ -406,48 +105,42 @@ body {
 
 <!-- HEADER -->
 <div class="header">
-    <h1>Packaging Catalogue</h1>
-    <p>Add items → build quote → send on WhatsApp</p>
+    <h1>Full Price List + Quote System</h1>
+    <p>Add items → Build quote → Send WhatsApp</p>
 </div>
 
-<!-- PRODUCTS -->
+<!-- PRODUCTS (YOUR REAL PRICE LIST BACK) -->
 <div class="container">
 
     <div class="product">
-        <div>
-            <h3>Bubble Wrap</h3>
-            <p>R65 per roll</p>
-        </div>
+        <div>Bubble Wrap - R65 per roll</div>
         <button class="btn btn-add" onclick="addItem('Bubble Wrap',65)">Add</button>
     </div>
 
     <div class="product">
-        <div>
-            <h3>Pallet Wrap</h3>
-            <p>R720 per roll</p>
-        </div>
+        <div>Bubble Wrap 500mm - R104</div>
+        <button class="btn btn-add" onclick="addItem('Bubble Wrap 500mm',104)">Add</button>
+    </div>
+
+    <div class="product">
+        <div>Pallet Wrap 750mm - R720</div>
         <button class="btn btn-add" onclick="addItem('Pallet Wrap',720)">Add</button>
     </div>
 
     <div class="product">
-        <div>
-            <h3>Stock Boxes</h3>
-            <p>R25 per unit</p>
-        </div>
-        <button class="btn btn-add" onclick="addItem('Boxes',25)">Add</button>
+        <div>Stock Boxes - POA</div>
+        <button class="btn btn-add" onclick="addItem('Stock Boxes',0)">Add</button>
     </div>
 
 </div>
 
 <!-- CART -->
 <div class="cart">
-    <h4>🧾 Quote Cart</h4>
+    <h4>Quote Cart</h4>
+    <div id="cartItems"></div>
+    <div id="total">Total: R0</div>
 
-    <div class="cart-items" id="cartItems"></div>
-
-    <div class="cart-total" id="cartTotal">Total: R0</div>
-
-    <a class="btn-wa" id="sendQuote" href="#">Send WhatsApp Quote</a>
+    <a class="btn-wa" id="send" href="#">Send WhatsApp Quote</a>
 </div>
 
 <!-- FLOAT -->
@@ -459,62 +152,27 @@ let cart = [];
 
 function addItem(name, price){
     cart.push({name, price});
-    renderCart();
+    render();
 }
 
-function renderCart(){
-    let list = document.getElementById("cartItems");
+function render(){
+    let list = "";
     let total = 0;
-    let message = "Hi Nexpak, I need a quote:%0A";
+    let msg = "Hi Nexpak, I need a quote:%0A";
 
-    list.innerHTML = "";
-
-    cart.forEach((item,i)=>{
-        list.innerHTML += item.name + " - R" + item.price + "<br>";
-        total += item.price;
-        message += "- " + item.name + "%0A";
+    cart.forEach(i=>{
+        list += i.name + " - R" + i.price + "<br>";
+        total += i.price;
+        msg += "- " + i.name + "%0A";
     });
 
-    document.getElementById("cartTotal").innerText = "Total: R" + total;
+    document.getElementById("cartItems").innerHTML = list;
+    document.getElementById("total").innerText = "Total: R" + total;
 
-    document.getElementById("sendQuote").href =
-    "https://wa.me/27836308249?text=" + message + "%0ATotal: R" + total;
+    document.getElementById("send").href =
+    "https://wa.me/27836308249?text=" + msg + "%0ATotal: R" + total;
 }
 
-</script>
-
-</body>
-</html>
-renderLeads();
-
-</script>
-
-</body>
-</html>
-
-<!-- WHATSAPP FLOAT -->
-<a class="whatsapp-float wa-global">
-    <i class="fab fa-whatsapp"></i>
-</a>
-
-<!-- SCRIPT -->
-<script>
-const phone = "27836308249";
-
-/* category buttons */
-document.querySelectorAll(".wa-btn").forEach(btn => {
-    btn.addEventListener("click", function () {
-        const product = this.getAttribute("data-product");
-        const msg = `Hi Nexpak, I need pricing for: ${product}. Please send me a quote.`;
-        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
-    });
-});
-
-/* floating button */
-document.querySelector(".wa-global").addEventListener("click", () => {
-    const msg = "Hi Nexpak, I need a full price list.";
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, "_blank");
-});
 </script>
 
 </body>
