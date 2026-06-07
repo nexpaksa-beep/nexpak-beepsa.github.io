@@ -265,7 +265,226 @@ function generateQuote() {
         </a>
     </div>`;
 }
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexpak Catalogue | Mini Shop</title>
+
+<style>
+body {
+    margin:0;
+    font-family:Arial;
+    background:#f3f4f6;
+    color:#111;
+}
+
+/* NAV */
+.navbar {
+    background:#0f172a;
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    padding:15px 20px;
+    flex-wrap:wrap;
+}
+
+.navbar a {
+    color:white;
+    text-decoration:none;
+    margin:0 10px;
+}
+
+/* HEADER */
+.header {
+    text-align:center;
+    padding:40px 20px;
+    background:linear-gradient(135deg,#0f172a,#2563eb);
+    color:white;
+}
+
+/* PRODUCT GRID */
+.container {
+    max-width:1000px;
+    margin:auto;
+    padding:20px;
+}
+
+.product {
+    background:white;
+    border-radius:10px;
+    padding:15px;
+    margin-bottom:15px;
+    border-left:5px solid #2563eb;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+.product h3 {
+    margin:0;
+    color:#0f172a;
+}
+
+.btn {
+    padding:10px 12px;
+    border-radius:6px;
+    border:none;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.btn-add {
+    background:#2563eb;
+    color:white;
+}
+
+.btn-wa {
+    background:#25D366;
+    color:#000;
+    text-decoration:none;
+    display:inline-block;
+    padding:10px 12px;
+    border-radius:6px;
+}
+
+/* CART */
+.cart {
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    background:#0f172a;
+    color:white;
+    padding:15px;
+    border-radius:10px;
+    width:260px;
+}
+
+.cart h4 {
+    margin:0 0 10px 0;
+}
+
+.cart-items {
+    font-size:13px;
+    margin-bottom:10px;
+}
+
+.cart-total {
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+/* FLOAT WHATSAPP */
+.float {
+    position:fixed;
+    bottom:110px;
+    right:20px;
+    background:#25D366;
+    color:white;
+    padding:15px;
+    border-radius:50%;
+    font-size:20px;
+    text-decoration:none;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- NAV -->
+<div class="navbar">
+    <div><b>Nexpak Solutions</b></div>
+    <div>
+        <a href="index.html">Home</a>
+        <a href="catalogue.html">Catalogue</a>
+        <a href="crm.html">CRM</a>
+    </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+    <h1>Packaging Catalogue</h1>
+    <p>Add items → build quote → send on WhatsApp</p>
+</div>
+
+<!-- PRODUCTS -->
+<div class="container">
+
+    <div class="product">
+        <div>
+            <h3>Bubble Wrap</h3>
+            <p>R65 per roll</p>
+        </div>
+        <button class="btn btn-add" onclick="addItem('Bubble Wrap',65)">Add</button>
+    </div>
+
+    <div class="product">
+        <div>
+            <h3>Pallet Wrap</h3>
+            <p>R720 per roll</p>
+        </div>
+        <button class="btn btn-add" onclick="addItem('Pallet Wrap',720)">Add</button>
+    </div>
+
+    <div class="product">
+        <div>
+            <h3>Stock Boxes</h3>
+            <p>R25 per unit</p>
+        </div>
+        <button class="btn btn-add" onclick="addItem('Boxes',25)">Add</button>
+    </div>
+
+</div>
+
+<!-- CART -->
+<div class="cart">
+    <h4>🧾 Quote Cart</h4>
+
+    <div class="cart-items" id="cartItems"></div>
+
+    <div class="cart-total" id="cartTotal">Total: R0</div>
+
+    <a class="btn-wa" id="sendQuote" href="#">Send WhatsApp Quote</a>
+</div>
+
+<!-- FLOAT -->
+<a class="float" href="https://wa.me/27836308249">💬</a>
+
+<script>
+
+let cart = [];
+
+function addItem(name, price){
+    cart.push({name, price});
+    renderCart();
+}
+
+function renderCart(){
+    let list = document.getElementById("cartItems");
+    let total = 0;
+    let message = "Hi Nexpak, I need a quote:%0A";
+
+    list.innerHTML = "";
+
+    cart.forEach((item,i)=>{
+        list.innerHTML += item.name + " - R" + item.price + "<br>";
+        total += item.price;
+        message += "- " + item.name + "%0A";
+    });
+
+    document.getElementById("cartTotal").innerText = "Total: R" + total;
+
+    document.getElementById("sendQuote").href =
+    "https://wa.me/27836308249?text=" + message + "%0ATotal: R" + total;
+}
+
+</script>
+
+</body>
+</html>
 renderLeads();
 
 </script>
