@@ -465,4 +465,24 @@ small{color:#666}
         </div></div>
 </div>
 </body>
+        <script>
+
+function saveLead(product){
+
+    let deal = {
+        product: product,
+        date: new Date().toLocaleString(),
+        status: "NEW LEAD"
+    };
+
+    localStorage.setItem(
+        "latestDeal",
+        JSON.stringify(deal)
+    );
+
+    alert(product + " saved to CRM");
+
+}
+
+            </script>
 </html>
