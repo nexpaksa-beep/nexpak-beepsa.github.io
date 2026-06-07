@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact Us | Nexpak Solutions</title>
+<meta name="description" content="Contact Nexpak Solutions - Get in touch for fast packaging quotes and support. Email, phone, WhatsApp contact information.">
+<meta name="keywords" content="contact nexpak, packaging supplier contact, get quote, whatsapp, email, phone">
+<title>Contact Us | Nexpak Solutions - Fast Packaging Support</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -13,6 +15,7 @@
     --dark: #0f172a;
     --light: #f8fafc;
     --accent: #f59e0b;
+    --rusty-chrome: #b8860b;
   }
 
   * {
@@ -24,6 +27,49 @@
 
   body {
     background: var(--light);
+  }
+
+  header {
+    background: var(--dark);
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .logo {
+    font-weight: 700;
+    font-size: 18px;
+  }
+
+  nav {
+    display: flex;
+    gap: 15px;
+  }
+
+  nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  nav a:hover {
+    color: var(--accent);
+  }
+
+  .back-btn {
+    background: var(--accent);
+    color: #000;
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .back-btn:hover {
+    background: #d97706;
   }
 
   /* HERO */
@@ -40,6 +86,7 @@
   .hero h1 {
     font-size: 42px;
     margin-bottom: 10px;
+    color: var(--rusty-chrome);
   }
 
   .hero p {
@@ -69,6 +116,7 @@
     border-radius: 6px;
     border: 1px solid #d1d5db;
     font-size: 14px;
+    font-family: 'Inter', sans-serif;
   }
 
   button {
@@ -80,6 +128,7 @@
     border-radius: 6px;
     font-weight: 600;
     cursor: pointer;
+    margin-top: 10px;
   }
 
   button:hover {
@@ -98,6 +147,10 @@
     padding: 15px;
     border-left: 4px solid var(--primary);
     border-radius: 6px;
+  }
+
+  .info-box strong {
+    color: var(--rusty-chrome);
   }
 
   /* WHATSAPP BUTTON */
@@ -126,10 +179,47 @@
     margin-top: 15px;
   }
 
+  footer {
+    background: var(--dark);
+    color: white;
+    text-align: center;
+    padding: 30px;
+  }
+
+  footer h3 {
+    color: var(--rusty-chrome);
+  }
+
+  h2 {
+    color: var(--rusty-chrome);
+  }
+
+  @media(max-width: 768px) {
+    header {
+      flex-direction: column;
+      text-align: center;
+    }
+    nav {
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 10px;
+    }
+  }
+
 </style>
 </head>
 
 <body>
+
+<header>
+  <div class="logo">Nexpak Solutions</div>
+  <nav>
+    <a class="back-btn" href="index.html">← Back</a>
+    <a href="index.html">Home</a>
+    <a href="Products.html">Products</a>
+    <a href="pricelist.html">Price List</a>
+  </nav>
+</header>
 
 <!-- HERO -->
 <div class="hero">
@@ -144,22 +234,17 @@
 
     <h2>Send Us a Message</h2>
 
-    <form>
-      <input type="text" placeholder="Your Name" required>
-      <input type="email" placeholder="Email Address" required>
-      <input type="text" placeholder="Phone Number">
-      <textarea rows="5" placeholder="Your Message"></textarea>
-
-      <button type="submit">Send enquiry>
-        <a class="whatsapp" href="https://wa.me/27836308249?text=Hi%20Nexpak%2C%20I%20need%20assistance%20with%20packaging%20solutions" target="_blank">
-      Chat on WhatsApp
-        </a>
-
+    <form action="https://formspree.io/f/xyzpqrst" method="POST" onsubmit="return handleFormSubmit(event)">
+      <input type="text" id="name" name="name" placeholder="Your Name" required>
+      <input type="email" id="email" name="email" placeholder="Email Address" required>
+      <input type="text" id="phone" name="phone" placeholder="Phone Number">
+      <textarea id="message" name="message" rows="5" placeholder="Your Message"></textarea>
+      <button type="submit">Send Enquiry to info@nexpaksolutions.co.za</button>
     </form>
 
     <!-- WHATSAPP -->
     <a class="whatsapp" href="https://wa.me/27836308249?text=Hi%20Nexpak%2C%20I%20need%20assistance%20with%20packaging%20solutions" target="_blank">
-      Chat on WhatsApp
+      💬 Chat on WhatsApp
     </a>
 
   </div>
@@ -168,19 +253,19 @@
   <div class="info">
 
     <div class="info-box">
-      <strong>Email:</strong> info@nexpaksolutions.co.za
+      <strong>📧 Email:</strong> info@nexpaksolutions.co.za
     </div>
 
     <div class="info-box">
-      <strong>Phone:</strong> +27 83 630 8249
+      <strong>📱 Phone:</strong> +27 83 630 8249
     </div>
 
     <div class="info-box">
-      <strong>Location:</strong> East Rand, Johannesburg, Gauteng, South Africa
+      <strong>📍 Location:</strong> East Rand, Johannesburg, Gauteng, South Africa
     </div>
 
     <div class="info-box">
-      <strong>Response Time:</strong> Within 1–2 business hours
+      <strong>⏱️ Response Time:</strong> Within 1–2 business hours
     </div>
 
   </div>
@@ -188,7 +273,7 @@
   <!-- MAP -->
   <div class="card" style="margin-top:30px;">
     <h2>Find Us</h2>
-    <p>East Rand, Johannesburg, Gauteng</p>
+    <p>East Rand, Johannesburg, Gauteng, South Africa</p>
 
     <iframe
       src="https://www.google.com/maps?q=East%20Rand%20Johannesburg%20Gauteng&output=embed">
@@ -196,35 +281,31 @@
   </div>
 
 </div>
+
+<footer>
+  <h3>© 2024-2026 Nexpak Solutions PTY Ltd</h3>
+  <p>Fast response to all packaging enquiries | Phone: +27 836 308 249</p>
+</footer>
+
 <script>
-
-function sendWhatsApp() {
-
-  let name = document.getElementById("name").value;
-  let email = document.getElementById("email").value;
-  let phone = document.getElementById("phone").value;
-  let message = document.getElementById("message").value;
-
-  let whatsappMessage =
-`New Website Enquiry
-
-Name: ${name}
-
-Email: ${email}
-
-Phone: ${phone}
-
-Message:
-${message}`;
-
-  window.open(
-    "https://wa.me/27836308249?text=" +
-    encodeURIComponent(whatsappMessage),
-    "_blank"
-  );
-
+function handleFormSubmit(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const message = document.getElementById('message').value;
+    
+    // Send to info@nexpaksolutions.co.za via email service
+    const mailtoLink = `mailto:info@nexpaksolutions.co.za?subject=New%20Enquiry%20from%20${encodeURIComponent(name)}&body=${encodeURIComponent(
+        `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`
+    )}`;
+    
+    window.location.href = mailtoLink;
+    
+    return false;
 }
-
 </script>
+
 </body>
 </html>

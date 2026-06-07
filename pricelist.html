@@ -1,251 +1,649 @@
-   <!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Nexpak Solutions Price List - Complete pricing for bubble wrap, pallet wrap, boxes, tape, strapping, and PPE. Add items to cart and request quotes.">
+<meta name="keywords" content="packaging price list, bubble wrap price, pallet wrap price, boxes price, tape price, wholesale pricing, packaging pricing">
+<title>Price List | Nexpak Solutions - Packaging Pricing & Quotes</title>
 
 <style>
 body {
-    font-family: Arial;
-    background:#0f172a;
-    color:white;
-    padding:20px;
-}
-
-.box {
-    background:#1f2937;
-    padding:15px;
-    border-radius:10px;
-    margin-bottom:15px;
-}
-
-.status {
-    color:#25D366;
-}
-</style>
-</head>
-
-<body>
-
-<h1>🧠 CRM SYSTEM</h1>
-
-<div class="box">
-    <h3>Latest Quote from Catalogue</h3>
-    <div id="deal"></div>
-</div>
-
-<script>
-
-let deal = JSON.parse(localStorage.getItem("latestDeal"));
-
-if(deal){
-
-    let html = "";
-    deal.items.forEach(i=>{
-        html += "• " + i + "<br>";
-    });
-
-    document.getElementById("deal").innerHTML = `
-        <p><b>Date:</b> ${deal.date}</p>
-        <p><b>Items:</b><br>${html}</p>
-        <p class="status">Status: NEW LEAD</p>
-    `;
-
-} else {
-    document.getElementById("deal").innerHTML =
-    "No recent quotes found.";
-}
-
-</script>
-
-</body>
-</html>
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nexpak Catalogue + Pricing</title>
-
-<style>
-body {
-    margin:0;
-    font-family:Arial;
-    background:#f3f4f6;
-}
-
-/* NAV */
-.navbar {
-    background:#0f172a;
-    color:white;
-    display:flex;
-    justify-content:space-between;
-    padding:15px;
-    flex-wrap:wrap;
-}
-
-.navbar a {
-    color:white;
-    margin:0 10px;
-    text-decoration:none;
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background: #f3f4f6;
 }
 
 /* HEADER */
-.header {
-    text-align:center;
-    padding:40px;
-    background:linear-gradient(135deg,#0f172a,#2563eb);
-    color:white;
+header {
+    background: #0f172a;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-/* PRODUCT LIST */
+.logo {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+nav {
+    display: flex;
+    gap: 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+nav a:hover {
+    color: #f59e0b;
+}
+
+.back-btn {
+    background: #f59e0b;
+    color: #000;
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.back-btn:hover {
+    background: #d97706;
+}
+
+/* BANNER */
+.banner {
+    background: linear-gradient(135deg, #0f172a, #2563eb);
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.banner h1 {
+    color: #b8860b;
+}
+
+/* CONTAINER */
 .container {
-    max-width:1000px;
-    margin:auto;
-    padding:20px;
+    max-width: 1200px;
+    margin: auto;
+    padding: 30px 20px;
 }
 
-.product {
-    background:white;
-    padding:15px;
-    margin-bottom:10px;
-    border-left:5px solid #2563eb;
-    display:flex;
-    justify-content:space-between;
-    flex-wrap:wrap;
+.section-title {
+    color: #b8860b;
+    font-size: 28px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #2563eb;
+    padding-bottom: 10px;
 }
 
-.btn {
-    padding:10px;
-    border-radius:6px;
-    font-weight:bold;
-    cursor:pointer;
-    border:none;
+/* PRODUCT TABLE */
+.product-table {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 40px;
 }
 
-.btn-add { background:#2563eb; color:white; }
-.btn-wa { background:#25D366; color:#000; text-decoration:none; }
-
-/* CART */
-.cart {
-    position:fixed;
-    right:15px;
-    bottom:15px;
-    width:260px;
-    background:#0f172a;
-    color:white;
-    padding:15px;
-    border-radius:10px;
+table {
+    width: 100%;
+    border-collapse: collapse;
 }
-    <button class="btn btn-blue" onclick="sendToCRM()">
-Send to CRM
-</button>
+
+th {
+    background: #0f172a;
+    color: white;
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+}
+
+td {
+    padding: 15px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+tr:hover {
+    background: #f8fafc;
+}
+
+.sku {
+    font-weight: 600;
+    color: #2563eb;
+}
+
+.price {
+    color: #059669;
+    font-weight: 700;
+}
+
+.action-btn {
+    background: #25D366;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.action-btn:hover {
+    background: #1ebe5d;
+}
+
+.quote-btn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.quote-btn:hover {
+    background: #1d4ed8;
+}
+
+/* PRODUCT IMAGE */
+.product-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* CART SIDEBAR */
+.cart-sidebar {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    background: white;
+    border: 2px solid #0f172a;
+    border-radius: 10px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 100;
+}
+
+.cart-sidebar h3 {
+    color: #0f172a;
+    margin-bottom: 10px;
+}
+
+.cart-item {
+    background: #f8fafc;
+    padding: 8px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.cart-total {
+    font-weight: 700;
+    color: #059669;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 2px solid #e5e7eb;
+}
+
+.send-btn {
+    width: 100%;
+    background: #25D366;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.send-btn:hover {
+    background: #1ebe5d;
+}
 
 /* FLOAT */
-.float {
-    position:fixed;
-    bottom:110px;
-    right:15px;
-    background:#25D366;
-    color:white;
-    padding:15px;
-    border-radius:50%;
-    text-decoration:none;
+.float-wa {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    background: #25D366;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    text-decoration: none;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    z-index: 99;
 }
-</style>
 
+footer {
+    background: #0f172a;
+    color: white;
+    text-align: center;
+    padding: 30px;
+}
+
+footer h3 {
+    color: #b8860b;
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+    nav {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    .cart-sidebar {
+        width: 250px;
+        right: 10px;
+        bottom: 80px;
+    }
+    table {
+        font-size: 12px;
+    }
+    td, th {
+        padding: 10px;
+    }
+}
+
+</style>
 </head>
 
 <body>
 
-<!-- NAV -->
-<div class="navbar">
-    <div><b>Nexpak Solutions</b></div>
-    <div>
+<header>
+    <div class="logo">Nexpak Solutions</div>
+    <nav>
+        <a class="back-btn" href="index.html">← Back</a>
         <a href="index.html">Home</a>
-        <a href="catalogue.html">Catalogue</a>
-        <a href="./crm.html">CRM</a>
-        <a href="./contact.html">CRM</a>
-    </div>
+        <a href="Products.html">Products</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+</header>
+
+<!-- BANNER -->
+<div class="banner">
+    <h1>Complete Price List</h1>
+    <p>Add items to your quote cart and request a full quote on WhatsApp</p>
 </div>
 
-<!-- HEADER -->
-<div class="header">
-    <h1>Full Price List + Quote System</h1>
-    <p>Add items → Build quote → Send WhatsApp</p>
-</div>
-
-<!-- PRODUCTS (YOUR REAL PRICE LIST BACK) -->
+<!-- CONTAINER -->
 <div class="container">
 
-    <div class="product">
-        <div>Bubble Wrap - R65 per roll</div>
-        <button class="btn btn-add" onclick="addItem('Bubble Wrap',65)">Add</button>
+    <!-- BUBBLE WRAP SECTION -->
+    <h2 class="section-title">📦 Bubble Wrap & Protective Film</h2>
+    <div class="product-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>SKU</th>
+                    <th>Size</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Bubble Wrap Premium</strong></td>
+                    <td class="sku">BW-PREM-1</td>
+                    <td>300mm x 50m</td>
+                    <td class="price">R65</td>
+                    <td><button class="action-btn" onclick="addItem('Bubble Wrap Premium (300mm x 50m)', 65)">🛒</button><a class="action-btn" href="https://wa.me/27836308249?text=Quote%20for%20Bubble%20Wrap%20Premium">📱</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Bubble Wrap Standard</strong></td>
+                    <td class="sku">BW-STD-1</td>
+                    <td>500mm x 50m</td>
+                    <td class="price">R104</td>
+                    <td><button class="action-btn" onclick="addItem('Bubble Wrap Standard (500mm x 50m)', 104)">🛒</button><a class="action-btn" href="https://wa.me/27836308249?text=Quote%20for%20Bubble%20Wrap%20Standard">📱</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Bubble Wrap Anti-Static</strong></td>
+                    <td class="sku">BW-AS-1</td>
+                    <td>500mm x 30m</td>
+                    <td class="price">R189</td>
+                    <td><button class="action-btn" onclick="addItem('Bubble Wrap Anti-Static (500mm x 30m)', 189)">🛒</button><a class="action-btn" href="https://wa.me/27836308249?text=Quote%20for%20Bubble%20Wrap%20Anti-Static">📱</a></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
-    <div class="product">
-        <div>Bubble Wrap 500mm - R104</div>
-        <button class="btn btn-add" onclick="addItem('Bubble Wrap 500mm',104)">Add</button>
+    <!-- PALLET WRAP SECTION -->
+    <h2 class="section-title">🔄 Pallet & Stretch Wrap</h2>
+    <div class="product-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>SKU</th>
+                    <th>Size</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Pallet Wrap Hand Roll</strong></td>
+                    <td class="sku">PW-HR-1</td>
+                    <td>500mm x 300m</td>
+                    <td class="price">R320</td>
+                    <td><button class="action-btn" onclick="addItem('Pallet Wrap Hand Roll (500mm x 300m)', 320)">🛒</button><a class="action-btn" href="https://wa.me/27836308249?text=Quote%20for%20Pallet%20Wrap%20Hand%20Roll">📱</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Pallet Wrap Machine Roll</strong></td>
+                    <td class="sku">PW-MR-1</td>
+                    <td>750mm x 300m</td>
+                    <td class="price">R720</td>
+                    <td><button class="action-btn" onclick="addItem('Pallet Wrap Machine Roll (750mm x 300m)', 720)">🛒</button><a class="action-btn" href="https://wa.me/27836308249?text=Quote%20for%20Pallet%20Wrap%20Machine%20Roll">📱</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Extended Core Roll</strong></td>
+                    <td class="sku">PW-ECR-1</td>
+                    <td>500mm x 600m</td>
+                    <td class="price">R580</td>
+                    <td><button class="action-btn" onclick="addItem('Extended Core Roll (500mm x 600m)', 580)">🛒</button><a class="action-btn" href="https://wa.me/27836308249?text=Quote%20for%20Extended%20Core%20Roll">📱</a></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
-    <div class="product">
-        <div>Pallet Wrap 750mm - R720</div>
-        <button class="btn btn-add" onclick="addItem('Pallet Wrap',720)">Add</button>
+    <!-- BOXES SECTION -->
+    <h2 class="section-title">📫 Corrugated Boxes</h2>
+    <div class="product-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>SKU</th>
+                    <th>Size (mm)</th>
+                    <th>Price/Unit</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Single Wall Box Small</strong></td>
+                    <td class="sku">SWB-SM-1</td>
+                    <td>200x150x100</td>
+                    <td class="price">R8.50</td>
+                    <td><button class="action-btn" onclick="addItem('Single Wall Box Small', 8.50)">🛒</button><a class="action-btn" href="https://wa.me/27836308249?text=Quote%20for%20Single%20Wall%20Box%20Small">📱</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Single Wall Box Medium</strong></td>
+                    <td class="sku">SWB-MD-1</td>
+                    <td>300x200x150</td>
+                    <td class="price">R12.00</td>
+                    <td><button class="action-btn" onclick="addItem('Single Wall Box Medium', 12.00)">🛒</button><a class="action-btn" href="https://wa.me/27836308249?text=Quote%20for%20Single%20Wall%20Box%20Medium">📱</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Single Wall Box Large</strong></td>
+                    <td class="sku">SWB-LG-1</td>
+                    <td>400x300x300</td>
+                    <td class="price">R18.00</td>
+                    <td><button class="action-btn" onclick="addItem('Single Wall Box Large', 18.00)">🛒</button><a class="action-btn" href="https://wa.me/27836308249?text=Quote%20for%20Single%20Wall%20Box%20Large">📱</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Double Wall Box Small</strong></td>
+                    <td class="sku">DWB-SM-1</td>
+                    <td>200x150x100</td>
+                    <td class="price">R14.00</td>
+                    <td><button class="action-btn" onclick="addItem('Double Wall Box Small', 14.00)">🛒</button><a class="action-btn" href="https://wa.me/27836308249?text=Quote%20for%20Double%20Wall%20Box%20Small">📱</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Double Wall Box Medium</strong></td>
+                    <td class="sku">DWB-MD-1</td>
+                    <td>300x200x150</td>
+                    <td class="price">R19.50</td>
+                    <td><button class="action-btn" onclick="addItem('Double Wall Box Medium', 19.50)">🛒</button><a class="action-btn" href="https://wa.me/27836308249?text=Quote%20for%20Double%20Wall%20Box%20Medium">📱</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Double Wall Box Large</strong></td>
+                    <td class="sku">DWB-LG-1</td>
+                    <td>400x300x300</td>
+                    <td class="price">R28.00</td>
+                    <td><button class="action-btn" onclick="addItem('Double Wall Box Large', 28.00)">🛒</button><a class="action-btn" href="https://wa.me/27836308249?text=Quote%20for%20Double%20Wall%20Box%20Large">📱</a></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
-    <div class="product">
-        <div>Stock Boxes - POA</div>
-        <button class="btn btn-add" onclick="addItem('Stock Boxes',0)">Add</button>
+    <!-- TAPE SECTION -->
+    <h2 class="section-title">📀 Packaging Tape</h2>
+    <div class="product-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>SKU</th>
+                    <th>Size</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Clear Tape</strong></td>
+                    <td class="sku">TAP-CLR-1</td>
+                    <td>48mm x 66m</td>
+                    <td class="price">R12.00</td>
+                    <td><button class="action-btn" onclick="addItem('Clear Tape (48mm x 66m)', 12.00)">🛒</button><a class="action-btn" href="https://wa.me/27836308249?text=Quote%20for%20Clear%20Tape">📱</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Buff Tape</strong></td>
+                    <td class="sku">TAP-BUF-1</td>
+                    <td>48mm x 66m</td>
+                    <td class="price">R13.50</td>
+                    <td><button class="action-btn" onclick="addItem('Buff Tape (48mm x 66m)', 13.50)">🛒</button><a class="action-btn" href="https://wa.me/27836308249?text=Quote%20for%20Buff%20Tape">📱</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Masking Tape</strong></td>
+                    <td class="sku">TAP-MSK-1</td>
+                    <td>24mm x 50m</td>
+                    <td class="price">R9.00</td>
+                    <td><button class="action-btn" onclick="addItem('Masking Tape (24mm x 50m)', 9.00)">🛒</button><a class="action-btn" href="https://wa.me/27836308249?text=Quote%20for%20Masking%20Tape">📱</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Duct Tape</strong></td>
+                    <td class="sku">TAP-DUCT-1</td>
+                    <td>48mm x 10m</td>
+                    <td class="price">R35.00</td>
+                    <td><button class="action-btn" onclick="addItem('Duct Tape (48mm x 10m)', 35.00)">🛒</button><a class="action-btn" href="https://wa.me/27836308249?text=Quote%20for%20Duct%20Tape">📱</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- STRAPPING SECTION -->
+    <h2 class="section-title">🔗 Strapping Products</h2>
+    <div class="product-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>SKU</th>
+                    <th>Size</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>PP Strapping Roll</strong></td>
+                    <td class="sku">STR-PP-1</td>
+                    <td>16mm x 2000m</td>
+                    <td class="price">R450</td>
+                    <td><button class="action-btn" onclick="addItem('PP Strapping Roll', 450)">🛒</button><a class="action-btn" href="https://wa.me/27836308249?text=Quote%20for%20PP%20Strapping">📱</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Polyester Strapping</strong></td>
+                    <td class="sku">STR-PES-1</td>
+                    <td>16mm x 1000m</td>
+                    <td class="price">R650</td>
+                    <td><button class="action-btn" onclick="addItem('Polyester Strapping', 650)">🛒</button><a class="action-btn" href="https://wa.me/27836308249?text=Quote%20for%20Polyester%20Strapping">📱</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Strapping Buckles</strong></td>
+                    <td class="sku">STR-BKL-1</td>
+                    <td>Box of 1000</td>
+                    <td class="price">R180</td>
+                    <td><button class="action-btn" onclick="addItem('Strapping Buckles', 180)">🛒</button><a class="action-btn" href="https://wa.me/27836308249?text=Quote%20for%20Strapping%20Buckles">📱</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- PPE SECTION -->
+    <h2 class="section-title">🦺 PPE Safety Equipment</h2>
+    <div class="product-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>SKU</th>
+                    <th>Specifications</th>
+                    <th>Price/Unit</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Safety Gloves</strong></td>
+                    <td class="sku">PPE-GLV-1</td>
+                    <td>Pair - Cotton</td>
+                    <td class="price">R45</td>
+                    <td><button class="action-btn" onclick="addItem('Safety Gloves', 45)">🛒</button><a class="action-btn" href="https://wa.me/27836308249?text=Quote%20for%20Safety%20Gloves">📱</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Reflective Safety Jacket</strong></td>
+                    <td class="sku">PPE-JAC-1</td>
+                    <td>One Size - Yellow</td>
+                    <td class="price">R189</td>
+                    <td><button class="action-btn" onclick="addItem('Reflective Safety Jacket', 189)">🛒</button><a class="action-btn" href="https://wa.me/27836308249?text=Quote%20for%20Reflective%20Jacket">📱</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Safety Hard Hat</strong></td>
+                    <td class="sku">PPE-HAT-1</td>
+                    <td>Industrial Grade</td>
+                    <td class="price">R125</td>
+                    <td><button class="action-btn" onclick="addItem('Safety Hard Hat', 125)">🛒</button><a class="action-btn" href="https://wa.me/27836308249?text=Quote%20for%20Safety%20Hard%20Hat">📱</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Safety Goggles</strong></td>
+                    <td class="sku">PPE-GOG-1</td>
+                    <td>Clear Lens</td>
+                    <td class="price">R95</td>
+                    <td><button class="action-btn" onclick="addItem('Safety Goggles', 95)">🛒</button><a class="action-btn" href="https://wa.me/27836308249?text=Quote%20for%20Safety%20Goggles">📱</a></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
 </div>
 
-<!-- CART -->
-<div class="cart">
-    <h4>Quote Cart</h4>
-    <div id="cartItems"></div>
-    <div id="total">Total: R0</div>
-
-    <a class="btn-wa" id="send" href="#">Send WhatsApp Quote</a>
+<!-- CART SIDEBAR -->
+<div class="cart-sidebar">
+    <h3>📦 Quote Cart</h3>
+    <div id="cartItems">No items yet</div>
+    <div id="total" class="cart-total">Total: R0</div>
+    <button class="send-btn" onclick="sendQuoteWhatsApp()">📱 Send Quote to WhatsApp</button>
 </div>
 
 <!-- FLOAT -->
-<a class="float" href="https://wa.me/27836308249">💬</a>
+<a class="float-wa" href="https://wa.me/27836308249" target="_blank">💬</a>
+
+<footer>
+    <h3>© 2024-2026 Nexpak Solutions PTY Ltd</h3>
+    <p>Complete packaging solutions | Email: info@nexpaksolutions.co.za | Phone: +27 836 308 249</p>
+</footer>
 
 <script>
-
 let cart = [];
 
-function addItem(name, price){
-    cart.push({name, price});
-    render();
+function addItem(name, price) {
+    cart.push({name: name, price: price});
+    renderCart();
+    alert(name + ' added to cart!');
 }
 
-function render(){
-    let list = "";
+function renderCart() {
+    let html = '';
     let total = 0;
-    let msg = "Hi Nexpak, I need a quote:%0A";
+    
+    if (cart.length === 0) {
+        html = 'No items yet';
+    } else {
+        cart.forEach((item, index) => {
+            html += '<div class="cart-item">' + item.name + ' - R' + item.price.toFixed(2) + ' <button onclick="removeItem(' + index + ')" style="float:right; background:red; color:white; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">X</button></div>';
+            total += item.price;
+        });
+    }
+    
+    document.getElementById('cartItems').innerHTML = html;
+    document.getElementById('total').innerHTML = 'Total: R' + total.toFixed(2);
+    
+    // Store in localStorage
+    localStorage.setItem('nexpakCart', JSON.stringify(cart));
+}
 
-    cart.forEach(i=>{
-        list += i.name + " - R" + i.price + "<br>";
-        total += i.price;
-        msg += "- " + i.name + "%0A";
+function removeItem(index) {
+    cart.splice(index, 1);
+    renderCart();
+}
+
+function sendQuoteWhatsApp() {
+    if (cart.length === 0) {
+        alert('Please add items to your cart first!');
+        return;
+    }
+    
+    let message = 'Hi Nexpak, I need a quote for the following items:%0A%0A';
+    let total = 0;
+    
+    cart.forEach(item => {
+        message += '• ' + item.name + ' - R' + item.price.toFixed(2) + '%0A';
+        total += item.price;
     });
-
-    document.getElementById("cartItems").innerHTML = list;
-    document.getElementById("total").innerText = "Total: R" + total;
-
-    document.getElementById("send").href =
-    "https://wa.me/27836308249?text=" + msg + "%0ATotal: R" + total;
+    
+    message += '%0AEstimated Total: R' + total.toFixed(2) + '%0A%0APlease confirm availability and delivery time.';
+    
+    window.open('https://wa.me/27836308249?text=' + message, '_blank');
 }
 
+// Load cart from localStorage
+window.onload = function() {
+    let savedCart = localStorage.getItem('nexpakCart');
+    if (savedCart) {
+        cart = JSON.parse(savedCart);
+        renderCart();
+    }
+};
 </script>
-function sendToCRM(){
-    let deal = {
-        items: cart,
-        date: new Date().toISOString()
-    };
 
-    localStorage.setItem("latestDeal", JSON.stringify(deal));
-
-    alert("Sent to CRM successfully!");
-    window.location.href = "crm.html";
-}
 </body>
 </html>

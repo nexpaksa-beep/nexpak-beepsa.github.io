@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Nexpak Solutions | Products</title>
-
+<meta name="description" content="Nexpak Solutions products: bubble wrap, pallet wrap, boxes, tape, strapping, PPE. Quality packaging materials for warehouses, logistics, manufacturing.">
+<meta name="keywords" content="bubble wrap product, pallet wrap, corrugated boxes, packaging tape, strapping, PPE safety wear, warehouse supplies, logistics packaging">
+<title>Nexpak Solutions | Products - Bubble Wrap, Pallet Wrap, Boxes, Tape</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -15,6 +15,7 @@
     --dark:#0f172a;
     --light:#f8fafc;
     --accent:#f59e0b;
+    --rusty-chrome: #b8860b;
 }
 
 *{
@@ -37,6 +38,7 @@ header{
     display:flex;
     justify-content:space-between;
     align-items:center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 .logo{
@@ -44,14 +46,32 @@ header{
     font-weight:700;
 }
 
+nav {
+    display: flex;
+    gap: 20px;
+}
+
 nav a{
     color:white;
     text-decoration:none;
-    margin-left:20px;
+    font-weight: 500;
 }
 
 nav a:hover{
     color:var(--accent);
+}
+
+.back-btn {
+    background: var(--accent);
+    color: #000;
+    padding: 8px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.back-btn:hover {
+    background: #d97706;
 }
 
 /* HERO */
@@ -72,6 +92,7 @@ nav a:hover{
 .hero h1{
     font-size:48px;
     margin-bottom:10px;
+    color: var(--rusty-chrome);
 }
 
 .hero p{
@@ -105,7 +126,7 @@ nav a:hover{
 }
 
 .product-content h2{
-    color:var(--primary);
+    color:var(--rusty-chrome);
     margin-bottom:10px;
 }
 
@@ -123,9 +144,22 @@ nav a:hover{
     padding:12px 20px;
     border-radius:8px;
     font-weight:600;
+    margin-right: 10px;
 }
 
-.quote-btn:hover{
+.cart-btn {
+    display:inline-block;
+    margin-top:20px;
+    background:var(--primary);
+    color:white;
+    text-decoration:none;
+    padding:12px 20px;
+    border-radius:8px;
+    font-weight:600;
+    cursor: pointer;
+}
+
+.quote-btn:hover, .cart-btn:hover{
     opacity:.9;
 }
 
@@ -146,6 +180,7 @@ nav a:hover{
     align-items:center;
     font-size:28px;
     box-shadow:0 5px 20px rgba(0,0,0,.3);
+    z-index: 998;
 }
 
 /* FOOTER */
@@ -155,6 +190,10 @@ footer{
     color:white;
     text-align:center;
     padding:30px;
+}
+
+footer h3 {
+    color: var(--rusty-chrome);
 }
 
 /* MOBILE */
@@ -171,10 +210,13 @@ height:250px;
 
 header{
 flex-direction:column;
+text-align: center;
 }
 
 nav{
 margin-top:10px;
+flex-direction: column;
+gap: 10px;
 }
 
 }
@@ -190,6 +232,7 @@ margin-top:10px;
 <div class="logo">Nexpak Solutions</div>
 
 <nav>
+<a class="back-btn" href="index.html">← Back</a>
 <a href="index.html">Home</a>
 <a href="aboutus.html">About</a>
 <a href="Products.html">Products</a>
@@ -204,7 +247,7 @@ margin-top:10px;
 
 <p>
 Industrial Packaging Solutions For Warehousing,
-Logistics, Manufacturing & Retail.
+Logistics, Manufacturing & Retail
 </p>
 
 </section>
@@ -215,7 +258,7 @@ Logistics, Manufacturing & Retail.
 
 <div class="product-card">
 
-<img src="bobble.jpeg" alt="Bubble Wrap">
+<img src="bobble.jpeg" alt="Premium Bubble Wrap for Packaging - Nexpak Solutions">
 
 <div class="product-content">
 
@@ -228,9 +271,8 @@ Ideal for warehousing, logistics and ecommerce operations.
 </p>
 
 <a class="quote-btn"
-href="https://wa.me/27836308249?text=Quote%20for%20Bubble%20Wrap">
-Request Quote
-</a>
+href="https://wa.me/27836308249?text=I%20need%20a%20quote%20for%20Bubble%20Wrap">📱 Quote on WhatsApp</a>
+<button class="cart-btn" onclick="addToCart('Bubble Wrap - Premium', 65)">🛒 Add to Cart</button>
 
 </div>
 </div>
@@ -239,7 +281,7 @@ Request Quote
 
 <div class="product-card">
 
-<img src="pallet.jpeg" alt="Pallet Wrap">
+<img src="pallet.jpeg" alt="Pallet Wrap Stretch Film - Nexpak Solutions">
 
 <div class="product-content">
 
@@ -252,9 +294,8 @@ Provides maximum load stability and protection during transport.
 </p>
 
 <a class="quote-btn"
-href="https://wa.me/27836308249?text=Quote%20for%20Pallet%20Wrap">
-Request Quote
-</a>
+href="https://wa.me/27836308249?text=I%20need%20a%20quote%20for%20Pallet%20Wrap">📱 Quote on WhatsApp</a>
+<button class="cart-btn" onclick="addToCart('Pallet Wrap 750mm', 720)">🛒 Add to Cart</button>
 
 </div>
 </div>
@@ -263,7 +304,7 @@ Request Quote
 
 <div class="product-card">
 
-<img src="straps.jpeg">
+<img src="straps.jpeg" alt="Polypropylene Strapping Products - Nexpak Solutions">
 
 <div class="product-content">
 
@@ -276,9 +317,8 @@ Available with seals, buckles and tensioning tools.
 </p>
 
 <a class="quote-btn"
-href="https://wa.me/27836308249?text=Quote%20for%20Strapping">
-Request Quote
-</a>
+href="https://wa.me/27836308249?text=I%20need%20a%20quote%20for%20Strapping">📱 Quote on WhatsApp</a>
+<button class="cart-btn" onclick="addToCart('Strapping Products', 150)">🛒 Add to Cart</button>
 
 </div>
 </div>
@@ -287,7 +327,7 @@ Request Quote
 
 <div class="product-card">
 
-<img src="tvl.jpeg">
+<img src="tvl.jpeg" alt="TVL Stock Boxes Heavy Duty - Nexpak Solutions">
 
 <div class="product-content">
 
@@ -300,9 +340,8 @@ Available in multiple standard sizes.
 </p>
 
 <a class="quote-btn"
-href="https://wa.me/27836308249?text=Quote%20for%20TVL%20Boxes">
-Request Quote
-</a>
+href="https://wa.me/27836308249?text=I%20need%20a%20quote%20for%20TVL%20Boxes">📱 Quote on WhatsApp</a>
+<button class="cart-btn" onclick="addToCart('TVL Stock Boxes', 250)">🛒 Add to Cart</button>
 
 </div>
 </div>
@@ -311,7 +350,7 @@ Request Quote
 
 <div class="product-card">
 
-<img src="slb.jpeg">
+<img src="slb.jpeg" alt="Single Wall Board Boxes - Nexpak Solutions">
 
 <div class="product-content">
 
@@ -320,12 +359,12 @@ Request Quote
 <p>
 Cost-effective carton solutions suitable for retail,
 storage and light industrial packaging applications.
+Excellent for shipping and storage.
 </p>
 
 <a class="quote-btn"
-href="https://wa.me/27836308249?text=Quote%20for%20SWB%20Boxes">
-Request Quote
-</a>
+href="https://wa.me/27836308249?text=I%20need%20a%20quote%20for%20SWB%20Boxes">📱 Quote on WhatsApp</a>
+<button class="cart-btn" onclick="addToCart('Single Wall Boxes', 180)">🛒 Add to Cart</button>
 
 </div>
 </div>
@@ -334,7 +373,7 @@ Request Quote
 
 <div class="product-card">
 
-<img src="dlb.jpeg">
+<img src="dlb.jpeg" alt="Double Wall Board Boxes Heavy Duty - Nexpak Solutions">
 
 <div class="product-content">
 
@@ -343,12 +382,12 @@ Request Quote
 <p>
 Heavy-duty corrugated cartons designed for industrial
 and export packaging where additional strength is required.
+Extra protection for fragile items.
 </p>
 
 <a class="quote-btn"
-href="https://wa.me/27836308249?text=Quote%20for%20DWB%20Boxes">
-Request Quote
-</a>
+href="https://wa.me/27836308249?text=I%20need%20a%20quote%20for%20DWB%20Boxes">📱 Quote on WhatsApp</a>
+<button class="cart-btn" onclick="addToCart('Double Wall Boxes', 320)">🛒 Add to Cart</button>
 
 </div>
 </div>
@@ -357,7 +396,7 @@ Request Quote
 
 <div class="product-card">
 
-<img src="tape.jpg">
+<img src="tape.jpg" alt="Packaging Tapes - Clear, Buff, Masking, Duct - Nexpak Solutions">
 
 <div class="product-content">
 
@@ -370,9 +409,8 @@ warning tapes and custom branded tape solutions.
 </p>
 
 <a class="quote-btn"
-href="https://wa.me/27836308249?text=Quote%20for%20Packaging%20Tape">
-Request Quote
-</a>
+href="https://wa.me/27836308249?text=I%20need%20a%20quote%20for%20Packaging%20Tape">📱 Quote on WhatsApp</a>
+<button class="cart-btn" onclick="addToCart('Packaging Tape Roll', 45)">🛒 Add to Cart</button>
 
 </div>
 </div>
@@ -381,7 +419,7 @@ Request Quote
 
 <div class="product-card">
 
-<img src="seal.jpg">
+<img src="seal.jpg" alt="Fire and Security Seals - Nexpak Solutions">
 
 <div class="product-content">
 
@@ -390,12 +428,12 @@ Request Quote
 <p>
 Tamper-evident seals for fire extinguishers,
 logistics operations, warehouses and transport security.
+Professional grade security solutions.
 </p>
 
 <a class="quote-btn"
-href="https://wa.me/27836308249?text=Quote%20for%20Fire%20Seals">
-Request Quote
-</a>
+href="https://wa.me/27836308249?text=I%20need%20a%20quote%20for%20Fire%20Seals">📱 Quote on WhatsApp</a>
+<button class="cart-btn" onclick="addToCart('Security Seals', 200)">🛒 Add to Cart</button>
 
 </div>
 </div>
@@ -404,7 +442,7 @@ Request Quote
 
 <div class="product-card">
 
-<img src="ppe.jpeg">
+<img src="ppe.jpeg" alt="PPE Safety Wear - Gloves, Jackets, Hard Hats - Nexpak Solutions">
 
 <div class="product-content">
 
@@ -417,9 +455,8 @@ for industrial environments.
 </p>
 
 <a class="quote-btn"
-href="https://wa.me/27836308249?text=Quote%20for%20PPE">
-Request Quote
-</a>
+href="https://wa.me/27836308249?text=I%20need%20a%20quote%20for%20PPE">📱 Quote on WhatsApp</a>
+<button class="cart-btn" onclick="addToCart('PPE Safety Equipment', 500)">🛒 Add to Cart</button>
 
 </div>
 </div>
@@ -428,7 +465,7 @@ Request Quote
 
 <div class="product-card">
 
-<img src="ppe.jpeg">
+<img src="ppe.jpeg" alt="Custom Branded Packaging - Labels, Printed Boxes - Nexpak Solutions">
 
 <div class="product-content">
 
@@ -441,9 +478,8 @@ tailored to your company requirements.
 </p>
 
 <a class="quote-btn"
-href="https://wa.me/27836308249?text=Quote%20for%20Custom%20Branding">
-Request Quote
-</a>
+href="https://wa.me/27836308249?text=I%20need%20a%20quote%20for%20Custom%20Branding">📱 Quote on WhatsApp</a>
+<button class="cart-btn" onclick="addToCart('Custom Branding Service', 1000)">🛒 Add to Cart</button>
 
 </div>
 </div>
@@ -452,8 +488,8 @@ Request Quote
 
 <footer>
 
-© 2026 Nexpak Solutions PTY Ltd<br>
-Free Delivery On Orders Over R5000
+<h3>© 2026 Nexpak Solutions PTY Ltd</h3>
+<p>Free Delivery On Orders Over R5000 | Fast Nationwide Delivery</p>
 
 </footer>
 
@@ -463,5 +499,14 @@ target="_blank">
 💬
 </a>
 
+<script>
+function addToCart(product, price) {
+  let cart = JSON.parse(localStorage.getItem('nexpakCart')) || [];
+  cart.push({product: product, price: price});
+  localStorage.setItem('nexpakCart', JSON.stringify(cart));
+  alert(product + ' added to cart! View cart on price list page.');
+}
+</script>
+
 </body>
-  </html>
+</html>
