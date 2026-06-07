@@ -1,6 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
+   <!DOCTYPE html>
+<html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    font-family: Arial;
+    background:#0f172a;
+    color:white;
+    padding:20px;
+}
+
+.box {
+    background:#1f2937;
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:15px;
+}
+
+.status {
+    color:#25D366;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🧠 CRM SYSTEM</h1>
+
+<div class="box">
+    <h3>Latest Quote from Catalogue</h3>
+    <div id="deal"></div>
+</div>
+
+<script>
+
+let deal = JSON.parse(localStorage.getItem("latestDeal"));
+
+if(deal){
+
+    let html = "";
+    deal.items.forEach(i=>{
+        html += "• " + i + "<br>";
+    });
+
+    document.getElementById("deal").innerHTML = `
+        <p><b>Date:</b> ${deal.date}</p>
+        <p><b>Items:</b><br>${html}</p>
+        <p class="status">Status: NEW LEAD</p>
+    `;
+
+} else {
+    document.getElementById("deal").innerHTML =
+    "No recent quotes found.";
+}
+
+</script>
+
+</body>
+</html>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nexpak Catalogue + Pricing</title>
@@ -75,6 +133,9 @@ body {
     padding:15px;
     border-radius:10px;
 }
+    <button class="btn btn-blue" onclick="sendToCRM()">
+Send to CRM
+</button>
 
 /* FLOAT */
 .float {
@@ -174,6 +235,16 @@ function render(){
 }
 
 </script>
+function sendToCRM(){
+    let deal = {
+        items: cart,
+        date: new Date().toISOString()
+    };
 
+    localStorage.setItem("latestDeal", JSON.stringify(deal));
+
+    alert("Sent to CRM successfully!");
+    window.location.href = "crm.html";
+}
 </body>
 </html>
