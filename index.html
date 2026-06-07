@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nexpak Solutions | Packaging Supplier Gauteng South Africa</title>
   <meta name="description" content="Nexpak Solutions PTY Ltd supplies bubble wrap, pallet wrap, tapes, boxes, pallets and PPE across South Africa. Fast, reliable packaging supply for businesses and couriers.">
-  <meta name="keywords" content="packaging supplier, bubble wrap, pallet wrap, boxes, tape, PPE, warehouse, logistics, South Africa, Gauteng, corrugated boxes, strapping, packaging materials, industrial packaging, wholesale packaging, packaging solutions">
+  <meta name="keywords" content="packaging supplier, bubble wrap, pallet wrap, boxes, tape, PPE, warehouse, logistics, South Africa, Gauteng, corrugated boxes, strapping, packaging materials, industrial">
   <meta name="author" content="Nexpak Solutions PTY Ltd">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
   <meta name="google-site-verification" content="nexpak-solutions">
@@ -58,15 +58,33 @@
       font-size:18px;
     }
 
+    nav {
+      display:flex;
+      gap:20px;
+    }
+
     nav a {
       color:white;
       text-decoration:none;
-      margin-left:15px;
       font-weight:500;
+      transition: color 0.3s;
     }
 
     nav a:hover {
       color:var(--accent);
+    }
+
+    nav a.shop-link {
+      background: var(--accent);
+      color: #000;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    nav a.shop-link:hover {
+      background: #d97706;
+      color: #000;
     }
 
     /* HERO */
@@ -175,11 +193,12 @@
 
       nav {
         margin-top:10px;
+        flex-direction: column;
+        gap: 10px;
       }
 
       nav a {
         display:inline-block;
-        margin:5px;
       }
 
       .hero h1 {
@@ -201,6 +220,7 @@
     <a href="Products.html">Products</a>
     <a href="pricelist.html">Price List</a>
     <a href="contact.html">Contact</a>
+    <a href="shop.html" class="shop-link">🛒 Shop Now</a>
   </nav>
 </header>
 
@@ -209,7 +229,7 @@
   <h1>Packaging Solutions That Deliver</h1>
   <p>Wholesale packaging supplier across South Africa - Fast Delivery, Quality Materials, Competitive Pricing</p>
 
-  <a href="Products.html" class="btn primary">View Products</a>
+  <a href="shop.html" class="btn primary">Start Shopping</a>
   <a href="pricelist.html" class="btn accent">Get Quote</a>
 </section>
 
@@ -228,6 +248,8 @@
   <div>🚚 Fast Delivery Nationwide</div>
   <div>💰 Wholesale Pricing Available</div>
   <div>✅ Professional Service</div>
+  <div>🛒 Online Shopping Available</div>
+  <div>💳 Secure Payments</div>
 </div>
 
 <!-- FOOTER -->
