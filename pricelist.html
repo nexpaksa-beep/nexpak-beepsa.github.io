@@ -4,10 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Price List - Nexpak Solutions Packaging & PPE</title>
-
-<link rel="stylesheet" href="styles.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<title>Nexpak Solutions | Packaging & PPE</title>
 
 <style>
 body {
@@ -42,7 +39,7 @@ body {
     color:white;
 }
 
-/* CATEGORY */
+/* CTA BOX */
 .price-category {
     background:white;
     margin:20px auto;
@@ -50,34 +47,24 @@ body {
     border-radius:10px;
     max-width:1000px;
     border:1px solid #e5e7eb;
+    text-align:center;
 }
 
-.price-category h2 {
-    margin-bottom:10px;
-}
-
-/* BUTTON */
+/* BUTTONS */
 .btn {
     display:inline-block;
     padding:10px 16px;
     border-radius:6px;
     font-weight:600;
     text-decoration:none;
-    margin-top:10px;
+    margin:5px;
     cursor:pointer;
 }
 
-.btn-primary {
-    background:#2563eb;
-    color:white;
-}
+.btn-primary { background:#2563eb; color:white; }
+.btn-wa { background:#25D366; color:white; }
 
-.btn-wa {
-    background:#25D366;
-    color:white;
-}
-
-/* FLOAT BUTTON */
+/* FLOAT */
 .whatsapp-float {
     position:fixed;
     bottom:20px;
@@ -87,15 +74,59 @@ body {
     padding:15px;
     border-radius:50%;
     font-size:22px;
+    text-decoration:none;
 }
 
-/* FOOTER */
-footer {
-    background:#0f172a;
+/* ADMIN PANEL (CRM + QUOTES) */
+#adminPanel {
+    display:none;
+    padding:20px;
+    max-width:1100px;
+    margin:auto;
+}
+
+.admin-box {
+    background:#111827;
     color:white;
-    text-align:center;
-    padding:30px;
-    margin-top:40px;
+    padding:20px;
+    border-radius:10px;
+    margin-top:20px;
+}
+
+input, select {
+    width:100%;
+    padding:10px;
+    margin:5px 0;
+    border-radius:5px;
+    border:none;
+}
+
+button {
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:10px;
+    width:100%;
+    margin-top:10px;
+    cursor:pointer;
+}
+
+.lead {
+    background:#1f2937;
+    padding:10px;
+    margin-top:10px;
+    border-left:4px solid #25D366;
+}
+
+.status {
+    font-size:12px;
+    color:#25D366;
+}
+
+.quote-box {
+    background:#1f2937;
+    padding:10px;
+    margin-top:10px;
 }
 </style>
 </head>
@@ -107,29 +138,140 @@ footer {
     <div><b>Nexpak Solutions</b></div>
     <div>
         <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="Products.html">Products</a>
-        <a href="products1.html">Price List</a>
-        <a href="contact.html">Contact</a>
+        <a href="#products">Products</a>
+        <a href="#contact">Contact</a>
+        <a href="#admin" onclick="openAdmin()">Admin</a>
     </div>
 </div>
 
 <!-- HEADER -->
 <section class="page-header">
-    <h1>Request Pricing via WhatsApp</h1>
-    <p>No fixed prices shown — get instant quote</p>
-</section><nav>
-  <a href="index.html">Home</a>
-  <a href="Products.html">Products</a>
-  <a href="products1.html">Price List</a>
-</nav>
+    <h1>Packaging & PPE Supplier</h1>
+    <p>Fast quotes • Reliable supply • Gauteng delivery</p>
+</section>
 
 <!-- CTA -->
-<div class="price-category" style="text-align:center;">
-    <h2>Dont find it here? we will source it.</h2>
-    <p>Request a quote</p>
-    <a class="btn btn-primary" href="products1.html" target="_blank">View Pricelist</a>
+<div class="price-category">
+    <h2>Need Pricing?</h2>
+    <p>Get instant WhatsApp quotes</p>
+
+    <a class="btn btn-wa" href="https://wa.me/27836308249">WhatsApp Us</a>
+    <a class="btn btn-primary" href="#admin" onclick="openAdmin()">Open CRM System</a>
 </div>
+
+<!-- FLOAT -->
+<a class="whatsapp-float" href="https://wa.me/27836308249">💬</a>
+
+<!-- ================= ADMIN PANEL ================= -->
+<div id="adminPanel">
+
+    <h2>🧠 CRM + AUTO QUOTE SYSTEM</h2>
+
+    <!-- CRM -->
+    <div class="admin-box">
+        <h3>📊 CRM</h3>
+
+        <input id="name" placeholder="Client Name">
+        <input id="company" placeholder="Company">
+        <input id="contact" placeholder="Contact">
+
+        <button onclick="addLead()">Add Lead</button>
+
+        <div id="leads"></div>
+    </div>
+
+    <!-- QUOTES -->
+    <div class="admin-box">
+        <h3>🧾 Auto Quote</h3>
+
+        <select id="product">
+            <option value="Bubble Wrap|65">Bubble Wrap - R65</option>
+            <option value="Pallet Wrap|720">Pallet Wrap - R720</option>
+            <option value="Boxes|25">Boxes - R25</option>
+        </select>
+
+        <input id="qty" type="number" placeholder="Quantity">
+
+        <button onclick="generateQuote()">Generate Quote</button>
+
+        <div id="quoteResult"></div>
+    </div>
+
+</div>
+
+<script>
+
+let leads = JSON.parse(localStorage.getItem("leads")) || [];
+
+/* OPEN ADMIN */
+function openAdmin() {
+    document.getElementById("adminPanel").style.display = "block";
+    window.scrollTo(0, document.body.scrollHeight);
+}
+
+/* CRM */
+function addLead() {
+    let lead = {
+        name: name.value,
+        company: company.value,
+        contact: contact.value,
+        status: "NEW"
+    };
+
+    leads.push(lead);
+    localStorage.setItem("leads", JSON.stringify(leads));
+    renderLeads();
+}
+
+function renderLeads() {
+    let container = document.getElementById("leads");
+    container.innerHTML = "";
+
+    leads.forEach((l, i) => {
+        container.innerHTML += `
+        <div class="lead">
+            <b>${l.name}</b><br>
+            ${l.company}<br>
+            ${l.contact}<br>
+            <div class="status">${l.status}</div>
+            <button onclick="nextStatus(${i})">Change Status</button>
+        </div>`;
+    });
+}
+
+function nextStatus(i) {
+    let steps = ["NEW","QUOTED","WON","LOST"];
+    let current = leads[i].status;
+    leads[i].status = steps[(steps.indexOf(current)+1)%steps.length];
+
+    localStorage.setItem("leads", JSON.stringify(leads));
+    renderLeads();
+}
+
+/* QUOTES */
+function generateQuote() {
+    let data = product.value.split("|");
+    let total = parseFloat(data[1]) * parseInt(qty.value);
+
+    quoteResult.innerHTML = `
+    <div class="quote-box">
+        <h3>QUOTE</h3>
+        Product: ${data[0]}<br>
+        Total: <b>R${total}</b><br><br>
+
+        <a class="btn btn-wa"
+        href="https://wa.me/27836308249?text=Quote:%20${data[0]}%20Total:%20R${total}">
+        Send Quote on WhatsApp
+        </a>
+    </div>`;
+}
+
+renderLeads();
+
+</script>
+
+</body>
+</html>
 
 <!-- WHATSAPP FLOAT -->
 <a class="whatsapp-float wa-global">
