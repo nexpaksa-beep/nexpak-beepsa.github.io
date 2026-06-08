@@ -369,12 +369,27 @@ async function processPaymentEFT(formData, amount) {
     // Generate EFT payment details
     alert(`
 Please complete the payment via EFT:
-Account: Nexpak Solutions
-Amount: R${amount.toFixed(2)}
-Reference: ${formData.lastName}-${Date.now()}
+alert(`
+Please complete the payment via EFT:
 
-Your order details have been saved. We'll process your order once payment is received.
-    `);
+Bank: FNB
+Account Name: Nexpak Solutions
+Account Number: 2517857594
+Branch Code: 470010
+Account Type: Business Savings 
+
+Amount: R${amount.toFixed(2)}
+
+Reference:
+${formData.lastName}-${Date.now()}
+
+Email POP to:
+daryll@nexpaksolutions.co.za
+
+Your order will be processed once payment reflects.
+`);
+
+Your order details have been saved. 
     showOrderSuccess(formData);
 }
 
