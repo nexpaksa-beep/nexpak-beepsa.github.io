@@ -8,7 +8,7 @@ const products = [
         category: 'wrap',
         specs: '100m x 312mm',
         price: 161.11,
-        minOrder: 100,
+        minOrder: 10,
         unit: 'meters',
         icon: '🫧'
     },
@@ -18,7 +18,7 @@ const products = [
         category: 'wrap',
         specs: '100m x 416mm',
         price: 214.81,
-        minOrder: 100,
+        minOrder: 10,
         unit: 'meters',
         icon: '🫧'
     },
@@ -28,7 +28,7 @@ const products = [
         category: 'wrap',
         specs: '100m x 625mm',
         price: 316.02,
-        minOrder: 100,
+        minOrder: 10,
         unit: 'meters',
         icon: '🫧'
     },
@@ -38,7 +38,7 @@ const products = [
         category: 'wrap',
         specs: '100m x 1250mm',
         price: 470.93,
-        minOrder: 100,
+        minOrder: 10,
         unit: 'meters',
         icon: '🫧'
     },
@@ -50,7 +50,7 @@ const products = [
         category: 'wrap',
         specs: '450mm x 400m x 10mic',
         price: 165.61,
-        minOrder: 100,
+        minOrder: 10,
         unit: 'rolls',
         icon: '📦'
     },
@@ -60,7 +60,7 @@ const products = [
         category: 'wrap',
         specs: '450mm x 400m x 15mic',
         price: 248.43,
-        minOrder: 100,
+        minOrder: 10,
         unit: 'rolls',
         icon: '📦'
     },
@@ -70,7 +70,7 @@ const products = [
         category: 'wrap',
         specs: '450mm x 400m x 20mic',
         price: 331.23,
-        minOrder: 100,
+        minOrder: 10,
         unit: 'rolls',
         icon: '📦'
     },
@@ -80,7 +80,7 @@ const products = [
         category: 'wrap',
         specs: '450mm x 400m x 25mic',
         price: 414.03,
-        minOrder: 100,
+        minOrder: 10,
         unit: 'rolls',
         icon: '📦'
     },
@@ -92,7 +92,7 @@ const products = [
         category: 'tape',
         specs: '48mm x 50m',
         price: 17.90,
-        minOrder: 1,
+        minOrder: 36,
         unit: 'rolls',
         icon: '📎'
     },
@@ -102,7 +102,7 @@ const products = [
         category: 'tape',
         specs: '48mm x 100m',
         price: 35.67,
-        minOrder: 1,
+        minOrder: 36,
         unit: 'rolls',
         icon: '📎'
     },
@@ -112,7 +112,7 @@ const products = [
         category: 'tape',
         specs: '48mm x 50m',
         price: 17.90,
-        minOrder: 1,
+        minOrder: 36,
         unit: 'rolls',
         icon: '📎'
     },
@@ -122,7 +122,7 @@ const products = [
         category: 'tape',
         specs: '48mm x 100m',
         price: 35.67,
-        minOrder: 1,
+        minOrder: 36,
         unit: 'rolls',
         icon: '📎'
     },
@@ -132,7 +132,7 @@ const products = [
         category: 'tape',
         specs: '48mm x 40m',
         price: 71.63,
-        minOrder: 1,
+        minOrder: 40,
         unit: 'rolls',
         icon: '📎'
     },
@@ -142,7 +142,7 @@ const products = [
         category: 'tape',
         specs: '48mm x 40m',
         price: 31.46,
-        minOrder: 1,
+        minOrder: 40,
         unit: 'rolls',
         icon: '📎'
     },
@@ -154,7 +154,7 @@ const products = [
         category: 'boxes',
         specs: '500x400x147',
         price: 22.30,
-        minOrder: 2000,
+        minOrder: 500,
         unit: 'units',
         icon: '📦'
     },
@@ -164,7 +164,7 @@ const products = [
         category: 'boxes',
         specs: '500x400x286',
         price: 25.37,
-        minOrder: 2000,
+        minOrder: 500,
         unit: 'units',
         icon: '📦'
     },
@@ -174,7 +174,7 @@ const products = [
         category: 'boxes',
         specs: '500x400x450',
         price: 31.34,
-        minOrder: 2000,
+        minOrder: 500,
         unit: 'units',
         icon: '📦'
     },
@@ -184,7 +184,7 @@ const products = [
         category: 'boxes',
         specs: '230x150x150',
         price: 8.30,
-        minOrder: 2000,
+        minOrder: 500,
         unit: 'units',
         icon: '📦'
     },
@@ -194,7 +194,7 @@ const products = [
         category: 'boxes',
         specs: '250x150x250',
         price: 6.25,
-        minOrder: 2000,
+        minOrder: 500,
         unit: 'units',
         icon: '📦'
     },
