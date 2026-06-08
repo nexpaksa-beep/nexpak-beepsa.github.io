@@ -10,7 +10,7 @@ const products = [
         price: 161.11,
         minOrder: 10,
         unit: 'meters',
-        icon: 'bubble1.jpeg'
+        icon: '🫧'
     },
     {
         id: 'BW-416',
@@ -20,7 +20,7 @@ const products = [
         price: 214.81,
         minOrder: 10,
         unit: 'meters',
-        icon: 'bubble1.jpeg'
+        icon: '🫧'
     },
     {
         id: 'BW-625',
@@ -30,7 +30,7 @@ const products = [
         price: 316.02,
         minOrder: 10,
         unit: 'meters',
-        icon: 'bubble1.jpeg'
+        icon: '🫧'
     },
     {
         id: 'BW-1250',
@@ -40,7 +40,7 @@ const products = [
         price: 470.93,
         minOrder: 10,
         unit: 'meters',
-        icon: 'bubble1.jpeg'
+        icon: '🫧'
     },
 
     // ===== PALLET WRAP =====
@@ -52,7 +52,7 @@ const products = [
         price: 165.61,
         minOrder: 10,
         unit: 'rolls',
-        icon: 'sfilm.jpeg'
+        icon: '🧵'
     },
     {
         id: 'PW-15',
@@ -62,7 +62,7 @@ const products = [
         price: 248.43,
         minOrder: 10,
         unit: 'rolls',
-        icon: 'sfilm.jpeg'
+        icon: '🧵'
     },
     {
         id: 'PW-20',
@@ -72,7 +72,7 @@ const products = [
         price: 331.23,
         minOrder: 10,
         unit: 'rolls',
-        icon: 'sfilm.jpeg'
+        icon: '🧵'
     },
     {
         id: 'PW-25',
@@ -82,7 +82,7 @@ const products = [
         price: 414.03,
         minOrder: 10,
         unit: 'rolls',
-        icon: 'sfilm.jpeg'
+        icon: '🧵'
     },
 
     // ===== TAPES =====
@@ -94,7 +94,7 @@ const products = [
         price: 17.90,
         minOrder: 36,
         unit: 'rolls',
-        icon: 'clear.jpg'
+        icon: '📼'
     },
     {
         id: 'T-CLR-100',
@@ -104,7 +104,7 @@ const products = [
         price: 35.67,
         minOrder: 36,
         unit: 'rolls',
-        icon: 'clear.jpg'
+        icon: '📼'
     },
     {
         id: 'T-BUF-50',
@@ -114,7 +114,7 @@ const products = [
         price: 17.90,
         minOrder: 36,
         unit: 'rolls',
-        icon: '📎'
+        icon: '📼'
     },
     {
         id: 'T-BUF-100',
@@ -124,7 +124,7 @@ const products = [
         price: 35.67,
         minOrder: 36,
         unit: 'rolls',
-        icon: '📎'
+        icon: '📼'
     },
     {
         id: 'T-FIL',
@@ -134,7 +134,7 @@ const products = [
         price: 71.63,
         minOrder: 40,
         unit: 'rolls',
-        icon: '📎'
+        icon: '📼'
     },
     {
         id: 'T-MSK',
@@ -144,7 +144,7 @@ const products = [
         price: 31.46,
         minOrder: 40,
         unit: 'rolls',
-        icon: '📎'
+        icon: '📼'
     },
 
     // ===== BOXES =====
@@ -268,7 +268,7 @@ const products = [
         price: 179.99,
         minOrder: 1,
         unit: 'units',
-        icon: '👔'
+        icon: '🥼'
     },
     {
         id: 'PPE-OVERALL-M',
@@ -278,7 +278,7 @@ const products = [
         price: 179.99,
         minOrder: 1,
         unit: 'units',
-        icon: '👔'
+        icon: '🥼'
     },
     {
         id: 'PPE-OVERALL-L',
@@ -288,7 +288,7 @@ const products = [
         price: 179.99,
         minOrder: 1,
         unit: 'units',
-        icon: '👔'
+        icon: '🥼'
     },
     {
         id: 'PPE-OVERALL-XL',
@@ -298,7 +298,7 @@ const products = [
         price: 179.99,
         minOrder: 1,
         unit: 'units',
-        icon: '👔'
+        icon: '🥼'
     },
     {
         id: 'PPE-BOOTS-7',
