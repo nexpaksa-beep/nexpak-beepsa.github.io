@@ -10,7 +10,7 @@ const products = [
         price: 161.11,
         minOrder: 10,
         unit: 'meters',
-        icon: '🫧'
+        icon: 'bubble1.jpeg'
     },
     {
         id: 'BW-416',
@@ -20,7 +20,7 @@ const products = [
         price: 214.81,
         minOrder: 10,
         unit: 'meters',
-        icon: '🫧'
+        icon: 'bubble1.jpeg'
     },
     {
         id: 'BW-625',
@@ -30,7 +30,7 @@ const products = [
         price: 316.02,
         minOrder: 10,
         unit: 'meters',
-        icon: '🫧'
+        icon: 'bubble1.jpeg'
     },
     {
         id: 'BW-1250',
@@ -40,7 +40,7 @@ const products = [
         price: 470.93,
         minOrder: 10,
         unit: 'meters',
-        icon: '🫧'
+        icon: 'bubble1.jpeg'
     },
 
     // ===== PALLET WRAP =====
@@ -52,7 +52,7 @@ const products = [
         price: 165.61,
         minOrder: 10,
         unit: 'rolls',
-        icon: '📦'
+        icon: 'sfilm.jpeg'
     },
     {
         id: 'PW-15',
@@ -62,7 +62,7 @@ const products = [
         price: 248.43,
         minOrder: 10,
         unit: 'rolls',
-        icon: '📦'
+        icon: 'sfilm.jpeg'
     },
     {
         id: 'PW-20',
@@ -72,7 +72,7 @@ const products = [
         price: 331.23,
         minOrder: 10,
         unit: 'rolls',
-        icon: '📦'
+        icon: 'sfilm.jpeg'
     },
     {
         id: 'PW-25',
@@ -82,7 +82,7 @@ const products = [
         price: 414.03,
         minOrder: 10,
         unit: 'rolls',
-        icon: '📦'
+        icon: 'sfilm.jpeg'
     },
 
     // ===== TAPES =====
@@ -94,7 +94,7 @@ const products = [
         price: 17.90,
         minOrder: 36,
         unit: 'rolls',
-        icon: '📎'
+        icon: 'clear.jpg'
     },
     {
         id: 'T-CLR-100',
@@ -104,7 +104,7 @@ const products = [
         price: 35.67,
         minOrder: 36,
         unit: 'rolls',
-        icon: '📎'
+        icon: 'clear.jpg'
     },
     {
         id: 'T-BUF-50',
