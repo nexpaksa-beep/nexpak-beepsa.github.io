@@ -10,7 +10,7 @@ const products = [
         price: 161.11,
         minOrder: 10,
         unit: 'roll',
-        image: 'bobble.jpep'
+        icon: 'bobble.jpeg'
     },
     {
         id: 'BW-416',
