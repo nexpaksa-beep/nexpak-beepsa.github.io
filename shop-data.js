@@ -9,8 +9,8 @@ const products = [
         specs: '100m x 312mm',
         price: 161.11,
         minOrder: 10,
-        unit: 'meters',
-        icon: '🫧'
+        unit: 'roll',
+        icon: 'bobble.jpeg'
     },
     {
         id: 'BW-416',
@@ -19,7 +19,7 @@ const products = [
         specs: '100m x 416mm',
         price: 214.81,
         minOrder: 10,
-        unit: 'meters',
+        unit: 'roll',
         icon: '🫧'
     },
     {
@@ -29,7 +29,7 @@ const products = [
         specs: '100m x 625mm',
         price: 316.02,
         minOrder: 10,
-        unit: 'meters',
+        unit: 'roll',
         icon: '🫧'
     },
     {
@@ -39,7 +39,7 @@ const products = [
         specs: '100m x 1250mm',
         price: 470.93,
         minOrder: 10,
-        unit: 'meters',
+        unit: 'roll',
         icon: '🫧'
     },
 
