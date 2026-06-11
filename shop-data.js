@@ -11,7 +11,6 @@ const products = [
         minOrder: 10,
         unit: 'roll',
         icon: '🫧'
-        image: 'bubble.jpeg'
     },
     {
         id: 'BW-416',
