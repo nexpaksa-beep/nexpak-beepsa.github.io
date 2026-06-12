@@ -40,8 +40,33 @@ function renderProducts(category = 'all', searchTerm = '') {
             : '';
 
         card.innerHTML = `
-            <div class="product-image">${product.icon}</div>
-            <div class="product-body">
+    <div class="product-image">
+        <img
+            src="${product.images?.[0] || ''}"
+            alt="${product.name}"
+            class="product-img"
+            onerror="this.style.display='none'; this.parentElement.innerHTML='${product.icon}'"
+        >
+    </div>
+
+    <div class="product-body">
+        <div class="product-category">${product.category}</div>
+        <div class="product-name">${product.name}</div>
+        <div class="product-sku">SKU: ${product.id}</div>
+        <div class="product-specs">${product.specs}</div>
+        <div class="product-price">R${product.price.toFixed(2)}</div>
+        <div class="product-price-note">(Ex VAT)</div>
+        ${minOrderText}
+        <div class="product-footer">
+            <div class="qty-selector">
+                <button type="button" onclick="decreaseQty('qty-${product.id}')">−</button>
+                <input type="number" id="qty-${product.id}" value="${product.minOrder}" min="${product.minOrder}" step="1">
+                <button type="button" onclick="increaseQty('qty-${product.id}')">+</button>
+            </div>
+            <button class="add-to-cart-btn" onclick="addToCart('${product.id}')">Add to Cart</button>
+        </div>
+    </div>
+`;
                 <div class="product-category">${product.category}</div>
                 <div class="product-name">${product.name}</div>
                 <div class="product-sku">SKU: ${product.id}</div>
