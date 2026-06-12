@@ -19,10 +19,10 @@ const products = [
         description: "Protective bubble wrap for fragile goods and courier packaging.",
         features: ["Lightweight", "Shock absorbing", "Industrial grade"],
         images: [
-            "/products/bubblew1.jpeg",
-            "/products/bubblew2.jpeg",
-            "/products/bubblew3.jpeg",
-            "/products/bubblew4.jpeg"
+            "/bubblew1.jpeg",
+            "/bubblew2.jpeg",
+            "/bubblew3.jpeg",
+            "/bubblew4.jpeg"
         ],
         stock: 500,
         featured: true,
