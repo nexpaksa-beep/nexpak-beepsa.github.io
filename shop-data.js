@@ -19,10 +19,10 @@ const products = [
         description: "Protective bubble wrap for fragile goods and courier packaging.",
         features: ["Lightweight", "Shock absorbing", "Industrial grade"],
         images: [
-            "/products/bubblew1.jpeg",
-            "/products/bubblew2.jpeg",
-            "/products/bubblew3.jpeg",
-            "/products/bubblew4.jpeg"
+            "products/bubblew1.jpeg",
+            "products/bubblew2.jpeg",
+            "products/bubblew3.jpeg",
+            "products/bubblew4.jpeg"
         ],
         stock: 500,
         featured: true,
@@ -42,10 +42,10 @@ const products = [
         description: "Protective packaging for delicate products.",
         features: ["Reusable", "Strong", "Lightweight"],
         images: [
-            "/products/bubblew1.jpeg",
-            "/products/bubblew2.jpeg",
-            "/products/bubblew3.jpeg",
-            "/products/bubblew4.jpeg"
+            "products/bubblew1.jpeg",
+            "products/bubblew2.jpeg",
+            "products/bubblew3.jpeg",
+            "products/bubblew4.jpeg"
         ],
         stock: 500,
         featured: true,
@@ -65,10 +65,10 @@ const products = [
         description: "Industrial bubble wrap ideal for shipping and storage.",
         features: ["Shock absorbing", "Flexible", "Durable"],
         images: [
-            "/products/bubblew1.jpeg",
-            "/products/bubblew2.jpeg",
-            "/products/bubblew3.jpeg",
-            "/products/bubblew4.jpeg"
+            "products/bubblew1.jpeg",
+            "products/bubblew2.jpeg",
+            "products/bubblew3.jpeg",
+            "products/bubblew4.jpeg"
         ],
         stock: 400,
         featured: true,
@@ -88,10 +88,10 @@ const products = [
         description: "Large-format bubble wrap for furniture and heavy-duty packaging.",
         features: ["Wide coverage", "Protective", "Professional grade"],
         images: [
-            "/products/bubblew1.jpeg",
-            "/products/bubblew2.jpeg",
-            "/products/bubblew3.jpeg",
-            "/products/bubblew4.jpeg"
+            "products/bubblew1.jpeg",
+            "products/bubblew2.jpeg",
+            "products/bubblew3.jpeg",
+            "products/bubblew4.jpeg"
         ],
         stock: 300,
         featured: true,
@@ -115,10 +115,10 @@ const products = [
         description: "Economical stretch film for pallet stabilization.",
         features: ["High stretch", "Clear film", "Warehouse use"],
         images: [
-            "/products/stretch1.jpeg",
-            "/products/stretch2.jpeg",
-            "/products/stretch3.jpeg",
-            "/products/stretch4.jpeg"
+            "products/stretch1.jpeg",
+            "products/stretch2.jpeg",
+            "products/stretch3.jpeg",
+            "products/stretch4.jpeg"
         ],
         stock: 500,
         featured: true,
@@ -138,10 +138,10 @@ const products = [
         description: "Premium stretch film for securing pallet loads.",
         features: ["Strong cling", "Industrial grade", "Clear finish"],
         images: [
-            "/products/stretch1.jpeg",
-            "/products/stretch2.jpeg",
-            "/products/stretch3.jpeg",
-            "/products/stretch4.jpeg"
+            "products/stretch1.jpeg",
+            "products/stretch2.jpeg",
+            "products/stretch3.jpeg",
+            "products/stretch4.jpeg"
         ],
         stock: 450,
         featured: true,
@@ -161,10 +161,10 @@ const products = [
         description: "Heavy-duty stretch wrap for warehouse and logistics use.",
         features: ["Durable", "High cling", "Professional quality"],
         images: [
-            "/products/stretch1.jpeg",
-            "/products/stretch2.jpeg",
-            "/products/stretch3.jpeg",
-            "/products/stretch4.jpeg"
+            "products/stretch1.jpeg",
+            "products/stretch2.jpeg",
+            "products/stretch3.jpeg",
+            "products/stretch4.jpeg"
         ],
         stock: 400,
         featured: true,
@@ -184,10 +184,10 @@ const products = [
         description: "Maximum strength pallet wrap for demanding applications.",
         features: ["Heavy duty", "Excellent cling", "Industrial use"],
         images: [
-            "/products/stretch1.jpeg",
-            "/products/stretch2.jpeg",
-            "/products/stretch3.jpeg",
-            "/products/stretch4.jpeg"
+            "products/stretch1.jpeg",
+            "products/stretch2.jpeg",
+            "products/stretch3.jpeg",
+            "products/stretch4.jpeg"
         ],
         stock: 350,
         featured: true,
@@ -211,9 +211,9 @@ const products = [
         description: "Foam protection for furniture, glass and sensitive products.",
         features: ["Scratch resistant", "Lightweight", "Flexible"],
         images: [
-            "/products/aero1.jpeg",
-            "/products/aero2.jpeg",
-            "/products/aero3.jpeg"
+            "products/aero1.jpeg",
+            "products/aero2.jpeg",
+            "products/aero3.jpeg"
         ],
         stock: 200,
         featured: true,
@@ -236,8 +236,8 @@ const products = [
         description: "High-quality transparent carton sealing tape.",
         features: ["Strong adhesion", "Clear finish", "Packaging grade"],
         images: [
-            "/products/cleartp1.jpeg",
-            "/products/cleartp2.jpeg"
+            "products/cleartp1.jpeg",
+            "products/cleartp2.jpeg"
         ],
         stock: 1000,
         featured: true,
@@ -257,8 +257,8 @@ const products = [
         description: "Extra-length clear packaging tape.",
         features: ["Long roll", "Industrial use", "Strong bond"],
         images: [
-            "/products/cleartp1.jpeg",
-            "/products/cleartp2.jpeg"
+            "products/cleartp1.jpeg",
+            "products/cleartp2.jpeg"
         ],
         stock: 1000,
         featured: true,
@@ -278,8 +278,8 @@ const products = [
         description: "Brown carton sealing tape for shipping and storage.",
         features: ["Strong adhesive", "Warehouse use", "Durable"],
         images: [
-            "/products/bufftp1.jpeg",
-            "/products/bufftp2.jpeg"
+            "products/bufftp1.jpeg",
+            "products/bufftp2.jpeg"
         ],
         stock: 1000,
         featured: true,
@@ -299,8 +299,8 @@ const products = [
         description: "Heavy-duty brown packaging tape.",
         features: ["Long roll", "Industrial grade", "High strength"],
         images: [
-            "/products/bufftp1.jpeg",
-            "/products/bufftp2.jpeg"
+            "products/bufftp1.jpeg",
+            "products/bufftp2.jpeg"
         ],
         stock: 900,
         featured: true,
@@ -320,7 +320,7 @@ const products = [
         description: "Reinforced filament tape for heavy-duty bundling.",
         features: ["Fiberglass reinforced", "High tensile strength"],
         images: [
-            "/products/filatape.jpeg"
+            "products/filatape.jpeg"
         ],
         stock: 500,
         featured: true,
@@ -340,7 +340,7 @@ const products = [
         description: "General-purpose masking tape for painting and packaging.",
         features: ["Easy tear", "Clean removal", "Multi-purpose"],
         images: [
-            "/products/cleartp1.jpeg"
+            "products/cleartp1.jpeg"
         ],
         stock: 600,
         featured: false,
@@ -364,7 +364,7 @@ const products = [
         description: "Strong pallet strapping for securing loads.",
         features: ["High strength", "Industrial use", "Reliable"],
         images: [
-            "/products/palletstrap.jpeg"
+            "products/palletstrap.jpeg"
         ],
         stock: 150,
         featured: true,
@@ -388,10 +388,10 @@ const products = [
         description: "Metal buckles for pallet strapping systems.",
         features: ["Corrosion resistant", "Secure fastening"],
         images: [
-            "/products/buckle1.jpeg",
-            "/products/buckle2.jpeg",
-            "/products/buckle3.jpeg",
-            "/products/buckle4.jpeg"
+            "products/buckle1.jpeg",
+            "products/buckle2.jpeg",
+            "products/buckle3.jpeg",
+            "products/buckle4.jpeg"
         ],
         stock: 300,
         featured: false,
@@ -415,9 +415,9 @@ const products = [
         description: "Single-wall corrugated carton for lightweight products.",
         features: ["Lightweight", "Stackable", "Durable"],
         images: [
-            "/products/singlebox1.jpeg",
-            "/products/singlebox2.jpeg",
-            "/products/singlebox3.jpeg"
+            "products/singlebox1.jpeg",
+            "products/singlebox2.jpeg",
+            "products/singlebox3.jpeg"
         ],
         stock: 5000,
         featured: true,
@@ -437,9 +437,9 @@ const products = [
         description: "Strong single-wall carton for packaging applications.",
         features: ["Corrugated board", "Stackable"],
         images: [
-            "/products/singlebox1.jpeg",
-            "/products/singlebox2.jpeg",
-            "/products/singlebox3.jpeg"
+            "products/singlebox1.jpeg",
+            "products/singlebox2.jpeg",
+            "products/singlebox3.jpeg"
         ],
         stock: 5000,
         featured: true,
@@ -463,9 +463,9 @@ const products = [
         description: "Heavy-duty double-wall box for industrial applications.",
         features: ["Extra strength", "Export quality"],
         images: [
-            "/products/doublebox1.jpeg",
-            "/products/doublebox2.jpeg",
-            "/products/doublebox3.jpeg"
+            "products/doublebox1.jpeg",
+            "products/doublebox2.jpeg",
+            "products/doublebox3.jpeg"
         ],
         stock: 3000,
         featured: true,
@@ -489,8 +489,8 @@ const products = [
         description: "Heavy-duty corrugated TVL box.",
         features: ["Strong construction", "Stackable"],
         images: [
-            "/products/tvlbox1.jpeg",
-            "/products/tvlbox2.jpeg"
+            "products/tvlbox1.jpeg",
+            "products/tvlbox2.jpeg"
         ],
         stock: 4000,
         featured: true,
@@ -510,8 +510,8 @@ const products = [
         description: "Large industrial corrugated box.",
         features: ["Durable", "High load capacity"],
         images: [
-            "/products/tvlbox1.jpeg",
-            "/products/tvlbox2.jpeg"
+            "products/tvlbox1.jpeg",
+            "products/tvlbox2.jpeg"
         ],
         stock: 4000,
         featured: true,
@@ -531,8 +531,8 @@ const products = [
         description: "Large-volume heavy-duty box.",
         features: ["High strength", "Warehouse use"],
         images: [
-            "/products/tvlbox1.jpeg",
-            "/products/tvlbox2.jpeg"
+            "products/tvlbox1.jpeg",
+            "products/tvlbox2.jpeg"
         ],
         stock: 3500,
         featured: true,
@@ -555,9 +555,9 @@ const products = [
         description: "Industrial safety helmet for construction and warehouse environments.",
         features: ["Impact resistant", "Lightweight", "Adjustable fit"],
         images: [
-            "/products/hat1.jpeg",
-            "/products/hat2.jpeg",
-            "/products/hat3.jpeg"
+            "products/hat1.jpeg",
+            "products/hat2.jpeg",
+            "products/hat3.jpeg"
         ],
         stock: 500,
         featured: true,
@@ -577,9 +577,9 @@ const products = [
         description: "Professional-grade safety helmet.",
         features: ["Adjustable", "Impact resistant"],
         images: [
-            "/products/hat1.jpeg",
-            "/products/hat2.jpeg",
-            "/products/hat3.jpeg"
+            "products/hat1.jpeg",
+            "products/hat2.jpeg",
+            "products/hat3.jpeg"
         ],
         stock: 500,
         featured: false,
@@ -599,9 +599,9 @@ const products = [
         description: "High-visibility safety helmet.",
         features: ["Comfort fit", "Durable shell"],
         images: [
-            "/products/hat1.jpeg",
-            "/products/hat2.jpeg",
-            "/products/hat3.jpeg"
+            "products/hat1.jpeg",
+            "products/hat2.jpeg",
+            "products/hat3.jpeg"
         ],
         stock: 500,
         featured: false,
@@ -625,10 +625,10 @@ const products = [
         description: "Protective goggles for industrial and workshop applications.",
         features: ["UV resistant", "Impact resistant"],
         images: [
-            "/products/eye1.jpeg",
-            "/products/eye2.jpeg",
-            "/products/eye3.jpeg",
-            "/products/eye4.jpeg"
+            "products/eye1.jpeg",
+            "products/eye2.jpeg",
+            "products/eye3.jpeg",
+            "products/eye4.jpeg"
         ],
         stock: 800,
         featured: true,
@@ -652,9 +652,9 @@ const products = [
         description: "Comfortable hearing protection for noisy work environments.",
         features: ["Reusable", "Soft fit"],
         images: [
-            "/products/ear1.jpeg",
-            "/products/ear2.jpeg",
-            "/products/ear3.jpeg"
+            "products/ear1.jpeg",
+            "products/ear2.jpeg",
+            "products/ear3.jpeg"
         ],
         stock: 1000,
         featured: false,
@@ -678,9 +678,9 @@ const products = [
         description: "General-purpose industrial gloves.",
         features: ["Good grip", "Durable"],
         images: [
-            "/products/glove1.jpeg",
-            "/products/glove3.jpeg",
-            "/products/gloves.jpeg"
+            "products/glove1.jpeg",
+            "products/glove3.jpeg",
+            "products/gloves.jpeg"
         ],
         stock: 300,
         featured: true,
@@ -700,9 +700,9 @@ const products = [
         description: "Chemical-resistant nitrile gloves.",
         features: ["Strong grip", "Oil resistant"],
         images: [
-            "/products/glove1.jpeg",
-            "/products/glove3.jpeg",
-            "/products/gloves.jpeg"
+            "products/glove1.jpeg",
+            "products/glove3.jpeg",
+            "products/gloves.jpeg"
         ],
         stock: 300,
         featured: true,
@@ -726,13 +726,13 @@ const products = [
         description: "Heavy-duty steel-toe safety boots.",
         features: ["Slip resistant", "Steel toe cap"],
         images: [
-            "/products/boot1.jpeg",
-            "/products/boot2.jpeg",
-            "/products/boot3.jpeg",
-            "/products/boot4.jpeg",
-            "/products/boot5.jpeg",
-            "/products/boot6.jpeg",
-            "/products/boot7.jpeg"
+            "products/boot1.jpeg",
+            "products/boot2.jpeg",
+            "products/boot3.jpeg",
+            "products/boot4.jpeg",
+            "products/boot5.jpeg",
+            "products/boot6.jpeg",
+            "products/boot7.jpeg"
         ],
         stock: 100,
         featured: true,
@@ -756,7 +756,7 @@ const products = [
         description: "Durable one-piece work overall.",
         features: ["Comfort fit", "Industrial grade"],
         images: [
-            "/products/blueoverall.jpeg"
+            "products/blueoverall.jpeg"
         ],
         stock: 200,
         featured: true,
@@ -776,7 +776,7 @@ const products = [
         description: "Comfortable ladies industrial overall.",
         features: ["Tailored fit"],
         images: [
-            "/products/ladiesoverall.jpeg"
+            "products/ladiesoverall.jpeg"
         ],
         stock: 150,
         featured: false,
@@ -796,7 +796,7 @@ const products = [
         description: "High-visibility safety overall.",
         features: ["Reflective tape", "Durable"],
         images: [
-            "/products/refoverall.jpeg"
+            "products/refoverall.jpeg"
         ],
         stock: 200,
         featured: true,
@@ -816,7 +816,7 @@ const products = [
         description: "Flame-resistant workwear for hazardous environments.",
         features: ["FR fabric", "Heavy-duty"],
         images: [
-            "/products/overallfr.jpeg"
+            "products/overallfr.jpeg"
         ],
         stock: 100,
         featured: true,
@@ -840,7 +840,7 @@ const products = [
         description: "Waterproof rain suit for outdoor work.",
         features: ["Waterproof", "Lightweight"],
         images: [
-            "/products/2prainsuit.jpeg"
+            "products/2prainsuit.jpeg"
         ],
         stock: 150,
         featured: false,
@@ -864,10 +864,10 @@ const products = [
         description: "High-visibility reflective vest.",
         features: ["Bright colour", "Reflective tape"],
         images: [
-            "/products/vest1.jpeg",
-            "/products/vest2.jpeg",
-            "/products/vest3.jpeg",
-            "/products/vest4.jpeg"
+            "products/vest1.jpeg",
+            "products/vest2.jpeg",
+            "products/vest3.jpeg",
+            "products/vest4.jpeg"
         ],
         stock: 500,
         featured: true,
@@ -891,7 +891,7 @@ const products = [
         description: "Lightweight void fill packaging.",
         features: ["Shock absorbing", "Reusable"],
         images: [
-            "/products/aero1.jpeg"
+            "products/aero1.jpeg"
         ],
         stock: 100,
         featured: false,
@@ -911,7 +911,7 @@ const products = [
         description: "Large-volume void fill solution.",
         features: ["Protective", "Lightweight"],
         images: [
-            "/products/aero1.jpeg"
+            "products/aero1.jpeg"
         ],
         stock: 100,
         featured: false,
@@ -935,7 +935,7 @@ const products = [
         description: "Heavy-duty wooden pallet.",
         features: ["Reusable", "Strong"],
         images: [
-            "/products/woodenpallet1.jpeg"
+            "products/woodenpallet1.jpeg"
         ],
         stock: 50,
         featured: true,
@@ -955,7 +955,7 @@ const products = [
         description: "Durable reusable plastic pallet.",
         features: ["Water resistant", "Long lifespan"],
         images: [
-            "/products/plasticpallet.jpeg"
+            "products/plasticpallet.jpeg"
         ],
         stock: 50,
         featured: true,
