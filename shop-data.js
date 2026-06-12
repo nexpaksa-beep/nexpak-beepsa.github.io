@@ -320,7 +320,7 @@ const products = [
         description: "Reinforced filament tape for heavy-duty bundling.",
         features: ["Fiberglass reinforced", "High tensile strength"],
         images: [
-            "products/filatape.jpeg"
+            "products/cleartp1.jpeg"
         ],
         stock: 500,
         featured: true,
@@ -680,7 +680,7 @@ const products = [
         images: [
             "products/glove1.jpeg",
             "products/glove3.jpeg",
-            "products/gloves.jpeg"
+            "products/glove4.jpeg"
         ],
         stock: 300,
         featured: true,
@@ -702,7 +702,7 @@ const products = [
         images: [
             "products/glove1.jpeg",
             "products/glove3.jpeg",
-            "products/gloves.jpeg"
+            "products/glove4.jpeg"
         ],
         stock: 300,
         featured: true,
