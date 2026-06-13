@@ -394,7 +394,7 @@ async function processPaymentEFT(formData, amount) {
     alert(`
 Please complete the payment via EFT:
 
-Bank: FNB
+Bank: Capitec
 Account Name: Nexpak Solutions
 Account Number: 2517857594
 Branch Code: 470010
