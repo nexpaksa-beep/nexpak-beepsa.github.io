@@ -11,7 +11,8 @@ specs: '100m x 312mm',
 price: 161.11,
 minOrder: 10,
 unit: 'roll',
-icon: '🫧'
+icon: '🫧',
+image: 'products/cleartp1.jpeg'
 },
 {
 id: 'BW-416',
