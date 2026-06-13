@@ -11,82 +11,140 @@ document.addEventListener('DOMContentLoaded', function() {
     renderProducts();
     initializeStripe();
     updateCartUI();
-});
-
+})
 // ===== PRODUCT RENDERING =====
-function renderProducts(category = 'all', searchTerm = '') {
-    const grid = document.getElementById('productsGrid');
-    grid.innerHTML = '';
+function renderProducts(category = "all", searchTerm = "") {
 
-    let filteredProducts = products.filter(p => {
-        const categoryMatch = category === 'all' || p.category === category;
-        const searchMatch = searchTerm === '' || 
-            p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            p.id.toLowerCase().includes(searchTerm.toLowerCase());
+    const grid = document.getElementById("productsGrid");
+
+    if (!grid) return;
+
+    grid.innerHTML = "";
+
+    let filteredProducts = products.filter(product => {
+
+        const categoryMatch =
+            category === "all" || product.category === category;
+
+        const searchMatch =
+            searchTerm === "" ||
+            product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            product.id.toLowerCase().includes(searchTerm.toLowerCase());
+
         return categoryMatch && searchMatch;
+
     });
 
     if (filteredProducts.length === 0) {
-        grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #888;">No products found</div>';
+
+        grid.innerHTML = `
+            <div style="
+                grid-column:1/-1;
+                text-align:center;
+                padding:3rem;
+                color:#888;">
+                No products found
+            </div>
+        `;
+
         return;
     }
 
     filteredProducts.forEach(product => {
-        const card = document.createElement('div');
-        card.className = 'product-card';
-        
-        const minOrderText = product.minOrder > 1 
-            ? `<div class="min-order">⚠️ Minimum Order: ${product.minOrder} ${product.unit}</div>`
-            : '';
+
+        const card = document.createElement("div");
+
+        card.className = "product-card";
+
+        const minOrderText =
+            product.minOrder > 1
+                ? `<div class="min-order">
+                    ⚠️ Minimum Order:
+                    ${product.minOrder} ${product.unit}
+                   </div>`
+                : "";
 
         card.innerHTML = `
-    <div class="product-image">
-        <img
-            src="${product.images?.[0] || ''}"
-            alt="${product.name}"
-            class="product-img"
-            onerror="this.style.display='none'; this.parentElement.innerHTML='${product.icon}'"
-        >
-    </div>
 
-    <div class="product-body">
-        <div class="product-category">${product.category}</div>
-        <div class="product-name">${product.name}</div>
-        <div class="product-sku">SKU: ${product.id}</div>
-        <div class="product-specs">${product.specs}</div>
-        <div class="product-price">R${product.price.toFixed(2)}</div>
-        <div class="product-price-note">(Ex VAT)</div>
-        ${minOrderText}
-        <div class="product-footer">
-            <div class="qty-selector">
-                <button type="button" onclick="decreaseQty('qty-${product.id}')">−</button>
-                <input type="number" id="qty-${product.id}" value="${product.minOrder}" min="${product.minOrder}" step="1">
-                <button type="button" onclick="increaseQty('qty-${product.id}')">+</button>
+            <div class="product-image">
+
+                <img
+                    src="${product.images?.[0] || ""}"
+                    alt="${product.name}"
+                    class="product-img"
+                    onerror="this.style.display='none'; this.parentElement.innerHTML='${product.icon}'"
+                >
+
             </div>
-            <button class="add-to-cart-btn" onclick="addToCart('${product.id}')">Add to Cart</button>
-        </div>
-    </div>
-`;
-                <div class="product-category">${product.category}</div>
-                <div class="product-name">${product.name}</div>
-                <div class="product-sku">SKU: ${product.id}</div>
-                <div class="product-specs">${product.specs}</div>
-                <div class="product-price">R${product.price.toFixed(2)}</div>
-                <div class="product-price-note">(Ex VAT)</div>
-                ${minOrderText}
-                <div class="product-footer">
-                    <div class="qty-selector">
-                        <button type="button" onclick="decreaseQty('qty-${product.id}')">−</button>
-                        <input type="number" id="qty-${product.id}" value="${product.minOrder}" min="${product.minOrder}" step="1">
-                        <button type="button" onclick="increaseQty('qty-${product.id}')">+</button>
-                    </div>
-                    <button class="add-to-cart-btn" onclick="addToCart('${product.id}')">Add to Cart</button>
+
+            <div class="product-body">
+
+                <div class="product-category">
+                    ${product.category}
                 </div>
+
+                <div class="product-name">
+                    ${product.name}
+                </div>
+
+                <div class="product-sku">
+                    SKU: ${product.id}
+                </div>
+
+                <div class="product-specs">
+                    ${product.specs}
+                </div>
+
+                <div class="product-price">
+                    R${product.price.toFixed(2)}
+                </div>
+
+                <div class="product-price-note">
+                    (Ex VAT)
+                </div>
+
+                ${minOrderText}
+
+                <div class="product-footer">
+
+                    <div class="qty-selector">
+
+                        <button
+                            type="button"
+                            onclick="decreaseQty('qty-${product.id}')">
+                            −
+                        </button>
+
+                        <input
+                            type="number"
+                            id="qty-${product.id}"
+                            value="${product.minOrder}"
+                            min="${product.minOrder}"
+                            step="1">
+
+                        <button
+                            type="button"
+                            onclick="increaseQty('qty-${product.id}')">
+                            +
+                        </button>
+
+                    </div>
+
+                    <button
+                        class="add-to-cart-btn"
+                        onclick="addToCart('${product.id}')">
+                        Add to Cart
+                    </button>
+
+                </div>
+
             </div>
         `;
-        
+
         grid.appendChild(card);
+
     });
+
 }
 
 // ===== QUANTITY CONTROLS =====
