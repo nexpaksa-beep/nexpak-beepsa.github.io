@@ -12,7 +12,7 @@ price: 161.11,
 minOrder: 10,
 unit: 'roll',
 icon: '🫧',
-images: ['straps.jpeg']
+images: ['bubble1.jpeg']
 },
 {
 id: 'BW-416',
@@ -22,7 +22,8 @@ specs: '100m x 416mm',
 price: 214.81,
 minOrder: 10,
 unit: 'roll',
-icon: '🫧'
+icon: '🫧',
+images: ['bubble1.jpeg']
 },
 {
 id: 'BW-625',
@@ -32,7 +33,8 @@ specs: '100m x 625mm',
 price: 316.02,
 minOrder: 10,
 unit: 'roll',
-icon: '🫧'
+icon: '🫧',
+images: ['bubble1.jpeg']
 },
 {
 id: 'BW-1250',
@@ -42,7 +44,8 @@ specs: '100m x 1250mm',
 price: 470.93,
 minOrder: 10,
 unit: 'roll',
-icon: '🫧'
+icon: '🫧',
+images: ['bubble1.jpeg']
 },
 
 // ===== PALLET WRAP =====  
