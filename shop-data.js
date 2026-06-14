@@ -475,7 +475,7 @@ images: ['bubble1.jpeg']
     minOrder: 1,  
     unit: 'units',  
     icon: '🪵',
-    images: ['woodenpallet.jpeg']
+    images: ['woodenpallet2.jpeg']
 },  
 {  
     id: 'PALLET-PLASTIC',  
@@ -486,7 +486,7 @@ images: ['bubble1.jpeg']
     minOrder: 1,  
     unit: 'units',  
     icon: '🔷',
-    images: ['plasticpallet.jpeg']
+    images: ['palletplastic.jpeg']
 }
 
 ];
