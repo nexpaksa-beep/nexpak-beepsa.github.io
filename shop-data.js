@@ -103,7 +103,8 @@ images: ['bubble1.jpeg']
     price: 17.90,  
     minOrder: 36,  
     unit: 'rolls',  
-    icon: '📼'  
+    icon: '📼',
+    images: ['cleartp1.jpeg']
 },  
 {  
     id: 'T-CLR-100',  
@@ -113,7 +114,8 @@ images: ['bubble1.jpeg']
     price: 35.67,  
     minOrder: 36,  
     unit: 'rolls',  
-    icon: '📼'  
+    icon: '📼',
+    images: ['cleartp1.jpeg']
 },  
 {  
     id: 'T-BUF-50',  
@@ -123,7 +125,8 @@ images: ['bubble1.jpeg']
     price: 17.90,  
     minOrder: 36,  
     unit: 'rolls',  
-    icon: '📼'  
+    icon: '📼',
+    images: ['bufftp1.jpeg']
 },  
 {  
     id: 'T-BUF-100',  
@@ -133,7 +136,8 @@ images: ['bubble1.jpeg']
     price: 35.67,  
     minOrder: 36,  
     unit: 'rolls',  
-    icon: '📼'  
+    icon: '📼',
+    images: ['bufftp1.jpeg']
 },  
 {  
     id: 'T-FIL',  
@@ -143,7 +147,8 @@ images: ['bubble1.jpeg']
     price: 71.63,  
     minOrder: 40,  
     unit: 'rolls',  
-    icon: '📼'  
+    icon: '📼',
+    images: ['filatape.jpeg']
 },  
 {  
     id: 'T-MSK',  
@@ -153,7 +158,8 @@ images: ['bubble1.jpeg']
     price: 31.46,  
     minOrder: 40,  
     unit: 'rolls',  
-    icon: '📼'  
+    icon: '📼',
+    images: ['maskingtape.jpeg']
 },  
 
 // ===== BOXES =====  
@@ -165,7 +171,8 @@ images: ['bubble1.jpeg']
     price: 22.30,  
     minOrder: 500,  
     unit: 'units',  
-    icon: '📦'  
+    icon: '📦',
+    images: ['tvlbox1.jpeg']
 },  
 {  
     id: 'TVL-286',  
@@ -175,7 +182,8 @@ images: ['bubble1.jpeg']
     price: 25.37,  
     minOrder: 500,  
     unit: 'units',  
-    icon: '📦'  
+    icon: '📦',
+    images: ['tvlbox1.jpeg']
 },  
 {  
     id: 'TVL-450',  
@@ -185,7 +193,8 @@ images: ['bubble1.jpeg']
     price: 31.34,  
     minOrder: 500,  
     unit: 'units',  
-    icon: '📦'  
+    icon: '📦',
+    images: ['tvlbox1.jpeg']
 },  
 {  
     id: 'SWB-230',  
@@ -195,7 +204,8 @@ images: ['bubble1.jpeg']
     price: 8.30,  
     minOrder: 500,  
     unit: 'units',  
-    icon: '📦'  
+    icon: '📦',
+    images: ['singlebox1.jpeg']
 },  
 {  
     id: 'SWB-250',  
@@ -205,7 +215,8 @@ images: ['bubble1.jpeg']
     price: 6.25,  
     minOrder: 500,  
     unit: 'units',  
-    icon: '📦'  
+    icon: '📦',
+    images: ['singlebox1.jpeg']
 },  
 
 // ===== PPE PRODUCTS =====  
@@ -217,7 +228,8 @@ images: ['bubble1.jpeg']
     price: 89.99,  
     minOrder: 1,  
     unit: 'units',  
-    icon: '🪖'  
+    icon: '🪖',
+    images: ['hat1.jpeg']
 },  
 {  
     id: 'PPE-HH-WHT',  
@@ -227,7 +239,8 @@ images: ['bubble1.jpeg']
     price: 89.99,  
     minOrder: 1,  
     unit: 'units',  
-    icon: '🪖'  
+    icon: '🪖',
+    images: ['hat1.jpeg']
 },  
 {  
     id: 'PPE-HH-ORG',  
@@ -237,7 +250,8 @@ images: ['bubble1.jpeg']
     price: 89.99,  
     minOrder: 1,  
     unit: 'units',  
-    icon: '🪖'  
+    icon: '🪖',
+    images: ['hat1.jpeg']
 },  
 {  
     id: 'PPE-GLOVES-L',  
@@ -247,7 +261,8 @@ images: ['bubble1.jpeg']
     price: 149.99,  
     minOrder: 1,  
     unit: 'packs',  
-    icon: '🧤'  
+    icon: '🧤',
+    images: ['glove1.jpeg']
 },  
 {  
     id: 'PPE-GLOVES-N',  
@@ -257,7 +272,8 @@ images: ['bubble1.jpeg']
     price: 199.99,  
     minOrder: 1,  
     unit: 'packs',  
-    icon: '🧤'  
+    icon: '🧤',
+    images: ['glove1.jpeg']
 },  
 {  
     id: 'PPE-GLOVES-L-XL',  
@@ -267,7 +283,8 @@ images: ['bubble1.jpeg']
     price: 249.99,  
     minOrder: 1,  
     unit: 'pairs',  
-    icon: '🧤'  
+    icon: '🧤',
+    images: ['glove1.jpeg']
 },  
 {  
     id: 'PPE-OVERALL-S',  
@@ -277,7 +294,8 @@ images: ['bubble1.jpeg']
     price: 179.99,  
     minOrder: 1,  
     unit: 'units',  
-    icon: '🥼'  
+    icon: '🥼',
+    images: ['overallrf.jpeg']
 },  
 {  
     id: 'PPE-OVERALL-M',  
@@ -287,7 +305,8 @@ images: ['bubble1.jpeg']
     price: 179.99,  
     minOrder: 1,  
     unit: 'units',  
-    icon: '🥼'  
+    icon: '🥼',
+    images: ['overallrf.jpeg']
 },  
 {  
     id: 'PPE-OVERALL-L',  
@@ -297,7 +316,8 @@ images: ['bubble1.jpeg']
     price: 179.99,  
     minOrder: 1,  
     unit: 'units',  
-    icon: '🥼'  
+    icon: '🥼',
+    images: ['overallrf.jpeg']
 },  
 {  
     id: 'PPE-OVERALL-XL',  
@@ -307,7 +327,8 @@ images: ['bubble1.jpeg']
     price: 179.99,  
     minOrder: 1,  
     unit: 'units',  
-    icon: '🥼'  
+    icon: '🥼',
+    images: ['overallrf.jpeg']
 },  
 {  
     id: 'PPE-BOOTS-7',  
@@ -317,7 +338,8 @@ images: ['bubble1.jpeg']
     price: 649.99,  
     minOrder: 1,  
     unit: 'pairs',  
-    icon: '👢'  
+    icon: '👢',
+    images: ['boot1.jpeg']
 },  
 {  
     id: 'PPE-BOOTS-8',  
@@ -327,7 +349,8 @@ images: ['bubble1.jpeg']
     price: 649.99,  
     minOrder: 1,  
     unit: 'pairs',  
-    icon: '👢'  
+    icon: '👢',
+    images: ['boot1.jpeg']
 },  
 {  
     id: 'PPE-BOOTS-9',  
@@ -337,7 +360,8 @@ images: ['bubble1.jpeg']
     price: 649.99,  
     minOrder: 1,  
     unit: 'pairs',  
-    icon: '👢'  
+    icon: '👢',
+    images: ['boot1.jpeg']
 },  
 {  
     id: 'PPE-BOOTS-10',  
@@ -347,7 +371,8 @@ images: ['bubble1.jpeg']
     price: 649.99,  
     minOrder: 1,  
     unit: 'pairs',  
-    icon: '👢'  
+    icon: '👢',
+    images: ['boot1.jpeg']
 },  
 {  
     id: 'PPE-GOGGLES-CLR',  
@@ -357,7 +382,8 @@ images: ['bubble1.jpeg']
     price: 69.99,  
     minOrder: 1,  
     unit: 'units',  
-    icon: '🥽'  
+    icon: '🥽',
+    images: ['eye1.jpeg']
 },  
 {  
     id: 'PPE-GOGGLES-DARK',  
@@ -367,7 +393,8 @@ images: ['bubble1.jpeg']
     price: 89.99,  
     minOrder: 1,  
     unit: 'units',  
-    icon: '🥽'  
+    icon: '🥽',
+    images: ['eye1.jpeg']
 },  
 {  
     id: 'PPE-VEST-ORG',  
@@ -377,7 +404,8 @@ images: ['bubble1.jpeg']
     price: 119.99,  
     minOrder: 1,  
     unit: 'units',  
-    icon: '🦺'  
+    icon: '🦺',
+    images: ['vest1.jpeg']
 },  
 {  
     id: 'PPE-VEST-YEL',  
@@ -387,7 +415,8 @@ images: ['bubble1.jpeg']
     price: 119.99,  
     minOrder: 1,  
     unit: 'units',  
-    icon: '🦺'  
+    icon: '🦺',
+    images: ['vest1.jpeg']
 },  
 {  
     id: 'PPE-MASK-KN95',  
@@ -397,7 +426,8 @@ images: ['bubble1.jpeg']
     price: 249.99,  
     minOrder: 1,  
     unit: 'boxes',  
-    icon: '😷'  
+    icon: '😷',
+    images: ['mask.jpeg']
 },  
 {  
     id: 'PPE-MASK-N95',  
@@ -407,7 +437,8 @@ images: ['bubble1.jpeg']
     price: 349.99,  
     minOrder: 1,  
     unit: 'boxes',  
-    icon: '😷'  
+    icon: '😷',
+    images: ['mask.jpeg']
 },  
 
 // ===== VOID FILL =====  
@@ -419,7 +450,8 @@ images: ['bubble1.jpeg']
     price: 121.66,  
     minOrder: 1,  
     unit: 'bags',  
-    icon: '💨'  
+    icon: '💨',
+    images: ['worm.jpeg']
 },  
 {  
     id: 'VOID-LARGE',  
@@ -429,7 +461,8 @@ images: ['bubble1.jpeg']
     price: 376.04,  
     minOrder: 1,  
     unit: 'bags',  
-    icon: '💨'  
+    icon: '💨',
+    images: ['worm.jpeg']
 },  
 
 // ===== PALLETS =====  
@@ -441,7 +474,8 @@ images: ['bubble1.jpeg']
     price: 450.00,  
     minOrder: 1,  
     unit: 'units',  
-    icon: '🪵'  
+    icon: '🪵',
+    images: ['woodenpallet.jpeg']
 },  
 {  
     id: 'PALLET-PLASTIC',  
@@ -451,7 +485,8 @@ images: ['bubble1.jpeg']
     price: 650.00,  
     minOrder: 1,  
     unit: 'units',  
-    icon: '🔷'  
+    icon: '🔷',
+    images: ['plasticpallet.jpeg']
 }
 
 ];
