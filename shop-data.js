@@ -12,7 +12,7 @@ price: 161.11,
 minOrder: 10,
 unit: 'roll',
 icon: '🫧',
-image: 'straps.jpeg'
+images: ['straps.jpeg']
 },
 {
 id: 'BW-416',
