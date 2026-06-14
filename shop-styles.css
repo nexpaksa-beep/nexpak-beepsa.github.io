@@ -263,7 +263,7 @@ body {
 .qty-selector button {
     background: var(--light);
     border: none;
-    width: 32px;
+    width: 30px;
     cursor: pointer;
     font-weight: 600;
     transition: background 0.2s;
