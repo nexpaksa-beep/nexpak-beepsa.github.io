@@ -57,7 +57,8 @@ images: ['bubble1.jpeg']
     price: 165.61,  
     minOrder: 10,  
     unit: 'rolls',  
-    icon: '🧵'  
+    icon: '🧵',
+    images: ['palletwrap.png']
 },  
 {  
     id: 'PW-15',  
@@ -67,7 +68,8 @@ images: ['bubble1.jpeg']
     price: 248.43,  
     minOrder: 10,  
     unit: 'rolls',  
-    icon: '🧵'  
+    icon: '🧵',
+    images: ['palletwrap.png']
 },  
 {  
     id: 'PW-20',  
@@ -77,7 +79,8 @@ images: ['bubble1.jpeg']
     price: 331.23,  
     minOrder: 10,  
     unit: 'rolls',  
-    icon: '🧵'  
+    icon: '🧵',
+    images: ['palletwrap.png']
 },  
 {  
     id: 'PW-25',  
@@ -87,7 +90,8 @@ images: ['bubble1.jpeg']
     price: 414.03,  
     minOrder: 10,  
     unit: 'rolls',  
-    icon: '🧵'  
+    icon: '🧵',
+    images: ['palletwrap.png']
 },  
 
 // ===== TAPES =====  
