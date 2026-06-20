@@ -37,7 +37,6 @@ overflow-x:hidden;
 }
 
 /* HEADER */
-
 header{
 background:var(--dark);
 padding:15px 25px;
@@ -47,17 +46,40 @@ align-items:center;
 flex-wrap:wrap;
 }
 
-<div class="logo" style="display:flex;align-items:center;gap:10px;">
-    <img src="logo.png" alt="Nexpak Solutions Logo" style="height:60px;">
-    <div>
-        <span class="nex">NEX</span><span class="pak">PAK</span><br>
-        <span class="small">SOLUTIONS</span>
-    </div>
-</div>
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+}
 
+.logo img{
+height:60px;
+}
+
+.nex{
+color:white;
+font-weight:700;
+font-size:24px;
+}
+
+.pak{
+color:var(--accent);
+font-weight:700;
+font-size:24px;
+}
+
+.small{
+display:block;
+font-size:12px;
+letter-spacing:4px;
+color:white;
+}
+
+/* NAV */
 nav{
 display:flex;
 gap:20px;
+align-items:center;
 }
 
 nav a{
@@ -80,7 +102,6 @@ font-weight:600;
 }
 
 /* HERO */
-
 .hero{
 min-height:100vh;
 background:
@@ -142,7 +163,6 @@ background:#d97706;
 }
 
 /* SECTION */
-
 .section{
 padding:80px 20px;
 max-width:1000px;
@@ -156,7 +176,6 @@ margin-bottom:20px;
 }
 
 /* GRID */
-
 .grid{
 max-width:1100px;
 margin:auto;
@@ -177,7 +196,6 @@ box-shadow:0 5px 20px rgba(0,0,0,.05);
 }
 
 /* FOOTER */
-
 footer{
 background:var(--dark);
 color:white;
@@ -191,26 +209,20 @@ margin-bottom:15px;
 }
 
 /* WHATSAPP */
-
 .whatsapp{
 position:fixed;
 bottom:25px;
 right:25px;
-
 width:65px;
 height:65px;
-
 border-radius:50%;
 background:#25D366;
-
 display:flex;
 justify-content:center;
 align-items:center;
-
 font-size:40px;
 color:white;
 text-decoration:none;
-
 box-shadow:0 8px 20px rgba(0,0,0,.3);
 z-index:9999;
 }
@@ -220,7 +232,6 @@ transform:scale(1.1);
 }
 
 /* MOBILE */
-
 @media(max-width:768px){
 
 header{
@@ -257,17 +268,14 @@ display:block;
 <header>
 
 <div class="logo">
-
-<span class="nex">NEX</span><span class="pak">PAK</span>
-
-<span class="small">
-SOLUTIONS
-</span>
-
+    <img src="logo.png" alt="Nexpak Solutions Logo">
+    <div>
+        <span class="nex">NEX</span><span class="pak">PAK</span>
+        <span class="small">SOLUTIONS</span>
+    </div>
 </div>
 
 <nav>
-
 <a href="index.html">Home</a>
 <a href="aboutus.html">About Us</a>
 <a href="Products.html">Products</a>
@@ -277,16 +285,13 @@ SOLUTIONS
 <a href="shop.html" class="shop-link">
 🛒 Shop Now
 </a>
-
 </nav>
 
 </header>
 
 <section class="hero">
 
-<h1>
-Packaging Solutions That Deliver
-</h1>
+<h1>Packaging Solutions That Deliver</h1>
 
 <p>
 Wholesale packaging supplier across South Africa.
@@ -294,89 +299,50 @@ Fast Delivery, Quality Materials and Competitive Pricing.
 </p>
 
 <div>
-
-<a href="shop.html" class="btn primary">
-Start Shopping
-</a>
-
-<a href="pricelist.html" class="btn accent">
-Get Quote
-</a>
-
+<a href="shop.html" class="btn primary">Start Shopping</a>
+<a href="pricelist.html" class="btn accent">Get Quote</a>
 </div>
 
 </section>
 
 <section class="section">
 
-<h2>
-Who We Are
-</h2>
+<h2>Who We Are</h2>
 
 <p>
-
 Nexpak Solutions is a trusted packaging supplier providing quality materials, fast delivery and wholesale pricing across South Africa.
 
 We supply bubble wrap, pallet wrap, boxes, tape, strapping and PPE to warehouses, manufacturers, retailers and logistics companies.
-
 </p>
 
 </section>
 
 <div class="grid">
 
-<div>
-📦 Quality Packaging Supplies
-</div>
-
-<div>
-🚚 Fast Delivery Nationwide
-</div>
-
-<div>
-💰 Wholesale Pricing Available
-</div>
-
-<div>
-✅ Professional Service
-</div>
-
-<div>
-🛒 Online Shopping Available
-</div>
-
-<div>
-💳 Secure Payments
-</div>
+<div>📦 Quality Packaging Supplies</div>
+<div>🚚 Fast Delivery Nationwide</div>
+<div>💰 Wholesale Pricing Available</div>
+<div>✅ Professional Service</div>
+<div>🛒 Online Shopping Available</div>
+<div>💳 Secure Payments</div>
 
 </div>
 
 <footer>
 
-<h3>
-© 2024-2026 Nexpak Solutions PTY Ltd
-</h3>
+<h3>© 2024-2026 Nexpak Solutions PTY Ltd</h3>
 
 <p>
-
 Fast delivery on all packaging orders across South Africa
-
 <br><br>
-
-Email:
-info@nexpaksolutions.co.za
-
+Email: info@nexpaksolutions.co.za
 <br>
-
-Phone:
-+27 83 630 8249
-
+Phone: +27 83 630 8249
 </p>
 
 </footer>
 
-<a
-class="whatsapp"
+<a class="whatsapp"
 href="https://wa.me/27836308249?text=Hi%20Nexpak,%20I%20need%20assistance%20with%20packaging%20products"
 target="_blank">
 
