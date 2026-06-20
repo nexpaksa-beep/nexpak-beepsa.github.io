@@ -67,14 +67,23 @@ align-items:center;
 flex-wrap:wrap;
 }
 
-.logo{
-  display:flex;
-  align-items:center;
+  .logo{
+display:flex;
+align-items:center;
 }
 
-.logo svg{
-  max-width:220px;
-  height:auto;
+.nexpak-logo{
+width:260px;
+height:auto;
+display:block;
+}
+
+@media (max-width:768px){
+
+.nexpak-logo{
+width:190px;
+}
+
 }
 
 nav{
@@ -275,9 +284,76 @@ display:block;
 <header>
 
 <div class="logo">
-  <a href="index.html" style="text-decoration:none;">
-    <svg width="220" height="70" viewBox="0 0 220 70"
-         xmlns="http://www.w3.org/2000/svg">
+Nexpak Solutions
+</div>
+
+<svg viewBox="0 0 650 170"
+     xmlns="http://www.w3.org/2000/svg"
+     class="nexpak-logo">
+
+    <!-- Swoosh -->
+    <path d="M90 90
+             C130 20 250 10 390 20
+             C500 30 580 55 620 95"
+          fill="none"
+          stroke="#0f172a"
+          stroke-width="8"
+          stroke-linecap="round"/>
+
+    <!-- N -->
+    <path d="M80 120V35H115L170 95V35H205V120H170L115 60V120Z"
+          fill="#0f172a"/>
+
+    <!-- Gold Bar -->
+    <rect x="205" y="35"
+          width="25"
+          height="85"
+          fill="#d4a017"/>
+
+    <!-- Box -->
+    <polygon points="250,50 290,30 330,50 290,70"
+             fill="#d4a017"/>
+
+    <polygon points="250,50 250,90 290,110 290,70"
+             fill="#0f172a"/>
+
+    <polygon points="330,50 330,90 290,110 290,70"
+             fill="#14213d"/>
+
+    <!-- NEX -->
+    <text x="50"
+          y="150"
+          font-size="52"
+          font-weight="700"
+          font-family="Inter,Arial,sans-serif"
+          fill="#0f172a">
+        NEX
+    </text>
+
+    <!-- PAK -->
+    <text x="180"
+          y="150"
+          font-size="52"
+          font-weight="700"
+          font-family="Inter,Arial,sans-serif"
+          fill="#d4a017">
+        PAK
+    </text>
+
+    <!-- SOLUTIONS -->
+    <text x="320"
+          y="150"
+          font-size="20"
+          letter-spacing="8"
+          font-family="Inter,Arial,sans-serif"
+          fill="#0f172a">
+        SOLUTIONS
+    </text>
+
+</svg>
+
+</a>
+</div>
 
       <!-- Box -->
       <rect x="5" y="15" width="32" height="32"
