@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nexpak-beepsa.github.io/sitemap.xml
