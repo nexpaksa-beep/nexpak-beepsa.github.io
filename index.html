@@ -4,27 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Nexpak Solutions | Packaging Supplier Gauteng South Africa</title>
+<title>Nexpak Solutions | Packaging Supplier South Africa</title>
 
-<meta name="description" content="Nexpak Solutions PTY Ltd supplies bubble wrap, pallet wrap, tapes, boxes, pallets and PPE across South Africa.">
-<meta name="keywords" content="packaging supplier, bubble wrap, pallet wrap, boxes, tape, PPE, South Africa">
-<meta name="author" content="Nexpak Solutions PTY Ltd">
-<meta name="robots" content="index, follow">
-
-<meta property="og:title" content="Nexpak Solutions | Premium Packaging Supplier South Africa">
-<meta property="og:description" content="Quality packaging solutions with fast delivery across South Africa">
-<meta property="og:image" content="warehouse.jpg">
-<meta property="og:type" content="business.business">
-<meta property="og:url" content="https://nexpaksa-beep.github.io/">
-
-<meta name="twitter:card" content="summary_large_image">
-
-<meta name="theme-color" content="#0f172a">
-
-<meta name="google-site-verification"
-content="HCFgtyg07hEOHtMF8VTlXWlEYbY4_fHSHqhni-VVVX8" />
-
-<link rel="canonical" href="https://nexpaksa-beep.github.io/">
+<meta name="description" content="Nexpak Solutions supplies bubble wrap, pallet wrap, tapes, boxes, pallets and PPE across South Africa.">
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
@@ -38,7 +20,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 --dark:#0f172a;
 --light:#f8fafc;
 --accent:#f59e0b;
---rusty-chrome:#b8860b;
+--gold:#d4a017;
 }
 
 *{
@@ -47,43 +29,42 @@ padding:0;
 box-sizing:border-box;
 }
 
-html,body{
-width:100%;
-overflow-x:hidden;
+body{
 font-family:Inter,sans-serif;
 background:var(--light);
 color:#1f2937;
+overflow-x:hidden;
 }
 
 /* HEADER */
 
 header{
 background:var(--dark);
-color:white;
-padding:15px 20px;
+padding:15px 25px;
 display:flex;
 justify-content:space-between;
 align-items:center;
 flex-wrap:wrap;
 }
 
-  .logo{
-display:flex;
-align-items:center;
+.logo{
+font-size:30px;
+font-weight:700;
 }
 
-.nexpak-logo{
-width:260px;
-height:auto;
+.logo .nex{
+color:white;
+}
+
+.logo .pak{
+color:var(--gold);
+}
+
+.logo .small{
 display:block;
-}
-
-@media (max-width:768px){
-
-.nexpak-logo{
-width:190px;
-}
-
+font-size:12px;
+letter-spacing:4px;
+color:white;
 }
 
 nav{
@@ -104,56 +85,52 @@ color:var(--accent);
 
 .shop-link{
 background:var(--accent);
-color:black;
 padding:10px 18px;
 border-radius:8px;
+color:black;
 font-weight:600;
-}
-
-.shop-link:hover{
-background:#d97706;
 }
 
 /* HERO */
 
 .hero{
+min-height:100vh;
 background:
 linear-gradient(rgba(15,23,42,.75),rgba(37,99,235,.75)),
 url('warehouse.jpg');
 
 background-size:cover;
 background-position:center;
-min-height:100vh;
 
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
-
 text-align:center;
+
 padding:20px;
 color:white;
 }
 
 .hero h1{
-font-size:48px;
-color:var(--rusty-chrome);
+font-size:55px;
 margin-bottom:15px;
+color:var(--gold);
 }
 
 .hero p{
-max-width:700px;
+max-width:750px;
 font-size:20px;
 line-height:1.6;
 }
 
 .btn{
 display:inline-block;
-margin-top:20px;
-padding:14px 28px;
+padding:14px 30px;
+margin-top:25px;
 border-radius:8px;
-font-weight:600;
 text-decoration:none;
+font-weight:600;
 transition:.3s;
 }
 
@@ -176,37 +153,39 @@ margin-left:10px;
 background:#d97706;
 }
 
-/* SECTIONS */
+/* SECTION */
 
 .section{
+padding:80px 20px;
 max-width:1000px;
 margin:auto;
-padding:70px 20px;
 text-align:center;
 }
 
 .section h2{
-color:var(--rusty-chrome);
+color:var(--gold);
 margin-bottom:20px;
 }
 
 /* GRID */
 
 .grid{
+max-width:1100px;
+margin:auto;
+padding:0 20px 80px;
+
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
 gap:20px;
-padding:0 20px 60px;
-max-width:1100px;
-margin:auto;
 }
 
 .grid div{
 background:white;
 padding:25px;
-border-radius:12px;
+border-radius:15px;
 border:1px solid #e5e7eb;
 font-weight:600;
+box-shadow:0 5px 20px rgba(0,0,0,.05);
 }
 
 /* FOOTER */
@@ -214,13 +193,13 @@ font-weight:600;
 footer{
 background:var(--dark);
 color:white;
+padding:40px;
 text-align:center;
-padding:35px;
 }
 
 footer h3{
-color:var(--rusty-chrome);
-margin-bottom:10px;
+color:var(--gold);
+margin-bottom:15px;
 }
 
 /* WHATSAPP */
@@ -229,16 +208,21 @@ margin-bottom:10px;
 position:fixed;
 bottom:25px;
 right:25px;
+
 width:65px;
 height:65px;
-background:#25D366;
+
 border-radius:50%;
+background:#25D366;
+
 display:flex;
 justify-content:center;
 align-items:center;
+
+font-size:40px;
 color:white;
-font-size:38px;
 text-decoration:none;
+
 box-shadow:0 8px 20px rgba(0,0,0,.3);
 z-index:9999;
 }
@@ -263,7 +247,7 @@ gap:12px;
 }
 
 .hero h1{
-font-size:34px;
+font-size:36px;
 }
 
 .hero p{
@@ -274,6 +258,7 @@ font-size:18px;
 margin-left:0;
 display:block;
 }
+
 }
 
 </style>
@@ -284,126 +269,43 @@ display:block;
 <header>
 
 <div class="logo">
-Nexpak Solutions
-</div>
 
-<svg viewBox="0 0 650 170"
-     xmlns="http://www.w3.org/2000/svg"
-     class="nexpak-logo">
+<span class="nex">NEX</span><span class="pak">PAK</span>
 
-    <!-- Swoosh -->
-    <path d="M90 90
-             C130 20 250 10 390 20
-             C500 30 580 55 620 95"
-          fill="none"
-          stroke="#0f172a"
-          stroke-width="8"
-          stroke-linecap="round"/>
+<span class="small">
+SOLUTIONS
+</span>
 
-    <!-- N -->
-    <path d="M80 120V35H115L170 95V35H205V120H170L115 60V120Z"
-          fill="#0f172a"/>
-
-    <!-- Gold Bar -->
-    <rect x="205" y="35"
-          width="25"
-          height="85"
-          fill="#d4a017"/>
-
-    <!-- Box -->
-    <polygon points="250,50 290,30 330,50 290,70"
-             fill="#d4a017"/>
-
-    <polygon points="250,50 250,90 290,110 290,70"
-             fill="#0f172a"/>
-
-    <polygon points="330,50 330,90 290,110 290,70"
-             fill="#14213d"/>
-
-    <!-- NEX -->
-    <text x="50"
-          y="150"
-          font-size="52"
-          font-weight="700"
-          font-family="Inter,Arial,sans-serif"
-          fill="#0f172a">
-        NEX
-    </text>
-
-    <!-- PAK -->
-    <text x="180"
-          y="150"
-          font-size="52"
-          font-weight="700"
-          font-family="Inter,Arial,sans-serif"
-          fill="#d4a017">
-        PAK
-    </text>
-
-    <!-- SOLUTIONS -->
-    <text x="320"
-          y="150"
-          font-size="20"
-          letter-spacing="8"
-          font-family="Inter,Arial,sans-serif"
-          fill="#0f172a">
-        SOLUTIONS
-    </text>
-
-</svg>
-
-</a>
-</div>
-
-      <!-- Box -->
-      <rect x="5" y="15" width="32" height="32"
-            rx="3" fill="#0f172a"/>
-
-      <path d="M5 15 L21 5 L37 15"
-            fill="#f59e0b"/>
-
-      <!-- Text -->
-      <text x="50" y="35"
-            font-size="28"
-            font-family="Inter, Arial, sans-serif"
-            font-weight="700">
-
-        <tspan fill="#0f172a">NEX</tspan>
-        <tspan fill="#d4a017">PAK</tspan>
-
-      </text>
-
-      <text x="50" y="55"
-            font-size="10"
-            font-family="Inter, Arial, sans-serif"
-            fill="#0f172a"
-            letter-spacing="2">
-        SOLUTIONS
-      </text>
-
-    </svg>
-  </a>
 </div>
 
 <nav>
+
 <a href="index.html">Home</a>
 <a href="aboutus.html">About Us</a>
 <a href="Products.html">Products</a>
 <a href="pricelist.html">Price List</a>
 <a href="contact.html">Contact</a>
-<a href="shop.html" class="shop-link">🛒 Shop Now</a>
+
+<a href="shop.html" class="shop-link">
+🛒 Shop Now
+</a>
+
 </nav>
 
 </header>
 
 <section class="hero">
 
-<h1>Packaging Solutions That Deliver</h1>
+<h1>
+Packaging Solutions That Deliver
+</h1>
 
 <p>
 Wholesale packaging supplier across South Africa.
 Fast Delivery, Quality Materials and Competitive Pricing.
 </p>
+
+<div>
 
 <a href="shop.html" class="btn primary">
 Start Shopping
@@ -413,47 +315,74 @@ Start Shopping
 Get Quote
 </a>
 
+</div>
+
 </section>
 
 <section class="section">
 
-<h2>Who We Are</h2>
+<h2>
+Who We Are
+</h2>
 
 <p>
-Nexpak Solutions is a trusted packaging supplier providing quality materials,
-fast delivery and wholesale pricing across South Africa.
-We supply bubble wrap, pallet wrap, boxes, tape, strapping and PPE to warehouses,
-manufacturers, retailers and logistics companies.
+
+Nexpak Solutions is a trusted packaging supplier providing quality materials, fast delivery and wholesale pricing across South Africa.
+
+We supply bubble wrap, pallet wrap, boxes, tape, strapping and PPE to warehouses, manufacturers, retailers and logistics companies.
+
 </p>
 
 </section>
 
 <div class="grid">
 
-<div>📦 Quality Packaging Supplies</div>
+<div>
+📦 Quality Packaging Supplies
+</div>
 
-<div>🚚 Fast Delivery Nationwide</div>
+<div>
+🚚 Fast Delivery Nationwide
+</div>
 
-<div>💰 Wholesale Pricing Available</div>
+<div>
+💰 Wholesale Pricing Available
+</div>
 
-<div>✅ Professional Service</div>
+<div>
+✅ Professional Service
+</div>
 
-<div>🛒 Online Shopping Available</div>
+<div>
+🛒 Online Shopping Available
+</div>
 
-<div>💳 Secure Payments</div>
+<div>
+💳 Secure Payments
+</div>
 
 </div>
 
 <footer>
 
-<h3>© 2024-2026 Nexpak Solutions PTY Ltd</h3>
+<h3>
+© 2024-2026 Nexpak Solutions PTY Ltd
+</h3>
 
 <p>
+
 Fast delivery on all packaging orders across South Africa
+
 <br><br>
-Email: info@nexpaksolutions.co.za
+
+Email:
+info@nexpaksolutions.co.za
+
 <br>
-Phone: +27 83 630 8249
+
+Phone:
++27 83 630 8249
+
 </p>
 
 </footer>
@@ -468,4 +397,4 @@ target="_blank">
 </a>
 
 </body>
-  </html>
+</html>
