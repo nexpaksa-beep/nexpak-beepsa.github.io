@@ -7,6 +7,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="shop-styles.css">
 </head>
+    <div id="cartOverlay" class="cart-overlay" onclick="toggleCart(false)"></div>
+
+<div id="cartDrawer" class="cart-drawer">
+
+    <div class="cart-header">
+        <h2>Your Cart</h2>
+        <button onclick="toggleCart(false)">✕</button>
+    </div>
+
+    <div id="cartItems"></div>
+
+    <div class="cart-footer">
+        <div class="cart-summary">
+            <div>Subtotal: <span id="subtotal">R0.00</span></div>
+            <div>Delivery: <span id="delivery">R0.00</span></div>
+            <div><b>Total: <span id="total">R0.00</span></b></div>
+        </div>
+
+        <button id="checkoutBtn">Checkout</button>
+    </div>
+
+</div>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
