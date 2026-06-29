@@ -357,13 +357,15 @@ body {
 }
 
 .cart-item {
-    background: var(--light);
-    padding: 1rem;
-    border-radius: 8px;
-    margin-bottom: 1rem;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
+    gap: 15px;
+    padding: 16px;
+    margin-bottom: 16px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
 }
 
 .cart-item-details h4 {
