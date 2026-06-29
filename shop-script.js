@@ -1,4 +1,4 @@
-// ===== NEXPAK SHOP SCRIPT (CLEAN FIXED VERSION) =====
+// ===== NEXPAK SHOP SCRIPT (FINAL CLEAN VERSION) =====
 
 let cart = [];
 let stripe = null;
@@ -6,6 +6,7 @@ let elements = null;
 let cardElement = null;
 
 let activeImageIndex = {};
+
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', function () {
     loadCart();
@@ -52,14 +53,14 @@ function renderProducts(category = "all", searchTerm = "") {
             ? `<div class="min-order">Min order: ${product.minOrder} ${product.unit}</div>`
             : '';
 
-        const sizeSelector =
-            product.sizes?.length
-                ? `
-            <select class="size-selector" id="size-${product.id}">
-                ${product.sizes.map(size => `<option value="${size}">${size}</option>`).join('')}
-            </select>
-          `
-                : '';
+        const sizeSelector = product.sizes?.length
+            ? `
+                <select class="size-selector" id="size-${product.id}">
+                    <option value="">Select size</option>
+                    ${product.sizes.map(size => `<option value="${size}">${size}</option>`).join('')}
+                </select>
+            `
+            : '';
 
         card.innerHTML = `
             <div class="product-image">
@@ -138,12 +139,23 @@ function addToCart(productId) {
 
     const quantity = parseInt(qtyInput.value || product.minOrder || 1);
 
+    const sizeSelector = document.getElementById(`size-${productId}`);
+    const selectedSize = sizeSelector ? sizeSelector.value : null;
+
+    // validate size if dropdown exists
+    if (sizeSelector && !selectedSize) {
+        alert("Please select a size");
+        return;
+    }
+
     if (quantity < product.minOrder) {
         alert(`Minimum order quantity for ${product.name} is ${product.minOrder} ${product.unit}`);
         return;
     }
 
-    const existingItem = cart.find(item => item.id === productId);
+    const existingItem = cart.find(item =>
+        item.id === productId && item.size === selectedSize
+    );
 
     if (existingItem) {
         existingItem.quantity += quantity;
@@ -154,7 +166,8 @@ function addToCart(productId) {
             price: Number(product.price),
             quantity,
             minOrder: product.minOrder || 1,
-            unit: product.unit || ''
+            unit: product.unit || '',
+            size: selectedSize || null
         });
     }
 
@@ -164,18 +177,13 @@ function addToCart(productId) {
     showNotification?.(`${product.name} added to cart!`);
 }
 
-function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
-    saveCart();
-    updateCartUI();
-}
-
+// ===== UPDATE QTY =====
 function updateCartItemQty(productId, newQty) {
 
     const item = cart.find(i => i.id === productId);
     if (!item) return;
 
-    const qty = Math.max(item.minOrder, parseInt(newQty || item.minOrder));
+    const qty = Math.max(item.minOrder || 1, parseInt(newQty || item.minOrder || 1));
 
     item.quantity = qty;
 
@@ -199,6 +207,7 @@ function updateCartUI() {
     if (cart.length === 0) {
         cartItemsContainer.innerHTML = '<p class="empty-cart">Your cart is empty</p>';
         if (checkoutBtn) checkoutBtn.disabled = true;
+        updateCartSummary();
         return;
     }
 
@@ -212,6 +221,7 @@ function updateCartUI() {
             <div>
                 <h4>${item.name}</h4>
                 <div>SKU: ${item.id}</div>
+                ${item.size ? `<div>Size: ${item.size}</div>` : ''}
 
                 <input type="number"
                     value="${item.quantity}"
@@ -250,7 +260,7 @@ function updateCartSummary() {
     set('total', `R${total.toFixed(2)}`);
 }
 
-// ===== CART STORAGE =====
+// ===== STORAGE =====
 function saveCart() {
     localStorage.setItem('nexpak_cart', JSON.stringify(cart));
 }
@@ -258,4 +268,4 @@ function saveCart() {
 function loadCart() {
     const data = localStorage.getItem('nexpak_cart');
     cart = data ? JSON.parse(data) : [];
-        }
+}
