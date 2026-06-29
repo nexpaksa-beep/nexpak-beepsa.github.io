@@ -293,6 +293,7 @@ images: ['bubble1.jpeg']
     specs: 'Reflective strips',  
     price: 159.00,  
     minOrder: 1,  
+    sizes:["S","M","L","XL","2XL","3XL"],
     unit: 'units',  
     icon: '🥼',
     images: ['refoverall.jpeg']
@@ -304,28 +305,31 @@ images: ['bubble1.jpeg']
     specs: 'STD',  
     price: 139.00,  
     minOrder: 1,  
+    sizes:["S","M","XL","2XL","3XL"],
     unit: 'units',  
     icon: '🥼',
     images: ['refoverall.jpeg']
 },  
 {  
-    id: 'PPE-OVERALL-L',  
+    id: 'PPE-OVERALL-J54',  
     name: 'J54 Reflective Conti Suit',  
     category: 'ppe',  
     specs: 'Reflective strips',  
     price: 329.00,  
     minOrder: 1,  
+    sizes:["S","M","L","XL","2XL","3XL"],
     unit: 'units',  
     icon: '🥼',
     images: ['j54.jpeg']
 },  
 {  
-    id: 'PPE-OVERALL-XL',  
+    id: 'PPE-OVERALL-D59',  
     name: 'D59 Flame and Acid resistant',  
     category: 'ppe',  
     specs: 'SABS',  
     price: 629.00,  
     minOrder: 1,  
+    sizes:["S","M","L","XL","2XL","3XL"],
     unit: 'units',  
     icon: '🥼',
     images: ['j54cotton.jpeg']
@@ -337,6 +341,7 @@ images: ['bubble1.jpeg']
     specs: 'Steel toe',  
     price: 299.00,  
     minOrder: 1,  
+    sizes:["8","9","10","11","12","13"],
     unit: 'pairs',  
     icon: '👢',
     images: ['dot.jpeg']
@@ -347,7 +352,8 @@ images: ['bubble1.jpeg']
     category: 'ppe',  
     specs: 'Steel toe',  
     price: 299.00,  
-    minOrder: 1,  
+    minOrder: 1, 
+    sizes:["8","9","10","11","12","13"],
     unit: 'pairs',  
     icon: '👢',
     images: ['radon.jpeg']
@@ -358,7 +364,8 @@ images: ['bubble1.jpeg']
     category: 'ppe',  
     specs: 'Slip resistant sole',  
     price: 319.00,  
-    minOrder: 1,  
+    minOrder: 1,
+    sizes:["8","9","10","11","12","13"],
     unit: 'pairs',  
     icon: '👢',
     images: ['argon.jpeg']
@@ -370,6 +377,7 @@ images: ['bubble1.jpeg']
     specs: 'Slip resistant sole',  
     price: 329.00,  
     minOrder: 1,  
+    sizes:["8","9","10","11","12","13"],
     unit: 'pairs',  
     icon: '👢',
     images: ['mercury.jpeg']
