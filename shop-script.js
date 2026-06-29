@@ -77,7 +77,7 @@ function renderProducts(category = "all", searchTerm = "") {
 
             </div>
 
-            <div class="product-body">
+            <div class="product-info">
 
                 <div class="product-category">
                     ${product.category}
