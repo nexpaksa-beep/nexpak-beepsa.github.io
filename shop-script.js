@@ -5,6 +5,7 @@ let stripe = null;
 let elements = null;
 let cardElement = null;
 
+let activeImageIndex = {};
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', function () {
     loadCart();
