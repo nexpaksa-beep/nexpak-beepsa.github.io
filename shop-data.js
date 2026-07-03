@@ -23,7 +23,7 @@ price: 155,
 minOrder: 10,
 unit: 'roll',
 icon: '🫧',
-images: ['bubble1.jpeg']
+images: ['images/bubblewrap.jpeg']
 },
 {
 id: 'BW-625',
@@ -31,10 +31,10 @@ name: 'Bubble Wrap 625mm',
 category: 'wrap',
 specs: '100m x 625mm',
 price: 259,
-minOrder: 10,
+minOrder: 5,
 unit: 'roll',
 icon: '🫧',
-images: ['bubble1.jpeg']
+images: ['images/bobble.jpeg']
 },
 {
 id: 'BW-1250',
@@ -45,13 +45,13 @@ price: 340,
 minOrder: 10,
 unit: 'roll',
 icon: '🫧',
-images: ['bubble1.jpeg']
+images: ['images/bubble2.jpg']
 },
 {   id: 'CB-20',
     name: 'SFK/Corroboard',
     category: 'wrap',
     specs: '915 x 20kg',
-    price: 700,
+    price: 700.00,
     minOrder: 1,
     unit: 'rolls',
     icon: '💈',
@@ -62,7 +62,7 @@ images: ['bubble1.jpeg']
     name: 'SFK/Corroboard',
     category: 'wrap',
     specs: '1525 x 35kg',
-    price: 820,
+    price: 820.00,
     minOrder: 1,
     unit: 'rolls',
     icon: '💈',
@@ -73,7 +73,7 @@ images: ['bubble1.jpeg']
     name: 'SFK/Corroboard',
     category: 'wrap',
     specs: '1830 x 40kg',
-    price: 920,
+    price: 920.00,
     minOrder: 1,
     unit: 'rolls',
     icon: '💈',
@@ -100,7 +100,7 @@ images: ['bubble1.jpeg']
     minOrder: 10,  
     unit: 'rolls',  
     icon: '🧵',
-    images: ['palletwrap.png']
+    images: ['images/stretch.jpeg']
 },  
 {  
     id: 'PW-20',  
@@ -111,7 +111,7 @@ images: ['bubble1.jpeg']
     minOrder: 10,  
     unit: 'rolls',  
     icon: '🧵',
-    images: ['palletwrap.png']
+    images: ['images/stretch.jpeg']
 },  
 {  
     id: 'PW-25',  
@@ -122,7 +122,7 @@ images: ['bubble1.jpeg']
     minOrder: 10,  
     unit: 'rolls',  
     icon: '🧵',
-    images: ['palletwrap.png']
+    images: ['images/stretch.jpeg']
 },  
 
 // ===== TAPES =====  
@@ -253,36 +253,36 @@ images: ['bubble1.jpeg']
 // ===== PPE PRODUCTS =====  
 {  
     id: 'PPE-HH-YEL',  
-    name: 'Hard Hat Yellow',  
+    name: 'Hard Hat',  
     category: 'ppe',  
     specs: 'Safety Certified',  
-    price: 36.00,  
+    price: 38.00,  
     minOrder: 1,  
     unit: 'units',  
     icon: '🪖',
     images: ['hat1.jpeg']
 },  
 {  
-    id: 'PPE-HH-WHT',  
-    name: 'Hard Hat White',  
+    id: 'PPE-EAR',  
+    name: 'Universal Ear Muffs Red ',  
     category: 'ppe',  
     specs: 'Safety Certified',  
-    price: 36.00,  
+    price: 42.00,  
     minOrder: 1,  
     unit: 'units',  
-    icon: '🪖',
-    images: ['hat1.jpeg']
+    icon: '🦻🏼',
+    images: ['images/ear.jpeg']
 },  
 {  
-    id: 'PPE-HH-ORG',  
-    name: 'Hard Hat Orange',  
+    id: 'PPE-HH-EPG',  
+    name: 'Ear plug foam corded 100s',  
     category: 'ppe',  
     specs: 'Safety Certified',  
-    price: 36.00,  
+    price: 399.00,  
     minOrder: 1,  
-    unit: 'units',  
-    icon: '🪖',
-    images: ['hat1.jpeg']
+    unit: '1 box',  
+    icon: '🦻🏼',
+    images: ['images/earplug.jpeg']
 },  
 {  
     id: 'PPE-GLOVES-L',  
@@ -322,49 +322,169 @@ images: ['bubble1.jpeg']
     name: '2PC Polycotton Conti Suit',  
     category: 'ppe',  
     specs: 'Reflective strips',  
-    price: 159.00,  
+    price: 179.00,  
     minOrder: 1,  
     sizes:["S","M","L","XL","2XL","3XL"],
     unit: 'units',  
     icon: '🥼',
-    images: ['refoverall.jpeg']
+    images: ['images/2.jpeg']
 },  
 {  
     id: 'PPE-OVERALL-M',  
     name: '2PC Polycotton Conti Suit Econo',  
     category: 'ppe',  
     specs: 'STD',  
-    price: 139.00,  
+    price: 159.00,  
     minOrder: 1,  
     sizes:["S","M","XL","2XL","3XL"],
     unit: 'units',  
     icon: '🥼',
-    images: ['refoverall.jpeg']
+    images: ['images/1.jpeg']
 },  
 {  
-    id: 'PPE-OVERALL-J54',  
-    name: 'J54 Reflective Conti Suit',  
+    id: 'PPE-OVERALL-8020',  
+    name: 'Poly Cotton Conti Suit 8020',  
     category: 'ppe',  
-    specs: 'Reflective strips',  
-    price: 329.00,  
+    specs: 'STD',  
+    price: 179.00,  
     minOrder: 1,  
     sizes:["S","M","L","XL","2XL","3XL"],
     unit: 'units',  
     icon: '🥼',
-    images: ['j54.jpeg']
+    images: ['images/1.jpeg']
 },  
 {  
-    id: 'PPE-OVERALL-D59',  
-    name: 'D59 Flame and Acid resistant',  
+    id: 'PPE-OVERALL-8020R',  
+    name: 'Reflective Poly Cotton 8020',  
     category: 'ppe',  
-    specs: 'SABS',  
-    price: 629.00,  
+    specs: 'Reflective',  
+    price: 199.00,  
     minOrder: 1,  
     sizes:["S","M","L","XL","2XL","3XL"],
     unit: 'units',  
     icon: '🥼',
-    images: ['j54cotton.jpeg']
+    images: ['images/2.jpeg']
 },  
+{  
+    id: 'J54-CCS',
+    name: 'J54 100% Cotton Conti Suit',
+    category: 'ppe',
+    specs: 'STD',
+    price: 329.00,
+    minOrder: 1,
+    sizes: ["S","M","L","XL","2XL","3XL"],
+    units: 'units',
+    icon: '🥼',
+    images: ['images/3.jpeg']
+},
+{
+    id: 'J54-CCSR',
+    name: 'J54 Conti suit reflective',
+    category: 'ppe',
+    specs: 'reflective',
+    price: 349.00,
+    minOrder: 1,
+    sizes: ["S","M","L","XL","2XL","3XL"],
+    units: 'units',
+    icon: '🥼',
+    images: ['images/4.jpeg']
+},
+{
+    id: 'D59-F&A',
+    name: 'D59 Flame and acid resistant ',
+    category: 'ppe',
+    specs: 'STD',
+    price: 559.00,
+    minOrder: 1,
+    sizes: ["S","M","L","XL","2XL","3XL"],
+    units: 'units',
+    icon: '🥼',
+    images: ['images/5.jpeg]
+},
+{
+    id: 'D59-F&ASABS',
+    name: 'D59 Flame and Acid resistant SABS',
+    category: 'ppe',
+    specs: 'SABS',
+    price: 639.00,
+    minOrder: 1,
+    sizes: ["S","M","L","XL","2XL","3XL"],
+    units: 'units',
+    icon: '🥼',
+    images: ['images/6.jpeg']
+},
+{
+    id: 'PPE-6535',
+    name: '6535 Poly cotton conti suit',
+    category: 'ppe',
+    specs: 'STD',
+    price: 359.00,
+    minOrder: 1,
+    sizes: ["S","M","L","XL","2XL","3XL"],
+    units: 'units',
+    icon: '🥼',
+    images: ['images/7.jpeg]
+},
+{
+    id: 'PPE-6535R',
+    name: '6535 Poly Cotton Conti suit reflective',
+    category: 'ppe',
+    specs: 'reflective',
+    price: 389.00,
+    minOrder: 1,
+    sizes: ["S","M","L","XL","2XL","3XL"],
+    units: 'units',
+    icon: '🥼',
+    images: ['images/8.jpeg']
+},
+{
+    id: 'PPE-Denim',
+    name: 'Denim Conti Suit',
+    category: 'ppe',
+    specs: 'denim',
+    price: 249.00,
+    minOrder: 1,
+    sizes: ["S","M","L","XL","2XL","3XL"],
+    units: 'units',
+    icons: '🥼',
+    images: ['images/9.jpeg']
+},
+{
+    id: 'PPE-DenimR',
+    name: 'Reflective Denim Conti Suit',
+    category: 'ppe',
+    specs: 'reflective',
+    price: 269.00,
+    minOrder: 1,
+    sizes: ["S","M","L","XL","2XL","3XL"],
+    units: 'units',
+    icon: '🥼',
+    images: ['images/10.jpeg']
+},
+{
+    id: 'PPE-Boiler',
+    name: 'Boiler suit econo',
+    category: 'ppe',
+    specs: 'STD',
+    price: 239.00,
+    minOrder: 1,
+    sizes: ["S","M","L","XL","2XL","3XL"],
+    units: 'units',
+    icon: '🥼',
+    images: ['images/11.jpeg']
+},
+{
+    id: 'PPE-BREF',
+    name: 'Boiler suit reflective',
+    category: 'ppe',
+    specs: 'reflective',
+    price: 269.00,
+    minOrder: 1,
+    sizes: [ "S","M","L","XL","2XL","3XL"],
+    units: 'units',
+    icon: '🥼',
+    images: ['images/12.jpeg']
+},
 {  
     id: 'PPE-BOOTS-safety shoe',  
     name: 'Dot Contractor Safety Boots Size various',  
@@ -401,6 +521,30 @@ images: ['bubble1.jpeg']
     icon: '👢',
     images: ['argon.jpeg']
 },  
+{
+    id : 'PPE-BOOTS-Canvas',
+    name: 'Security Boots',
+    category: 'ppe',
+    specs: 'security',
+    price: 329.00,
+    minOrder: 1,
+    sizes: ["8","9","10","11","12","13"],
+    unit: 'pairs',
+    icon: '🥾',
+    images: ['images/canvas.jpeg']
+},
+{
+    id: 'PPE-BOOTS-CHELSEA',
+    name: 'Steel-Toe Chelsea boots',
+    category: 'ppe',
+    specs: 'steel-toe',
+    price: 559.00,
+    minOrder: 1,
+    sizes: ["8","9","10","11","12","13"],
+    unit: 'pairs',
+    icon: '🥾',
+    images: ['images/chelsea.jpeg']
+},
 {  
     id: 'PPE-BOOTS-Mercury',  
     name: 'Steel-Toe Boots Size various',  
@@ -511,8 +655,8 @@ images: ['bubble1.jpeg']
     category: 'wrap',  
     specs: '1200x1000mm',  
     price: 450.00,  
-    minOrder: 1,  
-    unit: 'units',  
+    minOrder: 10,  
+    unit: 'MOQ',  
     icon: '🪵',
     images: ['woodenpallet2.jpeg']
 },  
@@ -522,8 +666,8 @@ images: ['bubble1.jpeg']
     category: 'wrap',  
     specs: '1200x1000mm',  
     price: 650.00,  
-    minOrder: 1,  
-    unit: 'units',  
+    minOrder: 10,  
+    unit: 'MOQ',  
     icon: '🔷',
     images: ['palletplastic.jpeg']
 }
