@@ -423,7 +423,7 @@ images: ['images/bubble2.jpg']
     sizes: ["S","M","L","XL","2XL","3XL"],
     units: 'units',
     icon: '🥼',
-    images: ['images/7.jpeg]
+    images: ['images/7.jpeg']
 },
 {
     id: 'PPE-6535R',
