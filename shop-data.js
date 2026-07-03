@@ -373,7 +373,7 @@ images: ['images/bubble2.jpg']
     price: 329.00,
     minOrder: 1,
     sizes: ["S","M","L","XL","2XL","3XL"],
-    units: 'units',
+    unit: 'units',
     icon: '🥼',
     images: ['images/3.jpeg']
 },
@@ -385,7 +385,7 @@ images: ['images/bubble2.jpg']
     price: 349.00,
     minOrder: 1,
     sizes: ["S","M","L","XL","2XL","3XL"],
-    units: 'units',
+    unit: 'units',
     icon: '🥼',
     images: ['images/4.jpeg']
 },
@@ -397,9 +397,9 @@ images: ['images/bubble2.jpg']
     price: 559.00,
     minOrder: 1,
     sizes: ["S","M","L","XL","2XL","3XL"],
-    units: 'units',
+    unit: 'units',
     icon: '🥼',
-    images: ['images/5.jpeg]
+    images: ['images/5.jpeg']
 },
 {
     id: 'D59-F&ASABS',
@@ -409,7 +409,7 @@ images: ['images/bubble2.jpg']
     price: 639.00,
     minOrder: 1,
     sizes: ["S","M","L","XL","2XL","3XL"],
-    units: 'units',
+    unit: 'units',
     icon: '🥼',
     images: ['images/6.jpeg']
 },
@@ -421,7 +421,7 @@ images: ['images/bubble2.jpg']
     price: 359.00,
     minOrder: 1,
     sizes: ["S","M","L","XL","2XL","3XL"],
-    units: 'units',
+    unit: 'units',
     icon: '🥼',
     images: ['images/7.jpeg']
 },
@@ -433,7 +433,7 @@ images: ['images/bubble2.jpg']
     price: 389.00,
     minOrder: 1,
     sizes: ["S","M","L","XL","2XL","3XL"],
-    units: 'units',
+    unit: 'units',
     icon: '🥼',
     images: ['images/8.jpeg']
 },
@@ -445,7 +445,7 @@ images: ['images/bubble2.jpg']
     price: 249.00,
     minOrder: 1,
     sizes: ["S","M","L","XL","2XL","3XL"],
-    units: 'units',
+    unit: 'units',
     icons: '🥼',
     images: ['images/9.jpeg']
 },
@@ -457,7 +457,7 @@ images: ['images/bubble2.jpg']
     price: 269.00,
     minOrder: 1,
     sizes: ["S","M","L","XL","2XL","3XL"],
-    units: 'units',
+    unit: 'units',
     icon: '🥼',
     images: ['images/10.jpeg']
 },
@@ -469,7 +469,7 @@ images: ['images/bubble2.jpg']
     price: 239.00,
     minOrder: 1,
     sizes: ["S","M","L","XL","2XL","3XL"],
-    units: 'units',
+    unit: 'units',
     icon: '🥼',
     images: ['images/11.jpeg']
 },
@@ -481,7 +481,7 @@ images: ['images/bubble2.jpg']
     price: 269.00,
     minOrder: 1,
     sizes: [ "S","M","L","XL","2XL","3XL"],
-    units: 'units',
+    unit: 'units',
     icon: '🥼',
     images: ['images/12.jpeg']
 },
