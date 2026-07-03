@@ -49,6 +49,7 @@ images: ['bubble1.jpeg']
 },
 {   id: 'CB-20',
     name: 'SFK/Corroboard',
+    category: 'wrap',
     specs: '915 x 20kg',
     price: 700,
     minOrder: 1,
@@ -59,6 +60,7 @@ images: ['bubble1.jpeg']
 {
     id: 'CB-35',
     name: 'SFK/Corroboard',
+    category: 'wrap',
     specs: '1525 x 35kg',
     price: 820,
     minOrder: 1,
@@ -69,6 +71,7 @@ images: ['bubble1.jpeg']
 {
     id: 'CB-45',
     name: 'SFK/Corroboard',
+    category: 'wrap',
     specs: '1830 x 40kg',
     price: 920,
     minOrder: 1,
