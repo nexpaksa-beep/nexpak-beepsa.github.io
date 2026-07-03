@@ -56,6 +56,26 @@ images: ['bubble1.jpeg']
     icon: '💈',
     images: ['images/cor1.jpeg']
 },
+{
+    id: 'CB-35',
+    name: 'SFK/Corroboard',
+    specs: '1525 x 35kg',
+    price: 820,
+    minOrder: 1,
+    unit: 'rolls',
+    icon: '💈',
+    images: ['images/cor2.jpeg']
+},
+{
+    id: 'CB-45',
+    name: 'SFK/Corroboard',
+    specs: '1830 x 40kg',
+    price: 920,
+    minOrder: 1,
+    unit: 'rolls',
+    icon: '💈',
+    images: ['images/cor3.jpeg']
+},
 // ===== PALLET WRAP =====  
 {  
     id: 'PW-10',  
