@@ -47,7 +47,15 @@ unit: 'roll',
 icon: '🫧',
 images: ['bubble1.jpeg']
 },
-
+{   id: 'CB-20',
+    name: 'SFK/Corroboard',
+    specs: '915 x 20kg',
+    price: 700,
+    minOrder: 1,
+    unit: 'rolls',
+    icon: '💈',
+    images: ['images/cor1.jpeg']
+},
 // ===== PALLET WRAP =====  
 {  
     id: 'PW-10',  
