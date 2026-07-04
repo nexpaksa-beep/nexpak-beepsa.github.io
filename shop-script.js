@@ -1,31 +1,79 @@
-// ===== NEXPAK SHOP SCRIPT (FINAL CLEAN VERSION) =====
+// ======================================================
+// NEXPAK SHOP SCRIPT
+// PART 1A - INITIALIZATION & PRODUCT RENDERING
+// ======================================================
 
 let cart = [];
 let stripe = null;
 let elements = null;
 let cardElement = null;
 
-let activeImageIndex = {};
+let currentCategory = "all";
+let currentSearch = "";
 
-// ===== INIT =====
-document.addEventListener('DOMContentLoaded', function () {
+// =====================
+// INITIALIZE
+// =====================
+document.addEventListener("DOMContentLoaded", () => {
+
     loadCart();
+
     renderProducts();
-    initializeStripe?.();
+
     updateCartUI();
+
+    if (typeof initializeStripe === "function") {
+        initializeStripe();
+    }
+
+    // Search
+    const searchInput = document.getElementById("searchInput");
+
+    if (searchInput) {
+        searchInput.addEventListener("input", function () {
+
+            currentSearch = this.value.trim();
+
+            renderProducts(currentCategory, currentSearch);
+
+        });
+    }
+
 });
 
-// ===== PRODUCT RENDERING =====
+// =====================
+// CATEGORY FILTER
+// =====================
+function filterCategory(category) {
+
+    currentCategory = category;
+
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    event.target.classList.add("active");
+
+    renderProducts(category, currentSearch);
+
+}
+
+// =====================
+// RENDER PRODUCTS
+// =====================
 function renderProducts(category = "all", searchTerm = "") {
 
     const grid = document.getElementById("productsGrid");
+
     if (!grid) return;
 
     grid.innerHTML = "";
 
     const filteredProducts = products.filter(product => {
 
-        const categoryMatch = category === "all" || product.category === category;
+        const categoryMatch =
+            category === "all" ||
+            product.category === category;
 
         const searchMatch =
             searchTerm === "" ||
@@ -33,264 +81,770 @@ function renderProducts(category = "all", searchTerm = "") {
             product.id.toLowerCase().includes(searchTerm.toLowerCase());
 
         return categoryMatch && searchMatch;
+
     });
 
     if (filteredProducts.length === 0) {
+
         grid.innerHTML = `
-            <div style="grid-column:1/-1;text-align:center;padding:3rem;color:#888;">
-                No products found
+            <div style="
+                grid-column:1/-1;
+                text-align:center;
+                padding:60px;
+                color:#64748b;
+            ">
+                <h2>No products found</h2>
+                <p>Try another search.</p>
             </div>
         `;
+
         return;
+
     }
 
     filteredProducts.forEach(product => {
 
-        const card = document.createElement("div");
-        card.className = "product-card";
+        createProductCard(product, grid);
 
-        const minOrderText = product.minOrder
-            ? `<div class="min-order">Min order: ${product.minOrder} ${product.unit}</div>`
-            : '';
-
-        const sizeSelector = product.sizes?.length
-            ? `
-                <select class="size-selector" id="size-${product.id}">
-                    <option value="">Select size</option>
-                    ${product.sizes.map(size => `<option value="${size}">${size}</option>`).join('')}
-                </select>
-            `
-            : '';
-        const colorSelector = product.color
-    ? `
-        <select class="color-selector" id="color-${product.id}">
-            <option value="">Select colour</option>
-            ${
-                (Array.isArray(product.color) ? product.color : [product.color])
-                    .map(color => `<option value="${color}">${color}</option>`)
-                    .join('')
-            }
-        </select>
-    `
-    : '';
-
-        card.innerHTML = `
-            <div class="product-image">
-                <img
-                    src="${product.images?.[0] || ''}"
-                    alt="${product.name}"
-                    class="product-img"
-                    onerror="this.style.display='none'; this.parentElement.innerHTML='${product.icon || ''}'"
-                >
-            </div>
-
-            <div class="product-info">
-                <div class="product-category">${product.category}</div>
-                <div class="product-name">${product.name}</div>
-                <div class="product-sku">SKU: ${product.id}</div>
-                <div class="product-specs">${product.specs || ''}</div>
-                <div class="product-price">R${Number(product.price).toFixed(2)}</div>
-                <div class="product-price-note">(Ex VAT)</div>
-
-                ${minOrderText}
-                ${sizeSelector}
-                ${colorSelector}
-
-                <div class="product-footer">
-                    <div class="qty-selector">
-                        <button type="button" onclick="increaseQty('qty-${product.id}')">+</button>
-
-                        <input
-                            type="number"
-                            id="qty-${product.id}"
-                            value="${product.minOrder || 1}"
-                            min="${product.minOrder || 1}"
-                            step="1"
-                        >
-
-                        <button type="button" onclick="decreaseQty('qty-${product.id}')">−</button>
-                    </div>
-
-                    <button class="add-to-cart-btn" onclick="addToCart('${product.id}')">
-                        Add to Cart
-                    </button>
-                </div>
-            </div>
-        `;
-
-        grid.appendChild(card);
     });
+
+    }
+// =====================
+// CREATE PRODUCT CARD
+// =====================
+function createProductCard(product, grid) {
+
+    const card = document.createElement("div");
+    card.className = "product-card";
+
+    const image = product.images && product.images.length
+        ? product.images[0]
+        : "";
+
+    const sizeSelector = product.sizes && product.sizes.length
+        ? `
+            <select class="size-selector" id="size-${product.id}">
+                <option value="">Select Size</option>
+                ${product.sizes.map(size =>
+                    `<option value="${size}">${size}</option>`
+                ).join("")}
+            </select>
+        `
+        : "";
+
+    const colourSelector = product.color
+        ? `
+            <select class="color-selector" id="color-${product.id}">
+                <option value="">Select Colour</option>
+                ${(Array.isArray(product.color)
+                    ? product.color
+                    : [product.color])
+                    .map(colour =>
+                        `<option value="${colour}">${colour}</option>`
+                    ).join("")}
+            </select>
+        `
+        : "";
+
+    card.innerHTML = `
+
+        <div class="product-image">
+
+            ${
+                image
+                ?
+
+                `<img
+                    src="${image}"
+                    class="product-img"
+                    alt="${product.name}"
+                    onerror="this.style.display='none'"
+                >`
+
+                :
+
+                `<div style="font-size:70px;">
+                    ${product.icon || "📦"}
+                </div>`
+            }
+
+        </div>
+
+        <div class="product-info">
+
+            <div class="product-category">
+                ${product.category.toUpperCase()}
+            </div>
+
+            <h3 class="product-name">
+                ${product.name}
+            </h3>
+
+            <div class="product-sku">
+                SKU: ${product.id}
+            </div>
+
+            <div class="product-specs">
+                ${product.specs || ""}
+            </div>
+
+            <div class="product-price">
+                R${Number(product.price).toFixed(2)}
+            </div>
+
+            <div class="product-price-note">
+                Excluding VAT
+            </div>
+
+            ${
+                product.minOrder
+                ?
+
+                `<div class="min-order">
+                    Minimum Order:
+                    ${product.minOrder} ${product.unit}
+                </div>`
+
+                :
+
+                ""
+            }
+
+            ${sizeSelector}
+
+            ${colourSelector}
+
+            <div class="product-footer">
+
+                <div class="qty-selector">
+
+                    <button
+                        type="button"
+                        onclick="decreaseQty('qty-${product.id}')">
+                        −
+                    </button>
+
+                    <input
+                        id="qty-${product.id}"
+                        type="number"
+                        value="${product.minOrder || 1}"
+                        min="${product.minOrder || 1}"
+                    >
+
+                    <button
+                        type="button"
+                        onclick="increaseQty('qty-${product.id}')">
+                        +
+                    </button>
+
+                </div>
+
+                <button
+                    class="add-to-cart-btn"
+                    onclick="addToCart('${product.id}')">
+
+                    🛒 Add to Cart
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+    grid.appendChild(card);
+
 }
 
-// ===== QUANTITY CONTROLS =====
-function increaseQty(inputId) {
-    const input = document.getElementById(inputId);
+// =====================
+// QUANTITY CONTROLS
+// =====================
+function increaseQty(id) {
+
+    const input = document.getElementById(id);
+
     if (!input) return;
+
     input.value = parseInt(input.value || 1) + 1;
+
 }
 
-function decreaseQty(inputId) {
-    const input = document.getElementById(inputId);
+function decreaseQty(id) {
+
+    const input = document.getElementById(id);
+
     if (!input) return;
 
-    const productId = inputId.replace('qty-', '');
+    const productId = id.replace("qty-", "");
+
     const product = products.find(p => p.id === productId);
 
-    const min = product?.minOrder || 1;
-    const current = parseInt(input.value || min);
+    const minimum = product?.minOrder || 1;
 
-    input.value = Math.max(min, current - 1);
+    input.value = Math.max(
+        minimum,
+        parseInt(input.value || minimum) - 1
+    );
+
 }
+// ======================================================
+// PART 2A - CART FUNCTIONS
+// ======================================================
 
-// ===== CART =====
+// ===== ADD TO CART =====
 function addToCart(productId) {
 
     const product = products.find(p => p.id === productId);
-    const qtyInput = document.getElementById(`qty-${productId}`);
 
-    if (!product || !qtyInput) return;
+    if (!product) return;
 
-    const quantity = parseInt(qtyInput.value || product.minOrder || 1);
+    const qty = parseInt(document.getElementById(`qty-${productId}`)?.value) || product.minOrder || 1;
 
-    const sizeSelector = document.getElementById(`size-${productId}`);
-    const selectedSize = sizeSelector ? sizeSelector.value : null;
+    const size = document.getElementById(`size-${productId}`)?.value || "";
 
-    const colorSelector = document.getElementById(`color-${productId}`);
-    const selectedColor = colorSelector ? colorSelector.value : null;
+    const colour = document.getElementById(`color-${productId}`)?.value || "";
 
-    // Validate size
-    if (sizeSelector && !selectedSize) {
-        alert("Please select a size");
-        return;
-    }
-
-    // Validate colour
-    if (colorSelector && !selectedColor) {
-        alert("Please select a colour");
-        return;
-    }
-
-    if (quantity < product.minOrder) {
-        alert(`Minimum order quantity for ${product.name} is ${product.minOrder} ${product.unit}`);
-        return;
-    }
-
-    const existingItem = cart.find(item =>
+    const existing = cart.find(item =>
         item.id === productId &&
-        item.size === selectedSize &&
-        item.color === selectedColor
+        item.size === size &&
+        item.colour === colour
     );
 
-    if (existingItem) {
-        existingItem.quantity += quantity;
+    if (existing) {
+
+        existing.quantity += qty;
+
     } else {
+
         cart.push({
-            id: productId,
+            id: product.id,
+            sku: product.id,
             name: product.name,
-            price: Number(product.price),
-            quantity,
-            minOrder: product.minOrder || 1,
-            unit: product.unit || '',
-            size: selectedSize || null,
-            color: selectedColor || null
+            price: product.price,
+            quantity: qty,
+            size: size,
+            colour: colour,
+            image: product.images?.[0] || "",
+            minOrder: product.minOrder || 1
         });
+
     }
 
     saveCart();
     updateCartUI();
-    toggleCart?.();
-    showNotification?.(`${product.name} added to cart!`);
+    toggleCart(true);
+
 }
-// ===== UPDATE QTY =====
+
+// ===== REMOVE ITEM =====
+function removeFromCart(productId) {
+
+    cart = cart.filter(item => item.id !== productId);
+
+    saveCart();
+    updateCartUI();
+
+}
+
+// ===== UPDATE QUANTITY =====
 function updateCartItemQty(productId, newQty) {
 
     const item = cart.find(i => i.id === productId);
+
     if (!item) return;
 
-    const qty = Math.max(item.minOrder || 1, parseInt(newQty || item.minOrder || 1));
+    newQty = parseInt(newQty);
 
-    item.quantity = qty;
+    if (newQty <= 0) {
+
+        removeFromCart(productId);
+        return;
+
+    }
+
+    item.quantity = Math.max(item.minOrder || 1, newQty);
 
     saveCart();
     updateCartUI();
+
 }
 
-// ===== CART UI =====
+// ===== OPEN / CLOSE CART =====
+function toggleCart(open = true) {
+
+    const drawer = document.getElementById("cartDrawer");
+    const overlay = document.getElementById("cartOverlay");
+
+    if (!drawer || !overlay) return;
+
+    if (open) {
+
+        drawer.classList.add("active");
+        overlay.classList.add("active");
+
+    } else {
+
+        drawer.classList.remove("active");
+        overlay.classList.remove("active");
+
+    }
+
+}
+// ======================================================
+// PART 2B - PROFESSIONAL CART UI
+// ======================================================
+
 function updateCartUI() {
 
-    const cartCount = document.getElementById('cartCount');
-    const cartItemsContainer = document.getElementById('cartItems');
-    const checkoutBtn = document.getElementById('checkoutBtn');
+    const cartCount = document.getElementById("cartCount");
+    const cartItems = document.getElementById("cartItems");
+    const checkoutBtn = document.getElementById("checkoutBtn");
 
+    if (!cartItems) return;
+
+    // Cart Badge
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-    if (cartCount) cartCount.textContent = totalItems;
+    if (cartCount) {
+        cartCount.textContent = totalItems;
+    }
 
-    if (!cartItemsContainer) return;
-
+    // Empty Cart
     if (cart.length === 0) {
-        cartItemsContainer.innerHTML = '<p class="empty-cart">Your cart is empty</p>';
-        if (checkoutBtn) checkoutBtn.disabled = true;
+
+        cartItems.innerHTML = `
+            <div class="empty-cart">
+
+                <div style="font-size:70px;">🛒</div>
+
+                <h3>Your cart is empty</h3>
+
+                <p>
+                    Browse our premium packaging products and
+                    start adding items.
+                </p>
+
+            </div>
+        `;
+
+        if (checkoutBtn)
+            checkoutBtn.disabled = true;
+
         updateCartSummary();
+
         return;
     }
 
-    cartItemsContainer.innerHTML = "";
+    // Build Cart
+    cartItems.innerHTML = "";
 
     cart.forEach(item => {
-        const el = document.createElement("div");
-        el.className = "cart-item";
 
-        el.innerHTML = `
-            <div>
-                <h4>${item.name}</h4>
-                <div>SKU: ${item.id}</div>
-                ${item.size ? `<div>Size: ${item.size}</div>` : ''}
-                ${item.color ? `<div>Colour: ${item.color}</div>` : ''}
+        const row = document.createElement("div");
 
-                <input type="number"
-                    value="${item.quantity}"
-                    min="${item.minOrder}"
-                    onchange="updateCartItemQty('${item.id}', this.value)"
-                >
+        row.className = "cart-item";
 
-                <div>R${(item.price * item.quantity).toFixed(2)}</div>
+        row.innerHTML = `
+
+            <div class="cart-item-image">
+
+                ${
+                    item.image
+
+                    ?
+
+                    `<img src="${item.image}" alt="${item.name}">`
+
+                    :
+
+                    `<div class="cart-placeholder">
+                        📦
+                    </div>`
+
+                }
+
             </div>
 
-            <button onclick="removeFromCart('${item.id}')">🗑️</button>
+            <div class="cart-item-details">
+
+                <h4>${item.name}</h4>
+
+                <small>SKU: ${item.sku}</small>
+
+                ${
+                    item.size
+                    ? `<div>📏 ${item.size}</div>`
+                    : ""
+                }
+
+                ${
+                    item.colour
+                    ? `<div>🎨 ${item.colour}</div>`
+                    : ""
+                }
+
+                <div class="cart-price">
+
+                    R${Number(item.price).toFixed(2)}
+
+                    <span>each</span>
+
+                </div>
+
+                <div class="cart-qty">
+
+                    <button
+                        onclick="updateCartItemQty('${item.id}',${item.quantity-1})">
+
+                        −
+
+                    </button>
+
+                    <span>${item.quantity}</span>
+
+                    <button
+                        onclick="updateCartItemQty('${item.id}',${item.quantity+1})">
+
+                        +
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="cart-item-right">
+
+                <div class="cart-total">
+
+                    R${(item.price * item.quantity).toFixed(2)}
+
+                </div>
+
+                <button
+                    class="remove-item"
+                    onclick="removeFromCart('${item.id}')">
+
+                    🗑
+
+                </button>
+
+            </div>
+
         `;
 
-        cartItemsContainer.appendChild(el);
+        cartItems.appendChild(row);
+
     });
 
-    if (checkoutBtn) checkoutBtn.disabled = false;
+    if (checkoutBtn)
+        checkoutBtn.disabled = false;
 
     updateCartSummary();
+
 }
 
-// ===== SUMMARY =====
+// ======================================================
+// CART TOTALS
+// ======================================================
+
 function updateCartSummary() {
 
-    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const subtotal = cart.reduce((sum, item) => {
+
+        return sum + (item.price * item.quantity);
+
+    }, 0);
+
     const delivery = subtotal >= 5000 ? 0 : 150;
+
     const total = subtotal + delivery;
 
-    const set = (id, val) => {
+    const setValue = (id, value) => {
+
         const el = document.getElementById(id);
-        if (el) el.textContent = val;
+
+        if (el)
+            el.textContent = value;
+
     };
 
-    set('subtotal', `R${subtotal.toFixed(2)}`);
-    set('delivery', delivery === 0 ? 'FREE' : `R${delivery.toFixed(2)}`);
-    set('total', `R${total.toFixed(2)}`);
+    setValue("subtotal", `R${subtotal.toFixed(2)}`);
+
+    setValue(
+        "delivery",
+        delivery === 0
+            ? "FREE"
+            : `R${delivery.toFixed(2)}`
+    );
+
+    setValue(
+        "total",
+        `R${total.toFixed(2)}`
+    );
+
+}
+// ======================================================
+// PART 3 - CHECKOUT & ORDER REVIEW
+// ======================================================
+
+// Open Checkout
+function proceedToCheckout() {
+
+    if (cart.length === 0) return;
+
+    buildOrderReview();
+
+    document.getElementById("checkoutModal").classList.add("active");
+
 }
 
-// ===== STORAGE =====
+// Close Checkout
+function closeCheckout() {
+
+    document.getElementById("checkoutModal").classList.remove("active");
+
+}
+
+// Build Order Review
+function buildOrderReview() {
+
+    const review = document.getElementById("orderReview");
+
+    if (!review) return;
+
+    let html = "";
+
+    let subtotal = 0;
+
+    cart.forEach(item => {
+
+        const total = item.price * item.quantity;
+
+        subtotal += total;
+
+        html += `
+            <div class="review-item">
+
+                <div>
+
+                    <strong>${item.name}</strong><br>
+
+                    Qty: ${item.quantity}
+
+                    ${item.size ? `<br>Size: ${item.size}` : ""}
+
+                    ${item.colour ? `<br>Colour: ${item.colour}` : ""}
+
+                </div>
+
+                <strong>
+                    R${total.toFixed(2)}
+                </strong>
+
+            </div>
+        `;
+
+    });
+
+    const delivery = subtotal >= 5000 ? 0 : 150;
+
+    const total = subtotal + delivery;
+
+    html += `
+
+        <hr>
+
+        <div class="review-total">
+
+            <div>
+
+                <span>Subtotal</span>
+
+                <span>R${subtotal.toFixed(2)}</span>
+
+            </div>
+
+            <div>
+
+                <span>Delivery</span>
+
+                <span>${delivery === 0 ? "FREE" : "R" + delivery.toFixed(2)}</span>
+
+            </div>
+
+            <div>
+
+                <strong>Total</strong>
+
+                <strong>R${total.toFixed(2)}</strong>
+
+            </div>
+
+        </div>
+
+    `;
+
+    review.innerHTML = html;
+
+}
+
+// ======================================================
+// PLACE ORDER
+// ======================================================
+
+const checkoutForm = document.getElementById("checkoutForm");
+
+if (checkoutForm) {
+
+    checkoutForm.addEventListener("submit", function(e){
+
+        e.preventDefault();
+
+        processOrder();
+
+    });
+
+}
+
+function processOrder() {
+
+    const orderNumber =
+        "NP" +
+        Date.now().toString().slice(-8);
+
+    document.getElementById("orderNumber").innerHTML = `
+
+        <h3>Order Number</h3>
+
+        <strong>${orderNumber}</strong>
+
+    `;
+
+    cart = [];
+
+    saveCart();
+
+    updateCartUI();
+
+    closeCheckout();
+
+    document.getElementById("successModal").classList.add("active");
+
+}
+
+// ======================================================
+// SUCCESS
+// ======================================================
+
+function returnToShop(){
+
+    document.getElementById("successModal").classList.remove("active");
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+// ======================================================
+// PART 4 - STRIPE, STORAGE & UTILITIES
+// ======================================================
+
+// ===== STRIPE =====
+function initializeStripe() {
+
+    // Replace with your Stripe Publishable Key
+    const stripeKey = "";
+
+    if (!stripeKey) {
+        console.log("Stripe not configured.");
+        return;
+    }
+
+    stripe = Stripe(stripeKey);
+
+}
+
+// ===== SAVE CART =====
 function saveCart() {
-    localStorage.setItem('nexpak_cart', JSON.stringify(cart));
+
+    localStorage.setItem(
+        "nexpak_cart",
+        JSON.stringify(cart)
+    );
+
 }
 
+// ===== LOAD CART =====
 function loadCart() {
-    const data = localStorage.getItem('nexpak_cart');
-    cart = data ? JSON.parse(data) : [];
+
+    const saved =
+        localStorage.getItem("nexpak_cart");
+
+    cart = saved
+        ? JSON.parse(saved)
+        : [];
+
 }
+
+// ===== CLEAR CART =====
+function clearCart() {
+
+    cart = [];
+
+    saveCart();
+
+    updateCartUI();
+
+}
+
+// ===== FORMAT MONEY =====
+function formatPrice(value) {
+
+    return `R${Number(value).toFixed(2)}`;
+
+}
+
+// ===== FIND PRODUCT =====
+function getProduct(productId) {
+
+    return products.find(p => p.id === productId);
+
+}
+
+// ===== REFRESH SHOP =====
+function refreshShop() {
+
+    renderProducts(
+        currentCategory,
+        currentSearch
+    );
+
+    updateCartUI();
+
+}
+
+// ======================================================
+// OPTIONAL KEYBOARD SHORTCUTS
+// ======================================================
+
+document.addEventListener("keydown", function(e){
+
+    // ESC closes cart
+    if(e.key === "Escape"){
+
+        toggleCart(false);
+
+        closeCheckout();
+
+    }
+
+});
+
+// ======================================================
+// END OF SCRIPT
+// ======================================================
+
+console.log("✅ Nexpak Shop Loaded Successfully");
