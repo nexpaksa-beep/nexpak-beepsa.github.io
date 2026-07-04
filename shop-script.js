@@ -148,111 +148,84 @@ function createProductCard(product, grid) {
 
     card.innerHTML = `
 
-        <div class="product-image">
+<div class="product-image">
 
-            ${
-                image
-                ?
+    ${
+        image
+        ? `<img src="${image}" class="product-img" alt="${product.name}">`
+        : `<div class="product-placeholder">${product.icon || "📦"}</div>`
+    }
 
-                `<img
-                    src="${image}"
-                    class="product-img"
-                    alt="${product.name}"
-                    onerror="this.style.display='none'"
-                >`
+    <span class="stock-badge">✔ In Stock</span>
 
-                :
+</div>
 
-                `<div style="font-size:70px;">
-                    ${product.icon || "📦"}
-                </div>`
-            }
+<div class="product-info">
 
-        </div>
+    <div class="product-category">
+        ${product.category.toUpperCase()}
+    </div>
 
-        <div class="product-info">
+    <h3 class="product-name">
+        ${product.name}
+    </h3>
 
-            <div class="product-category">
-                ${product.category.toUpperCase()}
-            </div>
+    <div class="product-sku">
+        SKU: ${product.id}
+    </div>
 
-            <h3 class="product-name">
-                ${product.name}
-            </h3>
+    <div class="product-specs">
+        ${product.specs || ""}
+    </div>
 
-            <div class="product-sku">
-                SKU: ${product.id}
-            </div>
+    <div class="min-order">
+        Minimum Order:
+        ${product.minOrder || 1} ${product.unit || ""}
+    </div>
 
-            <div class="product-specs">
-                ${product.specs || ""}
-            </div>
+    <div class="product-price">
+        R${Number(product.price).toFixed(2)}
+    </div>
 
-            <div class="product-price">
-                R${Number(product.price).toFixed(2)}
-            </div>
+    <div class="vat-note">
+        Excluding VAT
+    </div>
 
-            <div class="product-price-note">
-                Excluding VAT
-            </div>
+    ${sizeSelector}
 
-            ${
-                product.minOrder
-                ?
+    ${colourSelector}
 
-                `<div class="min-order">
-                    Minimum Order:
-                    ${product.minOrder} ${product.unit}
-                </div>`
+    <div class="product-footer">
 
-                :
+        <div class="qty-selector">
 
-                ""
-            }
+            <button onclick="decreaseQty('qty-${product.id}')">−</button>
 
-            ${sizeSelector}
+            <input
+                id="qty-${product.id}"
+                type="number"
+                value="${product.minOrder || 1}"
+                min="${product.minOrder || 1}"
+            >
 
-            ${colourSelector}
-
-            <div class="product-footer">
-
-                <div class="qty-selector">
-
-                    <button
-                        type="button"
-                        onclick="decreaseQty('qty-${product.id}')">
-                        −
-                    </button>
-
-                    <input
-                        id="qty-${product.id}"
-                        type="number"
-                        value="${product.minOrder || 1}"
-                        min="${product.minOrder || 1}"
-                    >
-
-                    <button
-                        type="button"
-                        onclick="increaseQty('qty-${product.id}')">
-                        +
-                    </button>
-
-                </div>
-
-                <button
-                    class="add-to-cart-btn"
-                    onclick="addToCart('${product.id}')">
-
-                    🛒 Add to Cart
-
-                </button>
-
-            </div>
+            <button onclick="increaseQty('qty-${product.id}')">+</button>
 
         </div>
 
-    `;
+        <button
+            class="add-to-cart-btn"
+            onclick="addToCart('${product.id}')">
 
+            🛒 Add to Cart
+
+        </button>
+
+    </div>
+
+</div>
+
+`;
+                    
     grid.appendChild(card);
 
 }
