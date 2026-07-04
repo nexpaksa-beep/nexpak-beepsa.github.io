@@ -50,13 +50,40 @@ button {
     align-items: center;
 }
 
-.logo h1 {
-    font-size: 1.8rem;
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
 }
 
-.logo p {
-    font-size: 0.85rem;
-    opacity: 0.8;
+.logo img{
+    height:60px;
+    width:auto;
+}
+
+.logo-text{
+    display:flex;
+    flex-direction:column;
+    line-height:1;
+}
+
+.nex{
+    color:#ffffff;
+    font-size:24px;
+    font-weight:700;
+}
+
+.pak{
+    color:#f59e0b;
+    font-size:24px;
+    font-weight:700;
+}
+
+.small{
+    color:#ffffff;
+    font-size:12px;
+    letter-spacing:4px;
+    margin-top:2px;
 }
 
 .nav-links {
