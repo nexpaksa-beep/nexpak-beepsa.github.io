@@ -60,7 +60,8 @@
             <a href="shop.html" class="active">Shop</a>
 
             <a href="#" class="cart-link" onclick="toggleCart(true)">
-                🛒 <span id="cartCount">0</span>
+    🛒 <span id="cartCount" class="cart-count">0</span>
+            </a>
             </a>
         </div>
 
@@ -75,15 +76,14 @@
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="Search products...">
         </div>
-
-        <div class="category-filter">
-            <button onclick="filterCategory('all')">All</button>
-            <button onclick="filterCategory('wrap')">Wraps</button>
-            <button onclick="filterCategory('tape')">Tapes</button>
-            <button onclick="filterCategory('boxes')">Boxes</button>
-            <button onclick="filterCategory('ppe')">PPE</button>
-            <button onclick="filterCategory('void')">Void Fill</button>
-        </div>
+        
+            <button class="filter-btn active" onclick="filterCategory('all')">All</button>
+            <button class="filter-btn" onclick="filterCategory('wrap')">Wraps</button>
+            <button class="filter-btn" onclick="filterCategory('tape')">Tapes</button>
+            <button class="filter-btn" onclick="filterCategory('boxes')">Boxes</button>
+            <button class="filter-btn" onclick="filterCategory('ppe')">PPE</button>
+            <button class="filter-btn" onclick="filterCategory('void')">Void Fill</button>
+        </div>  
     </div>
 
     <!-- PRODUCTS -->
