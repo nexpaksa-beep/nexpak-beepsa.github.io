@@ -11,7 +11,7 @@
 
 <body>
 
-<!-- ================= CART DRAWER (TAKEALOT STYLE) ================= -->
+<!-- ================= CART DRAWER ================= -->
 <div id="cartOverlay" class="cart-overlay" onclick="toggleCart(false)"></div>
 
 <div id="cartDrawer" class="cart-drawer">
@@ -27,7 +27,7 @@
         <div class="cart-summary">
             <div>Subtotal: <span id="subtotal">R0.00</span></div>
             <div>Delivery: <span id="delivery">R0.00</span></div>
-            <div><b>Total: <span id="total">R0.00</span></b></div>
+            <div><strong>Total: <span id="total">R0.00</span></strong></div>
         </div>
 
         <button id="checkoutBtn" onclick="proceedToCheckout()">Checkout</button>
@@ -37,8 +37,8 @@
 </div>
 
 <!-- ================= NAVBAR ================= -->
-<!-- ================= NAVBAR ================= -->
 <nav class="navbar">
+
     <div class="navbar-container">
 
         <div class="logo">
@@ -51,21 +51,22 @@
         </div>
 
         <div class="nav-links">
+
             <a href="index.html">Home</a>
             <a href="aboutus.html">About Us</a>
             <a href="Products.html">Products</a>
             <a href="pricelist.html">Price List</a>
             <a href="contact.html">Contact</a>
-
             <a href="shop.html" class="active">Shop</a>
 
             <a href="#" class="cart-link" onclick="toggleCart(true)">
-    🛒 <span id="cartCount" class="cart-count">0</span>
+                🛒 <span id="cartCount" class="cart-count">0</span>
             </a>
-            </a>
+
         </div>
 
     </div>
+
 </nav>
 
 <!-- ================= MAIN ================= -->
@@ -73,17 +74,26 @@
 
     <!-- FILTER -->
     <div class="filter-section">
+
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Search products...">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search products..."
+            >
         </div>
-        
+
+        <div class="category-filter">
+
             <button class="filter-btn active" onclick="filterCategory('all')">All</button>
             <button class="filter-btn" onclick="filterCategory('wrap')">Wraps</button>
             <button class="filter-btn" onclick="filterCategory('tape')">Tapes</button>
             <button class="filter-btn" onclick="filterCategory('boxes')">Boxes</button>
             <button class="filter-btn" onclick="filterCategory('ppe')">PPE</button>
             <button class="filter-btn" onclick="filterCategory('void')">Void Fill</button>
-        </div>  
+
+        </div>
+
     </div>
 
     <!-- PRODUCTS -->
@@ -106,6 +116,7 @@
         <form id="checkoutForm">
 
             <div class="form-section">
+
                 <h3>Shipping Information</h3>
 
                 <div class="form-row">
@@ -123,6 +134,7 @@
                 </div>
 
                 <textarea id="instructions" placeholder="Delivery Instructions (Optional)"></textarea>
+
             </div>
 
             <div class="form-section">
@@ -131,11 +143,13 @@
             </div>
 
             <div class="form-section">
+
                 <h3>Payment Method</h3>
 
-                <label><input type="radio" name="payment" value="stripe" checked> Card (Stripe)</label>
-                <label><input type="radio" name="payment" value="eft"> EFT</label>
+                <label><input type="radio" name="payment" value="stripe" checked> Card (Stripe)</label><br>
+                <label><input type="radio" name="payment" value="eft"> EFT</label><br>
                 <label><input type="radio" name="payment" value="cash"> Cash on Delivery</label>
+
             </div>
 
             <div class="form-actions">
@@ -153,12 +167,14 @@
 <div id="successModal" class="modal">
 
     <div class="modal-content">
+
         <h2>Order Confirmed!</h2>
         <p>Thank you for your order.</p>
 
         <div id="orderNumber"></div>
 
         <button onclick="returnToShop()">Continue Shopping</button>
+
     </div>
 
 </div>
@@ -169,4 +185,4 @@
 <script src="shop-script.js"></script>
 
 </body>
-</html>
+                </html>
