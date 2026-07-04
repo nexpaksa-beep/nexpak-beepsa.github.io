@@ -456,7 +456,7 @@ images: ['images/bubble2.jpg']
     minOrder: 25,
     sizes: ["S","M","L","XL","2XL","3XL"],
     unit: 'MOQ',
-    icons: '🥼',
+    icon: '🥼',
     images: ['images/9.jpeg']
 },
 {
