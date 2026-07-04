@@ -681,17 +681,35 @@ if (checkoutForm) {
 
 }
 
-function processOrder() {
+async function processOrder() {
 
-    const orderNumber =
-        "NP" +
-        Date.now().toString().slice(-8);
+    try {
 
-    document.getElementById("orderNumber").innerHTML = `
+        const response = await fetch("http://localhost:4242/create-checkout-session", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                items: cart
+            })
+        });
 
-        <h3>Order Number</h3>
+        const session = await response.json();
 
-        <strong>${orderNumber}</strong>
+        const result = await stripe.redirectToCheckout({
+            sessionId: session.id
+        });
+
+        if (result.error) {
+            alert(result.error.message);
+        }
+
+    } catch (error) {
+        console.error("Checkout error:", error);
+        alert("Payment failed to start.");
+    }
+}
 
     `;
 
@@ -729,7 +747,7 @@ function returnToShop(){
 function initializeStripe() {
 
     // Replace with your Stripe Publishable Key
-    const stripeKey = "";
+    const stripeKey = "pk_test_eb10f3a59ed6937bee0d41f1664cfcc1bc3f39b0";
 
     if (!stripeKey) {
         console.log("Stripe not configured.");
