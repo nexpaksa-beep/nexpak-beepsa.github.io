@@ -1099,3 +1099,47 @@ visibility:visible;
 transform:translateY(-5px);
 
    }
+/* ==========================================
+   EXTRA ANIMATIONS
+========================================== */
+
+nav a.active{
+
+color:var(--gold);
+
+}
+
+.pulse{
+
+animation:pulse 1s;
+
+}
+
+@keyframes pulse{
+
+0%{
+
+transform:scale(1);
+
+}
+
+50%{
+
+transform:scale(1.08);
+
+}
+
+100%{
+
+transform:scale(1);
+
+}
+
+}
+
+.hero{
+
+transition:background-image 1s ease-in-out,
+opacity .6s ease;
+
+   }
