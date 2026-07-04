@@ -61,6 +61,18 @@ function renderProducts(category = "all", searchTerm = "") {
                 </select>
             `
             : '';
+        const colorSelector = product.color
+    ? `
+        <select class="color-selector" id="color-${product.id}">
+            <option value="">Select colour</option>
+            ${
+                (Array.isArray(product.color) ? product.color : [product.color])
+                    .map(color => `<option value="${color}">${color}</option>`)
+                    .join('')
+            }
+        </select>
+    `
+    : '';
 
         card.innerHTML = `
             <div class="product-image">
@@ -82,6 +94,7 @@ function renderProducts(category = "all", searchTerm = "") {
 
                 ${minOrderText}
                 ${sizeSelector}
+                ${colorSelector}
 
                 <div class="product-footer">
                     <div class="qty-selector">
@@ -142,9 +155,18 @@ function addToCart(productId) {
     const sizeSelector = document.getElementById(`size-${productId}`);
     const selectedSize = sizeSelector ? sizeSelector.value : null;
 
-    // validate size if dropdown exists
+    const colorSelector = document.getElementById(`color-${productId}`);
+    const selectedColor = colorSelector ? colorSelector.value : null;
+
+    // Validate size
     if (sizeSelector && !selectedSize) {
         alert("Please select a size");
+        return;
+    }
+
+    // Validate colour
+    if (colorSelector && !selectedColor) {
+        alert("Please select a colour");
         return;
     }
 
@@ -154,7 +176,9 @@ function addToCart(productId) {
     }
 
     const existingItem = cart.find(item =>
-        item.id === productId && item.size === selectedSize
+        item.id === productId &&
+        item.size === selectedSize &&
+        item.color === selectedColor
     );
 
     if (existingItem) {
@@ -167,7 +191,8 @@ function addToCart(productId) {
             quantity,
             minOrder: product.minOrder || 1,
             unit: product.unit || '',
-            size: selectedSize || null
+            size: selectedSize || null,
+            color: selectedColor || null
         });
     }
 
@@ -176,7 +201,6 @@ function addToCart(productId) {
     toggleCart?.();
     showNotification?.(`${product.name} added to cart!`);
 }
-
 // ===== UPDATE QTY =====
 function updateCartItemQty(productId, newQty) {
 
@@ -222,6 +246,7 @@ function updateCartUI() {
                 <h4>${item.name}</h4>
                 <div>SKU: ${item.id}</div>
                 ${item.size ? `<div>Size: ${item.size}</div>` : ''}
+                ${item.color ? `<div>Colour: ${item.color}</div>` : ''}
 
                 <input type="number"
                     value="${item.quantity}"
