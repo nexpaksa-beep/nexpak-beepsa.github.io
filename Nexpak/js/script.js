@@ -246,3 +246,133 @@ window.addEventListener("load",()=>{
     document.body.classList.add("loaded");
 
 });
+// ======================================
+// NEXPAK SOLUTIONS V2
+// SCRIPT.JS - PART 3
+// Premium Effects
+// ======================================
+
+// -----------------------------
+// ACTIVE NAVIGATION
+// -----------------------------
+
+window.addEventListener("scroll", () => {
+
+    let current = "";
+
+    document.querySelectorAll("section").forEach(section => {
+
+        const sectionTop = section.offsetTop - 120;
+
+        if (window.scrollY >= sectionTop) {
+
+            current = section.getAttribute("id");
+
+        }
+
+    });
+
+    document.querySelectorAll("nav a").forEach(link => {
+
+        link.classList.remove("active");
+
+        if (current && link.getAttribute("href") === "#" + current) {
+
+            link.classList.add("active");
+
+        }
+
+    });
+
+});
+
+
+// -----------------------------
+// HERO PARALLAX EFFECT
+// -----------------------------
+
+window.addEventListener("scroll", () => {
+
+    const hero = document.querySelector(".hero");
+
+    if (!hero) return;
+
+    let offset = window.pageYOffset;
+
+    hero.style.backgroundPositionY = offset * 0.35 + "px";
+
+});
+
+
+// -----------------------------
+// CARD HOVER EFFECT
+// -----------------------------
+
+document.querySelectorAll(
+
+".product-card,.why-card,.category-card,.testimonial"
+
+).forEach(card => {
+
+    card.addEventListener("mouseenter", () => {
+
+        card.style.transform = "translateY(-12px)";
+
+    });
+
+    card.addEventListener("mouseleave", () => {
+
+        card.style.transform = "";
+
+    });
+
+});
+
+
+// -----------------------------
+// HERO BUTTON PULSE
+// -----------------------------
+
+setInterval(() => {
+
+    const btn = document.querySelector(".primary-btn");
+
+    if (!btn) return;
+
+    btn.classList.add("pulse");
+
+    setTimeout(() => {
+
+        btn.classList.remove("pulse");
+
+    }, 1000);
+
+}, 5000);
+
+
+// -----------------------------
+// PRELOAD HERO IMAGES
+// -----------------------------
+
+heroImages.forEach(src => {
+
+    const img = new Image();
+
+    img.src = src;
+
+});
+
+
+// -----------------------------
+// CONSOLE MESSAGE
+// -----------------------------
+
+console.log(
+"%cNEXPAK SOLUTIONS WEBSITE V2",
+"color:#D4AF37;font-size:20px;font-weight:bold;"
+);
+
+console.log(
+"%cIndustrial Packaging | PPE | Advanced Security",
+"color:#1D4ED8;font-size:14px;"
+);
