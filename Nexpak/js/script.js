@@ -114,4 +114,135 @@ function initializeCounters(){
     });
 
     }
+// ======================================
+// NEXPAK SOLUTIONS V2
+// SCRIPT.JS - PART 2
+// Hero Slideshow
+// Smooth Scroll
+// Scroll To Top
+// ======================================
 
+// -----------------------------
+// HERO SLIDESHOW
+// -----------------------------
+
+const heroImages = [
+
+    "imagez/hero.jpg",
+    "imagez/hero2.jpg",
+    "imagez/hero3.jpg",
+    "imagez/hero4.jpg"
+
+];
+
+let heroIndex = 0;
+
+function initializeHeroSlider(){
+
+    const hero = document.querySelector(".hero");
+
+    if(!hero) return;
+
+    setInterval(()=>{
+
+        heroIndex++;
+
+        if(heroIndex >= heroImages.length){
+
+            heroIndex = 0;
+
+        }
+
+        hero.style.opacity = ".85";
+
+        setTimeout(()=>{
+
+            hero.style.backgroundImage =
+                `url('${heroImages[heroIndex]}')`;
+
+            hero.style.opacity = "1";
+
+        },500);
+
+    },7000);
+
+}
+
+initializeHeroSlider();
+
+
+// -----------------------------
+// SMOOTH SCROLL
+// -----------------------------
+
+document.querySelectorAll('a[href^="#"]').forEach(link=>{
+
+    link.addEventListener("click",function(e){
+
+        e.preventDefault();
+
+        const target=document.querySelector(this.getAttribute("href"));
+
+        if(target){
+
+            target.scrollIntoView({
+
+                behavior:"smooth"
+
+            });
+
+        }
+
+    });
+
+});
+
+
+// -----------------------------
+// SCROLL TO TOP BUTTON
+// -----------------------------
+
+const topButton=document.createElement("button");
+
+topButton.innerHTML='<i class="fa-solid fa-arrow-up"></i>';
+
+topButton.className="scroll-top";
+
+document.body.appendChild(topButton);
+
+window.addEventListener("scroll",()=>{
+
+    if(window.scrollY>500){
+
+        topButton.classList.add("show");
+
+    }else{
+
+        topButton.classList.remove("show");
+
+    }
+
+});
+
+topButton.addEventListener("click",()=>{
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+
+});
+
+
+// -----------------------------
+// PAGE LOAD ANIMATION
+// -----------------------------
+
+window.addEventListener("load",()=>{
+
+    document.body.classList.add("loaded");
+
+});
