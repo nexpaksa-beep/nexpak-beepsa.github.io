@@ -406,7 +406,6 @@ nav a:hover::after{
     overflow:hidden;
 
     background:url("..hero.jpg") center center/contain no-repeat;
-background-color:#0A2342;
 }
 
 .hero-overlay{
