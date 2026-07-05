@@ -128,10 +128,10 @@ function initializeCounters(){
 
 const heroImages = [
 
-    "imagez/hero.jpg",
-    "imagez/hero2.jpg",
-    "imagez/hero3.jpg",
-    "imagez/hero4.jpg"
+    "hero.jpg",
+    "hero2.jpg",
+    "hero3.jpg",
+    "hero4.jpg"
 
 ];
 
