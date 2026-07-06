@@ -828,79 +828,30 @@ nav{
     color:var(--navy);
 }
 
-/* ==========================================
-   SECURITY SECTION
-========================================== */
+/* ==============================
+   SECURITY PAGE
+============================== */
 
-.security{
-    position:relative;
-    background:url("../imagez/security.jpg") center center/cover no-repeat;
-    color:white;
-    overflow:hidden;
+.security-page {
+
+    width:100%;
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:#020b16;
+
 }
 
-.security-overlay{
-    position:absolute;
-    inset:0;
-    background:rgba(10,35,66,.88);
-}
+.security-page img {
 
-.security-content{
-    position:relative;
-    z-index:2;
-    text-align:center;
-}
+    width:100%;
+    height:auto;
 
-.security h5{
-    color:var(--gold);
-    letter-spacing:4px;
-    margin-bottom:15px;
-}
+    display:block;
 
-.security h2{
-    font-size:48px;
-    margin-bottom:25px;
-}
-
-.security p{
-    max-width:800px;
-    margin:auto;
-    line-height:1.9;
-    font-size:18px;
-}
-
-.security-services{
-    margin:60px auto;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:20px;
-}
-
-.security-services div{
-    background:rgba(255,255,255,.08);
-    backdrop-filter:blur(10px);
-    padding:22px;
-    border-radius:16px;
-    border:1px solid rgba(255,255,255,.12);
-}
-
-.security-services i{
-    color:var(--gold);
-    margin-right:10px;
-}
-
-.security-btn{
-    display:inline-block;
-    padding:18px 38px;
-    background:var(--gold);
-    color:var(--navy);
-    font-weight:700;
-    border-radius:50px;
-    margin-top:25px;
-}
-
-.security-btn:hover{
-    background:#fff;
 }
 
 /* ==========================================
