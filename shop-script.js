@@ -997,6 +997,31 @@ function downloadQuotationPDF() {
     doc.setFontSize(12);
     doc.text(`TOTAL: R ${quote.total.toFixed(2)}`, 120, y);
 
+    // ======================================================
+// CART DRAWER OPEN / CLOSE
+// ======================================================
+
+function toggleCart(show) {
+
+    const cartDrawer = document.getElementById("cartDrawer");
+    const cartOverlay = document.getElementById("cartOverlay");
+
+    if (!cartDrawer || !cartOverlay) return;
+
+
+    if (show) {
+
+        cartDrawer.classList.add("active");
+        cartOverlay.classList.add("active");
+
+    } else {
+
+        cartDrawer.classList.remove("active");
+        cartOverlay.classList.remove("active");
+
+    }
+
+}
     // =========================
     // FOOTER
     // =========================
