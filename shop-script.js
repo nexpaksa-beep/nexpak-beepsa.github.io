@@ -33,6 +33,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
     updateCartUI();
 
+    // ================================
+    // 🔥 BACKGROUND SLIDESHOW (ADD HERE)
+    // ================================
+
+    const images = [
+        "hero.jpg",
+        "hero2.jpg",
+        "hero3.jpg",
+        "hero4.jpg"
+    ];
+
+    let index = 0;
+
+    document.body.style.backgroundImage = `url('${images[0]}')`;
+
+    setInterval(() => {
+
+        index = (index + 1) % images.length;
+
+        document.body.style.backgroundImage = `url('${images[index]}')`;
+
+    }, 5000);
+
 });
 
 // ======================================================
