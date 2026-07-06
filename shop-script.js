@@ -156,3 +156,977 @@ function getProduct(id) {
 }
 
 console.log("✅ Module 1 Loaded");
+// ======================================================
+// MODULE 2A - PRODUCT RENDERING
+// ======================================================
+
+function renderProducts(category = "all", search = "") {
+
+    const grid = document.getElementById("productsGrid");
+
+    if (!grid) return;
+
+    grid.innerHTML = "";
+
+    const filtered = products.filter(product => {
+
+        const categoryMatch =
+            category === "all" ||
+            product.category === category;
+
+        const searchMatch =
+            search === "" ||
+            product.name.toLowerCase().includes(search.toLowerCase()) ||
+            product.id.toLowerCase().includes(search.toLowerCase()) ||
+            (product.specs || "").toLowerCase().includes(search.toLowerCase());
+
+        return categoryMatch && searchMatch;
+
+    });
+
+    if (filtered.length === 0) {
+
+        grid.innerHTML = `
+            <div class="no-products">
+                <h2>No products found</h2>
+                <p>Please try another search or category.</p>
+            </div>
+        `;
+
+        return;
+
+    }
+
+    filtered.forEach(product => {
+
+        createProductCard(product, grid);
+
+    });
+
+}
+
+console.log("Module 2A Loaded");
+// ======================================================
+// MODULE 2B - CREATE PRODUCT CARD
+// ======================================================
+
+function createProductCard(product, grid) {
+
+    const card = document.createElement("div");
+    card.className = "product-card";
+
+    const image =
+        (product.images && product.images.length)
+            ? product.images[0]
+            : "";
+
+    const sizeSelector = Array.isArray(product.sizes)
+        ? `
+            <label>Size</label>
+            <select id="size-${product.id}" class="size-selector">
+                ${product.sizes.map(size => `
+                    <option value="${size}">${size}</option>
+                `).join("")}
+            </select>
+        `
+        : "";
+
+    const colourSelector = Array.isArray(product.color)
+        ? `
+            <label>Colour</label>
+            <select id="colour-${product.id}" class="color-selector">
+                ${product.color.map(colour => `
+                    <option value="${colour}">${colour}</option>
+                `).join("")}
+            </select>
+        `
+        : (typeof product.color === "string"
+            ? `
+                <label>Colour</label>
+                <input
+                    id="colour-${product.id}"
+                    class="color-selector"
+                    value="${product.color}"
+                    readonly>
+            `
+            : "");
+
+    card.innerHTML = `
+
+        <div class="product-image">
+
+            ${image
+                ? `<img src="${image}" class="product-img" alt="${product.name}">`
+                : `<div class="product-placeholder">${product.icon || "📦"}</div>`
+            }
+
+        </div>
+
+        <div class="product-info">
+
+            <span class="product-category">
+                ${product.category.toUpperCase()}
+            </span>
+
+            <h3 class="product-name">
+                ${product.name}
+            </h3>
+
+            <p class="product-specs">
+                ${product.specs || ""}
+            </p>
+
+            <small class="product-sku">
+                SKU: ${product.id}
+            </small>
+
+            <div class="product-price">
+                ${money(product.price)}
+            </div>
+
+            <div class="product-price-note">
+                Price Excl. VAT
+            </div>
+
+            <div class="min-order">
+                Minimum Order: ${product.minOrder} ${product.unit || ""}
+            </div>
+
+            ${sizeSelector}
+
+            ${colourSelector}
+
+            <div class="product-footer">
+
+                <div class="qty-selector">
+
+                    <button onclick="changeQty('${product.id}',-1)">
+                        −
+                    </button>
+
+                    <input
+                        id="qty-${product.id}"
+                        type="number"
+                        min="${product.minOrder}"
+                        value="${product.minOrder}">
+
+                    <button onclick="changeQty('${product.id}',1)">
+                        +
+                    </button>
+
+                </div>
+
+                <button
+                    class="add-to-cart-btn"
+                    onclick="addToCart('${product.id}')">
+
+                    🛒 Add to Cart
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+    grid.appendChild(card);
+
+}
+
+console.log("Module 2B Loaded");
+
+// ======================================================
+// MODULE 3 - QUANTITY & ADD TO CART
+// ======================================================
+
+// -----------------------------
+// CHANGE PRODUCT QUANTITY
+// -----------------------------
+function changeQty(id, change) {
+
+    const input = document.getElementById(`qty-${id}`);
+
+    if (!input) return;
+
+    const product = getProduct(id);
+
+    const minQty = product.minOrder || 1;
+
+    let qty = parseInt(input.value);
+
+    if (isNaN(qty)) qty = minQty;
+
+    qty += change;
+
+    if (qty < minQty) qty = minQty;
+
+    input.value = qty;
+
+}
+
+// -----------------------------
+// ADD PRODUCT TO CART
+// -----------------------------
+function addToCart(id) {
+
+    const product = getProduct(id);
+
+    if (!product) return;
+
+    const qty =
+        parseInt(document.getElementById(`qty-${id}`).value) ||
+        product.minOrder;
+
+    let size = "";
+    const sizeField = document.getElementById(`size-${id}`);
+    if (sizeField) size = sizeField.value;
+
+    let colour = "";
+    const colourField = document.getElementById(`colour-${id}`);
+    if (colourField) colour = colourField.value;
+
+    const existing = cart.find(item =>
+        item.id === id &&
+        item.size === size &&
+        item.colour === colour
+    );
+
+    if (existing) {
+
+        existing.quantity += qty;
+
+    } else {
+
+        cart.push({
+
+            id: product.id,
+            sku: product.id,
+            name: product.name,
+            price: Number(product.price),
+            quantity: qty,
+            unit: product.unit || "",
+            specs: product.specs || "",
+            image: product.images ? product.images[0] : "",
+            size: size,
+            colour: colour
+
+        });
+
+    }
+
+    saveCart();
+
+    updateCartUI();
+
+    toggleCart(true);
+
+    alert(product.name + " added to cart.");
+
+}
+
+console.log("Module 3 Loaded");
+// ======================================================
+// MODULE 4A - CART DISPLAY
+// ======================================================
+
+function updateCartUI() {
+
+    const cartItems = document.getElementById("cartItems");
+    const cartCount = document.getElementById("cartCount");
+    const checkoutBtn = document.getElementById("checkoutBtn");
+
+    if (!cartItems) return;
+
+    cartItems.innerHTML = "";
+
+    let totalItems = 0;
+
+    if (cart.length === 0) {
+
+        cartItems.innerHTML = `
+            <div class="empty-cart">
+                <h3>Your cart is empty</h3>
+                <p>Add products to begin your order.</p>
+            </div>
+        `;
+
+        if (cartCount) cartCount.textContent = "0";
+
+        if (checkoutBtn) checkoutBtn.disabled = true;
+
+        updateTotals();
+
+        return;
+
+    }
+
+    cart.forEach(item => {
+
+        totalItems += item.quantity;
+
+        const lineTotal = item.price * item.quantity;
+
+        const row = document.createElement("div");
+
+        row.className = "cart-item";
+
+        row.innerHTML = `
+
+            <div class="cart-item-image">
+
+                ${
+                    item.image
+                    ? `<img src="${item.image}" alt="${item.name}">`
+                    : "📦"
+                }
+
+            </div>
+
+            <div class="cart-item-details">
+
+                <h4>${item.name}</h4>
+
+                <small>SKU: ${item.sku}</small>
+
+                ${item.size ? `<small>Size: ${item.size}</small>` : ""}
+
+                ${item.colour ? `<small>Colour: ${item.colour}</small>` : ""}
+
+                <div class="cart-price">
+                    ${money(item.price)} each
+                </div>
+
+                <div class="cart-qty">
+
+                    <button onclick="updateQty('${item.id}','${item.size}','${item.colour}',${item.quantity-1})">
+                        −
+                    </button>
+
+                    <span>${item.quantity}</span>
+
+                    <button onclick="updateQty('${item.id}','${item.size}','${item.colour}',${item.quantity+1})">
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div>
+
+                <div class="cart-price">
+
+                    ${money(lineTotal)}
+
+                </div>
+
+                <button
+                    class="remove-item"
+                    onclick="removeFromCart('${item.id}','${item.size}','${item.colour}')">
+
+                    🗑️
+
+                </button>
+
+            </div>
+
+        `;
+
+        cartItems.appendChild(row);
+
+    });
+
+    if (cartCount) {
+
+        cartCount.textContent = totalItems;
+
+    }
+
+    if (checkoutBtn) {
+
+        checkoutBtn.disabled = false;
+
+    }
+
+    updateTotals();
+
+}
+
+console.log("Module 4A Loaded");
+// ======================================================
+// MODULE 4B - CART MANAGEMENT
+// ======================================================
+
+// -----------------------------
+// UPDATE CART QUANTITY
+// -----------------------------
+function updateQty(id, size, colour, qty) {
+
+    qty = parseInt(qty);
+
+    const item = cart.find(cartItem =>
+        cartItem.id === id &&
+        cartItem.size === size &&
+        cartItem.colour === colour
+    );
+
+    if (!item) return;
+
+    if (qty <= 0) {
+
+        removeFromCart(id, size, colour);
+        return;
+
+    }
+
+    item.quantity = qty;
+
+    saveCart();
+
+    updateCartUI();
+
+}
+
+// -----------------------------
+// REMOVE ITEM
+// -----------------------------
+function removeFromCart(id, size, colour) {
+
+    cart = cart.filter(item =>
+
+        !(
+            item.id === id &&
+            item.size === size &&
+            item.colour === colour
+        )
+
+    );
+
+    saveCart();
+
+    updateCartUI();
+
+}
+
+// -----------------------------
+// CLEAR CART
+// -----------------------------
+function clearCart() {
+
+    if (cart.length === 0) return;
+
+    if (!confirm("Are you sure you want to clear your cart?")) return;
+
+    cart = [];
+
+    saveCart();
+
+    updateCartUI();
+
+    toggleCart(false);
+
+}
+
+// -----------------------------
+// SAVE CART
+// -----------------------------
+function saveCart() {
+
+    localStorage.setItem(
+        "nexpak_cart",
+        JSON.stringify(cart)
+    );
+
+}
+
+// -----------------------------
+// LOAD CART
+// -----------------------------
+function loadCart() {
+
+    const savedCart = localStorage.getItem("nexpak_cart");
+
+    if (savedCart) {
+
+        try {
+
+            cart = JSON.parse(savedCart);
+
+        } catch (e) {
+
+            cart = [];
+
+        }
+
+    } else {
+
+        cart = [];
+
+    }
+
+}
+
+console.log("Module 4B Loaded");
+// ======================================================
+// MODULE 5 - TOTALS & VAT
+// ======================================================
+
+// -----------------------------
+// UPDATE TOTALS
+// -----------------------------
+function updateTotals() {
+
+    let subtotal = 0;
+
+    cart.forEach(item => {
+
+        subtotal += item.price * item.quantity;
+
+    });
+
+    const vat = subtotal * VAT_RATE;
+
+    const delivery =
+        subtotal >= FREE_DELIVERY_OVER
+            ? 0
+            : DELIVERY_FEE;
+
+    const total = subtotal + vat + delivery;
+
+    setMoney("subtotal", subtotal);
+
+    setMoney("vat", vat);
+
+    if (delivery === 0) {
+
+        const deliveryElement = document.getElementById("delivery");
+
+        if (deliveryElement) {
+
+            deliveryElement.textContent = "FREE";
+
+        }
+
+    } else {
+
+        setMoney("delivery", delivery);
+
+    }
+
+    setMoney("total", total);
+
+}
+
+// -----------------------------
+// DISPLAY MONEY
+// -----------------------------
+function setMoney(id, value) {
+
+    const element = document.getElementById(id);
+
+    if (!element) return;
+
+    element.textContent = money(value);
+
+}
+
+console.log("Module 5 Loaded");
+// ======================================================
+// MODULE 6 - EFT CHECKOUT & WHATSAPP ORDER
+// ======================================================
+
+function processOrder() {
+
+    if (cart.length === 0) {
+        alert("Your shopping cart is empty.");
+        return;
+    }
+
+    const customerName = document.getElementById("customerName").value.trim();
+    const customerPhone = document.getElementById("customerPhone").value.trim();
+    const customerEmail = document.getElementById("customerEmail").value.trim();
+    const customerAddress = document.getElementById("customerAddress").value.trim();
+
+    if (!customerName || !customerPhone || !customerAddress) {
+
+        alert("Please complete your Name, Contact Number and Delivery Address.");
+        return;
+
+    }
+
+    const orderNumber = generateOrderNumber();
+
+    let subtotal = 0;
+
+    let message = "";
+
+    message += "🟦 *NEXPAK SOLUTIONS ONLINE ORDER*\n\n";
+    message += "*Order Number:* " + orderNumber + "\n\n";
+
+    message += "*Customer Details*\n";
+    message += "Name: " + customerName + "\n";
+    message += "Phone: " + customerPhone + "\n";
+
+    if (customerEmail !== "") {
+        message += "Email: " + customerEmail + "\n";
+    }
+
+    message += "Address: " + customerAddress + "\n\n";
+
+    message += "*ORDER ITEMS*\n";
+    message += "-----------------------------\n";
+
+    cart.forEach(item => {
+
+        const lineTotal = item.price * item.quantity;
+
+        subtotal += lineTotal;
+
+        message += "• " + item.name + "\n";
+
+        if (item.size) {
+            message += "Size: " + item.size + "\n";
+        }
+
+        if (item.colour) {
+            message += "Colour: " + item.colour + "\n";
+        }
+
+        message += "Qty: " + item.quantity + " " + (item.unit || "") + "\n";
+        message += "Amount: " + money(lineTotal) + "\n\n";
+
+    });
+
+    const vat = subtotal * VAT_RATE;
+
+    const delivery =
+        subtotal >= FREE_DELIVERY_OVER
+            ? 0
+            : DELIVERY_FEE;
+
+    const total = subtotal + vat + delivery;
+
+    message += "-----------------------------\n";
+    message += "Subtotal: " + money(subtotal) + "\n";
+    message += "VAT (15%): " + money(vat) + "\n";
+    message += "Delivery: " + (delivery === 0 ? "FREE" : money(delivery)) + "\n";
+    message += "*TOTAL:* " + money(total) + "\n\n";
+
+    message += "*EFT PAYMENT DETAILS*\n";
+    message += "Bank: Capitec\n";
+    message += "Account Number: 2517857594\n";
+    message += "Branch Code: 470010\n";
+    message += "Reference: " + orderNumber + "\n\n";
+
+    message += "Please send your Proof of Payment once payment has been made.\n";
+    message += "Thank you for choosing NexPak Solutions.";
+
+    window.open(
+        "https://wa.me/27836308249?text=" +
+        encodeURIComponent(message),
+        "_blank"
+    );
+
+    alert("WhatsApp has opened with your order.");
+
+    cart = [];
+
+    saveCart();
+
+    updateCartUI();
+
+    toggleCart(false);
+
+}
+
+console.log("Module 6 Loaded");
+// ======================================================
+// MODULE 7A - ORDER NUMBER, BANK DETAILS & CART DRAWER
+// ======================================================
+
+// -----------------------------
+// GENERATE ORDER NUMBER
+// -----------------------------
+function generateOrderNumber() {
+
+    const now = new Date();
+
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+
+    const random = Math.floor(Math.random() * 9000) + 1000;
+
+    return `NP-${year}${month}${day}-${random}`;
+
+}
+
+// -----------------------------
+// COPY BANK DETAILS
+// -----------------------------
+function copyBankDetails() {
+
+    const details = `
+
+NEXPAK SOLUTIONS
+
+Bank: Capitec
+Account Number: 2517857594
+Branch Code: 470010
+
+Reference: Your Order Number
+
+`;
+
+    navigator.clipboard.writeText(details)
+        .then(() => {
+
+            alert("Bank details copied successfully.");
+
+        })
+        .catch(() => {
+
+            alert("Unable to copy bank details.");
+
+        });
+
+}
+
+// -----------------------------
+// COPY ACCOUNT NUMBER
+// -----------------------------
+function copyAccountNumber() {
+
+    navigator.clipboard.writeText("2517857594")
+        .then(() => {
+
+            alert("Account number copied.");
+
+        });
+
+}
+
+// -----------------------------
+// OPEN / CLOSE CART
+// -----------------------------
+function toggleCart(open) {
+
+    const drawer = document.getElementById("cartDrawer");
+    const overlay = document.getElementById("cartOverlay");
+
+    if (!drawer || !overlay) return;
+
+    if (open) {
+
+        drawer.classList.add("active");
+        overlay.classList.add("active");
+
+    } else {
+
+        drawer.classList.remove("active");
+        overlay.classList.remove("active");
+
+    }
+
+}
+
+console.log("Module 7A Loaded");
+// ======================================================
+// MODULE 7B - PDF QUOTATION GENERATOR
+// ======================================================
+
+function generateQuoteData() {
+
+    if (cart.length === 0) {
+        alert("Your cart is empty.");
+        return null;
+    }
+
+    let subtotal = 0;
+
+    const items = cart.map(item => {
+
+        const lineTotal = item.price * item.quantity;
+
+        subtotal += lineTotal;
+
+        return {
+            ...item,
+            lineTotal
+        };
+
+    });
+
+    const vat = subtotal * VAT_RATE;
+    const delivery = subtotal >= FREE_DELIVERY_OVER ? 0 : DELIVERY_FEE;
+    const total = subtotal + vat + delivery;
+
+    return {
+
+        quoteNumber: generateOrderNumber(),
+
+        date: new Date().toLocaleDateString("en-ZA"),
+
+        customer: {
+            name: document.getElementById("customerName").value || "",
+            phone: document.getElementById("customerPhone").value || "",
+            email: document.getElementById("customerEmail").value || "",
+            address: document.getElementById("customerAddress").value || ""
+        },
+
+        items,
+        subtotal,
+        vat,
+        delivery,
+        total
+
+    };
+
+}
+
+function downloadQuotation() {
+
+    const quote = generateQuoteData();
+
+    if (!quote) return;
+
+    const { jsPDF } = window.jspdf;
+
+    const doc = new jsPDF();
+
+    let y = 20;
+
+    // COMPANY HEADER
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(20);
+    doc.text("NEXPAK SOLUTIONS", 14, y);
+
+    y += 8;
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+
+    doc.text("Industrial Packaging • PPE • Warehouse Supplies", 14, y);
+
+    y += 8;
+
+    doc.text("Quotation Number: " + quote.quoteNumber, 14, y);
+
+    doc.text("Date: " + quote.date, 140, y);
+
+    y += 15;
+
+    // CUSTOMER
+    doc.setFont("helvetica", "bold");
+    doc.text("CUSTOMER", 14, y);
+
+    y += 7;
+
+    doc.setFont("helvetica", "normal");
+
+    doc.text(quote.customer.name, 14, y);
+
+    y += 6;
+
+    doc.text(quote.customer.phone, 14, y);
+
+    y += 6;
+
+    if (quote.customer.email) {
+
+        doc.text(quote.customer.email, 14, y);
+
+        y += 6;
+
+    }
+
+    doc.text(quote.customer.address, 14, y);
+
+    y += 12;
+
+    // TABLE HEADER
+    doc.setFont("helvetica", "bold");
+
+    doc.text("Product", 14, y);
+    doc.text("Qty", 110, y);
+    doc.text("Price", 135, y);
+    doc.text("Total", 170, y);
+
+    y += 6;
+
+    doc.line(14, y, 195, y);
+
+    y += 8;
+
+    // PRODUCTS
+    doc.setFont("helvetica", "normal");
+
+    quote.items.forEach(item => {
+
+        doc.text(item.name, 14, y);
+
+        doc.text(String(item.quantity), 112, y);
+
+        doc.text(money(item.price), 135, y);
+
+        doc.text(money(item.lineTotal), 170, y);
+
+        y += 8;
+
+    });
+
+    y += 8;
+
+    doc.line(110, y, 195, y);
+
+    y += 8;
+
+    doc.text("Subtotal:", 120, y);
+    doc.text(money(quote.subtotal), 170, y);
+
+    y += 7;
+
+    doc.text("VAT (15%):", 120, y);
+    doc.text(money(quote.vat), 170, y);
+
+    y += 7;
+
+    doc.text("Delivery:", 120, y);
+    doc.text(
+        quote.delivery === 0 ? "FREE" : money(quote.delivery),
+        170,
+        y
+    );
+
+    y += 8;
+
+    doc.setFont("helvetica", "bold");
+
+    doc.text("TOTAL:", 120, y);
+    doc.text(money(quote.total), 170, y);
+
+    y += 20;
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+
+    doc.text("Bank: Capitec", 14, y);
+
+    y += 6;
+
+    doc.text("Account Number: 2517857594", 14, y);
+
+    y += 6;
+
+    doc.text("Branch Code: 470010", 14, y);
+
+    y += 15;
+
+    doc.text("Thank you for choosing NexPak Solutions.", 14, y);
+
+    doc.save(`Quotation-${quote.quoteNumber}.pdf`);
+
+}
+
+console.log("Module 7B Loaded");
