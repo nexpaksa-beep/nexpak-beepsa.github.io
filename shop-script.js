@@ -890,14 +890,73 @@ function generateQuoteData() {
 function wrapText(doc, text, maxWidth) {
     return doc.splitTextToSize(text, maxWidth);
 }
+// =========================
+// WATERMARK
+// =========================
+
+doc.setTextColor(230, 230, 230);
+doc.setFontSize(50);
+doc.setFont("helvetica", "bold");
+
+doc.text("NEXPAK", 40, 160, { angle: 45 });
+
+doc.setTextColor(0, 0, 0);
 
 function downloadQuotationPDF() {
 
-    const quote = generateQuoteData();
-    if (!quote) return;
+    function generateQuoteData() {
 
-    const doc = new jsPDF();
+    if (!cart || cart.length === 0) return null;
 
+    let clientName = document.getElementById("clientName")?.value || "Walk-in Client";
+    let clientEmail = document.getElementById("clientEmail")?.value || "";
+    let clientPhone = document.getElementById("clientPhone")?.value || "";
+
+    let quoteItems = [];
+    let subTotal = 0;
+
+    cart.forEach(item => {
+        let lineTotal = item.price * item.qty;
+        subTotal += lineTotal;
+
+        quoteItems.push({
+            name: item.name,
+            qty: item.qty,
+            unitPrice: item.price,
+            lineTotal
+        });
+    });
+
+    let vat = subTotal * 0.15;
+    let total = subTotal + vat;
+
+    return {
+        quoteNumber: "NP-" + Date.now(),
+        date: new Date().toLocaleDateString(),
+        expiry: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString(),
+        clientName,
+        clientEmail,
+        clientPhone,
+        items: quoteItems,
+        subTotal,
+        vat,
+        total
+    };
+    }
+// =========================
+// WHATSAPP MESSAGE PREP
+// =========================
+
+let whatsappMessage =
+`*NEXPAK QUOTATION*
+Quote #: ${quote.quoteNumber}
+Client: ${quote.clientName}
+Total: R ${quote.total.toFixed(2)}
+
+Reply to confirm.`;
+
+console.log("WhatsApp Message Ready:");
+console.log(whatsappMessage);
     // =========================
     // LOGO
     // =========================
@@ -906,41 +965,26 @@ function downloadQuotationPDF() {
     } catch (e) {}
 
     // =========================
-    // HEADER
-    // =========================
-    doc.setFontSize(16);
-    doc.setFont("helvetica", "bold");
-    doc.text("NEXPAK SOLUTIONS", 14, 40);
-
-    doc.setFontSize(10);
-    doc.setFont("helvetica", "normal");
-    doc.text("Industrial Packaging & PPE Solutions", 14, 46);
-
-    doc.text(`Quotation No: ${quote.quoteNumber}`, 140, 40);
-    doc.text(`Date: ${quote.date}`, 140, 46);
-
-    // ... rest of your table, items, totals ...
-
-    doc.save(`${quote.quoteNumber}.pdf`);
-}
-
-    // =========================
 // HEADER (CLEAN BUSINESS STYLE)
 // =========================
 
 doc.setFontSize(16);
 doc.setFont("helvetica", "bold");
-doc.text("NEXPAK SOLUTIONS", 14, 40);
+doc.text("NEXPAK SOLUTIONS", 14, 20);
 
 doc.setFontSize(10);
 doc.setFont("helvetica", "normal");
-doc.text("Industrial Packaging & PPE Solutions", 14, 46);
+doc.text("Industrial Packaging & PPE Solutions", 14, 26);
 
-doc.text("Email: sales@nexpak.co.za | Tel: +27 XX XXX XXXX", 14, 52);
+// CLIENT INFO
+doc.text(`Client: ${quote.clientName}`, 14, 40);
+doc.text(`Email: ${quote.clientEmail}`, 14, 46);
+doc.text(`Phone: ${quote.clientPhone}`, 14, 52);
 
-doc.setFontSize(10);
-doc.text(`Quotation No: ${quote.quoteNumber}`, 140, 40);
+// QUOTE INFO
+doc.text(`Quote #: ${quote.quoteNumber}`, 140, 40);
 doc.text(`Date: ${quote.date}`, 140, 46);
+doc.text(`Valid Until: ${quote.expiry}`, 140, 52);
 
     // =========================
 // TABLE HEADER (CLEAN)
@@ -1047,6 +1091,12 @@ if (y > 270) {
 
 doc.setFontSize(9);
 doc.setFont("helvetica", "italic");
+
+doc.text(
+    "This quotation is valid for 7 days. Payment via EFT only unless agreed otherwise.",
+    14,
+    285
+);
 
 doc.text(
     "Thank you for your business. Payment via EFT only unless agreed otherwise.",
