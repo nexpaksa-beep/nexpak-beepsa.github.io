@@ -353,7 +353,7 @@ function addToCart(id) {
 
             price: Number(product.price),
 
-            quantity: qty,
+            item: qty,
 
             unit: product.unit || "",
 
@@ -844,6 +844,7 @@ console.log("Module 7A Loaded");
 // ======================================================
 
 function generateQuoteData() {
+
     if (!cart || cart.length === 0) {
         alert("Cart is empty. Add products before generating a quotation.");
         return null;
@@ -853,77 +854,17 @@ function generateQuoteData() {
     let subTotal = 0;
 
     cart.forEach(item => {
-        let lineTotal = item.price * item.qty;
+
+        let lineTotal = item.price * item.quantity;
+
         subTotal += lineTotal;
 
         quoteItems.push({
             id: item.id,
             name: item.name,
-            qty: item.qty,
+            qty: item.quantity,
             unitPrice: item.price,
             lineTotal: lineTotal
-        });
-    });
-
-    let vatRate = 0.15; // 15% VAT (South Africa standard)
-    let vatAmount = subTotal * vatRate;
-    let grandTotal = subTotal + vatAmount;
-
-    let quote = {
-        quoteNumber: "NP-" + Date.now(),
-        date: new Date().toLocaleDateString(),
-        items: quoteItems,
-        subTotal: subTotal,
-        vat: vatAmount,
-        total: grandTotal
-    };
-
-    return quote;
-        }
- // ======================================================
-// MODULE 7B-2 - QUOTATION PDF GENERATOR (jsPDF)
-// ======================================================
-// ======================================================
-// PDF TEXT WRAP HELPER
-// ======================================================
-
-function wrapText(doc, text, maxWidth) {
-    return doc.splitTextToSize(text, maxWidth);
-}
-// =========================
-// WATERMARK
-// =========================
-
-doc.setTextColor(230, 230, 230);
-doc.setFontSize(50);
-doc.setFont("helvetica", "bold");
-
-doc.text("NEXPAK", 40, 160, { angle: 45 });
-
-doc.setTextColor(0, 0, 0);
-
-function downloadQuotationPDF() {
-
-    function generateQuoteData() {
-
-    if (!cart || cart.length === 0) return null;
-
-    let clientName = document.getElementById("clientName")?.value || "Walk-in Client";
-    let clientEmail = document.getElementById("clientEmail")?.value || "";
-    let clientPhone = document.getElementById("clientPhone")?.value || "";
-
-    let quoteItems = [];
-    let subTotal = 0;
-
-    cart.forEach(item => {
-        let lineTotal = item.price * item.qty;
-        subTotal += lineTotal;
-
-        quoteItems.push({
-            name: item.name,
-            qty: item.qty,
-            unitPrice: item.price,
-            lineTotal
         });
     });
 
@@ -933,106 +874,55 @@ function downloadQuotationPDF() {
     return {
         quoteNumber: "NP-" + Date.now(),
         date: new Date().toLocaleDateString(),
-        expiry: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toLocaleDateString(),
-        clientName,
-        clientEmail,
-        clientPhone,
         items: quoteItems,
         subTotal,
         vat,
         total
     };
-    }
-// =========================
-// WHATSAPP MESSAGE PREP
-// =========================
+}
 
-let whatsappMessage =
-`*NEXPAK QUOTATION*
-Quote #: ${quote.quoteNumber}
-Client: ${quote.clientName}
-Total: R ${quote.total.toFixed(2)}
+ // ======================================================
+// MODULE 7B-2 - QUOTATION PDF GENERATOR (jsPDF)
+// ======================================================
 
-Reply to confirm.`;
+function downloadQuotationPDF() {
 
-console.log("WhatsApp Message Ready:");
-console.log(whatsappMessage);
-    // =========================
-    // LOGO
-    // =========================
-    try {
-        doc.addImage("logo.png", "PNG", 14, 10, 40, 20);
-    } catch (e) {}
+    const quote = generateQuoteData();
+    if (!quote) return;
+
+    const doc = new jsPDF();
+
+    let y = 20;
 
     // =========================
-// HEADER (CLEAN BUSINESS STYLE)
-// =========================
-
-doc.setFontSize(16);
-doc.setFont("helvetica", "bold");
-doc.text("NEXPAK SOLUTIONS", 14, 20);
-
-doc.setFontSize(10);
-doc.setFont("helvetica", "normal");
-doc.text("Industrial Packaging & PPE Solutions", 14, 26);
-
-// CLIENT INFO
-doc.text(`Client: ${quote.clientName}`, 14, 40);
-doc.text(`Email: ${quote.clientEmail}`, 14, 46);
-doc.text(`Phone: ${quote.clientPhone}`, 14, 52);
-
-// QUOTE INFO
-doc.text(`Quote #: ${quote.quoteNumber}`, 140, 40);
-doc.text(`Date: ${quote.date}`, 140, 46);
-doc.text(`Valid Until: ${quote.expiry}`, 140, 52);
+    // WATERMARK
+    // =========================
+    doc.setTextColor(230, 230, 230);
+    doc.setFontSize(50);
+    doc.setFont("helvetica", "bold");
+    doc.text("NEXPAK", 40, 160, { angle: 45 });
+    doc.setTextColor(0, 0, 0);
 
     // =========================
-// TABLE HEADER (CLEAN)
-// =========================
-
-let y = 65;
-
-doc.setFontSize(10);
-doc.setFont("helvetica", "bold");
-
-doc.text("Product", 14, y);
-doc.text("Qty", 95, y);
-doc.text("Unit Price", 120, y);
-doc.text("Total", 165, y);
-
-doc.line(14, y + 2, 195, y + 2);
-
-y += 10;
-doc.setFont("helvetica", "normal");
-    
+    // HEADER
     // =========================
-    // ITEMS LOOP
-    // =========================
-    quote.items.forEach(item => {
+    doc.setFontSize(16);
+    doc.text("NEXPAK SOLUTIONS", 14, y);
 
-    let nameLines = wrapText(doc, item.name, 70);
+    y += 10;
+    doc.setFontSize(10);
+    doc.text(`Quote #: ${quote.quoteNumber}`, 14, y);
+    doc.text(`Date: ${quote.date}`, 140, y);
 
-    doc.text(nameLines, 14, y);
-
-    doc.text(String(item.qty), 95, y);
-    doc.text("R " + item.unitPrice.toFixed(2), 120, y);
-    doc.text("R " + item.lineTotal.toFixed(2), 165, y);
-
-    // 👇 dynamic height based on wrapped text
-    let rowHeight = nameLines.length * 5;
-
-    y += Math.max(rowHeight, 8);
+    y += 15;
 
     // =========================
-    // PAGE BREAK SAFETY
+    // TABLE HEADER
     // =========================
-    if (y > 260) {
-        doc.addPage();
-        y = 20;
-
-        // reprint table header on new page
+    function drawHeader() {
         doc.setFontSize(10);
         doc.setFont("helvetica", "bold");
+
         doc.text("Product", 14, y);
         doc.text("Qty", 95, y);
         doc.text("Unit Price", 120, y);
@@ -1043,63 +933,54 @@ doc.setFont("helvetica", "normal");
         y += 10;
         doc.setFont("helvetica", "normal");
     }
-});
+
+    drawHeader();
 
     // =========================
-// SAFE TOTALS POSITION
-// =========================
-
-if (y > 240) {
-    doc.addPage();
-    y = 20;
-}
-
-y += 10;
-doc.line(14, y, 195, y);
-y += 10;
-
-doc.setFont("helvetica", "normal");
-
-doc.text(`Subtotal:`, 120, y);
-doc.text(`R ${quote.subTotal.toFixed(2)}`, 165, y);
-y += 6;
-
-doc.text(`VAT (15%):`, 120, y);
-doc.text(`R ${quote.vat.toFixed(2)}`, 165, y);
-y += 8;
-
-doc.setFontSize(12);
-doc.setFont("helvetica", "bold");
-doc.text(`TOTAL:`, 120, y);
-doc.text(`R ${quote.total.toFixed(2)}`, 165, y);
-
+    // ITEMS
     // =========================
-    // SAVE
-    // =========================
-    doc.save(`${quote.quoteNumber}.pdf`);
+    quote.items.forEach(item => {
+
+        let nameLines = doc.splitTextToSize(item.name, 70);
+        let rowHeight = nameLines.length * 6;
+
+        if (y + rowHeight > 260) {
+            doc.addPage();
+            y = 20;
+            drawHeader();
         }
-// =========================
-// FOOTER (SAFE POSITION)
-// =========================
 
-if (y > 270) {
-    doc.addPage();
-    y = 280;
-} else {
-    y = 280;
-}
+        doc.text(nameLines, 14, y);
+        doc.text(String(item.qty), 95, y);
+        doc.text("R " + item.unitPrice.toFixed(2), 120, y);
+        doc.text("R " + item.lineTotal.toFixed(2), 165, y);
 
-doc.setFontSize(9);
-doc.setFont("helvetica", "italic");
+        y += Math.max(rowHeight, 8);
+    });
 
-doc.text(
-    "This quotation is valid for 7 days. Payment via EFT only unless agreed otherwise.",
-    14,
-    285
-);
+    // =========================
+    // TOTALS
+    // =========================
+    y += 10;
+    doc.line(14, y, 195, y);
+    y += 10;
 
-doc.text(
-    "Thank you for your business. Payment via EFT only unless agreed otherwise.",
-    14,
-    y
-);
+    doc.text(`Subtotal: R ${quote.subTotal.toFixed(2)}`, 120, y);
+    y += 6;
+
+    doc.text(`VAT: R ${quote.vat.toFixed(2)}`, 120, y);
+    y += 8;
+
+    doc.setFontSize(12);
+    doc.text(`TOTAL: R ${quote.total.toFixed(2)}`, 120, y);
+
+    // =========================
+    // FOOTER
+    // =========================
+    doc.setFontSize(9);
+    doc.text("Thank you for your business.", 14, 285);
+
+    doc.save(`${quote.quoteNumber}.pdf`);
+            }
+
+    
