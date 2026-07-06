@@ -1,75 +1,112 @@
 // ======================================================
-// NEXPAK SHOP SCRIPT V2
-// Complete Rewrite
-// PART 1 - INITIALIZATION & PRODUCT RENDERING
+// NEXPAK SHOP SCRIPT V3
+// MODULE 1 - SETUP & INITIALIZATION
 // ======================================================
 
-let cart = [];
-
-let currentCategory = "all";
-let currentSearch = "";
-
-// VAT
+// -----------------------------
+// SHOP SETTINGS
+// -----------------------------
 const VAT_RATE = 0.15;
-
-// Delivery
 const DELIVERY_FEE = 150;
 const FREE_DELIVERY_OVER = 5000;
 
+// -----------------------------
+// GLOBAL VARIABLES
+// -----------------------------
+let cart = [];
+let currentCategory = "all";
+let currentSearch = "";
+
 // ======================================================
-// INITIALIZE
+// PAGE LOAD
 // ======================================================
 
 document.addEventListener("DOMContentLoaded", () => {
 
     loadCart();
 
+    initializeSearch();
+
+    initializeFilters();
+
     renderProducts();
 
     updateCartUI();
 
-    const search = document.getElementById("searchInput");
-
-    if (search) {
-
-        search.addEventListener("input", function () {
-
-            currentSearch = this.value.trim();
-
-            renderProducts(currentCategory, currentSearch);
-
-        });
-
-    }
-
 });
 
 // ======================================================
-// CATEGORY FILTER
+// SEARCH
 // ======================================================
 
-function filterCategory(category, event) {
+function initializeSearch() {
 
-    currentCategory = category;
+    const searchInput = document.getElementById("searchInput");
 
-    document.querySelectorAll(".filter-btn").forEach(btn => {
+    if (!searchInput) return;
 
-        btn.classList.remove("active");
+    searchInput.addEventListener("input", function () {
+
+        currentSearch = this.value.trim().toLowerCase();
+
+        renderProducts(currentCategory, currentSearch);
 
     });
-
-    if (event) {
-
-        event.target.classList.add("active");
-
-    }
-
-    renderProducts(category, currentSearch);
 
 }
 
 // ======================================================
-// PRODUCT RENDERING
+// CATEGORY FILTERS
+// ======================================================
+
+function initializeFilters() {
+
+    document.querySelectorAll(".filter-btn").forEach(button => {
+
+        button.addEventListener("click", function () {
+
+            document.querySelectorAll(".filter-btn")
+                .forEach(btn => btn.classList.remove("active"));
+
+            this.classList.add("active");
+
+        });
+
+    });
+
+}
+
+function filterCategory(category) {
+
+    currentCategory = category;
+
+    renderProducts(currentCategory, currentSearch);
+
+}
+
+// ======================================================
+// MONEY FORMAT
+// ======================================================
+
+function money(value) {
+
+    return "R" + Number(value).toFixed(2);
+
+}
+
+// ======================================================
+// FIND PRODUCT
+// ======================================================
+
+function getProduct(id) {
+
+    return products.find(product => product.id === id);
+
+}
+
+console.log("Module 1 Loaded");
+// ======================================================
+// MODULE 2 - PRODUCT RENDERING
 // ======================================================
 
 function renderProducts(category = "all", search = "") {
@@ -88,8 +125,9 @@ function renderProducts(category = "all", search = "") {
 
         const searchMatch =
             search === "" ||
-            product.name.toLowerCase().includes(search.toLowerCase()) ||
-            product.id.toLowerCase().includes(search.toLowerCase());
+            product.name.toLowerCase().includes(search) ||
+            product.id.toLowerCase().includes(search) ||
+            (product.specs || "").toLowerCase().includes(search);
 
         return categoryMatch && searchMatch;
 
@@ -100,6 +138,7 @@ function renderProducts(category = "all", search = "") {
         grid.innerHTML = `
             <div class="no-products">
                 <h2>No products found</h2>
+                <p>Try another search.</p>
             </div>
         `;
 
@@ -109,86 +148,144 @@ function renderProducts(category = "all", search = "") {
 
     filtered.forEach(product => {
 
-        const image = product.images && product.images.length
-            ? product.images[0]
-            : "";
-
-        const card = document.createElement("div");
-
-        card.className = "product-card";
-
-        card.innerHTML = `
-
-            <div class="product-image">
-
-                ${
-                    image
-                    ? `<img src="${image}" class="product-img" alt="${product.name}">`
-                    : `<div class="product-placeholder">${product.icon || "📦"}</div>`
-                }
-
-            </div>
-
-            <div class="product-info">
-
-                <span class="product-category">
-                    ${product.category.toUpperCase()}
-                </span>
-
-                <h3>${product.name}</h3>
-
-                <p>SKU: ${product.id}</p>
-
-                <h2>R${Number(product.price).toFixed(2)}</h2>
-
-                <div class="qty-selector">
-
-                    <button onclick="changeQty('${product.id}',-1)">−</button>
-
-                    <input
-                        id="qty-${product.id}"
-                        type="number"
-                        value="${product.minOrder || 1}"
-                        min="${product.minOrder || 1}"
-                    >
-
-                    <button onclick="changeQty('${product.id}',1)">+</button>
-
-                </div>
-
-                <button
-                    class="add-cart-btn"
-                    onclick="addToCart('${product.id}')">
-
-                    🛒 Add to Cart
-
-                </button>
-
-            </div>
-
-        `;
-
-        grid.appendChild(card);
+        createProductCard(product, grid);
 
     });
 
 }
+
 // ======================================================
-// PART 2 - QUANTITY CONTROL & CART FUNCTIONS
+// CREATE PRODUCT CARD
 // ======================================================
 
-// ----------------------------
+function createProductCard(product, grid) {
+
+    const card = document.createElement("div");
+
+    card.className = "product-card";
+
+    const image =
+        product.images && product.images.length
+            ? product.images[0]
+            : "";
+
+    const sizeSelector = Array.isArray(product.sizes)
+        ? `
+        <label>Size</label>
+        <select id="size-${product.id}" class="option-select">
+            ${product.sizes.map(size =>
+                `<option value="${size}">${size}</option>`
+            ).join("")}
+        </select>
+        `
+        : "";
+
+    const colourSelector = Array.isArray(product.color)
+        ? `
+        <label>Colour</label>
+        <select id="colour-${product.id}" class="option-select">
+            ${product.color.map(colour =>
+                `<option value="${colour}">${colour}</option>`
+            ).join("")}
+        </select>
+        `
+        : (typeof product.color === "string"
+            ? `
+            <label>Colour</label>
+            <input
+                id="colour-${product.id}"
+                class="option-select"
+                value="${product.color}"
+                readonly>
+            `
+            : "");
+
+    card.innerHTML = `
+
+        <div class="product-image">
+
+            ${
+                image
+                ? `<img src="${image}" class="product-img" alt="${product.name}">`
+                : `<div class="product-placeholder">${product.icon || "📦"}</div>`
+            }
+
+        </div>
+
+        <div class="product-info">
+
+            <span class="product-category">
+                ${product.category.toUpperCase()}
+            </span>
+
+            <h3>${product.name}</h3>
+
+            <p>${product.specs}</p>
+
+            <small>SKU: ${product.id}</small>
+
+            <h2>${money(product.price)}</h2>
+
+            <p>
+                <strong>Minimum Order:</strong>
+                ${product.minOrder} ${product.unit}
+            </p>
+
+            ${sizeSelector}
+
+            ${colourSelector}
+
+            <div class="qty-selector">
+
+                <button onclick="changeQty('${product.id}',-1)">
+                    −
+                </button>
+
+                <input
+                    id="qty-${product.id}"
+                    type="number"
+                    min="${product.minOrder}"
+                    value="${product.minOrder}">
+
+                <button onclick="changeQty('${product.id}',1)">
+                    +
+                </button>
+
+            </div>
+
+            <button
+                class="add-cart-btn"
+                onclick="addToCart('${product.id}')">
+
+                🛒 Add to Cart
+
+            </button>
+
+        </div>
+
+    `;
+
+    grid.appendChild(card);
+
+}
+
+console.log("Module 2 Loaded");
+// ======================================================
+// MODULE 3 - QUANTITY & ADD TO CART
+// ======================================================
+
+// -----------------------------
 // CHANGE PRODUCT QUANTITY
-// ----------------------------
+// -----------------------------
 function changeQty(id, change) {
 
     const input = document.getElementById(`qty-${id}`);
 
     if (!input) return;
 
-    const product = products.find(p => p.id === id);
+    const product = getProduct(id);
 
-    const min = product?.minOrder || 1;
+    const min = product.minOrder || 1;
 
     let qty = parseInt(input.value);
 
@@ -199,26 +296,46 @@ function changeQty(id, change) {
     if (qty < min) qty = min;
 
     input.value = qty;
+
 }
 
-// ----------------------------
+// -----------------------------
 // ADD TO CART
-// ----------------------------
+// -----------------------------
 function addToCart(id) {
 
-    const product = products.find(p => p.id === id);
+    const product = getProduct(id);
 
     if (!product) return;
 
-    const qtyInput = document.getElementById(`qty-${id}`);
+    const qty =
+        parseInt(document.getElementById(`qty-${id}`).value) ||
+        product.minOrder;
 
-    let qty = parseInt(qtyInput.value);
+    // Selected size
+    let size = "";
 
-    if (isNaN(qty)) {
-        qty = product.minOrder || 1;
+    const sizeField = document.getElementById(`size-${id}`);
+
+    if (sizeField) {
+        size = sizeField.value;
     }
 
-    const existing = cart.find(item => item.id === id);
+    // Selected colour
+    let colour = "";
+
+    const colourField = document.getElementById(`colour-${id}`);
+
+    if (colourField) {
+        colour = colourField.value;
+    }
+
+    // Same product + same size + same colour
+    const existing = cart.find(item =>
+        item.id === id &&
+        item.size === size &&
+        item.colour === colour
+    );
 
     if (existing) {
 
@@ -229,12 +346,22 @@ function addToCart(id) {
         cart.push({
 
             id: product.id,
+
             sku: product.id,
+
             name: product.name,
-            category: product.category,
-            unit: product.unit || "",
+
             price: Number(product.price),
-            quantity: qty
+
+            quantity: qty,
+
+            unit: product.unit || "",
+
+            specs: product.specs || "",
+
+            size: size,
+
+            colour: colour
 
         });
 
@@ -250,33 +377,140 @@ function addToCart(id) {
 
 }
 
-// ----------------------------
-// REMOVE ITEM
-// ----------------------------
-function removeFromCart(id) {
+console.log("Module 3 Loaded");
+// ======================================================
+// MODULE 4A - CART DISPLAY
+// ======================================================
 
-    cart = cart.filter(item => item.id !== id);
+function updateCartUI() {
 
-    saveCart();
+    const cartItems = document.getElementById("cartItems");
+    const cartCount = document.getElementById("cartCount");
+    const checkoutBtn = document.getElementById("checkoutBtn");
 
-    updateCartUI();
+    if (!cartItems) return;
+
+    cartItems.innerHTML = "";
+
+    let totalItems = 0;
+
+    if (cart.length === 0) {
+
+        cartItems.innerHTML = `
+            <p style="text-align:center;padding:20px;">
+                Your cart is empty.
+            </p>
+        `;
+
+        if (cartCount) cartCount.textContent = "0";
+
+        if (checkoutBtn) checkoutBtn.disabled = true;
+
+        updateTotals();
+
+        return;
+
+    }
+
+    cart.forEach(item => {
+
+        totalItems += item.quantity;
+
+        const lineTotal = item.price * item.quantity;
+
+        const row = document.createElement("div");
+
+        row.className = "cart-item";
+
+        row.innerHTML = `
+
+            <div class="cart-item-details">
+
+                <strong>${item.name}</strong><br>
+
+                <small>SKU: ${item.sku}</small><br>
+
+                ${item.size ? `<small>Size: ${item.size}</small><br>` : ""}
+
+                ${item.colour ? `<small>Colour: ${item.colour}</small><br>` : ""}
+
+                <small>${money(item.price)} each</small>
+
+            </div>
+
+            <div class="cart-item-controls">
+
+                <button onclick="updateQty('${item.id}','${item.size}','${item.colour}',${item.quantity-1})">
+                    −
+                </button>
+
+                <span>${item.quantity}</span>
+
+                <button onclick="updateQty('${item.id}','${item.size}','${item.colour}',${item.quantity+1})">
+                    +
+                </button>
+
+            </div>
+
+            <div class="cart-item-price">
+
+                ${money(lineTotal)}
+
+            </div>
+
+            <button
+                class="remove-btn"
+                onclick="removeFromCart('${item.id}','${item.size}','${item.colour}')">
+
+                ✖
+
+            </button>
+
+        `;
+
+        cartItems.appendChild(row);
+
+    });
+
+    if (cartCount) {
+
+        cartCount.textContent = totalItems;
+
+    }
+
+    if (checkoutBtn) {
+
+        checkoutBtn.disabled = false;
+
+    }
+
+    updateTotals();
 
 }
 
-// ----------------------------
+console.log("Module 4A Loaded");
+// ======================================================
+// MODULE 4B - CART MANAGEMENT
+// ======================================================
+
+// -----------------------------
 // UPDATE CART QUANTITY
-// ----------------------------
-function updateQty(id, qty) {
+// -----------------------------
+function updateQty(id, size, colour, qty) {
 
     qty = parseInt(qty);
 
-    const item = cart.find(i => i.id === id);
+    const item = cart.find(i =>
+        i.id === id &&
+        i.size === size &&
+        i.colour === colour
+    );
 
     if (!item) return;
 
     if (qty <= 0) {
 
-        removeFromCart(id);
+        removeFromCart(id, size, colour);
 
         return;
 
@@ -290,9 +524,28 @@ function updateQty(id, qty) {
 
 }
 
-// ----------------------------
-// EMPTY CART
-// ----------------------------
+// -----------------------------
+// REMOVE FROM CART
+// -----------------------------
+function removeFromCart(id, size, colour) {
+
+    cart = cart.filter(item =>
+
+        !(item.id === id &&
+          item.size === size &&
+          item.colour === colour)
+
+    );
+
+    saveCart();
+
+    updateCartUI();
+
+}
+
+// -----------------------------
+// CLEAR CART
+// -----------------------------
 function clearCart() {
 
     if (!confirm("Clear your shopping cart?")) return;
@@ -305,9 +558,9 @@ function clearCart() {
 
 }
 
-// ----------------------------
+// -----------------------------
 // LOCAL STORAGE
-// ----------------------------
+// -----------------------------
 function saveCart() {
 
     localStorage.setItem(
@@ -332,89 +585,15 @@ function loadCart() {
     }
 
 }
+
+console.log("Module 4B Loaded");
 // ======================================================
-// PART 3 - CART UI & TOTALS
+// MODULE 5 - TOTALS & VAT
 // ======================================================
 
-// ----------------------------
-// UPDATE CART DISPLAY
-// ----------------------------
-function updateCartUI() {
-
-    const cartItems = document.getElementById("cartItems");
-    const cartCount = document.getElementById("cartCount");
-    const checkoutBtn = document.getElementById("checkoutBtn");
-
-    if (!cartItems) return;
-
-    cartItems.innerHTML = "";
-
-    let totalItems = 0;
-
-    cart.forEach(item => {
-
-        totalItems += item.quantity;
-
-        const row = document.createElement("div");
-        row.className = "cart-item";
-
-        const lineTotal = item.price * item.quantity;
-
-        row.innerHTML = `
-            <div class="cart-item-info">
-                <strong>${item.name}</strong><br>
-                <small>${item.sku}</small><br>
-                <small>R${item.price.toFixed(2)} each</small>
-            </div>
-
-            <div class="cart-item-controls">
-
-                <button onclick="updateQty('${item.id}', ${item.quantity - 1})">−</button>
-
-                <span>${item.quantity}</span>
-
-                <button onclick="updateQty('${item.id}', ${item.quantity + 1})">+</button>
-
-            </div>
-
-            <div class="cart-item-total">
-                R${lineTotal.toFixed(2)}
-            </div>
-
-            <button onclick="removeFromCart('${item.id}')">
-                ✖
-            </button>
-        `;
-
-        cartItems.appendChild(row);
-
-    });
-
-    if (cart.length === 0) {
-
-        cartItems.innerHTML = `
-            <p style="text-align:center;padding:20px;">
-                Your cart is empty.
-            </p>
-        `;
-
-    }
-
-    if (cartCount) {
-        cartCount.textContent = totalItems;
-    }
-
-    if (checkoutBtn) {
-        checkoutBtn.disabled = cart.length === 0;
-    }
-
-    updateTotals();
-
-}
-
-// ----------------------------
-// CALCULATE TOTALS
-// ----------------------------
+// -----------------------------
+// UPDATE TOTALS
+// -----------------------------
 function updateTotals() {
 
     let subtotal = 0;
@@ -443,9 +622,14 @@ function updateTotals() {
 
     if (delivery === 0) {
 
-        const d = document.getElementById("delivery");
+        const deliveryElement =
+            document.getElementById("delivery");
 
-        if (d) d.textContent = "FREE";
+        if (deliveryElement) {
+
+            deliveryElement.textContent = "FREE";
+
+        }
 
     } else {
 
@@ -457,52 +641,27 @@ function updateTotals() {
 
 }
 
-// ----------------------------
+// -----------------------------
 // DISPLAY MONEY
-// ----------------------------
+// -----------------------------
 function setMoney(id, value) {
 
-    const el = document.getElementById(id);
+    const element = document.getElementById(id);
 
-    if (!el) return;
+    if (!element) return;
 
-    el.textContent =
+    element.textContent =
         "R" + Number(value).toFixed(2);
 
 }
 
-// ----------------------------
-// OPEN/CLOSE CART
-// ----------------------------
-function toggleCart(open = true) {
-
-    const drawer = document.getElementById("cartDrawer");
-    const overlay = document.getElementById("cartOverlay");
-
-    if (!drawer || !overlay) return;
-
-    drawer.classList.toggle("active", open);
-    overlay.classList.toggle("active", open);
-
-}
-
-// ----------------------------
-// ESC KEY CLOSES CART
-// ----------------------------
-document.addEventListener("keydown", function(e){
-
-    if(e.key === "Escape"){
-
-        toggleCart(false);
-
-    }
-
-});
+console.log("Module 5 Loaded");
 // ======================================================
-// PART 4 - EFT CHECKOUT & WHATSAPP ORDER
+// MODULE 6 - EFT CHECKOUT & WHATSAPP ORDER
 // ======================================================
 
 function processOrder() {
+    const orderNumber = generateOrderNumber();
 
     if (cart.length === 0) {
         alert("Your shopping cart is empty.");
@@ -510,38 +669,63 @@ function processOrder() {
     }
 
     const customerName =
-        prompt("Please enter your Name or Company Name:");
-
-    if (!customerName) return;
+        document.getElementById("customerName")?.value.trim();
 
     const customerPhone =
-        prompt("Please enter your Contact Number:");
+        document.getElementById("customerPhone")?.value.trim();
 
-    if (!customerPhone) return;
+    const customerEmail =
+        document.getElementById("customerEmail")?.value.trim();
+
+    const customerAddress =
+        document.getElementById("customerAddress")?.value.trim();
+
+    if (!customerName || !customerPhone || !customerAddress) {
+
+        alert("Please complete your Name, Contact Number and Delivery Address.");
+
+        return;
+
+    }
 
     let subtotal = 0;
 
-    let order = "";
+    let message = "";
 
-    order += "NEXPAK SOLUTIONS\n";
-    order += "ONLINE ORDER\n";
-    order += "========================\n\n";
+    message += "🟦 *NEXPAK SOLUTIONS ONLINE ORDER*\n\n";
+    
+    message += "*Order Number:* " + orderNumber + "\n\n";
+    message += "*Customer Details*\n";
+    message += "Name: " + customername+ "\n";
+    message += "Phone: " + customerPhone + "\n";
 
-    order += "Customer: " + customerName + "\n";
-    order += "Contact: " + customerPhone + "\n\n";
+    if (customerEmail) {
+        message += "Email: " + customerEmail + "\n";
+    }
 
-    order += "ORDER ITEMS\n";
-    order += "------------------------\n";
+    message += "Address: " + customerAddress + "\n\n";
+
+    message += "*ORDER ITEMS*\n";
+    message += "--------------------------\n";
 
     cart.forEach(item => {
 
-        const line = item.price * item.quantity;
+        const lineTotal = item.price * item.quantity;
 
-        subtotal += line;
+        subtotal += lineTotal;
 
-        order += item.name + "\n";
-        order += "Qty: " + item.quantity + " " + (item.unit || "") + "\n";
-        order += "Amount: R" + line.toFixed(2) + "\n\n";
+        message += "• " + item.name + "\n";
+
+        if (item.size) {
+            message += "Size: " + item.size + "\n";
+        }
+
+        if (item.colour) {
+            message += "Colour: " + item.colour + "\n";
+        }
+
+        message += "Qty: " + item.quantity + " " + (item.unit || "") + "\n";
+        message += "Amount: " + money(lineTotal) + "\n\n";
 
     });
 
@@ -552,33 +736,30 @@ function processOrder() {
             ? 0
             : DELIVERY_FEE;
 
-    const total =
-        subtotal +
-        vat +
-        delivery;
+    const total = subtotal + vat + delivery;
 
-    order += "------------------------\n";
-    order += "Subtotal : R" + subtotal.toFixed(2) + "\n";
-    order += "VAT (15%): R" + vat.toFixed(2) + "\n";
-    order += "Delivery : " + (delivery === 0 ? "FREE" : "R" + delivery.toFixed(2)) + "\n";
-    order += "TOTAL    : R" + total.toFixed(2) + "\n\n";
+    message += "--------------------------\n";
+    message += "Subtotal: " + money(subtotal) + "\n";
+    message += "VAT (15%): " + money(vat) + "\n";
+    message += "Delivery: " + (delivery === 0 ? "FREE" : money(delivery)) + "\n";
+    message += "*TOTAL: " + money(total) + "*\n\n";
 
-    order += "PAYMENT METHOD\n";
-    order += "EFT\n\n";
+    message += "*EFT PAYMENT DETAILS*\n";
+    message += "Bank: Capitec\n";
+    message += "Account No: 2517857594\n";
+    message += "Branch Code: 470010\n";
+    message += "Reference: " + customerName + "\n\n";
 
-    order += "BANK: Capitec\n";
-    order += "ACCOUNT NO: 2517857594\n";
-    order += "BRANCH CODE: 470010\n";
-    order += "REFERENCE: " + customerName + "\n\n";
-
-    order += "Please send Proof of Payment after making the EFT.\n";
-    order += "Thank you for shopping with NexPak Solutions.";
+    message += "Please send your Proof of Payment after completing the EFT.\n";
+    message += "Thank you for choosing NexPak Solutions.";
 
     window.open(
         "https://wa.me/27836308249?text=" +
-        encodeURIComponent(order),
+        encodeURIComponent(message),
         "_blank"
     );
+
+    alert("WhatsApp is opening with your order. Complete the EFT payment and send your proof of payment.");
 
     cart = [];
 
@@ -588,11 +769,74 @@ function processOrder() {
 
     toggleCart(false);
 
-    alert("Your order has been prepared for WhatsApp. Please complete your EFT payment and send the proof of payment.");
 }
 
+console.log("Module 6 Loaded");
 // ======================================================
-// END OF SCRIPT
+// MODULE 7A - ORDER NUMBER & BANK DETAILS
 // ======================================================
 
-console.log("NexPak Shop V2 Loaded Successfully");
+// -----------------------------
+// GENERATE ORDER NUMBER
+// -----------------------------
+function generateOrderNumber() {
+
+    const now = new Date();
+
+    const year = now.getFullYear();
+
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+
+    const day = String(now.getDate()).padStart(2, "0");
+
+    const random = Math.floor(Math.random() * 9000) + 1000;
+
+    return `NP-${year}${month}${day}-${random}`;
+
+}
+
+// -----------------------------
+// COPY EFT DETAILS
+// -----------------------------
+function copyBankDetails() {
+
+    const details = `
+NEXPAK SOLUTIONS
+
+Bank: Capitec
+Account Number: 2517857594
+Branch Code: 470010
+
+Reference: Your Order Number
+`;
+
+    navigator.clipboard.writeText(details)
+        .then(() => {
+
+            alert("Bank details copied.");
+
+        })
+        .catch(() => {
+
+            alert("Unable to copy bank details.");
+
+        });
+
+}
+
+// -----------------------------
+// COPY ACCOUNT NUMBER
+// -----------------------------
+function copyAccountNumber() {
+
+    navigator.clipboard.writeText("2517857594")
+        .then(() => {
+
+            alert("Account number copied.");
+
+        });
+
+}
+
+console.log("Module 7A Loaded");
+
