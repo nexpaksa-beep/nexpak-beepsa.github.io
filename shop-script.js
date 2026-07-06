@@ -883,6 +883,13 @@ function generateQuoteData() {
  // ======================================================
 // MODULE 7B-2 - QUOTATION PDF GENERATOR (jsPDF)
 // ======================================================
+// ======================================================
+// PDF TEXT WRAP HELPER
+// ======================================================
+
+function wrapText(doc, text, maxWidth) {
+    return doc.splitTextToSize(text, maxWidth);
+}
 
 function downloadQuotationPDF() {
 
@@ -958,26 +965,54 @@ doc.setFont("helvetica", "normal");
     // ITEMS LOOP
     // =========================
     quote.items.forEach(item => {
-    doc.text(item.name.substring(0, 38), 14, y);
+
+    let nameLines = wrapText(doc, item.name, 70);
+
+    doc.text(nameLines, 14, y);
+
     doc.text(String(item.qty), 95, y);
     doc.text("R " + item.unitPrice.toFixed(2), 120, y);
     doc.text("R " + item.lineTotal.toFixed(2), 165, y);
 
-    y += 8;
+    // 👇 dynamic height based on wrapped text
+    let rowHeight = nameLines.length * 5;
 
+    y += Math.max(rowHeight, 8);
+
+    // =========================
+    // PAGE BREAK SAFETY
+    // =========================
     if (y > 260) {
         doc.addPage();
         y = 20;
+
+        // reprint table header on new page
+        doc.setFontSize(10);
+        doc.setFont("helvetica", "bold");
+        doc.text("Product", 14, y);
+        doc.text("Qty", 95, y);
+        doc.text("Unit Price", 120, y);
+        doc.text("Total", 165, y);
+
+        doc.line(14, y + 2, 195, y + 2);
+
+        y += 10;
+        doc.setFont("helvetica", "normal");
     }
 });
 
-    // // =========================
-// TOTALS SECTION
+    // =========================
+// SAFE TOTALS POSITION
 // =========================
+
+if (y > 240) {
+    doc.addPage();
+    y = 20;
+}
 
 y += 10;
 doc.line(14, y, 195, y);
-y += 8;
+y += 10;
 
 doc.setFont("helvetica", "normal");
 
@@ -999,4 +1034,22 @@ doc.text(`R ${quote.total.toFixed(2)}`, 165, y);
     // =========================
     doc.save(`${quote.quoteNumber}.pdf`);
         }
+// =========================
+// FOOTER (SAFE POSITION)
+// =========================
 
+if (y > 270) {
+    doc.addPage();
+    y = 280;
+} else {
+    y = 280;
+}
+
+doc.setFontSize(9);
+doc.setFont("helvetica", "italic");
+
+doc.text(
+    "Thank you for your business. Payment via EFT only unless agreed otherwise.",
+    14,
+    y
+);
