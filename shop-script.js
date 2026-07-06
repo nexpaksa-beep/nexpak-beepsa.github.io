@@ -839,4 +839,164 @@ function copyAccountNumber() {
 }
 
 console.log("Module 7A Loaded");
+// ======================================================
+// MODULE 7B-1 - QUOTATION BUILDER CORE
+// ======================================================
+
+function generateQuoteData() {
+    if (!cart || cart.length === 0) {
+        alert("Cart is empty. Add products before generating a quotation.");
+        return null;
+    }
+
+    let quoteItems = [];
+    let subTotal = 0;
+
+    cart.forEach(item => {
+        let lineTotal = item.price * item.qty;
+        subTotal += lineTotal;
+
+        quoteItems.push({
+            id: item.id,
+            name: item.name,
+            qty: item.qty,
+            unitPrice: item.price,
+            lineTotal: lineTotal
+        });
+    });
+
+    let vatRate = 0.15; // 15% VAT (South Africa standard)
+    let vatAmount = subTotal * vatRate;
+    let grandTotal = subTotal + vatAmount;
+
+    let quote = {
+        quoteNumber: "NP-" + Date.now(),
+        date: new Date().toLocaleDateString(),
+        items: quoteItems,
+        subTotal: subTotal,
+        vat: vatAmount,
+        total: grandTotal
+    };
+
+    return quote;
+        }
+ // ======================================================
+// MODULE 7B-2 - QUOTATION PDF GENERATOR (jsPDF)
+// ======================================================
+
+function downloadQuotationPDF() {
+
+    const quote = generateQuoteData();
+    if (!quote) return;
+
+    const doc = new jsPDF();
+
+    // =========================
+    // LOGO
+    // =========================
+    try {
+        doc.addImage("logo.png", "PNG", 14, 10, 40, 20);
+    } catch (e) {}
+
+    // =========================
+    // HEADER
+    // =========================
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "bold");
+    doc.text("NEXPAK SOLUTIONS", 14, 40);
+
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "normal");
+    doc.text("Industrial Packaging & PPE Solutions", 14, 46);
+
+    doc.text(`Quotation No: ${quote.quoteNumber}`, 140, 40);
+    doc.text(`Date: ${quote.date}`, 140, 46);
+
+    // ... rest of your table, items, totals ...
+
+    doc.save(`${quote.quoteNumber}.pdf`);
+}
+
+    // =========================
+// HEADER (CLEAN BUSINESS STYLE)
+// =========================
+
+doc.setFontSize(16);
+doc.setFont("helvetica", "bold");
+doc.text("NEXPAK SOLUTIONS", 14, 40);
+
+doc.setFontSize(10);
+doc.setFont("helvetica", "normal");
+doc.text("Industrial Packaging & PPE Solutions", 14, 46);
+
+doc.text("Email: sales@nexpak.co.za | Tel: +27 XX XXX XXXX", 14, 52);
+
+doc.setFontSize(10);
+doc.text(`Quotation No: ${quote.quoteNumber}`, 140, 40);
+doc.text(`Date: ${quote.date}`, 140, 46);
+
+    // =========================
+// TABLE HEADER (CLEAN)
+// =========================
+
+let y = 65;
+
+doc.setFontSize(10);
+doc.setFont("helvetica", "bold");
+
+doc.text("Product", 14, y);
+doc.text("Qty", 95, y);
+doc.text("Unit Price", 120, y);
+doc.text("Total", 165, y);
+
+doc.line(14, y + 2, 195, y + 2);
+
+y += 10;
+doc.setFont("helvetica", "normal");
+    
+    // =========================
+    // ITEMS LOOP
+    // =========================
+    quote.items.forEach(item => {
+    doc.text(item.name.substring(0, 38), 14, y);
+    doc.text(String(item.qty), 95, y);
+    doc.text("R " + item.unitPrice.toFixed(2), 120, y);
+    doc.text("R " + item.lineTotal.toFixed(2), 165, y);
+
+    y += 8;
+
+    if (y > 260) {
+        doc.addPage();
+        y = 20;
+    }
+});
+
+    // // =========================
+// TOTALS SECTION
+// =========================
+
+y += 10;
+doc.line(14, y, 195, y);
+y += 8;
+
+doc.setFont("helvetica", "normal");
+
+doc.text(`Subtotal:`, 120, y);
+doc.text(`R ${quote.subTotal.toFixed(2)}`, 165, y);
+y += 6;
+
+doc.text(`VAT (15%):`, 120, y);
+doc.text(`R ${quote.vat.toFixed(2)}`, 165, y);
+y += 8;
+
+doc.setFontSize(12);
+doc.setFont("helvetica", "bold");
+doc.text(`TOTAL:`, 120, y);
+doc.text(`R ${quote.total.toFixed(2)}`, 165, y);
+
+    // =========================
+    // SAVE
+    // =========================
+    doc.save(`${quote.quoteNumber}.pdf`);
+        }
 
