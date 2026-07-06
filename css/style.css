@@ -40,6 +40,12 @@ body{
 font-family:'Inter',sans-serif;
 
 background:var(--light);
+   
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+background-attachment: fixed;
+transition: background-image 1s ease-in-out;
 
 color:var(--dark);
 
