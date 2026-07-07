@@ -235,12 +235,26 @@
 
     <h2>Send Us a Message</h2>
 
-    <form action="https://formspree.io/f/xyzpqrst" method="POST" onsubmit="return handleFormSubmit(event)">
-      <input type="text" id="name" name="name" placeholder="Your Name" required>
-      <input type="email" id="email" name="email" placeholder="Email Address" required>
-      <input type="text" id="phone" name="phone" placeholder="Phone Number">
-      <textarea id="message" name="message" rows="5" placeholder="Your Message"></textarea>
-      <button type="submit">Send Enquiry to info@nexpaksolutions.co.za</button>
+    <form action="https://api.web3forms.com/submit" method="POST">
+
+    <input type="hidden" name="access_key" value="5415d140-cbd3-4bc5-97af-7af920246778">
+
+    <input type="hidden" name="subject" value="New Enquiry - NexPak Solutions">
+
+    <input type="hidden" name="from_name" value="NexPak Website">
+
+    <input type="text" name="name" placeholder="Your Name" required>
+
+    <input type="email" name="email" placeholder="Your Email" required>
+
+    <input type="tel" name="phone" placeholder="Phone Number">
+
+    <input type="text" name="company" placeholder="Company">
+
+    <textarea name="message" placeholder="How can we help you?" required></textarea>
+
+    <button type="submit">Send Enquiry</button>
+
     </form>
 
     <!-- WHATSAPP -->
@@ -254,7 +268,7 @@
   <div class="info">
 
     <div class="info-box">
-      <strong>📧 Email:</strong> info@nexpaksolutions.co.za
+      <strong>📧 Email:</strong> info@nexpaksolutions.co.za/nexpaksa@outlook.com
     </div>
 
     <div class="info-box">
