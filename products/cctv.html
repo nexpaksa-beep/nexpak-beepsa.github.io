@@ -1,1 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CCTV Systems | Nexpak Security Solutions</title>
+
+<meta name="description" content="Shop Hikvision and Dahua CCTV systems including 8 channel, 16 channel and 32 channel security camera solutions.">
+
+
+<link rel="stylesheet" href="../css/style.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="container header">
+
+
+<a href="../index.html" class="logo">
+
+<img src="../images/logo-security.png">
+
+<div class="logo-text">
+
+<h2>Nexpak</h2>
+
+<span>Security Solutions</span>
+
+</div>
+
+</a>
+
+
+<nav>
+
+<a href="../index.html">
+Home
+</a>
+
+<a href="../shop.html">
+Shop
+</a>
+
+<a href="../contact.html">
+Contact
+</a>
+
+</nav>
+
+
+</div>
+
+</header>
+
+
+
+
+
+<section class="hero">
+
+
+<div class="hero-content">
+
+
+<h5>
+SECURITY CAMERAS
+</h5>
+
+
+<h1>
+Professional CCTV Systems
+</h1>
+
+
+<p>
+
+Hikvision and Dahua CCTV solutions for homes,
+businesses and industrial sites.
+
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+<section class="featured-products">
+
+
+<div class="container">
+
+
+<div class="section-title">
+
+
+<h5>
+CCTV RANGE
+</h5>
+
+
+<h2>
+Choose Your CCTV System
+</h2>
+
+
+<p>
+Select channel capacity, storage and camera options.
+</p>
+
+
+</div>
+
+
+
+
+<div class="products-grid"
+id="cctv-products">
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<footer>
+
+<div class="container">
+
+<h3>
+Nexpak Security Solutions
+</h3>
+
+<p>
+CCTV | Electric Fencing | Access Control | Gate Automation
+</p>
+
+</div>
+
+</footer>
+
+
+
+
+
+<script src="../js/products.js"></script>
+
+<script src="../js/cart.js"></script>
+
+
+<script>
+
+
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
+
+
+const container =
+document.getElementById(
+"cctv-products"
+);
+
+
+
+products
+
+.filter(product =>
+
+product.category === "CCTV"
+
+)
+
+.forEach(product=>{
+
+
+container.innerHTML += `
+
+
+<div class="product-card">
+
+
+<img src="../${product.image}"
+alt="${product.name}">
+
+
+
+<div class="product-content">
+
+
+<h3>
+${product.name}
+</h3>
+
+
+
+<p>
+${product.description}
+</p>
+
+
+
+<div class="price">
+
+<span class="current-price">
+
+R${product.price}
+
+</span>
+
+</div>
+
+
+
+<a class="primary-btn"
+href="../product.html?id=${product.id}">
+
+Configure System
+
+<i class="fa fa-arrow-right"></i>
+
+</a>
+
+
+</div>
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+});
+
+
+</script>
+
+
+</body>
+
+  </html>
