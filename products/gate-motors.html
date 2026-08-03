@@ -1,1 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<title>Gate Motors | Nexpak Security Solutions</title>
+
+
+<meta name="description"
+content="Shop Centurion D5 Evo, D5 Smart, D10 Smart and D10 Turbo gate motors with rack and battery options from Nexpak Security Solutions.">
+
+
+<link rel="stylesheet" href="../css/style.css">
+
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+
+
+</head>
+
+
+
+<body>
+
+
+
+<header>
+
+
+<div class="container header">
+
+
+<a href="../index.html" class="logo">
+
+
+<img src="../images/logo-security.png"
+alt="Nexpak Security Solutions">
+
+
+<div class="logo-text">
+
+<h2>Nexpak</h2>
+
+<span>Security Solutions</span>
+
+</div>
+
+
+</a>
+
+
+
+<nav>
+
+<a href="../index.html">
+Home
+</a>
+
+
+<a href="../shop.html">
+Shop
+</a>
+
+
+<a href="../contact.html">
+Contact
+</a>
+
+
+</nav>
+
+
+
+</div>
+
+
+</header>
+
+
+
+
+
+
+<section class="hero">
+
+
+<div class="hero-content">
+
+
+<h5>
+GATE AUTOMATION
+</h5>
+
+
+<h1>
+Premium Gate Motors
+</h1>
+
+
+<p>
+
+Reliable Centurion gate automation solutions
+for residential, commercial and industrial applications.
+
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<section class="featured-products">
+
+
+<div class="container">
+
+
+<div class="section-title">
+
+
+<h5>
+CENTURION RANGE
+</h5>
+
+
+<h2>
+Choose Your Gate Motor
+</h2>
+
+
+<p>
+
+Configure motor type, rack length, battery and accessories.
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+<div class="products-grid" id="gate-products">
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<footer>
+
+
+<div class="container">
+
+
+<h3>
+Nexpak Security Solutions
+</h3>
+
+
+<p>
+Gate Automation | CCTV | Electric Fencing | Access Control
+</p>
+
+
+</div>
+
+
+</footer>
+
+
+
+
+
+
+
+<script src="../js/products.js"></script>
+
+<script src="../js/cart.js"></script>
+
+<script src="../js/configurator.js"></script>
+
+
+
+<script>
+
+
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
+
+
+const container =
+
+document.getElementById(
+"gate-products"
+);
+
+
+
+products
+
+.filter(product =>
+
+product.category === "Gate Automation"
+
+)
+
+.forEach(product=>{
+
+
+container.innerHTML += `
+
+
+<div class="product-card">
+
+
+<img src="../${product.image}"
+alt="${product.name}">
+
+
+
+<div class="product-content">
+
+
+<h3>
+
+${product.name}
+
+</h3>
+
+
+
+<p>
+
+${product.description}
+
+</p>
+
+
+
+
+<div class="price">
+
+<span class="current-price">
+
+R${product.price}
+
+</span>
+
+</div>
+
+
+
+
+
+<a href="../product.html?id=${product.id}"
+class="primary-btn">
+
+
+<i class="fa fa-sliders"></i>
+
+Configure Motor
+
+
+</a>
+
+
+
+</div>
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+});
+
+
+</script>
+
+
+
+</body>
+
+  </html>
