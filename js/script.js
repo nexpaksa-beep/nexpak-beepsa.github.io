@@ -1,39 +1,40 @@
-// ======================================
-// NEXPAK SOLUTIONS V2
-// script.js
-// PART 1
-// ======================================
+/*=========================================================
+ NEXPAK SECURITY SOLUTIONS V3
+ script.js
+ PART 1
+=========================================================*/
 
 document.addEventListener("DOMContentLoaded", () => {
 
     initializeHeader();
 
-    initializeFadeAnimations();
+    initializeMobileMenu();
 
-    initializeCounters();
+    initializeSmoothScroll();
+
+    initializeFadeAnimations();
 
 });
 
-
-// ======================================
-// STICKY HEADER
-// ======================================
+/*=========================================================
+ STICKY HEADER
+=========================================================*/
 
 function initializeHeader(){
 
     const header = document.querySelector("header");
 
-    window.addEventListener("scroll", () => {
+    if(!header) return;
+
+    window.addEventListener("scroll",()=>{
 
         if(window.scrollY > 80){
 
-            header.style.background = "rgba(10,35,66,.96)";
-            header.style.boxShadow = "0 10px 30px rgba(0,0,0,.25)";
+            header.classList.add("scrolled");
 
         }else{
 
-            header.style.background = "rgba(10,35,66,.88)";
-            header.style.boxShadow = "none";
+            header.classList.remove("scrolled");
 
         }
 
@@ -41,10 +42,73 @@ function initializeHeader(){
 
 }
 
+/*=========================================================
+ MOBILE MENU
+=========================================================*/
 
-// ======================================
-// FADE ANIMATIONS
-// ======================================
+function initializeMobileMenu(){
+
+    const menuButton = document.querySelector(".menu-toggle");
+
+    const nav = document.querySelector("nav");
+
+    if(!menuButton || !nav) return;
+
+    menuButton.addEventListener("click",()=>{
+
+        nav.classList.toggle("active");
+
+        menuButton.classList.toggle("active");
+
+    });
+
+    document.querySelectorAll("nav a").forEach(link=>{
+
+        link.addEventListener("click",()=>{
+
+            nav.classList.remove("active");
+
+            menuButton.classList.remove("active");
+
+        });
+
+    });
+
+}
+
+/*=========================================================
+ SMOOTH SCROLL
+=========================================================*/
+
+function initializeSmoothScroll(){
+
+    document.querySelectorAll('a[href^="#"]').forEach(link=>{
+
+        link.addEventListener("click",function(e){
+
+            const target=document.querySelector(this.getAttribute("href"));
+
+            if(!target) return;
+
+            e.preventDefault();
+
+            target.scrollIntoView({
+
+                behavior:"smooth",
+
+                block:"start"
+
+            });
+
+        });
+
+    });
+
+}
+
+/*=========================================================
+ FADE ANIMATIONS
+=========================================================*/
 
 function initializeFadeAnimations(){
 
@@ -66,76 +130,30 @@ function initializeFadeAnimations(){
 
     });
 
-    document.querySelectorAll(".fade").forEach(el=>{
+    document.querySelectorAll(".fade").forEach(item=>{
 
-        observer.observe(el);
+        observer.observe(item);
 
     });
 
 }
-
-
-// ======================================
-// ANIMATED COUNTERS
-// ======================================
-
-function initializeCounters(){
-
-    const counters = document.querySelectorAll(".counter");
-
-    counters.forEach(counter=>{
-
-        const target = Number(counter.dataset.target);
-
-        let current = 0;
-
-        const speed = target / 120;
-
-        function update(){
-
-            current += speed;
-
-            if(current < target){
-
-                counter.innerText = Math.floor(current);
-
-                requestAnimationFrame(update);
-
-            }else{
-
-                counter.innerText = target;
-
-            }
-
-        }
-
-        update();
-
-    });
-
-    }
-// ======================================
-// NEXPAK SOLUTIONS V2
-// SCRIPT.JS - PART 2
-// Hero Slideshow
-// Smooth Scroll
-// Scroll To Top
-// ======================================
-
-// -----------------------------
-// HERO SLIDESHOW
-// -----------------------------
+/*=========================================================
+ HERO IMAGE SLIDER
+=========================================================*/
 
 const heroImages = [
 
-    "hero.jpg",
-    "hero2.jpg",
-    "hero3.jpg",
-    "hero4.jpg"
+"images/hero1.jpg",
+
+"images/hero2.jpg",
+
+"images/hero3.jpg",
+
+"images/hero4.jpg"
 
 ];
 
-let heroIndex = 0;
+let currentHero = 0;
 
 function initializeHeroSlider(){
 
@@ -143,236 +161,375 @@ function initializeHeroSlider(){
 
     if(!hero) return;
 
+    hero.style.backgroundImage =
+    `url('${heroImages[currentHero]}')`;
+
     setInterval(()=>{
 
-        heroIndex++;
-
-        if(heroIndex >= heroImages.length){
-
-            heroIndex = 0;
-
-        }
-
-        hero.style.opacity = ".85";
+        hero.style.opacity=".92";
 
         setTimeout(()=>{
 
-            hero.style.backgroundImage =
-                `url('${heroImages[heroIndex]}')`;
+            currentHero++;
 
-            hero.style.opacity = "1";
+            if(currentHero >= heroImages.length){
+
+                currentHero = 0;
+
+            }
+
+            hero.style.backgroundImage =
+            `url('${heroImages[currentHero]}')`;
+
+            hero.style.opacity="1";
 
         },500);
 
-    },7000);
+    },6000);
 
 }
 
-initializeHeroSlider();
+/*=========================================================
+ PRELOAD HERO IMAGES
+=========================================================*/
 
+function preloadHeroImages(){
 
-// -----------------------------
-// SMOOTH SCROLL
-// -----------------------------
+    heroImages.forEach(src=>{
 
-document.querySelectorAll('a[href^="#"]').forEach(link=>{
+        const img = new Image();
 
-    link.addEventListener("click",function(e){
+        img.src = src;
 
-        e.preventDefault();
+    });
 
-        const target=document.querySelector(this.getAttribute("href"));
+}
 
-        if(target){
+/*=========================================================
+ HERO PARALLAX
+=========================================================*/
 
-            target.scrollIntoView({
+function initializeHeroParallax(){
 
-                behavior:"smooth"
+    const hero=document.querySelector(".hero");
 
-            });
+    if(!hero) return;
+
+    window.addEventListener("scroll",()=>{
+
+        const offset=window.pageYOffset;
+
+        hero.style.backgroundPositionY=(offset*0.35)+"px";
+
+    });
+
+}
+
+/*=========================================================
+ INITIALIZE
+=========================================================*/
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+    preloadHeroImages();
+
+    initializeHeroSlider();
+
+    initializeHeroParallax();
+
+});
+/*=========================================================
+ ANIMATED COUNTERS
+=========================================================*/
+
+function initializeCounters(){
+
+    const counters = document.querySelectorAll(".counter");
+
+    if(!counters.length) return;
+
+    const observer = new IntersectionObserver((entries)=>{
+
+        entries.forEach(entry=>{
+
+            if(!entry.isIntersecting) return;
+
+            const counter = entry.target;
+
+            const target = parseInt(counter.dataset.target);
+
+            let current = 0;
+
+            const increment = target / 120;
+
+            function updateCounter(){
+
+                current += increment;
+
+                if(current < target){
+
+                    counter.textContent = Math.floor(current);
+
+                    requestAnimationFrame(updateCounter);
+
+                }else{
+
+                    counter.textContent = target.toLocaleString();
+
+                }
+
+            }
+
+            updateCounter();
+
+            observer.unobserve(counter);
+
+        });
+
+    },{
+
+        threshold:0.5
+
+    });
+
+    counters.forEach(counter=>{
+
+        observer.observe(counter);
+
+    });
+
+}
+
+/*=========================================================
+ ACTIVE NAVIGATION
+=========================================================*/
+
+function initializeActiveNavigation(){
+
+    const sections = document.querySelectorAll("section[id]");
+
+    const navLinks = document.querySelectorAll("nav a");
+
+    window.addEventListener("scroll",()=>{
+
+        let currentSection="";
+
+        sections.forEach(section=>{
+
+            const sectionTop = section.offsetTop - 150;
+
+            const sectionHeight = section.offsetHeight;
+
+            if(window.scrollY >= sectionTop &&
+               window.scrollY < sectionTop + sectionHeight){
+
+                currentSection = section.getAttribute("id");
+
+            }
+
+        });
+
+        navLinks.forEach(link=>{
+
+            link.classList.remove("active");
+
+            if(link.getAttribute("href")==="#" + currentSection){
+
+                link.classList.add("active");
+
+            }
+
+        });
+
+    });
+
+}
+
+/*=========================================================
+ SCROLL TO TOP
+=========================================================*/
+
+function initializeScrollTop(){
+
+    const button=document.createElement("button");
+
+    button.className="scroll-top";
+
+    button.innerHTML='<i class="fa-solid fa-arrow-up"></i>';
+
+    document.body.appendChild(button);
+
+    window.addEventListener("scroll",()=>{
+
+        if(window.scrollY>500){
+
+            button.classList.add("show");
+
+        }else{
+
+            button.classList.remove("show");
 
         }
 
     });
 
+    button.addEventListener("click",()=>{
+
+        window.scrollTo({
+
+            top:0,
+
+            behavior:"smooth"
+
+        });
+
+    });
+
+}
+
+/*=========================================================
+ INITIALIZE
+=========================================================*/
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+    initializeCounters();
+
+    initializeActiveNavigation();
+
+    initializeScrollTop();
+
 });
+/*=========================================================
+ NEXPAK SECURITY SOLUTIONS V3
+ SCRIPT.JS - PART 4
+ Premium Effects
+=========================================================*/
 
+/*=========================================================
+ HERO BUTTON PULSE
+=========================================================*/
 
-// -----------------------------
-// SCROLL TO TOP BUTTON
-// -----------------------------
+function initializeButtonPulse(){
 
-const topButton=document.createElement("button");
+    const button=document.querySelector(".primary-btn");
 
-topButton.innerHTML='<i class="fa-solid fa-arrow-up"></i>';
+    if(!button) return;
 
-topButton.className="scroll-top";
+    setInterval(()=>{
 
-document.body.appendChild(topButton);
+        button.classList.add("pulse");
 
-window.addEventListener("scroll",()=>{
+        setTimeout(()=>{
 
-    if(window.scrollY>500){
+            button.classList.remove("pulse");
 
-        topButton.classList.add("show");
+        },1000);
 
-    }else{
+    },5000);
 
-        topButton.classList.remove("show");
+}
+
+/*=========================================================
+ CARD HOVER EFFECT
+=========================================================*/
+
+function initializeCardEffects(){
+
+    const cards=document.querySelectorAll(
+
+        ".service-card,.product-card,.why-card,.industry-card,.testimonial-card"
+
+    );
+
+    cards.forEach(card=>{
+
+        card.addEventListener("mouseenter",()=>{
+
+            card.style.transform="translateY(-10px)";
+
+        });
+
+        card.addEventListener("mouseleave",()=>{
+
+            card.style.transform="";
+
+        });
+
+    });
+
+}
+
+/*=========================================================
+ PAGE LOAD
+=========================================================*/
+
+function initializePageLoad(){
+
+    document.body.classList.add("loaded");
+
+}
+
+/*=========================================================
+ RESIZE HANDLER
+=========================================================*/
+
+window.addEventListener("resize",()=>{
+
+    const nav=document.querySelector("nav");
+
+    if(window.innerWidth>992 && nav){
+
+        nav.classList.remove("active");
 
     }
 
 });
 
-topButton.addEventListener("click",()=>{
+/*=========================================================
+ INITIALIZE
+=========================================================*/
 
-    window.scrollTo({
+document.addEventListener("DOMContentLoaded",()=>{
 
-        top:0,
+    initializeButtonPulse();
 
-        behavior:"smooth"
-
-    });
+    initializeCardEffects();
 
 });
-
-
-// -----------------------------
-// PAGE LOAD ANIMATION
-// -----------------------------
 
 window.addEventListener("load",()=>{
 
-    document.body.classList.add("loaded");
-
-});
-// ======================================
-// NEXPAK SOLUTIONS V2
-// SCRIPT.JS - PART 3
-// Premium Effects
-// ======================================
-
-// -----------------------------
-// ACTIVE NAVIGATION
-// -----------------------------
-
-window.addEventListener("scroll", () => {
-
-    let current = "";
-
-    document.querySelectorAll("section").forEach(section => {
-
-        const sectionTop = section.offsetTop - 120;
-
-        if (window.scrollY >= sectionTop) {
-
-            current = section.getAttribute("id");
-
-        }
-
-    });
-
-    document.querySelectorAll("nav a").forEach(link => {
-
-        link.classList.remove("active");
-
-        if (current && link.getAttribute("href") === "#" + current) {
-
-            link.classList.add("active");
-
-        }
-
-    });
+    initializePageLoad();
 
 });
 
+/*=========================================================
+ CONSOLE MESSAGE
+=========================================================*/
 
-// -----------------------------
-// HERO PARALLAX EFFECT
-// -----------------------------
-
-window.addEventListener("scroll", () => {
-
-    const hero = document.querySelector(".hero");
-
-    if (!hero) return;
-
-    let offset = window.pageYOffset;
-
-    hero.style.backgroundPositionY = offset * 0.35 + "px";
-
-});
-
-
-// -----------------------------
-// CARD HOVER EFFECT
-// -----------------------------
-
-document.querySelectorAll(
-
-".product-card,.why-card,.category-card,.testimonial"
-
-).forEach(card => {
-
-    card.addEventListener("mouseenter", () => {
-
-        card.style.transform = "translateY(-12px)";
-
-    });
-
-    card.addEventListener("mouseleave", () => {
-
-        card.style.transform = "";
-
-    });
-
-});
-
-
-// -----------------------------
-// HERO BUTTON PULSE
-// -----------------------------
-
-setInterval(() => {
-
-    const btn = document.querySelector(".primary-btn");
-
-    if (!btn) return;
-
-    btn.classList.add("pulse");
-
-    setTimeout(() => {
-
-        btn.classList.remove("pulse");
-
-    }, 1000);
-
-}, 5000);
-
-
-// -----------------------------
-// PRELOAD HERO IMAGES
-// -----------------------------
-
-heroImages.forEach(src => {
-
-    const img = new Image();
-
-    img.src = src;
-
-});
-
-
-// -----------------------------
-// CONSOLE MESSAGE
-// -----------------------------
+console.clear();
 
 console.log(
-"%cNEXPAK SOLUTIONS WEBSITE V2",
-"color:#D4AF37;font-size:20px;font-weight:bold;"
+
+"%cNEXPAK SECURITY SOLUTIONS V3",
+
+"color:#00B4FF;font-size:22px;font-weight:bold;"
+
 );
 
 console.log(
-"%cIndustrial Packaging | PPE | Advanced Security",
-"color:#1D4ED8;font-size:14px;"
+
+"%cCCTV | Alarm Systems | Electric Fencing | Access Control | AI Surveillance",
+
+"color:#38BDF8;font-size:14px;"
+
+);
+
+console.log(
+
+"%cWebsite developed for Nexpak Security Solutions",
+
+"color:#94A3B8;font-size:12px;"
+
 );
