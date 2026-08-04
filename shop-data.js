@@ -2523,3 +2523,2266 @@ shopBrands
 
 
 };
+
+// ======================================================
+// NEXPAK SECURITY SOLUTIONS V17
+// SHOP DATA ENGINE UPGRADE
+// PART 1
+// V15 DATABASE COMPATIBILITY LAYER
+// ======================================================
+
+
+
+// ======================================================
+// SHOP CONFIGURATION
+// ======================================================
+
+
+const shopConfig = {
+
+
+name:
+"Nexpak Security Solutions",
+
+
+currency:
+"ZAR",
+
+
+currencySymbol:
+"R",
+
+
+delivery:{
+
+enabled:true,
+
+standardRate:150,
+
+freeDeliveryMinimum:5000
+
+},
+
+
+features:{
+
+
+cart:true,
+
+wishlist:true,
+
+compare:true,
+
+checkout:true,
+
+reviews:true,
+
+quickView:true
+
+}
+
+
+};
+
+
+
+
+
+// ======================================================
+// CATEGORY ENGINE
+// ======================================================
+
+
+const shopCategories = [
+
+
+{
+id:"electric-fencing",
+name:"Electric Fencing",
+icon:"⚡"
+},
+
+
+{
+id:"roboguard",
+name:"Roboguard",
+icon:"🛡️"
+},
+
+
+{
+id:"cctv",
+name:"CCTV",
+icon:"📹"
+},
+
+
+{
+id:"ip-cctv",
+name:"IP CCTV",
+icon:"🌐"
+},
+
+
+{
+id:"gate-automation",
+name:"Gate Automation",
+icon:"🚪"
+},
+
+
+{
+id:"access-control",
+name:"Access Control",
+icon:"🔐"
+},
+
+
+{
+id:"alarm-systems",
+name:"Alarm Systems",
+icon:"🚨"
+},
+
+
+{
+id:"intercom",
+name:"Intercom",
+icon:"📞"
+},
+
+
+{
+id:"security-accessories",
+name:"Security Accessories",
+icon:"🔧"
+}
+
+
+];
+
+
+
+
+
+// ======================================================
+// BRAND DATABASE
+// ======================================================
+
+
+const shopBrands = [
+
+
+"Hikvision",
+
+"Dahua",
+
+"Centurion",
+
+"Paradox",
+
+"IDS",
+
+"Ajax",
+
+"Roboguard",
+
+"ZKTeco",
+
+"Gemini",
+
+"ET Nice"
+
+
+];
+
+
+
+
+
+// ======================================================
+// V17 SHOP ENGINE CONNECTION
+// ======================================================
+
+
+window.NexpakShop = {
+
+
+config:
+shopConfig,
+
+
+products:
+products,
+
+
+categories:
+shopCategories,
+
+
+brands:
+shopBrands
+
+
+};
+
+
+
+
+
+console.log(
+
+"Nexpak Security Solutions V17 Shop Data Loaded:",
+
+products.length,
+
+"products"
+
+);
+
+   // ======================================================
+// NEXPAK SECURITY SOLUTIONS V17
+// SHOP DATA
+// PART 2
+// PRICING + STOCK ENGINE
+// ======================================================
+
+
+
+// ======================================================
+// PRICING SETTINGS
+// ======================================================
+
+
+const pricingConfig = {
+
+
+currency:
+"ZAR",
+
+
+taxIncluded:
+false,
+
+
+vatRate:
+15,
+
+
+tradeDiscount:
+20,
+
+
+installationAvailable:
+true
+
+
+};
+
+
+
+
+
+// ======================================================
+// PRODUCT PRICE HELPERS
+// ======================================================
+
+
+function getProductPrice(product){
+
+
+if(product.basePrice && product.basePrice > 0){
+
+return product.basePrice;
+
+}
+
+
+return null;
+
+
+}
+
+
+
+
+function calculateVAT(amount){
+
+
+return amount * 
+(pricingConfig.vatRate / 100);
+
+
+}
+
+
+
+
+function calculateTradePrice(amount){
+
+
+return amount -
+(amount *
+(pricingConfig.tradeDiscount / 100));
+
+
+}
+
+
+
+
+
+// ======================================================
+// V17 PRODUCT ENHANCEMENT DEFAULTS
+// ======================================================
+
+
+products.forEach(product => {
+
+
+
+if(!product.stock){
+
+product.stock =
+"Quote Required";
+
+}
+
+
+
+if(!product.rating){
+
+product.rating =
+0;
+
+}
+
+
+
+if(!product.reviews){
+
+product.reviews =
+0;
+
+}
+
+
+
+if(!product.badge){
+
+
+product.badge =
+"Professional Security";
+
+
+}
+
+
+
+if(!product.featured){
+
+
+product.featured =
+false;
+
+
+}
+
+
+
+if(!product.deal){
+
+
+product.deal =
+false;
+
+
+}
+
+
+
+if(!product.oldPrice){
+
+
+product.oldPrice =
+null;
+
+
+}
+
+
+
+});
+
+
+
+
+
+// ======================================================
+// FEATURED PRODUCTS
+// ======================================================
+
+
+const featuredProducts = products.filter(product => {
+
+
+return product.featured === true;
+
+
+});
+
+
+
+
+
+// ======================================================
+// DEAL PRODUCTS
+// ======================================================
+
+
+const dealProducts = products.filter(product => {
+
+
+return product.deal === true;
+
+
+});
+
+
+
+
+
+// ======================================================
+// EXPORT V17 PRICING ENGINE
+// ======================================================
+
+
+window.NexpakShop.pricing = {
+
+
+config:
+pricingConfig,
+
+
+getPrice:
+getProductPrice,
+
+
+vat:
+calculateVAT,
+
+
+tradePrice:
+calculateTradePrice,
+
+
+featured:
+featuredProducts,
+
+
+deals:
+dealProducts
+
+
+};
+
+
+
+
+
+console.log(
+
+"Nexpak V17 Pricing Engine Loaded"
+
+);
+
+// ======================================================
+// NEXPAK SECURITY SOLUTIONS V17
+// SHOP DATA
+// PART 3
+// SEARCH + SEO METADATA ENGINE
+// ======================================================
+
+
+
+// ======================================================
+// SEARCH CONFIGURATION
+// ======================================================
+
+
+const searchConfig = {
+
+
+minCharacters:2,
+
+
+maxResults:10,
+
+
+searchFields:[
+
+"name",
+
+"category",
+
+"description",
+
+"brand",
+
+"keywords"
+
+]
+
+
+};
+
+
+
+
+
+// ======================================================
+// ADD SEARCH METADATA TO PRODUCTS
+// ======================================================
+
+
+products.forEach(product => {
+
+
+
+/*
+ Create searchable keyword storage
+*/
+
+
+if(!product.keywords){
+
+
+product.keywords=[];
+
+
+}
+
+
+
+// Category keywords
+
+
+if(product.category){
+
+
+product.keywords.push(
+
+product.category.toLowerCase()
+
+);
+
+
+}
+
+
+
+// Product name keywords
+
+
+if(product.name){
+
+
+product.keywords.push(
+
+...product.name
+.toLowerCase()
+.split(" ")
+
+);
+
+
+}
+
+
+
+// Description keywords
+
+
+if(product.description){
+
+
+product.keywords.push(
+
+...product.description
+.toLowerCase()
+.split(" ")
+
+);
+
+
+}
+
+
+
+// Remove duplicates
+
+
+product.keywords = [
+
+...new Set(product.keywords)
+
+];
+
+
+
+});
+
+
+
+
+
+// ======================================================
+// SEARCH ENGINE FUNCTION
+// ======================================================
+
+
+function searchProducts(query){
+
+
+
+if(!query){
+
+return products;
+
+}
+
+
+
+query = query
+.toLowerCase()
+.trim();
+
+
+
+
+return products.filter(product => {
+
+
+
+let searchableText = [
+
+product.name,
+
+product.category,
+
+product.description,
+
+product.keywords.join(" ")
+
+
+]
+
+.join(" ")
+
+.toLowerCase();
+
+
+
+return searchableText.includes(query);
+
+
+
+});
+
+
+}
+
+
+
+
+
+// ======================================================
+// CATEGORY FILTER ENGINE
+// ======================================================
+
+
+function filterByCategory(category){
+
+
+
+if(
+
+!category ||
+
+category==="all"
+
+){
+
+return products;
+
+}
+
+
+
+return products.filter(product=>{
+
+
+return product.category
+.toLowerCase()
+
+===
+
+category
+.toLowerCase();
+
+
+
+});
+
+
+}
+
+
+
+
+
+// ======================================================
+// BRAND FILTER ENGINE
+// ======================================================
+
+
+function filterByBrand(brand){
+
+
+
+if(!brand){
+
+return products;
+
+}
+
+
+
+return products.filter(product=>{
+
+
+return product.brand &&
+
+product.brand
+.toLowerCase()
+
+===
+
+brand
+.toLowerCase();
+
+
+
+});
+
+
+}
+
+
+
+
+
+// ======================================================
+// SORTING ENGINE
+// ======================================================
+
+
+function sortProducts(list, method){
+
+
+
+let sorted=[...list];
+
+
+
+switch(method){
+
+
+
+case "name":
+
+sorted.sort((a,b)=>
+
+a.name.localeCompare(b.name)
+
+);
+
+break;
+
+
+
+
+case "price-low":
+
+
+sorted.sort((a,b)=>
+
+(a.basePrice||0)
+
+-
+
+(b.basePrice||0)
+
+);
+
+break;
+
+
+
+
+case "price-high":
+
+
+sorted.sort((a,b)=>
+
+(b.basePrice||0)
+
+-
+
+(a.basePrice||0)
+
+);
+
+break;
+
+
+
+
+case "rating":
+
+
+sorted.sort((a,b)=>
+
+(b.rating||0)
+
+-
+
+(a.rating||0)
+
+);
+
+break;
+
+
+
+}
+
+
+
+return sorted;
+
+
+}
+
+
+
+
+
+// ======================================================
+// SEO PRODUCT DATA
+// ======================================================
+
+
+products.forEach(product=>{
+
+
+product.seo={
+
+
+
+title:
+
+`${product.name} | Nexpak Security Solutions`,
+
+
+
+description:
+
+product.description,
+
+
+
+url:
+
+product.id
+.toLowerCase()
+
+.replaceAll(
+" ",
+"-"
+)
+
+
+};
+
+
+
+});
+
+
+
+
+
+// ======================================================
+// EXPORT SEARCH ENGINE
+// ======================================================
+
+
+window.NexpakShop.search = {
+
+
+config:
+
+searchConfig,
+
+
+search:
+
+searchProducts,
+
+
+category:
+
+filterByCategory,
+
+
+brand:
+
+filterByBrand,
+
+
+sort:
+
+sortProducts
+
+
+};
+
+
+
+
+
+console.log(
+
+"Nexpak V17 Search Engine Loaded"
+
+);
+
+// ======================================================
+// NEXPAK SECURITY SOLUTIONS V17
+// SHOP DATA
+// PART 4
+// PRODUCT DISPLAY + UI DATA ENGINE
+// ======================================================
+
+
+
+// ======================================================
+// PRODUCT DISPLAY DEFAULTS
+// ======================================================
+
+
+products.forEach(product => {
+
+
+
+/*
+ PRODUCT IMAGE GALLERY
+*/
+
+
+if(!product.gallery){
+
+
+product.gallery=[
+
+product.image
+
+];
+
+
+}
+
+
+
+
+/*
+ PRODUCT DISPLAY BADGE
+*/
+
+
+if(!product.badge){
+
+
+if(product.type==="configurable"){
+
+
+product.badge="Configure System";
+
+
+}
+
+else{
+
+
+product.badge="Security Product";
+
+
+}
+
+
+}
+
+
+
+
+/*
+ PRODUCT SHORT DESCRIPTION
+*/
+
+
+if(!product.shortDescription){
+
+
+product.shortDescription =
+
+product.description
+.substring(0,120)
++
+"...";
+
+
+}
+
+
+
+
+
+/*
+ STOCK DISPLAY
+*/
+
+
+if(product.basePrice===0){
+
+
+product.stockStatus=
+
+"Request Quote";
+
+
+}
+
+else{
+
+
+product.stockStatus=
+
+"In Stock";
+
+
+}
+
+
+
+
+
+/*
+ PRODUCT FLAGS
+*/
+
+
+if(!product.flags){
+
+
+product.flags={
+
+
+featured:false,
+
+
+popular:false,
+
+
+new:false,
+
+
+deal:false
+
+
+};
+
+
+}
+
+
+
+});
+
+
+
+
+
+// ======================================================
+// PRODUCT CARD FORMATTER
+// ======================================================
+
+
+function createProductCardData(product){
+
+
+
+return{
+
+
+id:
+
+product.id,
+
+
+
+name:
+
+product.name,
+
+
+
+category:
+
+product.category,
+
+
+
+image:
+
+product.image,
+
+
+
+icon:
+
+product.icon,
+
+
+
+price:
+
+product.basePrice,
+
+
+
+badge:
+
+product.badge,
+
+
+
+rating:
+
+product.rating,
+
+
+
+reviews:
+
+product.reviews,
+
+
+
+stock:
+
+product.stockStatus,
+
+
+
+type:
+
+product.type
+
+
+
+};
+
+
+}
+
+
+
+
+
+// ======================================================
+// QUICK VIEW DATA
+// ======================================================
+
+
+function getQuickView(productID){
+
+
+
+return products.find(product=>{
+
+
+return product.id===productID;
+
+
+});
+
+
+}
+
+
+
+
+
+// ======================================================
+// PRODUCT GALLERY DATA
+// ======================================================
+
+
+function getGallery(productID){
+
+
+
+let product = products.find(product=>{
+
+
+return product.id===productID;
+
+
+});
+
+
+
+if(!product){
+
+return [];
+
+}
+
+
+
+return product.gallery;
+
+
+
+}
+
+
+
+
+
+// ======================================================
+// RELATED PRODUCTS ENGINE
+// ======================================================
+
+
+function getRelatedProducts(productID){
+
+
+
+let current = products.find(product=>{
+
+
+return product.id===productID;
+
+
+});
+
+
+
+if(!current){
+
+
+return [];
+
+
+}
+
+
+
+return products.filter(product=>{
+
+
+return (
+
+product.id!==productID &&
+
+product.category===current.category
+
+
+);
+
+
+}).slice(0,4);
+
+
+
+}
+
+
+
+
+
+// ======================================================
+// FEATURED DISPLAY PRODUCTS
+// ======================================================
+
+
+function getFeaturedProducts(){
+
+
+
+return products.filter(product=>{
+
+
+return product.flags.featured===true;
+
+
+});
+
+
+}
+
+
+
+
+
+// ======================================================
+// POPULAR PRODUCTS
+// ======================================================
+
+
+function getPopularProducts(){
+
+
+
+return products.filter(product=>{
+
+
+return product.flags.popular===true;
+
+
+});
+
+
+}
+
+
+
+
+
+// ======================================================
+// EXPORT DISPLAY ENGINE
+// ======================================================
+
+
+window.NexpakShop.display = {
+
+
+card:
+
+createProductCardData,
+
+
+quickView:
+
+getQuickView,
+
+
+gallery:
+
+getGallery,
+
+
+related:
+
+getRelatedProducts,
+
+
+featured:
+
+getFeaturedProducts,
+
+
+popular:
+
+getPopularProducts
+
+
+};
+
+
+
+
+
+console.log(
+
+"Nexpak V17 Product Display Engine Loaded"
+
+);
+
+/*=========================================================
+ NEXPAK SECURITY SOLUTIONS V17
+
+ shop-data.js
+
+ PART 5
+
+ CART • WISHLIST • COMPARE DATA ENGINE
+=========================================================*/
+
+
+
+// ======================================================
+// STORAGE KEYS
+// ======================================================
+
+
+const storageKeys = {
+
+
+cart:
+
+"nexpak_cart_v17",
+
+
+wishlist:
+
+"nexpak_wishlist_v17",
+
+
+compare:
+
+"nexpak_compare_v17"
+
+
+};
+
+
+
+
+
+// ======================================================
+// CART DATA ENGINE
+// ======================================================
+
+
+function getCart(){
+
+
+
+let cart =
+
+localStorage.getItem(
+storageKeys.cart
+);
+
+
+
+return cart ?
+
+JSON.parse(cart)
+
+:
+
+[];
+
+}
+
+
+
+
+
+function saveCart(cart){
+
+
+localStorage.setItem(
+
+storageKeys.cart,
+
+JSON.stringify(cart)
+
+);
+
+
+}
+
+
+
+
+
+function addToCart(productID, quantity=1){
+
+
+
+let cart=getCart();
+
+
+
+let existing = cart.find(item=>{
+
+
+return item.id===productID;
+
+
+});
+
+
+
+
+if(existing){
+
+
+existing.quantity += quantity;
+
+
+}
+
+else{
+
+
+cart.push({
+
+
+id:productID,
+
+
+quantity:quantity,
+
+
+date:Date.now()
+
+
+});
+
+
+}
+
+
+
+saveCart(cart);
+
+
+
+return cart;
+
+
+}
+
+
+
+
+
+function removeFromCart(productID){
+
+
+
+let cart=getCart();
+
+
+
+cart = cart.filter(item=>{
+
+
+return item.id!==productID;
+
+
+});
+
+
+
+saveCart(cart);
+
+
+
+return cart;
+
+
+}
+
+
+
+
+
+function updateCartQuantity(productID, quantity){
+
+
+
+let cart=getCart();
+
+
+
+let item = cart.find(item=>{
+
+
+return item.id===productID;
+
+
+});
+
+
+
+if(item){
+
+
+item.quantity=quantity;
+
+
+}
+
+
+
+saveCart(cart);
+
+
+
+return cart;
+
+
+}
+
+
+
+
+
+function clearCart(){
+
+
+
+localStorage.removeItem(
+
+storageKeys.cart
+
+);
+
+
+}
+
+
+
+
+
+// ======================================================
+// CART TOTAL ENGINE
+// ======================================================
+
+
+function calculateCartTotal(){
+
+
+
+let cart=getCart();
+
+
+let total=0;
+
+
+
+cart.forEach(item=>{
+
+
+
+let product = products.find(product=>{
+
+
+return product.id===item.id;
+
+
+});
+
+
+
+if(product){
+
+
+total +=
+
+(product.basePrice || 0)
+
+*
+
+item.quantity;
+
+
+}
+
+
+
+});
+
+
+
+return total;
+
+
+}
+
+
+
+
+
+// ======================================================
+// WISHLIST ENGINE
+// ======================================================
+
+
+function getWishlist(){
+
+
+
+let list =
+
+localStorage.getItem(
+
+storageKeys.wishlist
+
+);
+
+
+
+return list ?
+
+JSON.parse(list)
+
+:
+
+[];
+
+}
+
+
+
+
+
+function toggleWishlist(productID){
+
+
+
+let wishlist=getWishlist();
+
+
+
+let exists = wishlist.includes(productID);
+
+
+
+if(exists){
+
+
+wishlist = wishlist.filter(id=>id!==productID);
+
+
+}
+
+else{
+
+
+wishlist.push(productID);
+
+
+}
+
+
+
+localStorage.setItem(
+
+storageKeys.wishlist,
+
+JSON.stringify(wishlist)
+
+);
+
+
+
+return wishlist;
+
+
+}
+
+
+
+
+
+// ======================================================
+// COMPARE ENGINE
+// ======================================================
+
+
+const compareLimit = 4;
+
+
+
+function getCompare(){
+
+
+let compare =
+
+localStorage.getItem(
+
+storageKeys.compare
+
+);
+
+
+
+return compare ?
+
+JSON.parse(compare)
+
+:
+
+[];
+
+}
+
+
+
+
+
+function addCompare(productID){
+
+
+
+let compare=getCompare();
+
+
+
+if(compare.includes(productID)){
+
+
+return compare;
+
+
+}
+
+
+
+
+if(compare.length >= compareLimit){
+
+
+return compare;
+
+
+}
+
+
+
+compare.push(productID);
+
+
+
+localStorage.setItem(
+
+storageKeys.compare,
+
+JSON.stringify(compare)
+
+);
+
+
+
+return compare;
+
+
+}
+
+
+
+
+
+function removeCompare(productID){
+
+
+
+let compare=getCompare();
+
+
+
+compare = compare.filter(id=>{
+
+
+return id!==productID;
+
+
+});
+
+
+
+localStorage.setItem(
+
+storageKeys.compare,
+
+JSON.stringify(compare)
+
+);
+
+
+
+return compare;
+
+
+}
+
+
+
+
+
+// ======================================================
+// EXPORT SHOP STORAGE ENGINE
+// ======================================================
+
+
+window.NexpakShop.storage = {
+
+
+keys:
+
+storageKeys,
+
+
+cart:{
+
+
+get:getCart,
+
+
+add:addToCart,
+
+
+remove:removeFromCart,
+
+
+update:updateCartQuantity,
+
+
+total:calculateCartTotal,
+
+
+clear:clearCart
+
+
+},
+
+
+
+wishlist:{
+
+
+get:getWishlist,
+
+
+toggle:toggleWishlist
+
+
+},
+
+
+
+compare:{
+
+
+get:getCompare,
+
+
+add:addCompare,
+
+
+remove:removeCompare
+
+
+}
+
+
+};
+
+
+
+
+
+console.log(
+
+"Nexpak V17 Cart Wishlist Compare Engine Loaded"
+
+);
+
+/*=========================================================
+ NEXPAK SECURITY SOLUTIONS V17
+
+ shop-data.js
+
+ PART 6
+
+ FINAL DATABASE INTEGRATION
+ VALIDATION + ENGINE READY
+=========================================================*/
+
+
+
+// ======================================================
+// DATABASE VALIDATION
+// ======================================================
+
+
+function validateProducts(){
+
+
+let errors=[];
+
+
+
+products.forEach(product=>{
+
+
+
+if(!product.id){
+
+
+errors.push(
+"Missing Product ID"
+);
+
+
+}
+
+
+
+if(!product.name){
+
+
+errors.push(
+"Missing Product Name"
+);
+
+
+}
+
+
+
+if(!product.category){
+
+
+errors.push(
+product.id + " missing category"
+);
+
+
+}
+
+
+
+if(!product.image){
+
+
+errors.push(
+product.id + " missing image"
+);
+
+
+}
+
+
+
+});
+
+
+
+return errors;
+
+
+}
+
+
+
+
+
+// ======================================================
+// DATABASE STATISTICS
+// ======================================================
+
+
+function getShopStatistics(){
+
+
+
+return {
+
+
+totalProducts:
+
+products.length,
+
+
+
+categories:
+
+[
+
+...new Set(
+
+products.map(product=>
+
+product.category
+
+)
+
+)
+
+],
+
+
+
+configurableProducts:
+
+products.filter(product=>{
+
+
+return product.type==="configurable";
+
+
+}).length,
+
+
+
+standardProducts:
+
+products.filter(product=>{
+
+
+return product.type==="standard";
+
+
+}).length
+
+
+};
+
+
+}
+
+
+
+
+
+// ======================================================
+// FINAL V17 SHOP OBJECT
+// ======================================================
+
+
+window.NexpakShop = {
+
+
+config:
+
+shopConfig,
+
+
+products:
+
+products,
+
+
+categories:
+
+shopCategories,
+
+
+brands:
+
+shopBrands,
+
+
+pricing:
+
+window.NexpakShop.pricing,
+
+
+search:
+
+window.NexpakShop.search,
+
+
+display:
+
+window.NexpakShop.display,
+
+
+storage:
+
+window.NexpakShop.storage,
+
+
+statistics:
+
+getShopStatistics,
+
+
+validate:
+
+validateProducts
+
+
+};
+
+
+
+
+
+// ======================================================
+// STARTUP CHECK
+// ======================================================
+
+
+const databaseErrors = validateProducts();
+
+
+
+if(databaseErrors.length){
+
+
+
+console.warn(
+
+"Nexpak V17 Database Warnings:",
+
+databaseErrors
+
+);
+
+
+
+}
+
+else{
+
+
+
+console.log(
+
+"✅ Nexpak V17 Shop Database Valid"
+
+);
+
+
+
+}
+
+
+
+console.log(
+
+"Nexpak V17 Products Loaded:",
+
+products.length
+
+);
+
+
+
+console.log(
+
+"Nexpak V17 Statistics:",
+
+getShopStatistics()
+
+);
