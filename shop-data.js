@@ -2422,3 +2422,104 @@ if(typeof module !== "undefined"){
 module.exports = products;
 
    }
+// ======================================================
+// NEXPAK SECURITY SOLUTIONS V17
+// SHOP DATA ENGINE BRIDGE
+// ======================================================
+
+
+const shopConfig = {
+
+name:
+"Nexpak Security Solutions",
+
+currency:
+"ZAR",
+
+symbol:
+"R",
+
+
+delivery:{
+
+enabled:true,
+
+standardRate:150,
+
+freeDeliveryAmount:5000
+
+}
+
+};
+
+
+
+
+const shopCategories = [
+
+"Electric Fencing",
+
+"Roboguard",
+
+"CCTV",
+
+"IP CCTV",
+
+"Gate Automation",
+
+"Access Control",
+
+"Alarm Systems",
+
+"Intercom",
+
+"Security Accessories"
+
+];
+
+
+
+
+const shopBrands = [
+
+"Hikvision",
+
+"Dahua",
+
+"Centurion",
+
+"Paradox",
+
+"IDS",
+
+"Ajax",
+
+"Roboguard",
+
+"ZKTeco"
+
+];
+
+
+
+
+window.NexpakShop = {
+
+
+config:
+shopConfig,
+
+
+products:
+products,
+
+
+categories:
+shopCategories,
+
+
+brands:
+shopBrands
+
+
+};
