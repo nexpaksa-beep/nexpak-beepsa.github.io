@@ -1,51 +1,31 @@
-<!-- ======================================================
-NEXPAK SECURITY SOLUTIONS V16
-SHOP.HTML
-PART 1/6
-HEAD • SEO • HEADER • HERO • SHOP CONTROLS
-====================================================== -->
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>
-Nexpak Security Solutions | Professional Security Shop
+Nexpak Security Solutions | Security Superstore
 </title>
 
 <meta name="description"
-content="Shop CCTV, Electric Fencing, Alarm Systems, Gate Automation, Access Control, Intercoms and Security Equipment.">
+content="South Africa's professional security equipment superstore. CCTV, Electric Fencing, Roboguard, Alarm Systems, Gate Automation, Access Control, Intercoms and more.">
 
 <meta name="keywords"
-content="CCTV, Hikvision, Dahua, Electric Fence, Nemtek, Roboguard, Alarm Systems, Gate Motors">
-
-<meta name="author"
-content="Nexpak Security Solutions">
+content="CCTV, Hikvision, Dahua, Electric Fencing, Nemtek, Roboguard, Alarm Systems, Gate Motors, Security Equipment">
 
 <meta name="robots"
 content="index,follow">
 
-<link rel="canonical"
-href="https://www.nexpaksolutions.co.za/shop.html">
+<meta name="theme-color"
+content="#0A4D8C">
 
-<meta property="og:type"
-content="website">
-
-<meta property="og:title"
-content="Nexpak Security Solutions Shop">
-
-<meta property="og:description"
-content="Professional Security Equipment">
-
-<meta property="og:image"
-content="images/social-preview.jpg">
-
-<meta property="og:url"
-content="https://www.nexpaksolutions.co.za/shop.html">
+<link rel="icon"
+href="images/favicon.png">
 
 <link rel="preconnect"
 href="https://fonts.googleapis.com">
@@ -61,22 +41,57 @@ rel="stylesheet">
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 <link rel="stylesheet"
-href="shop-styles.css">
-
-<link rel="stylesheet"
-href="css/shop-enhancements.css">
+href="css/shop-v17.css">
 
 </head>
 
 <body>
 
 <!-- ======================================================
-HEADER
+TOP BAR
 ====================================================== -->
 
-<header class="shop-header">
+<div class="top-bar">
 
-<div class="header-container">
+<div class="top-left">
+
+<i class="fas fa-shield-halved"></i>
+
+Professional Security Equipment
+
+</div>
+
+<div class="top-right">
+
+<a href="quote.html">
+
+Request Quote
+
+</a>
+
+<a href="contact.html">
+
+Contact
+
+</a>
+
+<a href="track-order.html">
+
+Track Order
+
+</a>
+
+</div>
+
+</div>
+
+<!-- ======================================================
+MAIN HEADER
+====================================================== -->
+
+<header class="main-header">
+
+<div class="header-inner">
 
 <a href="index.html"
 class="logo">
@@ -87,56 +102,81 @@ alt="Nexpak Security Solutions">
 
 </a>
 
-<nav class="main-nav">
+<div class="search-area">
 
-<a href="index.html">
-Home
-</a>
+<input
 
-<a href="products.html">
-Products
-</a>
+type="search"
 
-<a href="shop.html"
-class="active">
-Shop
-</a>
+id="shopSearch"
 
-<a href="quote.html">
-Quote
-</a>
+placeholder="Search CCTV, Electric Fencing, Roboguard, Gate Motors...">
 
-<a href="contact.html">
-Contact
-</a>
-
-</nav>
-
-<div class="header-icons">
-
-<button
-class="header-icon"
-id="searchToggle">
+<button id="searchButton">
 
 <i class="fas fa-search"></i>
 
 </button>
 
-<a
-href="cart.html"
-class="header-icon">
+</div>
 
-<i class="fas fa-shopping-cart"></i>
+<div class="header-actions">
+
+<button
+class="header-btn">
+
+<i class="fas fa-user"></i>
+
+<span>
+
+Account
+
+</span>
+
+</button>
+
+<button
+class="header-btn">
+
+<i class="fas fa-heart"></i>
+
+<span>
+
+Wishlist
+
+</span>
 
 <span
-id="cartCount"
-class="cart-count">
+id="wishlistCount"
+class="badge">
 
 0
 
 </span>
 
-</a>
+</button>
+
+<button
+class="header-btn"
+id="cartButton">
+
+<i class="fas fa-shopping-cart"></i>
+
+<span>
+
+Cart
+
+</span>
+
+<span
+id="cartCount"
+class="badge">
+
+0
+
+</span>
+
+</button>
 
 </div>
 
@@ -145,78 +185,150 @@ class="cart-count">
 </header>
 
 <!-- ======================================================
-SHOP HERO
+CATEGORY NAVIGATION
 ====================================================== -->
 
-<section class="shop-hero">
+<nav class="category-nav">
 
-<div class="hero-overlay">
+<button onclick="NexpakShop.filter('all')">
+
+All Products
+
+</button>
+
+<button onclick="NexpakShop.filter('CCTV')">
+
+CCTV
+
+</button>
+
+<button onclick="NexpakShop.filter('Electric Fencing')">
+
+Electric Fencing
+
+</button>
+
+<button onclick="NexpakShop.filter('Roboguard')">
+
+Roboguard
+
+</button>
+
+<button onclick="NexpakShop.filter('Gate Automation')">
+
+Gate Automation
+
+</button>
+
+<button onclick="NexpakShop.filter('Alarm Systems')">
+
+Alarm Systems
+
+</button>
+
+<button onclick="NexpakShop.filter('Access Control')">
+
+Access Control
+
+</button>
+
+<button onclick="NexpakShop.filter('Intercom')">
+
+Intercom
+
+</button>
+
+</nav>
+
+<!-- ======================================================
+HOME BANNER
+====================================================== -->
+
+<section class="hero-banner">
+
+<div class="hero-left">
 
 <h1>
 
-South Africa's Professional
-Security Equipment Store
+South Africa's
+Security Superstore
 
 </h1>
 
 <p>
 
-CCTV • Electric Fencing •
-Roboguard • Gate Automation •
-Alarm Systems • Access Control
+Professional CCTV,
+Electric Fencing,
+Gate Automation,
+Roboguard,
+Alarm Systems,
+Access Control
+and Installation.
 
 </p>
 
 <a
-href="#shopSection"
-class="hero-button">
+href="#shopProducts"
+class="shop-now-btn">
 
-Browse Products
+Shop Now
 
 </a>
+
+</div>
+
+<div class="hero-right">
+
+<img
+src="images/banners/security-banner.png"
+alt="Security Equipment">
 
 </div>
 
 </section>
 
 <!-- ======================================================
-SHOP TOOLBAR
+SHOP LAYOUT
+PART 2/8
 ====================================================== -->
 
 <section
-id="shopSection"
-class="shop-toolbar">
+id="shopProducts"
+class="shop-layout">
 
-<div class="toolbar-search">
+<!-- ======================================================
+LEFT SIDEBAR
+====================================================== -->
 
-<input
+<aside class="shop-sidebar">
 
-type="search"
+<div class="sidebar-card">
 
-id="shopSearch"
+<h3>
 
-placeholder="Search products...">
+Categories
 
-<button>
-
-<i class="fas fa-search"></i>
-
-</button>
-
-</div>
+</h3>
 
 <div
 id="categoryFilters"
-class="category-filters">
+class="category-list">
 
 <!-- Generated automatically -->
 
 </div>
 
-<div class="toolbar-right">
+</div>
 
-<select
-id="productSort">
+<div class="sidebar-card">
+
+<h3>
+
+Sort Products
+
+</h3>
+
+<select id="productSort">
 
 <option value="default">
 
@@ -238,19 +350,141 @@ Name Z-A
 
 <option value="price-low">
 
-Price Low-High
+Price Low → High
 
 </option>
 
 <option value="price-high">
 
-Price High-Low
+Price High → Low
 
 </option>
 
 </select>
 
-<div class="view-buttons">
+</div>
+
+<div class="sidebar-card">
+
+<h3>
+
+Brands
+
+</h3>
+
+<label>
+
+<input type="checkbox">
+
+Hikvision
+
+</label>
+
+<label>
+
+<input type="checkbox">
+
+Dahua
+
+</label>
+
+<label>
+
+<input type="checkbox">
+
+Nemtek
+
+</label>
+
+<label>
+
+<input type="checkbox">
+
+Centurion
+
+</label>
+
+<label>
+
+<input type="checkbox">
+
+ET Nice
+
+</label>
+
+<label>
+
+<input type="checkbox">
+
+Roboguard
+
+</label>
+
+</div>
+
+<div class="sidebar-card">
+
+<h3>
+
+Services
+
+</h3>
+
+<label>
+
+<input type="checkbox">
+
+Supply Only
+
+</label>
+
+<label>
+
+<input type="checkbox">
+
+Supply & Installation
+
+</label>
+
+<label>
+
+<input type="checkbox">
+
+Commercial
+
+</label>
+
+<label>
+
+<input type="checkbox">
+
+Residential
+
+</label>
+
+</div>
+
+</aside>
+
+<!-- ======================================================
+RIGHT CONTENT
+====================================================== -->
+
+<div class="shop-content">
+
+<div class="shop-toolbar">
+
+<div>
+
+<strong id="productCount">
+
+0 Products
+
+</strong>
+
+</div>
+
+<div class="toolbar-buttons">
 
 <button
 id="gridView"
@@ -271,54 +505,28 @@ id="listView">
 
 </div>
 
-</section>
-
 <!-- ======================================================
-PRODUCT COUNT
+PRODUCT GRID
 ====================================================== -->
 
-<section class="shop-summary">
-
-<div>
-
-<strong id="productCount">
-
-0 Products
-
-</strong>
-
-</div>
-
-</section>
-
-<!-- ======================================================
-PRODUCT SECTION
-====================================================== -->
-
-<section class="shop-container">
-
-<div id="productsGrid"
+<div
+id="productsGrid"
 class="products-grid grid-view">
 
-<!-- Products injected by shop-script.js -->
+<!-- Products injected by JavaScript -->
 
 </div>
-
-</section>
 
 <!-- ======================================================
-NO PRODUCTS FOUND
+EMPTY PRODUCTS
 ====================================================== -->
 
-<template id="emptyProductsTemplate">
+<div
+id="emptyProducts"
+class="empty-products"
+style="display:none;">
 
-<div class="empty-products">
-
-<div class="empty-icon">
-
-<i class="fa-solid fa-box-open"></i>
-
-</div>
+<i class="fas fa-box-open"></i>
 
 <h2>
 
@@ -328,13 +536,13 @@ No Products Found
 
 <p>
 
-Try another category or search term.
+Try another search or category.
 
 </p>
 
 <button
 class="primary-btn"
-onclick="clearFilters()">
+onclick="NexpakShop.clear()">
 
 Show All Products
 
@@ -342,36 +550,531 @@ Show All Products
 
 </div>
 
-</template>
+</div>
+
+</section>
 
 <!-- ======================================================
-LOADING INDICATOR
+FLOATING CART
 ====================================================== -->
 
 <div
-id="shopLoading"
-class="shop-loading"
-style="display:none;">
+id="floatingCart"
+class="floating-cart">
 
-<div class="loader"></div>
+<button
+id="floatingCartButton">
+
+<i class="fas fa-shopping-cart"></i>
+
+<span
+id="floatingCartCount">
+
+0
+
+</span>
+
+</button>
+
+</div>
+
+<!-- ======================================================
+SHOP FEATURES STRIP
+====================================================== -->
+
+<section class="features-strip">
+
+<div class="feature">
+
+<i class="fas fa-truck-fast"></i>
+
+<div>
+
+<h4>
+
+Nationwide Delivery
+
+</h4>
 
 <p>
 
-Loading Products...
+Fast delivery across South Africa
 
 </p>
 
 </div>
 
+</div>
+
+<div class="feature">
+
+<i class="fas fa-headset"></i>
+
+<div>
+
+<h4>
+
+Expert Support
+
+</h4>
+
+<p>
+
+Professional advice before purchase
+
+</p>
+
+</div>
+
+</div>
+
+<div class="feature">
+
+<i class="fas fa-credit-card"></i>
+
+<div>
+
+<h4>
+
+Secure Payments
+
+</h4>
+
+<p>
+
+Safe online transactions
+
+</p>
+
+</div>
+
+</div>
+
+<div class="feature">
+
+<i class="fas fa-shield-halved"></i>
+
+<div>
+
+<h4>
+
+Trusted Brands
+
+</h4>
+
+<p>
+
+Professional security equipment
+
+</p>
+
+</div>
+
+</div>
+
+</section>
+
 <!-- ======================================================
-QUICK VIEW MODAL
+NEXPAK SECURITY SOLUTIONS V17
+SHOP.HTML
+PART 3/8
+
+FEATURED PRODUCTS
+DAILY DEALS
+RECOMMENDED PRODUCTS
+====================================================== -->
+
+<!-- ======================================================
+FEATURED PRODUCTS
+====================================================== -->
+
+<section class="featured-section">
+
+<div class="section-header">
+
+<h2>
+
+⭐ Featured Products
+
+</h2>
+
+<a href="#productsGrid">
+
+View All
+
+</a>
+
+</div>
+
+<div
+id="featuredProducts"
+class="featured-products-grid">
+
+<!-- Generated automatically -->
+
+</div>
+
+</section>
+
+<!-- ======================================================
+PROMOTIONAL BANNER
+====================================================== -->
+
+<section class="promo-banner">
+
+<div class="promo-left">
+
+<h2>
+
+Professional Installation Available
+
+</h2>
+
+<p>
+
+Supply only or complete installation anywhere in South Africa.
+
+</p>
+
+<a
+href="quote.html"
+class="primary-btn">
+
+Request a Quote
+
+</a>
+
+</div>
+
+<div class="promo-right">
+
+<img
+src="images/banners/installation-banner.jpg"
+alt="Professional Installation">
+
+</div>
+
+</section>
+
+<!-- ======================================================
+DAILY DEALS
+====================================================== -->
+
+<section class="daily-deals">
+
+<div class="section-header">
+
+<h2>
+
+🔥 Daily Deals
+
+</h2>
+
+<span>
+
+Updated Daily
+
+</span>
+
+</div>
+
+<div
+id="dailyDeals"
+class="deal-grid">
+
+<!-- Generated automatically -->
+
+</div>
+
+</section>
+
+<!-- ======================================================
+BEST SELLERS
+====================================================== -->
+
+<section class="best-sellers">
+
+<div class="section-header">
+
+<h2>
+
+🏆 Best Sellers
+
+</h2>
+
+</div>
+
+<div
+id="bestSellerProducts"
+class="featured-products-grid">
+
+<!-- Generated automatically -->
+
+</div>
+
+</section>
+
+<!-- ======================================================
+NEW ARRIVALS
+====================================================== -->
+
+<section class="new-arrivals">
+
+<div class="section-header">
+
+<h2>
+
+🆕 New Arrivals
+
+</h2>
+
+</div>
+
+<div
+id="newArrivalProducts"
+class="featured-products-grid">
+
+<!-- Generated automatically -->
+
+</div>
+
+</section>
+
+<!-- ======================================================
+SHOP BENEFITS
+====================================================== -->
+
+<section class="shop-benefits">
+
+<div class="benefit">
+
+<i class="fas fa-shield-halved"></i>
+
+<h3>
+
+Professional Brands
+
+</h3>
+
+<p>
+
+Trusted security manufacturers.
+
+</p>
+
+</div>
+
+<div class="benefit">
+
+<i class="fas fa-headset"></i>
+
+<h3>
+
+Technical Support
+
+</h3>
+
+<p>
+
+Expert product advice.
+
+</p>
+
+</div>
+
+<div class="benefit">
+
+<i class="fas fa-truck-fast"></i>
+
+<h3>
+
+Fast Delivery
+
+</h3>
+
+<p>
+
+Nationwide delivery.
+
+</p>
+
+</div>
+
+<div class="benefit">
+
+<i class="fas fa-credit-card"></i>
+
+<h3>
+
+Secure Payments
+
+</h3>
+
+<p>
+
+Safe online checkout.
+
+</p>
+
+</div>
+
+</section>
+
+<!-- ======================================================
+NEXPAK SECURITY SOLUTIONS V17
+SHOP.HTML
+PART 4/8
+
+SHOP TOOLS
+====================================================== -->
+
+<!-- ======================================================
+FLOATING SHOP ACTIONS
+====================================================== -->
+
+<div class="floating-actions">
+
+<button
+id="wishlistButton"
+class="floating-action">
+
+<i class="fas fa-heart"></i>
+
+<span
+id="wishlistCount">
+
+0
+
+</span>
+
+</button>
+
+<button
+id="compareButton"
+class="floating-action">
+
+<i class="fas fa-code-compare"></i>
+
+<span
+id="compareCount">
+
+0
+
+</span>
+
+</button>
+
+<button
+id="cartButtonFloating"
+class="floating-action cart">
+
+<i class="fas fa-shopping-cart"></i>
+
+<span
+id="cartCountFloating">
+
+0
+
+</span>
+
+</button>
+
+</div>
+
+<!-- ======================================================
+SLIDE OUT CART
+====================================================== -->
+
+<aside
+id="cartDrawer"
+class="cart-drawer">
+
+<div class="drawer-header">
+
+<h2>
+
+Shopping Cart
+
+</h2>
+
+<button
+onclick="toggleCartDrawer()">
+
+<i class="fas fa-times"></i>
+
+</button>
+
+</div>
+
+<div
+id="cartItems"
+class="drawer-body">
+
+<p>
+
+Your cart is empty.
+
+</p>
+
+</div>
+
+<div class="drawer-footer">
+
+<div class="cart-summary">
+
+<span>
+
+Items
+
+</span>
+
+<strong
+id="cartItemsCount">
+
+0
+
+</strong>
+
+</div>
+
+<div class="cart-summary">
+
+<span>
+
+Total
+
+</span>
+
+<strong
+id="cartTotal">
+
+R0.00
+
+</strong>
+
+</div>
+
+<a
+href="checkout.html"
+class="checkout-btn">
+
+Secure Checkout
+
+</a>
+
+</div>
+
+</aside>
+
+<!-- ======================================================
+QUICK VIEW
 ====================================================== -->
 
 <div
 id="quickViewModal"
-class="quick-view-modal">
+class="modal">
 
-<div class="quick-view-window">
+<div class="modal-content">
 
 <button
 class="close-modal"
@@ -393,342 +1096,23 @@ id="quickViewContent">
 </div>
 
 <!-- ======================================================
-SHOP FEATURES
+COMPARE PRODUCTS
 ====================================================== -->
 
-<section class="shop-features">
+<div
+id="compareDrawer"
+class="compare-drawer">
 
-<div class="feature-card">
-
-<i class="fas fa-shield-halved"></i>
-
-<h3>
-
-Professional Security Products
-
-</h3>
-
-<p>
-
-Commercial and residential security
-equipment from trusted brands.
-
-</p>
-
-</div>
-
-<div class="feature-card">
-
-<i class="fas fa-truck-fast"></i>
-
-<h3>
-
-Nationwide Delivery
-
-</h3>
-
-<p>
-
-Fast delivery throughout South Africa.
-
-</p>
-
-</div>
-
-<div class="feature-card">
-
-<i class="fas fa-headset"></i>
-
-<h3>
-
-Expert Advice
-
-</h3>
-
-<p>
-
-Professional guidance before purchasing.
-
-</p>
-
-</div>
-
-<div class="feature-card">
-
-<i class="fas fa-lock"></i>
-
-<h3>
-
-Secure Shopping
-
-</h3>
-
-<p>
-
-Safe online ordering with quotation support.
-
-</p>
-
-</div>
-
-</section>
-
-<!-- ======================================================
-FEATURED BRANDS
-====================================================== -->
-
-<section class="brands-section">
+<div class="drawer-header">
 
 <h2>
 
-Trusted Security Brands
-
-</h2>
-
-<div class="brands-grid">
-
-<div>Hikvision</div>
-
-<div>Dahua</div>
-
-<div>Nemtek</div>
-
-<div>Centurion</div>
-
-<div>ET Nice</div>
-
-<div>IDS</div>
-
-<div>Paradox</div>
-
-<div>ZKTeco</div>
-
-<div>Ajax</div>
-
-<div>Commax</div>
-
-<div>Roboguard</div>
-
-<div>Texecom</div>
-
-</div>
-
-</section>
-
-<!-- ======================================================
-NEXPAK SECURITY SOLUTIONS V16
-SHOP.HTML
-PART 3/6
-
-FEATURED CATEGORIES
-PROMOTIONAL BANNER
-WHY CHOOSE NEXPAK
-====================================================== -->
-
-<section class="featured-categories">
-
-<div class="section-heading">
-
-<h2>Shop by Category</h2>
-
-<p>Select a security solution below.</p>
-
-</div>
-
-<div class="featured-category-grid">
-
-<div class="featured-category-card"
-onclick="NexpakShop.filter('CCTV')">
-
-<i class="fas fa-video"></i>
-
-<h3>CCTV</h3>
-
-<p>Professional surveillance systems.</p>
-
-</div>
-
-<div class="featured-category-card"
-onclick="NexpakShop.filter('Electric Fencing')">
-
-<i class="fas fa-bolt"></i>
-
-<h3>Electric Fencing</h3>
-
-<p>Complete perimeter protection.</p>
-
-</div>
-
-<div class="featured-category-card"
-onclick="NexpakShop.filter('Roboguard')">
-
-<i class="fas fa-shield-halved"></i>
-
-<h3>Roboguard</h3>
-
-<p>Outdoor wireless beam systems.</p>
-
-</div>
-
-<div class="featured-category-card"
-onclick="NexpakShop.filter('Gate Automation')">
-
-<i class="fas fa-warehouse"></i>
-
-<h3>Gate Automation</h3>
-
-<p>Sliding & swing gate motors.</p>
-
-</div>
-
-<div class="featured-category-card"
-onclick="NexpakShop.filter('Access Control')">
-
-<i class="fas fa-fingerprint"></i>
-
-<h3>Access Control</h3>
-
-<p>Biometric & RFID access.</p>
-
-</div>
-
-<div class="featured-category-card"
-onclick="NexpakShop.filter('Alarm Systems')">
-
-<i class="fas fa-bell"></i>
-
-<h3>Alarm Systems</h3>
-
-<p>Residential & commercial alarms.</p>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ======================================================
-PROMOTIONAL BANNER
-====================================================== -->
-
-<section class="promo-banner">
-
-<div class="promo-content">
-
-<h2>
-
-Professional Security Equipment
-
-</h2>
-
-<p>
-
-Request a quotation for complete supply and installation anywhere in South Africa.
-
-</p>
-
-<a href="quote.html"
-class="primary-btn">
-
-Request Quote
-
-</a>
-
-</div>
-
-</section>
-
-<!-- ======================================================
-WHY CHOOSE NEXPAK
-====================================================== -->
-
-<section class="why-nexpak">
-
-<div class="section-heading">
-
-<h2>
-
-Why Choose Nexpak Security Solutions?
-
-</h2>
-
-</div>
-
-<div class="benefits-grid">
-
-<div class="benefit-card">
-
-<i class="fas fa-award"></i>
-
-<h3>Professional Brands</h3>
-
-<p>Leading security manufacturers.</p>
-
-</div>
-
-<div class="benefit-card">
-
-<i class="fas fa-tools"></i>
-
-<h3>Expert Advice</h3>
-
-<p>Product selection assistance.</p>
-
-</div>
-
-<div class="benefit-card">
-
-<i class="fas fa-truck-fast"></i>
-
-<h3>Fast Delivery</h3>
-
-<p>Nationwide delivery available.</p>
-
-</div>
-
-<div class="benefit-card">
-
-<i class="fas fa-headset"></i>
-
-<h3>After Sales Support</h3>
-
-<p>Technical assistance when needed.</p>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- ======================================================
-NEXPAK SECURITY SOLUTIONS V16
-SHOP.HTML
-PART 4/6
-
-CART DRAWER
-SHOP NOTIFICATIONS
-FOOTER
-====================================================== -->
-
-<!-- ======================================================
-SLIDE OUT CART
-====================================================== -->
-
-<aside
-id="cartPanel"
-class="cart-panel">
-
-<div class="cart-header">
-
-<h2>
-
-Shopping Cart
+Compare Products
 
 </h2>
 
 <button
-class="close-cart"
-onclick="toggleCartPanel()">
+onclick="toggleCompareDrawer()">
 
 <i class="fas fa-times"></i>
 
@@ -737,66 +1121,428 @@ onclick="toggleCartPanel()">
 </div>
 
 <div
-id="cartItems"
-class="cart-items">
+id="compareProducts">
 
 <p>
 
-Your cart is currently empty.
+Select products to compare.
 
 </p>
 
 </div>
 
-<div class="cart-footer">
+</div>
 
-<div class="cart-total">
+<!-- ======================================================
+RECENTLY VIEWED
+====================================================== -->
 
-<span>Total</span>
+<section class="recently-viewed">
 
-<strong id="cartTotal">
+<div class="section-header">
 
-R0.00
+<h2>
 
-</strong>
+Recently Viewed
+
+</h2>
 
 </div>
 
-<a
-href="cart.html"
-class="checkout-button">
+<div
+id="recentProducts"
+class="product-slider">
 
-Proceed To Checkout
+<!-- Generated automatically -->
+
+</div>
+
+</section>
+
+<!-- ======================================================
+RECOMMENDED PRODUCTS
+====================================================== -->
+
+<section class="recommended-products">
+
+<div class="section-header">
+
+<h2>
+
+Recommended For You
+
+</h2>
+
+</div>
+
+<div
+id="recommendedProducts"
+class="product-slider">
+
+<!-- Generated automatically -->
+
+</div>
+
+</section>
+
+<!-- ======================================================
+INSTALLATION SERVICES
+====================================================== -->
+
+<section class="installation-services">
+
+<div class="install-card">
+
+<i class="fas fa-user-hard-hat"></i>
+
+<h3>
+
+Professional Installation
+
+</h3>
+
+<p>
+
+Qualified technicians available throughout South Africa.
+
+</p>
+
+<a
+href="quote.html">
+
+Book Installation
 
 </a>
 
 </div>
 
-</aside>
+<div class="install-card">
 
-<!-- ======================================================
-CART NOTIFICATION
-====================================================== -->
+<i class="fas fa-phone-volume"></i>
 
-<div
-id="cartNotification"
-class="cart-notification">
+<h3>
 
-<i class="fas fa-check-circle"></i>
+Free Consultation
 
-<span>
+</h3>
 
-Product added to cart
+<p>
 
-</span>
+Need help choosing equipment?
+
+</p>
+
+<a
+href="contact.html">
+
+Speak To Us
+
+</a>
 
 </div>
+
+<div class="install-card">
+
+<i class="fas fa-map-location-dot"></i>
+
+<h3>
+
+Nationwide Service
+
+</h3>
+
+<p>
+
+Residential, Commercial and Industrial solutions.
+
+</p>
+
+<a
+href="contact.html">
+
+Coverage Areas
+
+</a>
+
+</div>
+
+</section>
+
+
+
+</div>
+
+<!-- ======================================================
+NEXPAK SECURITY SOLUTIONS V17
+SHOP.HTML
+PART 5/8
+
+REVIEWS
+TRUSTED BRANDS
+NEWSLETTER
+====================================================== -->
+
+<!-- ======================================================
+CUSTOMER REVIEWS
+====================================================== -->
+
+<section class="customer-reviews">
+
+<div class="section-header">
+
+<h2>
+
+⭐ Customer Reviews
+
+</h2>
+
+<p>
+
+Trusted by homeowners, businesses and installers.
+
+</p>
+
+</div>
+
+<div class="reviews-grid">
+
+<div class="review-card">
+
+<div class="stars">
+
+★★★★★
+
+</div>
+
+<p>
+
+"Excellent service and professional installation. The CCTV system works perfectly."
+
+</p>
+
+<h4>
+
+— Residential Customer
+
+</h4>
+
+</div>
+
+<div class="review-card">
+
+<div class="stars">
+
+★★★★★
+
+</div>
+
+<p>
+
+"Nexpak supplied our warehouse security equipment quickly and at competitive prices."
+
+</p>
+
+<h4>
+
+— Business Client
+
+</h4>
+
+</div>
+
+<div class="review-card">
+
+<div class="stars">
+
+★★★★★
+
+</div>
+
+<p>
+
+"Great advice before purchasing. Highly recommended."
+
+</p>
+
+<h4>
+
+— Commercial Customer
+
+</h4>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ======================================================
+TRUSTED BRANDS
+====================================================== -->
+
+<section class="trusted-brands">
+
+<div class="section-header">
+
+<h2>
+
+Trusted Security Brands
+
+</h2>
+
+</div>
+
+<div class="brands-slider">
+
+<div class="brand-card">
+
+Hikvision
+
+</div>
+
+<div class="brand-card">
+
+Dahua
+
+</div>
+
+<div class="brand-card">
+
+Nemtek
+
+</div>
+
+<div class="brand-card">
+
+Centurion
+
+</div>
+
+<div class="brand-card">
+
+ET Nice
+
+</div>
+
+<div class="brand-card">
+
+IDS
+
+</div>
+
+<div class="brand-card">
+
+Ajax
+
+</div>
+
+<div class="brand-card">
+
+Paradox
+
+</div>
+
+<div class="brand-card">
+
+Roboguard
+
+</div>
+
+<div class="brand-card">
+
+ZKTeco
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ======================================================
+WHY BUY FROM US
+====================================================== -->
+
+<section class="why-buy">
+
+<div class="why-card">
+
+<i class="fas fa-shield-halved"></i>
+
+<h3>
+
+Quality Products
+
+</h3>
+
+<p>
+
+Professional equipment from leading manufacturers.
+
+</p>
+
+</div>
+
+<div class="why-card">
+
+<i class="fas fa-award"></i>
+
+<h3>
+
+Experienced Team
+
+</h3>
+
+<p>
+
+Years of experience in the electronic security industry.
+
+</p>
+
+</div>
+
+<div class="why-card">
+
+<i class="fas fa-headset"></i>
+
+<h3>
+
+Technical Support
+
+</h3>
+
+<p>
+
+Advice before and after your purchase.
+
+</p>
+
+</div>
+
+<div class="why-card">
+
+<i class="fas fa-truck-fast"></i>
+
+<h3>
+
+Fast Delivery
+
+</h3>
+
+<p>
+
+Nationwide delivery throughout South Africa.
+
+</p>
+
+</div>
+
+</section>
 
 <!-- ======================================================
 NEWSLETTER
 ====================================================== -->
 
-<section class="newsletter-section">
+<section class="newsletter">
 
 <div class="newsletter-content">
 
@@ -808,21 +1554,21 @@ Stay Updated
 
 <p>
 
-Receive product launches, promotions and
-security industry news.
+Receive new products, specials and security tips.
 
 </p>
 
-<form class="newsletter-form">
+<form id="newsletterForm">
 
 <input
 
 type="email"
 
-placeholder="Enter your email address">
+placeholder="Enter your email address"
 
-<button
-type="submit">
+required>
+
+<button type="submit">
 
 Subscribe
 
@@ -835,83 +1581,222 @@ Subscribe
 </section>
 
 <!-- ======================================================
-FOOTER
+SECURITY GUARANTEE
+====================================================== -->
+
+<section class="security-promise">
+
+<div class="promise-grid">
+
+<div>
+
+<i class="fas fa-lock"></i>
+
+<h4>
+
+Secure Shopping
+
+</h4>
+
+</div>
+
+<div>
+
+<i class="fas fa-credit-card"></i>
+
+<h4>
+
+Safe Payments
+
+</h4>
+
+</div>
+
+<div>
+
+<i class="fas fa-box"></i>
+
+<h4>
+
+Quality Products
+
+</h4>
+
+</div>
+
+<div>
+
+<i class="fas fa-people-group"></i>
+
+<h4>
+
+Expert Advice
+
+</h4>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ======================================================
+NEXPAK SECURITY SOLUTIONS V17
+SHOP.HTML
+PART 6/8
+
+PREMIUM FOOTER
 ====================================================== -->
 
 <footer class="shop-footer">
 
-<div class="footer-grid">
+<div class="footer-container">
 
-<div>
+<!-- COMPANY -->
+
+<div class="footer-column">
 
 <img
-src="images/nexpak-logo.png"
-alt="Nexpak Security Solutions"
-class="footer-logo">
+src="images/nexpak-logo-white.png"
+class="footer-logo"
+alt="Nexpak">
 
 <p>
 
-Professional CCTV,
-Electric Fencing,
-Roboguard,
-Alarm Systems,
-Gate Automation,
-Access Control and
-Intercom Solutions.
+South Africa's professional security equipment
+supplier specialising in CCTV, Electric Fencing,
+Gate Automation, Alarm Systems, Roboguard,
+Access Control and Intercom Solutions.
 
 </p>
 
+<div class="footer-social">
+
+<a href="#">
+
+<i class="fab fa-facebook-f"></i>
+
+</a>
+
+<a href="#">
+
+<i class="fab fa-instagram"></i>
+
+</a>
+
+<a href="#">
+
+<i class="fab fa-linkedin-in"></i>
+
+</a>
+
+<a href="#">
+
+<i class="fab fa-youtube"></i>
+
+</a>
+
+<a href="#">
+
+<i class="fab fa-whatsapp"></i>
+
+</a>
+
 </div>
 
-<div>
+</div>
+
+<!-- SHOP -->
+
+<div class="footer-column">
 
 <h3>
 
-Products
+Shop
 
 </h3>
 
 <ul>
 
-<li><a href="shop.html?category=CCTV">CCTV</a></li>
+<li><a href="shop.html">All Products</a></li>
 
-<li><a href="shop.html?category=Electric%20Fencing">Electric Fencing</a></li>
+<li><a href="#">Daily Deals</a></li>
 
-<li><a href="shop.html?category=Roboguard">Roboguard</a></li>
+<li><a href="#">Featured Products</a></li>
 
-<li><a href="shop.html?category=Gate%20Automation">Gate Automation</a></li>
+<li><a href="#">Best Sellers</a></li>
 
-<li><a href="shop.html?category=Alarm%20Systems">Alarm Systems</a></li>
+<li><a href="#">New Arrivals</a></li>
 
-<li><a href="shop.html?category=Access%20Control">Access Control</a></li>
+<li><a href="#">Security Accessories</a></li>
 
 </ul>
 
 </div>
 
-<div>
+<!-- CATEGORIES -->
+
+<div class="footer-column">
 
 <h3>
 
-Company
+Categories
 
 </h3>
 
 <ul>
 
-<li><a href="aboutus.html">About Us</a></li>
+<li><a href="#">CCTV</a></li>
 
-<li><a href="contact.html">Contact</a></li>
+<li><a href="#">Electric Fencing</a></li>
+
+<li><a href="#">Roboguard</a></li>
+
+<li><a href="#">Alarm Systems</a></li>
+
+<li><a href="#">Gate Automation</a></li>
+
+<li><a href="#">Access Control</a></li>
+
+<li><a href="#">Intercom</a></li>
+
+</ul>
+
+</div>
+
+<!-- SUPPORT -->
+
+<div class="footer-column">
+
+<h3>
+
+Customer Support
+
+</h3>
+
+<ul>
+
+<li><a href="contact.html">Contact Us</a></li>
 
 <li><a href="quote.html">Request Quote</a></li>
 
-<li><a href="privacy.html">Privacy Policy</a></li>
+<li><a href="cart.html">Shopping Cart</a></li>
+
+<li><a href="checkout.html">Checkout</a></li>
+
+<li><a href="#">Returns</a></li>
+
+<li><a href="#">Privacy Policy</a></li>
+
+<li><a href="#">Terms & Conditions</a></li>
 
 </ul>
 
 </div>
 
-<div>
+<!-- CONTACT -->
+
+<div class="footer-column">
 
 <h3>
 
@@ -921,45 +1806,122 @@ Contact
 
 <p>
 
-📧 info@nexpaksolutions.co.za
+<i class="fas fa-phone"></i>
+
++27 83 630 8249
 
 </p>
 
 <p>
 
-📞 +27 83 630 8249
+<i class="fas fa-envelope"></i>
+
+info@nexpaksecurity.co.za
 
 </p>
 
 <p>
+
+<i class="fas fa-location-dot"></i>
 
 Johannesburg,
 South Africa
 
 </p>
 
-<div class="footer-social">
+<p>
 
-<a href="#"><i class="fab fa-facebook-f"></i></a>
+<i class="fas fa-clock"></i>
 
-<a href="#"><i class="fab fa-linkedin-in"></i></a>
+Mon - Fri
 
-<a href="#"><i class="fab fa-instagram"></i></a>
+08:00 - 17:00
 
-<a href="#"><i class="fab fa-whatsapp"></i></a>
-
-</div>
+</p>
 
 </div>
 
 </div>
 
-<div class="footer-bottom">
+<!-- PAYMENT METHODS -->
+
+<div class="payment-strip">
+
+<h3>
+
+Secure Payments
+
+</h3>
+
+<div class="payment-icons">
+
+<i class="fab fa-cc-visa"></i>
+
+<i class="fab fa-cc-mastercard"></i>
+
+<i class="fab fa-cc-paypal"></i>
+
+<i class="fas fa-university"></i>
+
+<i class="fas fa-mobile-alt"></i>
+
+</div>
+
+</div>
+
+<!-- SECURITY BADGES -->
+
+<div class="security-strip">
+
+<div>
+
+<i class="fas fa-lock"></i>
+
+SSL Secure
+
+</div>
+
+<div>
+
+<i class="fas fa-truck-fast"></i>
+
+Nationwide Delivery
+
+</div>
+
+<div>
+
+<i class="fas fa-headset"></i>
+
+Technical Support
+
+</div>
+
+<div>
+
+<i class="fas fa-shield-halved"></i>
+
+Professional Equipment
+
+</div>
+
+</div>
+
+<!-- COPYRIGHT -->
+
+<div class="copyright">
 
 <p>
 
 © 2026 Nexpak Security Solutions.
+
 All Rights Reserved.
+
+</p>
+
+<p>
+
+Designed with ❤️ in South Africa.
 
 </p>
 
@@ -967,77 +1929,295 @@ All Rights Reserved.
 
 </footer>
 
-3<!-- ======================================================
-NEXPAK SECURITY SOLUTIONS V16
-SHOP.HTML
-PART 5/6
-
-JAVASCRIPT
-SHOP ENGINE
-PERFORMANCE
-====================================================== -->
-
 <!-- ======================================================
-BACK TO TOP BUTTON
+NEXPAK SECURITY SOLUTIONS V17
+SHOP.HTML
+PART 7/8
+
+FLOATING FEATURES
 ====================================================== -->
+
+<!-- LOADING SCREEN -->
+
+<div
+id="pageLoader"
+class="page-loader">
+
+<div class="loader">
+
+<div class="loader-ring"></div>
+
+<h2>
+
+Loading Security Superstore...
+
+</h2>
+
+</div>
+
+</div>
+
+<!-- SEARCH SUGGESTIONS -->
+
+<div
+id="searchSuggestions"
+class="search-suggestions">
+
+<!-- Generated automatically -->
+
+</div>
+
+<!-- TOAST NOTIFICATION -->
+
+<div
+id="toastNotification"
+class="toast-notification">
+
+<i class="fas fa-circle-check"></i>
+
+<span
+id="toastMessage">
+
+Product added to cart.
+
+</span>
+
+</div>
+
+<!-- BACK TO TOP -->
 
 <button
 id="backToTop"
-class="back-to-top"
-aria-label="Back to top">
+class="back-to-top">
 
-<i class="fas fa-chevron-up"></i>
+<i class="fas fa-arrow-up"></i>
 
 </button>
 
+<!-- FLOATING WHATSAPP -->
+
+<a
+
+href="https://wa.me/27836308249"
+
+target="_blank"
+
+id="whatsappButton"
+
+class="whatsapp-button">
+
+<i class="fab fa-whatsapp"></i>
+
+</a>
+
+<!-- LIVE CHAT -->
+
+<button
+id="liveChatButton"
+class="live-chat">
+
+<i class="fas fa-comments"></i>
+
+</button>
+
+<!-- MOBILE MENU -->
+
+<div
+id="mobileMenu"
+class="mobile-menu">
+
+<div class="mobile-header">
+
+<h2>
+
+Menu
+
+</h2>
+
+<button
+onclick="closeMobileMenu()">
+
+<i class="fas fa-times"></i>
+
+</button>
+
+</div>
+
+<nav>
+
+<a href="index.html">
+
+Home
+
+</a>
+
+<a href="shop.html">
+
+Shop
+
+</a>
+
+<a href="cart.html">
+
+Shopping Cart
+
+</a>
+
+<a href="checkout.html">
+
+Checkout
+
+</a>
+
+<a href="quote.html">
+
+Request Quote
+
+</a>
+
+<a href="contact.html">
+
+Contact
+
+</a>
+
+</nav>
+
+</div>
+
+<!-- MOBILE OVERLAY -->
+
+<div
+id="mobileOverlay"
+class="mobile-overlay">
+
+</div>
+
+<!-- COOKIE NOTICE -->
+
+<div
+id="cookieNotice"
+class="cookie-notice">
+
+<p>
+
+This website uses cookies to improve your shopping experience.
+
+</p>
+
+<button
+id="acceptCookies">
+
+Accept
+
+</button>
+
+</div>
+
+<!-- EMAIL SPECIALS -->
+
+<div
+id="promoPopup"
+class="promo-popup">
+
+<button
+class="close-popup">
+
+<i class="fas fa-times"></i>
+
+</button>
+
+<h2>
+
+Get Exclusive Specials
+
+</h2>
+
+<p>
+
+Subscribe and receive security offers and new product updates.
+
+</p>
+
+<input
+
+type="email"
+
+placeholder="Email Address">
+
+<button>
+
+Subscribe
+
+</button>
+
+</div>
+
 <!-- ======================================================
-SHOP JAVASCRIPT
+JAVASCRIPT FILES
 ====================================================== -->
 
-<!-- Product Database -->
 <script src="js/shop-data.js"></script>
 
-<!-- Shopping Cart -->
 <script src="js/cart.js"></script>
 
-<!-- Delivery Calculator -->
 <script src="js/delivery.js"></script>
 
-<!-- Payment Engine -->
 <script src="js/payments.js"></script>
 
-<!-- Shop Engine V16 -->
-<script src="js/shop-script.js"></script>
+<script src="js/shop-v17.js"></script>
 
 <!-- ======================================================
-SHOP HELPERS
+NEXPAK SECURITY SOLUTIONS V17
+SHOP.HTML
+PART 8/8
+
+FINAL INITIALIZATION
 ====================================================== -->
 
 <script>
 
-window.addEventListener("scroll",()=>{
+/*=========================================
+START SHOP
+=========================================*/
 
-const button=document.getElementById("backToTop");
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
 
-if(!button)return;
+if(
+typeof initializeShop==="function"
+){
 
-button.classList.toggle(
+initializeShop();
 
-"visible",
+}
 
-window.scrollY>300
+});
 
+/*=========================================
+BACK TO TOP
+=========================================*/
+
+const backToTop=
+document.getElementById(
+"backToTop"
+);
+
+if(backToTop){
+
+window.addEventListener(
+"scroll",
+()=>{
+
+backToTop.classList.toggle(
+"show",
+window.scrollY>400
 );
 
 });
 
-document.getElementById("backToTop")
-
-?.addEventListener(
-
-"click",
-
-()=>{
+backToTop.onclick=()=>{
 
 window.scrollTo({
 
@@ -1047,21 +2227,90 @@ behavior:"smooth"
 
 });
 
-});
+};
 
-window.addEventListener(
+}
 
-"load",
+/*=========================================
+WHATSAPP BUTTON
+=========================================*/
 
-()=>{
+console.info(
 
-document.body.classList.add(
-
-"shop-loaded"
+"NEXPAK SECURITY SOLUTIONS"
 
 );
 
-});
+console.info(
+
+"SHOP V17"
+
+);
+
+console.info(
+
+"STATUS : PRODUCTION"
+
+);
 
 </script>
 
+<!-- ======================================================
+SCHEMA.ORG SEO
+====================================================== -->
+
+<script type="application/ld+json">
+
+{
+"@context":"https://schema.org",
+"@type":"Store",
+"name":"Nexpak Security Solutions",
+"url":"https://www.nexpaksolutions.co.za",
+"logo":"https://www.nexpaksolutions.co.za/images/logo.png",
+"telephone":"+27836308249",
+"address":{
+"@type":"PostalAddress",
+"addressCountry":"ZA"
+},
+"priceRange":"R",
+"currenciesAccepted":"ZAR",
+"paymentAccepted":[
+"Visa",
+"MasterCard",
+"EFT"
+]
+}
+
+</script>
+
+<!-- ======================================================
+NOSCRIPT
+====================================================== -->
+
+<noscript>
+
+<div class="noscript-warning">
+
+<h2>
+
+JavaScript Required
+
+</h2>
+
+<p>
+
+Please enable JavaScript to use the Nexpak Security Superstore.
+
+</p>
+
+</div>
+
+</noscript>
+
+<!-- ======================================================
+END OF DOCUMENT
+====================================================== -->
+
+</body>
+
+</html>
