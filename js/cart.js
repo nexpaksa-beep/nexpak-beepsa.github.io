@@ -1,91 +1,85 @@
 /*=========================================================
- NEXPAK SECURITY SOLUTIONS V5
- CART SYSTEM
+ NEXPAK SECURITY SOLUTIONS V8
+
  cart.js
- PART 1/4
+
+ PART 1/5
+
+ SHOPPING CART ENGINE
+
 =========================================================*/
 
 
-//=========================================================
-// CART STORAGE
-//=========================================================
-
-
-let cart = JSON.parse(localStorage.getItem("nexpakCart")) || [];
+let cart = [];
 
 
 
 
-//=========================================================
-// SAVE CART
-//=========================================================
+
+/*=========================================================
+ LOAD CART FROM STORAGE
+
+=========================================================*/
+
+
+function loadCart(){
+
+
+const savedCart =
+
+localStorage.getItem(
+"nexpak_cart"
+);
+
+
+
+
+
+if(savedCart){
+
+
+cart = JSON.parse(
+savedCart
+);
+
+
+
+}else{
+
+
+cart = [];
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+ SAVE CART
+
+=========================================================*/
 
 
 function saveCart(){
 
-    localStorage.setItem(
-        "nexpakCart",
-        JSON.stringify(cart)
-    );
-
-}
 
 
+localStorage.setItem(
 
-//=========================================================
-// ADD PRODUCT TO CART
-//=========================================================
+"nexpak_cart",
 
+JSON.stringify(cart)
 
-function addToCart(product){
-
-
-    const existingProduct = cart.find(item =>
-
-        item.id === product.id &&
-        JSON.stringify(item.options) === JSON.stringify(product.options)
-
-    );
-
-
-
-    if(existingProduct){
-
-
-        existingProduct.quantity += product.quantity || 1;
-
-
-    }else{
-
-
-        cart.push({
-
-            id: product.id,
-
-            name: product.name,
-
-            image: product.image,
-
-            price: Number(product.price),
-
-            options: product.options || {},
-
-            quantity: product.quantity || 1
-
-        });
-
-
-    }
-
-
-
-    saveCart();
-
-
-    updateCartCount();
-
-
-    showCartMessage(product.name);
+);
 
 
 
@@ -96,418 +90,337 @@ function addToCart(product){
 
 
 
-//=========================================================
-// QUICK PRODUCT BUTTON
-//=========================================================
 
 
-document.addEventListener(
-"click",
-function(e){
+/*=========================================================
+ ADD PRODUCT TO CART
+
+ Supports:
+
+- Standard products
+- Configured systems
+- Multiple quantities
+- Options
+
+=========================================================*/
 
 
-    if(e.target.classList.contains("add-cart")){
-
-
-        const button = e.target;
-
-
-
-        const product = {
-
-
-            id:
-            button.dataset.id,
-
-
-            name:
-            button.dataset.name,
-
-
-            price:
-            button.dataset.price,
-
-
-            image:
-            button.dataset.image,
-
-
-            quantity:1,
-
-
-            options:{}
+function addToCart(item){
 
 
 
-        };
+if(!item){
 
+return;
 
-
-        addToCart(product);
-
-
-    }
-
-
-
-});
+}
 
 
 
 
 
 
-//=========================================================
-// CART COUNT
-//=========================================================
+const existing =
+
+cart.find(product =>
+
+product.id === item.id
+
+&&
+
+JSON.stringify(product.options)
+
+===
+
+JSON.stringify(item.options)
+
+);
+
+
+
+
+
+
+if(existing){
+
+
+
+existing.quantity +=
+
+item.quantity;
+
+
+
+}else{
+
+
+
+cart.push(item);
+
+
+
+}
+
+
+
+
+
+
+saveCart();
+
+
+
+
+updateCartCount();
+
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+ REMOVE PRODUCT
+
+=========================================================*/
+
+
+function removeFromCart(index){
+
+
+
+cart.splice(
+
+index,
+
+1
+
+);
+
+
+
+saveCart();
+
+
+
+renderCart();
+
+
+
+updateCartCount();
+
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+ CLEAR CART
+
+=========================================================*/
+
+
+function clearCart(){
+
+
+
+cart = [];
+
+
+
+saveCart();
+
+
+
+renderCart();
+
+
+
+updateCartCount();
+
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+ CART ITEM COUNT
+
+=========================================================*/
 
 
 function updateCartCount(){
 
 
-    const count =
-    document.querySelector(".cart-count");
 
+const counter =
 
-
-    if(!count) return;
-
-
-
-    let total = 0;
-
-
-
-    cart.forEach(item=>{
-
-
-        total += item.quantity;
-
-
-    });
-
-
-
-    count.innerHTML = total;
-
-
-
-}
+document.querySelector(
+".cart-count"
+);
 
 
 
 
 
-//=========================================================
-// CART MESSAGE
-//=========================================================
-
-
-function showCartMessage(name){
-
-
-    const message =
-    document.createElement("div");
-
-
-
-    message.className =
-    "cart-message";
-
-
-
-    message.innerHTML = `
-
-    <i class="fas fa-check"></i>
-
-    ${name} added to cart
-
-    `;
-
-
-
-    document.body.appendChild(message);
-
-
-
-    setTimeout(()=>{
-
-
-        message.remove();
-
-
-    },3000);
-
-
-
-}
+if(!counter)
+return;
 
 
 
 
-// INITIAL LOAD
 
-document.addEventListener(
-"DOMContentLoaded",
-()=>{
+let total = 0;
 
-    updateCartCount();
+
+
+
+cart.forEach(item=>{
+
+
+total += item.quantity;
+
+
 
 });
+
+
+
+
+
+
+counter.innerHTML = total;
+
+
+
+}
+
+
+
+
+
+
+
+
 /*=========================================================
- CART DISPLAY
- PART 2/4
+ INITIAL LOAD
+
 =========================================================*/
 
 
+document.addEventListener(
 
-//=========================================================
-// DISPLAY CART ITEMS
-//=========================================================
+"DOMContentLoaded",
 
+()=>{
 
-function displayCart(){
 
+loadCart();
 
-    const cartContainer =
-    document.querySelector(".cart-items");
 
+updateCartCount();
 
 
-    if(!cartContainer) return;
+});
+/*=========================================================
+ RENDER CART
 
+ Displays:
 
+- Product image
+- Product name
+- Selected options
+- Quantity
+- Price
+- Remove button
 
-    cartContainer.innerHTML = "";
+=========================================================*/
 
 
+function renderCart(){
 
-    if(cart.length === 0){
 
 
-        cartContainer.innerHTML = `
+const container =
 
-        <div class="empty-cart">
+document.querySelector(
+".cart-items"
+);
 
-        <i class="fas fa-cart-shopping"></i>
 
-        <h3>Your cart is empty</h3>
 
-        <p>Add security products to continue.</p>
 
-        </div>
 
-        `;
+if(!container)
+return;
 
 
-        updateCartTotal();
 
-        return;
 
 
-    }
+container.innerHTML = "";
 
 
 
 
-    cart.forEach((item,index)=>{
 
 
 
-        let optionsHTML = "";
+if(cart.length === 0){
 
 
 
-        if(item.options){
+container.innerHTML = `
 
 
-            Object.keys(item.options).forEach(option=>{
+<div class="empty-cart">
 
 
-                optionsHTML += `
+<i class="fas fa-cart-shopping"></i>
 
-                <p>
 
-                <strong>${option}:</strong>
-                ${item.options[option]}
+<h3>
 
-                </p>
+Your cart is empty
 
-                `;
+</h3>
 
 
-            });
+<a href="shop.html">
 
+Continue Shopping
 
-        }
+</a>
 
 
+</div>
 
 
-        cartContainer.innerHTML += `
+`;
 
 
-        <div class="cart-product glass">
 
+updateCartTotal();
 
-            <img src="${item.image}"
-            alt="${item.name}">
 
-
-            <div class="cart-details">
-
-
-                <h3>
-                ${item.name}
-                </h3>
-
-
-                <div class="cart-options">
-
-                ${optionsHTML}
-
-                </div>
-
-
-
-                <p class="cart-price">
-
-                R${(
-                item.price *
-                item.quantity
-                ).toLocaleString()}
-
-                </p>
-
-
-
-                <div class="quantity-control">
-
-
-                    <button onclick="changeQuantity(${index},-1)">
-                    -
-                    </button>
-
-
-                    <span>
-                    ${item.quantity}
-                    </span>
-
-
-                    <button onclick="changeQuantity(${index},1)">
-                    +
-                    </button>
-
-
-
-                </div>
-
-
-
-                <button 
-                class="remove-cart"
-                onclick="removeCartItem(${index})">
-
-
-                <i class="fas fa-trash"></i>
-
-                Remove
-
-
-                </button>
-
-
-
-            </div>
-
-
-
-        </div>
-
-
-        `;
-
-
-
-    });
-
-
-
-
-    updateCartTotal();
-
-
-
-}
-
-
-
-
-
-//=========================================================
-// CHANGE QUANTITY
-//=========================================================
-
-
-function changeQuantity(index,amount){
-
-
-
-    cart[index].quantity += amount;
-
-
-
-    if(cart[index].quantity <= 0){
-
-
-        cart[index].quantity = 1;
-
-
-    }
-
-
-
-    saveCart();
-
-
-
-    displayCart();
-
-
-
-    updateCartCount();
-
-
-
-}
-
-
-
-
-
-
-//=========================================================
-// REMOVE ITEM
-//=========================================================
-
-
-function removeCartItem(index){
-
-
-
-    cart.splice(index,1);
-
-
-
-    saveCart();
-
-
-
-    displayCart();
-
-
-
-    updateCartCount();
+return;
 
 
 
@@ -519,44 +432,309 @@ function removeCartItem(index){
 
 
 
-//=========================================================
-// CART TOTAL
-//=========================================================
+
+cart.forEach((item,index)=>{
+
+
+
+
+
+let optionsHTML = "";
+
+
+
+
+
+if(item.options){
+
+
+
+Object.keys(item.options)
+
+.forEach(option=>{
+
+
+
+optionsHTML += `
+
+
+<li>
+
+<strong>
+
+${formatCartOption(option)}
+
+:
+
+</strong>
+
+
+${item.options[option]}
+
+
+</li>
+
+
+`;
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
+
+
+container.innerHTML += `
+
+
+<div class="cart-item">
+
+
+
+
+
+<div class="cart-image">
+
+
+<img src="${item.image}"
+
+alt="${item.name}">
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="cart-details">
+
+
+
+<h3>
+
+${item.name}
+
+</h3>
+
+
+
+
+<ul class="cart-options">
+
+
+${optionsHTML}
+
+
+</ul>
+
+
+
+
+
+<div class="cart-price">
+
+
+R${
+
+calculateItemTotal(item)
+
+.toLocaleString(
+"en-ZA"
+)
+
+}
+
+
+</div>
+
+
+
+
+
+
+<div class="cart-controls">
+
+
+
+
+
+<button onclick="changeCartQuantity(${index},-1)">
+
+
+<i class="fas fa-minus"></i>
+
+
+</button>
+
+
+
+
+
+<input type="number"
+
+value="${item.quantity}"
+
+min="1"
+
+onchange="setCartQuantity(${index},this.value)">
+
+
+
+
+
+<button onclick="changeCartQuantity(${index},1)">
+
+
+<i class="fas fa-plus"></i>
+
+
+</button>
+
+
+
+
+<button class="remove-btn"
+
+onclick="removeFromCart(${index})">
+
+
+<i class="fas fa-trash"></i>
+
+
+</button>
+
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+
+
+
+
+updateCartTotal();
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/*=========================================================
+ CALCULATE ITEM TOTAL
+
+=========================================================*/
+
+
+function calculateItemTotal(item){
+
+
+
+return item.price *
+
+item.quantity;
+
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+ CART TOTAL
+
+=========================================================*/
 
 
 function updateCartTotal(){
 
 
 
-    const totalElement =
-    document.querySelector(".cart-total");
+const totalBox =
 
-
-
-    if(!totalElement) return;
-
-
-
-    let total = 0;
-
-
-
-    cart.forEach(item=>{
-
-
-        total +=
-        item.price *
-        item.quantity;
-
-
-    });
+document.querySelector(
+".cart-total"
+);
 
 
 
 
-    totalElement.innerHTML =
 
-    `R${total.toLocaleString()}`;
+if(!totalBox)
+return;
+
+
+
+
+
+let total = 0;
+
+
+
+
+
+cart.forEach(item=>{
+
+
+total += calculateItemTotal(item);
+
+
+
+});
+
+
+
+
+
+
+totalBox.innerHTML =
+
+"R" +
+
+total.toLocaleString(
+"en-ZA"
+);
 
 
 
@@ -567,114 +745,522 @@ function updateCartTotal(){
 
 
 
-//=========================================================
-// LOAD CART PAGE
-//=========================================================
+
+
+/*=========================================================
+ FORMAT OPTION LABELS
+
+=========================================================*/
+
+
+function formatCartOption(text){
+
+
+
+return text
+
+.replace(/([A-Z])/g," $1")
+
+.replace(/^./,
+
+letter => letter.toUpperCase());
+
+
+
+ }
+/*=========================================================
+ UPDATE CART QUANTITY
+
+=========================================================*/
+
+
+function changeCartQuantity(index,amount){
+
+
+
+cart[index].quantity += amount;
+
+
+
+
+
+if(cart[index].quantity < 1){
+
+
+cart[index].quantity = 1;
+
+
+}
+
+
+
+
+
+saveCart();
+
+
+
+renderCart();
+
+
+
+updateCartCount();
+
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+ SET CART QUANTITY MANUALLY
+
+=========================================================*/
+
+
+function setCartQuantity(index,value){
+
+
+
+let qty =
+parseInt(value);
+
+
+
+
+
+if(isNaN(qty) || qty < 1){
+
+
+qty = 1;
+
+
+}
+
+
+
+
+
+cart[index].quantity = qty;
+
+
+
+
+saveCart();
+
+
+
+renderCart();
+
+
+
+updateCartCount();
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/*=========================================================
+ CART SUMMARY BUILDER
+
+ Creates customer order summary
+
+=========================================================*/
+
+
+function generateCartSummary(){
+
+
+
+let summary =
+
+"NEXPAK SECURITY SOLUTIONS QUOTE%0A%0A";
+
+
+
+
+
+
+let total = 0;
+
+
+
+
+
+
+
+cart.forEach((item,index)=>{
+
+
+
+summary +=
+
+
+(index + 1)
+
++
+
+". "
+
++
+
+item.name
+
++
+
+"%0A";
+
+
+
+
+
+
+
+if(item.options){
+
+
+
+Object.keys(item.options)
+
+.forEach(option=>{
+
+
+summary +=
+
+"- "
+
++
+
+formatCartOption(option)
+
++
+
+": "
+
++
+
+item.options[option]
+
++
+
+"%0A";
+
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+summary +=
+
+
+"Quantity: "
+
++
+
+item.quantity
+
++
+
+"%0A";
+
+
+
+
+
+summary +=
+
+
+"Price: R"
+
++
+
+calculateItemTotal(item)
+
++
+
+"%0A%0A";
+
+
+
+
+
+
+total += calculateItemTotal(item);
+
+
+
+});
+
+
+
+
+
+
+summary +=
+
+
+"TOTAL: R"
+
++
+
+total;
+
+
+
+
+
+return summary;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/*=========================================================
+ WHATSAPP CHECKOUT
+
+=========================================================*/
+
+
+function checkoutWhatsApp(){
+
+
+
+if(cart.length === 0){
+
+
+alert(
+
+"Your cart is empty"
+
+);
+
+
+
+return;
+
+
+}
+
+
+
+
+
+const message =
+
+generateCartSummary();
+
+
+
+
+
+
+window.open(
+
+
+"https://wa.me/27836308249?text="
+
++
+
+message,
+
+
+"_blank"
+
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/*=========================================================
+ EMAIL QUOTE
+
+=========================================================*/
+
+
+function checkoutEmail(){
+
+
+
+const body =
+
+decodeURIComponent(
+
+generateCartSummary()
+
+);
+
+
+
+
+
+
+window.location.href =
+
+
+"mailto:info@nexpaksecurity.co.za"
+
++
+
+"?subject=Nexpak Security Quote"
+
++
+
+"&body="
+
++
+
+encodeURIComponent(body);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/*=========================================================
+ REFRESH CART PAGE
+
+=========================================================*/
 
 
 document.addEventListener(
+
 "DOMContentLoaded",
+
 ()=>{
 
 
-    displayCart();
-
+renderCart();
 
 
 });
 /*=========================================================
- PRODUCT CONFIGURATOR
- PART 3/4
+ CUSTOMER DETAILS
+
+ Collects customer information
+ before sending quote
+
 =========================================================*/
 
 
-//=========================================================
-// GET SELECTED OPTIONS
-//=========================================================
+let customerDetails = {
 
+name:"",
+company:"",
+phone:"",
+email:"",
+address:""
 
-function getProductOptions(container){
-
-
-    let options = {};
-
-
-
-    const selectors =
-    container.querySelectorAll("select");
-
-
-
-    selectors.forEach(select=>{
-
-
-        if(select.value){
-
-
-            options[select.dataset.option] =
-            select.value;
-
-
-        }
-
-
-    });
-
-
-
-    return options;
-
-
-
-}
+};
 
 
 
 
 
-//=========================================================
-// CALCULATE OPTION PRICE
-//=========================================================
-
-
-function calculateOptionPrice(container){
-
-
-    let extraPrice = 0;
 
 
 
-    const selectors =
-    container.querySelectorAll("select");
+function saveCustomerDetails(){
 
 
 
-    selectors.forEach(select=>{
+customerDetails.name =
 
-
-        const selected =
-        select.options[
-        select.selectedIndex
-        ];
-
-
-
-        if(selected.dataset.price){
-
-
-            extraPrice +=
-            Number(selected.dataset.price);
+document.getElementById(
+"customer-name"
+)?.value || "";
 
 
 
-        }
+customerDetails.company =
+
+document.getElementById(
+"customer-company"
+)?.value || "";
 
 
-    });
+
+customerDetails.phone =
+
+document.getElementById(
+"customer-phone"
+)?.value || "";
 
 
 
-    return extraPrice;
+customerDetails.email =
+
+document.getElementById(
+"customer-email"
+)?.value || "";
+
+
+
+customerDetails.address =
+
+document.getElementById(
+"customer-address"
+)?.value || "";
+
+
+
+
+
+
+localStorage.setItem(
+
+"nexpak_customer",
+
+JSON.stringify(
+customerDetails
+)
+
+);
 
 
 
@@ -686,79 +1272,38 @@ function calculateOptionPrice(container){
 
 
 
-//=========================================================
-// CONFIGURED PRODUCT ADD TO CART
-//=========================================================
 
 
-function addConfiguredProduct(button){
+/*=========================================================
+ LOAD CUSTOMER DETAILS
+
+=========================================================*/
 
 
-
-    const productBox =
-    button.closest(".product-config");
-
-
-
-    if(!productBox) return;
+function loadCustomerDetails(){
 
 
 
+const saved =
 
-    const basePrice =
-    Number(productBox.dataset.price);
+localStorage.getItem(
+"nexpak_customer"
+);
 
 
 
 
-    const optionPrice =
-    calculateOptionPrice(productBox);
+
+if(saved){
+
+
+customerDetails =
+
+JSON.parse(saved);
 
 
 
-
-    const product = {
-
-
-
-        id:
-        productBox.dataset.id,
-
-
-
-        name:
-        productBox.dataset.name,
-
-
-
-        image:
-        productBox.dataset.image,
-
-
-
-        price:
-        basePrice + optionPrice,
-
-
-
-        quantity:
-        Number(
-        productBox.querySelector(".product-qty").value
-        )
-        || 1,
-
-
-
-        options:
-        getProductOptions(productBox)
-
-
-
-    };
-
-
-
-    addToCart(product);
+}
 
 
 
@@ -769,221 +1314,518 @@ function addConfiguredProduct(button){
 
 
 
-//=========================================================
-// CONFIGURATION BUTTON LISTENER
-//=========================================================
+
+
+/*=========================================================
+ VALIDATE ORDER
+
+=========================================================*/
+
+
+function validateOrder(){
+
+
+
+if(cart.length === 0){
+
+
+
+alert(
+
+"Your cart is empty"
+
+);
+
+
+
+return false;
+
+
+
+}
+
+
+
+
+
+if(!customerDetails.name){
+
+
+
+alert(
+
+"Please enter your name"
+
+);
+
+
+
+return false;
+
+
+
+}
+
+
+
+
+
+if(!customerDetails.phone){
+
+
+
+alert(
+
+"Please enter your phone number"
+
+);
+
+
+
+return false;
+
+
+
+}
+
+
+
+
+
+return true;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/*=========================================================
+ COMPLETE QUOTE MESSAGE
+
+ Includes:
+
+Customer details
+
+Products
+
+Configurations
+
+Total
+
+=========================================================*/
+
+
+function generateFullQuote(){
+
+
+
+let message =
+
+
+
+"NEXPAK SECURITY SOLUTIONS"
+
++
+
+"%0A--------------------%0A%0A";
+
+
+
+
+
+
+
+message +=
+
+
+"Customer: "
+
++
+
+customerDetails.name
+
++
+
+"%0A";
+
+
+
+
+
+message +=
+
+
+"Company: "
+
++
+
+customerDetails.company
+
++
+
+"%0A";
+
+
+
+
+
+message +=
+
+
+"Phone: "
+
++
+
+customerDetails.phone
+
++
+
+"%0A";
+
+
+
+
+
+message +=
+
+
+"Email: "
+
++
+
+customerDetails.email
+
++
+
+"%0A%0A";
+
+
+
+
+
+
+
+message +=
+
+
+"PRODUCTS:%0A%0A";
+
+
+
+
+
+
+
+let total = 0;
+
+
+
+
+
+cart.forEach(item=>{
+
+
+
+message +=
+
+
+item.name
+
++
+
+"%0A";
+
+
+
+
+
+if(item.options){
+
+
+
+Object.keys(item.options)
+
+.forEach(option=>{
+
+
+
+message +=
+
+
+"- "
+
++
+
+formatCartOption(option)
+
++
+
+": "
+
++
+
+item.options[option]
+
++
+
+"%0A";
+
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+message +=
+
+
+"Qty: "
+
++
+
+item.quantity
+
++
+
+"%0A";
+
+
+
+
+
+message +=
+
+
+"Subtotal: R"
+
++
+
+calculateItemTotal(item)
+
++
+
+"%0A%0A";
+
+
+
+
+
+total += calculateItemTotal(item);
+
+
+
+});
+
+
+
+
+
+
+message +=
+
+
+"TOTAL: R"
+
++
+
+total;
+
+
+
+
+
+
+return message;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/*=========================================================
+ FINAL WHATSAPP QUOTE
+
+=========================================================*/
+
+
+function sendQuote(){
+
+
+
+saveCustomerDetails();
+
+
+
+
+
+if(!validateOrder()){
+
+
+return;
+
+
+}
+
+
+
+
+
+
+
+const quote =
+
+generateFullQuote();
+
+
+
+
+
+
+window.open(
+
+
+"https://wa.me/27836308249?text="
+
++
+
+quote,
+
+
+"_blank"
+
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+ INITIALIZE CUSTOMER DATA
+
+=========================================================*/
 
 
 document.addEventListener(
-"click",
-function(e){
+
+"DOMContentLoaded",
+
+()=>{
 
 
-
-    if(
-    e.target.classList.contains(
-    "configure-cart")
-    ){
-
-
-        addConfiguredProduct(
-        e.target
-        );
-
-
-    }
-
+loadCustomerDetails();
 
 
 });
 /*=========================================================
- NEXPAK SECURITY SOLUTIONS V5
- CART SYSTEM
- PART 4/4
+ ORDER NUMBER GENERATOR
+
+ Creates unique enquiry reference
+
 =========================================================*/
 
-
-//=========================================================
-// GENERATE ORDER NUMBER
-//=========================================================
 
 function generateOrderNumber(){
 
-    const date = new Date();
 
-    return "NXP-" +
-    date.getFullYear() +
-    (date.getMonth()+1) +
-    date.getDate() +
-    "-" +
-    Math.floor(
-        Math.random()*9000 + 1000
-    );
 
-}
+const date =
 
+new Date();
 
 
 
 
-//=========================================================
-// WHATSAPP ORDER
-//=========================================================
+const year =
+date.getFullYear();
 
 
-function sendWhatsAppOrder(){
 
+const month =
 
-    if(cart.length === 0){
+String(
+date.getMonth()+1
+)
+.padStart(2,"0");
 
-        alert(
-        "Your cart is empty."
-        );
 
-        return;
 
-    }
 
+const day =
 
+String(
+date.getDate()
+)
+.padStart(2,"0");
 
-    let message =
 
-    `Nexpak Security Solutions\n\n` +
 
-    `Order Reference: ${generateOrderNumber()}\n\n` +
 
-    `Customer Enquiry:\n`;
+const random =
 
+Math.floor(
+Math.random()*9000
++1000
+);
 
 
 
-    let total = 0;
 
 
+return (
 
-    cart.forEach(item=>{
+"NP"
 
++
 
-        message +=
+year
 
-        `\n--------------------\n` +
++
 
-        `${item.name}\n` +
+month
 
-        `Quantity: ${item.quantity}\n`;
++
 
+day
 
++
 
-        if(item.options){
+"-"
 
++
 
-            message += "Options:\n";
+random
 
+);
 
-            Object.keys(item.options)
-            .forEach(option=>{
-
-
-                message +=
-
-                `${option}: ${item.options[option]}\n`;
-
-
-            });
-
-
-        }
-
-
-
-        message +=
-
-        `Price: R${
-
-        (
-        item.price *
-        item.quantity
-
-        )
-        .toLocaleString()
-
-        }\n`;
-
-
-
-        total +=
-
-        item.price *
-        item.quantity;
-
-
-
-    });
-
-
-
-    message +=
-
-    `\n--------------------\n` +
-
-    `Estimated Total: R${
-
-    total.toLocaleString()
-
-    }\n\n` +
-
-    `Please contact me regarding this quotation.`;
-
-
-
-
-    const whatsappURL =
-
-    "https://wa.me/27836308249?text=" +
-
-    encodeURIComponent(message);
-
-
-
-    window.open(
-    whatsappURL,
-    "_blank"
-    );
-
-
-}
-
-
-
-
-
-//=========================================================
-// CLEAR CART
-//=========================================================
-
-
-function clearCart(){
-
-
-    if(confirm(
-    "Remove all items from cart?"
-    )){
-
-
-        cart = [];
-
-
-        saveCart();
-
-
-        displayCart();
-
-
-        updateCartCount();
-
-
-
-    }
 
 
 }
@@ -994,68 +1836,377 @@ function clearCart(){
 
 
 
-//=========================================================
-// CHECKOUT BUTTON
-//=========================================================
+
+
+/*=========================================================
+ CREATE ORDER OBJECT
+
+ Ready for:
+
+- CRM
+- Email
+- Database
+- Invoice System
+
+=========================================================*/
+
+
+function createOrder(){
+
+
+
+let total = 0;
+
+
+
+
+
+cart.forEach(item=>{
+
+
+total += calculateItemTotal(item);
+
+
+
+});
+
+
+
+
+
+
+return {
+
+
+
+orderNumber:
+generateOrderNumber(),
+
+
+
+date:
+new Date()
+.toISOString(),
+
+
+
+customer:
+customerDetails,
+
+
+
+items:
+cart,
+
+
+
+total:
+total
+
+
+
+};
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/*=========================================================
+ SAVE ORDER LOCALLY
+
+ Future CRM integration
+
+=========================================================*/
+
+
+function saveOrder(){
+
+
+
+const order =
+
+createOrder();
+
+
+
+
+
+let orders =
+
+JSON.parse(
+
+localStorage.getItem(
+"nexpak_orders"
+)
+
+|| "[]"
+
+);
+
+
+
+
+
+orders.push(order);
+
+
+
+
+
+
+localStorage.setItem(
+
+"nexpak_orders",
+
+JSON.stringify(
+orders
+)
+
+);
+
+
+
+return order;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/*=========================================================
+ COMPLETE CHECKOUT
+
+=========================================================*/
+
+
+function completeCheckout(){
+
+
+
+saveCustomerDetails();
+
+
+
+
+
+if(!validateOrder()){
+
+return;
+
+}
+
+
+
+
+
+
+const order =
+
+saveOrder();
+
+
+
+
+
+console.log(
+
+"Nexpak Order Created",
+
+order
+
+);
+
+
+
+
+
+
+sendQuote();
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/*=========================================================
+ CART BUTTON ANIMATION
+
+=========================================================*/
+
+
+function animateCart(){
+
+
+
+const cartIcon =
+
+document.querySelector(
+".cart-icon"
+);
+
+
+
+
+
+if(!cartIcon)
+return;
+
+
+
+
+
+cartIcon.classList.add(
+"cart-pulse"
+);
+
+
+
+
+
+
+setTimeout(()=>{
+
+
+cartIcon.classList.remove(
+"cart-pulse"
+);
+
+
+
+},800);
+
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+ CLEAR AFTER SUCCESS
+
+=========================================================*/
+
+
+function clearAfterOrder(){
+
+
+
+cart = [];
+
+
+
+saveCart();
+
+
+
+renderCart();
+
+
+
+updateCartCount();
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/*=========================================================
+ FINAL CART INITIALIZATION
+
+=========================================================*/
 
 
 document.addEventListener(
-"click",
-function(e){
 
+"DOMContentLoaded",
 
-
-    if(
-    e.target.classList.contains(
-    "whatsapp-checkout"
-    )
-    ){
-
-
-        sendWhatsAppOrder();
-
-
-    }
-
-
-
-
-
-    if(
-    e.target.classList.contains(
-    "clear-cart"
-    )
-    ){
-
-
-        clearCart();
-
-
-    }
-
-
-
-});
-
-
-
-
-
-
-
-//=========================================================
-// CART STARTUP
-//=========================================================
-
-
-window.addEventListener(
-"load",
 ()=>{
 
 
-    updateCartCount();
+loadCart();
 
-    displayCart();
+
+renderCart();
+
+
+updateCartCount();
+
+
+
+console.log(
+
+"%cNEXPAK CART V8 ACTIVE",
+
+"color:#00B4FF;font-size:18px;font-weight:bold;"
+
+);
+
 
 
 });
+
+
+
+
+
+
+
+
+/*=========================================================
+ NEXPAK SECURITY SOLUTIONS V8
+
+ CART SYSTEM COMPLETE
+
+ Features:
+
+✔ Local Storage Cart
+✔ Configured Products
+✔ CCTV Options
+✔ Electric Fence Builder
+✔ Gate Motor Builder
+✔ Roboguard Options
+✔ WhatsApp Quotes
+✔ Customer Details
+✔ Order References
+✔ CRM Ready
+
+=========================================================*/
