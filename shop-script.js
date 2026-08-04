@@ -1147,8 +1147,6 @@ filteredProducts.length
 
 
 
-preloadImages();
-
 
 
 }
@@ -2001,24 +1999,7 @@ applyFilters();
 
  CART + FINAL STARTUP
 
-=========================================================*/
-
-
-/*=========================================================
- LOAD FEATURED PRODUCTS
-=========================================================*/
-
-function loadFeaturedProducts(){
-
-    filteredProducts =
-    shopProducts.filter(
-        product => product.featured === true
-    );
-
-    renderProducts();
-
-}
-
+===========================================================
 
 /*=========================================================
  ADD PRODUCT TO CART
@@ -2060,7 +2041,6 @@ function addProductToCart(productId){
 
 function startShop(){
 
-    refreshShop();
 
     console.log(
         "Nexpak Security Solutions Shop V16 Loaded"
