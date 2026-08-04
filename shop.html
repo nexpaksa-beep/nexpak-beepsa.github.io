@@ -5,53 +5,46 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-
-<title>Security Shop | Nexpak Security Solutions</title>
-
+<title>
+Security Shop | Nexpak Security Solutions
+</title>
 
 <meta name="description"
-content="Shop CCTV systems, IP CCTV, electric fencing, gate motors, Roboguard and security solutions from Nexpak Security Solutions.">
-
+content="Buy CCTV systems, electric fencing, gate motors, alarm systems, Roboguard, access control and security accessories from Nexpak Security Solutions.">
 
 <meta name="keywords"
-content="CCTV systems South Africa, electric fencing, gate motors, Roboguard, security equipment">
+content="CCTV, Hikvision, Dahua, Electric Fence, Gate Motor, Centurion, Alarm Systems, Roboguard, Access Control, Security Shop">
 
+<meta name="author"
+content="Nexpak Security Solutions">
 
-<link rel="stylesheet" href="css/style.css">
-
+<link rel="stylesheet"
+href="css/style.css">
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
 
-
 </head>
-
-
 
 <body>
 
-
-
-<!-- =========================
+<!--==================================
 HEADER
-========================= -->
-
+===================================-->
 
 <header>
 
-
 <div class="container header">
 
+<a href="index.html"
+class="logo">
 
-<a href="index.html" class="logo">
-
-
-<img src="images/logo-security.png"
+<img
+src="images/logo-security.png"
 alt="Nexpak Security Solutions">
-
-
 
 <div class="logo-text">
 
@@ -61,71 +54,39 @@ alt="Nexpak Security Solutions">
 
 </div>
 
-
 </a>
-
-
-
-
-
 
 <nav>
 
-
 <a href="index.html">
-
 Home
-
 </a>
-
 
 <a href="products.html">
-
 Products
-
 </a>
 
-
-
-<a href="shop.html" class="active">
-
+<a href="shop.html"
+class="active">
 Shop
-
 </a>
-
-
-
-<a href="cart.html">
-
-Cart
-
-<i class="fas fa-cart-shopping"></i>
-
-<span class="cart-count">
-
-0
-
-</span>
-
-
-</a>
-
-
 
 <a href="contact.html">
-
 Contact
+</a>
+
+<a href="cart.html"
+class="cart-icon">
+
+<i class="fas fa-shopping-cart"></i>
+
+<span class="cart-count">
+0
+</span>
 
 </a>
 
-
-
 </nav>
-
-
-
-
-
 
 <button class="menu-toggle">
 
@@ -133,344 +94,302 @@ Contact
 
 </button>
 
-
-
 </div>
-
 
 </header>
 
+<!--==================================
+SHOP HERO
+===================================-->
 
-
-
-
-
-
-<!-- =========================
-HERO
-========================= -->
-
-
-<section class="hero">
-
-
+<section class="hero shop-hero">
 
 <div class="hero-content fade">
 
-
-
 <h5>
 
-ONLINE SECURITY STORE
+NEXPAK SECURITY SHOP
 
 </h5>
-
-
-
 
 <h1>
 
-Configure Your Security System
+Professional Security Equipment
 
 </h1>
 
-
-
-
-
 <p>
 
-Choose CCTV, IP cameras, electric fencing,
-gate automation, Roboguard and complete
-security solutions.
+Browse our complete range of CCTV, electric fencing, gate motors, alarm systems, Roboguard, access control and security accessories.
 
 </p>
 
-
-
-
-
-
-
-<div class="hero-buttons">
-
-
-<a href="#products"
-
-class="primary-btn">
-
-
-<i class="fas fa-cart-shopping"></i>
-
-Browse Products
-
-
-</a>
-
-
-
-
-
-<a href="contact.html"
-
-class="secondary-btn">
-
-
-<i class="fas fa-file-signature"></i>
-
-Request Quote
-
-
-</a>
-
-
-
 </div>
-
-
-
-
-</div>
-
-
 
 </section>
-<!-- =========================
-PRODUCT SHOP AREA
-========================= -->
 
+<!--==================================
+SHOP FILTER BAR
+===================================-->
 
-<section class="shop-section" id="products">
-
+<section class="shop-filter">
 
 <div class="container">
 
+<div class="filter-grid">
 
+<div class="search-box">
 
+<i class="fas fa-search"></i>
 
-
-<!-- SEARCH -->
-
-<div class="search-container">
-
-
-<input 
+<input
 type="text"
-id="product-search"
-placeholder="Search CCTV, gate motors, electric fence, alarms...">
-
+id="productSearch"
+placeholder="Search security products...">
 
 </div>
 
+<select id="categoryFilter">
 
+<option value="all">
+All Categories
+</option>
 
-
-
-
-
-
-
-<!-- CATEGORY FILTERS -->
-
-
-<div class="category-buttons">
-
-
-
-<button 
-class="filter-btn active"
-onclick="filterProducts('all')">
-
-All
-
-</button>
-
-
-
-
-
-<button 
-class="filter-btn"
-onclick="filterProducts('CCTV')">
-
+<option value="CCTV">
 CCTV
+</option>
 
-</button>
-
-
-
-
-
-<button 
-class="filter-btn"
-onclick="filterProducts('IP CCTV')">
-
+<option value="IP CCTV">
 IP CCTV
+</option>
 
-</button>
-
-
-
-
-
-<button 
-class="filter-btn"
-onclick="filterProducts('Electric Fencing')">
-
+<option value="Electric Fencing">
 Electric Fencing
+</option>
 
-</button>
+<option value="Gate Motors">
+Gate Automation
+</option>
 
+<option value="Alarm Systems">
+Alarm Systems
+</option>
 
-
-
-
-<button 
-class="filter-btn"
-onclick="filterProducts('Gate Automation')">
-
-Gate Motors
-
-</button>
-
-
-
-
-
-<button 
-class="filter-btn"
-onclick="filterProducts('Outdoor Security')">
-
-Roboguard
-
-</button>
-
-
-
-
-
-<button 
-class="filter-btn"
-onclick="filterProducts('Alarm Systems')">
-
-Alarms
-
-</button>
-
-
-
-
-
-<button 
-class="filter-btn"
-onclick="filterProducts('Access Control')">
-
+<option value="Access Control">
 Access Control
+</option>
 
-</button>
+<option value="Outdoor Security">
+Roboguard
+</option>
 
+<option value="Accessories">
+Accessories
+</option>
 
+</select>
 
-</div>
+<select id="sortProducts">
 
+<option value="default">
+Sort Products
+</option>
 
+<option value="price-low">
+Price Low to High
+</option>
 
+<option value="price-high">
+Price High to Low
+</option>
 
+<option value="name">
+Name A-Z
+</option>
 
-
-
-
-
-
-<!-- PRODUCT GRID -->
-
-
-
-<div class="products-grid"
-id="products-grid">
-
-
-<!-- products.js loads products here -->
-
-
-</div>
-
-
-
-
-
+</select>
 
 </div>
 
+</div>
 
 </section>
 
+ <!--==================================
+SHOP PRODUCTS
+===================================-->
 
-
-
-
-
-
-
-
-<!-- =========================
-FEATURED SECURITY SYSTEMS
-========================= -->
-
-
-<section class="services">
-
+<section class="shop-products">
 
 <div class="container">
 
-
-
-<div class="section-title">
-
+<div class="section-title fade">
 
 <h5>
 
-BUILD YOUR SYSTEM
+OUR PRODUCTS
 
 </h5>
 
-
-
 <h2>
 
-Professional Security Solutions
+Security Equipment
 
 </h2>
 
-
-
 <p>
 
-Select a product and configure every option
-before adding it to your cart.
+Choose from our professional range of security products and configure each system to suit your requirements.
 
 </p>
 
+</div>
+
+<!-- Product Counter -->
+
+<div class="shop-toolbar">
+
+<div class="results">
+
+<span id="productCount">
+
+0 Products
+
+</span>
 
 </div>
 
+<div class="view-buttons">
 
+<button
+class="view-btn active"
+id="gridView">
 
+<i class="fas fa-th"></i>
 
+</button>
 
+<button
+class="view-btn"
+id="listView">
 
+<i class="fas fa-list"></i>
 
-<div class="services-grid">
+</button>
 
+</div>
 
+</div>
 
+<!-- Dynamic Product Grid -->
 
+<div
+class="products-grid"
+id="productsGrid">
 
-<div class="service-card">
+<!--
 
+Products are automatically loaded
+from products.js
+
+Example Product Card
+
+<div class="product-card">
+
+<img src="images/products/cctv.jpg">
+
+<div class="product-content">
+
+<span class="badge">
+CCTV
+</span>
+
+<h3>
+Professional CCTV System
+</h3>
+
+<p>
+Complete surveillance package...
+</p>
+
+<div class="price">
+
+<span class="current-price">
+
+R4,500
+
+</span>
+
+</div>
+
+<div class="product-buttons">
+
+<a
+href="product.html?id=cctv-system"
+class="primary-btn">
+
+Configure
+
+</a>
+
+<button
+class="secondary-btn">
+
+<i class="fas fa-cart-plus"></i>
+
+Quick Add
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+-->
+
+</div>
+
+</div>
+
+    </section>
+
+<!--==================================
+FEATURED CATEGORIES
+===================================-->
+
+<section class="featured-categories">
+
+<div class="container">
+
+<div class="section-title fade">
+
+<h5>
+
+SHOP BY CATEGORY
+
+</h5>
+
+<h2>
+
+Security Solutions
+
+</h2>
+
+<p>
+
+Browse our complete range of professional security equipment.
+
+</p>
+
+</div>
+
+<div class="categories-grid">
+
+<a href="product.html?id=cctv-system" class="category-card">
 
 <i class="fas fa-video"></i>
-
 
 <h3>
 
@@ -478,35 +397,17 @@ CCTV Systems
 
 </h3>
 
-
 <p>
 
-Select channels, HDD storage,
-PSU and cable options.
+Hikvision & Dahua surveillance systems.
 
 </p>
 
-
-<a href="product.html?id=hikvision-cctv-8ch">
-
-Configure CCTV
-
 </a>
 
-
-</div>
-
-
-
-
-
-
-
-<div class="service-card">
-
+<a href="product.html?id=ip-cctv-system" class="category-card">
 
 <i class="fas fa-network-wired"></i>
-
 
 <h3>
 
@@ -514,35 +415,17 @@ IP CCTV
 
 </h3>
 
-
 <p>
 
-Build IP camera systems with
-NVR and resolution options.
+Professional IP camera solutions.
 
 </p>
 
-
-<a href="product.html?id=hikvision-ip-cctv">
-
-Configure IP CCTV
-
 </a>
 
-
-</div>
-
-
-
-
-
-
-
-<div class="service-card">
-
+<a href="product.html?id=electric-fencing-system" class="category-card">
 
 <i class="fas fa-bolt"></i>
-
 
 <h3>
 
@@ -550,35 +433,17 @@ Electric Fencing
 
 </h3>
 
-
 <p>
 
-Create a complete perimeter
-security solution.
+Residential and commercial perimeter protection.
 
 </p>
 
-
-<a href="product.html?id=electric-fence-builder">
-
-Build Fence
-
 </a>
 
-
-</div>
-
-
-
-
-
-
-
-<div class="service-card">
-
+<a href="product.html?id=gate-automation" class="category-card">
 
 <i class="fas fa-warehouse"></i>
-
 
 <h3>
 
@@ -586,787 +451,748 @@ Gate Automation
 
 </h3>
 
-
 <p>
 
-Configure Centurion gate motors,
-racks and batteries.
+Centurion sliding gate motors.
 
 </p>
 
-
-<a href="product.html?id=centurion-d5-evo">
-
-Configure Gate Motor
-
 </a>
 
+<a href="product.html?id=alarm-system" class="category-card">
 
-</div>
-
-
-
-
-
-
-
-<div class="service-card">
-
-
-<i class="fas fa-person-rifle"></i>
-
+<i class="fas fa-bell"></i>
 
 <h3>
 
-Roboguard
+Alarm Systems
 
 </h3>
 
-
 <p>
 
-Select beam kits and colours.
+Professional intrusion detection systems.
 
 </p>
 
-
-<a href="product.html?id=roboguard-beam-system">
-
-Configure Roboguard
-
 </a>
 
+<a href="product.html?id=access-control" class="category-card">
 
-</div>
-
-
-
-
-
-</div>
-
-
-</div>
-
-
-</section>
-<!-- =========================
-CART PREVIEW
-========================= -->
-
-
-<section class="cart-preview">
-
-
-<div class="container">
-
-
-
-<div class="cart-box">
-
-
-
-
-
-<div class="cart-header">
-
-
-<h2>
-
-Your Security Cart
-
-</h2>
-
-
-
-<a href="cart.html">
-
-View Cart
-
-<i class="fas fa-arrow-right"></i>
-
-</a>
-
-
-
-</div>
-
-
-
-
-
-
-
-<div class="cart-items">
-
-<!-- cart.js loads items here -->
-
-<p>
-
-Your cart is empty.
-
-</p>
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="cart-total-box">
-
+<i class="fas fa-id-card"></i>
 
 <h3>
 
-Total:
-
-<span class="cart-total">
-
-R0.00
-
-</span>
-
+Access Control
 
 </h3>
 
+<p>
 
-</div>
+Fingerprint, RFID and facial recognition.
 
-
-
-
-
-
-
-
-<div class="cart-actions">
-
-
-<a href="cart.html"
-class="primary-btn">
-
-
-<i class="fas fa-cart-shopping"></i>
-
-
-Checkout
-
+</p>
 
 </a>
 
-
-
-
-
-
-<a href="javascript:void(0)"
-onclick="checkoutWhatsApp()"
-class="secondary-btn">
-
-
-<i class="fab fa-whatsapp"></i>
-
-
-Request Quote
-
-
-</a>
-
-
-
 </div>
 
-
-
-
-
-
 </div>
-
-
-</div>
-
 
 </section>
 
+<!--==================================
+TRUSTED BRANDS
+===================================-->
 
-
-
-
-
-
-
-
-<!-- =========================
-WHY CHOOSE NEXPAK
-========================= -->
-
-
-<section class="services">
-
+<section class="brands">
 
 <div class="container">
-
-
 
 <div class="section-title">
 
-
 <h5>
 
-WHY NEXPAK
+TRUSTED BRANDS
 
 </h5>
 
-
-
 <h2>
 
-Complete Security Solutions
+Leading Security Manufacturers
 
 </h2>
 
+</div>
+
+<div class="brands-grid">
+
+<div class="brand-card">
+
+<h3>Hikvision</h3>
 
 </div>
 
+<div class="brand-card">
 
+<h3>Dahua</h3>
 
+</div>
 
+<div class="brand-card">
 
+<h3>Centurion</h3>
 
+</div>
 
+<div class="brand-card">
+
+<h3>Nemtek</h3>
+
+</div>
+
+<div class="brand-card">
+
+<h3>JVA</h3>
+
+</div>
+
+<div class="brand-card">
+
+<h3>Roboguard</h3>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!--==================================
+WHY CHOOSE NEXPAK
+===================================-->
+
+<section class="services">
+
+<div class="container">
+
+<div class="section-title">
+
+<h5>
+
+WHY CHOOSE US
+
+</h5>
+
+<h2>
+
+Why Customers Choose Nexpak
+
+</h2>
+
+</div>
 
 <div class="services-grid">
 
-
-
-
-
 <div class="service-card">
 
+<i class="fas fa-award"></i>
+
+<h3>
+
+Quality Products
+
+</h3>
+
+<p>
+
+Only trusted brands and professional-grade security equipment.
+
+</p>
+
+</div>
+
+<div class="service-card">
 
 <i class="fas fa-user-shield"></i>
 
-
 <h3>
 
-Professional Installation
+Expert Advice
 
 </h3>
 
-
 <p>
 
-Security systems designed for
-homes, businesses and industrial sites.
+Experienced guidance to help you choose the right solution.
 
 </p>
 
-
 </div>
-
-
-
-
-
-
 
 <div class="service-card">
 
-
-<i class="fas fa-mobile-screen"></i>
-
+<i class="fas fa-tools"></i>
 
 <h3>
 
-Remote Monitoring
+Installation Ready
 
 </h3>
 
-
 <p>
 
-Control CCTV, alarms and automation
-from anywhere.
+Systems configured for quick and professional installation.
 
 </p>
 
-
 </div>
 
-
-
-
-
-
-
 <div class="service-card">
-
-
-<i class="fas fa-gears"></i>
-
-
-<h3>
-
-Custom Configuration
-
-</h3>
-
-
-<p>
-
-Choose every component to build
-the correct security solution.
-
-</p>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="service-card">
-
 
 <i class="fas fa-headset"></i>
 
-
 <h3>
 
-Support
+After Sales Support
 
 </h3>
 
-
 <p>
 
-Fast assistance for quotations,
-installation and upgrades.
+Technical assistance and ongoing customer support.
 
 </p>
 
+</div>
 
 </div>
 
-
-
-
-
 </div>
-
-
-
-</div>
-
 
     </section>
-    <!-- =========================
-FOOTER
-========================= -->
 
+    <!--==================================
+SECURITY PACKAGES
+===================================-->
 
-<footer>
-
+<section class="security-packages">
 
 <div class="container">
 
 
+<div class="section-title fade">
+
+<h5>
+POPULAR SOLUTIONS
+</h5>
+
+<h2>
+Complete Security Packages
+</h2>
+
+<p>
+Pre-configured security solutions for homes, offices and businesses.
+</p>
+
+</div>
+
+
+
+<div class="packages-grid">
+
+
+
+<div class="package-card">
+
+<div class="package-icon">
+
+<i class="fas fa-house-lock"></i>
+
+</div>
+
+<h3>
+Home Security Package
+</h3>
+
+<p>
+CCTV cameras, alarm systems and perimeter protection for residential properties.
+</p>
+
+<ul>
+
+<li>
+<i class="fas fa-check"></i>
+HD CCTV Cameras
+</li>
+
+<li>
+<i class="fas fa-check"></i>
+Alarm System
+</li>
+
+<li>
+<i class="fas fa-check"></i>
+Electric Fence Options
+</li>
+
+</ul>
+
+
+<a href="contact.html"
+class="primary-btn">
+
+Request Quote
+
+</a>
+
+</div>
+
+
+
+
+<div class="package-card">
+
+<div class="package-icon">
+
+<i class="fas fa-building-shield"></i>
+
+</div>
+
+<h3>
+Business Security Package
+</h3>
+
+<p>
+Professional security solutions designed for commercial environments.
+</p>
+
+<ul>
+
+<li>
+<i class="fas fa-check"></i>
+IP CCTV Systems
+</li>
+
+<li>
+<i class="fas fa-check"></i>
+Access Control
+</li>
+
+<li>
+<i class="fas fa-check"></i>
+Remote Monitoring
+</li>
+
+</ul>
+
+
+<a href="contact.html"
+class="primary-btn">
+
+Request Quote
+
+</a>
+
+</div>
+
+
+
+
+<div class="package-card">
+
+<div class="package-icon">
+
+<i class="fas fa-industry"></i>
+
+</div>
+
+<h3>
+Industrial Security Package
+</h3>
+
+<p>
+High-security protection for warehouses, factories and large sites.
+</p>
+
+<ul>
+
+<li>
+<i class="fas fa-check"></i>
+Perimeter Security
+</li>
+
+<li>
+<i class="fas fa-check"></i>
+Electric Fencing
+</li>
+
+<li>
+<i class="fas fa-check"></i>
+Industrial CCTV
+</li>
+
+</ul>
+
+
+<a href="contact.html"
+class="primary-btn">
+
+Request Quote
+
+</a>
+
+</div>
+
+
+</div>
+
+</div>
+
+    </section>
+
+    <!--==================================
+CUSTOMER REVIEWS
+===================================-->
+
+<section class="testimonials">
+
+<div class="container">
+
+<div class="section-title fade">
+
+<h5>
+
+CUSTOMER REVIEWS
+
+</h5>
+
+<h2>
+
+Trusted By Homes & Businesses
+
+</h2>
+
+<p>
+
+Our commitment to quality products and exceptional service has earned the trust of customers across South Africa.
+
+</p>
+
+</div>
+
+<div class="testimonials-grid">
+
+<div class="testimonial-card">
+
+<div class="stars">
+
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+
+</div>
+
+<p>
+
+"Excellent service from quotation to delivery. The CCTV system was easy to configure and the image quality is outstanding."
+
+</p>
+
+<h4>
+
+Residential Customer
+
+</h4>
+
+<span>
+
+Johannesburg
+
+</span>
+
+</div>
+
+<div class="testimonial-card">
+
+<div class="stars">
+
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+
+</div>
+
+<p>
+
+"Professional advice helped us choose the correct electric fencing solution for our warehouse."
+
+</p>
+
+<h4>
+
+Business Client
+
+</h4>
+
+<span>
+
+Gauteng
+
+</span>
+
+</div>
+
+<div class="testimonial-card">
+
+<div class="stars">
+
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+<i class="fas fa-star"></i>
+
+</div>
+
+<p>
+
+"Fast response, competitive pricing and quality products. Highly recommended."
+
+</p>
+
+<h4>
+
+Commercial Customer
+
+</h4>
+
+<span>
+
+South Africa
+
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!--==================================
+CALL TO ACTION
+===================================-->
+
+<section class="cta">
+
+<div class="container">
+
+<div class="cta-content">
+
+<h2>
+
+Need Help Choosing The Right Security Solution?
+
+</h2>
+
+<p>
+
+Our experienced team can help you select the ideal CCTV, electric fencing, alarm or access control system for your property.
+
+</p>
+
+<div class="cta-buttons">
+
+<a href="contact.html" class="primary-btn">
+
+Request a Quote
+
+</a>
+
+<a href="products.html" class="secondary-btn">
+
+Browse Products
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+    </section>
+
+    <!--==================================
+FOOTER
+===================================-->
+
+<footer class="footer">
+
+<div class="container">
 
 <div class="footer-grid">
 
+<div class="footer-column">
+
+<img src="images/logo-security.png"
+alt="Nexpak Security Solutions"
+class="footer-logo">
+
+<p>
+
+Nexpak Security Solutions supplies professional CCTV, electric fencing, gate automation, alarm systems, access control and security accessories throughout South Africa.
+
+</p>
+
+<div class="social-links">
+
+<a href="#"><i class="fab fa-facebook-f"></i></a>
+
+<a href="#"><i class="fab fa-linkedin-in"></i></a>
+
+<a href="#"><i class="fab fa-instagram"></i></a>
+
+<a href="#"><i class="fab fa-whatsapp"></i></a>
+
+</div>
+
+</div>
 
 
-
-
-<div>
-
+<div class="footer-column">
 
 <h3>
 
-Nexpak Security Solutions
+Quick Links
 
 </h3>
 
+<ul>
 
+<li><a href="index.html">Home</a></li>
+
+<li><a href="products.html">Products</a></li>
+
+<li><a href="shop.html">Shop</a></li>
+
+<li><a href="contact.html">Contact</a></li>
+
+<li><a href="cart.html">Shopping Cart</a></li>
+
+</ul>
+
+</div>
+
+
+<div class="footer-column">
+
+<h3>
+
+Product Categories
+
+</h3>
+
+<ul>
+
+<li><a href="product.html?id=cctv-system">CCTV Systems</a></li>
+
+<li><a href="product.html?id=ip-cctv-system">IP CCTV</a></li>
+
+<li><a href="product.html?id=electric-fencing-system">Electric Fencing</a></li>
+
+<li><a href="product.html?id=gate-automation">Gate Automation</a></li>
+
+<li><a href="product.html?id=alarm-system">Alarm Systems</a></li>
+
+<li><a href="product.html?id=access-control">Access Control</a></li>
+
+</ul>
+
+</div>
+
+
+<div class="footer-column">
+
+<h3>
+
+Contact Information
+
+</h3>
 
 <p>
 
-CCTV, electric fencing, gate automation,
-access control and perimeter security
-solutions across South Africa.
+<i class="fas fa-phone"></i>
++27 XX XXX XXXX
 
 </p>
-
-
-</div>
-
-
-
-
-
-
-
-<div>
-
-
-<h4>
-
-Quick Links
-
-</h4>
-
-
-
-<a href="index.html">
-
-Home
-
-</a>
-
-
-
-<a href="products.html">
-
-Products
-
-</a>
-
-
-
-<a href="security-shop.html">
-
-Shop
-
-</a>
-
-
-
-<a href="cart.html">
-
-Cart
-
-</a>
-
-
-
-<a href="contact.html">
-
-Contact
-
-</a>
-
-
-</div>
-
-
-
-
-
-
-
-<div>
-
-
-<h4>
-
-Security Products
-
-</h4>
-
-
-
-<a href="product.html?id=hikvision-cctv-8ch">
-
-CCTV
-
-</a>
-
-
-
-<a href="product.html?id=hikvision-ip-cctv">
-
-IP CCTV
-
-</a>
-
-
-
-<a href="product.html?id=electric-fence-builder">
-
-Electric Fencing
-
-</a>
-
-
-
-<a href="product.html?id=centurion-d5-evo">
-
-Gate Motors
-
-</a>
-
-
-
-<a href="product.html?id=roboguard-beam-system">
-
-Roboguard
-
-</a>
-
-
-
-</div>
-
-
-
-
-
-
-
-<div>
-
-
-<h4>
-
-Contact
-
-</h4>
-
-
 
 <p>
 
-📱 +27 83 630 8249
+<i class="fas fa-envelope"></i>
+info@nexpak.co.za
 
 </p>
-
-
 
 <p>
 
-📧 info@nexpaksecurity.co.za
+<i class="fas fa-location-dot"></i>
+Johannesburg, South Africa
 
 </p>
 
+<a href="contact.html"
+class="primary-btn">
 
+Contact Us
 
-<p>
-
-📍 Johannesburg, South Africa
-
-</p>
-
-
+</a>
 
 </div>
 
-
-
-
 </div>
 
-
-
-
-
-
-
+<hr>
 
 <div class="footer-bottom">
 
-
 <p>
 
-© 2026 Nexpak Security Solutions.
-All Rights Reserved.
+&copy; 2026 Nexpak Security Solutions. All Rights Reserved.
 
 </p>
 
+<p>
+
+Professional Security Equipment | CCTV | Electric Fencing | Gate Automation | Access Control
+
+</p>
 
 </div>
 
-
-
-
-
 </div>
-
 
 </footer>
 
-
-
-
-
-
-
-
-<!-- =========================
-SECURITY SHOP SCRIPTS
-
-IMPORTANT:
-NO shop-data.js
-NO shop-script.js
-
-========================= -->
-
-
+<!--==================================
+JAVASCRIPT
+===================================-->
 
 <script src="js/products.js"></script>
 
-
-<script src="js/configurator.js"></script>
-
-
 <script src="js/cart.js"></script>
 
+<script src="js/shop.js"></script>
 
 <script src="js/script.js"></script>
 
-
-
-
-
-
-
-
-<script>
-
-
-/*================================
-LIVE SEARCH
-================================*/
-
-
-const searchBox =
-
-document.getElementById(
-"product-search"
-);
-
-
-
-
-if(searchBox){
-
-
-
-searchBox.addEventListener(
-"keyup",
-
-function(){
-
-
-
-let search =
-
-this.value.toLowerCase();
-
-
-
-
-
-document
-.querySelectorAll(
-".product-card"
-)
-
-.forEach(card=>{
-
-
-
-let text =
-
-card.innerText.toLowerCase();
-
-
-
-
-
-if(text.includes(search)){
-
-
-card.style.display="block";
-
-
-}
-
-else{
-
-
-card.style.display="none";
-
-
-}
-
-
-
-});
-
-
-
-});
-
-
-}
-
-
-
-
-
-/*================================
-START SHOP
-
-================================*/
-
-
-document.addEventListener(
-
-"DOMContentLoaded",
-
-()=>{
-
-
-if(typeof loadProducts === "function"){
-
-
-loadProducts();
-
-
-}
-
-
-
-if(typeof loadCart === "function"){
-
-
-loadCart();
-
-
-}
-
-
-
-});
-
-
-
-</script>
-
-
-
-
-
-
-
 </body>
 
-    </html>
+                                             </html>
