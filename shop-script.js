@@ -1,1134 +1,1790 @@
-// ======================================================
-// NEXPAK SHOP SCRIPT V4
-// MODULE 1 - SETUP & INITIALIZATION
-// ======================================================
+```javascript
+/*=========================================================
+ NEXPAK SECURITY SOLUTIONS V15
 
-// -----------------------------
-// SHOP SETTINGS
-// -----------------------------
-const VAT_RATE = 0.15;
-const DELIVERY_FEE = 150;
-const FREE_DELIVERY_OVER = 5000;
+ shop-script.js
 
-// -----------------------------
-// GLOBAL VARIABLES
-// -----------------------------
-let cart = [];
-let currentCategory = "all";
-let currentSearch = "";
+ PART 1/5
 
-// ======================================================
-// PAGE LOAD
-// ======================================================
+ SHOP ENGINE INITIALIZATION
 
-document.addEventListener("DOMContentLoaded", () => {
+ FEATURES:
 
-    loadCart();
+ - Load product database
+ - Initialize shop
+ - Prepare filters
+ - Prepare search
+ - Prepare sorting
 
-    initializeSearch();
+========================================================= */
 
-    initializeFilters();
 
-    renderProducts();
 
-    updateCartUI();
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
 
-    initializeBackgroundSlider();
+
+initializeShop();
+
 
 });
 
-// ======================================================
-// BACKGROUND SLIDESHOW
-// ======================================================
 
-function initializeBackgroundSlider() {
 
-    const images = [
-        "hero.jpg",
-        "hero2.jpg",
-        "hero3.jpg",
-        "hero4.jpg"
-    ];
 
-    if (images.length === 0) return;
 
-    let index = 0;
+/*=========================================================
+ GLOBAL SHOP VARIABLES
+=========================================================*/
 
-    document.body.style.backgroundImage = `url('${images[index]}')`;
 
-    setInterval(() => {
+let shopProducts = [];
 
-        index++;
+let filteredProducts = [];
 
-        if (index >= images.length) {
-            index = 0;
-        }
+let currentCategory = "all";
 
-        document.body.style.backgroundImage =
-            `url('${images[index]}')`;
+let currentSearch = "";
 
-    }, 5000);
+let currentSort = "default";
 
-}
 
-// ======================================================
-// SEARCH
-// ======================================================
 
-function initializeSearch() {
 
-    const searchInput =
-        document.getElementById("searchInput");
 
-    if (!searchInput) return;
+/*=========================================================
+ INITIALIZE SHOP
+=========================================================*/
 
-    searchInput.addEventListener("input", function () {
 
-        currentSearch =
-            this.value.trim().toLowerCase();
+function initializeShop(){
 
-        renderProducts();
 
-    });
+
+if(typeof products === "undefined"){
+
+
+console.error(
+"Nexpak shop database not loaded."
+);
+
+
+return;
+
 
 }
 
-// ======================================================
-// CATEGORY FILTERS
-// ======================================================
 
-function initializeFilters() {
 
-    document.querySelectorAll(".filter-btn")
-        .forEach(button => {
+shopProducts = products;
 
-            button.addEventListener("click", function () {
 
-                document
-                    .querySelectorAll(".filter-btn")
-                    .forEach(btn =>
-                        btn.classList.remove("active"));
 
-                this.classList.add("active");
+filteredProducts = [...shopProducts];
 
-                currentCategory =
-                    this.dataset.category || "all";
 
-                renderProducts();
 
-            });
+createCategoryFilters();
 
-        });
+
+setupSearch();
+
+
+setupSorting();
+
+
+renderProducts();
+
+
 
 }
 
-// ======================================================
-// FILTER BUTTON SUPPORT
-// ======================================================
 
-function filterCategory(category) {
 
-    currentCategory = category;
 
-    renderProducts();
 
-}
+/*=========================================================
+ CATEGORY FILTER SETUP
+=========================================================*/
 
-// ======================================================
-// MONEY FORMAT
-// ======================================================
 
-function money(value) {
+function createCategoryFilters(){
 
-    return "R" + Number(value).toFixed(2);
 
-}
 
-// ======================================================
-// GET PRODUCT
-// ======================================================
+const categoryContainer =
 
-function getProduct(id) {
+document.getElementById(
+"categoryFilters"
+);
 
-    return products.find(product =>
-        product.id === id);
+
+
+if(!categoryContainer){
+
+return;
 
 }
 
-console.log("✅ Module 1 Loaded");
-// ======================================================
-// MODULE 2A - PRODUCT RENDERING
-// ======================================================
 
-function renderProducts(category = "all", search = "") {
 
-    const grid = document.getElementById("productsGrid");
+let categories = [
 
-    if (!grid) return;
+"all",
 
-    grid.innerHTML = "";
+...new Set(
 
-    const filtered = products.filter(product => {
+shopProducts.map(
 
-        const categoryMatch =
-            category === "all" ||
-            product.category === category;
+product=>product.category
 
-        const searchMatch =
-            search === "" ||
-            product.name.toLowerCase().includes(search.toLowerCase()) ||
-            product.id.toLowerCase().includes(search.toLowerCase()) ||
-            (product.specs || "").toLowerCase().includes(search.toLowerCase());
+)
 
-        return categoryMatch && searchMatch;
+)
 
-    });
+];
 
-    if (filtered.length === 0) {
 
-        grid.innerHTML = `
-            <div class="no-products">
-                <h2>No products found</h2>
-                <p>Please try another search or category.</p>
-            </div>
-        `;
 
-        return;
 
-    }
 
-    filtered.forEach(product => {
+categoryContainer.innerHTML = "";
 
-        createProductCard(product, grid);
 
-    });
 
-}
 
-console.log("Module 2A Loaded");
-// ======================================================
-// MODULE 2B - CREATE PRODUCT CARD
-// ======================================================
 
-function createProductCard(product, grid) {
+categories.forEach(category=>{
 
-    const card = document.createElement("div");
-    card.className = "product-card";
 
-    const image =
-        (product.images && product.images.length)
-            ? product.images[0]
-            : "";
+const button =
 
-    const sizeSelector = Array.isArray(product.sizes)
-        ? `
-            <label>Size</label>
-            <select id="size-${product.id}" class="size-selector">
-                ${product.sizes.map(size => `
-                    <option value="${size}">${size}</option>
-                `).join("")}
-            </select>
-        `
-        : "";
+document.createElement(
+"button"
+);
 
-    const colourSelector = Array.isArray(product.color)
-        ? `
-            <label>Colour</label>
-            <select id="colour-${product.id}" class="color-selector">
-                ${product.color.map(colour => `
-                    <option value="${colour}">${colour}</option>
-                `).join("")}
-            </select>
-        `
-        : (typeof product.color === "string"
-            ? `
-                <label>Colour</label>
-                <input
-                    id="colour-${product.id}"
-                    class="color-selector"
-                    value="${product.color}"
-                    readonly>
-            `
-            : "");
 
-    card.innerHTML = `
 
-        <div class="product-image">
+button.className =
+"category-btn";
 
-            ${image
-                ? `<img src="${image}" class="product-img" alt="${product.name}">`
-                : `<div class="product-placeholder">${product.icon || "📦"}</div>`
-            }
 
-        </div>
 
-        <div class="product-info">
+button.textContent =
 
-            <span class="product-category">
-                ${product.category.toUpperCase()}
-            </span>
+category === "all"
 
-            <h3 class="product-name">
-                ${product.name}
-            </h3>
+?
 
-            <p class="product-specs">
-                ${product.specs || ""}
-            </p>
+"All Products"
 
-            <small class="product-sku">
-                SKU: ${product.id}
-            </small>
+:
 
-            <div class="product-price">
-                ${money(product.price)}
-            </div>
+formatCategory(category);
 
-            <div class="product-price-note">
-                Price Excl. VAT
-            </div>
 
-            <div class="min-order">
-                Minimum Order: ${product.minOrder} ${product.unit || ""}
-            </div>
 
-            ${sizeSelector}
 
-            ${colourSelector}
 
-            <div class="product-footer">
+button.dataset.category =
+category;
 
-                <div class="qty-selector">
 
-                    <button onclick="changeQty('${product.id}',-1)">
-                        −
-                    </button>
 
-                    <input
-                        id="qty-${product.id}"
-                        type="number"
-                        min="${product.minOrder}"
-                        value="${product.minOrder}">
 
-                    <button onclick="changeQty('${product.id}',1)">
-                        +
-                    </button>
 
-                </div>
+button.addEventListener(
+"click",
+()=>{
 
-                <button
-                    class="add-to-cart-btn"
-                    onclick="addToCart('${product.id}')">
 
-                    🛒 Add to Cart
+currentCategory =
+category;
 
-                </button>
 
-            </div>
+filterProducts();
 
-        </div>
 
-    `;
+});
 
-    grid.appendChild(card);
+
+categoryContainer.appendChild(
+button
+);
+
+
+
+});
+
+
 
 }
 
-console.log("Module 2B Loaded");
 
-// ======================================================
-// MODULE 3 - QUANTITY & ADD TO CART
-// ======================================================
 
-// -----------------------------
-// CHANGE PRODUCT QUANTITY
-// -----------------------------
-function changeQty(id, change) {
 
-    const input = document.getElementById(`qty-${id}`);
 
-    if (!input) return;
+/*=========================================================
+ CATEGORY NAME FORMATTER
+=========================================================*/
 
-    const product = getProduct(id);
 
-    const minQty = product.minOrder || 1;
+function formatCategory(text){
 
-    let qty = parseInt(input.value);
 
-    if (isNaN(qty)) qty = minQty;
+return text
 
-    qty += change;
+.replace(
+"-",
+" "
+)
 
-    if (qty < minQty) qty = minQty;
+.replace(
+/\b\w/g,
+letter=>letter.toUpperCase()
 
-    input.value = qty;
+);
+
 
 }
 
-// -----------------------------
-// ADD PRODUCT TO CART
-// -----------------------------
-function addToCart(id) {
+```javascript
+/*=========================================================
+ NEXPAK SECURITY SOLUTIONS V15
 
-    const product = getProduct(id);
+ shop-script.js
 
-    if (!product) return;
+ PART 2/5
 
-    const qty =
-        parseInt(document.getElementById(`qty-${id}`).value) ||
-        product.minOrder;
+ FILTER + SEARCH ENGINE
 
-    let size = "";
-    const sizeField = document.getElementById(`size-${id}`);
-    if (sizeField) size = sizeField.value;
+ FEATURES:
 
-    let colour = "";
-    const colourField = document.getElementById(`colour-${id}`);
-    if (colourField) colour = colourField.value;
+ - Category filtering
+ - Product searching
+ - Live search
+ - Database filtering
 
-    const existing = cart.find(item =>
-        item.id === id &&
-        item.size === size &&
-        item.colour === colour
-    );
+========================================================= */
 
-    if (existing) {
 
-        existing.quantity += qty;
 
-    } else {
 
-        cart.push({
 
-            id: product.id,
-            sku: product.id,
-            name: product.name,
-            price: Number(product.price),
-            quantity: qty,
-            unit: product.unit || "",
-            specs: product.specs || "",
-            image: product.images ? product.images[0] : "",
-            size: size,
-            colour: colour
+/*=========================================================
+ INITIALIZE SHOP CONTROLS
+=========================================================*/
 
-        });
 
-    }
+function initializeShopControls(){
 
-    saveCart();
 
-    updateCartUI();
 
-    toggleCart(true);
+const searchInput = document.getElementById(
+"shopSearch"
+);
 
-    alert(product.name + " added to cart.");
+
+
+if(searchInput){
+
+
+searchInput.addEventListener(
+"input",
+(event)=>{
+
+
+searchTerm = event.target.value
+.toLowerCase()
+.trim();
+
+
+
+applyFilters();
+
+
+
+});
+
 
 }
 
-console.log("Module 3 Loaded");
-// ======================================================
-// MODULE 4A - CART DISPLAY
-// ======================================================
 
-function updateCartUI() {
 
-    const cartItems = document.getElementById("cartItems");
-    const cartCount = document.getElementById("cartCount");
-    const checkoutBtn = document.getElementById("checkoutBtn");
 
-    if (!cartItems) return;
 
-    cartItems.innerHTML = "";
 
-    let totalItems = 0;
+const categoryButtons =
 
-    if (cart.length === 0) {
+document.querySelectorAll(
+"[data-category]"
+);
 
-        cartItems.innerHTML = `
-            <div class="empty-cart">
-                <h3>Your cart is empty</h3>
-                <p>Add products to begin your order.</p>
-            </div>
-        `;
 
-        if (cartCount) cartCount.textContent = "0";
 
-        if (checkoutBtn) checkoutBtn.disabled = true;
 
-        updateTotals();
+categoryButtons.forEach(button=>{
 
-        return;
 
-    }
+button.addEventListener(
+"click",
+()=>{
 
-    cart.forEach(item => {
 
-        totalItems += item.quantity;
+activeCategory =
 
-        const lineTotal = item.price * item.quantity;
+button.dataset.category;
 
-        const row = document.createElement("div");
 
-        row.className = "cart-item";
 
-        row.innerHTML = `
+setActiveCategoryButton(
+button
+);
 
-            <div class="cart-item-image">
 
-                ${
-                    item.image
-                    ? `<img src="${item.image}" alt="${item.name}">`
-                    : "📦"
-                }
 
-            </div>
+applyFilters();
 
-            <div class="cart-item-details">
 
-                <h4>${item.name}</h4>
 
-                <small>SKU: ${item.sku}</small>
+});
 
-                ${item.size ? `<small>Size: ${item.size}</small>` : ""}
 
-                ${item.colour ? `<small>Colour: ${item.colour}</small>` : ""}
+});
 
-                <div class="cart-price">
-                    ${money(item.price)} each
-                </div>
 
-                <div class="cart-qty">
-
-                    <button onclick="updateQty('${item.id}','${item.size}','${item.colour}',${item.quantity-1})">
-                        −
-                    </button>
-
-                    <span>${item.quantity}</span>
-
-                    <button onclick="updateQty('${item.id}','${item.size}','${item.colour}',${item.quantity+1})">
-                        +
-                    </button>
-
-                </div>
-
-            </div>
-
-            <div>
-
-                <div class="cart-price">
-
-                    ${money(lineTotal)}
-
-                </div>
-
-                <button
-                    class="remove-item"
-                    onclick="removeFromCart('${item.id}','${item.size}','${item.colour}')">
-
-                    🗑️
-
-                </button>
-
-            </div>
-
-        `;
-
-        cartItems.appendChild(row);
-
-    });
-
-    if (cartCount) {
-
-        cartCount.textContent = totalItems;
-
-    }
-
-    if (checkoutBtn) {
-
-        checkoutBtn.disabled = false;
-
-    }
-
-    updateTotals();
 
 }
 
-console.log("Module 4A Loaded");
-// ======================================================
-// MODULE 4B - CART MANAGEMENT
-// ======================================================
 
-// -----------------------------
-// UPDATE CART QUANTITY
-// -----------------------------
-function updateQty(id, size, colour, qty) {
 
-    qty = parseInt(qty);
 
-    const item = cart.find(cartItem =>
-        cartItem.id === id &&
-        cartItem.size === size &&
-        cartItem.colour === colour
-    );
 
-    if (!item) return;
+/*=========================================================
+ APPLY ALL FILTERS
+=========================================================*/
 
-    if (qty <= 0) {
 
-        removeFromCart(id, size, colour);
-        return;
+function applyFilters(){
 
-    }
 
-    item.quantity = qty;
 
-    saveCart();
+let results = [...shopProducts];
 
-    updateCartUI();
 
-}
 
-// -----------------------------
-// REMOVE ITEM
-// -----------------------------
-function removeFromCart(id, size, colour) {
 
-    cart = cart.filter(item =>
 
-        !(
-            item.id === id &&
-            item.size === size &&
-            item.colour === colour
-        )
+/*=========================================================
+ CATEGORY FILTER
+=========================================================*/
 
-    );
 
-    saveCart();
+if(
+activeCategory !== "all"
+){
 
-    updateCartUI();
 
-}
+results = results.filter(
+(product)=>{
 
-// -----------------------------
-// CLEAR CART
-// -----------------------------
-function clearCart() {
 
-    if (cart.length === 0) return;
+return (
 
-    if (!confirm("Are you sure you want to clear your cart?")) return;
+product.category
+&&
 
-    cart = [];
+product.category
+.toLowerCase()
 
-    saveCart();
+===
 
-    updateCartUI();
+activeCategory
+.toLowerCase()
 
-    toggleCart(false);
+
+);
+
+
+
+});
+
 
 }
 
-// -----------------------------
-// SAVE CART
-// -----------------------------
-function saveCart() {
 
-    localStorage.setItem(
-        "nexpak_cart",
-        JSON.stringify(cart)
-    );
 
-}
 
-// -----------------------------
-// LOAD CART
-// -----------------------------
-function loadCart() {
 
-    const savedCart = localStorage.getItem("nexpak_cart");
+/*=========================================================
+ SEARCH FILTER
+=========================================================*/
 
-    if (savedCart) {
 
-        try {
+if(searchTerm){
 
-            cart = JSON.parse(savedCart);
 
-        } catch (e) {
+results = results.filter(
+(product)=>{
 
-            cart = [];
 
-        }
+const searchable =
 
-    } else {
 
-        cart = [];
+(
 
-    }
+product.name
 
-}
++
 
-console.log("Module 4B Loaded");
-// ======================================================
-// MODULE 5 - TOTALS & VAT
-// ======================================================
+" "
 
-// -----------------------------
-// UPDATE TOTALS
-// -----------------------------
-function updateTotals() {
++
 
-    let subtotal = 0;
+product.category
 
-    cart.forEach(item => {
++
 
-        subtotal += item.price * item.quantity;
+" "
 
-    });
++
 
-    const vat = subtotal * VAT_RATE;
+product.description
 
-    const delivery =
-        subtotal >= FREE_DELIVERY_OVER
-            ? 0
-            : DELIVERY_FEE;
+)
 
-    const total = subtotal + vat + delivery;
+.toLowerCase();
 
-    setMoney("subtotal", subtotal);
 
-    setMoney("vat", vat);
 
-    if (delivery === 0) {
 
-        const deliveryElement = document.getElementById("delivery");
+return searchable.includes(
+searchTerm
+);
 
-        if (deliveryElement) {
 
-            deliveryElement.textContent = "FREE";
 
-        }
+});
 
-    } else {
-
-        setMoney("delivery", delivery);
-
-    }
-
-    setMoney("total", total);
 
 }
 
-// -----------------------------
-// DISPLAY MONEY
-// -----------------------------
-function setMoney(id, value) {
 
-    const element = document.getElementById(id);
 
-    if (!element) return;
 
-    element.textContent = money(value);
 
-}
+filteredProducts = results;
 
-console.log("Module 5 Loaded");
-// ======================================================
-// MODULE 6 - EFT CHECKOUT & WHATSAPP ORDER
-// ======================================================
 
-function processOrder() {
 
-    if (cart.length === 0) {
-        alert("Your shopping cart is empty.");
-        return;
-    }
+renderProducts(
+filteredProducts
+);
 
-    const customerName = document.getElementById("customerName").value.trim();
-    const customerPhone = document.getElementById("customerPhone").value.trim();
-    const customerEmail = document.getElementById("customerEmail").value.trim();
-    const customerAddress = document.getElementById("customerAddress").value.trim();
 
-    if (!customerName || !customerPhone || !customerAddress) {
-
-        alert("Please complete your Name, Contact Number and Delivery Address.");
-        return;
-
-    }
-
-    const orderNumber = generateOrderNumber();
-
-    let subtotal = 0;
-
-    let message = "";
-
-    message += "🟦 *NEXPAK SOLUTIONS ONLINE ORDER*\n\n";
-    message += "*Order Number:* " + orderNumber + "\n\n";
-
-    message += "*Customer Details*\n";
-    message += "Name: " + customerName + "\n";
-    message += "Phone: " + customerPhone + "\n";
-
-    if (customerEmail !== "") {
-        message += "Email: " + customerEmail + "\n";
-    }
-
-    message += "Address: " + customerAddress + "\n\n";
-
-    message += "*ORDER ITEMS*\n";
-    message += "-----------------------------\n";
-
-    cart.forEach(item => {
-
-        const lineTotal = item.price * item.quantity;
-
-        subtotal += lineTotal;
-
-        message += "• " + item.name + "\n";
-
-        if (item.size) {
-            message += "Size: " + item.size + "\n";
-        }
-
-        if (item.colour) {
-            message += "Colour: " + item.colour + "\n";
-        }
-
-        message += "Qty: " + item.quantity + " " + (item.unit || "") + "\n";
-        message += "Amount: " + money(lineTotal) + "\n\n";
-
-    });
-
-    const vat = subtotal * VAT_RATE;
-
-    const delivery =
-        subtotal >= FREE_DELIVERY_OVER
-            ? 0
-            : DELIVERY_FEE;
-
-    const total = subtotal + vat + delivery;
-
-    message += "-----------------------------\n";
-    message += "Subtotal: " + money(subtotal) + "\n";
-    message += "VAT (15%): " + money(vat) + "\n";
-    message += "Delivery: " + (delivery === 0 ? "FREE" : money(delivery)) + "\n";
-    message += "*TOTAL:* " + money(total) + "\n\n";
-
-    message += "*EFT PAYMENT DETAILS*\n";
-    message += "Bank: Capitec\n";
-    message += "Account Number: 2517857594\n";
-    message += "Branch Code: 470010\n";
-    message += "Reference: " + orderNumber + "\n\n";
-
-    message += "Please send your Proof of Payment once payment has been made.\n";
-    message += "Thank you for choosing NexPak Solutions.";
-
-    window.open(
-        "https://wa.me/27836308249?text=" +
-        encodeURIComponent(message),
-        "_blank"
-    );
-
-    alert("WhatsApp has opened with your order.");
-
-    cart = [];
-
-    saveCart();
-
-    updateCartUI();
-
-    toggleCart(false);
 
 }
 
-console.log("Module 6 Loaded");
-// ======================================================
-// MODULE 7A - ORDER NUMBER, BANK DETAILS & CART DRAWER
-// ======================================================
 
-// -----------------------------
-// GENERATE ORDER NUMBER
-// -----------------------------
-function generateOrderNumber() {
 
-    const now = new Date();
 
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const day = String(now.getDate()).padStart(2, "0");
 
-    const random = Math.floor(Math.random() * 9000) + 1000;
+/*=========================================================
+ CATEGORY BUTTON STATE
+=========================================================*/
 
-    return `NP-${year}${month}${day}-${random}`;
+
+function setActiveCategoryButton(
+activeButton
+){
+
+
+
+const buttons =
+
+document.querySelectorAll(
+"[data-category]"
+);
+
+
+
+buttons.forEach(button=>{
+
+
+button.classList.remove(
+"active"
+);
+
+
+});
+
+
+
+
+activeButton.classList.add(
+"active"
+);
+
+
 
 }
 
-// -----------------------------
-// COPY BANK DETAILS
-// -----------------------------
-function copyBankDetails() {
 
-    const details = `
 
-NEXPAK SOLUTIONS
 
-Bank: Capitec
-Account Number: 2517857594
-Branch Code: 470010
 
-Reference: Your Order Number
+/*=========================================================
+ CATEGORY LIST GENERATOR
+=========================================================*/
+
+
+function generateCategories(){
+
+
+
+const categoryContainer =
+
+document.getElementById(
+"categoryFilters"
+);
+
+
+
+if(!categoryContainer){
+
+return;
+
+}
+
+
+
+
+let categories = [
+
+"all"
+
+];
+
+
+
+
+shopProducts.forEach(product=>{
+
+
+if(
+product.category
+&&
+
+!categories.includes(
+product.category
+)
+
+){
+
+
+categories.push(
+product.category
+);
+
+
+}
+
+
+});
+
+
+
+
+
+categoryContainer.innerHTML = "";
+
+
+
+
+
+categories.forEach(category=>{
+
+
+
+categoryContainer.innerHTML += `
+
+
+<button
+
+data-category="${category}"
+
+class="category-button"
+
+
+>
+
+
+${formatCategoryName(category)}
+
+
+</button>
+
 
 `;
 
-    navigator.clipboard.writeText(details)
-        .then(() => {
 
-            alert("Bank details copied successfully.");
 
-        })
-        .catch(() => {
+});
 
-            alert("Unable to copy bank details.");
 
-        });
 
-}
 
-// -----------------------------
-// COPY ACCOUNT NUMBER
-// -----------------------------
-function copyAccountNumber() {
 
-    navigator.clipboard.writeText("2517857594")
-        .then(() => {
+initializeShopControls();
 
-            alert("Account number copied.");
 
-        });
 
 }
 
-// -----------------------------
-// OPEN / CLOSE CART
-// -----------------------------
-function toggleCart(open) {
 
-    const drawer = document.getElementById("cartDrawer");
-    const overlay = document.getElementById("cartOverlay");
 
-    if (!drawer || !overlay) return;
 
-    if (open) {
 
-        drawer.classList.add("active");
-        overlay.classList.add("active");
+/*=========================================================
+ CATEGORY NAME FORMATTER
+=========================================================*/
 
-    } else {
 
-        drawer.classList.remove("active");
-        overlay.classList.remove("active");
+function formatCategoryName(
+category
+){
 
-    }
 
-}
+if(
+category === "all"
+){
 
-console.log("Module 7A Loaded");
-// ======================================================
-// MODULE 7B - PDF QUOTATION GENERATOR
-// ======================================================
 
-function generateQuoteData() {
+return "All Products";
 
-    if (cart.length === 0) {
-        alert("Your cart is empty.");
-        return null;
-    }
-
-    let subtotal = 0;
-
-    const items = cart.map(item => {
-
-        const lineTotal = item.price * item.quantity;
-
-        subtotal += lineTotal;
-
-        return {
-            ...item,
-            lineTotal
-        };
-
-    });
-
-    const vat = subtotal * VAT_RATE;
-    const delivery = subtotal >= FREE_DELIVERY_OVER ? 0 : DELIVERY_FEE;
-    const total = subtotal + vat + delivery;
-
-    return {
-
-        quoteNumber: generateOrderNumber(),
-
-        date: new Date().toLocaleDateString("en-ZA"),
-
-        customer: {
-            name: document.getElementById("customerName").value || "",
-            phone: document.getElementById("customerPhone").value || "",
-            email: document.getElementById("customerEmail").value || "",
-            address: document.getElementById("customerAddress").value || ""
-        },
-
-        items,
-        subtotal,
-        vat,
-        delivery,
-        total
-
-    };
 
 }
 
-function downloadQuotation() {
 
-    const quote = generateQuoteData();
 
-    if (!quote) return;
+return category
 
-    const { jsPDF } = window.jspdf;
+.replace(
+"-",
+" "
+)
 
-    const doc = new jsPDF();
+.replace(
+/\b\w/g,
+letter=>letter.toUpperCase()
+);
 
-    let y = 20;
 
-    // COMPANY HEADER
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(20);
-    doc.text("NEXPAK SOLUTIONS", 14, y);
+   }
 
-    y += 8;
+/*=========================================================
+ NEXPAK SECURITY SOLUTIONS V15
 
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(10);
+ shop-script.js
 
-    doc.text("Industrial Packaging • PPE • Warehouse Supplies", 14, y);
+ PART 3/5
 
-    y += 8;
+ SORTING ENGINE + PRODUCT CARD ENHANCEMENTS
 
-    doc.text("Quotation Number: " + quote.quoteNumber, 14, y);
+ FEATURES:
 
-    doc.text("Date: " + quote.date, 140, y);
+ - Price sorting
+ - Name sorting
+ - Featured products
+ - Configurator badges
+ - Product category display
 
-    y += 15;
+========================================================= */
 
-    // CUSTOMER
-    doc.setFont("helvetica", "bold");
-    doc.text("CUSTOMER", 14, y);
 
-    y += 7;
 
-    doc.setFont("helvetica", "normal");
 
-    doc.text(quote.customer.name, 14, y);
 
-    y += 6;
+/*=========================================================
+ SORT PRODUCTS
+=========================================================*/
 
-    doc.text(quote.customer.phone, 14, y);
 
-    y += 6;
+function sortProducts(sortType){
 
-    if (quote.customer.email) {
 
-        doc.text(quote.customer.email, 14, y);
 
-        y += 6;
+let results = [...filteredProducts];
 
-    }
 
-    doc.text(quote.customer.address, 14, y);
 
-    y += 12;
 
-    // TABLE HEADER
-    doc.setFont("helvetica", "bold");
 
-    doc.text("Product", 14, y);
-    doc.text("Qty", 110, y);
-    doc.text("Price", 135, y);
-    doc.text("Total", 170, y);
+switch(sortType){
 
-    y += 6;
 
-    doc.line(14, y, 195, y);
 
-    y += 8;
+case "price-low":
 
-    // PRODUCTS
-    doc.setFont("helvetica", "normal");
 
-    quote.items.forEach(item => {
+results.sort(
+(a,b)=>
 
-        doc.text(item.name, 14, y);
 
-        doc.text(String(item.quantity), 112, y);
+Number(a.basePrice)
 
-        doc.text(money(item.price), 135, y);
+-
 
-        doc.text(money(item.lineTotal), 170, y);
+Number(b.basePrice)
 
-        y += 8;
 
-    });
+);
 
-    y += 8;
 
-    doc.line(110, y, 195, y);
+break;
 
-    y += 8;
 
-    doc.text("Subtotal:", 120, y);
-    doc.text(money(quote.subtotal), 170, y);
 
-    y += 7;
 
-    doc.text("VAT (15%):", 120, y);
-    doc.text(money(quote.vat), 170, y);
 
-    y += 7;
+case "price-high":
 
-    doc.text("Delivery:", 120, y);
-    doc.text(
-        quote.delivery === 0 ? "FREE" : money(quote.delivery),
-        170,
-        y
-    );
 
-    y += 8;
+results.sort(
+(a,b)=>
 
-    doc.setFont("helvetica", "bold");
 
-    doc.text("TOTAL:", 120, y);
-    doc.text(money(quote.total), 170, y);
+Number(b.basePrice)
 
-    y += 20;
+-
 
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(10);
+Number(a.basePrice)
 
-    doc.text("Bank: Capitec", 14, y);
 
-    y += 6;
+);
 
-    doc.text("Account Number: 2517857594", 14, y);
 
-    y += 6;
+break;
 
-    doc.text("Branch Code: 470010", 14, y);
 
-    y += 15;
 
-    doc.text("Thank you for choosing NexPak Solutions.", 14, y);
 
-    doc.save(`Quotation-${quote.quoteNumber}.pdf`);
+
+case "name-a-z":
+
+
+results.sort(
+(a,b)=>
+
+a.name.localeCompare(
+b.name
+)
+
+);
+
+
+break;
+
+
+
+
+
+case "name-z-a":
+
+
+results.sort(
+(a,b)=>
+
+b.name.localeCompare(
+a.name
+)
+
+);
+
+
+break;
+
+
+
+
+
+default:
+
+
+break;
+
+
 
 }
 
-console.log("Module 7B Loaded");
 
 
+
+
+renderProducts(
+results
+);
+
+
+
+}
+
+
+
+
+
+/*=========================================================
+ SORT CONTROL
+=========================================================*/
+
+
+function initializeSorting(){
+
+
+
+const sortSelect =
+
+document.getElementById(
+"productSort"
+);
+
+
+
+
+if(!sortSelect){
+
+return;
+
+}
+
+
+
+
+
+sortSelect.addEventListener(
+"change",
+()=>{
+
+
+sortProducts(
+sortSelect.value
+);
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+/*=========================================================
+ ENHANCED PRODUCT CARD
+=========================================================*/
+
+
+function createProductCard(product){
+
+
+
+let badge = "";
+
+
+
+
+if(
+product.options
+&&
+
+product.options.length > 0
+
+){
+
+
+badge = `
+
+<span class="product-badge">
+
+Configurable
+
+</span>
+
+`;
+
+
+}
+
+
+
+
+if(
+product.extras
+&&
+
+product.extras.length > 0
+
+){
+
+
+badge += `
+
+<span class="product-badge extra">
+
+Extras Available
+
+</span>
+
+`;
+
+
+
+}
+
+
+
+
+
+return `
+
+
+<div class="product-card">
+
+
+${badge}
+
+
+
+
+
+<a href="product.html?id=${product.id}">
+
+
+<img
+
+src="${product.image}"
+
+alt="${product.name}"
+
+loading="lazy"
+
+
+>
+
+
+
+<h3>
+
+${product.name}
+
+</h3>
+
+
+</a>
+
+
+
+
+
+<div class="product-category">
+
+
+${formatCategoryName(
+product.category
+)}
+
+
+</div>
+
+
+
+
+
+
+<p>
+
+${product.description}
+
+</p>
+
+
+
+
+
+
+<div class="product-price">
+
+
+Starting From
+
+
+<strong>
+
+R${Number(
+product.basePrice
+).toFixed(2)}
+
+</strong>
+
+
+
+</div>
+
+
+
+
+
+
+
+<a
+
+href="product.html?id=${product.id}"
+
+class="product-button"
+
+
+>
+
+
+Configure / View
+
+
+</a>
+
+
+
+
+
+</div>
+
+
+`;
+
+
+
+}
+
+
+
+
+
+/*=========================================================
+ FEATURED PRODUCTS
+=========================================================*/
+
+
+function loadFeaturedProducts(){
+
+
+
+const featured =
+
+shopProducts.filter(
+product=>
+
+product.featured === true
+
+);
+
+
+
+
+
+if(
+featured.length
+){
+
+
+renderProducts(
+featured
+);
+
+
+}
+
+
+
+}
+
+
+
+
+
+/*=========================================================
+ START SORTING AFTER SHOP LOAD
+=========================================================*/
+
+
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
+
+
+initializeSorting();
+
+
+});
+
+/*=========================================================
+ NEXPAK SECURITY SOLUTIONS V15
+
+ shop-script.js
+
+ PART 4/5
+
+ SHOP URL HANDLING + PERFORMANCE
+
+ FEATURES:
+
+ - Category URL parameters
+ - Search URL parameters
+ - Product count
+ - Lazy loading support
+ - Empty state improvements
+
+========================================================= */
+
+
+
+
+
+/*=========================================================
+ LOAD URL FILTERS
+=========================================================*/
+
+
+function loadURLFilters(){
+
+
+
+const params =
+
+new URLSearchParams(
+window.location.search
+);
+
+
+
+
+
+const category =
+
+params.get(
+"category"
+);
+
+
+
+
+
+const search =
+
+params.get(
+"search"
+);
+
+
+
+
+
+if(category){
+
+
+activeCategory =
+category;
+
+
+
+}
+
+
+
+
+
+if(search){
+
+
+searchTerm =
+
+search.toLowerCase();
+
+
+const input =
+
+document.getElementById(
+"shopSearch"
+);
+
+
+
+if(input){
+
+input.value =
+search;
+
+
+}
+
+
+
+}
+
+
+
+
+
+applyFilters();
+
+
+
+}
+
+
+
+
+
+/*=========================================================
+ PRODUCT COUNT DISPLAY
+=========================================================*/
+
+
+function updateProductCount(
+count
+){
+
+
+
+const counter =
+
+document.getElementById(
+"productCount"
+);
+
+
+
+
+if(counter){
+
+
+counter.textContent =
+
+count +
+
+" security products found";
+
+
+}
+
+
+
+}
+
+
+
+
+
+/*=========================================================
+ UPDATE RENDER FUNCTION
+=========================================================*/
+
+
+const originalRenderProducts = renderProducts;
+
+
+
+
+renderProducts = function(
+productList
+){
+
+
+
+originalRenderProducts(
+productList
+);
+
+
+
+updateProductCount(
+productList.length
+);
+
+
+
+};
+
+
+
+
+
+/*=========================================================
+ CATEGORY LINK HANDLER
+=========================================================*/
+
+
+function openCategory(
+category
+){
+
+
+
+window.location.href =
+
+"shop.html?category=" +
+
+encodeURIComponent(
+category
+);
+
+
+
+}
+
+
+
+
+
+/*=========================================================
+ SEARCH LINK HANDLER
+=========================================================*/
+
+
+function searchProducts(
+keyword
+){
+
+
+
+window.location.href =
+
+"shop.html?search=" +
+
+encodeURIComponent(
+keyword
+);
+
+
+
+}
+
+
+
+
+
+/*=========================================================
+ IMAGE ERROR PROTECTION
+=========================================================*/
+
+
+document.addEventListener(
+"error",
+function(event){
+
+
+
+if(
+event.target.tagName === "IMG"
+){
+
+
+
+event.target.src =
+
+"images/product-placeholder.png";
+
+
+
+}
+
+
+
+},
+true
+);
+
+
+
+
+
+/*=========================================================
+ INITIALIZE URL FEATURES
+=========================================================*/
+
+
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
+
+
+loadURLFilters();
+
+
+});
+
+```javascript
+/*=========================================================
+ NEXPAK SECURITY SOLUTIONS V15
+
+ shop-script.js
+
+ PART 5/5
+
+ FINAL SHOP ENGINE INTEGRATION
+
+ FEATURES:
+
+ - Complete initialization
+ - Database validation
+ - Category generation
+ - Sorting activation
+ - Shop state saving
+ - Public functions
+
+========================================================= */
+
+
+
+
+
+/*=========================================================
+ DATABASE VALIDATION
+=========================================================*/
+
+
+function validateShopDatabase(){
+
+
+
+if(
+!Array.isArray(shopProducts)
+){
+
+
+console.error(
+"Nexpak shop database format invalid."
+);
+
+
+
+return false;
+
+
+}
+
+
+
+
+return true;
+
+
+
+}
+
+
+
+
+
+/*=========================================================
+ SAVE SHOP STATE
+=========================================================*/
+
+
+function saveShopState(){
+
+
+
+const state = {
+
+
+category:
+
+activeCategory,
+
+
+
+search:
+
+searchTerm
+
+
+
+};
+
+
+
+
+
+localStorage.setItem(
+
+"nexpak_shop_state",
+
+JSON.stringify(
+state
+)
+
+);
+
+
+
+}
+
+
+
+
+
+/*=========================================================
+ RESTORE SHOP STATE
+=========================================================*/
+
+
+function restoreShopState(){
+
+
+
+const saved =
+
+localStorage.getItem(
+"nexpak_shop_state"
+);
+
+
+
+
+if(
+!saved
+){
+
+return;
+
+}
+
+
+
+try{
+
+
+const state =
+
+JSON.parse(
+saved
+);
+
+
+
+
+if(
+state.category
+){
+
+
+activeCategory =
+
+state.category;
+
+
+}
+
+
+
+
+
+if(
+state.search
+){
+
+
+searchTerm =
+
+state.search;
+
+
+}
+
+
+
+
+}
+
+catch(error){
+
+
+console.error(
+"Shop state restore failed",
+error
+);
+
+
+}
+
+
+
+}
+
+
+
+
+
+/*=========================================================
+ COMPLETE SHOP STARTUP
+=========================================================*/
+
+
+function startShopV15(){
+
+
+
+if(
+!validateShopDatabase()
+){
+
+return;
+
+}
+
+
+
+
+restoreShopState();
+
+
+
+generateCategories();
+
+
+
+applyFilters();
+
+
+
+}
+
+
+
+
+
+/*=========================================================
+ UPDATE STATE AFTER FILTERING
+=========================================================*/
+
+
+const originalApplyFilters = applyFilters;
+
+
+
+
+applyFilters = function(){
+
+
+
+originalApplyFilters();
+
+
+
+saveShopState();
+
+
+
+};
+
+
+
+
+
+/*=========================================================
+ GLOBAL SHOP FUNCTIONS
+
+ AVAILABLE FOR HTML BUTTONS
+
+=========================================================*/
+
+
+window.NexpakShop = {
+
+
+filter:
+
+function(category){
+
+
+activeCategory = category;
+
+
+applyFilters();
+
+
+},
+
+
+
+
+search:
+
+function(keyword){
+
+
+searchTerm =
+
+keyword
+.toLowerCase();
+
+
+applyFilters();
+
+
+},
+
+
+
+
+
+sort:
+
+function(type){
+
+
+sortProducts(type);
+
+
+},
+
+
+
+
+category:
+
+openCategory,
+
+
+
+
+searchPage:
+
+searchProducts
+
+
+
+};
+
+
+
+
+
+/*=========================================================
+ FINAL INITIALIZATION
+=========================================================*/
+
+
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
+
+
+startShopV15();
+
+
+
+});
