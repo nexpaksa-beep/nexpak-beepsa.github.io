@@ -1,246 +1,317 @@
-// ======================================================
-// NEXPAK SECURITY SOLUTIONS V15
-// shop.js
-//
-// PART 1/6
-//
-// TAKEALOT STYLE SHOP ENGINE
-// PRODUCT DATABASE LOADER
-// PRODUCT CARD RENDERER
-// ======================================================
+<!-- ======================================================
+ NEXPAK SECURITY SOLUTIONS V15
 
+ shop.html
 
+ PART 1/6
 
-// ======================================================
-// GLOBAL SHOP VARIABLES
-// ======================================================
+ SHOP FRONTEND
+ HEAD
+ SEO
+ STYLES
+ HEADER
+ NAVIGATION
+====================================================== -->
 
 
-let displayedProducts = [];
+<!DOCTYPE html>
 
-let currentView = "grid";
+<html lang="en">
 
-let selectedProductOptions = {};
 
+<head>
 
 
+<meta charset="UTF-8">
 
-// ======================================================
-// INITIALIZE SHOP
-// ======================================================
 
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-document.addEventListener(
 
-"DOMContentLoaded",
 
-()=>{
+<title>
+Nexpak Security Solutions | CCTV, Electric Fencing, Alarms & Access Control
+</title>
 
 
-initializeShop();
 
+<meta name="description"
+content="Shop CCTV systems, electric fencing, alarm systems, gate motors, access control, intercoms and security equipment from Nexpak Security Solutions.">
 
-}
 
-);
 
+<meta name="keywords"
+content="CCTV South Africa, security cameras, electric fencing, alarm systems, gate motors, access control, intercom systems, Hikvision, Dahua">
 
 
 
-// ======================================================
-// START SHOP
-// ======================================================
+<meta name="author"
+content="Nexpak Security Solutions">
 
 
-function initializeShop(){
 
+<meta name="robots"
+content="index, follow">
 
-if(typeof shopProducts === "undefined"){
 
 
-console.error(
-"Nexpak shopProducts database missing."
-);
+<link rel="canonical"
+href="https://nexpak-beepsa.github.io/shop.html">
 
 
-return;
 
+<!-- OPEN GRAPH -->
 
-}
+<meta property="og:title"
+content="Nexpak Security Solutions Security Shop">
 
 
+<meta property="og:description"
+content="Professional security equipment including CCTV, electric fencing, alarms and access control solutions.">
 
-displayedProducts = [...shopProducts];
 
+<meta property="og:type"
+content="website">
 
-renderProducts();
 
 
-initializeShopEvents();
+<meta property="og:url"
+content="https://nexpak-beepsa.github.io/shop.html">
 
 
 
-console.log(
-"%cNEXPAK SHOP V15 INITIALIZED",
-"color:#00B4FF;font-size:18px;font-weight:bold;"
-);
 
 
+<!-- GOOGLE FONT -->
 
-}
 
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
 
 
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
 
-// ======================================================
-// RENDER ALL PRODUCTS
-// ======================================================
 
 
-function renderProducts(){
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+rel="stylesheet">
 
 
-const grid =
 
-document.getElementById(
-"productsGrid"
-);
 
 
+<!-- FONT AWESOME -->
 
-if(!grid){
 
-return;
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-}
 
 
 
-grid.innerHTML = "";
 
+<!-- SHOP CSS -->
 
 
+<link rel="stylesheet"
+href="shop-styles.css">
 
 
-if(displayedProducts.length === 0){
 
+</head>
 
-grid.innerHTML = `
 
 
-<div class="no-products">
 
 
-<h3>
-No products found
-</h3>
+<body>
+
+
+
+<!-- ======================================================
+ HEADER
+====================================================== -->
+
+
+<header class="shop-header">
+
+
+<div class="logo-area">
+
+
+<a href="index.html">
+
+
+<img src="images/nexpak-logo.png"
+alt="Nexpak Security Solutions">
+
+
+</a>
+
+
+</div>
+
+
+
+
+<nav class="main-navigation">
+
+
+<a href="index.html">
+Home
+</a>
+
+
+<a href="products.html">
+Products
+</a>
+
+
+<a href="shop.html"
+class="active">
+Shop
+</a>
+
+
+<a href="contact.html">
+Contact
+</a>
+
+
+</nav>
+
+
+
+
+
+<div class="header-actions">
+
+
+
+<button class="search-toggle">
+
+<i class="fas fa-search"></i>
+
+</button>
+
+
+
+
+<a href="cart.html"
+class="cart-icon">
+
+
+<i class="fas fa-shopping-cart"></i>
+
+
+<span id="cartCount">
+0
+</span>
+
+
+</a>
+
+
+
+</div>
+
+
+
+ </header>
+
+ <!-- ======================================================
+ SHOP HERO SECTION
+====================================================== -->
+
+
+<section class="shop-hero">
+
+
+<div class="hero-content">
+
+
+<h1>
+Security Equipment Shop
+</h1>
+
 
 
 <p>
-Try another search or category.
+Professional CCTV systems, electric fencing,
+alarms, gate automation, access control and
+security solutions.
 </p>
 
 
+
+
+<a href="#products"
+class="hero-shop-btn">
+
+Browse Products
+
+</a>
+
+
+
 </div>
 
 
-`;
 
-
-updateProductCount();
-
-
-return;
-
-
-}
+</section>
 
 
 
 
 
-displayedProducts.forEach(
+<!-- ======================================================
+ SHOP CONTROLS
+ SEARCH
+ FILTERS
+ SORTING
+====================================================== -->
 
-(product,index)=>{
 
-
-grid.innerHTML +=
-
-createProductCard(
-product,
-index
-);
+<section class="shop-controls">
 
 
 
-}
-
-);
+<div class="search-container">
 
 
+<label for="shopSearch">
 
-updateProductCount();
+Search Security Products
 
-
-}
+</label>
 
 
 
+<div class="search-box">
 
 
-// ======================================================
-// CREATE PRODUCT CARD
-// ======================================================
+<input
+
+type="search"
+
+id="shopSearch"
+
+placeholder="Search CCTV, alarms, gate motors...">
 
 
-function createProductCard(product,index){
+<button
 
+onclick="searchProducts(
+document.getElementById('shopSearch').value
+)">
 
+<i class="fas fa-search"></i>
 
-const mainImage =
+</button>
 
-product.images && product.images.length
-
-?
-
-product.images[0]
-
-:
-
-"images/no-image.jpg";
-
-
-
-
-return `
-
-
-<div class="product-card"
-
-data-product-id="${product.id}">
-
-
-
-<!-- IMAGE AREA -->
-
-<div class="product-gallery">
-
-
-<img
-
-class="product-main-image"
-
-src="${mainImage}"
-
-alt="${product.name}"
-
-data-index="0">
-
-
-<div class="image-thumbnails">
-
-
-${createThumbnails(product)}
 
 
 </div>
@@ -251,44 +322,236 @@ ${createThumbnails(product)}
 
 
 
-<!-- PRODUCT INFORMATION -->
-
-
-<div class="product-info">
 
 
 
-<span class="product-category">
+<div class="filter-container">
 
-${product.category}
+
+<label>
+
+Category
+
+</label>
+
+
+
+<select id="categoryFilter">
+
+
+<option value="all">
+
+All Categories
+
+</option>
+
+
+<option value="CCTV">
+
+CCTV Systems
+
+</option>
+
+
+<option value="Electric Fencing">
+
+Electric Fencing
+
+</option>
+
+
+<option value="Alarm Systems">
+
+Alarm Systems
+
+</option>
+
+
+<option value="Gate Automation">
+
+Gate Motors
+
+</option>
+
+
+<option value="Access Control">
+
+Access Control
+
+</option>
+
+
+<option value="Intercom">
+
+Intercom Systems
+
+</option>
+
+
+<option value="Accessories">
+
+Security Accessories
+
+</option>
+
+
+</select>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="sort-container">
+
+
+<label>
+
+Sort By
+
+</label>
+
+
+
+<select id="sortProducts">
+
+
+<option value="default">
+
+Recommended
+
+</option>
+
+
+<option value="low-high">
+
+Price Low To High
+
+</option>
+
+
+<option value="high-low">
+
+Price High To Low
+
+</option>
+
+
+<option value="name">
+
+Product Name
+
+</option>
+
+
+</select>
+
+
+
+</div>
+
+
+
+
+
+
+<div class="view-switcher">
+
+
+<button
+
+class="view-btn active"
+
+data-view="grid">
+
+
+<i class="fas fa-grip"></i>
+
+</button>
+
+
+
+
+<button
+
+class="view-btn"
+
+data-view="list">
+
+
+<i class="fas fa-list"></i>
+
+</button>
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+<!-- ======================================================
+ PRODUCTS SECTION
+====================================================== -->
+
+
+<section id="products"
+class="products-section">
+
+
+
+
+
+<div class="products-header">
+
+
+<h2>
+
+Security Products
+
+</h2>
+
+
+
+<span id="productCount">
+
+0 Products
 
 </span>
 
 
 
-<h3>
-
-${product.name}
-
-</h3>
-
-
-
-<p class="product-description">
-
-${product.description || ""}
-
-</p>
+</div>
 
 
 
 
-<!-- OPTIONS -->
-
-<div class="product-options">
 
 
-${createProductOptions(product)}
+
+<!-- PRODUCT GRID -->
+
+
+<div id="productsGrid"
+
+class="products-grid">
+
+
+
+<!-- PRODUCTS LOADED BY SHOP ENGINE -->
+
 
 
 </div>
@@ -296,13 +559,1170 @@ ${createProductOptions(product)}
 
 
 
-<!-- PRICE -->
+
+ </section>
+
+ <!-- ======================================================
+ FEATURED SECURITY CATEGORIES
+====================================================== -->
 
 
-<div class="product-price">
+<section class="featured-categories">
 
 
-${
+<div class="section-title">
+
+
+<h2>
+Shop By Security Category
+</h2>
+
+
+<p>
+Find the right protection solution for your property.
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="category-grid">
+
+
+
+
+
+<div class="category-card">
+
+
+<i class="fas fa-video"></i>
+
+
+<h3>
+CCTV Systems
+</h3>
+
+
+<p>
+HD cameras, IP cameras, DVR and NVR surveillance systems.
+</p>
+
+
+<button onclick="filterCategory('CCTV')">
+
+View CCTV
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="category-card">
+
+
+<i class="fas fa-bolt"></i>
+
+
+<h3>
+Electric Fencing
+</h3>
+
+
+<p>
+Perimeter protection systems and electric fence accessories.
+</p>
+
+
+<button onclick="filterCategory('Electric Fencing')">
+
+View Electric Fencing
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="category-card">
+
+
+<i class="fas fa-bell"></i>
+
+
+<h3>
+Alarm Systems
+</h3>
+
+
+<p>
+Smart alarms, sensors and security control panels.
+</p>
+
+
+<button onclick="filterCategory('Alarm Systems')">
+
+View Alarms
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="category-card">
+
+
+<i class="fas fa-door-open"></i>
+
+
+<h3>
+Access Control
+</h3>
+
+
+<p>
+Biometric, keypad and card access solutions.
+</p>
+
+
+<button onclick="filterCategory('Access Control')">
+
+View Access Control
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="category-card">
+
+
+<i class="fas fa-garage"></i>
+
+
+<h3>
+Gate Automation
+</h3>
+
+
+<p>
+Gate motors, remotes and automation accessories.
+</p>
+
+
+<button onclick="filterCategory('Gate Automation')">
+
+View Gate Motors
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+<div class="category-card">
+
+
+<i class="fas fa-phone"></i>
+
+
+<h3>
+Intercom Systems
+</h3>
+
+
+<p>
+Video intercom and communication solutions.
+</p>
+
+
+<button onclick="filterCategory('Intercom')">
+
+View Intercoms
+
+</button>
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- ======================================================
+ TRUSTED BRANDS
+====================================================== -->
+
+
+<section class="trusted-brands">
+
+
+<div class="section-title">
+
+
+<h2>
+Trusted Security Brands
+</h2>
+
+
+<p>
+Quality equipment from recognised manufacturers.
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="brand-grid">
+
+
+
+<div class="brand-card">
+Hikvision
+</div>
+
+
+
+<div class="brand-card">
+Dahua
+</div>
+
+
+
+<div class="brand-card">
+Nemtek
+</div>
+
+
+
+<div class="brand-card">
+Centurion
+</div>
+
+
+
+<div class="brand-card">
+ET Nice
+</div>
+
+
+
+<div class="brand-card">
+IDS
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ======================================================
+ WHY CHOOSE NEXPAK
+====================================================== -->
+
+
+<section class="why-nexpak">
+
+
+<div class="section-title">
+
+
+<h2>
+Why Choose Nexpak Security Solutions?
+</h2>
+
+
+</div>
+
+
+
+
+
+<div class="benefits-grid">
+
+
+
+
+
+<div class="benefit-card">
+
+
+<i class="fas fa-shield-halved"></i>
+
+
+<h3>
+Security Expertise
+</h3>
+
+
+<p>
+Professional security products selected for residential,
+commercial and industrial protection.
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="benefit-card">
+
+
+<i class="fas fa-truck-fast"></i>
+
+
+<h3>
+Reliable Supply
+</h3>
+
+
+<p>
+Quality security equipment delivered across South Africa.
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="benefit-card">
+
+
+<i class="fas fa-headset"></i>
+
+
+<h3>
+Support & Advice
+</h3>
+
+
+<p>
+Helping customers choose the correct security solution.
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="benefit-card">
+
+
+<i class="fas fa-lock"></i>
+
+
+<h3>
+Secure Shopping
+</h3>
+
+
+<p>
+Safe ordering with professional customer service.
+</p>
+
+
+</div>
+
+
+
+
+</div>
+
+
+ </section>
+
+ <!-- ======================================================
+ QUICK VIEW MODAL
+====================================================== -->
+
+
+<div id="quickViewModal"
+
+class="quick-view-modal">
+
+
+
+<div class="quick-view-content">
+
+
+
+<button
+
+class="close-quick-view"
+
+onclick="closeQuickView()">
+
+<i class="fas fa-times"></i>
+
+</button>
+
+
+
+
+
+<div class="quick-view-image">
+
+
+<img
+
+id="quickViewImage"
+
+src="images/no-image.jpg"
+
+alt="Product Image">
+
+
+</div>
+
+
+
+
+
+<div class="quick-view-details">
+
+
+
+<h2 id="quickViewName">
+
+Product Name
+
+</h2>
+
+
+
+
+
+<p id="quickViewDescription">
+
+Product description
+
+</p>
+
+
+
+
+
+<div id="quickViewPrice"
+
+class="quick-view-price">
+
+R0.00
+
+</div>
+
+
+
+
+
+<div id="quickViewOptions">
+
+</div>
+
+
+
+
+
+<button
+
+id="quickViewCartButton"
+
+class="add-cart-btn">
+
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+
+</button>
+
+
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- ======================================================
+ CART MINI PANEL
+====================================================== -->
+
+
+<div id="cartPanel"
+
+class="cart-panel">
+
+
+
+<div class="cart-panel-header">
+
+
+<h3>
+
+Your Cart
+
+</h3>
+
+
+
+<button
+
+onclick="closeCartPanel()">
+
+<i class="fas fa-times"></i>
+
+</button>
+
+
+</div>
+
+
+
+
+
+<div id="cartItems"
+
+class="cart-items">
+
+
+
+<p>
+
+Your cart is empty.
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+<div class="cart-panel-footer">
+
+
+
+<div class="cart-total">
+
+
+Total:
+
+<span id="cartTotal">
+
+R0.00
+
+</span>
+
+
+</div>
+
+
+
+
+
+<a href="cart.html"
+
+class="checkout-btn">
+
+View Cart
+
+</a>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- ======================================================
+ CART NOTIFICATION
+====================================================== -->
+
+
+<div class="cart-notification">
+
+
+<i class="fas fa-check-circle"></i>
+
+
+<span>
+
+Added to cart
+
+</span>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- ======================================================
+ FLOATING WHATSAPP QUOTE BUTTON
+====================================================== -->
+
+
+<a
+
+href="https://wa.me/"
+
+class="whatsapp-floating"
+
+target="_blank">
+
+
+
+<i class="fab fa-whatsapp"></i>
+
+
+
+<span>
+
+Request Quote
+
+</span>
+
+
+
+</a>
+
+
+
+
+
+
+
+
+
+<!-- ======================================================
+ SECURITY GUARANTEE STRIP
+====================================================== -->
+
+
+<section class="security-strip">
+
+
+
+<div>
+
+
+<i class="fas fa-shield"></i>
+
+
+<strong>
+Professional Security Solutions
+</strong>
+
+
+</div>
+
+
+
+
+
+<div>
+
+
+<i class="fas fa-clock"></i>
+
+
+<strong>
+Fast Response
+</strong>
+
+
+</div>
+
+
+
+
+
+<div>
+
+
+<i class="fas fa-user-shield"></i>
+
+
+<strong>
+Trusted Protection
+</strong>
+
+
+</div>
+
+
+
+
+ </section>
+
+ <!-- ======================================================
+ FOOTER
+====================================================== -->
+
+
+<footer class="shop-footer">
+
+
+
+
+
+<div class="footer-container">
+
+
+
+
+
+<div class="footer-column">
+
+
+<h3>
+Nexpak Security Solutions
+</h3>
+
+
+<p>
+
+Professional security equipment supplier
+specialising in CCTV, electric fencing,
+alarms, access control and automation.
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="footer-column">
+
+
+<h3>
+Shop
+</h3>
+
+
+<a href="shop.html">
+All Products
+</a>
+
+
+<a href="products.html">
+Categories
+</a>
+
+
+<a href="cart.html">
+Shopping Cart
+</a>
+
+
+<a href="contact.html">
+Request Quote
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="footer-column">
+
+
+<h3>
+Security Categories
+</h3>
+
+
+<a href="#">
+CCTV Systems
+</a>
+
+
+<a href="#">
+Electric Fencing
+</a>
+
+
+<a href="#">
+Alarm Systems
+</a>
+
+
+<a href="#">
+Gate Automation
+</a>
+
+
+<a href="#">
+Access Control
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="footer-column">
+
+
+<h3>
+Contact
+</h3>
+
+
+
+<p>
+
+<i class="fas fa-phone"></i>
+
+012 XXX XXXX
+
+</p>
+
+
+
+<p>
+
+<i class="fas fa-envelope"></i>
+
+info@nexpak.co.za
+
+</p>
+
+
+
+<p>
+
+<i class="fas fa-location-dot"></i>
+
+South Africa
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="footer-bottom">
+
+
+<p>
+
+© 2026 Nexpak Security Solutions.
+All Rights Reserved.
+
+</p>
+
+
+</div>
+
+
+
+
+</footer>
+
+
+
+
+
+
+
+
+
+<!-- ======================================================
+ JAVASCRIPT FILES
+====================================================== -->
+
+
+
+<!-- PRODUCT DATABASE -->
+
+
+<script src="shop-data.js"></script>
+
+
+
+
+
+<!-- CART ENGINE -->
+
+
+<script src="js/cart.js"></script>
+
+
+
+
+
+<!-- SHOP ENGINE -->
+
+
+<script src="js/shop-script.js"></script>
+
+
+
+
+
+
+
+<!-- ======================================================
+ PAGE INITIALIZATION
+====================================================== -->
+
+
+<script>
+
+
+console.log(
+
+"%cNEXPAK SHOP PAGE V15 LOADED",
+
+"color:#00B4FF;font-size:18px;font-weight:bold;"
+
+);
+
+
+
+</script>
+
+
+
+
+
+</body>
+
+
+</html>
+<!-- ======================================================
+ NEXPAK SECURITY SOLUTIONS V15
+
+ PART 6/6
+
+ SHOP PAGE HELPERS
+ MODALS
+ CATEGORY SHORTCUTS
+ MOBILE MENU
+====================================================== -->
+
+
+<script>
+
+
+// ======================================================
+// QUICK VIEW OPEN
+// ======================================================
+
+
+function openQuickView(productId){
+
+
+if(typeof shopProducts === "undefined"){
+
+return;
+
+}
+
+
+
+const product = shopProducts.find(
+
+item => item.id === productId
+
+);
+
+
+
+if(!product){
+
+return;
+
+}
+
+
+
+
+const modal = document.getElementById(
+"quickViewModal"
+);
+
+
+
+const image = document.getElementById(
+"quickViewImage"
+);
+
+
+
+const name = document.getElementById(
+"quickViewName"
+);
+
+
+
+const description = document.getElementById(
+"quickViewDescription"
+);
+
+
+
+const price = document.getElementById(
+"quickViewPrice"
+);
+
+
+
+
+
+if(image){
+
+image.src = product.images?.[0] || "images/no-image.jpg";
+
+}
+
+
+
+if(name){
+
+name.textContent = product.name;
+
+}
+
+
+
+if(description){
+
+description.textContent =
+product.description || "";
+
+}
+
+
+
+if(price){
+
+price.textContent =
+
 product.price > 0
 
 ?
@@ -311,2774 +1731,36 @@ formatShopCurrency(product.price)
 
 :
 
-"Request Quote"
-
-}
-
-
-</div>
-
-
-
-
-
-<!-- QUANTITY -->
-
-
-<div class="quantity-selector">
-
-
-<button
-
-onclick="changeProductQuantity('${product.id}',-1)">
-
-−
-
-</button>
-
-
-
-<input
-
-id="qty-${product.id}"
-
-type="number"
-
-value="1"
-
-min="1">
-
-
-
-<button
-
-onclick="changeProductQuantity('${product.id}',1)">
-
-+
-
-</button>
-
-
-</div>
-
-
-
-
-
-
-<button
-
-class="add-cart-btn"
-
-onclick="addProductToCart('${product.id}')">
-
-
-<i class="fas fa-cart-plus"></i>
-
-Add To Cart
-
-
-</button>
-
-
-
-
-<button
-
-class="quick-view-btn"
-
-onclick="openQuickView('${product.id}')">
-
-
-View Details
-
-
-</button>
-
-
-
-</div>
-
-
-
-</div>
-
-
-
-`;
-
-
-
-}
-
-
-
-
-// ======================================================
-// CREATE IMAGE THUMBNAILS
-// ======================================================
-
-
-function createThumbnails(product){
-
-
-if(!product.images){
-
-return "";
-
-}
-
-
-
-let html = "";
-
-
-
-
-product.images.forEach(
-
-(image,index)=>{
-
-
-html += `
-
-
-<img
-
-class="product-thumb"
-
-src="${image}"
-
-onclick="changeProductImage(this,'${product.id}',${index})">
-
-
-`;
-
-
-
-}
-
-);
-
-
-
-return html;
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// CREATE OPTION SELECTORS
-// ======================================================
-
-
-function createProductOptions(product){
-
-
-if(!product.options){
-
-return "";
-
-}
-
-
-
-let html = "";
-
-
-
-Object.entries(product.options)
-
-.forEach(
-
-([name,values])=>{
-
-
-
-html += `
-
-
-
-<label>
-
-${formatOptionLabel(name)}
-
-</label>
-
-
-
-<select
-
-class="product-select"
-
-data-product="${product.id}"
-
-data-option="${name}">
-
-
-
-<option value="">
-
-Choose ${formatOptionLabel(name)}
-
-</option>
-
-
-
-${
-
-values.map(
-
-value=>`
-
-<option value="${value}">
-
-${value}
-
-</option>
-
-`
-
-).join("")
-
-}
-
-
-
-</select>
-
-
-
-`;
-
-
-
-}
-
-);
-
-
-
-return html;
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// UPDATE PRODUCT COUNT
-// ======================================================
-
-
-function updateProductCount(){
-
-
-const count =
-
-document.getElementById(
-"productCount"
-);
-
-
-
-if(count){
-
-
-count.textContent =
-
-`${displayedProducts.length} Products`;
-
-
-}
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// FORMAT LABELS
-// ======================================================
-
-
-function formatOptionLabel(text){
-
-
-return text
-
-.replace(
-/([A-Z])/g,
-" $1"
-)
-
-.replace(
-/^./,
-char=>char.toUpperCase()
-);
-
-
-}
-
-
-
-
-
-// ======================================================
-// FORMAT PRICE
-// ======================================================
-
-
-function formatShopCurrency(value){
-
-
-return "R" +
-
-Number(value || 0)
-
-.toLocaleString(
-"en-ZA",
-{
-
-minimumFractionDigits:2
-
-}
-
-);
-
-
-}
-
-
-
-
-
-// ======================================================
-// INITIAL EVENTS PLACEHOLDER
-// ======================================================
-
-
-function initializeShopEvents(){
-
-
-console.log(
-
-"Nexpak shop events ready"
-
-);
-
-
-}
-
-
-
-
-console.log(
-
-"%cNEXPAK SHOP.JS V15 PART 1 READY",
-
-"color:#00B4FF;font-size:18px;font-weight:bold;"
-
-);
-
-// ======================================================
-// NEXPAK SECURITY SOLUTIONS V15
-// shop.js
-//
-// PART 2/6
-//
-// TAKEALOT STYLE IMAGE SYSTEM
-// 4 IMAGE GALLERY
-// THUMBNAIL SWITCHING
-// IMAGE ZOOM MAGNIFIER
-// ======================================================
-
-
-
-// ======================================================
-// CHANGE PRODUCT IMAGE
-// ======================================================
-
-
-function changeProductImage(element,productId,index){
-
-
-const card =
-
-document.querySelector(
-
-`.product-card[data-product-id="${productId}"]`
-
-);
-
-
-
-if(!card){
-
-return;
-
-}
-
-
-
-const product =
-
-shopProducts.find(
-
-item=>item.id === productId
-
-);
-
-
-
-if(!product){
-
-return;
-
-}
-
-
-
-const mainImage =
-
-card.querySelector(
-".product-main-image"
-);
-
-
-
-if(mainImage && product.images[index]){
-
-
-mainImage.src =
-
-product.images[index];
-
-
-mainImage.dataset.index = index;
-
-
-}
-
-
-
-
-const thumbnails =
-
-card.querySelectorAll(
-".product-thumb"
-);
-
-
-
-thumbnails.forEach(
-
-thumb=>{
-
-
-thumb.classList.remove(
-"active"
-);
-
-
-}
-
-);
-
-
-
-if(element){
-
-
-element.classList.add(
-"active"
-);
-
-
-}
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// INITIALIZE IMAGE GALLERIES
-// ======================================================
-
-
-function initializeImageGalleries(){
-
-
-
-const cards =
-
-document.querySelectorAll(
-
-".product-card"
-
-);
-
-
-
-
-cards.forEach(
-
-card=>{
-
-
-
-const image =
-
-card.querySelector(
-
-".product-main-image"
-
-);
-
-
-
-if(!image){
-
-return;
-
-}
-
-
-
-
-setupImageZoom(
-image
-);
-
-
-
-}
-
-);
-
-
-
-console.log(
-
-"Nexpak image galleries initialized"
-
-);
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// IMAGE ZOOM EFFECT
-// ======================================================
-
-
-function setupImageZoom(image){
-
-
-
-image.addEventListener(
-
-"mousemove",
-
-function(event){
-
-
-
-const rect =
-
-image.getBoundingClientRect();
-
-
-
-const x =
-
-((event.clientX - rect.left)
-
-/
-
-rect.width)
-
-*
-
-100;
-
-
-
-const y =
-
-((event.clientY - rect.top)
-
-/
-
-rect.height)
-
-*
-
-100;
-
-
-
-image.style.transformOrigin =
-
-`${x}% ${y}%`;
-
-
-
-image.classList.add(
-"zoom-active"
-);
-
-
-
-}
-
-
-
-);
-
-
-
-
-
-image.addEventListener(
-
-"mouseleave",
-
-()=>{
-
-
-image.classList.remove(
-"zoom-active"
-);
-
-
-
-}
-
-
-
-);
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// CREATE ZOOM VIEW BOX
-// ======================================================
-
-
-function createImageZoomBox(){
-
-
-if(document.querySelector(
-".image-zoom-box"
-)){
-
-return;
-
-}
-
-
-
-
-const box =
-
-document.createElement(
-"div"
-);
-
-
-
-box.className =
-"image-zoom-box";
-
-
-
-document.body.appendChild(
-box
-);
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// ADVANCED HOVER MAGNIFIER
-// ======================================================
-
-
-function enableMagnifier(image){
-
-
-
-image.addEventListener(
-
-"mouseenter",
-
-()=>{
-
-
-createImageZoomBox();
-
-
-
-}
-
-
-
-);
-
-
-
-
-image.addEventListener(
-
-"mousemove",
-
-event=>{
-
-
-
-const zoomBox =
-
-document.querySelector(
-".image-zoom-box"
-);
-
-
-
-if(!zoomBox){
-
-return;
-
-}
-
-
-
-const rect =
-
-image.getBoundingClientRect();
-
-
-
-const x =
-
-event.clientX - rect.left;
-
-
-
-const y =
-
-event.clientY - rect.top;
-
-
-
-
-zoomBox.style.backgroundImage =
-
-`url(${image.src})`;
-
-
-
-zoomBox.style.backgroundPosition =
-
-`${
-
-(x / rect.width) * 100
-
-}%
-
-${
-
-(y / rect.height) * 100
-
-}%`;
-
-
-
-zoomBox.style.display =
-"block";
-
-
-
-zoomBox.style.left =
-
-(event.pageX + 20)
-
-+
-
-"px";
-
-
-
-zoomBox.style.top =
-
-(event.pageY + 20)
-
-+
-
-"px";
-
-
-
-}
-
-
-
-);
-
-
-
-
-image.addEventListener(
-
-"mouseleave",
-
-()=>{
-
-
-const zoomBox =
-
-document.querySelector(
-".image-zoom-box"
-);
-
-
-
-if(zoomBox){
-
-
-zoomBox.style.display =
-"none";
-
-
-}
-
-
-
-}
-
-
-
-);
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// RELOAD IMAGE FUNCTIONS AFTER PRODUCTS RENDER
-// ======================================================
-
-
-const originalRenderProducts =
-
-renderProducts;
-
-
-
-renderProducts = function(){
-
-
-originalRenderProducts();
-
-
-
-setTimeout(()=>{
-
-
-initializeImageGalleries();
-
-
-
-document
-
-.querySelectorAll(
-".product-main-image"
-)
-
-.forEach(
-
-image=>{
-
-
-enableMagnifier(image);
-
-
-}
-
-);
-
-
-
-},100);
-
-
-
-};
-
-
-
-
-
-console.log(
-
-"%cNEXPAK SHOP.JS V15 PART 2 READY",
-
-"color:#00B4FF;font-size:18px;font-weight:bold;"
-
-);
-
- // ======================================================
-// NEXPAK SECURITY SOLUTIONS V15
-// shop.js
-//
-// PART 3/6
-//
-// PRODUCT CONFIGURATION ENGINE
-// OPTION SELECTORS
-// QUANTITY CONTROL
-// DYNAMIC PRODUCT DATA
-// ======================================================
-
-
-
-
-// ======================================================
-// STORE SELECTED OPTIONS
-// ======================================================
-
-
-document.addEventListener(
-
-"change",
-
-function(event){
-
-
-
-if(
-
-!event.target.classList.contains(
-"product-select"
-)
-
-){
-
-return;
-
-}
-
-
-
-const select =
-
-event.target;
-
-
-
-const productId =
-
-select.dataset.product;
-
-
-
-const optionName =
-
-select.dataset.option;
-
-
-
-if(!selectedProductOptions[productId]){
-
-
-selectedProductOptions[productId] = {};
-
-
-}
-
-
-
-selectedProductOptions[productId][optionName]
-
-=
-
-select.value;
-
-
-
-console.log(
-
-"Nexpak option selected",
-
-selectedProductOptions[productId]
-
-);
-
-
-
-}
-
-);
-
-
-
-
-
-// ======================================================
-// GET SELECTED OPTIONS
-// ======================================================
-
-
-function getProductOptions(productId){
-
-
-
-return (
-
-selectedProductOptions[productId]
-
-||
-
-{}
-
-);
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// PRODUCT QUANTITY STORAGE
-// ======================================================
-
-
-let productQuantities = {};
-
-
-
-
-
-// ======================================================
-// CHANGE PRODUCT QUANTITY
-// ======================================================
-
-
-function changeProductQuantity(productId,change){
-
-
-
-if(!productQuantities[productId]){
-
-
-productQuantities[productId] = 1;
-
-
-}
-
-
-
-
-productQuantities[productId] += change;
-
-
-
-if(productQuantities[productId] < 1){
-
-
-productQuantities[productId] = 1;
-
-
-}
-
-
-
-
-
-const input =
-
-document.getElementById(
-
-`qty-${productId}`
-
-);
-
-
-
-if(input){
-
-
-input.value =
-
-productQuantities[productId];
-
-
-}
-
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// READ PRODUCT QUANTITY
-// ======================================================
-
-
-function getProductQuantity(productId){
-
-
-return (
-
-productQuantities[productId]
-
-||
-
-1
-
-);
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// UPDATE PRICE DISPLAY
-// ======================================================
-
-
-function updateProductPrice(productId){
-
-
-
-const product =
-
-shopProducts.find(
-
-item=>
-
-item.id === productId
-
-);
-
-
-
-if(!product){
-
-return;
-
-}
-
-
-
-
-const card =
-
-document.querySelector(
-
-`.product-card[data-product-id="${productId}"]`
-
-);
-
-
-
-if(!card){
-
-return;
-
-}
-
-
-
-
-const priceBox =
-
-card.querySelector(
-
-".product-price"
-
-);
-
-
-
-if(!priceBox){
-
-return;
-
-}
-
-
-
-
-
-let price =
-
-calculateProductPrice(
-
-product
-
-);
-
-
-
-
-if(price > 0){
-
-
-priceBox.innerHTML =
-
-formatShopCurrency(price);
-
-
-
-}
-
-else{
-
-
-priceBox.innerHTML =
-
 "Request Quote";
 
-
-}
-
-
-
-
 }
 
 
 
 
 
-// ======================================================
-// PRODUCT PRICE CALCULATOR
-// ======================================================
-
-
-function calculateProductPrice(product){
-
-
-
-let price =
-
-product.price || 0;
-
-
-
-
-/*
-
-Future pricing system:
-
-Each option can later
-carry a price modifier.
-
-Example:
-
-{
-name:"Solar Kit",
-extraPrice:2500
-}
-
-*/
-
-
-
-const options =
-
-getProductOptions(
-
-product.id
-
+const cartButton = document.getElementById(
+"quickViewCartButton"
 );
 
 
 
+if(cartButton){
 
-Object.values(options)
 
-.forEach(
+cartButton.onclick = ()=>{
 
-option=>{
-
-
-if(!option){
-
-return;
-
-}
-
-
-
-// Future option pricing hook
-
-
-
-}
-
-);
-
-
-
-return price;
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// VALIDATE PRODUCT OPTIONS
-// ======================================================
-
-
-function validateProductSelection(product){
-
-
-
-if(!product.options){
-
-return true;
-
-}
-
-
-
-const selected =
-
-getProductOptions(
-
-product.id
-
-);
-
-
-
-let missing = [];
-
-
-
-
-
-Object.keys(product.options)
-
-.forEach(
-
-option=>{
-
-
-
-if(
-
-!selected[option]
-
-){
-
-
-
-missing.push(
-
-formatOptionLabel(option)
-
-);
-
-
-
-}
-
-
-
-}
-
-);
-
-
-
-
-
-if(missing.length){
-
-
-
-alert(
-
-"Please select:\n\n"
-
-+
-
-missing.join(
-"\n"
-)
-
-);
-
-
-
-return false;
-
-
-
-}
-
-
-
-return true;
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// CREATE CART ITEM DATA
-// ======================================================
-
-
-function createCartProduct(productId){
-
-
-
-const product =
-
-shopProducts.find(
-
-item=>
-
-item.id === productId
-
-);
-
-
-
-if(!product){
-
-return null;
-
-}
-
-
-
-
-
-return {
-
-
-id:
-
-product.id,
-
-
-
-name:
-
-product.name,
-
-
-
-image:
-
-product.images[0],
-
-
-
-price:
-
-calculateProductPrice(product),
-
-
-
-quantity:
-
-getProductQuantity(product.id),
-
-
-
-options:
-
-getProductOptions(product.id),
-
-
-
-extras:
-
-[]
-
-
+addProductToCart(product.id);
 
 };
 
 
-
 }
 
 
 
 
-
-// ======================================================
-// UPDATE PRICE WHEN OPTIONS CHANGE
-// ======================================================
-
-
-document.addEventListener(
-
-"change",
-
-function(event){
-
-
-
-if(
-
-event.target.classList.contains(
-"product-select"
-)
-
-){
-
-
-
-updateProductPrice(
-
-event.target.dataset.product
-
-);
-
-
-
-}
-
-
-
-}
-
-);
-
-
-
-
-
-console.log(
-
-"%cNEXPAK SHOP.JS V15 PART 3 READY",
-
-"color:#00B4FF;font-size:18px;font-weight:bold;"
-
-);
-
-    // ======================================================
-// NEXPAK SECURITY SOLUTIONS V15
-// shop.js
-//
-// PART 4/6
-//
-// CART INTEGRATION
-// ADD TO CART ENGINE
-// ANIMATIONS
-// NOTIFICATIONS
-// ======================================================
-
-
-
-
-// ======================================================
-// ADD PRODUCT TO CART
-// ======================================================
-
-
-function addProductToCart(productId){
-
-
-
-const product =
-
-shopProducts.find(
-
-item =>
-
-item.id === productId
-
-);
-
-
-
-if(!product){
-
-
-console.error(
-
-"Product not found:",
-
-productId
-
-);
-
-
-
-return;
-
-
-}
-
-
-
-
-// CHECK REQUIRED OPTIONS
-
-
-if(
-
-!validateProductSelection(product)
-
-){
-
-return;
-
-}
-
-
-
-
-
-const cartItem =
-
-createCartProduct(productId);
-
-
-
-if(!cartItem){
-
-
-return;
-
-
-}
-
-
-
-
-
-// SEND TO CART ENGINE
-
-
-if(typeof addToCart === "function"){
-
-
-
-addToCart(
-
-cartItem
-
-);
-
-
-
-}
-
-else{
-
-
-console.error(
-
-"Cart engine not loaded."
-
-);
-
-
-
-return;
-
-
-}
-
-
-
-
-
-showCartNotification(
-
-product.name
-
-);
-
-
-
-animateCartButton(
-
-productId
-
-);
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// CART NOTIFICATION
-// ======================================================
-
-
-function showCartNotification(productName){
-
-
-
-let notification =
-
-document.querySelector(
-
-".cart-notification"
-
-);
-
-
-
-
-if(!notification){
-
-
-
-notification =
-
-document.createElement(
-"div"
-);
-
-
-
-notification.className =
-
-"cart-notification";
-
-
-
-document.body.appendChild(
-notification
-);
-
-
-
-}
-
-
-
-
-
-notification.innerHTML = `
-
-
-<i class="fas fa-check-circle"></i>
-
-
-<strong>
-Added to Cart
-</strong>
-
-
-<span>
-
-${productName}
-
-</span>
-
-
-`;
-
-
-
-
-notification.classList.add(
-"show"
-);
-
-
-
-
-
-setTimeout(
-
-()=>{
-
-
-notification.classList.remove(
-"show"
-);
-
-
-
-},
-
-3000
-
-);
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// ADD BUTTON ANIMATION
-// ======================================================
-
-
-function animateCartButton(productId){
-
-
-
-const card =
-
-document.querySelector(
-
-`.product-card[data-product-id="${productId}"]`
-
-);
-
-
-
-if(!card){
-
-return;
-
-}
-
-
-
-const button =
-
-card.querySelector(
-
-".add-cart-btn"
-
-);
-
-
-
-if(!button){
-
-return;
-
-}
-
-
-
-const oldText =
-
-button.innerHTML;
-
-
-
-button.innerHTML =
-
-`
-
-<i class="fas fa-check"></i>
-
-Added
-
-`;
-
-
-
-button.classList.add(
-"added"
-);
-
-
-
-
-
-setTimeout(
-
-()=>{
-
-
-
-button.innerHTML =
-
-oldText;
-
-
-
-button.classList.remove(
-"added"
-);
-
-
-
-},
-
-2000
-
-);
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// FLY TO CART EFFECT
-// ======================================================
-
-
-function flyImageToCart(productId){
-
-
-
-const card =
-
-document.querySelector(
-
-`.product-card[data-product-id="${productId}"]`
-
-);
-
-
-
-const image =
-
-card?.querySelector(
-
-".product-main-image"
-
-);
-
-
-
-const cartIcon =
-
-document.querySelector(
-
-".cart-icon"
-
-);
-
-
-
-
-if(
-
-!image ||
-
-!cartIcon
-
-){
-
-return;
-
-}
-
-
-
-
-const flyingImage =
-
-image.cloneNode();
-
-
-
-const start =
-
-image.getBoundingClientRect();
-
-
-
-const end =
-
-cartIcon.getBoundingClientRect();
-
-
-
-
-
-flyingImage.style.position =
-"fixed";
-
-flyingImage.style.width =
-"80px";
-
-flyingImage.style.height =
-"80px";
-
-flyingImage.style.objectFit =
-"cover";
-
-flyingImage.style.left =
-start.left + "px";
-
-flyingImage.style.top =
-start.top + "px";
-
-flyingImage.style.zIndex =
-"9999";
-
-flyingImage.classList.add(
-"flying-cart-image"
-);
-
-
-
-document.body.appendChild(
-flyingImage
-);
-
-
-
-
-
-requestAnimationFrame(
-
-()=>{
-
-
-flyingImage.style.left =
-
-end.left + "px";
-
-
-
-flyingImage.style.top =
-
-end.top + "px";
-
-
-
-flyingImage.style.opacity =
-"0";
-
-
-
-flyingImage.style.transform =
-"scale(0.2)";
-
-
-
-}
-
-);
-
-
-
-
-
-setTimeout(
-
-()=>{
-
-
-flyingImage.remove();
-
-
-},
-
-800
-
-);
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// CART ICON UPDATE
-// ======================================================
-
-
-function refreshCartCounter(){
-
-
-
-if(typeof updateCartCounter === "function"){
-
-
-updateCartCounter();
-
-
-}
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// OVERRIDE ADD BUTTON WITH EFFECTS
-// ======================================================
-
-
-const originalAddProductToCart =
-
-addProductToCart;
-
-
-
-addProductToCart = function(productId){
-
-
-
-originalAddProductToCart(productId);
-
-
-
-flyImageToCart(productId);
-
-
-
-refreshCartCounter();
-
-
-
-};
-
-
-
-
-
-console.log(
-
-"%cNEXPAK SHOP.JS V15 PART 4 READY",
-
-"color:#00B4FF;font-size:18px;font-weight:bold;"
-
-);
-
-    // ======================================================
-// NEXPAK SECURITY SOLUTIONS V15
-// shop.js
-//
-// PART 5/6
-//
-// SHOP SEARCH ENGINE
-// CATEGORY FILTERS
-// SORTING SYSTEM
-// GRID / LIST VIEW
-// ======================================================
-
-
-
-
-// ======================================================
-// SEARCH PRODUCTS
-// ======================================================
-
-
-function searchProducts(searchText){
-
-
-
-const keyword =
-
-searchText
-
-.toLowerCase()
-
-.trim();
-
-
-
-
-
-if(!keyword){
-
-
-displayedProducts =
-
-[...shopProducts];
-
-
-
-renderProducts();
-
-
-return;
-
-
-}
-
-
-
-
-displayedProducts =
-
-shopProducts.filter(
-
-product=>{
-
-
-
-return (
-
-product.name
-
-.toLowerCase()
-
-.includes(keyword)
-
-
-
-||
-
-
-
-product.category
-
-.toLowerCase()
-
-.includes(keyword)
-
-
-
-||
-
-
-
-(product.description || "")
-
-.toLowerCase()
-
-.includes(keyword)
-
-
-
-);
-
-
-
-}
-
-);
-
-
-
-
-
-renderProducts();
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// FILTER BY CATEGORY
-// ======================================================
-
-
-function filterProducts(category){
-
-
-
-if(
-
-category === "all"
-
-){
-
-
-
-displayedProducts =
-
-[...shopProducts];
-
-
-
-}
-
-else{
-
-
-
-displayedProducts =
-
-shopProducts.filter(
-
-product=>
-
-
-
-product.category === category
-
-
-
-);
-
-
-
-}
-
-
-
-renderProducts();
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// SORT PRODUCTS
-// ======================================================
-
-
-function sortProducts(sortType){
-
-
-
-switch(sortType){
-
-
-
-case "price-low":
-
-
-
-displayedProducts.sort(
-
-(a,b)=>
-
-(a.price || 0)
-
--
-
-(b.price || 0)
-
-);
-
-
-
-break;
-
-
-
-
-
-case "price-high":
-
-
-
-displayedProducts.sort(
-
-(a,b)=>
-
-(b.price || 0)
-
--
-
-(a.price || 0)
-
-);
-
-
-
-break;
-
-
-
-
-
-case "name":
-
-
-
-displayedProducts.sort(
-
-(a,b)=>
-
-a.name.localeCompare(
-b.name
-)
-
-);
-
-
-
-break;
-
-
-
-
-
-default:
-
-
-
-displayedProducts =
-
-[...displayedProducts];
-
-
-
-}
-
-
-
-
-
-renderProducts();
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// GRID VIEW
-// ======================================================
-
-
-function activateGridView(){
-
-
-
-const grid =
-
-document.getElementById(
-
-"productsGrid"
-
-);
-
-
-
-if(!grid){
-
-return;
-
-}
-
-
-
-grid.classList.remove(
-"list-layout"
-);
-
-
-
-grid.classList.add(
-"grid-layout"
-);
-
-
-
-currentView =
-
-"grid";
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// LIST VIEW
-// ======================================================
-
-
-function activateListView(){
-
-
-
-const grid =
-
-document.getElementById(
-
-"productsGrid"
-
-);
-
-
-
-if(!grid){
-
-return;
-
-}
-
-
-
-grid.classList.remove(
-"grid-layout"
-);
-
-
-
-grid.classList.add(
-"list-layout"
-);
-
-
-
-currentView =
-
-"list";
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// CONNECT SHOP CONTROLS
-// ======================================================
-
-
-function initializeShopEvents(){
-
-
-
-const search =
-
-document.getElementById(
-
-"productSearch"
-
-);
-
-
-
-const category =
-
-document.getElementById(
-
-"categoryFilter"
-
-);
-
-
-
-const sort =
-
-document.getElementById(
-
-"sortProducts"
-
-);
-
-
-
-const gridButton =
-
-document.getElementById(
-
-"gridView"
-
-);
-
-
-
-const listButton =
-
-document.getElementById(
-
-"listView"
-
-);
-
-
-
-
-
-if(search){
-
-
-
-search.addEventListener(
-
-"input",
-
-()=>{
-
-
-searchProducts(
-
-search.value
-
-);
-
-
-
-}
-
-);
-
-
-
-}
-
-
-
-
-
-if(category){
-
-
-
-category.addEventListener(
-
-"change",
-
-()=>{
-
-
-filterProducts(
-
-category.value
-
-);
-
-
-
-}
-
-);
-
-
-
-}
-
-
-
-
-
-if(sort){
-
-
-
-sort.addEventListener(
-
-"change",
-
-()=>{
-
-
-sortProducts(
-
-sort.value
-
-);
-
-
-
-}
-
-);
-
-
-
-}
-
-
-
-
-
-if(gridButton){
-
-
-
-gridButton.addEventListener(
-
-"click",
-
-()=>{
-
-
-
-activateGridView();
-
-
-
-gridButton.classList.add(
-"active"
-);
-
-
-
-listButton?.classList.remove(
+modal.classList.add(
 "active"
 );
 
@@ -3086,370 +1768,6 @@ listButton?.classList.remove(
 
 }
 
-);
-
-
-
-}
-
-
-
-
-
-if(listButton){
-
-
-
-listButton.addEventListener(
-
-"click",
-
-()=>{
-
-
-
-activateListView();
-
-
-
-listButton.classList.add(
-"active"
-);
-
-
-
-gridButton?.classList.remove(
-"active"
-);
-
-
-
-}
-
-);
-
-
-
-}
-
-
-
-
-
-console.log(
-
-"Nexpak shop filters activated"
-
-);
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// LAZY IMAGE LOADING
-// ======================================================
-
-
-function enableLazyLoading(){
-
-
-
-const images =
-
-document.querySelectorAll(
-
-".product-main-image"
-
-);
-
-
-
-images.forEach(
-
-image=>{
-
-
-image.loading =
-"lazy";
-
-
-}
-
-);
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// RUN AFTER EVERY PRODUCT LOAD
-// ======================================================
-
-
-const oldRenderProducts =
-
-renderProducts;
-
-
-
-renderProducts = function(){
-
-
-
-oldRenderProducts();
-
-
-
-setTimeout(
-
-()=>{
-
-
-enableLazyLoading();
-
-
-
-},
-
-100
-
-);
-
-
-
-};
-
-
-
-
-
-console.log(
-
-"%cNEXPAK SHOP.JS V15 PART 5 READY",
-
-"color:#00B4FF;font-size:18px;font-weight:bold;"
-
-);
-
-    // ======================================================
-// NEXPAK SECURITY SOLUTIONS V15
-// shop-script.js
-//
-// PART 6/6
-//
-// PREMIUM SHOP FEATURES
-// QUICK VIEW
-// IMAGE MODAL
-// RECENT PRODUCTS
-// RELATED PRODUCTS
-// ======================================================
-
-
-
-
-
-// ======================================================
-// QUICK VIEW
-// ======================================================
-
-
-function openQuickView(index){
-
-
-const product =
-displayedProducts[index];
-
-
-if(!product){
-
-return;
-
-}
-
-
-
-let modal =
-document.getElementById(
-"productModal"
-);
-
-
-
-if(!modal){
-
-
-modal = document.createElement(
-"div"
-);
-
-
-modal.id =
-"productModal";
-
-
-modal.className =
-"product-modal";
-
-
-document.body.appendChild(
-modal
-);
-
-
-}
-
-
-
-
-modal.innerHTML = `
-
-
-<div class="modal-content">
-
-
-<button
-
-class="modal-close"
-
-onclick="closeQuickView()">
-
-×
-
-</button>
-
-
-
-
-<div class="modal-gallery">
-
-
-<img
-
-src="${product.images[0]}"
-
-class="modal-main-image"
-
->
-
-
-<div class="modal-thumbs">
-
-
-${
-
-product.images.map(
-
-img=>`
-
-<img
-
-src="${img}"
-
-onclick="changeModalImage('${img}')"
-
->
-
-`
-
-).join("")
-
-}
-
-
-
-</div>
-
-
-</div>
-
-
-
-
-<div class="modal-details">
-
-
-<h2>
-
-${product.name}
-
-</h2>
-
-
-<p>
-
-${product.description || ""}
-
-</p>
-
-
-
-<div>
-
-Category:
-
-<strong>
-
-${product.category}
-
-</strong>
-
-</div>
-
-
-
-<div class="product-options">
-
-
-${createProductOptions(
-product,
-"modal"
-)}
-
-
-</div>
-
-
-
-<button
-
-class="add-cart-btn"
-
-onclick="addModalProduct('${product.id}')">
-
-
-<i class="fas fa-cart-plus"></i>
-
-Add To Cart
-
-
-</button>
-
-
-</div>
-
-
-</div>
-
-
-`;
-
-
-
-modal.style.display =
-"flex";
-
-
-
-}
 
 
 
@@ -3464,22 +1782,24 @@ modal.style.display =
 function closeQuickView(){
 
 
-const modal =
-document.getElementById(
-"productModal"
+const modal = document.getElementById(
+"quickViewModal"
 );
 
 
 
 if(modal){
 
-modal.style.display =
-"none";
+modal.classList.remove(
+"active"
+);
 
 }
 
 
+
 }
+
 
 
 
@@ -3487,91 +1807,113 @@ modal.style.display =
 
 
 // ======================================================
-// CHANGE MODAL IMAGE
+// CATEGORY SHORTCUT FILTER
 // ======================================================
 
 
-function changeModalImage(
-image
-){
+function filterCategory(category){
 
 
-const main =
-document.querySelector(
-".modal-main-image"
+const selector = document.getElementById(
+"categoryFilter"
 );
 
 
 
-if(main){
-
-main.src=image;
-
-}
+if(selector){
 
 
-}
+selector.value = category;
 
 
-
-
-
-
-// ======================================================
-// ADD QUICK VIEW PRODUCT
-// ======================================================
-
-
-function addModalProduct(id){
-
-
-const product =
-
-shopProducts.find(
-
-item=>
-
-item.id === id
-
+selector.dispatchEvent(
+new Event("change")
 );
 
 
-
-if(!product){
-
-return;
-
 }
 
 
 
-addToCart({
+document
+.getElementById("products")
+?.scrollIntoView({
 
-
-id:product.id,
-
-
-name:product.name,
-
-
-image:product.images[0],
-
-
-price:product.price || 0,
-
-
-quantity:1,
-
-
-options:{}
-
+behavior:"smooth"
 
 });
 
 
+}
 
-alert(
-"Product added to cart"
+
+
+
+
+
+
+// ======================================================
+// CLOSE CART PANEL
+// ======================================================
+
+
+function closeCartPanel(){
+
+
+const panel = document.getElementById(
+"cartPanel"
+);
+
+
+
+if(panel){
+
+panel.classList.remove(
+"active"
+);
+
+}
+
+
+}
+
+
+
+
+
+
+
+// ======================================================
+// MOBILE NAVIGATION
+// ======================================================
+
+
+const searchToggle = document.querySelector(
+".search-toggle"
+);
+
+
+
+if(searchToggle){
+
+
+searchToggle.addEventListener(
+
+"click",
+
+()=>{
+
+
+document
+.querySelector(".shop-controls")
+?.classList.toggle(
+"active"
+);
+
+
+
+}
+
 );
 
 
@@ -3582,254 +1924,9 @@ alert(
 
 
 
-// ======================================================
-// RECENTLY VIEWED PRODUCTS
-// ======================================================
-
-
-function saveRecentlyViewed(product){
-
-
-let recent =
-
-JSON.parse(
-
-localStorage.getItem(
-"nexpak_recent"
-
-)
-
-)
-
-|| [];
-
-
-
-
-recent =
-
-recent.filter(
-
-item=>
-
-item.id !== product.id
-
-);
-
-
-
-recent.unshift(product);
-
-
-
-recent =
-
-recent.slice(
-0,
-6
-);
-
-
-
-localStorage.setItem(
-
-"nexpak_recent",
-
-JSON.stringify(
-recent
-)
-
-);
-
-
-
-}
-
-
-
-
-
-
-function displayRecentlyViewed(){
-
-
-const container =
-
-document.querySelector(
-".recent-products"
-);
-
-
-
-if(!container){
-
-return;
-
-}
-
-
-
-const recent =
-
-JSON.parse(
-
-localStorage.getItem(
-"nexpak_recent"
-
-)
-
-)
-
-|| [];
-
-
-
-container.innerHTML="";
-
-
-
-recent.forEach(
-
-product=>{
-
-
-container.innerHTML += `
-
-
-<div class="mini-product">
-
-
-<img src="${product.images[0]}">
-
-
-<h4>
-
-${product.name}
-
-</h4>
-
-
-</div>
-
-
-`;
-
-
-}
-
-);
-
-
-
-}
-
-
-
-
-
-
 
 // ======================================================
-// RELATED PRODUCTS
-// ======================================================
-
-
-function getRelatedProducts(
-product
-){
-
-
-return shopProducts.filter(
-
-item=>
-
-
-item.category === product.category
-
-&&
-
-item.id !== product.id
-
-
-)
-
-.slice(
-0,
-4
-);
-
-
-}
-
-
-
-
-
-
-// ======================================================
-// PRODUCT VIEW TRACKING
-// ======================================================
-
-
-function trackProductView(
-index
-){
-
-
-const product =
-
-displayedProducts[index];
-
-
-
-if(product){
-
-saveRecentlyViewed(product);
-
-}
-
-
-}
-
-
-
-
-
-
-
-// ======================================================
-// ESCAPE MODAL
-// ======================================================
-
-
-document.addEventListener(
-
-"keydown",
-
-event=>{
-
-
-if(event.key === "Escape"){
-
-
-closeQuickView();
-
-
-}
-
-
-}
-
-);
-
-
-
-
-
-
-
-// ======================================================
-// WINDOW CLICK CLOSE
+// CLICK OUTSIDE MODAL CLOSE
 // ======================================================
 
 
@@ -3837,13 +1934,11 @@ window.addEventListener(
 
 "click",
 
-event=>{
+(event)=>{
 
 
-const modal =
-
-document.getElementById(
-"productModal"
+const modal = document.getElementById(
+"quickViewModal"
 );
 
 
@@ -3855,7 +1950,6 @@ event.target === modal
 ){
 
 closeQuickView();
-
 
 }
 
@@ -3873,8 +1967,12 @@ closeQuickView();
 
 console.log(
 
-"%cNEXPAK SHOP SCRIPT V15 PART 6 READY - PREMIUM STORE ENABLED",
+"%cNEXPAK SHOP V15 HTML COMPLETE",
 
 "color:#00B4FF;font-size:18px;font-weight:bold;"
 
 );
+
+
+
+</script>
