@@ -346,7 +346,7 @@ price:0
 
 
 {
-id:"SHOP-EF-WIRE",
+id:"SHOP-EF-WIREV2",
 
 name:"Electric Fence Wire",
 
@@ -418,7 +418,7 @@ shopProducts.push(
 
 {
 
-id:"SHOP-EF-HT-CABLE",
+id:"SHOP-EF-HT-CABLEV2",
 
 name:"Electric Fence HT Cable",
 
