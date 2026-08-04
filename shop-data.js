@@ -1,361 +1,254 @@
 // ======================================================
-// NEXPAK SECURITY SOLUTIONS
-// SHOP DATA V1
+// NEXPAK SECURITY SOLUTIONS V15
+// SHOP DATA
+// PART 1/6
+// ELECTRIC FENCING DATABASE
 // ======================================================
+
 
 const products = [
 
-/* =====================================================
-   CCTV SOLUTION KIT
-===================================================== */
-
-{
-id: "CCTV-KIT",
-
-name: "Professional CCTV Surveillance Kit",
-
-category: "CCTV",
-
-type: "configurable",
-
-basePrice: 4999.00,
-
-description: "Build your own professional CCTV surveillance system using Hikvision or Dahua equipment.",
-
-image: "images/products/cctv-kit.jpg",
-
-icon: "📹",
-
-options: {
-
-brand: [
-"Hikvision",
-"Dahua"
-],
-
-channels: [
-4,
-8,
-16,
-32
-],
-
-cameraType: [
-"Dome",
-"Bullet",
-"Turret"
-],
-
-resolution: [
-"2MP",
-"5MP",
-"8MP"
-],
-
-cameraQuantity: [
-2,
-4,
-6,
-8,
-12,
-16,
-24,
-32
-],
-
-hardDrive: [
-"None",
-"1TB",
-"2TB",
-"4TB",
-"6TB",
-"8TB",
-"10TB"
-],
-
-colour: [
-"White",
-"Black"
-],
-
-installation: [
-"Supply Only",
-"Supply & Installation"
-],
-
-warranty: [
-"1 Year",
-"2 Years",
-"3 Years"
-]
-
-},
-
-extras: [
-
-{
-name: "Additional Camera",
-price: 699
-},
-
-{
-name: "27\" LED Monitor",
-price: 2999
-},
-
-{
-name: "Mouse & Keyboard",
-price: 399
-},
-
-{
-name: "UPS Backup Power",
-price: 1899
-},
-
-{
-name: "Cat5e Cable (per metre)",
-price: 8
-},
-
-{
-name: "Cat6 Cable (per metre)",
-price: 12
-},
-
-{
-name: "PVC Conduit (per metre)",
-price: 18
-},
-
-{
-name: "Junction Box",
-price: 89
-}
-
-]
-
-},
 
 /* =====================================================
-   WALL TOP ELECTRIC FENCE KIT
+   WALL TOP ELECTRIC FENCE SYSTEM
 ===================================================== */
 
+
 {
-id: "WALLTOP-KIT",
+id:"EF-WALLTOP-KIT",
 
-name: "Wall Top Electric Fence System",
+name:"Wall Top Electric Fence System",
 
-category: "Electric Fencing",
+category:"Electric Fencing",
 
-type: "configurable",
+type:"configurable",
 
-basePrice: 0,
+basePrice:0,
 
-description: "Configure a complete wall top electric fence solution.",
+description:
+"Configure a complete wall top electric fence system including brackets, stays, wire, high voltage cable and accessories.",
 
-image: "images/products/wall-top-kit.jpg",
+image:
+"images/products/wall-top-electric-fence.jpg",
 
-icon: "⚡",
+icon:"⚡",
 
-options: {
 
-brackets: [
-"6 Line Flat Bar",
-"8 Line Flat Bar",
-"10 Line Flat Bar",
-"12 Line Flat Bar",
-"6 Line Round Bar",
-"8 Line Round Bar",
-"10 Line Round Bar",
-"12 Line Round Bar"
+options:{
+
+
+bracketLines:[
+
+"6 Line",
+"8 Line",
+"10 Line",
+"12 Line"
+
 ],
 
-bracketStyle: [
+
+bracketStyle:[
+
+"Flat Bar",
+"Round Bar"
+
+],
+
+
+installationStyle:[
+
 "Straight",
 "Angle"
+
 ],
 
-bracketColour: [
+
+colour:[
+
 "Black",
 "White"
+
 ],
 
-wallTopStays: [
-"600mm Stay",
-"750mm Stay"
+
+wallTopStay:[
+
+"600mm Wall Top Stay",
+"750mm Wall Top Stay"
+
 ],
 
-staySleeves: [
-"Standard Stay Sleeve"
+
+wire:[
+
+"Stainless Steel Solid 1.2mm",
+
+"Stainless Steel Braided 1.2mm 1000m",
+
+"Galvanised Braided 1.2mm 680m",
+
+"Aluminium Braided 1.6mm 1000m",
+
+"Aluminium Solid 1.6mm 1000m"
+
 ],
 
-lugs: [
-"Compression Lug"
-],
 
-tensioners: [
-"Tweaker",
-"Compression Spring"
-],
+htCable:[
 
-wire: [
-"1.2mm Stainless Steel Solid",
-"1.2mm Stainless Steel Braided 1000m",
-"1.2mm Galvanised Braided 680m",
-"1.6mm Braided Aluminium 1000m",
-"1.6mm Solid Aluminium 1000m"
-],
-
-nailAnchors: [
-"6x60 Nail Anchors (100s)",
-"8x80 Nail Anchors (100s)"
-],
-
-ferrules: [
-"6mm Aluminium Ferrules (100s)",
-"6mm Solid Ferrules"
-],
-
-htCable: [
 "50m Soft HT Cable",
 "100m Soft HT Cable",
 "200m Soft HT Cable",
+
 "50m Hard HT Cable",
 "100m Hard HT Cable",
 "200m Hard HT Cable"
+
 ],
 
-warningSigns: [
+
+tensionComponents:[
+
+"Stay Sleeves",
+"Lugs",
+"Tensioners",
+"Tweakers",
+"Compression Springs"
+
+],
+
+
+anchors:[
+
+"6x60 Nail Anchors 100s",
+"8x80 Nail Anchors 100s"
+
+],
+
+
+ferrules:[
+
+"6mm Aluminium Ferrules 100s",
+"6mm Solid Ferrules"
+
+],
+
+
+warningSigns:[
+
 "Medium Warning Sign",
 "Large Warning Sign"
+
 ],
 
-earthSpikes: [
+
+earthSystem:[
+
 "1.2m Galvanised Earth Spike",
 "1.2m Copper Plated Earth Spike"
-]
 
-id: "walltop-protection-v1"
+],
 
-lightningProtection: [
+
+lightningProtection:[
 
 "Lightning Diverter"
 
 ],
 
-enclosures: [
 
-"DMC Enclosure Box 430",
+enclosure:[
 
-"DMC Enclosure Box 530"
+"DMC Box 430",
+"DMC Box 530"
 
-],
+]
+
+
+}
+
+},
+
+
 
 /* =====================================================
-   ELECTRIC FENCE ENERGIZER & CONTROL SYSTEM
+   ELECTRIC FENCE ENERGIZERS
 ===================================================== */
 
+
 {
-id: "EF-CONTROL-KIT",
+id:"EF-ENERGIZERS",
 
-name: "Electric Fence Energizer & Control System",
+name:"Electric Fence Energizers",
 
-category: "Electric Fencing",
+category:"Electric Fencing",
 
-type: "configurable",
+type:"configurable",
 
-basePrice: 0,
+basePrice:0,
 
-description: "Select the correct energizer, backup power and control accessories for your electric fence system.",
+description:
+"High voltage electric fence energizers for residential, commercial and industrial security.",
 
-image: "images/products/electric-fence-control.jpg",
+image:
+"images/products/electric-fence-energizer.jpg",
 
-icon: "⚡",
+icon:"⚡",
 
-options: {
 
-energizer: [
+options:{
 
-"1 Joule Energizer",
 
-"3 Joule Energizer",
+jouleRating:[
 
-"4 Joule Energizer",
-
-"8 Joule Energizer",
-
-"8 Joule 2 Zone Energizer",
-
-"14 Joule Energizer"
+"1 Joule",
+"3 Joule",
+"4 Joule",
+"8 Joule",
+"8 Joule 2 Zone",
+"14 Joule"
 
 ],
 
-battery: [
+
+powerBackup:[
 
 "7Ah Lead Acid Battery",
-
-"7Ah Gel Battery"
-
-],
-
-enclosure: [
-
-"DMC Enclosure Box 430",
-
-"DMC Enclosure Box 530"
-
-],
-
-powerSupply: [
-
+"7Ah Gel Battery",
 "12V PSU"
 
 ],
 
-controlKeypad: [
 
-"LCD Keypad",
-
-"Touch Keypad"
-
-],
-
-communication: [
+communication:[
 
 "None",
-
 "GSM Module",
-
 "Wi-Fi Module"
 
 ],
 
-securityAlert: [
 
-"Indoor Siren",
+control:[
 
-"Outdoor Siren",
-
-"Strobe Light",
-
-"Siren & Strobe Combination"
+"Keypad",
+"Remote Control"
 
 ],
 
-lighting: [
+
+alerts:[
+
+"Sirens",
+
+"Strobe Light",
 
 "Night Light"
 
 ],
 
-lightningProtection: [
 
-"Lightning Diverter"
-
-],
-
-installation: [
+installation:[
 
 "Supply Only",
 
@@ -363,506 +256,135 @@ installation: [
 
 ]
 
-},
 
-extras: [
-
-{
-name: "Remote Keypad",
-price: 0
-},
-
-{
-name: "Additional Battery",
-price: 0
-},
-
-{
-name: "Wireless Remote",
-price: 0
-},
-
-{
-name: "Gate Contact",
-price: 0
-},
-
-{
-name: "Fence Alarm Indicator",
-price: 0
 }
 
-]
 
 },
 
-  /* =====================================================
-   GATE AUTOMATION SOLUTION KIT
-===================================================== */
 
-{
-id: "GATE-AUTO-KIT",
-
-name: "Gate Automation System",
-
-category: "Gate Automation",
-
-type: "configurable",
-
-basePrice: 0,
-
-description: "Configure a complete automatic gate system for sliding and swing gates.",
-
-image: "images/products/gate-automation-kit.jpg",
-
-icon: "🚪",
-
-options: {
-
-brand: [
-
-"Centurion",
-
-"Hansa",
-
-"Gemini",
-
-"ET Nice"
-
-],
-
-gateType: [
-
-"Sliding Gate",
-
-"Swing Gate"
-
-],
-
-motorSelection: [
-
-"Centurion D5 Smart",
-
-"Centurion D10 Smart",
-
-"Centurion D10 Turbo",
-
-"Centurion A10",
-
-"Centurion D5 Evo"
-
-],
-
-gateWeight: [
-
-"Up to 500kg",
-
-"Up to 1000kg",
-
-"Up to 1500kg",
-
-"Up to 2000kg"
-
-],
-
-powerOptions: [
-
-"AC Powered",
-
-"Solar Powered"
-
-],
-
-battery: [
-
-"7Ah Battery",
-
-"12Ah Battery",
-
-"18Ah Battery"
-
-],
-
-rackLength: [
-
-"3m Rack",
-
-"4m Rack",
-
-"5m Rack",
-
-"6m Rack",
-
-"Custom Length"
-],
-
-remoteControls: [
-
-"1 Remote",
-
-"2 Remotes",
-
-"4 Remotes",
-
-"Additional Remotes"
-
-],
-
-accessControl: [
-
-"Remote Only",
-
-"Keypad",
-
-"GSM Access",
-
-"Wi-Fi Access"
-
-],
-
-safetyDevices: [
-
-"Safety Beams",
-
-"Loop Detector",
-
-"Safety Edge"
-
-],
-
-installation: [
-
-"Supply Only",
-
-"Supply & Installation"
-
-]
-
-},
-
-extras: [
-
-{
-name: "Centurion Nova Remote",
-price: 0
-},
-
-{
-name: "Centurion Battery Backup",
-price: 0
-},
-
-{
-name: "Solar Panel Kit",
-price: 0
-},
-
-{
-name: "Gate Rack Section",
-price: 0
-},
-
-{
-name: "Safety Infrared Beams",
-price: 0
-},
-
-{
-name: "GSM Module",
-price: 0
-},
-
-{
-name: "Wi-Fi Module",
-price: 0
-},
-
-{
-name: "Intercom System",
-price: 0
-},
-
-{
-name: "Exit Button",
-price: 0
-},
-
-{
-name: "Magnetic Lock",
-price: 0
-}
-
-]
-
-},  
 
 /* =====================================================
-   ALARM SYSTEM SOLUTION KIT
+   ELECTRIC FENCE ACCESSORIES
 ===================================================== */
 
+
 {
-id: "ALARM-KIT",
+id:"EF-ACCESSORIES",
 
-name: "Professional Alarm System Kit",
+name:"Electric Fence Accessories",
 
-category: "Alarm Systems",
+category:"Electric Fencing",
 
-type: "configurable",
+type:"standard",
 
-basePrice: 0,
+basePrice:0,
 
-description: "Configure a complete intrusion detection alarm system for residential, commercial and industrial properties.",
+description:
+"Replacement components and installation accessories for electric fencing systems.",
 
-image: "images/products/alarm-kit.jpg",
+image:
+"images/products/electric-fence-accessories.jpg",
 
-icon: "🚨",
+icon:"🔧",
 
-options: {
 
-brand: [
+options:{
 
-"Paradox",
 
-"IDS",
+components:[
 
-"Ajax",
+"Stay Sleeve",
 
-"Texecom"
+"Electric Fence Lug",
 
-],
+"Wire Tensioner",
 
-systemType: [
+"Fence Tweaker",
 
-"Wired Alarm System",
+"Compression Spring",
 
-"Wireless Alarm System",
+"Aluminium Ferrule",
 
-"Hybrid Alarm System"
+"Solid Ferrule",
 
-],
+"HT Cable",
 
-alarmPanel: [
+"Warning Sign",
 
-"4 Zone Panel",
+"Lightning Diverter",
 
-"8 Zone Panel",
+"Earth Clamp",
 
-"16 Zone Panel",
-
-"32 Zone Panel"
-
-],
-
-keypad: [
-
-"LED Keypad",
-
-"LCD Keypad",
-
-"Touch Keypad",
-
-"Wireless Keypad"
-
-],
-
-motionSensors: [
-
-"1 PIR Sensor",
-
-"2 PIR Sensors",
-
-"4 PIR Sensors",
-
-"8 PIR Sensors"
-
-],
-
-outdoorProtection: [
-
-"None",
-
-"Outdoor PIR",
-
-"Dual Beam Detector",
-
-"Outdoor Wireless Beam"
-
-],
-
-doorProtection: [
-
-"None",
-
-"Magnetic Door Contact",
-
-"Wireless Door Contact"
-
-],
-
-communication: [
-
-"None",
-
-"GSM Module",
-
-"Wi-Fi Module",
-
-"GSM + Wi-Fi Module"
-
-],
-
-battery: [
-
-"7Ah Lead Acid Battery",
-
-"7Ah Gel Battery",
-
-"12Ah Battery"
-
-],
-
-siren: [
-
-"Indoor Siren",
-
-"Outdoor Siren",
-
-"Outdoor Siren + Strobe"
-
-],
-
-panicButtons: [
-
-"None",
-
-"Wireless Panic Button",
-
-"Fixed Panic Button"
-
-],
-
-installation: [
-
-"Supply Only",
-
-"Supply & Installation"
+"Earth Cable"
 
 ]
 
-},
 
-extras: [
-
-{
-name: "Additional PIR Sensor",
-price: 0
-},
-
-{
-name: "Additional Door Contact",
-price: 0
-},
-
-{
-name: "Remote Control",
-price: 0
-},
-
-{
-name: "Wireless Receiver",
-price: 0
-},
-
-{
-name: "Smoke Detector",
-price: 0
-},
-
-{
-name: "Heat Detector",
-price: 0
-},
-
-{
-name: "External Beam",
-price: 0
-},
-
-{
-name: "DMC Enclosure Box",
-price: 0
 }
 
-]
 
-},
+}
+
+
+];
+
+// ======================================================
+// NEXPAK SECURITY SOLUTIONS V15
+// SHOP DATA
+// PART 2/6
+// ROBOGUARD DATABASE
+// ======================================================
+
+
 
 /* =====================================================
-   ROBOGUARD OUTDOOR BEAM SYSTEMS
+   ROBOGUARD OUTDOOR BEAM SECURITY SYSTEMS
 ===================================================== */
 
+
+products.push(
+
+
 {
-id: "ROBOGUARD-KITS",
+id:"ROBOGUARD-KIT-4",
 
-name: "Roboguard Outdoor Beam Security Systems",
+name:"Roboguard 4 Beam Security Kit",
 
-category: "Outdoor Security",
+category:"Roboguard",
 
-type: "configurable",
+type:"configurable",
 
-basePrice: 0,
+basePrice:0,
 
-description: "Complete Roboguard outdoor perimeter protection beam kits.",
+description:
+"Complete outdoor perimeter protection system with four Roboguard beams, receiver and alarm accessories.",
 
-image: "images/products/roboguard-kit.jpg",
+image:
+"images/products/roboguard-kit-4.jpg",
 
-icon: "🛡️",
+icon:"🛡️",
 
-options: {
 
-kitSelection: [
+options:{
 
-"Roboguard Beam Kit 4",
 
-"Roboguard Beam Kit 6",
-
-"Roboguard Beam Kit 8"
-
-],
-
-beamColour: [
+beamColour:[
 
 "Green",
-
 "Black",
-
 "White"
 
 ],
 
-kitComponents: {
 
-"Roboguard Beam Kit 4": [
+kitContents:[
 
 "4 x Roboguard Beams",
 
-"1 x HQ",
+"1 x HQ Receiver",
 
-"1 x Robalarm Powerback",
-
-"1 x Siren",
-
-"2 x 4 Button Remotes"
-
-],
-
-"Roboguard Beam Kit 6": [
-
-"6 x Roboguard Beams",
-
-"1 x HQ",
-
-"1 x Robalarm Powerback",
+"1 x Robalarm Power Back",
 
 "1 x Siren",
 
@@ -870,23 +392,17 @@ kitComponents: {
 
 ],
 
-"Roboguard Beam Kit 8": [
 
-"8 x Roboguard Beams",
+powerOptions:[
 
-"1 x HQ",
+"Battery Backup",
 
-"1 x Robalarm Powerback",
+"AC Power"
 
-"1 x Siren",
+],
 
-"2 x 4 Button Remotes"
 
-]
-
-},
-
-installation: [
+installation:[
 
 "Supply Only",
 
@@ -894,79 +410,991 @@ installation: [
 
 ]
 
+
 },
 
-extras: [
+
+extras:[
+
 
 {
-name: "Additional Roboguard Beam",
-price: 0
+name:"Additional Roboguard Beam",
+price:0
 },
 
-{
-name: "Additional 4 Button Remote",
-price: 0
-},
 
 {
-name: "Additional Siren",
-price: 0
+name:"Additional 4 Button Remote",
+price:0
+},
+
+
+{
+name:"Additional Siren",
+price:0
 }
+
 
 ]
 
+
 },
 
-   /* =====================================================
-   ACCESS CONTROL SYSTEMS
+
+
+
+/* =====================================================
+   ROBOGUARD 6 BEAM SYSTEM
 ===================================================== */
 
+
 {
-id: "ACCESS-CONTROL-KIT",
+id:"ROBOGUARD-KIT-6",
 
-name: "Access Control Security Systems",
+name:"Roboguard 6 Beam Security Kit",
 
-category: "Access Control",
+category:"Roboguard",
 
-type: "configurable",
+type:"configurable",
 
-basePrice: 0,
+basePrice:0,
 
-description: "Configure professional access control solutions for homes, offices and commercial properties.",
+description:
+"Extended perimeter protection system using six outdoor Roboguard detection beams.",
 
-image: "images/products/access-control-kit.jpg",
+image:
+"images/products/roboguard-kit-6.jpg",
 
-icon: "🔐",
+icon:"🛡️",
 
-options: {
 
-accessType: [
+options:{
 
-"RFID Access Control",
 
-"Fingerprint Access Control",
+beamColour:[
 
-"Facial Recognition Access Control",
-
-"Keypad Access Control",
-
-"Multi-Technology Access Control"
+"Green",
+"Black",
+"White"
 
 ],
 
-readerType: [
 
-"Single Door Reader",
+kitContents:[
 
-"Outdoor Weatherproof Reader",
+"6 x Roboguard Beams",
+
+"1 x HQ Receiver",
+
+"1 x Robalarm Power Back",
+
+"1 x Siren",
+
+"2 x 4 Button Remotes"
+
+],
+
+
+powerOptions:[
+
+"Battery Backup",
+
+"AC Power"
+
+],
+
+
+installation:[
+
+"Supply Only",
+
+"Supply & Installation"
+
+]
+
+
+},
+
+
+extras:[
+
+
+{
+name:"Additional Roboguard Beam",
+price:0
+},
+
+
+{
+name:"Additional Remote",
+price:0
+}
+
+
+]
+
+
+},
+
+
+
+
+/* =====================================================
+   ROBOGUARD 8 BEAM SYSTEM
+===================================================== */
+
+
+{
+id:"ROBOGUARD-KIT-8",
+
+name:"Roboguard 8 Beam Security Kit",
+
+category:"Roboguard",
+
+type:"configurable",
+
+basePrice:0,
+
+description:
+"Maximum outdoor perimeter protection with eight Roboguard detection beams.",
+
+image:
+"images/products/roboguard-kit-8.jpg",
+
+icon:"🛡️",
+
+
+options:{
+
+
+beamColour:[
+
+"Green",
+"Black",
+"White"
+
+],
+
+
+kitContents:[
+
+"8 x Roboguard Beams",
+
+"1 x HQ Receiver",
+
+"1 x Robalarm Power Back",
+
+"1 x Siren",
+
+"2 x 4 Button Remotes"
+
+],
+
+
+powerOptions:[
+
+"Battery Backup",
+
+"AC Power"
+
+],
+
+
+installation:[
+
+"Supply Only",
+
+"Supply & Installation"
+
+]
+
+
+},
+
+
+extras:[
+
+
+{
+name:"Additional Roboguard Beam",
+price:0
+},
+
+
+{
+name:"Additional Remote",
+price:0
+},
+
+
+{
+name:"Additional Siren",
+price:0
+}
+
+
+]
+
+
+},
+
+
+
+
+/* =====================================================
+   ROBOGUARD ACCESSORIES
+===================================================== */
+
+
+{
+id:"ROBOGUARD-ACCESSORIES",
+
+name:"Roboguard Accessories",
+
+category:"Roboguard",
+
+type:"standard",
+
+basePrice:0,
+
+description:
+"Replacement parts and accessories for Roboguard outdoor security systems.",
+
+image:
+"images/products/roboguard-accessories.jpg",
+
+icon:"🔧",
+
+
+options:{
+
+
+components:[
+
+"Roboguard Beam",
+
+"HQ Receiver",
+
+"Robalarm Power Back",
+
+"4 Button Remote",
+
+"Siren",
+
+"Battery",
+
+"Mounting Accessories"
+
+]
+
+
+}
+
+
+}
+
+
+);
+
+// ======================================================
+// NEXPAK SECURITY SOLUTIONS V15
+// SHOP DATA
+// PART 3/6
+// CCTV + IP CCTV DATABASE
+// ======================================================
+
+
+
+/* =====================================================
+   CCTV SURVEILLANCE SYSTEMS
+===================================================== */
+
+
+products.push(
+
+
+{
+id:"CCTV-SYSTEM-KIT",
+
+name:"Professional CCTV Surveillance System",
+
+category:"CCTV",
+
+type:"configurable",
+
+basePrice:0,
+
+description:
+"Configure a complete analogue CCTV surveillance system using professional security equipment.",
+
+image:
+"images/products/cctv-system.jpg",
+
+icon:"📹",
+
+
+options:{
+
+
+brand:[
+
+"Hikvision",
+"Dahua"
+
+],
+
+
+systemType:[
+
+"Turbo HD CCTV",
+"Hybrid CCTV"
+
+],
+
+
+cameraQuantity:[
+
+"2 Camera System",
+"4 Camera System",
+"6 Camera System",
+"8 Camera System",
+"16 Camera System",
+"32 Camera System"
+
+],
+
+
+cameraType:[
+
+"Bullet Camera",
+"Dome Camera",
+"Turret Camera",
+"ColorVu Camera",
+"AI Smart Detection Camera"
+
+],
+
+
+resolution:[
+
+"2MP",
+"4MP",
+"5MP",
+"8MP 4K"
+
+],
+
+
+recorder:[
+
+"DVR",
+"XVR Hybrid Recorder"
+
+],
+
+
+hardDrive:[
+
+"None",
+"1TB",
+"2TB",
+"4TB",
+"6TB",
+"8TB"
+
+],
+
+
+monitor:[
+
+"None",
+"22 inch Monitor",
+"24 inch Monitor",
+"32 inch Monitor"
+
+],
+
+
+remoteViewing:[
+
+"Mobile App Setup",
+"Remote Viewing Setup",
+"Cloud Access"
+
+],
+
+
+cabling:[
+
+"RG59 Cable Kit",
+"CAT5e Cable Kit",
+"CAT6 Cable Kit"
+
+],
+
+
+power:[
+
+"12V Power Supply",
+"UPS Backup Power"
+
+],
+
+
+installation:[
+
+"Supply Only",
+"Supply & Installation"
+
+]
+
+
+},
+
+
+extras:[
+
+
+{
+name:"Additional Camera",
+price:0
+},
+
+
+{
+name:"Additional Hard Drive",
+price:0
+},
+
+
+{
+name:"Camera Junction Box",
+price:0
+},
+
+
+{
+name:"Surge Protection",
+price:0
+},
+
+
+{
+name:"UPS Backup",
+price:0
+}
+
+
+]
+
+
+},
+
+
+
+
+/* =====================================================
+   IP CCTV SYSTEMS
+===================================================== */
+
+
+{
+id:"IP-CCTV-SYSTEM-KIT",
+
+name:"Professional IP CCTV Surveillance System",
+
+category:"IP CCTV",
+
+type:"configurable",
+
+basePrice:0,
+
+description:
+"Configure a high resolution IP camera surveillance system with network recording and smart security features.",
+
+image:
+"images/products/ip-cctv-system.jpg",
+
+icon:"🌐📹",
+
+
+options:{
+
+
+brand:[
+
+"Hikvision",
+"Dahua"
+
+],
+
+
+cameraQuantity:[
+
+"2 Camera System",
+"4 Camera System",
+"8 Camera System",
+"16 Camera System",
+"32 Camera System"
+
+],
+
+
+cameraType:[
+
+"IP Bullet Camera",
+"IP Dome Camera",
+"Turret IP Camera",
+"PTZ Camera",
+"AI Smart Camera"
+
+],
+
+
+resolution:[
+
+"2MP",
+"4MP",
+"5MP",
+"8MP 4K"
+
+],
+
+
+nightVision:[
+
+"IR Night Vision",
+"Color Night Vision",
+"Full Colour AI Vision"
+
+],
+
+
+recorder:[
+
+"NVR",
+"PoE NVR"
+
+],
+
+
+storage:[
+
+"1TB",
+"2TB",
+"4TB",
+"8TB",
+"10TB"
+
+],
+
+
+networkEquipment:[
+
+"PoE Switch",
+"Network Switch",
+"Router Integration"
+
+],
+
+
+remoteAccess:[
+
+"Mobile App",
+"Cloud Access",
+"Remote Monitoring"
+
+],
+
+
+cabling:[
+
+"CAT5e Cable",
+"CAT6 Cable"
+
+],
+
+
+installation:[
+
+"Supply Only",
+"Supply & Installation"
+
+]
+
+
+},
+
+
+extras:[
+
+
+{
+name:"Additional IP Camera",
+price:0
+},
+
+
+{
+name:"PoE Switch",
+price:0
+},
+
+
+{
+name:"Additional Hard Drive",
+price:0
+},
+
+
+{
+name:"CAT6 Cable",
+price:0
+},
+
+
+{
+name:"Camera Junction Box",
+price:0
+},
+
+
+{
+name:"Network Cabinet",
+price:0
+}
+
+
+]
+
+
+},
+
+
+
+
+/* =====================================================
+   CCTV ACCESSORIES
+===================================================== */
+
+
+{
+id:"CCTV-ACCESSORIES",
+
+name:"CCTV Installation Accessories",
+
+category:"CCTV",
+
+type:"standard",
+
+basePrice:0,
+
+description:
+"Security camera installation accessories and replacement components.",
+
+image:
+"images/products/cctv-accessories.jpg",
+
+icon:"🔧",
+
+
+options:{
+
+
+components:[
+
+"BNC Connectors",
+
+"DC Power Connectors",
+
+"Camera Junction Box",
+
+"RG59 Cable",
+
+"CAT5e Cable",
+
+"CAT6 Cable",
+
+"PoE Switch",
+
+"Hard Drive",
+
+"Monitor",
+
+"Power Supply",
+
+"Surge Protector"
+
+]
+
+
+}
+
+
+}
+
+
+);
+
+// ======================================================
+// NEXPAK SECURITY SOLUTIONS V15
+// SHOP DATA
+// PART 4/6
+// GATE AUTOMATION + ACCESS CONTROL DATABASE
+// ======================================================
+
+
+
+/* =====================================================
+   GATE AUTOMATION SYSTEMS
+===================================================== */
+
+
+products.push(
+
+
+{
+id:"GATE-AUTOMATION-KIT",
+
+name:"Automatic Gate Automation System",
+
+category:"Gate Automation",
+
+type:"configurable",
+
+basePrice:0,
+
+description:
+"Configure a complete automatic gate solution for residential, commercial and industrial properties.",
+
+image:
+"images/products/gate-automation.jpg",
+
+icon:"🚪",
+
+
+options:{
+
+
+brand:[
+
+"Centurion",
+"Hansa",
+"Gemini",
+"ET Nice"
+
+],
+
+
+gateType:[
+
+"Sliding Gate",
+"Swing Gate"
+
+],
+
+
+motorSelection:[
+
+"Centurion D5 Smart",
+"Centurion D10 Smart",
+"Centurion D10 Turbo",
+"Centurion A10",
+"Centurion D5 Evo"
+
+],
+
+
+gateWeight:[
+
+"Up to 500kg",
+"Up to 1000kg",
+"Up to 1500kg",
+"Up to 2000kg"
+
+],
+
+
+powerSystem:[
+
+"AC Powered",
+"Solar Powered"
+
+],
+
+
+batteryBackup:[
+
+"7Ah Battery",
+"12Ah Battery",
+"18Ah Battery"
+
+],
+
+
+rackLength:[
+
+"3m Rack",
+"4m Rack",
+"5m Rack",
+"6m Rack",
+"Custom Length"
+
+],
+
+
+remoteControls:[
+
+"1 Remote",
+"2 Remotes",
+"4 Remotes",
+"Additional Remotes"
+
+],
+
+
+accessControl:[
+
+"Remote Control Only",
+"Keypad Access",
+"GSM Access",
+"Wi-Fi Access"
+
+],
+
+
+safetyDevices:[
+
+"Safety Beams",
+"Loop Detector",
+"Safety Edge"
+
+],
+
+
+installation:[
+
+"Supply Only",
+"Supply & Installation"
+
+]
+
+
+},
+
+
+extras:[
+
+
+{
+name:"Additional Gate Remote",
+price:0
+},
+
+
+{
+name:"Solar Panel Kit",
+price:0
+},
+
+
+{
+name:"Safety Infrared Beams",
+price:0
+},
+
+
+{
+name:"GSM Module",
+price:0
+},
+
+
+{
+name:"Wi-Fi Module",
+price:0
+},
+
+
+{
+name:"Intercom Integration",
+price:0
+}
+
+
+]
+
+
+},
+
+
+
+
+/* =====================================================
+   ACCESS CONTROL SYSTEMS
+===================================================== */
+
+
+{
+id:"ACCESS-CONTROL-KIT",
+
+name:"Professional Access Control System",
+
+category:"Access Control",
+
+type:"configurable",
+
+basePrice:0,
+
+description:
+"Configure access control solutions for homes, offices, warehouses and commercial buildings.",
+
+image:
+"images/products/access-control.jpg",
+
+icon:"🔐",
+
+
+options:{
+
+
+brand:[
+
+"Hikvision",
+"Dahua",
+"ZKTeco",
+"Other"
+
+],
+
+
+accessMethod:[
+
+"RFID Card Access",
+
+"Fingerprint Access",
+
+"Facial Recognition",
+
+"PIN Code Access",
+
+"Multi Technology Access"
+
+],
+
+
+readerType:[
 
 "Standalone Reader",
+
+"Outdoor Weatherproof Reader",
 
 "Network Reader"
 
 ],
 
-controller: [
+
+doorController:[
 
 "Single Door Controller",
 
@@ -978,7 +1406,8 @@ controller: [
 
 ],
 
-lockType: [
+
+lockType:[
 
 "Magnetic Lock 180kg",
 
@@ -992,7 +1421,8 @@ lockType: [
 
 ],
 
-exitOptions: [
+
+exitDevices:[
 
 "Exit Button",
 
@@ -1002,17 +1432,19 @@ exitOptions: [
 
 ],
 
-powerSupply: [
+
+powerSupply:[
 
 "12V 3A PSU",
 
 "12V 5A PSU",
 
-"Boxed Power Supply With Battery Backup"
+"Boxed PSU With Battery Backup"
 
 ],
 
-batteryBackup: [
+
+batteryBackup:[
 
 "7Ah Lead Acid Battery",
 
@@ -1022,7 +1454,8 @@ batteryBackup: [
 
 ],
 
-communication: [
+
+communication:[
 
 "Standalone",
 
@@ -1032,7 +1465,8 @@ communication: [
 
 ],
 
-doorType: [
+
+doorType:[
 
 "Single Door",
 
@@ -1042,7 +1476,8 @@ doorType: [
 
 ],
 
-installation: [
+
+installation:[
 
 "Supply Only",
 
@@ -1050,461 +1485,631 @@ installation: [
 
 ]
 
+
 },
 
-extras: [
+
+extras:[
+
 
 {
-name: "RFID Cards",
-price: 0
+name:"RFID Cards",
+price:0
 },
 
-{
-name: "RFID Tags",
-price: 0
-},
 
 {
-name: "Exit Button",
-price: 0
+name:"RFID Tags",
+price:0
 },
 
-{
-name: "Door Contact",
-price: 0
-},
 
 {
-name: "Request To Exit Sensor",
-price: 0
+name:"Additional Reader",
+price:0
 },
 
+
 {
-name: "Video Intercom Integration",
-price: 0
+name:"Additional Lock",
+price:0
+},
+
+
+{
+name:"Door Contact",
+price:0
+},
+
+
+{
+name:"Video Intercom Integration",
+price:0
 }
+
 
 ]
 
+
 },
 
-   /* =====================================================
-   CCTV CAMERA SYSTEMS
+
+
+
+/* =====================================================
+   GATE ACCESSORIES
 ===================================================== */
 
+
 {
-id: "CCTV-SYSTEM-KIT",
+id:"GATE-ACCESSORIES",
 
-name: "Professional CCTV Surveillance Systems",
+name:"Gate Automation Accessories",
 
-category: "CCTV",
+category:"Gate Automation",
 
-type: "configurable",
+type:"standard",
 
-basePrice: 0,
+basePrice:0,
 
-description: "Configure a complete CCTV surveillance system for residential, commercial and industrial security.",
+description:
+"Replacement parts and accessories for automatic gate systems.",
 
-image: "images/products/cctv-kit.jpg",
+image:
+"images/products/gate-accessories.jpg",
 
-icon: "📹",
+icon:"🔧",
 
-options: {
 
-brand: [
+options:{
 
-"Hikvision",
 
-"Dahua"
+components:[
+
+"Gate Remote",
+
+"Gate Rack",
+
+"Safety Beam",
+
+"Loop Detector",
+
+"Gate Battery",
+
+"Solar Panel",
+
+"GSM Module",
+
+"Wi-Fi Module",
+
+"Keypad",
+
+"Exit Button",
+
+"Intercom Integration"
+
+]
+
+
+}
+
+
+}
+
+
+);
+
+// ======================================================
+// NEXPAK SECURITY SOLUTIONS V15
+// SHOP DATA
+// PART 5/6
+// ALARM SYSTEMS + INTERCOM DATABASE
+// ======================================================
+
+
+
+/* =====================================================
+   ALARM SYSTEMS
+===================================================== */
+
+
+products.push(
+
+
+{
+id:"ALARM-SYSTEM-KIT",
+
+name:"Professional Alarm System",
+
+category:"Alarm Systems",
+
+type:"configurable",
+
+basePrice:0,
+
+description:
+"Configure a complete intrusion detection alarm solution for residential, commercial and industrial security.",
+
+image:
+"images/products/alarm-system.jpg",
+
+icon:"🚨",
+
+
+options:{
+
+
+brand:[
+
+"Paradox",
+"IDS",
+"Ajax",
+"Texecom"
 
 ],
 
-systemType: [
 
-"Turbo HD CCTV",
+systemType:[
 
-"IP CCTV"
-
-],
-
-cameraQuantity: [
-
-"2 Camera System",
-
-"4 Camera System",
-
-"6 Camera System",
-
-"8 Camera System",
-
-"16 Camera System",
-
-"32 Camera System"
+"Wired Alarm System",
+"Wireless Alarm System",
+"Hybrid Alarm System"
 
 ],
 
-cameraType: [
 
-"Bullet Camera",
+alarmPanel:[
 
-"Dome Camera",
-
-"Turret Camera",
-
-"ColorVu Camera",
-
-"Full Colour Night Vision",
-
-"AI Smart Detection Camera"
+"4 Zone Panel",
+"8 Zone Panel",
+"16 Zone Panel",
+"32 Zone Panel"
 
 ],
 
-cameraResolution: [
 
-"2MP",
+keypad:[
 
-"4MP",
-
-"5MP",
-
-"8MP 4K"
+"LED Keypad",
+"LCD Keypad",
+"Touch Keypad",
+"Wireless Keypad"
 
 ],
 
-recorder: [
 
-"DVR",
+motionDetection:[
 
-"NVR",
-
-"XVR Hybrid Recorder"
-
-],
-
-storage: [
-
-"1TB Hard Drive",
-
-"2TB Hard Drive",
-
-"4TB Hard Drive",
-
-"8TB Hard Drive"
+"1 PIR Sensor",
+"2 PIR Sensors",
+"4 PIR Sensors",
+"8 PIR Sensors"
 
 ],
 
-monitor: [
+
+outdoorProtection:[
 
 "None",
-
-"22 inch Monitor",
-
-"24 inch Monitor",
-
-"32 inch Monitor"
+"Outdoor PIR",
+"Dual Beam Detector",
+"Outdoor Wireless Beam"
 
 ],
 
-networkOptions: [
 
-"Remote Viewing Setup",
+doorProtection:[
 
-"Mobile App Setup",
-
-"Cloud Access"
-
-],
-
-powerOptions: [
-
-"12V Power Supply",
-
-"PoE Switch",
-
-"PoE NVR"
+"None",
+"Magnetic Door Contact",
+"Wireless Door Contact"
 
 ],
 
-cabling: [
 
-"RG59 Cable Kit",
+communication:[
 
-"CAT6 Cable Kit",
-
-"Pre-made Cable Kit"
+"None",
+"GSM Module",
+"Wi-Fi Module",
+"GSM + Wi-Fi Module"
 
 ],
 
-installation: [
+
+battery:[
+
+"7Ah Lead Acid Battery",
+"7Ah Gel Battery",
+"12Ah Battery"
+
+],
+
+
+siren:[
+
+"Indoor Siren",
+"Outdoor Siren",
+"Outdoor Siren + Strobe"
+
+],
+
+
+panicOptions:[
+
+"None",
+"Wireless Panic Button",
+"Fixed Panic Button"
+
+],
+
+
+installation:[
 
 "Supply Only",
-
 "Supply & Installation"
 
 ]
 
+
 },
 
-extras: [
+
+extras:[
+
 
 {
-name: "Additional Camera",
-price: 0
+name:"Additional PIR Sensor",
+price:0
 },
 
-{
-name: "Additional Hard Drive",
-price: 0
-},
 
 {
-name: "PoE Switch",
-price: 0
+name:"Additional Door Contact",
+price:0
 },
 
-{
-name: "CAT6 Cable",
-price: 0
-},
 
 {
-name: "BNC Connectors",
-price: 0
+name:"Remote Control",
+price:0
 },
 
-{
-name: "Power Connectors",
-price: 0
-},
 
 {
-name: "Camera Junction Box",
-price: 0
+name:"Wireless Receiver",
+price:0
 },
 
+
 {
-name: "Surge Protection",
-price: 0
+name:"Smoke Detector",
+price:0
+},
+
+
+{
+name:"Heat Detector",
+price:0
+},
+
+
+{
+name:"Outdoor Beam Detector",
+price:0
+},
+
+
+{
+name:"DMC Enclosure Box",
+price:0
 }
+
 
 ]
 
-}, 
 
-    /* =====================================================
-   INTERCOM & SMART SECURITY SYSTEMS
+},
+
+
+
+
+/* =====================================================
+   INTERCOM SYSTEMS
 ===================================================== */
 
+
 {
-id: "INTERCOM-SYSTEM-KIT",
+id:"VIDEO-INTERCOM-KIT",
 
-name: "Video Intercom & Smart Security Systems",
+name:"Video Intercom & Smart Entry System",
 
-category: "Intercom",
+category:"Intercom",
 
-type: "configurable",
+type:"configurable",
 
-basePrice: 0,
+basePrice:0,
 
-description: "Configure professional video intercom solutions for homes, offices and commercial properties.",
+description:
+"Professional video intercom solutions for homes, offices, complexes and commercial properties.",
 
-image: "images/products/intercom-kit.jpg",
+image:
+"images/products/video-intercom.jpg",
 
-icon: "📞",
+icon:"📞",
 
-options: {
 
-brand: [
+options:{
+
+
+brand:[
 
 "Hikvision",
-
 "Dahua",
-
 "Commax",
-
 "Other"
 
 ],
 
-systemType: [
+
+systemType:[
 
 "Audio Intercom",
-
 "Video Intercom",
-
 "IP Video Intercom",
-
 "Wi-Fi Smart Intercom"
 
 ],
 
-doorStation: [
+
+doorStation:[
 
 "Single Button Outdoor Station",
-
 "Multi Button Outdoor Station",
-
 "Villa Door Station",
-
 "Commercial Door Station"
 
 ],
 
-indoorMonitor: [
+
+indoorMonitor:[
 
 "None",
-
-"7 inch Indoor Monitor",
-
-"10 inch Indoor Monitor",
-
-"Touch Screen Indoor Monitor"
+"7 Inch Indoor Monitor",
+"10 Inch Indoor Monitor",
+"Touch Screen Monitor"
 
 ],
 
-connection: [
+
+connection:[
 
 "2 Wire System",
-
 "4 Wire System",
-
 "IP Network",
-
 "Wi-Fi"
 
 ],
 
-gateControl: [
+
+gateControl:[
 
 "Gate Release",
-
 "Electric Lock Control",
-
 "Magnetic Lock Control"
 
 ],
 
-cameraIntegration: [
+
+cameraIntegration:[
 
 "Built-in Camera",
-
 "CCTV Integration",
-
 "Additional Camera"
 
 ],
 
-accessOptions: [
+
+accessOptions:[
 
 "PIN Code",
-
 "RFID Card",
-
 "Fingerprint",
-
 "Facial Recognition"
 
 ],
 
-mobileAccess: [
+
+mobileAccess:[
 
 "None",
-
 "Mobile App Viewing",
-
 "Remote Gate Opening"
 
 ],
 
-powerSupply: [
+
+powerSupply:[
 
 "12V Power Supply",
-
 "24V Power Supply",
-
 "PoE Power"
 
 ],
 
-installation: [
+
+installation:[
 
 "Supply Only",
-
 "Supply & Installation"
 
 ]
 
+
 },
 
-extras: [
+
+extras:[
+
 
 {
-name: "Additional Indoor Monitor",
-price: 0
+name:"Additional Indoor Monitor",
+price:0
 },
 
-{
-name: "Additional Outdoor Station",
-price: 0
-},
 
 {
-name: "Electric Strike Lock",
-price: 0
+name:"Additional Outdoor Station",
+price:0
 },
 
-{
-name: "Magnetic Lock",
-price: 0
-},
 
 {
-name: "Exit Button",
-price: 0
+name:"Electric Strike Lock",
+price:0
 },
 
-{
-name: "Gate Motor Integration",
-price: 0
-},
 
 {
-name: "Wi-Fi Module",
-price: 0
+name:"Magnetic Lock",
+price:0
+},
+
+
+{
+name:"Exit Button",
+price:0
+},
+
+
+{
+name:"Gate Motor Integration",
+price:0
+},
+
+
+{
+name:"Wi-Fi Module",
+price:0
 }
+
 
 ]
 
+
 },
 
-    /* =====================================================
-   SECURITY ACCESSORIES & CONSUMABLES
+
+
+
+/* =====================================================
+   ALARM & INTERCOM ACCESSORIES
 ===================================================== */
 
+
 {
-id: "SECURITY-ACCESSORIES",
+id:"ALARM-INTERCOM-ACCESSORIES",
 
-name: "Security Accessories & Components",
+name:"Alarm & Intercom Accessories",
 
-category: "Accessories",
+category:"Security Accessories",
 
-type: "configurable",
+type:"standard",
 
-basePrice: 0,
+basePrice:0,
 
-description: "Security system accessories, replacement parts and installation components.",
+description:
+"Replacement accessories and additional components for alarm and intercom systems.",
 
-image: "images/products/security-accessories.jpg",
+image:
+"images/products/alarm-accessories.jpg",
 
-icon: "🔧",
+icon:"🔧",
 
-options: {
 
-electricFenceAccessories: [
+options:{
+
+
+components:[
+
+"PIR Motion Sensor",
+
+"Outdoor PIR",
+
+"Magnetic Door Contact",
+
+"Wireless Contact",
+
+"Alarm Remote",
+
+"Panic Button",
+
+"Siren",
+
+"Strobe Light",
+
+"Smoke Detector",
+
+"Heat Detector",
+
+"Intercom Monitor",
+
+"Door Station"
+
+]
+
+
+}
+
+
+}
+
+
+);
+
+// ======================================================
+// NEXPAK SECURITY SOLUTIONS V15
+// SHOP DATA
+// PART 6/6
+// SECURITY ACCESSORIES + DATABASE CLOSE
+// ======================================================
+
+
+
+/* =====================================================
+   SECURITY ACCESSORIES
+===================================================== */
+
+
+products.push(
+
+
+{
+id:"SECURITY-ACCESSORIES",
+
+name:"Security System Accessories",
+
+category:"Security Accessories",
+
+type:"configurable",
+
+basePrice:0,
+
+description:
+"Professional security system accessories, replacement parts and installation components.",
+
+image:
+"images/products/security-accessories.jpg",
+
+icon:"🔧",
+
+
+options:{
+
+
+electricFence:[
 
 "Electric Fence Remote",
-
-"Electric Fence Key Switch",
 
 "Fence Alarm Indicator",
 
@@ -1520,11 +2125,12 @@ electricFenceAccessories: [
 
 "Fence Joiner",
 
-"Fence Warning Signs"
+"Warning Signs"
 
 ],
 
-alarmAccessories: [
+
+alarmAccessories:[
 
 "PIR Motion Detector",
 
@@ -1538,7 +2144,9 @@ alarmAccessories: [
 
 "Panic Button",
 
-"Siren",
+"Indoor Siren",
+
+"Outdoor Siren",
 
 "Strobe Light",
 
@@ -1548,7 +2156,8 @@ alarmAccessories: [
 
 ],
 
-cctvAccessories: [
+
+cctvAccessories:[
 
 "Camera Junction Box",
 
@@ -1556,19 +2165,26 @@ cctvAccessories: [
 
 "DC Power Connector",
 
-"CAT6 Cable",
-
 "RG59 Cable",
+
+"CAT5e Cable",
+
+"CAT6 Cable",
 
 "PoE Switch",
 
 "Hard Drive",
 
-"Monitor"
+"Monitor",
+
+"Power Supply",
+
+"Surge Protector"
 
 ],
 
-gateAccessories: [
+
+gateAccessories:[
 
 "Gate Remote",
 
@@ -1584,11 +2200,31 @@ gateAccessories: [
 
 "Keypad",
 
-"GSM Module"
+"GSM Module",
+
+"Wi-Fi Module"
 
 ],
 
-powerProducts: [
+
+accessControl:[
+
+"RFID Cards",
+
+"RFID Tags",
+
+"Exit Button",
+
+"Magnetic Lock",
+
+"Electric Strike",
+
+"Door Contact"
+
+],
+
+
+powerProducts:[
 
 "12V PSU",
 
@@ -1602,7 +2238,8 @@ powerProducts: [
 
 ],
 
-cables: [
+
+cables:[
 
 "Alarm Cable",
 
@@ -1612,11 +2249,14 @@ cables: [
 
 "CAT6 Cable",
 
-"Power Cable"
+"Power Cable",
+
+"HT Cable"
 
 ],
 
-installationHardware: [
+
+installationHardware:[
 
 "Wall Plugs",
 
@@ -1630,7 +2270,8 @@ installationHardware: [
 
 ],
 
-installation: [
+
+installation:[
 
 "Supply Only",
 
@@ -1638,30 +2279,146 @@ installation: [
 
 ]
 
+
 },
 
-extras: [
+
+extras:[
+
 
 {
-name: "Technician Installation Pack",
-price: 0
+name:"Technician Installation Pack",
+price:0
 },
 
-{
-name: "Replacement Battery",
-price: 0
-},
 
 {
-name: "Replacement Power Supply",
-price: 0
+name:"Replacement Battery",
+price:0
 },
 
+
 {
-name: "Maintenance Call Out",
-price: 0
+name:"Replacement Power Supply",
+price:0
+},
+
+
+{
+name:"Maintenance Call Out",
+price:0
 }
+
 
 ]
 
+
 },
+
+
+
+
+/* =====================================================
+   SECURITY SERVICE PACKAGES
+===================================================== */
+
+
+{
+id:"SECURITY-SERVICE-PACKAGES",
+
+name:"Security Installation Packages",
+
+category:"Security Solutions",
+
+type:"configurable",
+
+basePrice:0,
+
+description:
+"Complete security packages combining equipment supply, installation and setup.",
+
+image:
+"images/products/security-package.jpg",
+
+icon:"🛡️",
+
+
+options:{
+
+
+solutionType:[
+
+"Home Security Package",
+
+"Small Business Security Package",
+
+"Warehouse Security Package",
+
+"Industrial Security Package",
+
+"Estate Security Package"
+
+],
+
+
+systemsIncluded:[
+
+"CCTV System",
+
+"Electric Fence",
+
+"Alarm System",
+
+"Gate Automation",
+
+"Access Control",
+
+"Intercom System",
+
+"Roboguard Outdoor Protection"
+
+],
+
+
+installationLevel:[
+
+"Equipment Supply Only",
+
+"Professional Installation",
+
+"Full Security Assessment & Installation"
+
+],
+
+
+monitoring:[
+
+"No Monitoring",
+
+"Alarm Monitoring",
+
+"Remote CCTV Monitoring"
+
+]
+
+
+}
+
+
+}
+
+
+);
+
+
+
+// ======================================================
+// DATABASE EXPORT
+// ======================================================
+
+
+if(typeof module !== "undefined"){
+
+module.exports = products;
+
+   }
