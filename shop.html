@@ -1,241 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-<title>Nexpak Security Solutions | Security Superstore</title>
-
-<meta name="description" content="Buy CCTV, Electric Fencing, Gate Motors, Alarm Systems, Access Control and Security Equipment online.">
-
-<meta name="theme-color" content="#0057ff">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
-<link rel="stylesheet" href="shop-v18.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Nexpak Security Solutions | Security Superstore</title>
+    <meta name="description" content="Buy CCTV, Electric Fencing, Gate Motors, Alarm Systems, Access Control and Security Equipment online.">
+    <meta name="theme-color" content="#0057ff">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="shop-v18.css">
 </head>
-
 <body>
 
 <div class="topbar">
-
-<div class="container">
-
-<span>
-<i class="fas fa-shield-halved"></i>
-Professional Security Equipment
-</span>
-
-<div class="top-links">
-
-<a href="contact.html">Contact</a>
-
-<a href="quote.html">Request Quote</a>
-
-<a href="track-order.html">Track Order</a>
-
-</div>
-
-</div>
-
+    <div class="container">
+        <span><i class="fas fa-shield-halved"></i> Professional Security Equipment</span>
+        <div class="top-links">
+            <a href="contact.html">Contact</a>
+            <a href="quote.html">Request Quote</a>
+            <a href="track-order.html">Track Order</a>
+        </div>
+    </div>
 </div>
 
 <header class="header">
-
-<div class="container header-row">
-
-<a href="index.html" class="logo">
-
-<img src="images/logo.png" alt="Nexpak">
-
-</a>
-
-<div class="search">
-
-<input
-type="search"
-placeholder="Search CCTV, Electric Fencing, Alarms, Gate Motors...">
-
-<button>
-
-<i class="fas fa-search"></i>
-
-</button>
-
-</div>
-
-<div class="header-icons">
-
-<button>
-
-<i class="far fa-user"></i>
-
-</button>
-
-<button>
-
-<i class="far fa-heart"></i>
-
-<span class="badge">0</span>
-
-</button>
-
-<button>
-
-<i class="fas fa-shopping-cart"></i>
-
-<span class="badge">0</span>
-
-</button>
-
-</div>
-
-</div>
-
+    <div class="container header-row">
+        <a href="index.html" class="logo">
+            <img src="images/logo.png" alt="Nexpak">
+        </a>
+        <div class="search">
+            <!-- Added id="shopSearch" -->
+            <input type="search" id="shopSearch" placeholder="Search CCTV, Electric Fencing, Alarms, Gate Motors...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+        <div class="header-icons">
+            <button class="user-icon">
+                <i class="far fa-user"></i>
+            </button>
+            <!-- Added wishlist-icon class -->
+            <button class="wishlist-icon">
+                <i class="far fa-heart pointer-events-none"></i>
+                <span class="badge" id="wishlistCount">0</span>
+            </button>
+            <!-- Added cart-icon class and id="cartCount" -->
+            <button class="cart-icon">
+                <i class="fas fa-shopping-cart pointer-events-none"></i>
+                <span class="badge" id="cartCount">0</span>
+            </button>
+        </div>
+    </div>
 </header>
 
 <nav class="categories">
-
-<div class="container">
-
-<button>All</button>
-
-<button>CCTV</button>
-
-<button>Electric Fencing</button>
-
-<button>Roboguard</button>
-
-<button>Gate Automation</button>
-
-<button>Alarm Systems</button>
-
-<button>Access Control</button>
-
-<button>Intercom</button>
-
-</div>
-
+    <div class="container">
+        <button class="category-btn" data-category="all">All</button>
+        <button class="category-btn" data-category="cctv">CCTV</button>
+        <button class="category-btn" data-category="electric-fencing">Electric Fencing</button>
+        <button class="category-btn" data-category="roboguard">Roboguard</button>
+        <button class="category-btn" data-category="gate-automation">Gate Automation</button>
+        <button class="category-btn" data-category="alarm-systems">Alarm Systems</button>
+        <button class="category-btn" data-category="access-control">Access Control</button>
+        <button class="category-btn" data-category="intercom">Intercom</button>
+    </div>
 </nav>
 
 <section class="hero">
-
-<div class="container hero-grid">
-
-<div>
-
-<h1>
-
-South Africa's Security Superstore
-
-</h1>
-
-<p>
-
-Professional CCTV, Electric Fencing, Alarm Systems,
-Gate Automation, Access Control and Installation.
-
-</p>
-
-<a href="#products" class="btn">
-
-Shop Now
-
-</a>
-
-</div>
-
-<div>
-
-<img
-src="images/banners/security-banner.png"
-alt="Security Equipment">
-
-</div>
-
-</div>
-
+    <div class="container hero-grid">
+        <div>
+            <h1>South Africa's Security Superstore</h1>
+            <p>Professional CCTV, Electric Fencing, Alarm Systems, Gate Automation, Access Control and Installation.</p>
+            <a href="#products" class="btn">Shop Now</a>
+        </div>
+        <div>
+            <img src="images/banners/security-banner.png" alt="Security Equipment">
+        </div>
+    </div>
 </section>
 
 <section id="products" class="shop">
-
-<div class="container shop-grid">
-
-<aside class="sidebar">
-
-<h2>
-
-Categories
-
-</h2>
-
-<div id="categoryFilters">
-
-</div>
-
-</aside>
-
-<main>
-
-<div class="toolbar">
-
-<h3 id="productCount">
-
-0 Products
-
-</h3>
-
-<select id="sortProducts">
-
-<option>Recommended</option>
-
-<option>Price Low-High</option>
-
-<option>Price High-Low</option>
-
-<option>Name A-Z</option>
-
-</select>
-
-</div>
-
-<div id="productGrid">
-
-</div>
-
-</main>
-
-</div>
-
+    <div class="container shop-grid">
+        <aside class="sidebar">
+            <h2>Categories</h2>
+            <!-- Changed ID to match JS -->
+            <div id="categoryList"></div>
+        </aside>
+        
+        <main>
+            <div class="toolbar">
+                <h3 id="productCount">0 Products</h3>
+                <select id="sortProducts">
+                    <option value="default">Recommended</option>
+                    <option value="price-low">Price Low-High</option>
+                    <option value="price-high">Price High-Low</option>
+                    <option value="name">Name A-Z</option>
+                </select>
+            </div>
+            <div id="productGrid"></div>
+        </main>
+    </div>
 </section>
 
 <footer>
-
-<div class="container">
-
-<p>
-
-© 2026 Nexpak Security Solutions
-
-</p>
-
-</div>
-
+    <div class="container">
+        <p>© 2026 Nexpak Security Solutions</p>
+    </div>
 </footer>
 
+<!-- MISSING UI COMPONENTS REQUIRED BY JS -->
+<div id="cartDrawer" class="drawer">
+    <button class="close-cart">✕</button>
+    <h2>Your Cart</h2>
+    <div id="cartItems"></div>
+    <div class="cart-summary">
+        <h3>Total: <span id="cartTotal">R0</span></h3>
+        <button class="btn checkout-btn">Checkout</button>
+    </div>
+</div>
+
+<div id="wishlistPanel" class="panel">
+    <button class="close-wishlist">✕</button>
+    <h2>Wishlist</h2>
+    <div id="wishlistItems"></div>
+</div>
+
+<div id="comparePanel" class="panel">
+    <button class="close-compare">✕</button>
+    <h2>Compare</h2>
+    <div id="compareItems"></div>
+</div>
+
+<div id="quickViewModal" class="modal"></div>
+<div id="shopToast" class="toast"></div>
+
+<!-- Scripts -->
 <script src="shop-data.js"></script>
 <script src="wishlist.js"></script>
 <script src="js/cart.js"></script>
 <script src="shop-v18.js"></script>
 
 </body>
-
-             </html>
+  </html>
+  
