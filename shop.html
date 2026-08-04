@@ -82,7 +82,6 @@ content="https://nexpak-beepsa.github.io/shop.html">
 
 
 
-
 <!-- GOOGLE FONT -->
 
 
@@ -102,13 +101,11 @@ rel="stylesheet">
 
 
 
-
 <!-- FONT AWESOME -->
 
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
 
 
 
@@ -119,10 +116,12 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
 <link rel="stylesheet"
 href="shop-styles.css">
 
+<!-- SHOP ENHANCEMENTS CSS -->
+<link rel="stylesheet"
+href="css/shop-enhancements.css">
 
 
 </head>
-
 
 
 
@@ -186,7 +185,6 @@ Contact
 
 
 
-
 <div class="header-actions">
 
 
@@ -207,7 +205,7 @@ class="cart-icon">
 <i class="fas fa-shopping-cart"></i>
 
 
-<span id="cartCount">
+<span id="cartCount" class="cart-count">
 0
 </span>
 
@@ -217,7 +215,6 @@ class="cart-icon">
 
 
 </div>
-
 
 
  </header>
@@ -247,7 +244,6 @@ security solutions.
 
 
 
-
 <a href="#products"
 class="hero-shop-btn">
 
@@ -262,7 +258,6 @@ Browse Products
 
 
 </section>
-
 
 
 
@@ -318,9 +313,6 @@ document.getElementById('shopSearch').value
 
 
 </div>
-
-
-
 
 
 
@@ -404,9 +396,6 @@ Security Accessories
 
 
 
-
-
-
 <div class="sort-container">
 
 
@@ -458,8 +447,6 @@ Product Name
 
 
 
-
-
 <div class="view-switcher">
 
 
@@ -473,7 +460,6 @@ data-view="grid">
 <i class="fas fa-grip"></i>
 
 </button>
-
 
 
 
@@ -499,9 +485,6 @@ data-view="list">
 
 
 
-
-
-
 <!-- ======================================================
  PRODUCTS SECTION
 ====================================================== -->
@@ -509,7 +492,6 @@ data-view="list">
 
 <section id="products"
 class="products-section">
-
 
 
 
@@ -538,9 +520,6 @@ Security Products
 
 
 
-
-
-
 <!-- PRODUCT GRID -->
 
 
@@ -555,8 +534,6 @@ class="products-grid">
 
 
 </div>
-
-
 
 
 
@@ -587,10 +564,7 @@ Find the right protection solution for your property.
 
 
 
-
-
 <div class="category-grid">
-
 
 
 
@@ -623,9 +597,6 @@ View CCTV
 
 
 
-
-
-
 <div class="category-card">
 
 
@@ -650,9 +621,6 @@ View Electric Fencing
 
 
 </div>
-
-
-
 
 
 
@@ -685,9 +653,6 @@ View Alarms
 
 
 
-
-
-
 <div class="category-card">
 
 
@@ -716,9 +681,6 @@ View Access Control
 
 
 
-
-
-
 <div class="category-card">
 
 
@@ -743,8 +705,6 @@ View Gate Motors
 
 
 </div>
-
-
 
 
 
@@ -784,8 +744,31 @@ View Intercoms
 
 
 
+<!-- ======================================================
+ CART DRAWER
+====================================================== -->
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-panel-header">
+    <h2>Shopping Cart</h2>
+    <button onclick="toggleCartPanel()" class="close-cart"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <p>Your cart is empty.</p>
+  </div>
+  <div class="cart-panel-footer">
+    <div class="cart-total-line">
+      <strong>Total:</strong>
+      <strong id="cartTotal">R0.00</strong>
+    </div>
+    <a href="cart.html" class="checkout-btn">Proceed to Checkout</a>
+  </div>
+</div>
 
-
+<!-- CART NOTIFICATION -->
+<div class="cart-notification" id="cartNotification">
+  <i class="fas fa-check-circle"></i>
+  <span>Item added to cart</span>
+</div>
 
 
 <!-- ======================================================
@@ -810,7 +793,6 @@ Quality equipment from recognised manufacturers.
 
 
 </div>
-
 
 
 
@@ -863,11 +845,6 @@ IDS
 
 
 
-
-
-
-
-
 <!-- ======================================================
  WHY CHOOSE NEXPAK
 ====================================================== -->
@@ -889,9 +866,7 @@ Why Choose Nexpak Security Solutions?
 
 
 
-
 <div class="benefits-grid">
-
 
 
 
@@ -918,9 +893,6 @@ commercial and industrial protection.
 
 
 
-
-
-
 <div class="benefit-card">
 
 
@@ -938,9 +910,6 @@ Quality security equipment delivered across South Africa.
 
 
 </div>
-
-
-
 
 
 
@@ -966,9 +935,6 @@ Helping customers choose the correct security solution.
 
 
 
-
-
-
 <div class="benefit-card">
 
 
@@ -989,9 +955,7 @@ Safe ordering with professional customer service.
 
 
 
-
 </div>
-
 
  </section>
 
@@ -1000,975 +964,141 @@ Safe ordering with professional customer service.
 ====================================================== -->
 
 
-<div id="quickViewModal"
-
-class="quick-view-modal">
+<div id="quickViewModal" class="modal">
 
 
-
-<div class="quick-view-content">
-
+<div class="modal-content">
 
 
-<button
+<div class="modal-header">
 
-class="close-quick-view"
+<h2>Product Details</h2>
 
-onclick="closeQuickView()">
-
-<i class="fas fa-times"></i>
-
-</button>
-
-
-
-
-
-<div class="quick-view-image">
-
-
-<img
-
-id="quickViewImage"
-
-src="images/no-image.jpg"
-
-alt="Product Image">
-
+<button class="close" onclick="closeQuickView()">&times;</button>
 
 </div>
 
 
+<div class="modal-body">
 
-
-
-<div class="quick-view-details">
-
-
-
-<h2 id="quickViewName">
-
-Product Name
-
-</h2>
-
-
-
-
-
-<p id="quickViewDescription">
-
-Product description
-
-</p>
-
-
-
-
-
-<div id="quickViewPrice"
-
-class="quick-view-price">
-
-R0.00
-
-</div>
-
-
-
-
-
-<div id="quickViewOptions">
-
-</div>
-
-
-
-
-
-<button
-
-id="quickViewCartButton"
-
-class="add-cart-btn">
-
-
-<i class="fas fa-cart-plus"></i>
-
-Add To Cart
-
-
-</button>
-
-
-
-
-</div>
-
-
+<!-- Content loaded dynamically -->
 
 </div>
 
 
 </div>
 
-
-
-
-
-
-
+</div>
 
 
 <!-- ======================================================
- CART MINI PANEL
-====================================================== -->
-
-
-<div id="cartPanel"
-
-class="cart-panel">
-
-
-
-<div class="cart-panel-header">
-
-
-<h3>
-
-Your Cart
-
-</h3>
-
-
-
-<button
-
-onclick="closeCartPanel()">
-
-<i class="fas fa-times"></i>
-
-</button>
-
-
-</div>
-
-
-
-
-
-<div id="cartItems"
-
-class="cart-items">
-
-
-
-<p>
-
-Your cart is empty.
-
-</p>
-
-
-
-</div>
-
-
-
-
-
-<div class="cart-panel-footer">
-
-
-
-<div class="cart-total">
-
-
-Total:
-
-<span id="cartTotal">
-
-R0.00
-
-</span>
-
-
-</div>
-
-
-
-
-
-<a href="cart.html"
-
-class="checkout-btn">
-
-View Cart
-
-</a>
-
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- ======================================================
- CART NOTIFICATION
-====================================================== -->
-
-
-<div class="cart-notification">
-
-
-<i class="fas fa-check-circle"></i>
-
-
-<span>
-
-Added to cart
-
-</span>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- ======================================================
- FLOATING WHATSAPP QUOTE BUTTON
-====================================================== -->
-
-
-<a
-
-href="https://wa.me/"
-
-class="whatsapp-floating"
-
-target="_blank">
-
-
-
-<i class="fab fa-whatsapp"></i>
-
-
-
-<span>
-
-Request Quote
-
-</span>
-
-
-
-</a>
-
-
-
-
-
-
-
-
-
-<!-- ======================================================
- SECURITY GUARANTEE STRIP
-====================================================== -->
-
-
-<section class="security-strip">
-
-
-
-<div>
-
-
-<i class="fas fa-shield"></i>
-
-
-<strong>
-Professional Security Solutions
-</strong>
-
-
-</div>
-
-
-
-
-
-<div>
-
-
-<i class="fas fa-clock"></i>
-
-
-<strong>
-Fast Response
-</strong>
-
-
-</div>
-
-
-
-
-
-<div>
-
-
-<i class="fas fa-user-shield"></i>
-
-
-<strong>
-Trusted Protection
-</strong>
-
-
-</div>
-
-
-
-
- </section>
-
- <!-- ======================================================
- FOOTER
+ SHOP FOOTER
 ====================================================== -->
 
 
 <footer class="shop-footer">
 
 
+<div class="footer-content">
 
 
+<div class="footer-section">
 
-<div class="footer-container">
+<h3>Nexpak Security</h3>
 
+<p>Professional CCTV, electric fencing, alarms and access control solutions for South Africa.</p>
 
+<div class="social-links">
 
+<a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
 
+<a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
 
-<div class="footer-column">
+<a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
 
-
-<h3>
-Nexpak Security Solutions
-</h3>
-
-
-<p>
-
-Professional security equipment supplier
-specialising in CCTV, electric fencing,
-alarms, access control and automation.
-
-</p>
-
-
+</div>
 
 </div>
 
 
+<div class="footer-section">
 
+<h3>Products</h3>
 
+<ul>
 
+<li><a href="shop.html">Shop</a></li>
 
+<li><a href="#cctv">CCTV Systems</a></li>
 
-<div class="footer-column">
+<li><a href="#electric-fencing">Electric Fencing</a></li>
 
+<li><a href="#gate-motors">Gate Motors</a></li>
 
-<h3>
-Shop
-</h3>
+<li><a href="#alarms">Alarm Systems</a></li>
 
-
-<a href="shop.html">
-All Products
-</a>
-
-
-<a href="products.html">
-Categories
-</a>
-
-
-<a href="cart.html">
-Shopping Cart
-</a>
-
-
-<a href="contact.html">
-Request Quote
-</a>
-
-
+</ul>
 
 </div>
 
 
+<div class="footer-section">
 
+<h3>Company</h3>
 
+<ul>
 
+<li><a href="aboutus.html">About Us</a></li>
 
+<li><a href="contact.html">Contact</a></li>
 
-<div class="footer-column">
+<li><a href="#terms">Terms & Conditions</a></li>
 
+<li><a href="#privacy">Privacy Policy</a></li>
 
-<h3>
-Security Categories
-</h3>
-
-
-<a href="#">
-CCTV Systems
-</a>
-
-
-<a href="#">
-Electric Fencing
-</a>
-
-
-<a href="#">
-Alarm Systems
-</a>
-
-
-<a href="#">
-Gate Automation
-</a>
-
-
-<a href="#">
-Access Control
-</a>
-
-
+</ul>
 
 </div>
 
 
+<div class="footer-section">
 
+<h3>Support</h3>
 
+<p>Email: info@nexpaksecurity.co.za</p>
 
+<p>Phone: +27 (0)83 630 8249</p>
 
-
-<div class="footer-column">
-
-
-<h3>
-Contact
-</h3>
-
-
-
-<p>
-
-<i class="fas fa-phone"></i>
-
-083 630 8249
-
-</p>
-
-
-
-<p>
-
-<i class="fas fa-envelope"></i>
-
-info@nexpaksolutions.co.za
-
-</p>
-
-
-
-<p>
-
-<i class="fas fa-location-dot"></i>
-
-South Africa
-
-</p>
-
-
+<p>Hours: Mon-Fri 08:00-17:00 SAST</p>
 
 </div>
 
-
-
-
-
-
 </div>
-
-
-
-
-
-
 
 
 <div class="footer-bottom">
 
-
-<p>
-
-© 2024 Nexpak Security Solutions.
-All Rights Reserved.
-
-</p>
-
+© Nexpak Security Solutions. All Rights Reserved.
 
 </div>
 
-
-
-
 </footer>
 
+<!-- Shop data engine -->
+<script src="js/shop-data.js"></script>
 
-
-
-
-
-
-
-
-<!-- ======================================================
- JAVASCRIPT FILES
-====================================================== -->
-
-
-
-<!-- PRODUCT DATABASE -->
-
-
-<script src="shop-products.js"></script>
-
-
-
-
-
-<!-- CART ENGINE -->
-
-
+<!-- Cart engine with enhancements -->
 <script src="js/cart.js"></script>
 
+<!-- Delivery calculator -->
+<script src="js/delivery.js"></script>
 
+<!-- Payment handler -->
+<script src="js/payments.js"></script>
 
+<!-- Shop display engine -->
+<script src="js/shop.js"></script>
 
-
-<!-- SHOP ENGINE -->
-
-
-<script src="js/shop-script.js"></script>
-
-
-
-
-
-
-
-<!-- ======================================================
- PAGE INITIALIZATION
-====================================================== -->
-
-
-<script>
-
-
-console.log(
-
-"%cNEXPAK SHOP PAGE V15 LOADED",
-
-"color:#00B4FF;font-size:18px;font-weight:bold;"
-
-);
-
-
-
-</script>
-
-
-
-<!-- ======================================================
- NEXPAK SECURITY SOLUTIONS V15
-
- PART 6/6
-
- SHOP PAGE HELPERS
- MODALS
- CATEGORY SHORTCUTS
- MOBILE MENU
-====================================================== -->
-
-
-<script>
-
-
-// ======================================================
-// QUICK VIEW OPEN
-// ======================================================
-
-
-function openQuickView(productId){
-
-
-if(typeof shopProducts === "undefined"){
-
-return;
-
-}
-
-
-
-const product = shopProducts.find(
-
-item => item.id === productId
-
-);
-
-
-
-if(!product){
-
-return;
-
-}
-
-
-
-
-const modal = document.getElementById(
-"quickViewModal"
-);
-
-
-
-const image = document.getElementById(
-"quickViewImage"
-);
-
-
-
-const name = document.getElementById(
-"quickViewName"
-);
-
-
-
-const description = document.getElementById(
-"quickViewDescription"
-);
-
-
-
-const price = document.getElementById(
-"quickViewPrice"
-);
-
-
-
-
-
-if(image){
-
-image.src = product.images?.[0] || "images/no-image.jpg";
-
-}
-
-
-
-if(name){
-
-name.textContent = product.name;
-
-}
-
-
-
-if(description){
-
-description.textContent =
-product.description || "";
-
-}
-
-
-
-if(price){
-
-price.textContent =
-
-product.price > 0
-
-?
-
-formatShopCurrency(product.price)
-
-:
-
-"Request Quote";
-
-}
-
-
-
-
-
-const cartButton = document.getElementById(
-"quickViewCartButton"
-);
-
-
-
-if(cartButton){
-
-
-cartButton.onclick = ()=>{
-
-addProductToCart(product.id);
-
-};
-
-
-}
-
-
-
-
-modal.classList.add(
-"active"
-);
-
-
-
-}
-
-
-
-
-
-
-
-// ======================================================
-// CLOSE QUICK VIEW
-// ======================================================
-
-
-function closeQuickView(){
-
-
-const modal = document.getElementById(
-"quickViewModal"
-);
-
-
-
-if(modal){
-
-modal.classList.remove(
-"active"
-);
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-// ======================================================
-// CATEGORY SHORTCUT FILTER
-// ======================================================
-
-
-function filterCategory(category){
-
-
-const selector = document.getElementById(
-"categoryFilter"
-);
-
-
-
-if(selector){
-
-
-selector.value = category;
-
-
-selector.dispatchEvent(
-new Event("change")
-);
-
-
-}
-
-
-
-document
-.getElementById("products")
-?.scrollIntoView({
-
-behavior:"smooth"
-
-});
-
-
-}
-
-
-
-
-
-
-
-// ======================================================
-// CLOSE CART PANEL
-// ======================================================
-
-
-function closeCartPanel(){
-
-
-const panel = document.getElementById(
-"cartPanel"
-);
-
-
-
-if(panel){
-
-panel.classList.remove(
-"active"
-);
-
-}
-
-
-}
-
-
-
-
-
-
-
-// ======================================================
-// MOBILE NAVIGATION
-// ======================================================
-
-
-const searchToggle = document.querySelector(
-".search-toggle"
-);
-
-
-
-if(searchToggle){
-
-
-searchToggle.addEventListener(
-
-"click",
-
-()=>{
-
-
-document
-.querySelector(".shop-controls")
-?.classList.toggle(
-"active"
-);
-
-
-
-}
-
-);
-
-
-}
-
-
-
-
-
-
-
-// ======================================================
-// CLICK OUTSIDE MODAL CLOSE
-// ======================================================
-
-
-window.addEventListener(
-
-"click",
-
-(event)=>{
-
-
-const modal = document.getElementById(
-"quickViewModal"
-);
-
-
-
-if(
-
-event.target === modal
-
-){
-
-closeQuickView();
-
-}
-
-
-
-}
-
-);
-
-
-
-
-
-
-
-console.log(
-
-"%cNEXPAK SHOP V15 HTML COMPLETE",
-
-"color:#00B4FF;font-size:18px;font-weight:bold;"
-
-);
-
-
-
-</script>
 </body>
+
 </html>
