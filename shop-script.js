@@ -1295,7 +1295,7 @@ ${price}
 
 <a
 
-href="product.html?id=${product.id}"
+href="products/product.html?id=${product.id}"
 
 class="primary-btn"
 
@@ -2030,7 +2030,7 @@ function addProductToCart(productId){
         typeof window.addToCart !== "function"
     ){
         window.location.href =
-        `product.html?id=${productId}`;
+        `products/product.html?id=${productId}`;
         return;
     }
 
