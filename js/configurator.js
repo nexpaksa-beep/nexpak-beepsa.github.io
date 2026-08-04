@@ -1,970 +1,725 @@
 /*=========================================================
- NEXPAK SECURITY SOLUTIONS V8
-
+ NEXPAK SECURITY SOLUTIONS V9
  configurator.js
-
  PART 1/5
 
- PRODUCT CONFIGURATION ENGINE
-
+ ADVANCED CONFIGURATION ENGINE
 =========================================================*/
 
-
-document.addEventListener(
-"DOMContentLoaded",
-()=>{
-
-
-    loadConfigurator();
-
-
-});
-
-
-
-
+document.addEventListener("DOMContentLoaded", initConfigurator);
 
 /*=========================================================
  GLOBAL VARIABLES
 =========================================================*/
 
-
 let currentProduct = null;
-
-let selectedOptions = {};
-
-let basePrice = 0;
-
 let currentQuantity = 1;
-
-
-
-
-
-
-
-
+let selectedOptions = {};
+let configurationPrice = 0;
 
 /*=========================================================
- LOAD PRODUCT FROM URL
+ INITIALIZE CONFIGURATOR
 =========================================================*/
 
+function initConfigurator() {
 
-function loadConfigurator(){
+    const params = new URLSearchParams(window.location.search);
 
+    const productId = params.get("id");
 
-    const params = new URLSearchParams(
-        window.location.search
+    if (!productId) {
+        console.error("No product selected.");
+        return;
+    }
+
+    currentProduct = getProductById(productId);
+
+    if (!currentProduct) {
+        console.error("Product not found.");
+        return;
+    }
+
+    configurationPrice = currentProduct.price;
+
+    loadProductInformation();
+
+    createConfigurationSelectors();
+
+    updateConfigurationSummary();
+
+    calculatePrice();
+
+}
+
+/*=========================================================
+ LOAD PRODUCT INFORMATION
+=========================================================*/
+
+function loadProductInformation() {
+
+    const title = document.querySelector(".product-title");
+    const description = document.querySelector(".product-description");
+    const image = document.querySelector(".product-image");
+    const fullDescription = document.querySelector(".full-description");
+    const featureList = document.querySelector(".product-features");
+
+    if (title)
+        title.textContent = currentProduct.name;
+
+    if (description)
+        description.textContent = currentProduct.description;
+
+    if (image) {
+        image.src = currentProduct.image;
+        image.alt = currentProduct.name;
+    }
+
+    if (fullDescription)
+        fullDescription.textContent = currentProduct.description;
+
+    if (featureList) {
+
+        featureList.innerHTML = "";
+
+        currentProduct.features.forEach(feature => {
+
+            featureList.innerHTML += `
+<li>
+<i class="fas fa-check-circle"></i>
+${feature}
+</li>
+`;
+
+        });
+
+    }
+
+}
+
+/*=========================================================
+ RESET CONFIGURATION
+=========================================================*/
+
+function resetConfiguration() {
+
+    selectedOptions = {};
+    currentQuantity = 1;
+    configurationPrice = currentProduct.price;
+
+}
+
+/*=========================================================
+ GET CURRENT PRODUCT
+=========================================================*/
+
+function getCurrentProduct() {
+
+    return currentProduct;
+
+}
+
+/*=========================================================
+ GET CURRENT CONFIGURATION
+=========================================================*/
+
+function getCurrentConfiguration() {
+
+    return {
+
+        product: currentProduct,
+        quantity: currentQuantity,
+        options: selectedOptions,
+        total: configurationPrice
+
+    };
+
+}
+
+console.log("%cNEXPAK CONFIGURATOR V9 LOADED",
+"color:#00b4ff;font-size:18px;font-weight:bold;");
+/*=========================================================
+ NEXPAK SECURITY SOLUTIONS V9
+ configurator.js
+ PART 2/5
+
+ DYNAMIC CONFIGURATION SELECTORS
+=========================================================*/
+
+/*=========================================================
+ CREATE CONFIGURATION SELECTORS
+=========================================================*/
+
+function createConfigurationSelectors() {
+
+    const container =
+        document.querySelector(".product-options");
+
+    if (!container || !currentProduct) return;
+
+    container.innerHTML = "";
+
+    selectedOptions = {};
+
+    Object.entries(currentProduct.options).forEach(([key, values]) => {
+
+        const group = document.createElement("div");
+        group.className = "option-group";
+
+        const label = document.createElement("label");
+        label.textContent = formatOptionName(key);
+
+        const select = document.createElement("select");
+        select.className = "config-select";
+        select.dataset.option = key;
+
+        values.forEach((item, index) => {
+
+            const option = document.createElement("option");
+
+            option.value = item.name;
+            option.dataset.price = item.price;
+
+            option.textContent =
+                item.price > 0
+                ? `${item.name} (+R${item.price.toLocaleString()})`
+                : item.name;
+
+            if (index === 0) {
+                option.selected = true;
+                selectedOptions[key] = item.name;
+            }
+
+            select.appendChild(option);
+
+        });
+
+        select.addEventListener("change", configurationChanged);
+
+        group.appendChild(label);
+        group.appendChild(select);
+
+        container.appendChild(group);
+
+    });
+
+}
+
+/*=========================================================
+ CONFIGURATION CHANGED
+=========================================================*/
+
+function configurationChanged(event) {
+
+    const select = event.target;
+
+    selectedOptions[
+        select.dataset.option
+    ] = select.value;
+
+    updateConfigurationSummary();
+
+    calculatePrice();
+
+}
+
+/*=========================================================
+ FORMAT OPTION NAME
+=========================================================*/
+
+function formatOptionName(text) {
+
+    return text
+
+        .replace(/([A-Z])/g, " $1")
+
+        .replace(/^./, letter =>
+            letter.toUpperCase()
+        );
+
+}
+
+/*=========================================================
+ GET SELECTED OPTION PRICE
+=========================================================*/
+
+function getSelectedOptionPrice(select) {
+
+    return Number(
+        select.options[
+            select.selectedIndex
+        ].dataset.price
     );
 
-
-    const productID = params.get("id");
-
-
-
-    if(!productID){
-
-        console.log(
-        "No product selected"
-        );
-
-        return;
-
-    }
-
-
-
-
-
-    currentProduct = getProductById(productID);
-
-
-
-
-
-    if(!currentProduct){
-
-
-        console.log(
-        "Product not found"
-        );
-
-
-        return;
-
-
-    }
-
-
-
-
-
-
-    basePrice = currentProduct.price;
-
-
-
-
-
-    displayProduct();
-
-
-
-    createSelectors();
-
-
-
-    updatePrice();
-
-
-
 }
-
-
-
-
-
-
-
-
 
 /*=========================================================
- DISPLAY PRODUCT INFORMATION
+ GET SELECTED OPTION VALUE
 =========================================================*/
 
+function getSelectedOptionValue(select) {
 
-function displayProduct(){
-
-
-
-document.querySelector(".product-title")
-.innerHTML =
-currentProduct.name;
-
-
-
-
-
-document.querySelector(".product-description")
-.innerHTML =
-currentProduct.description;
-
-
-
-
-
-
-document.querySelector(".product-image")
-.src =
-currentProduct.image;
-
-
-
-
-
-const featureBox =
-document.querySelector(".product-features");
-
-
-
-
-
-if(featureBox){
-
-
-featureBox.innerHTML="";
-
-
-
-currentProduct.features.forEach(feature=>{
-
-
-featureBox.innerHTML += `
-
-<li>
-
-<i class="fas fa-check"></i>
-
-${feature}
-
-</li>
-
-
-`;
-
-
-});
-
+    return select.options[
+        select.selectedIndex
+    ].value;
 
 }
-
-
-
-
-
-
-
-}
- /*=========================================================
- CREATE PRODUCT SELECTORS
-
- Generates dropdown menus from products.js
-
- Examples:
- - CCTV 8/16/32 Channel
- - IP CCTV Channels
- - PSU Options
- - Cable Options
- - Gate Motor Options
- - Electric Fence Options
- - Roboguard Options
-
-=========================================================*/
-
-
-function createSelectors(){
-
-
-
-const container = document.querySelector(
-".product-options"
-);
-
-
-
-if(!container) return;
-
-
-
-
-container.innerHTML="";
-
-
-
-selectedOptions = {};
-
-
-
-
-
-if(!currentProduct.options){
-
-    return;
-
-}
-
-
-
-
-
-
-Object.keys(currentProduct.options)
-.forEach(optionKey=>{
-
-
-
-
-
-const optionGroup =
-currentProduct.options[optionKey];
-
-
-
-
-
-
-let html = `
-
-<div class="option-group">
-
-
-<label>
-
-${formatOptionName(optionKey)}
-
-</label>
-
-
-
-<select 
-
-class="config-select"
-
-data-option="${optionKey}"
-
-onchange="optionChanged(this)">
-
-
-`;
-
-
-
-
-
-
-optionGroup.forEach((option,index)=>{
-
-
-
-
-
-html += `
-
-<option
-
-value="${option.name}"
-
-data-price="${option.price}"
-
-${index === 0 ? "selected":""}
-
->
-
-
-${option.name}
-
-`;
-
-
-
-if(option.price > 0){
-
-html += `
-
- (+R${option.price})
-
-`;
-
-}
-
-
-html += `
-
-</option>
-
-
-`;
-
-
-
-
-
-});
-
-
-
-
-
-html += `
-
-
-</select>
-
-
-</div>
-
-
-`;
-
-
-
-
-
-container.innerHTML += html;
-
-
-
-
-});
-
-
-
-
-
-
-
-// Store default selections
-
-
-document.querySelectorAll(
-".config-select"
-)
-.forEach(select=>{
-
-
-const selected =
-select.options[
-select.selectedIndex
-];
-
-
-
-selectedOptions[
-select.dataset.option
-]
-=
-selected.value;
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-
 
 /*=========================================================
- FORMAT OPTION NAMES
+ RESET SELECTORS
 =========================================================*/
 
+function resetSelectors() {
 
-function formatOptionName(text){
+    document
+        .querySelectorAll(".config-select")
+        .forEach(select => {
 
+            select.selectedIndex = 0;
 
+            selectedOptions[
+                select.dataset.option
+            ] = select.value;
 
-return text
+        });
 
-.replace(/([A-Z])/g," $1")
+    currentQuantity = 1;
 
-.replace(/^./,
-letter=>letter.toUpperCase());
+    const qty =
+        document.getElementById("productQuantity");
 
+    if (qty)
+        qty.value = 1;
 
+    calculatePrice();
+
+    updateConfigurationSummary();
 
 }
-
-
-
-
-
-
-
 
 /*=========================================================
- OPTION CHANGE EVENT
+ REFRESH CONFIGURATION
 =========================================================*/
 
+function refreshConfigurator() {
 
-function optionChanged(select){
+    createConfigurationSelectors();
 
+    calculatePrice();
 
-
-const optionName =
-select.dataset.option;
-
-
-
-const selected =
-select.options[
-select.selectedIndex
-];
-
-
-
-
-
-selectedOptions[optionName]
-=
-selected.value;
-
-
-
-
-
-updatePrice();
-
-
+    updateConfigurationSummary();
 
 }
-/*=========================================================
- PRICE CALCULATOR
-
- Calculates:
-
- Base Product Price
-+
-Selected Options
-+
-Quantity
-
-=========================================================*/
-
-
-function updatePrice(){
-
-
-
-if(!currentProduct) return;
-
-
-
-let total =
-currentProduct.price;
-
-
-
-
-
-
-document.querySelectorAll(
-".config-select"
-)
-.forEach(select=>{
-
-
-
-const selected =
-select.options[
-select.selectedIndex
-];
-
-
-
-const extra =
-Number(
-selected.dataset.price
-);
-
-
-
-total += extra;
-
-
-
-});
-
-
-
-
-
-total =
-total * currentQuantity;
-
-
-
-
-
-
-
-const priceBox =
-document.querySelector(
-".live-price"
-);
-
-
-
-if(priceBox){
-
-
-priceBox.innerHTML =
-
-"R" +
-total.toLocaleString(
-"en-ZA",
-{
-minimumFractionDigits:2
-}
-);
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
 
 /*=========================================================
- QUANTITY CONTROLS
+ NEXPAK SECURITY SOLUTIONS V9
+ configurator.js
+ PART 3/5
 
- Plus / Minus Buttons
-
+ PRICE ENGINE & CONFIGURATION SUMMARY
 =========================================================*/
 
+/*=========================================================
+ CALCULATE CONFIGURATION PRICE
+=========================================================*/
 
-function changeQuantity(amount){
+function calculatePrice() {
 
+    if (!currentProduct) return;
 
+    let total = currentProduct.price;
 
-currentQuantity += amount;
+    document
+    .querySelectorAll(".config-select")
+    .forEach(select => {
 
+        total += getSelectedOptionPrice(select);
 
+    });
 
+    total *= currentQuantity;
 
+    configurationPrice = total;
 
-if(currentQuantity < 1){
+    updateLivePrice();
 
-currentQuantity = 1;
-
-}
-
-
-
-
-
-const input =
-document.getElementById(
-"productQuantity"
-);
-
-
-
-
-
-if(input){
-
-input.value =
-currentQuantity;
+    updateConfigurationSummary();
 
 }
 
+/*=========================================================
+ UPDATE LIVE PRICE
+=========================================================*/
 
+function updateLivePrice() {
 
+    const priceBox =
+    document.querySelector(".live-price");
 
+    if (!priceBox) return;
 
-updatePrice();
-
-
+    priceBox.innerHTML =
+    "R" +
+    configurationPrice.toLocaleString(
+        "en-ZA",
+        {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }
+    );
 
 }
 
+/*=========================================================
+ CHANGE QUANTITY
+=========================================================*/
 
+function changeQuantity(change) {
 
+    currentQuantity += change;
 
+    if (currentQuantity < 1)
+        currentQuantity = 1;
 
+    const input =
+    document.getElementById("productQuantity");
 
+    if (input)
+        input.value = currentQuantity;
 
+    calculatePrice();
+
+}
 
 /*=========================================================
  MANUAL QUANTITY INPUT
-
 =========================================================*/
 
+document.addEventListener("input", function(e){
 
-document.addEventListener(
-"input",
-function(e){
+    if(e.target.id !== "productQuantity")
+        return;
 
+    let qty = parseInt(e.target.value);
 
+    if(isNaN(qty) || qty < 1)
+        qty = 1;
 
-if(
-e.target.id === "productQuantity"
-){
+    currentQuantity = qty;
 
+    e.target.value = qty;
 
-
-currentQuantity =
-parseInt(
-e.target.value
-);
-
-
-
-if(
-isNaN(currentQuantity)
-||
-currentQuantity < 1
-){
-
-currentQuantity = 1;
-
-e.target.value = 1;
-
-}
-
-
-
-updatePrice();
-
-
-
-}
-
+    calculatePrice();
 
 });
 
+/*=========================================================
+ UPDATE CONFIGURATION SUMMARY
+=========================================================*/
 
+function updateConfigurationSummary(){
 
+    const summary =
+    document.querySelector(".configuration-summary");
 
+    if(!summary) return;
 
+    summary.innerHTML = "";
 
+    Object.keys(selectedOptions)
+    .forEach(option=>{
 
+        summary.innerHTML += `
 
+<div class="summary-row">
+
+<span>
+
+${formatOptionName(option)}
+
+</span>
+
+<strong>
+
+${selectedOptions[option]}
+
+</strong>
+
+</div>
+
+`;
+
+    });
+
+}
 
 /*=========================================================
- BUILD CART ITEM
-
- Creates configured product
-
+ PRICE BREAKDOWN
 =========================================================*/
 
+function getPriceBreakdown(){
 
-function buildConfiguredItem(){
+    let breakdown = [];
 
+    breakdown.push({
 
+        name:"Base Product",
 
-let finalPrice =
-currentProduct.price;
+        price:currentProduct.price
 
+    });
 
+    document
+    .querySelectorAll(".config-select")
+    .forEach(select=>{
 
+        const option =
+        select.options[
+        select.selectedIndex];
 
+        breakdown.push({
 
-let options = {};
+            name:option.value,
 
+            price:Number(
+                option.dataset.price
+            )
 
+        });
 
+    });
 
-
-
-document.querySelectorAll(
-".config-select"
-)
-
-.forEach(select=>{
-
-
-
-const selected =
-select.options[
-select.selectedIndex
-];
-
-
-
-const optionPrice =
-Number(
-selected.dataset.price
-);
-
-
-
-
-finalPrice += optionPrice;
-
-
-
-
-
-options[
-select.dataset.option
-]
-=
-selected.value;
-
-
-
-});
-
-
-
-
-
-
-
-
-return {
-
-
-
-id:
-currentProduct.id,
-
-
-
-name:
-currentProduct.name,
-
-
-
-image:
-currentProduct.image,
-
-
-
-price:
-finalPrice,
-
-
-
-quantity:
-currentQuantity,
-
-
-
-options:
-options
-
-
-
-};
-
-
+    return breakdown;
 
 }
- /*=========================================================
- ADD CONFIGURED PRODUCT TO CART
-
- Sends finished configuration
- to cart.js
-
-=========================================================*/
-
-
-function addConfiguredProduct(){
-
-
-
-if(!currentProduct){
-
-alert(
-"Please select a product"
-);
-
-return;
-
-}
-
-
-
-
-
-
-const item =
-buildConfiguredItem();
-
-
-
-
-
-
-if(typeof addToCart === "function"){
-
-
-addToCart(item);
-
-
-
-alert(
-
-currentProduct.name +
-
-" added to cart"
-
-);
-
-
-
-}else{
-
-
-console.log(
-"cart.js not loaded"
-);
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
 
 /*=========================================================
- LOAD RELATED PRODUCTS
-
- Shows products in same category
-
+ DISPLAY PRICE BREAKDOWN
 =========================================================*/
 
+function displayPriceBreakdown(){
+
+    const box =
+    document.querySelector(".price-breakdown");
+
+    if(!box) return;
+
+    const breakdown =
+    getPriceBreakdown();
+
+    box.innerHTML = "";
+
+    breakdown.forEach(item=>{
+
+        box.innerHTML += `
+
+<div class="price-row">
+
+<span>
+
+${item.name}
+
+</span>
+
+<strong>
+
+R${item.price.toLocaleString()}
+
+</strong>
+
+</div>
+
+`;
+
+    });
+
+         }
+
+/*=========================================================
+ NEXPAK SECURITY SOLUTIONS V9
+ configurator.js
+ PART 4/5
+
+ VALIDATION • SAVE/LOAD • RELATED PRODUCTS
+=========================================================*/
+
+/*=========================================================
+ VALIDATE CONFIGURATION
+=========================================================*/
+
+function validateConfiguration(){
+
+    if(!currentProduct)
+        return false;
+
+    const selects =
+    document.querySelectorAll(".config-select");
+
+    let valid = true;
+
+    selects.forEach(select=>{
+
+        if(select.selectedIndex < 0){
+
+            valid = false;
+
+            select.classList.add("config-error");
+
+        }else{
+
+            select.classList.remove("config-error");
+
+        }
+
+    });
+
+    if(!valid){
+
+        alert(
+        "Please complete your product configuration."
+        );
+
+    }
+
+    return valid;
+
+}
+
+/*=========================================================
+ SAVE CONFIGURATION
+=========================================================*/
+
+function saveConfiguration(){
+
+    if(!currentProduct) return;
+
+    const data = {
+
+        productId: currentProduct.id,
+
+        quantity: currentQuantity,
+
+        options: selectedOptions
+
+    };
+
+    localStorage.setItem(
+        "nexpak_configuration",
+        JSON.stringify(data)
+    );
+
+}
+
+/*=========================================================
+ LOAD SAVED CONFIGURATION
+=========================================================*/
+
+function loadSavedConfiguration(){
+
+    const saved =
+    localStorage.getItem(
+    "nexpak_configuration"
+    );
+
+    if(!saved) return;
+
+    const config =
+    JSON.parse(saved);
+
+    if(
+        !currentProduct ||
+        config.productId !== currentProduct.id
+    ){
+        return;
+    }
+
+    currentQuantity =
+    config.quantity || 1;
+
+    document
+    .querySelectorAll(".config-select")
+    .forEach(select=>{
+
+        const value =
+        config.options[
+        select.dataset.option];
+
+        if(!value) return;
+
+        [...select.options]
+        .forEach(option=>{
+
+            if(option.value === value){
+
+                option.selected = true;
+
+            }
+
+        });
+
+        selectedOptions[
+        select.dataset.option] = value;
+
+    });
+
+    const qty =
+    document.getElementById(
+    "productQuantity");
+
+    if(qty)
+        qty.value = currentQuantity;
+
+    calculatePrice();
+
+}
+
+/*=========================================================
+ CLEAR SAVED CONFIGURATION
+=========================================================*/
+
+function clearSavedConfiguration(){
+
+    localStorage.removeItem(
+    "nexpak_configuration"
+    );
+
+}
+
+/*=========================================================
+ RELATED PRODUCTS
+=========================================================*/
 
 function loadRelatedProducts(){
 
+    const container =
+    document.getElementById(
+    "related-products"
+    );
 
+    if(
+        !container ||
+        !currentProduct
+    ) return;
 
-const container =
-document.getElementById(
-"related-products"
-);
+    container.innerHTML = "";
 
+    products
 
+    .filter(product=>
 
+        product.id !== currentProduct.id
 
+    )
 
-if(!container ||
-!currentProduct){
+    .slice(0,4)
 
-return;
+    .forEach(product=>{
 
-}
+        container.innerHTML += `
 
-
-
-
-
-container.innerHTML="";
-
-
-
-
-
-products
-
-.filter(product=>
-
-product.category === currentProduct.category
-
-&&
-
-product.id !== currentProduct.id
-
-)
-
-.slice(0,4)
-
-.forEach(product=>{
-
-
-
-
-
-container.innerHTML += `
-
-
-<div class="service-card fade">
-
-
+<div class="service-card">
 
 <img src="${product.image}"
-
 alt="${product.name}">
-
-
-
-
 
 <h3>
 
@@ -972,20 +727,11 @@ ${product.name}
 
 </h3>
 
-
-
-
-
 <p>
 
-${product.description.substring(0,100)}
-...
+${product.description.substring(0,80)}...
 
 </p>
-
-
-
-
 
 <a href="product.html?id=${product.id}">
 
@@ -995,554 +741,338 @@ Configure
 
 </a>
 
-
-
 </div>
-
 
 `;
 
-
-
-});
-
-
-
-
+    });
 
 }
 
-
-
-
-
-
-
-
 /*=========================================================
- WHATSAPP QUOTE BUILDER
-
- Creates customer enquiry
-
+ PRODUCT IMAGE GALLERY
 =========================================================*/
 
+function changeProductImage(image){
 
-function createWhatsAppQuote(){
+    const img =
+    document.querySelector(
+    ".product-image"
+    );
 
+    if(img){
 
+        img.src = image;
 
-if(!currentProduct)
-return;
+    }
 
+}
 
+/*=========================================================
+ AUTO SAVE
+=========================================================*/
 
+document.addEventListener(
+"change",
+function(e){
 
+    if(
+        e.target.classList.contains(
+        "config-select")
+    ){
 
+        saveConfiguration();
 
-let message =
-
-"Hi Nexpak Security Solutions,%0A%0A"
-
-+
-
-"I would like a quote for:%0A"
-
-+
-
-currentProduct.name
-
-+
-
-"%0A%0A";
-
-
-
-
-
-
-document.querySelectorAll(
-".config-select"
-)
-
-.forEach(select=>{
-
-
-const selected =
-select.options[
-select.selectedIndex
-];
-
-
-
-message +=
-
-select.dataset.option
-
-+
-": "
-
-+
-selected.value
-
-+
-
-"%0A";
-
-
+    }
 
 });
 
+/*=========================================================
+ INITIALIZE SAVED DATA
+=========================================================*/
 
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
 
+    setTimeout(()=>{
 
+        loadSavedConfiguration();
 
-message +=
+        loadRelatedProducts();
 
-"%0AQuantity: "
+    },300);
 
-+
+});
 
-currentQuantity;
+/*=========================================================
+ NEXPAK SECURITY SOLUTIONS V9
+ configurator.js
+ PART 5/5
 
+ CART • WHATSAPP • PRINT • FINAL INITIALIZATION
+=========================================================*/
 
+/*=========================================================
+ ADD CONFIGURED PRODUCT TO CART
+=========================================================*/
 
+function addConfiguredProduct(){
 
+    if(!validateConfiguration())
+        return;
 
+    const item = {
 
+        id: currentProduct.id,
 
-window.open(
+        name: currentProduct.name,
 
-"https://wa.me/27836308249?text="
+        image: currentProduct.image,
 
-+
+        quantity: currentQuantity,
 
-message,
+        price: configurationPrice,
+
+        options: {...selectedOptions}
+
+    };
+
+    if(typeof addToCart === "function"){
+
+        addToCart(item);
+
+        saveConfiguration();
+
+        alert(
+            currentProduct.name +
+            " added to cart."
+        );
+
+    }else{
+
+        console.error(
+            "cart.js not loaded."
+        );
+
+    }
+
+}
+
+/*=========================================================
+ BUILD WHATSAPP QUOTE
+=========================================================*/
+
+function createWhatsAppQuote(){
+
+    if(!currentProduct) return;
+
+    let message =
+`*NEXPAK SECURITY SOLUTIONS*
+
+Quotation Request
+
+Product:
+${currentProduct.name}
+
+`;
+
+    Object.keys(selectedOptions).forEach(option=>{
+
+        message +=
+`${formatOptionName(option)}:
+${selectedOptions[option]}
+
+`;
+
+    });
+
+    message +=
+
+`Quantity:
+${currentQuantity}
+
+Estimated Total:
+R${configurationPrice.toLocaleString("en-ZA")}
+
+Please send me a quotation.`;
+
+    window.open(
+
+"https://wa.me/27836308249?text=" +
+
+encodeURIComponent(message),
 
 "_blank"
 
 );
 
-
-
 }
-
-
-
-
-
-
-
-
 
 /*=========================================================
- START RELATED PRODUCTS
-
+ PRINT CONFIGURATION
 =========================================================*/
 
+function printConfiguration(){
 
-document.addEventListener(
-"DOMContentLoaded",
-()=>{
-
-
-setTimeout(()=>{
-
-
-loadRelatedProducts();
-
-
-
-},300);
-
-
-
-});
-/*=========================================================
- CONFIGURATION SUMMARY
-
- Displays selected options
- before adding to cart
-
-=========================================================*/
-
-
-function showConfigurationSummary(){
-
-
-const summary =
-document.querySelector(
-".configuration-summary"
-);
-
-
-
-if(!summary) return;
-
-
-
-
-summary.innerHTML="";
-
-
-
-Object.keys(selectedOptions)
-
-.forEach(option=>{
-
-
-
-summary.innerHTML += `
-
-<p>
-
-<strong>
-
-${formatOptionName(option)}
-
-:
-
-</strong>
-
-${selectedOptions[option]}
-
-</p>
-
-`;
-
-
-
-});
-
-
+    window.print();
 
 }
-
-
-
-
-
-
-
 
 /*=========================================================
- VALIDATE CONFIGURATION
-
- Prevents incomplete orders
-
+ COPY CONFIGURATION
 =========================================================*/
 
+function copyConfiguration(){
 
-function validateConfiguration(){
+    let text =
 
+currentProduct.name + "\n\n";
 
+    Object.keys(selectedOptions).forEach(option=>{
 
-if(!currentProduct){
+        text +=
 
-return false;
+formatOptionName(option) +
 
-}
+": " +
 
+selectedOptions[option] +
 
+"\n";
 
+    });
 
+    text +=
 
-const selectors =
-document.querySelectorAll(
-".config-select"
-);
+"\nQuantity: " +
 
+currentQuantity +
 
+"\n";
 
+    text +=
 
+"Total: R" +
 
-if(
-selectors.length === 0
-){
+configurationPrice.toLocaleString();
 
-return true;
+    navigator.clipboard.writeText(text);
 
-}
-
-
-
-
-
-let valid = true;
-
-
-
-
-
-selectors.forEach(select=>{
-
-
-if(!select.value){
-
-
-valid=false;
-
+    alert("Configuration copied.");
 
 }
-
-
-
-});
-
-
-
-
-
-
-if(!valid){
-
-
-alert(
-"Please select all product options before adding to cart."
-);
-
-
-}
-
-
-
-return valid;
-
-
-
-}
-
-
-
-
-
-
-
-
 
 /*=========================================================
- OVERRIDE ADD CART VALIDATION
-
+ EMAIL QUOTE
 =========================================================*/
 
+function emailConfiguration(){
 
-const originalAddConfiguredProduct =
-window.addConfiguredProduct;
+    let body =
 
+"Quotation Request%0A%0A";
 
+    body +=
 
+"Product: " +
 
+currentProduct.name +
 
+"%0A";
 
-window.addConfiguredProduct =
-function(){
+    Object.keys(selectedOptions).forEach(option=>{
 
+        body +=
 
+formatOptionName(option) +
 
-if(
-!validateConfiguration()
-){
+": " +
 
-return;
+selectedOptions[option] +
 
-}
+"%0A";
 
+    });
 
+    body +=
 
+"Quantity: " +
 
+currentQuantity +
 
-showConfigurationSummary();
+"%0A";
 
+    body +=
 
+"Estimated Total: R" +
 
+configurationPrice.toLocaleString();
 
-const item =
-buildConfiguredItem();
+    window.location =
 
+"mailto:info@nexpaksecurity.co.za?subject=Security Quote Request&body=" +
 
-
-
-
-if(typeof addToCart === "function"){
-
-
-
-addToCart(item);
-
-
-
-
-alert(
-
-"Product configuration added to cart"
-
-);
-
-
+body;
 
 }
-
-
-
-};
-
-
-
-
-
-
-
-
 
 /*=========================================================
- SAVE CONFIGURATION
-
- Saves customer selections
-
+ RESET CONFIGURATION
 =========================================================*/
 
+function resetConfiguration(){
 
-function saveConfiguration(){
+    document
 
+    .querySelectorAll(".config-select")
 
+    .forEach(select=>{
 
-const saved = {
+        select.selectedIndex = 0;
 
+        selectedOptions[select.dataset.option] =
+        select.value;
 
-product:
-currentProduct.id,
+    });
 
+    currentQuantity = 1;
 
-options:
-selectedOptions,
+    const qty =
+    document.getElementById("productQuantity");
 
+    if(qty)
+        qty.value = 1;
 
-quantity:
-currentQuantity
+    calculatePrice();
 
-
-
-};
-
-
-
-
-localStorage.setItem(
-
-"nexpak_configuration",
-
-JSON.stringify(saved)
-
-);
-
-
+    updateConfigurationSummary();
 
 }
-
-
-
-
-
-
-
-
-/*=========================================================
- LOAD SAVED CONFIGURATION
-
-=========================================================*/
-
-
-function loadSavedConfiguration(){
-
-
-
-const saved =
-localStorage.getItem(
-"nexpak_configuration"
-);
-
-
-
-
-
-if(!saved)
-return;
-
-
-
-
-
-console.log(
-
-"Saved configuration loaded",
-
-JSON.parse(saved)
-
-);
-
-
-
-}
-
-
-
-
-
-
-
-
 
 /*=========================================================
  FINAL INITIALIZATION
-
 =========================================================*/
 
+document.addEventListener("DOMContentLoaded",()=>{
 
-document.addEventListener(
-"DOMContentLoaded",
-()=>{
+    setTimeout(()=>{
 
+        calculatePrice();
 
-setTimeout(()=>{
+        loadRelatedProducts();
 
-
-loadSavedConfiguration();
-
-
-updatePrice();
-
-
-},500);
-
-
+    },200);
 
 });
 
-
-
-
-
-
-
-
 /*=========================================================
- NEXPAK SECURITY SOLUTIONS V8
-
  CONFIGURATOR READY
-
- CCTV
- IP CCTV
- ELECTRIC FENCE
- GATE AUTOMATION
- ROBOGUARD
- ALARM
- ACCESS CONTROL
-
 =========================================================*/
-
 
 console.log(
 
-"%cNEXPAK CONFIGURATOR V8 ACTIVE",
+"%cNEXPAK CONFIGURATOR V9 READY",
 
 "color:#00B4FF;font-size:18px;font-weight:bold;"
 
