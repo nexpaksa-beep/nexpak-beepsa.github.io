@@ -1,14 +1,39 @@
 // ======================================================
-// NEXPAK SECURITY SOLUTIONS V15
+// NEXPAK SECURITY SOLUTIONS V16
 // shop.js
 //
 // PART 1/5
 //
-// TAKEALOT STYLE SHOP ENGINE
+// ADVANCED E-COMMERCE SHOP ENGINE
+//
+// CORE SYSTEM
 // PRODUCT LOADER
-// SEARCH ENGINE
+// SEARCH
 // CATEGORY FILTER
+// STATE MANAGEMENT
 // ======================================================
+
+
+// ======================================================
+// GLOBAL SHOP STATE
+// ======================================================
+
+
+let shopState = {
+
+    category: "All",
+
+    search: "",
+
+    sort: "default",
+
+    products: [],
+
+    viewed: []
+
+};
+
+
 
 
 
@@ -22,7 +47,7 @@ document.addEventListener(
 ()=>{
 
 
-initializeShop();
+startShopEngine();
 
 
 });
@@ -32,28 +57,15 @@ initializeShop();
 
 
 // ======================================================
-// GLOBAL SHOP VARIABLES
+// START SHOP ENGINE
 // ======================================================
 
 
-let currentCategory = "All";
-
-let currentSearch = "";
-
-
-
-
-
-// ======================================================
-// INITIALIZE SHOP
-// ======================================================
-
-
-function initializeShop(){
+function startShopEngine(){
 
 
 console.log(
-"NEXPAK SHOP ENGINE STARTING..."
+"NEXPAK V16 SHOP ENGINE STARTING..."
 );
 
 
@@ -62,24 +74,50 @@ if(
 typeof shopProducts === "undefined"
 ){
 
+
 console.error(
-"shopProducts database not loaded."
+"Product database missing."
 );
 
 
 return;
 
+
 }
+
+
+
+
+
+shopState.products =
+[...shopProducts];
+
 
 
 
 createCategoryMenu();
 
+
+initializeSearch();
+
+
+initializeSort();
+
+
+loadRecentlyViewed();
+
+
 renderShopProducts();
 
 
+updateShopCartIcon();
 
-initializeSearch();
+
+
+
+console.log(
+"NEXPAK V16 SHOP ONLINE"
+);
 
 
 
@@ -97,7 +135,8 @@ initializeSearch();
 function createCategoryMenu(){
 
 
-const menu = document.querySelector(
+const menu =
+document.querySelector(
 ".shop-categories"
 );
 
@@ -111,20 +150,29 @@ return;
 
 
 
-let categories = [
 
+let categories =
+[
 "All"
-
 ];
 
 
 
-shopProducts.forEach(product=>{
+
+
+shopState.products.forEach(product=>{
 
 
 if(
-!categories.includes(product.category)
+
+product.category &&
+
+!categories.includes(
+product.category
+)
+
 ){
+
 
 categories.push(
 product.category
@@ -140,7 +188,10 @@ product.category
 
 
 
+
 menu.innerHTML = "";
+
+
 
 
 
@@ -154,15 +205,18 @@ menu.innerHTML += `
 
 class="category-btn"
 
+data-category="${category}"
+
 onclick="filterCategory('${category}')">
 
+
 ${category}
+
 
 </button>
 
 
 `;
-
 
 
 });
@@ -183,14 +237,68 @@ ${category}
 function filterCategory(category){
 
 
-currentCategory = category;
+shopState.category =
+category;
+
 
 
 renderShopProducts();
 
 
 
+updateActiveCategory(
+category
+);
+
+
+
 }
+
+
+
+
+
+// ======================================================
+// ACTIVE CATEGORY BUTTON
+// ======================================================
+
+
+function updateActiveCategory(category){
+
+
+document
+.querySelectorAll(
+".category-btn"
+)
+.forEach(button=>{
+
+
+button.classList.remove(
+"active"
+);
+
+
+
+if(
+button.dataset.category === category
+){
+
+
+button.classList.add(
+"active"
+);
+
+
+}
+
+
+
+});
+
+
+}
+
+
 
 
 
@@ -202,7 +310,8 @@ renderShopProducts();
 function initializeSearch(){
 
 
-const searchBox = document.querySelector(
+const searchBox =
+document.querySelector(
 "#shopSearch"
 );
 
@@ -216,13 +325,21 @@ return;
 
 
 
+
+
 searchBox.addEventListener(
 "input",
 ()=>{
 
 
-currentSearch =
-searchBox.value.toLowerCase();
+shopState.search =
+
+searchBox.value
+
+.toLowerCase()
+
+.trim();
+
 
 
 
@@ -231,6 +348,7 @@ renderShopProducts();
 
 
 });
+
 
 
 }
@@ -247,31 +365,63 @@ renderShopProducts();
 function getFilteredProducts(){
 
 
-return shopProducts.filter(product=>{
+let products =
+[...shopState.products];
+
+
+
+
+
+return products.filter(product=>{
+
 
 
 let categoryMatch =
 
-currentCategory === "All"
+
+shopState.category === "All"
 
 ||
 
-product.category === currentCategory;
+product.category === shopState.category;
+
+
+
+
+
+
+let searchText =
+
+
+(
+
+product.name +
+
+" " +
+
+(product.category || "") +
+
+" " +
+
+(product.description || "")
+
+)
+
+.toLowerCase();
+
 
 
 
 
 let searchMatch =
 
-product.name
-.toLowerCase()
-.includes(currentSearch)
 
-||
+searchText.includes(
+shopState.search
+);
 
-product.description
-?.toLowerCase()
-.includes(currentSearch);
+
+
 
 
 
@@ -298,21 +448,21 @@ searchMatch
 
 
 // ======================================================
-// PLACEHOLDER RENDER FUNCTION
-// PART 2 WILL COMPLETE THIS
+// SORT SYSTEM INITIALIZER
 // ======================================================
 
 
-function renderShopProducts(){
+function initializeSort(){
 
 
-const container = document.querySelector(
-".shop-products"
+const sortBox =
+document.querySelector(
+"#shopSort"
 );
 
 
 
-if(!container){
+if(!sortBox){
 
 return;
 
@@ -320,15 +470,151 @@ return;
 
 
 
-const products =
-getFilteredProducts();
+
+
+sortBox.addEventListener(
+"change",
+()=>{
+
+
+shopState.sort =
+sortBox.value;
 
 
 
-console.log(
-"Products loaded:",
-products.length
+renderShopProducts();
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+// ======================================================
+// APPLY SORT
+// ======================================================
+
+
+function applySort(products){
+
+
+
+if(
+shopState.sort === "name"
+){
+
+
+return products.sort(
+(a,b)=>
+
+a.name.localeCompare(
+b.name
+)
+
 );
+
+
+}
+
+
+
+
+
+if(
+shopState.sort === "price-low"
+){
+
+
+return products.sort(
+(a,b)=>
+
+(a.price || 0)
+
+-
+
+(b.price || 0)
+
+);
+
+
+}
+
+
+
+
+
+if(
+shopState.sort === "price-high"
+){
+
+
+return products.sort(
+(a,b)=>
+
+(b.price || 0)
+
+-
+
+(a.price || 0)
+
+);
+
+
+}
+
+
+
+
+
+return products;
+
+
+
+}
+
+
+
+
+
+// ======================================================
+// RESET FILTERS
+// ======================================================
+
+
+function clearShopFilters(){
+
+
+shopState.category =
+"All";
+
+
+shopState.search =
+"";
+
+
+
+const search =
+document.querySelector(
+"#shopSearch"
+);
+
+
+
+if(search){
+
+search.value = "";
+
+}
+
+
+
+renderShopProducts();
 
 
 
@@ -340,22 +626,27 @@ products.length
 
 console.log(
 
-"%cNEXPAK SHOP.JS PART 1 READY",
+"%cNEXPAK V16 SHOP.JS PART 1 READY",
 
 "color:#00B4FF;font-size:18px;font-weight:bold;"
 
 );
 
 // ======================================================
-// NEXPAK SECURITY SOLUTIONS V15
+// NEXPAK SECURITY SOLUTIONS V16
 // shop.js
 //
 // PART 2/5
 //
 // TAKEALOT STYLE PRODUCT CARDS
+//
+// PRODUCT GRID
 // IMAGE GALLERY
-// IMAGE ZOOM
-// PRODUCT SELECTORS
+// RATINGS
+// STOCK STATUS
+// DISCOUNTS
+// WISHLIST
+// PRODUCT QUICK VIEW
 // ======================================================
 
 
@@ -370,7 +661,8 @@ console.log(
 function renderShopProducts(){
 
 
-const container = document.querySelector(
+const container =
+document.querySelector(
 ".shop-products"
 );
 
@@ -384,8 +676,17 @@ return;
 
 
 
-const products =
+
+let products =
 getFilteredProducts();
+
+
+
+
+products =
+applySort(products);
+
+
 
 
 
@@ -404,14 +705,26 @@ container.innerHTML = `
 <div class="no-products">
 
 
+<i class="fas fa-search"></i>
+
+
 <h3>
 No products found
 </h3>
 
 
 <p>
-Try another search or category.
+Try changing your search or category.
 </p>
+
+
+<button
+
+onclick="clearShopFilters()">
+
+Clear Filters
+
+</button>
 
 
 </div>
@@ -431,7 +744,9 @@ return;
 products.forEach(product=>{
 
 
-container.innerHTML += createProductCard(product);
+container.innerHTML +=
+
+createProductCard(product);
 
 
 
@@ -454,39 +769,45 @@ function createProductCard(product){
 
 
 
-let images = "";
+const discount =
+
+product.discount
+
+?
+
+`
+
+<span class="discount-badge">
+
+-${product.discount}%
+
+</span>
+
+`
+
+:
+
+"";
 
 
 
-product.images.forEach(
-(image,index)=>{
 
 
-images += `
+const stock =
 
-
-<img
-
-src="${image}"
-
-alt="${product.name}"
-
-class="product-image
-
-${index === 0 ? "active-image" : ""}"
+getStockBadge(product);
 
 
 
-onmouseover="zoomProductImage(this)"
-
->
-
-
-`;
 
 
 
-});
+const rating =
+
+createRatingStars(
+product.rating || 0
+);
+
 
 
 
@@ -495,41 +816,59 @@ onmouseover="zoomProductImage(this)"
 return `
 
 
-<div class="shop-card">
+<div class="shop-card"
+
+data-product="${product.id}">
 
 
 
-<div class="shop-gallery">
 
 
-<div class="main-image">
+<div class="product-image-area">
+
+
+
+
+
+${discount}
+
+
+
+
+<button
+
+class="wishlist-btn"
+
+onclick="toggleWishlist('${product.id}')">
+
+
+<i class="far fa-heart"></i>
+
+
+</button>
+
+
+
+
 
 
 <img
 
-src="${product.images[0]}"
-
-id="main-${product.id}"
+src="${product.images?.[0] || 'images/no-image.jpg'}"
 
 alt="${product.name}"
 
-class="zoom-image"
+loading="lazy"
+
+class="product-main-image"
+
+onclick="openQuickView('${product.id}')"
+
+
 
 >
 
 
-</div>
-
-
-
-<div class="thumbnail-images">
-
-
-${images}
-
-
-</div>
-
 
 
 </div>
@@ -538,7 +877,28 @@ ${images}
 
 
 
-<div class="shop-product-info">
+
+
+<div class="product-details">
+
+
+
+
+
+<div class="product-rating">
+
+${rating}
+
+<span>
+
+(${product.reviews || 0})
+
+</span>
+
+
+</div>
+
+
 
 
 
@@ -550,26 +910,43 @@ ${product.name}
 
 
 
-<p class="shop-category">
-
-${product.category}
-
-</p>
 
 
+<span class="product-category">
 
-<p>
+${product.category || ""}
+
+</span>
+
+
+
+
+
+<p class="product-description">
+
 
 ${product.description || ""}
 
+
 </p>
 
 
 
-<div class="shop-options">
 
 
-${createSelectors(product)}
+
+${stock}
+
+
+
+
+
+
+
+<div class="product-price">
+
+
+${formatShopPrice(product.price)}
 
 
 </div>
@@ -578,55 +955,27 @@ ${createSelectors(product)}
 
 
 
-<div class="shop-price">
 
 
-Request Quote
-
-
-</div>
+<div class="product-actions">
 
 
 
-
-<div class="quantity-box">
 
 
 <button
 
-onclick="changeShopQuantity('${product.id}',-1)">
+class="view-btn"
 
--
+onclick="openQuickView('${product.id}')">
+
+
+<i class="fas fa-eye"></i>
+
+View
+
 
 </button>
-
-
-
-<input
-
-type="number"
-
-id="qty-${product.id}"
-
-value="1"
-
-min="1"
-
-
-
->
-
-
-<button
-
-onclick="changeShopQuantity('${product.id}',1)">
-
-+
-
-</button>
-
-
-</div>
 
 
 
@@ -641,10 +990,630 @@ onclick="addShopProductToCart('${product.id}')">
 
 <i class="fas fa-cart-shopping"></i>
 
+Add
+
+
+</button>
+
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+`;
+
+
+
+}
+
+
+
+
+
+// ======================================================
+// STOCK BADGE
+// ======================================================
+
+
+function getStockBadge(product){
+
+
+
+if(
+product.stock === 0
+){
+
+
+return `
+
+
+<div class="stock out">
+
+
+Out Of Stock
+
+</div>
+
+
+`;
+
+
+
+}
+
+
+
+
+if(
+product.stock <= 5
+){
+
+
+return `
+
+
+<div class="stock low">
+
+
+Only ${product.stock} left
+
+</div>
+
+
+`;
+
+
+
+}
+
+
+
+
+return `
+
+
+<div class="stock available">
+
+
+<i class="fas fa-check"></i>
+
+In Stock
+
+</div>
+
+
+`;
+
+
+
+}
+
+
+
+
+
+// ======================================================
+// STAR RATING SYSTEM
+// ======================================================
+
+
+function createRatingStars(rating){
+
+
+let stars = "";
+
+
+
+
+
+for(
+let i = 1;
+i <= 5;
+i++
+){
+
+
+
+if(
+i <= rating
+){
+
+
+stars +=
+
+'<i class="fas fa-star"></i>';
+
+
+}
+
+else{
+
+
+stars +=
+
+'<i class="far fa-star"></i>';
+
+
+}
+
+
+
+}
+
+
+
+return stars;
+
+
+
+}
+
+
+
+
+
+// ======================================================
+// WISHLIST ENGINE
+// ======================================================
+
+
+let wishlist =
+
+JSON.parse(
+
+localStorage.getItem(
+"nexpak_wishlist"
+)
+
+)
+
+|| [];
+
+
+
+
+
+
+
+function toggleWishlist(productId){
+
+
+
+const index =
+
+wishlist.indexOf(
+productId
+);
+
+
+
+
+
+if(index > -1){
+
+
+wishlist.splice(
+index,
+1
+);
+
+
+
+showShopNotification(
+"Removed from wishlist"
+);
+
+
+
+}
+
+else{
+
+
+wishlist.push(
+productId
+);
+
+
+
+showShopNotification(
+"Added to wishlist ❤️"
+);
+
+
+
+}
+
+
+
+
+
+localStorage.setItem(
+
+"nexpak_wishlist",
+
+JSON.stringify(
+wishlist
+)
+
+);
+
+
+
+updateWishlistButtons();
+
+
+
+}
+
+
+
+
+
+// ======================================================
+// UPDATE WISHLIST BUTTONS
+// ======================================================
+
+
+function updateWishlistButtons(){
+
+
+
+document
+
+.querySelectorAll(
+".wishlist-btn"
+)
+
+.forEach(button=>{
+
+
+const card =
+button.closest(
+".shop-card"
+);
+
+
+
+const id =
+card.dataset.product;
+
+
+
+
+
+if(
+wishlist.includes(id)
+){
+
+
+button.classList.add(
+"active"
+);
+
+
+
+button.innerHTML =
+
+'<i class="fas fa-heart"></i>';
+
+
+
+}
+
+else{
+
+
+button.classList.remove(
+"active"
+);
+
+
+
+button.innerHTML =
+
+'<i class="far fa-heart"></i>';
+
+
+
+}
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+// ======================================================
+// QUICK VIEW PLACEHOLDER
+// PART 3 WILL COMPLETE MODAL
+// ======================================================
+
+
+function openQuickView(productId){
+
+
+
+console.log(
+
+"Quick view:",
+
+productId
+
+);
+
+
+
+}
+
+
+
+
+
+console.log(
+
+"%cNEXPAK V16 SHOP.JS PART 2 READY",
+
+"color:#00B4FF;font-size:18px;font-weight:bold;"
+
+);
+
+// ======================================================
+// NEXPAK SECURITY SOLUTIONS V16
+// shop.js
+//
+// PART 3/5
+//
+// ADVANCED PRODUCT EXPERIENCE
+//
+// QUICK VIEW MODAL
+// IMAGE SLIDER
+// PRODUCT OPTIONS
+// SPECIFICATIONS
+// RECENTLY VIEWED
+// RELATED PRODUCTS
+// ======================================================
+
+
+
+
+
+// ======================================================
+// QUICK VIEW MODAL
+// ======================================================
+
+
+function openQuickView(productId){
+
+
+
+const product =
+
+shopState.products.find(
+
+item =>
+
+item.id === productId
+
+);
+
+
+
+if(!product){
+
+return;
+
+}
+
+
+
+
+
+addRecentlyViewed(productId);
+
+
+
+
+
+let modal =
+
+document.querySelector(
+"#productQuickView"
+);
+
+
+
+
+
+if(!modal){
+
+
+modal = document.createElement(
+"div"
+);
+
+
+modal.id =
+"productQuickView";
+
+
+modal.className =
+"quick-view-modal";
+
+
+document.body.appendChild(
+modal
+);
+
+
+
+}
+
+
+
+
+
+modal.innerHTML = `
+
+
+<div class="quick-view-box">
+
+
+
+<button
+
+class="close-quick-view"
+
+onclick="closeQuickView()">
+
+×
+
+</button>
+
+
+
+
+
+<div class="quick-image-section">
+
+
+<img
+
+id="quickMainImage"
+
+src="${product.images?.[0] || 'images/no-image.jpg'}"
+
+alt="${product.name}"
+
+>
+
+
+
+
+<div class="quick-thumbnails">
+
+
+${createQuickThumbnails(product)}
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="quick-product-info">
+
+
+
+<h2>
+
+${product.name}
+
+</h2>
+
+
+
+
+
+<div class="product-rating">
+
+${createRatingStars(product.rating || 0)}
+
+</div>
+
+
+
+
+
+<p>
+
+${product.description || ""}
+
+</p>
+
+
+
+
+
+<div class="quick-price">
+
+
+${formatShopPrice(product.price)}
+
+</div>
+
+
+
+
+
+
+<div class="quick-options">
+
+
+${createProductOptions(product)}
+
+
+</div>
+
+
+
+
+
+<div class="quick-specifications">
+
+
+${createSpecifications(product)}
+
+
+</div>
+
+
+
+
+
+
+
+<button
+
+class="add-cart-btn"
+
+onclick="addQuickViewToCart('${product.id}')">
+
+
+<i class="fas fa-cart-shopping"></i>
+
 Add To Cart
 
 
 </button>
+
 
 
 
@@ -660,6 +1629,14 @@ Add To Cart
 
 
 
+
+
+modal.classList.add(
+"active"
+);
+
+
+
 }
 
 
@@ -667,11 +1644,59 @@ Add To Cart
 
 
 // ======================================================
-// CREATE PRODUCT SELECTORS
+// CLOSE QUICK VIEW
 // ======================================================
 
 
-function createSelectors(product){
+function closeQuickView(){
+
+
+
+const modal =
+
+document.querySelector(
+"#productQuickView"
+);
+
+
+
+if(modal){
+
+
+modal.classList.remove(
+"active"
+);
+
+
+}
+
+
+
+}
+
+
+
+
+
+// ======================================================
+// QUICK VIEW THUMBNAILS
+// ======================================================
+
+
+function createQuickThumbnails(product){
+
+
+
+if(
+!product.images ||
+product.images.length < 2
+){
+
+return "";
+
+}
+
+
 
 
 
@@ -681,19 +1706,111 @@ let html = "";
 
 
 
-if(!product.options){
+product.images.forEach(image=>{
+
+
+html += `
+
+
+<img
+
+src="${image}"
+
+onclick="changeQuickImage('${image}')"
+
+loading="lazy"
+
+
+>
+
+
+`;
+
+
+
+});
+
+
+
+
 
 return html;
+
+
 
 }
 
 
 
 
-Object.entries(product.options)
+
+// ======================================================
+// CHANGE QUICK IMAGE
+// ======================================================
+
+
+function changeQuickImage(image){
+
+
+
+const main =
+
+document.querySelector(
+"#quickMainImage"
+);
+
+
+
+if(main){
+
+
+main.src =
+image;
+
+
+}
+
+
+
+}
+
+
+
+
+
+// ======================================================
+// CREATE PRODUCT OPTIONS
+// ======================================================
+
+
+function createProductOptions(product){
+
+
+
+if(
+!product.options
+){
+
+return "";
+
+}
+
+
+
+
+
+let html = "";
+
+
+
+
+
+Object.entries(
+product.options
+)
 
 .forEach(
-([key,values])=>{
+([name,values])=>{
 
 
 
@@ -702,9 +1819,7 @@ html += `
 
 <label>
 
-
-${formatOptionName(key)}
-
+${formatOptionName(name)}
 
 </label>
 
@@ -712,9 +1827,9 @@ ${formatOptionName(key)}
 
 <select
 
-id="${product.id}-${key}"
+id="quick-${product.id}-${name}"
 
-class="product-selector">
+class="quick-selector">
 
 
 `;
@@ -744,6 +1859,8 @@ ${value}
 
 
 
+
+
 html += `
 
 </select>
@@ -753,11 +1870,9 @@ html += `
 
 
 
-}
+});
 
 
-
-);
 
 
 
@@ -772,29 +1887,100 @@ return html;
 
 
 // ======================================================
-// IMAGE ZOOM
+// PRODUCT SPECIFICATIONS
 // ======================================================
 
 
-function zoomProductImage(image){
+function createSpecifications(product){
 
 
 
-const card = image.closest(
-".shop-card"
-);
+if(
+!product.specifications
+){
+
+return "";
+
+}
 
 
 
-const mainImage =
-card.querySelector(
-".zoom-image"
-);
+
+
+let html = `
+
+
+<h3>
+
+Specifications
+
+</h3>
 
 
 
-mainImage.src =
-image.src;
+<table class="spec-table">
+
+
+`;
+
+
+
+
+
+Object.entries(
+product.specifications
+)
+
+.forEach(
+([key,value])=>{
+
+
+html += `
+
+
+<tr>
+
+
+<td>
+
+${key}
+
+</td>
+
+
+
+<td>
+
+${value}
+
+</td>
+
+
+
+</tr>
+
+
+`;
+
+
+
+});
+
+
+
+
+
+html += `
+
+</table>
+
+`;
+
+
+
+
+
+return html;
 
 
 
@@ -805,92 +1991,17 @@ image.src;
 
 
 // ======================================================
-// QUANTITY CONTROL
+// ADD QUICK VIEW TO CART
 // ======================================================
 
 
-function changeShopQuantity(id,change){
-
-
-
-const input =
-document.getElementById(
-"qty-"+id
-);
-
-
-
-if(!input){
-
-return;
-
-}
-
-
-
-let quantity =
-parseInt(input.value);
-
-
-
-quantity += change;
-
-
-
-if(quantity < 1){
-
-quantity = 1;
-
-}
-
-
-
-input.value =
-quantity;
-
-
-
-}
-
-
-
-
-
-console.log(
-
-"%cNEXPAK SHOP.JS PART 2 READY",
-
-"color:#00B4FF;font-size:18px;font-weight:bold;"
-
-);
-
-// ======================================================
-// NEXPAK SECURITY SOLUTIONS V15
-// shop.js
-//
-// PART 3/5
-//
-// PRODUCT CONFIGURATION
-// ADD TO CART CONNECTION
-// OPTIONS CAPTURE
-// ======================================================
-
-
-
-
-
-// ======================================================
-// ADD SHOP PRODUCT TO CART
-// ======================================================
-
-
-function addShopProductToCart(productId){
+function addQuickViewToCart(productId){
 
 
 
 const product =
 
-shopProducts.find(
+shopState.products.find(
 
 item =>
 
@@ -902,15 +2013,7 @@ item.id === productId
 
 if(!product){
 
-
-console.error(
-"Product not found:",
-productId
-);
-
-
 return;
-
 
 }
 
@@ -918,43 +2021,37 @@ return;
 
 
 
-let selectedOptions = {};
+let options = {};
 
 
 
-
-
-// ======================================================
-// COLLECT SELECTOR VALUES
-// ======================================================
 
 
 if(product.options){
 
 
-Object.keys(product.options)
+Object.keys(
+product.options
+)
 
 .forEach(option=>{
 
 
 const selector =
 
-document.getElementById(
+document.querySelector(
 
-product.id +
-
-"-" +
-
-option
+`#quick-${productId}-${option}`
 
 );
+
 
 
 
 if(selector){
 
 
-selectedOptions[option] =
+options[option] =
 
 selector.value;
 
@@ -973,33 +2070,7 @@ selector.value;
 
 
 
-const quantityInput =
-
-document.getElementById(
-
-"qty-" + product.id
-
-);
-
-
-
-const quantity =
-
-quantityInput
-
-?
-
-parseInt(quantityInput.value)
-
-:
-
-1;
-
-
-
-
-
-const cartItem = {
+const item = {
 
 
 id:
@@ -1012,17 +2083,9 @@ name:
 product.name,
 
 
-
 image:
 
-product.images[0],
-
-
-
-quantity:
-
-quantity,
-
+product.images?.[0],
 
 
 price:
@@ -1030,16 +2093,14 @@ price:
 product.price || 0,
 
 
+quantity:
+
+1,
+
 
 options:
 
-selectedOptions,
-
-
-
-extras:
-
-[]
+options
 
 
 
@@ -1049,35 +2110,21 @@ extras:
 
 
 
-// ======================================================
-// SEND TO CART ENGINE
-// ======================================================
-
 
 if(
 typeof addToCart === "function"
 ){
 
 
-addToCart(
-cartItem
-);
+addToCart(item);
 
 
+showShopNotification(
 
-showCartMessage(
-product.name
-);
+product.name +
 
+" added to cart"
 
-
-}
-
-else{
-
-
-console.error(
-"Cart engine not loaded."
 );
 
 
@@ -1092,133 +2139,92 @@ console.error(
 
 
 // ======================================================
-// CART SUCCESS MESSAGE
+// RECENTLY VIEWED
 // ======================================================
 
 
-function showCartMessage(productName){
+function addRecentlyViewed(id){
 
 
 
-const message = document.createElement(
-"div"
+let viewed =
+
+JSON.parse(
+
+localStorage.getItem(
+"nexpak_recent"
+)
+
+)
+
+|| [];
+
+
+
+
+
+viewed =
+
+viewed.filter(
+item => item !== id
 );
 
 
 
-message.className =
-"shop-alert";
 
 
-
-message.innerHTML = `
-
-
-<i class="fas fa-check-circle"></i>
-
-
-${productName}
-
-added to cart
-
-
-`;
-
-
-
-document.body.appendChild(
-message
+viewed.unshift(
+id
 );
 
 
 
-setTimeout(()=>{
 
 
-message.remove();
+viewed =
 
-
-},3000);
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// QUICK BUY FUNCTION
-// ======================================================
-
-
-function buyNow(productId){
-
-
-addShopProductToCart(productId);
-
-
-
-setTimeout(()=>{
-
-
-window.location.href =
-"cart.html";
-
-
-},500);
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// UPDATE CART ICON
-// ======================================================
-
-
-function updateShopCartIcon(){
-
-
-
-const counters =
-
-document.querySelectorAll(
-".cart-count"
+viewed.slice(
+0,
+10
 );
 
 
 
-if(
-typeof getCartQuantity === "function"
-){
 
 
+localStorage.setItem(
 
-const count =
+"nexpak_recent",
 
-getCartQuantity();
+JSON.stringify(
+viewed
+)
 
+);
 
-
-counters.forEach(
-counter=>{
-
-
-counter.textContent =
-count;
-
-
-
-});
 
 
 }
+
+
+
+
+
+function loadRecentlyViewed(){
+
+
+
+shopState.viewed =
+
+JSON.parse(
+
+localStorage.getItem(
+"nexpak_recent"
+)
+
+)
+
+|| [];
 
 
 
@@ -1229,22 +2235,56 @@ count;
 
 
 // ======================================================
-// AUTO UPDATE CART DISPLAY
+// RELATED PRODUCTS
 // ======================================================
 
 
-document.addEventListener(
-
-"DOMContentLoaded",
-
-()=>{
-
-
-updateShopCartIcon();
+function getRelatedProducts(productId){
 
 
 
-});
+const product =
+
+shopState.products.find(
+
+item =>
+
+item.id === productId
+
+);
+
+
+
+if(!product){
+
+return [];
+
+}
+
+
+
+
+
+return shopState.products
+
+.filter(item=>
+
+item.category === product.category
+
+&&
+
+item.id !== productId
+
+)
+
+.slice(
+0,
+4
+);
+
+
+
+}
 
 
 
@@ -1252,23 +2292,25 @@ updateShopCartIcon();
 
 console.log(
 
-"%cNEXPAK SHOP.JS PART 3 READY",
+"%cNEXPAK V16 SHOP.JS PART 3 READY",
 
 "color:#00B4FF;font-size:18px;font-weight:bold;"
 
 );
 
 // ======================================================
-// NEXPAK SECURITY SOLUTIONS V15
+// NEXPAK SECURITY SOLUTIONS V16
 // shop.js
 //
 // PART 4/5
 //
 // ADVANCED SHOP FEATURES
-// IMAGE GALLERY
-// ZOOM EFFECT
-// SORTING
-// CART PREVIEW
+//
+// MINI CART DRAWER
+// PRODUCT COMPARISON
+// DELIVERY ESTIMATOR
+// TRUST FEATURES
+// CART EXPERIENCE
 // ======================================================
 
 
@@ -1276,235 +2318,7 @@ console.log(
 
 
 // ======================================================
-// IMAGE GALLERY SWITCH
-// ======================================================
-
-
-function changeMainProductImage(
-productId,
-image
-){
-
-
-const mainImage =
-
-document.getElementById(
-
-"main-" + productId
-
-);
-
-
-
-if(mainImage){
-
-
-mainImage.src =
-image;
-
-
-}
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// IMAGE ZOOM EFFECT
-// ======================================================
-
-
-document.addEventListener(
-
-"mousemove",
-
-function(e){
-
-
-const image =
-
-e.target.closest(
-".zoom-image"
-);
-
-
-
-if(!image){
-
-return;
-
-}
-
-
-
-
-const rect =
-image.getBoundingClientRect();
-
-
-
-const x =
-
-((e.clientX - rect.left)
-/ rect.width) * 100;
-
-
-
-const y =
-
-((e.clientY - rect.top)
-/ rect.height) * 100;
-
-
-
-
-image.style.transformOrigin =
-
-`${x}% ${y}%`;
-
-
-
-}
-
-
-
-);
-
-
-
-
-
-document.addEventListener(
-
-"mouseenter",
-
-function(e){
-
-
-if(
-e.target.classList.contains(
-"zoom-image"
-)
-
-){
-
-
-e.target.style.transform =
-"scale(1.8)";
-
-
-e.target.style.cursor =
-"zoom-in";
-
-
-}
-
-
-
-},
-
-true
-
-);
-
-
-
-
-
-document.addEventListener(
-
-"mouseleave",
-
-function(e){
-
-
-if(
-e.target.classList.contains(
-"zoom-image"
-)
-
-){
-
-
-e.target.style.transform =
-"scale(1)";
-
-
-}
-
-
-
-},
-
-true
-
-);
-
-
-
-
-
-// ======================================================
-// SORT PRODUCTS
-// ======================================================
-
-
-function sortProducts(type){
-
-
-
-if(type === "name"){
-
-
-shopProducts.sort(
-
-(a,b)=>
-
-a.name.localeCompare(
-b.name
-)
-
-);
-
-
-}
-
-
-
-if(type === "category"){
-
-
-shopProducts.sort(
-
-(a,b)=>
-
-a.category.localeCompare(
-b.category
-)
-
-);
-
-
-}
-
-
-
-renderShopProducts();
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// CART MINI PREVIEW
+// MINI CART DRAWER
 // ======================================================
 
 
@@ -1521,36 +2335,86 @@ return;
 
 
 
+
 const cartItems =
 getCart();
 
 
 
-let html = "";
+
+let box =
+document.querySelector(
+".mini-cart"
+);
+
+
+
+if(!box){
+
+return;
+
+}
 
 
 
 
 
-if(cartItems.length === 0){
+if(
+cartItems.length === 0
+){
 
 
-html = `
+box.innerHTML = `
+
+
+<div class="empty-cart">
+
+
+<i class="fas fa-cart-shopping"></i>
+
 
 <p>
 Your cart is empty
 </p>
 
+
+</div>
+
+
 `;
 
+
+return;
 
 
 }
 
-else{
+
+
+
+
+
+let html = "";
+
+let total = 0;
+
+
+
 
 
 cartItems.forEach(item=>{
+
+
+total +=
+
+(item.price || 0)
+
+*
+
+item.quantity;
+
+
+
 
 
 html += `
@@ -1559,7 +2423,14 @@ html += `
 <div class="mini-cart-item">
 
 
-<img src="${item.image}">
+<img
+
+src="${item.image}"
+
+alt="${item.name}"
+
+>
+
 
 
 <div>
@@ -1580,6 +2451,7 @@ Qty:
 ${item.quantity}
 
 
+
 </div>
 
 
@@ -1595,28 +2467,48 @@ ${item.quantity}
 
 
 
-}
+
+
+box.innerHTML = `
+
+
+<div class="mini-cart-products">
+
+
+${html}
+
+
+</div>
 
 
 
 
-
-const box =
-
-document.querySelector(
-".mini-cart"
-);
+<div class="mini-cart-total">
 
 
+Total:
 
-if(box){
+${formatShopPrice(total)}
 
 
-box.innerHTML = html;
+</div>
 
 
 
-}
+
+<a
+
+href="cart.html"
+
+class="checkout-mini-btn">
+
+
+View Cart
+
+</a>
+
+
+`;
 
 
 
@@ -1627,7 +2519,7 @@ box.innerHTML = html;
 
 
 // ======================================================
-// CART DROPDOWN TOGGLE
+// TOGGLE MINI CART
 // ======================================================
 
 
@@ -1635,7 +2527,7 @@ function toggleMiniCart(){
 
 
 
-const cartBox =
+const cart =
 
 document.querySelector(
 ".mini-cart"
@@ -1643,7 +2535,7 @@ document.querySelector(
 
 
 
-if(!cartBox){
+if(!cart){
 
 return;
 
@@ -1651,7 +2543,8 @@ return;
 
 
 
-cartBox.classList.toggle(
+
+cart.classList.toggle(
 "active"
 );
 
@@ -1668,29 +2561,377 @@ showMiniCart();
 
 
 // ======================================================
-// MOBILE SHOP FILTER
+// PRODUCT COMPARISON
 // ======================================================
 
 
-function toggleShopFilters(){
+let compareProducts =
+
+JSON.parse(
+
+localStorage.getItem(
+"nexpak_compare"
+)
+
+)
+
+|| [];
 
 
 
-const filters =
+
+
+function addToCompare(productId){
+
+
+
+if(
+
+compareProducts.includes(
+productId
+)
+
+){
+
+
+showShopNotification(
+"Already added to compare"
+);
+
+
+return;
+
+
+}
+
+
+
+
+
+if(
+
+compareProducts.length >= 4
+
+){
+
+
+showShopNotification(
+"Maximum 4 products allowed"
+);
+
+
+return;
+
+
+}
+
+
+
+
+
+compareProducts.push(
+productId
+);
+
+
+
+
+
+localStorage.setItem(
+
+"nexpak_compare",
+
+JSON.stringify(
+compareProducts
+)
+
+);
+
+
+
+
+
+showShopNotification(
+"Added to comparison"
+);
+
+
+
+updateCompareCounter();
+
+
+
+}
+
+
+
+
+
+function removeFromCompare(productId){
+
+
+
+compareProducts =
+
+compareProducts.filter(
+
+id =>
+
+id !== productId
+
+);
+
+
+
+
+
+localStorage.setItem(
+
+"nexpak_compare",
+
+JSON.stringify(
+compareProducts
+)
+
+);
+
+
+
+
+
+updateCompareCounter();
+
+
+
+}
+
+
+
+
+
+function updateCompareCounter(){
+
+
+
+document
+
+.querySelectorAll(
+".compare-count"
+)
+
+.forEach(counter=>{
+
+
+counter.textContent =
+
+compareProducts.length;
+
+
+
+});
+
+
+}
+
+
+
+
+
+// ======================================================
+// BUILD COMPARISON TABLE
+// ======================================================
+
+
+function openComparison(){
+
+
+
+let products =
+
+compareProducts.map(id=>
+
+shopState.products.find(
+
+product=>
+
+product.id === id
+
+)
+
+)
+
+.filter(Boolean);
+
+
+
+
+
+if(products.length === 0){
+
+
+showShopNotification(
+"No products selected"
+);
+
+
+return;
+
+
+}
+
+
+
+
+
+let html = `
+
+
+<table class="compare-table">
+
+
+<tr>
+
+
+<th>
+Feature
+</th>
+
+`;
+
+
+
+
+
+products.forEach(product=>{
+
+
+html += `
+
+
+<th>
+
+${product.name}
+
+</th>
+
+
+`;
+
+
+
+});
+
+
+
+
+
+html += `
+
+</tr>
+
+`;
+
+
+
+
+
+const fields = [
+
+"price",
+
+"category",
+
+"stock",
+
+"description"
+
+];
+
+
+
+
+
+fields.forEach(field=>{
+
+
+html += `
+
+
+<tr>
+
+
+<td>
+
+${field}
+
+</td>
+
+
+`;
+
+
+
+
+
+products.forEach(product=>{
+
+
+html += `
+
+
+<td>
+
+${product[field] || "-"}
+
+</td>
+
+
+`;
+
+
+
+});
+
+
+
+
+
+html += `
+
+</tr>
+
+`;
+
+
+
+});
+
+
+
+
+
+html += `
+
+</table>
+
+`;
+
+
+
+
+
+const compareBox =
 
 document.querySelector(
-".shop-filters"
+".compare-area"
 );
 
 
 
-if(filters){
+if(compareBox){
 
 
-filters.classList.toggle(
-"open"
-);
-
+compareBox.innerHTML = html;
 
 
 }
@@ -1698,6 +2939,306 @@ filters.classList.toggle(
 
 
 }
+
+
+
+
+
+// ======================================================
+// DELIVERY ESTIMATOR
+// ======================================================
+
+
+function estimateDelivery(){
+
+
+
+const locationInput =
+
+document.querySelector(
+"#deliveryLocation"
+);
+
+
+
+const result =
+
+document.querySelector(
+"#deliveryResult"
+);
+
+
+
+if(
+!locationInput ||
+!result
+){
+
+return;
+
+}
+
+
+
+
+
+let location =
+
+locationInput.value.trim();
+
+
+
+
+
+if(!location){
+
+
+result.innerHTML =
+
+"Enter your area";
+
+
+return;
+
+
+}
+
+
+
+
+
+// Basic South Africa estimate
+
+result.innerHTML = `
+
+
+<i class="fas fa-truck"></i>
+
+
+Delivery available to:
+
+<strong>
+
+${location}
+
+</strong>
+
+
+
+<br>
+
+
+Estimated delivery:
+
+2 - 5 working days
+
+
+`;
+
+
+
+}
+
+
+
+
+
+// ======================================================
+// TRUST BADGES
+// ======================================================
+
+
+function loadTrustFeatures(){
+
+
+
+const area =
+
+document.querySelector(
+".trust-features"
+);
+
+
+
+if(!area){
+
+return;
+
+}
+
+
+
+
+
+area.innerHTML = `
+
+
+<div class="trust-box">
+
+
+<i class="fas fa-shield-halved"></i>
+
+
+<h4>
+
+Secure Shopping
+
+</h4>
+
+
+<p>
+
+Safe payment and customer support
+
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="trust-box">
+
+
+<i class="fas fa-truck"></i>
+
+
+<h4>
+
+Fast Delivery
+
+</h4>
+
+
+<p>
+
+Nationwide security equipment delivery
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+<div class="trust-box">
+
+
+<i class="fas fa-user-shield"></i>
+
+
+<h4>
+
+Security Experts
+
+</h4>
+
+
+<p>
+
+Professional installation support
+
+</p>
+
+
+</div>
+
+
+`;
+
+
+
+}
+
+
+
+
+
+// ======================================================
+// SHOP NOTIFICATION
+// ======================================================
+
+
+function showShopNotification(message){
+
+
+
+let alert =
+
+document.createElement(
+"div"
+);
+
+
+
+alert.className =
+"shop-alert";
+
+
+
+alert.innerHTML = `
+
+
+<i class="fas fa-check-circle"></i>
+
+
+${message}
+
+
+`;
+
+
+
+
+
+document.body.appendChild(
+alert
+);
+
+
+
+
+
+setTimeout(()=>{
+
+
+alert.remove();
+
+
+},3000);
+
+
+
+}
+
+
+
+
+
+// ======================================================
+// INITIALIZE ADVANCED FEATURES
+// ======================================================
+
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+()=>{
+
+
+loadTrustFeatures();
+
+
+updateCompareCounter();
+
+
+});
 
 
 
@@ -1705,23 +3246,25 @@ filters.classList.toggle(
 
 console.log(
 
-"%cNEXPAK SHOP.JS PART 4 READY",
+"%cNEXPAK V16 SHOP.JS PART 4 READY",
 
 "color:#00B4FF;font-size:18px;font-weight:bold;"
 
 );
-
 // ======================================================
-// NEXPAK SECURITY SOLUTIONS V15
+// NEXPAK SECURITY SOLUTIONS V16
 // shop.js
 //
 // PART 5/5
 //
 // FINAL SHOP ENGINE
-// PRICE FORMAT
-// PRODUCT URL SUPPORT
+//
+// SEO SCHEMA
+// WHATSAPP AUTOMATION
+// PERFORMANCE
 // CART COMPATIBILITY
-// FINAL INITIALIZATION
+// SYSTEM CHECK
+// PRODUCTION FINALIZATION
 // ======================================================
 
 
@@ -1729,79 +3272,226 @@ console.log(
 
 
 // ======================================================
-// FORMAT SHOP PRICE
+// PRODUCT SEO SCHEMA GENERATOR
 // ======================================================
 
 
-function formatShopPrice(price){
-
-
-if(!price || price === 0){
-
-
-return "Request Quote";
-
-
-}
+function generateProductSchema(product){
 
 
 
-return "R" +
+const schema = {
 
-Number(price)
 
-.toLocaleString(
+"@context":
 
-"en-ZA",
+"https://schema.org",
+
+
+
+"@type":
+
+"Product",
+
+
+
+"name":
+
+product.name,
+
+
+
+"description":
+
+product.description || "",
+
+
+
+"image":
+
+product.images || [],
+
+
+
+"category":
+
+product.category || "Security Equipment",
+
+
+
+"offers":{
+
+
+"@type":
+
+"Offer",
+
+
+
+"priceCurrency":
+
+"ZAR",
+
+
+
+"price":
+
+product.price || 0,
+
+
+
+"availability":
+
+product.stock > 0
+
+?
+
+"https://schema.org/InStock"
+
+:
+
+"https://schema.org/OutOfStock"
+
+
+
+},
+
+
+
+"aggregateRating":
+
+product.rating
+
+?
 
 {
 
-minimumFractionDigits:2,
 
-maximumFractionDigits:2
+"@type":
+
+"AggregateRating",
+
+
+
+"ratingValue":
+
+product.rating,
+
+
+
+"reviewCount":
+
+product.reviews || 0
+
 
 }
+
+:
+
+undefined
+
+
+
+};
+
+
+
+return schema;
+
+
+
+}
+
+
+
+
+
+// ======================================================
+// INSERT PRODUCT SEO DATA
+// ======================================================
+
+
+function injectProductSchema(productId){
+
+
+
+const product =
+
+shopState.products.find(
+
+item =>
+
+item.id === productId
 
 );
 
 
 
+if(!product){
+
+return;
+
 }
 
 
 
 
 
-// ======================================================
-// UPDATE PRODUCT PRICE DISPLAY
-// ======================================================
-
-
-function updateProductPrice(
-productId,
-price
-){
-
-
-const element =
+const oldSchema =
 
 document.querySelector(
+"#product-schema"
+);
 
-"#price-" + productId
+
+
+if(oldSchema){
+
+
+oldSchema.remove();
+
+
+}
+
+
+
+
+
+const script =
+
+document.createElement(
+"script"
+);
+
+
+
+script.type =
+
+"application/ld+json";
+
+
+
+script.id =
+
+"product-schema";
+
+
+
+script.textContent =
+
+JSON.stringify(
+
+generateProductSchema(product)
 
 );
 
 
 
-if(element){
 
 
-element.innerHTML =
-
-formatShopPrice(price);
-
-
-}
+document.head.appendChild(
+script
+);
 
 
 
@@ -1812,42 +3502,17 @@ formatShopPrice(price);
 
 
 // ======================================================
-// LOAD SINGLE PRODUCT FROM URL
+// WHATSAPP QUOTE AUTOMATION
 // ======================================================
 
 
-function loadShopProductFromURL(){
-
-
-const params =
-
-new URLSearchParams(
-
-window.location.search
-
-);
-
-
-
-const productId =
-
-params.get(
-"id"
-);
-
-
-
-if(!productId){
-
-return;
-
-}
+function createWhatsAppQuote(productId){
 
 
 
 const product =
 
-shopProducts.find(
+shopState.products.find(
 
 item =>
 
@@ -1865,87 +3530,37 @@ return;
 
 
 
-console.log(
-
-"Shop product loaded:",
-
-product.name
-
-);
 
 
-
-}
-
+const message = `
 
 
+Hello Nexpak Security Solutions.
 
 
-// ======================================================
-// CREATE SHOP PRODUCT LINK
-// ======================================================
+I would like a quotation for:
 
-
-function getProductLink(product){
-
-
-return (
-
-"shop.html?id="
-
-+
-
-product.id
-
-);
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// REQUEST QUOTE FALLBACK
-// ======================================================
-
-
-function requestProductQuote(productId){
-
-
-const product =
-
-shopProducts.find(
-
-item =>
-
-item.id === productId
-
-);
-
-
-
-if(!product){
-
-return;
-
-}
-
-
-
-const message =
-
-
-`Nexpak Security Solutions Quote Request
 
 Product:
 
 ${product.name}
 
 
-Please provide pricing and availability.`;
+
+Category:
+
+${product.category}
+
+
+
+Please send pricing and availability.
+
+
+
+`;
+
+
+
 
 
 window.open(
@@ -1971,37 +3586,194 @@ message
 
 
 // ======================================================
-// CLEAR SHOP FILTERS
+// CART COMPATIBILITY LAYER
 // ======================================================
 
 
-function clearShopFilters(){
-
-
-currentCategory = "All";
-
-
-currentSearch = "";
+function syncShopCart(){
 
 
 
-const search =
+if(
+
+typeof getCartQuantity !== "function"
+
+){
+
+return;
+
+}
+
+
+
+
+
+const quantity =
+
+getCartQuantity();
+
+
+
+
+
+document
+
+.querySelectorAll(
+".cart-count"
+)
+
+.forEach(counter=>{
+
+
+counter.textContent =
+
+quantity;
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+// ======================================================
+// PRODUCT IMAGE OPTIMIZATION
+// ======================================================
+
+
+function optimizeProductImages(){
+
+
+
+document
+
+.querySelectorAll(
+".product-main-image"
+)
+
+.forEach(image=>{
+
+
+image.loading =
+
+"lazy";
+
+
+
+image.decoding =
+
+"async";
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+// ======================================================
+// RECENT PRODUCTS DISPLAY
+// ======================================================
+
+
+function renderRecentlyViewed(){
+
+
+
+const container =
 
 document.querySelector(
-"#shopSearch"
+".recent-products"
 );
 
 
 
-if(search){
+if(!container){
 
-search.value = "";
+return;
 
 }
 
 
 
-renderShopProducts();
+
+
+let html = "";
+
+
+
+
+
+shopState.viewed.forEach(id=>{
+
+
+const product =
+
+shopState.products.find(
+
+item=>
+
+item.id === id
+
+);
+
+
+
+if(product){
+
+
+
+html += `
+
+
+<div class="recent-item"
+
+
+onclick="openQuickView('${product.id}')">
+
+
+<img
+
+src="${product.images[0]}"
+
+>
+
+
+<p>
+
+${product.name}
+
+</p>
+
+
+</div>
+
+
+`;
+
+
+
+}
+
+
+
+});
+
+
+
+
+
+container.innerHTML = html;
 
 
 
@@ -2012,7 +3784,86 @@ renderShopProducts();
 
 
 // ======================================================
-// SHOP READY CHECK
+// PRODUCT URL HANDLER
+// ======================================================
+
+
+function checkProductURL(){
+
+
+
+const params =
+
+new URLSearchParams(
+
+window.location.search
+
+);
+
+
+
+const id =
+
+params.get(
+"id"
+);
+
+
+
+if(id){
+
+
+injectProductSchema(id);
+
+
+openQuickView(id);
+
+
+}
+
+
+
+}
+
+
+
+
+
+// ======================================================
+// ERROR HANDLING
+// ======================================================
+
+
+window.addEventListener(
+
+"error",
+
+function(event){
+
+
+
+console.warn(
+
+"Nexpak Shop Error:",
+
+event.message
+
+);
+
+
+
+}
+
+
+
+);
+
+
+
+
+
+// ======================================================
+// FINAL SYSTEM CHECK
 // ======================================================
 
 
@@ -2022,9 +3873,19 @@ function shopSystemCheck(){
 
 console.log(
 
-"%cNEXPAK SHOP SYSTEM ONLINE",
+"%c================================",
 
-"color:#00ff88;font-size:18px;font-weight:bold;"
+"color:#00B4FF"
+
+);
+
+
+
+console.log(
+
+"%cNEXPAK SECURITY SOLUTIONS V16",
+
+"color:#00B4FF;font-size:20px;font-weight:bold"
 
 );
 
@@ -2034,37 +3895,65 @@ console.log(
 
 "Products:",
 
-shopProducts.length
+shopState.products.length
 
 );
 
 
 
-if(
-typeof addToCart === "function"
-){
 
 
 console.log(
 
-"Cart integration: OK"
+"Wishlist:",
+
+wishlist.length
 
 );
 
 
-}
-
-else{
 
 
-console.warn(
 
-"Cart integration missing"
+console.log(
+
+"Compare Items:",
+
+compareProducts.length
 
 );
 
 
-}
+
+
+
+console.log(
+
+"Cart Engine:",
+
+typeof addToCart === "function"
+
+?
+
+"CONNECTED"
+
+:
+
+"MISSING"
+
+);
+
+
+
+
+
+console.log(
+
+"%cSHOP ENGINE READY",
+
+"color:#00ff88;font-size:18px;font-weight:bold"
+
+);
 
 
 
@@ -2086,10 +3975,20 @@ document.addEventListener(
 ()=>{
 
 
+syncShopCart();
+
+
+optimizeProductImages();
+
+
+renderRecentlyViewed();
+
+
+checkProductURL();
+
+
 shopSystemCheck();
 
-
-loadShopProductFromURL();
 
 
 });
@@ -2100,8 +3999,8 @@ loadShopProductFromURL();
 
 console.log(
 
-"%cNEXPAK SHOP.JS V15 COMPLETE",
+"%cNEXPAK SHOP.JS V16 COMPLETE",
 
-"color:#00B4FF;font-size:20px;font-weight:bold;"
+"color:#00B4FF;font-size:22px;font-weight:bold"
 
 );
