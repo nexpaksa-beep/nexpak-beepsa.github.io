@@ -1,579 +1,13 @@
 /*=========================================================
- NEXPAK SECURITY SOLUTIONS V5
- PRODUCT CONFIGURATOR
+ NEXPAK SECURITY SOLUTIONS V8
+
  configurator.js
- PART 1/4
+
+ PART 1/5
+
+ PRODUCT CONFIGURATION ENGINE
+
 =========================================================*/
-
-
-//=========================================================
-// INITIALIZE CONFIGURATORS
-//=========================================================
-
-document.addEventListener("DOMContentLoaded",()=>{
-
-    initializeConfigurator();
-
-});
-
-
-
-
-//=========================================================
-// PRODUCT CONFIGURATOR
-//=========================================================
-
-
-function initializeConfigurator(){
-
-
-    const products =
-    document.querySelectorAll(".product-config");
-
-
-
-    products.forEach(product=>{
-
-
-        const selects =
-        product.querySelectorAll("select");
-
-
-
-        selects.forEach(select=>{
-
-
-            select.addEventListener(
-            "change",
-            ()=>{
-
-
-                updateProductPrice(product);
-
-
-                updateConfiguration(product);
-
-
-            });
-
-
-        });
-
-
-
-        updateProductPrice(product);
-
-
-    });
-
-
-}
-
-
-
-
-
-
-
-//=========================================================
-// UPDATE PRODUCT PRICE
-//=========================================================
-
-
-function updateProductPrice(product){
-
-
-
-    let basePrice =
-    Number(product.dataset.price);
-
-
-
-    let optionPrice = 0;
-
-
-
-    const options =
-    product.querySelectorAll("select");
-
-
-
-    options.forEach(option=>{
-
-
-        const selected =
-        option.options[
-        option.selectedIndex
-        ];
-
-
-
-        optionPrice +=
-
-        Number(
-        selected.dataset.price || 0
-        );
-
-
-
-    });
-
-
-
-
-    const quantity =
-    product.querySelector(".product-qty");
-
-
-
-    let qty = 1;
-
-
-
-    if(quantity){
-
-        qty =
-        Number(quantity.value);
-
-    }
-
-
-
-
-    const total =
-
-    (basePrice + optionPrice)
-    * qty;
-
-
-
-
-    const priceDisplay =
-
-    product.querySelector(
-    ".live-price"
-    );
-
-
-
-    if(priceDisplay){
-
-
-        priceDisplay.innerHTML =
-
-        "R" +
-        total.toLocaleString();
-
-
-    }
-
-
-}
-
-
-
-
-
-//=========================================================
-// UPDATE CONFIGURATION SUMMARY
-//=========================================================
-
-
-function updateConfiguration(product){
-
-
-
-    const summary =
-
-    product.querySelector(
-    ".configuration-summary"
-    );
-
-
-
-    if(!summary) return;
-
-
-
-
-    let html = "";
-
-
-
-    const selects =
-
-    product.querySelectorAll(
-    "select"
-    );
-
-
-
-
-    selects.forEach(select=>{
-
-
-        const label =
-        select.dataset.option;
-
-
-
-        const value =
-        select.value;
-
-
-
-
-        html += `
-
-        <p>
-
-        <strong>${label}:</strong>
-        ${value}
-
-        </p>
-
-        `;
-
-
-    });
-
-
-
-    summary.innerHTML = html;
-
-
-
-      }
-/*=========================================================
- CCTV CONFIGURATION ENGINE
- PART 2/4
-=========================================================*/
-
-
-//=========================================================
-// CCTV SETTINGS DATABASE
-//=========================================================
-
-
-const cctvOptions = {
-
-
-    "8 Channel":{
-
-        cameras:8,
-
-        type:"DVR System"
-
-    },
-
-
-    "16 Channel":{
-
-        cameras:16,
-
-        type:"DVR System"
-
-    },
-
-
-    "32 Channel":{
-
-        cameras:32,
-
-        type:"DVR System"
-
-    }
-
-
-};
-
-
-
-
-
-
-
-//=========================================================
-// IP CCTV SETTINGS
-//=========================================================
-
-
-const ipCameraOptions = {
-
-
-    "8 Channel IP":{
-
-        cameras:8,
-
-        type:"NVR System"
-
-    },
-
-
-    "16 Channel IP":{
-
-        cameras:16,
-
-        type:"NVR System"
-
-    },
-
-
-    "32 Channel IP":{
-
-        cameras:32,
-
-        type:"NVR System"
-
-    }
-
-
-};
-
-
-
-
-
-
-
-//=========================================================
-// CCTV AUTO CONFIGURATION
-//=========================================================
-
-
-function initializeCCTVConfigurator(){
-
-
-
-    const systems =
-
-    document.querySelectorAll(
-    ".cctv-config"
-    );
-
-
-
-    systems.forEach(system=>{
-
-
-        const channel =
-        system.querySelector(
-        "[data-option='Channel']"
-        );
-
-
-
-        if(!channel) return;
-
-
-
-
-        channel.addEventListener(
-        "change",
-        ()=>{
-
-
-            updateCameraInformation(
-            system
-            );
-
-
-        });
-
-
-    });
-
-
-
-}
-
-
-
-
-
-
-
-
-//=========================================================
-// UPDATE CAMERA INFORMATION
-//=========================================================
-
-
-function updateCameraInformation(system){
-
-
-
-    const channel =
-
-    system.querySelector(
-    "[data-option='Channel']"
-    );
-
-
-
-    const display =
-
-    system.querySelector(
-    ".camera-info"
-    );
-
-
-
-    if(!channel || !display)
-    return;
-
-
-
-
-    const selected =
-    channel.value;
-
-
-
-    let data =
-    cctvOptions[selected]
-    ||
-    ipCameraOptions[selected];
-
-
-
-    if(!data)
-    return;
-
-
-
-
-    display.innerHTML = `
-
-
-    <div class="system-info">
-
-
-    <p>
-
-    <strong>System:</strong>
-
-    ${data.type}
-
-    </p>
-
-
-    <p>
-
-    <strong>Camera Capacity:</strong>
-
-    ${data.cameras} Cameras
-
-    </p>
-
-
-    </div>
-
-
-    `;
-
-
-
-}
-
-
-
-
-
-
-
-
-//=========================================================
-// STORAGE CALCULATOR
-//=========================================================
-
-
-function calculateStorage(system){
-
-
-
-    const storage =
-
-    system.querySelector(
-    "[data-option='Storage']"
-    );
-
-
-
-    const storageInfo =
-
-    system.querySelector(
-    ".storage-info"
-    );
-
-
-
-    if(!storage || !storageInfo)
-    return;
-
-
-
-
-    let result="";
-
-
-
-    switch(storage.value){
-
-
-        case "1TB":
-
-            result =
-            "Approx. 7-14 days recording";
-
-        break;
-
-
-
-        case "2TB":
-
-            result =
-            "Approx. 14-30 days recording";
-
-        break;
-
-
-
-        case "4TB":
-
-            result =
-            "Approx. 30-60 days recording";
-
-        break;
-
-
-
-        default:
-
-            result =
-            "Select storage size";
-
-
-    }
-
-
-
-    storageInfo.innerHTML =
-    result;
-
-
-}
-
-
-
-
-
-
-
-
-//=========================================================
-// START CCTV MODULE
-//=========================================================
 
 
 document.addEventListener(
@@ -581,326 +15,871 @@ document.addEventListener(
 ()=>{
 
 
-    initializeCCTVConfigurator();
-
-
-
-    document
-    .querySelectorAll(".cctv-config")
-    .forEach(system=>{
-
-
-        calculateStorage(system);
-
-
-    });
+    loadConfigurator();
 
 
 });
+
+
+
+
+
 /*=========================================================
- GATE MOTOR + ROBOGUARD CONFIGURATOR
- PART 3/4
+ GLOBAL VARIABLES
 =========================================================*/
 
 
-//=========================================================
-// GATE MOTOR DATABASE
-//=========================================================
+let currentProduct = null;
+
+let selectedOptions = {};
+
+let basePrice = 0;
+
+let currentQuantity = 1;
 
 
-const gateMotorOptions = {
 
 
-    "Centurion D5 Evo":{
-
-        maxWeight:"500kg",
-
-        category:"Sliding Gate Motor"
-
-    },
 
 
-    "Centurion D5 Smart":{
-
-        maxWeight:"500kg",
-
-        category:"Smart Sliding Gate Motor"
-
-    },
 
 
-    "Centurion D10 Smart":{
 
-        maxWeight:"1000kg",
-
-        category:"Heavy Duty Sliding Gate Motor"
-
-    },
+/*=========================================================
+ LOAD PRODUCT FROM URL
+=========================================================*/
 
 
-    "Centurion D10 Turbo":{
+function loadConfigurator(){
 
-        maxWeight:"1000kg+",
 
-        category:"Industrial Sliding Gate Motor"
+    const params = new URLSearchParams(
+        window.location.search
+    );
+
+
+    const productID = params.get("id");
+
+
+
+    if(!productID){
+
+        console.log(
+        "No product selected"
+        );
+
+        return;
 
     }
 
 
-};
+
+
+
+    currentProduct = getProductById(productID);
 
 
 
 
 
-
-//=========================================================
-// INITIALIZE GATE MOTOR CONFIG
-//=========================================================
+    if(!currentProduct){
 
 
-function initializeGateConfigurator(){
-
-
-    const motors =
-
-    document.querySelectorAll(
-    ".gate-config"
-    );
-
-
-
-    motors.forEach(motor=>{
-
-
-        const selects =
-
-        motor.querySelectorAll(
-        "select"
+        console.log(
+        "Product not found"
         );
 
 
+        return;
 
-        selects.forEach(select=>{
-
-
-            select.addEventListener(
-            "change",
-            ()=>{
-
-
-                updateGateMotorInfo(
-                motor
-                );
-
-
-            });
-
-
-        });
-
-
-
-    });
-
-
-}
-
-
-
-
-
-
-//=========================================================
-// UPDATE GATE MOTOR INFORMATION
-//=========================================================
-
-
-function updateGateMotorInfo(motor){
-
-
-    const model =
-
-    motor.querySelector(
-    "[data-option='Motor']"
-    );
-
-
-
-    const display =
-
-    motor.querySelector(
-    ".motor-info"
-    );
-
-
-
-    if(!model || !display)
-    return;
-
-
-
-
-    const data =
-
-    gateMotorOptions[
-    model.value
-    ];
-
-
-
-    if(!data)
-    return;
-
-
-
-    display.innerHTML = `
-
-
-    <div class="system-info">
-
-
-    <p>
-    <strong>Type:</strong>
-    ${data.category}
-    </p>
-
-
-    <p>
-    <strong>Gate Capacity:</strong>
-    ${data.maxWeight}
-    </p>
-
-
-    </div>
-
-
-    `;
-
-
-}
-
-
-
-
-
-
-
-//=========================================================
-// BATTERY OPTIONS
-//=========================================================
-
-
-const batteryOptions = {
-
-
-    "7Ah Battery":{
-
-        type:"Standard Backup Battery"
-
-    },
-
-
-    "9Ah Gel Battery":{
-
-        type:"High Performance Gel Battery"
 
     }
+
+
+
+
+
+
+    basePrice = currentProduct.price;
+
+
+
+
+
+    displayProduct();
+
+
+
+    createSelectors();
+
+
+
+    updatePrice();
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/*=========================================================
+ DISPLAY PRODUCT INFORMATION
+=========================================================*/
+
+
+function displayProduct(){
+
+
+
+document.querySelector(".product-title")
+.innerHTML =
+currentProduct.name;
+
+
+
+
+
+document.querySelector(".product-description")
+.innerHTML =
+currentProduct.description;
+
+
+
+
+
+
+document.querySelector(".product-image")
+.src =
+currentProduct.image;
+
+
+
+
+
+const featureBox =
+document.querySelector(".product-features");
+
+
+
+
+
+if(featureBox){
+
+
+featureBox.innerHTML="";
+
+
+
+currentProduct.features.forEach(feature=>{
+
+
+featureBox.innerHTML += `
+
+<li>
+
+<i class="fas fa-check"></i>
+
+${feature}
+
+</li>
+
+
+`;
+
+
+});
+
+
+}
+
+
+
+
+
+
+
+}
+ /*=========================================================
+ CREATE PRODUCT SELECTORS
+
+ Generates dropdown menus from products.js
+
+ Examples:
+ - CCTV 8/16/32 Channel
+ - IP CCTV Channels
+ - PSU Options
+ - Cable Options
+ - Gate Motor Options
+ - Electric Fence Options
+ - Roboguard Options
+
+=========================================================*/
+
+
+function createSelectors(){
+
+
+
+const container = document.querySelector(
+".product-options"
+);
+
+
+
+if(!container) return;
+
+
+
+
+container.innerHTML="";
+
+
+
+selectedOptions = {};
+
+
+
+
+
+if(!currentProduct.options){
+
+    return;
+
+}
+
+
+
+
+
+
+Object.keys(currentProduct.options)
+.forEach(optionKey=>{
+
+
+
+
+
+const optionGroup =
+currentProduct.options[optionKey];
+
+
+
+
+
+
+let html = `
+
+<div class="option-group">
+
+
+<label>
+
+${formatOptionName(optionKey)}
+
+</label>
+
+
+
+<select 
+
+class="config-select"
+
+data-option="${optionKey}"
+
+onchange="optionChanged(this)">
+
+
+`;
+
+
+
+
+
+
+optionGroup.forEach((option,index)=>{
+
+
+
+
+
+html += `
+
+<option
+
+value="${option.name}"
+
+data-price="${option.price}"
+
+${index === 0 ? "selected":""}
+
+>
+
+
+${option.name}
+
+`;
+
+
+
+if(option.price > 0){
+
+html += `
+
+ (+R${option.price})
+
+`;
+
+}
+
+
+html += `
+
+</option>
+
+
+`;
+
+
+
+
+
+});
+
+
+
+
+
+html += `
+
+
+</select>
+
+
+</div>
+
+
+`;
+
+
+
+
+
+container.innerHTML += html;
+
+
+
+
+});
+
+
+
+
+
+
+
+// Store default selections
+
+
+document.querySelectorAll(
+".config-select"
+)
+.forEach(select=>{
+
+
+const selected =
+select.options[
+select.selectedIndex
+];
+
+
+
+selectedOptions[
+select.dataset.option
+]
+=
+selected.value;
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/*=========================================================
+ FORMAT OPTION NAMES
+=========================================================*/
+
+
+function formatOptionName(text){
+
+
+
+return text
+
+.replace(/([A-Z])/g," $1")
+
+.replace(/^./,
+letter=>letter.toUpperCase());
+
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+ OPTION CHANGE EVENT
+=========================================================*/
+
+
+function optionChanged(select){
+
+
+
+const optionName =
+select.dataset.option;
+
+
+
+const selected =
+select.options[
+select.selectedIndex
+];
+
+
+
+
+
+selectedOptions[optionName]
+=
+selected.value;
+
+
+
+
+
+updatePrice();
+
+
+
+}
+/*=========================================================
+ PRICE CALCULATOR
+
+ Calculates:
+
+ Base Product Price
++
+Selected Options
++
+Quantity
+
+=========================================================*/
+
+
+function updatePrice(){
+
+
+
+if(!currentProduct) return;
+
+
+
+let total =
+currentProduct.price;
+
+
+
+
+
+
+document.querySelectorAll(
+".config-select"
+)
+.forEach(select=>{
+
+
+
+const selected =
+select.options[
+select.selectedIndex
+];
+
+
+
+const extra =
+Number(
+selected.dataset.price
+);
+
+
+
+total += extra;
+
+
+
+});
+
+
+
+
+
+total =
+total * currentQuantity;
+
+
+
+
+
+
+
+const priceBox =
+document.querySelector(
+".live-price"
+);
+
+
+
+if(priceBox){
+
+
+priceBox.innerHTML =
+
+"R" +
+total.toLocaleString(
+"en-ZA",
+{
+minimumFractionDigits:2
+}
+);
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/*=========================================================
+ QUANTITY CONTROLS
+
+ Plus / Minus Buttons
+
+=========================================================*/
+
+
+function changeQuantity(amount){
+
+
+
+currentQuantity += amount;
+
+
+
+
+
+if(currentQuantity < 1){
+
+currentQuantity = 1;
+
+}
+
+
+
+
+
+const input =
+document.getElementById(
+"productQuantity"
+);
+
+
+
+
+
+if(input){
+
+input.value =
+currentQuantity;
+
+}
+
+
+
+
+
+updatePrice();
+
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+ MANUAL QUANTITY INPUT
+
+=========================================================*/
+
+
+document.addEventListener(
+"input",
+function(e){
+
+
+
+if(
+e.target.id === "productQuantity"
+){
+
+
+
+currentQuantity =
+parseInt(
+e.target.value
+);
+
+
+
+if(
+isNaN(currentQuantity)
+||
+currentQuantity < 1
+){
+
+currentQuantity = 1;
+
+e.target.value = 1;
+
+}
+
+
+
+updatePrice();
+
+
+
+}
+
+
+});
+
+
+
+
+
+
+
+
+
+/*=========================================================
+ BUILD CART ITEM
+
+ Creates configured product
+
+=========================================================*/
+
+
+function buildConfiguredItem(){
+
+
+
+let finalPrice =
+currentProduct.price;
+
+
+
+
+
+let options = {};
+
+
+
+
+
+
+document.querySelectorAll(
+".config-select"
+)
+
+.forEach(select=>{
+
+
+
+const selected =
+select.options[
+select.selectedIndex
+];
+
+
+
+const optionPrice =
+Number(
+selected.dataset.price
+);
+
+
+
+
+finalPrice += optionPrice;
+
+
+
+
+
+options[
+select.dataset.option
+]
+=
+selected.value;
+
+
+
+});
+
+
+
+
+
+
+
+
+return {
+
+
+
+id:
+currentProduct.id,
+
+
+
+name:
+currentProduct.name,
+
+
+
+image:
+currentProduct.image,
+
+
+
+price:
+finalPrice,
+
+
+
+quantity:
+currentQuantity,
+
+
+
+options:
+options
+
 
 
 };
 
 
 
+}
+ /*=========================================================
+ ADD CONFIGURED PRODUCT TO CART
+
+ Sends finished configuration
+ to cart.js
+
+=========================================================*/
+
+
+function addConfiguredProduct(){
 
 
 
+if(!currentProduct){
 
-//=========================================================
-// ROBOGUARD DATABASE
-//=========================================================
+alert(
+"Please select a product"
+);
 
+return;
 
-const roboGuardOptions = {
-
-
-    "4 Beam Kit":{
-
-        beams:4
-
-    },
-
-
-    "6 Beam Kit":{
-
-        beams:6
-
-    },
-
-
-    "8 Beam Kit":{
-
-        beams:8
-
-    }
-
-
-};
+}
 
 
 
 
 
 
-
-//=========================================================
-// INITIALIZE ROBOGUARD
-//=========================================================
-
-
-function initializeRoboGuard(){
+const item =
+buildConfiguredItem();
 
 
 
-    const products =
-
-    document.querySelectorAll(
-    ".roboguard-config"
-    );
 
 
 
-    products.forEach(product=>{
+if(typeof addToCart === "function"){
 
 
-        const selects =
-
-        product.querySelectorAll(
-        "select"
-        );
+addToCart(item);
 
 
 
-        selects.forEach(select=>{
+alert(
+
+currentProduct.name +
+
+" added to cart"
+
+);
 
 
-            select.addEventListener(
-            "change",
-            ()=>{
+
+}else{
 
 
-                updateRoboGuardInfo(
-                product
-                );
+console.log(
+"cart.js not loaded"
+);
 
 
-            });
-
-
-        });
-
-
-    });
+}
 
 
 
@@ -912,75 +891,122 @@ function initializeRoboGuard(){
 
 
 
-//=========================================================
-// ROBOGUARD SUMMARY
-//=========================================================
 
 
-function updateRoboGuardInfo(product){
+/*=========================================================
+ LOAD RELATED PRODUCTS
+
+ Shows products in same category
+
+=========================================================*/
 
 
-    const beam =
-
-    product.querySelector(
-    "[data-option='Beam Kit']"
-    );
-
-
-
-    const colour =
-
-    product.querySelector(
-    "[data-option='Colour']"
-    );
+function loadRelatedProducts(){
 
 
 
-    const display =
-
-    product.querySelector(
-    ".roboguard-info"
-    );
-
-
-
-    if(!beam || !colour || !display)
-    return;
+const container =
+document.getElementById(
+"related-products"
+);
 
 
 
 
-    const beamData =
 
-    roboGuardOptions[
-    beam.value
-    ];
+if(!container ||
+!currentProduct){
 
+return;
 
-
-
-    display.innerHTML = `
+}
 
 
-    <p>
-
-    <strong>Beam Count:</strong>
-
-    ${beamData.beams}
-
-    </p>
 
 
-    <p>
 
-    <strong>Colour:</strong>
-
-    ${colour.value}
-
-    </p>
+container.innerHTML="";
 
 
-    `;
+
+
+
+products
+
+.filter(product=>
+
+product.category === currentProduct.category
+
+&&
+
+product.id !== currentProduct.id
+
+)
+
+.slice(0,4)
+
+.forEach(product=>{
+
+
+
+
+
+container.innerHTML += `
+
+
+<div class="service-card fade">
+
+
+
+<img src="${product.image}"
+
+alt="${product.name}">
+
+
+
+
+
+<h3>
+
+${product.name}
+
+</h3>
+
+
+
+
+
+<p>
+
+${product.description.substring(0,100)}
+...
+
+</p>
+
+
+
+
+
+<a href="product.html?id=${product.id}">
+
+Configure
+
+<i class="fas fa-arrow-right"></i>
+
+</a>
+
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
 
 
 
@@ -992,9 +1018,126 @@ function updateRoboGuardInfo(product){
 
 
 
-//=========================================================
-// START MODULES
-//=========================================================
+
+/*=========================================================
+ WHATSAPP QUOTE BUILDER
+
+ Creates customer enquiry
+
+=========================================================*/
+
+
+function createWhatsAppQuote(){
+
+
+
+if(!currentProduct)
+return;
+
+
+
+
+
+
+let message =
+
+"Hi Nexpak Security Solutions,%0A%0A"
+
++
+
+"I would like a quote for:%0A"
+
++
+
+currentProduct.name
+
++
+
+"%0A%0A";
+
+
+
+
+
+
+document.querySelectorAll(
+".config-select"
+)
+
+.forEach(select=>{
+
+
+const selected =
+select.options[
+select.selectedIndex
+];
+
+
+
+message +=
+
+select.dataset.option
+
++
+": "
+
++
+selected.value
+
++
+
+"%0A";
+
+
+
+});
+
+
+
+
+
+message +=
+
+"%0AQuantity: "
+
++
+
+currentQuantity;
+
+
+
+
+
+
+
+window.open(
+
+"https://wa.me/27836308249?text="
+
++
+
+message,
+
+"_blank"
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/*=========================================================
+ START RELATED PRODUCTS
+
+=========================================================*/
 
 
 document.addEventListener(
@@ -1002,69 +1145,242 @@ document.addEventListener(
 ()=>{
 
 
-    initializeGateConfigurator();
+setTimeout(()=>{
 
 
-    initializeRoboGuard();
+loadRelatedProducts();
+
+
+
+},300);
 
 
 
 });
 /*=========================================================
- ELECTRIC FENCE CONFIGURATOR
- PART 4/4
+ CONFIGURATION SUMMARY
+
+ Displays selected options
+ before adding to cart
+
 =========================================================*/
 
 
-
-//=========================================================
-// ELECTRIC FENCE DATABASE
-//=========================================================
+function showConfigurationSummary(){
 
 
-const electricFenceData = {
+const summary =
+document.querySelector(
+".configuration-summary"
+);
 
 
-    "Round Bar - 6 Line":{
 
-        lines:6
-
-    },
+if(!summary) return;
 
 
-    "Flat Bar - 6 Line":{
-
-        lines:6
-
-    },
 
 
-    "Square Tube - 6 Line":{
-
-        lines:6
-
-    },
+summary.innerHTML="";
 
 
-    "Square Tube - 8 Line":{
 
-        lines:8
+Object.keys(selectedOptions)
 
-    },
-
-
-    "Square Tube - 10 Line":{
-
-        lines:10
-
-    },
+.forEach(option=>{
 
 
-    "Square Tube - 12 Line":{
 
-        lines:12
+summary.innerHTML += `
 
-    }
+<p>
+
+<strong>
+
+${formatOptionName(option)}
+
+:
+
+</strong>
+
+${selectedOptions[option]}
+
+</p>
+
+`;
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+ VALIDATE CONFIGURATION
+
+ Prevents incomplete orders
+
+=========================================================*/
+
+
+function validateConfiguration(){
+
+
+
+if(!currentProduct){
+
+return false;
+
+}
+
+
+
+
+
+const selectors =
+document.querySelectorAll(
+".config-select"
+);
+
+
+
+
+
+if(
+selectors.length === 0
+){
+
+return true;
+
+}
+
+
+
+
+
+let valid = true;
+
+
+
+
+
+selectors.forEach(select=>{
+
+
+if(!select.value){
+
+
+valid=false;
+
+
+}
+
+
+
+});
+
+
+
+
+
+
+if(!valid){
+
+
+alert(
+"Please select all product options before adding to cart."
+);
+
+
+}
+
+
+
+return valid;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/*=========================================================
+ OVERRIDE ADD CART VALIDATION
+
+=========================================================*/
+
+
+const originalAddConfiguredProduct =
+window.addConfiguredProduct;
+
+
+
+
+
+
+window.addConfiguredProduct =
+function(){
+
+
+
+if(
+!validateConfiguration()
+){
+
+return;
+
+}
+
+
+
+
+
+showConfigurationSummary();
+
+
+
+
+const item =
+buildConfiguredItem();
+
+
+
+
+
+if(typeof addToCart === "function"){
+
+
+
+addToCart(item);
+
+
+
+
+alert(
+
+"Product configuration added to cart"
+
+);
+
+
+
+}
+
 
 
 };
@@ -1074,188 +1390,49 @@ const electricFenceData = {
 
 
 
-//=========================================================
-// INITIALIZE ELECTRIC FENCE BUILDER
-//=========================================================
 
 
-function initializeElectricFence(){
 
+/*=========================================================
+ SAVE CONFIGURATION
 
+ Saves customer selections
 
-    const systems =
+=========================================================*/
 
-    document.querySelectorAll(
-    ".electric-fence-config"
-    );
 
+function saveConfiguration(){
 
 
-    systems.forEach(system=>{
 
+const saved = {
 
-        const inputs =
 
-        system.querySelectorAll(
-        "select,input"
-        );
+product:
+currentProduct.id,
 
 
+options:
+selectedOptions,
 
-        inputs.forEach(input=>{
 
+quantity:
+currentQuantity
 
-            input.addEventListener(
-            "change",
-            ()=>{
 
 
-                calculateFenceSystem(
-                system
-                );
+};
 
 
-            });
 
 
+localStorage.setItem(
 
-        });
+"nexpak_configuration",
 
+JSON.stringify(saved)
 
-
-    });
-
-
-}
-
-
-
-
-
-
-
-//=========================================================
-// FENCE CALCULATOR
-//=========================================================
-
-
-function calculateFenceSystem(system){
-
-
-
-    const fenceType =
-
-    system.querySelector(
-    "[data-option='Fence Type']"
-    );
-
-
-
-    const metres =
-
-    system.querySelector(
-    "[data-option='Property Metres']"
-    );
-
-
-
-    const summary =
-
-    system.querySelector(
-    ".fence-summary"
-    );
-
-
-
-    if(
-    !fenceType ||
-    !metres ||
-    !summary
-    )
-    return;
-
-
-
-
-
-    const fence =
-
-    electricFenceData[
-    fenceType.value
-    ];
-
-
-
-    const distance =
-
-    Number(
-    metres.value
-    );
-
-
-
-    if(!fence)
-    return;
-
-
-
-
-    const wireRequired =
-
-    distance *
-    fence.lines;
-
-
-
-    const rolls =
-
-    Math.ceil(
-    wireRequired / 700
-    );
-
-
-
-
-
-    summary.innerHTML = `
-
-
-    <h3>
-    System Calculation
-    </h3>
-
-
-    <p>
-    Fence Type:
-    ${fenceType.value}
-    </p>
-
-
-    <p>
-    Fence Lines:
-    ${fence.lines}
-    </p>
-
-
-    <p>
-    Property Size:
-    ${distance} metres
-    </p>
-
-
-    <p>
-    Estimated Wire:
-    ${wireRequired} metres
-    </p>
-
-
-    <p>
-    Recommended Wire Rolls:
-    ${rolls}
-    </p>
-
-
-    `;
+);
 
 
 
@@ -1267,110 +1444,40 @@ function calculateFenceSystem(system){
 
 
 
-//=========================================================
-// ACCESSORY SUMMARY
-//=========================================================
+
+/*=========================================================
+ LOAD SAVED CONFIGURATION
+
+=========================================================*/
 
 
-function getFenceAccessories(system){
-
-
-    let accessories = {};
-
-
-
-    const options =
-
-    system.querySelectorAll(
-    "select"
-    );
+function loadSavedConfiguration(){
 
 
 
-    options.forEach(option=>{
-
-
-        accessories[
-        option.dataset.option
-        ] =
-        option.value;
-
-
-
-    });
-
-
-
-    return accessories;
-
-
-}
+const saved =
+localStorage.getItem(
+"nexpak_configuration"
+);
 
 
 
 
 
-
-
-//=========================================================
-// ADD FENCE CONFIGURATION TO CART
-//=========================================================
-
-
-function addFenceToCart(button){
+if(!saved)
+return;
 
 
 
-    const product =
-
-    button.closest(
-    ".electric-fence-config"
-    );
 
 
+console.log(
 
-    const summary =
+"Saved configuration loaded",
 
-    getFenceAccessories(
-    product
-    );
+JSON.parse(saved)
 
-
-
-    const item = {
-
-
-        id:
-        "electric-fence-system",
-
-
-        name:
-        "Electric Fence System",
-
-
-        image:
-        "../images/electric-fence.jpg",
-
-
-        price:
-        Number(
-        product.dataset.price
-        ),
-
-
-        quantity:1,
-
-
-        options:
-        summary
-
-
-
-    };
-
-
-
-    addToCart(item);
+);
 
 
 
@@ -1381,42 +1488,13 @@ function addFenceToCart(button){
 
 
 
-//=========================================================
-// FENCE CART BUTTON
-//=========================================================
-
-
-document.addEventListener(
-"click",
-(e)=>{
-
-
-    if(
-    e.target.classList.contains(
-    "add-fence-cart"
-    )
-    ){
-
-
-        addFenceToCart(
-        e.target
-        );
-
-
-    }
-
-
-});
 
 
 
+/*=========================================================
+ FINAL INITIALIZATION
 
-
-
-
-//=========================================================
-// START ELECTRIC FENCE MODULE
-//=========================================================
+=========================================================*/
 
 
 document.addEventListener(
@@ -1424,7 +1502,48 @@ document.addEventListener(
 ()=>{
 
 
-    initializeElectricFence();
+setTimeout(()=>{
+
+
+loadSavedConfiguration();
+
+
+updatePrice();
+
+
+},500);
+
 
 
 });
+
+
+
+
+
+
+
+
+/*=========================================================
+ NEXPAK SECURITY SOLUTIONS V8
+
+ CONFIGURATOR READY
+
+ CCTV
+ IP CCTV
+ ELECTRIC FENCE
+ GATE AUTOMATION
+ ROBOGUARD
+ ALARM
+ ACCESS CONTROL
+
+=========================================================*/
+
+
+console.log(
+
+"%cNEXPAK CONFIGURATOR V8 ACTIVE",
+
+"color:#00B4FF;font-size:18px;font-weight:bold;"
+
+);
