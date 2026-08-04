@@ -1,689 +1,1667 @@
-
-// ===== NEXPAK PRODUCT DATABASE =====
+// ======================================================
+// NEXPAK SECURITY SOLUTIONS
+// SHOP DATA V1
+// ======================================================
 
 const products = [
-// ===== BUBBLE WRAP =====
-{
-id: 'BW-312',
-name: 'Bubble Wrap 312mm',
-category: 'wrap',
-specs: '100m x 312mm',
-price: 140,
-minOrder: 10,
-unit: 'roll',
-icon: '🫧',
-images: ['p7.png']
-},
-{
-id: 'BW-416',
-name: 'Bubble Wrap 416mm',
-category: 'wrap',
-specs: '100m x 416mm',
-price: 189,
-minOrder: 10,
-unit: 'roll',
-icon: '🫧',
-images: ['p7.png']
-},
-{
-id: 'BW-625',
-name: 'Bubble Wrap 625mm',
-category: 'wrap',
-specs: '100m x 625mm',
-price: 290,
-minOrder: 10,
-unit: 'roll',
-icon: '🫧',
-images: ['p7.png']
-},
-{
-id: 'BW-1250',
-name: 'Bubble Wrap 1250mm',
-category: 'wrap',
-specs: '100m x 1250mm',
-price: 395,
-minOrder: 10,
-unit: 'roll',
-icon: '🫧',
-images: ['p7.png']
-},
-{   id: 'CB-20',
-    name: 'SFK/Corroboard',
-    category: 'wrap',
-    specs: '915 x 20kg',
-    price: 850.00,
-    minOrder: 1,
-    unit: 'rolls',
-    icon: '💈',
-    images: ['images/cor1.jpeg']
-},
-{
-    id: 'CB-35',
-    name: 'SFK/Corroboard',
-    category: 'wrap',
-    specs: '1525 x 35kg',
-    price: 1050.00,
-    minOrder: 1,
-    unit: 'rolls',
-    icon: '💈',
-    images: ['images/cor2.jpeg']
-},
-{
-    id: 'CB-45',
-    name: 'SFK/Corroboard',
-    category: 'wrap',
-    specs: '1830 x 40kg',
-    price: 1100.00,
-    minOrder: 1,
-    unit: 'rolls',
-    icon: '💈',
-    images: ['images/cor3.jpeg']
-},
-// ===== PALLET WRAP =====  
-{  
-    id: 'PW-10',  
-    name: 'Pallet Wrap 10mic',  
-    category: 'wrap',  
-    specs: '450mm x 400m x 10mic',  
-    price: 199.00,  
-    minOrder: 10,  
-    unit: 'rolls',  
-    icon: '🧵',
-    images: ['p4.png']
-},  
-{  
-    id: 'PW-15',  
-    name: 'Pallet Wrap 15mic',  
-    category: 'wrap',  
-    specs: '450mm x 400m x 15mic',  
-    price: 290.00,  
-    minOrder: 10,  
-    unit: 'rolls',  
-    icon: '🧵',
-    images: ['p4.png']
-},  
-{  
-    id: 'PW-20',  
-    name: 'Pallet Wrap 20mic',  
-    category: 'wrap',  
-    specs: '450mm x 400m x 20mic',  
-    price: 330.00,  
-    minOrder: 10,  
-    unit: 'rolls',  
-    icon: '🧵',
-    images: ['p4.png']
-},  
-{  
-    id: 'PW-25',  
-    name: 'Pallet Wrap 25mic',  
-    category: 'wrap',  
-    specs: '450mm x 400m x 25mic',  
-    price: 440.00,  
-    minOrder: 10,  
-    unit: 'rolls',  
-    icon: '🧵',
-    images: ['p4.png']
-},  
 
-// ===== TAPES =====  
-{  
-    id: 'T-CLR-50',  
-    name: 'Clear Tape 50m',  
-    category: 'tape',  
-    specs: '48mm x 50m',  
-    price: 19.00,  
-    minOrder: 36,  
-    unit: 'rolls',  
-    icon: '📼',
-    images: ['cleartp1.jpeg']
-},  
-{  
-    id: 'T-CLR-100',  
-    name: 'Clear Tape 100m',  
-    category: 'tape',  
-    specs: '48mm x 100m',  
-    price: 38.00,  
-    minOrder: 36,  
-    unit: 'rolls',  
-    icon: '📼',
-    images: ['cleartp1.jpeg']
-},  
-{  
-    id: 'T-BUF-50',  
-    name: 'Buff Tape 50m',  
-    category: 'tape',  
-    specs: '48mm x 50m',  
-    price: 19.00,  
-    minOrder: 36,  
-    unit: 'rolls',  
-    icon: '📼',
-    images: ['bufftp1.jpeg']
-},  
-{  
-    id: 'T-BUF-100',  
-    name: 'Buff Tape 100m',  
-    category: 'tape',  
-    specs: '48mm x 100m',  
-    price: 38.00,  
-    minOrder: 36,  
-    unit: 'rolls',  
-    icon: '📼',
-    images: ['bufftp1.jpeg']
-},  
-{  
-    id: 'T-FIL',  
-    name: 'Filament Tape',  
-    category: 'tape',  
-    specs: '48mm x 40m',  
-    price: 79.00,  
-    minOrder: 40,  
-    unit: 'rolls',  
-    icon: '📼',
-    images: ['filatape.jpeg']
-},  
-{  
-    id: 'T-MSK',  
-    name: 'Masking Tape',  
-    category: 'tape',  
-    specs: '48mm x 40m',  
-    price: 35.00,  
-    minOrder: 40,  
-    unit: 'rolls',  
-    icon: '📼',
-    images: ['maskingtape.jpeg']
-},  
+/* =====================================================
+   CCTV SOLUTION KIT
+===================================================== */
 
-// ===== BOXES =====  
-{  
-    id: 'TVL-147',  
-    name: 'TVL Box 147mm',  
-    category: 'boxes',  
-    specs: '500x400x147',  
-    price: 25.00,  
-    minOrder: 500,  
-    unit: 'units',  
-    icon: '📦',
-    images: ['p5.png']
-},  
-{  
-    id: 'TVL-286',  
-    name: 'TVL Box 286mm',  
-    category: 'boxes',  
-    specs: '500x400x286',  
-    price: 23.5,  
-    minOrder: 500,  
-    unit: 'units',  
-    icon: '📦',
-    images: ['p5.png']
-},  
-{  
-    id: 'TVL-450',  
-    name: 'TVL Box 450mm',  
-    category: 'boxes',  
-    specs: '500x400x450',  
-    price: 34.00,  
-    minOrder: 500,  
-    unit: 'units',  
-    icon: '📦',
-    images: ['p5.png']
-},  
-{  
-    id: 'SWB-230',  
-    name: 'SWB Box 230mm',  
-    category: 'boxes',  
-    specs: '230x150x150',  
-    price: 7.00,  
-    minOrder: 500,  
-    unit: 'units',  
-    icon: '📦',
-    images: ['p5.png']
-},  
-{  
-    id: 'SWB-250',  
-    name: 'SWB Box 250mm',  
-    category: 'boxes',  
-    specs: '250x150x250',  
-    price: 5.00,  
-    minOrder: 500,  
-    unit: 'units',  
-    icon: '📦',
-    images: ['p5.png']
-},  
+{
+id: "CCTV-KIT",
 
-// ===== PPE PRODUCTS =====  
-{  
-    id: 'PPE-HH',  
-    name: 'Hard Hat',  
-    category: 'ppe',  
-    specs: 'Safety Certified',  
-    price: 47.00,  
-    minOrder: 25,  
-    unit: 'MOQ',  
-    icon: '🪖',
-    images: ['hat1.jpeg']
-},  
-{  
-    id: 'PPE-EAR',  
-    name: 'Universal Ear Muffs Red ',  
-    category: 'ppe',  
-    specs: 'Safety Certified',  
-    price: 62.00,  
-    minOrder: 25,  
-    unit: 'MOQ',  
-    icon: '🦻🏼',
-    images: ['images/ear.jpeg']
-},  
-{  
-    id: 'PPE-HH-EPG',  
-    name: 'Ear plug foam corded 100s',  
-    category: 'ppe',  
-    specs: 'Safety Certified',  
-    price: 399.00,  
-    minOrder: 1,  
-    unit: '1 box',  
-    icon: '🦻🏼',
-    images: ['images/earplug.jpeg']
-},  
-{  
-    id: 'PPE-GLOVES-L',  
-    name: 'Chrome Leather DBL palm wrist 2.5',  
-    category: 'ppe',  
-    specs: 'Pack of 120 pairs',  
-    price: 49.00,  
-    minOrder: 120,  
-    unit: 'packs',  
-    icon: '🧤',
-    images: ['chrome.jpeg']
-},  
-{  
-    id: 'PPE-GLOVES-N',  
-    name: 'Chrome Leather DBL Palm Elbow 8',  
-    category: 'ppe',  
-    specs: 'Pack of 120 pairs',  
-    price: 59.00,  
-    minOrder: 120,  
-    unit: 'packs',  
-    icon: '🧤',
-    images: ['chrome.jpeg']
-},  
-{  
-    id: 'PPE-GLOVES-L-XL',  
-    name: 'Chrome Leather DBL Palm 16',  
-    category: 'ppe',  
-    specs: 'MOQ',  
-    price: 89.00,  
-    minOrder: 120,  
-    unit: 'pairs',  
-    icon: '🧤',
-    images: ['chrome.jpeg']
-},  
-{  
-    id: 'PPE-OVERALL-S',  
-    name: '2PC Polycotton Conti Suit',  
-    category: 'ppe',  
-    specs: 'Reflective strips',  
-    price: 229.00,  
-    minOrder: 20,  
-    sizes:["S","M","L","XL","2XL","3XL"],
-    color: ["blue","black","navy","green","yellow","red","orange","brown","white"],
-    unit: 'MOQ',  
-    icon: '🥼',
-    images: ['images/2.jpeg']
-},  
-{  
-    id: 'PPE-OVERALL-M',  
-    name: '2PC Polycotton Conti Suit Econo',  
-    category: 'ppe',  
-    specs: 'STD',  
-    price: 229.00,  
-    minOrder: 20,  
-    sizes:["S","M","L","XL","2XL","3XL"],
-    color: ["blue","black","navy","green","yellow","red","orange","brown","white"],
-    unit: 'MOQ',  
-    icon: '🥼',
-    images: ['images/1.jpeg']
-},  
-{  
-    id: 'PPE-OVERALL-8020',  
-    name: 'Poly Cotton Conti Suit 8020',  
-    category: 'ppe',  
-    specs: 'STD',  
-    price: 249.00,  
-    minOrder: 20,  
-    sizes:["S","M","L","XL","2XL","3XL"],
-    color: ["blue","black","navy","green","yellow","red","orange","brown","white"],
-    unit: 'MOQ',  
-    icon: '🥼',
-    images: ['images/1.jpeg']
-},  
-{  
-    id: 'PPE-OVERALL-8020R',  
-    name: 'Reflective Poly Cotton 8020',  
-    category: 'ppe',  
-    specs: 'Reflective',  
-    price: 279.00,  
-    minOrder: 20,  
-    sizes:["S","M","L","XL","2XL","3XL"],
-    color: ["blue","black","navy","green","yellow","red","orange","brown","white"],
-    unit: 'MOQ',  
-    icon: '🥼',
-    images: ['images/2.jpeg']
-},  
-{  
-    id: 'J54-CCS',
-    name: 'J54 100% Cotton Conti Suit',
-    category: 'ppe',
-    specs: 'STD',
-    price: 359.00,
-    minOrder: 20,
-    sizes: ["S","M","L","XL","2XL","3XL"],
-    color: ["blue","black","navy","green","yellow","red","orange","brown","white"],
-    unit: 'MOQ',
-    icon: '🥼',
-    images: ['images/3.jpeg']
-},
-{
-    id: 'J54-CCSR',
-    name: 'J54 Conti suit reflective',
-    category: 'ppe',
-    specs: 'reflective',
-    price: 379.00,
-    minOrder: 20,
-    sizes: ["S","M","L","XL","2XL","3XL"],
-    color: ["blue","black","navy","green","yellow","red","orange","brown","white"],
-    unit: 'MOQ',
-    icon: '🥼',
-    images: ['images/4.jpeg']
-},
-{
-    id: 'D59-F&A',
-    name: 'D59 Flame and acid resistant ',
-    category: 'ppe',
-    specs: 'STD',
-    price: 499.00,
-    minOrder: 20,
-    sizes: ["S","M","L","XL","2XL","3XL"],
-    color: 'blue',
-    unit: 'MOQ',
-    icon: '🥼',
-    images: ['images/5.jpeg']
-},
-{
-    id: 'D59-F&ASABS',
-    name: 'D59 Flame and Acid resistant SABS',
-    category: 'ppe',
-    specs: 'SABS',
-    price: 599,
-    minOrder: 15,
-    sizes: ["S","M","L","XL","2XL","3XL"],
-    color: 'blue',
-    unit: 'MOQ',
-    icon: '🥼',
-    images: ['images/6.jpeg']
-},
-{
-    id: 'PPE-6535',
-    name: '6535 Poly cotton conti suit',
-    category: 'ppe',
-    specs: 'STD',
-    price: 369.00,
-    minOrder: 20.00,
-    sizes: ["S","M","L","XL","2XL","3XL"],
-    color: ["blue","black","navy","green","yellow","red","orange","brown","white"],
-    unit: 'MOQ',
-    icon: '🥼',
-    images: ['images/7.jpeg']
-},
-{
-    id: 'PPE-6535R',
-    name: '6535 Poly Cotton Conti suit reflective',
-    category: 'ppe',
-    specs: 'reflective',
-    price: 389.00,
-    minOrder: 20,
-    sizes: ["S","M","L","XL","2XL","3XL"],
-    color: ["blue","black","navy","green","yellow","red","orange","brown","white"],
-    unit: 'MOQ',
-    icon: '🥼',
-    images: ['images/8.jpeg']
-},
-{
-    id: 'PPE-Denim',
-    name: 'Denim Conti Suit',
-    category: 'ppe',
-    specs: 'denim',
-    price: 279.00,
-    minOrder: 25,
-    sizes: ["S","M","L","XL","2XL","3XL"],
-    unit: 'MOQ',
-    icon: '🥼',
-    images: ['images/9.jpeg']
-},
-{
-    id: 'PPE-DenimR',
-    name: 'Reflective Denim Conti Suit',
-    category: 'ppe',
-    specs: 'reflective',
-    price: 289.00,
-    minOrder: 25,
-    sizes: ["S","M","L","XL","2XL","3XL"],
-    unit: 'MOQ',
-    icon: '🥼',
-    images: ['images/10.jpeg']
-},
-{
-    id: 'PPE-Boiler',
-    name: 'Boiler suit econo',
-    category: 'ppe',
-    specs: 'STD',
-    price: 289.00,
-    minOrder: 25,
-    sizes: ["S","M","L","XL","2XL","3XL"],
-    unit: 'MOQ',
-    icon: '🥼',
-    images: ['images/11.jpeg']
-},
-{
-    id: 'PPE-BREF',
-    name: 'Boiler suit reflective',
-    category: 'ppe',
-    specs: 'reflective',
-    price: 369.00,
-    minOrder: 20,
-    sizes: [ "S","M","L","XL","2XL","3XL"],
-    unit: 'MOQ',
-    icon: '🥼',
-    images: ['images/12.jpeg']
-},
-{  
-    id: 'PPE-BOOTS-safety shoe',  
-    name: 'Dot Contractor Safety Boots Size various',  
-    category: 'ppe',  
-    specs: 'Steel toe',  
-    price: 389.00,  
-    minOrder: 10,  
-    sizes:["8","9","10","11","12","13"],
-    unit: 'MOQ',  
-    icon: '👢',
-    images: ['dot.jpeg']
-},  
-{  
-    id: 'PPE-BOOTS-Radon',  
-    name: 'Steel-Toe Boots Size various',  
-    category: 'ppe',  
-    specs: 'Steel toe',  
-    price: 399.00,  
-    minOrder: 10, 
-    sizes:["8","9","10","11","12","13"],
-    unit: 'MOQ',  
-    icon: '👢',
-    images: ['radon.jpeg']
-},  
-{  
-    id: 'PPE-BOOTS-Argon',  
-    name: 'Steel-Toe Boots Size various',  
-    category: 'ppe',  
-    specs: 'Slip resistant sole',  
-    price: 399.00,  
-    minOrder: 10,
-    sizes:["8","9","10","11","12","13"],
-    unit: 'MOQ',  
-    icon: '👢',
-    images: ['argon.jpeg']
-},  
-{
-    id : 'PPE-BOOTS-Canvas',
-    name: 'Security Boots',
-    category: 'ppe',
-    specs: 'security',
-    price: 399.00,
-    minOrder: 10,
-    sizes: ["8","9","10","11","12","13"],
-    unit: 'MOQ',
-    icon: '🥾',
-    images: ['images/canvas.jpeg']
-},
-{
-    id: 'PPE-BOOTS-CHELSEA',
-    name: 'Steel-Toe Chelsea boots',
-    category: 'ppe',
-    specs: 'steel-toe',
-    price: 599.00,
-    minOrder: 10,
-    sizes: ["8","9","10","11","12","13"],
-    unit: 'MOQ',
-    icon: '🥾',
-    images: ['images/chelsea.jpeg']
-},
-{  
-    id: 'PPE-BOOTS-Mercury',  
-    name: 'Steel-Toe Boots Size various',  
-    category: 'ppe',  
-    specs: 'Slip resistant sole',  
-    price: 399.00,  
-    minOrder: 10,  
-    sizes:["8","9","10","11","12","13"],
-    unit: 'MOQ',  
-    icon: '👢',
-    images: ['mercury.jpeg']
-},  
-{  
-    id: 'PPE-GOGGLES-CLR',  
-    name: 'Safety Spectacles - Clear,grey,green',  
-    category: 'ppe',  
-    specs: 'UV Protection',  
-    price: 29.00,  
-    minOrder: 240,  
-    unit: 'MOQ',  
-    icon: '🥽',
-    images: ['eye.jpeg']
-},  
-{  
-    id: 'PPE-GOGGLES-Clear',  
-    name: 'Safety Goggles - Clear',  
-    category: 'ppe',  
-    specs: 'MONO',  
-    price: 38.00,  
-    minOrder: 240,  
-    unit: 'MOQ',  
-    icon: '🥽',
-    images: ['goggle.jpeg']
-},  
-{  
-    id: 'PPE-VEST-ORG',  
-    name: 'Safety Vest Orange',  
-    category: 'ppe',  
-    specs: 'Reflective strips',  
-    price: 65.00,  
-    minOrder: 20,  
-    unit: 'MOQ',  
-    icon: '🦺',
-    images: ['vest1.jpeg']
-},  
-{  
-    id: 'PPE-VEST-YEL',  
-    name: 'Safety Vest Yellow',  
-    category: 'ppe',  
-    specs: 'Reflective strips',  
-    price: 65.00,  
-    minOrder: 20,  
-    unit: 'MOQ',  
-    icon: '🦺',
-    images: ['vest1.jpeg']
-},  
-{  
-    id: 'PPE-MASK-KN95',  
-    name: 'KN95 Face Mask',  
-    category: 'ppe',  
-    specs: 'Box of 50',  
-    price: 299.99,  
-    minOrder: 5,  
-    unit: 'boxes',  
-    icon: '😷',
-    images: ['mask.jpeg']
-},  
-{  
-    id: 'PPE-WELD-GOGGLE',  
-    name: 'Flip Front Welding Goggles',  
-    category: 'ppe',  
-    specs: 'Flipfront',  
-    price: 60.00,  
-    minOrder: 15,  
-    unit: 'MOQ',  
-    icon: '😷',
-    images: ['weldgog.jpeg']
-},  
+name: "Professional CCTV Surveillance Kit",
 
-// ===== VOID FILL =====  
-{  
-    id: 'VOID-SMALL',  
-    name: 'Polyworms Small',  
-    category: 'void',  
-    specs: '1kg bag',  
-    price: 121.66,  
-    minOrder: 10,  
-    unit: 'bags',  
-    icon: '💨',
-    images: ['worm.jpeg']
-},  
-{  
-    id: 'VOID-LARGE',  
-    name: 'Polyworms Large',  
-    category: 'void',  
-    specs: '3kg bag',  
-    price: 376.04,  
-    minOrder: 10,  
-    unit: 'bags',  
-    icon: '💨',
-    images: ['worm.jpeg']
-},  
+category: "CCTV",
 
-// ===== PALLETS =====  
-{  
-    id: 'PALLET-WOOD',  
-    name: 'Wooden Pallet',  
-    category: 'wrap',  
-    specs: '1200x1000mm',  
-    price: 450.00,  
-    minOrder: 10,  
-    unit: 'MOQ',  
-    icon: '🪵',
-    images: ['woodenpallet2.jpeg']
-},  
-{  
-    id: 'PALLET-PLASTIC',  
-    name: 'Plastic Pallet',  
-    category: 'wrap',  
-    specs: '1200x1000mm',  
-    price: 650.00,  
-    minOrder: 10,  
-    unit: 'MOQ',  
-    icon: '🔷',
-    images: ['palletplastic.jpeg']
+type: "configurable",
+
+basePrice: 4999.00,
+
+description: "Build your own professional CCTV surveillance system using Hikvision or Dahua equipment.",
+
+image: "images/products/cctv-kit.jpg",
+
+icon: "📹",
+
+options: {
+
+brand: [
+"Hikvision",
+"Dahua"
+],
+
+channels: [
+4,
+8,
+16,
+32
+],
+
+cameraType: [
+"Dome",
+"Bullet",
+"Turret"
+],
+
+resolution: [
+"2MP",
+"5MP",
+"8MP"
+],
+
+cameraQuantity: [
+2,
+4,
+6,
+8,
+12,
+16,
+24,
+32
+],
+
+hardDrive: [
+"None",
+"1TB",
+"2TB",
+"4TB",
+"6TB",
+"8TB",
+"10TB"
+],
+
+colour: [
+"White",
+"Black"
+],
+
+installation: [
+"Supply Only",
+"Supply & Installation"
+],
+
+warranty: [
+"1 Year",
+"2 Years",
+"3 Years"
+]
+
+},
+
+extras: [
+
+{
+name: "Additional Camera",
+price: 699
+},
+
+{
+name: "27\" LED Monitor",
+price: 2999
+},
+
+{
+name: "Mouse & Keyboard",
+price: 399
+},
+
+{
+name: "UPS Backup Power",
+price: 1899
+},
+
+{
+name: "Cat5e Cable (per metre)",
+price: 8
+},
+
+{
+name: "Cat6 Cable (per metre)",
+price: 12
+},
+
+{
+name: "PVC Conduit (per metre)",
+price: 18
+},
+
+{
+name: "Junction Box",
+price: 89
 }
-];
 
-// Export for use in other files
-if (typeof module !== 'undefined' && module.exports) {
-module.exports = { products };
-    }
+]
+
+},
+
+/* =====================================================
+   WALL TOP ELECTRIC FENCE KIT
+===================================================== */
+
+{
+id: "WALLTOP-KIT",
+
+name: "Wall Top Electric Fence System",
+
+category: "Electric Fencing",
+
+type: "configurable",
+
+basePrice: 0,
+
+description: "Configure a complete wall top electric fence solution.",
+
+image: "images/products/wall-top-kit.jpg",
+
+icon: "⚡",
+
+options: {
+
+brackets: [
+"6 Line Flat Bar",
+"8 Line Flat Bar",
+"10 Line Flat Bar",
+"12 Line Flat Bar",
+"6 Line Round Bar",
+"8 Line Round Bar",
+"10 Line Round Bar",
+"12 Line Round Bar"
+],
+
+bracketStyle: [
+"Straight",
+"Angle"
+],
+
+bracketColour: [
+"Black",
+"White"
+],
+
+wallTopStays: [
+"600mm Stay",
+"750mm Stay"
+],
+
+staySleeves: [
+"Standard Stay Sleeve"
+],
+
+lugs: [
+"Compression Lug"
+],
+
+tensioners: [
+"Tweaker",
+"Compression Spring"
+],
+
+wire: [
+"1.2mm Stainless Steel Solid",
+"1.2mm Stainless Steel Braided 1000m",
+"1.2mm Galvanised Braided 680m",
+"1.6mm Braided Aluminium 1000m",
+"1.6mm Solid Aluminium 1000m"
+],
+
+nailAnchors: [
+"6x60 Nail Anchors (100s)",
+"8x80 Nail Anchors (100s)"
+],
+
+ferrules: [
+"6mm Aluminium Ferrules (100s)",
+"6mm Solid Ferrules"
+],
+
+htCable: [
+"50m Soft HT Cable",
+"100m Soft HT Cable",
+"200m Soft HT Cable",
+"50m Hard HT Cable",
+"100m Hard HT Cable",
+"200m Hard HT Cable"
+],
+
+warningSigns: [
+"Medium Warning Sign",
+"Large Warning Sign"
+],
+
+earthSpikes: [
+"1.2m Galvanised Earth Spike",
+"1.2m Copper Plated Earth Spike"
+]
+
+id: "walltop-protection-v1"
+
+lightningProtection: [
+
+"Lightning Diverter"
+
+],
+
+enclosures: [
+
+"DMC Enclosure Box 430",
+
+"DMC Enclosure Box 530"
+
+],
+
+/* =====================================================
+   ELECTRIC FENCE ENERGIZER & CONTROL SYSTEM
+===================================================== */
+
+{
+id: "EF-CONTROL-KIT",
+
+name: "Electric Fence Energizer & Control System",
+
+category: "Electric Fencing",
+
+type: "configurable",
+
+basePrice: 0,
+
+description: "Select the correct energizer, backup power and control accessories for your electric fence system.",
+
+image: "images/products/electric-fence-control.jpg",
+
+icon: "⚡",
+
+options: {
+
+energizer: [
+
+"1 Joule Energizer",
+
+"3 Joule Energizer",
+
+"4 Joule Energizer",
+
+"8 Joule Energizer",
+
+"8 Joule 2 Zone Energizer",
+
+"14 Joule Energizer"
+
+],
+
+battery: [
+
+"7Ah Lead Acid Battery",
+
+"7Ah Gel Battery"
+
+],
+
+enclosure: [
+
+"DMC Enclosure Box 430",
+
+"DMC Enclosure Box 530"
+
+],
+
+powerSupply: [
+
+"12V PSU"
+
+],
+
+controlKeypad: [
+
+"LCD Keypad",
+
+"Touch Keypad"
+
+],
+
+communication: [
+
+"None",
+
+"GSM Module",
+
+"Wi-Fi Module"
+
+],
+
+securityAlert: [
+
+"Indoor Siren",
+
+"Outdoor Siren",
+
+"Strobe Light",
+
+"Siren & Strobe Combination"
+
+],
+
+lighting: [
+
+"Night Light"
+
+],
+
+lightningProtection: [
+
+"Lightning Diverter"
+
+],
+
+installation: [
+
+"Supply Only",
+
+"Supply & Installation"
+
+]
+
+},
+
+extras: [
+
+{
+name: "Remote Keypad",
+price: 0
+},
+
+{
+name: "Additional Battery",
+price: 0
+},
+
+{
+name: "Wireless Remote",
+price: 0
+},
+
+{
+name: "Gate Contact",
+price: 0
+},
+
+{
+name: "Fence Alarm Indicator",
+price: 0
+}
+
+]
+
+},
+
+  /* =====================================================
+   GATE AUTOMATION SOLUTION KIT
+===================================================== */
+
+{
+id: "GATE-AUTO-KIT",
+
+name: "Gate Automation System",
+
+category: "Gate Automation",
+
+type: "configurable",
+
+basePrice: 0,
+
+description: "Configure a complete automatic gate system for sliding and swing gates.",
+
+image: "images/products/gate-automation-kit.jpg",
+
+icon: "🚪",
+
+options: {
+
+brand: [
+
+"Centurion",
+
+"Hansa",
+
+"Gemini",
+
+"ET Nice"
+
+],
+
+gateType: [
+
+"Sliding Gate",
+
+"Swing Gate"
+
+],
+
+motorSelection: [
+
+"Centurion D5 Smart",
+
+"Centurion D10 Smart",
+
+"Centurion D10 Turbo",
+
+"Centurion A10",
+
+"Centurion D5 Evo"
+
+],
+
+gateWeight: [
+
+"Up to 500kg",
+
+"Up to 1000kg",
+
+"Up to 1500kg",
+
+"Up to 2000kg"
+
+],
+
+powerOptions: [
+
+"AC Powered",
+
+"Solar Powered"
+
+],
+
+battery: [
+
+"7Ah Battery",
+
+"12Ah Battery",
+
+"18Ah Battery"
+
+],
+
+rackLength: [
+
+"3m Rack",
+
+"4m Rack",
+
+"5m Rack",
+
+"6m Rack",
+
+"Custom Length"
+],
+
+remoteControls: [
+
+"1 Remote",
+
+"2 Remotes",
+
+"4 Remotes",
+
+"Additional Remotes"
+
+],
+
+accessControl: [
+
+"Remote Only",
+
+"Keypad",
+
+"GSM Access",
+
+"Wi-Fi Access"
+
+],
+
+safetyDevices: [
+
+"Safety Beams",
+
+"Loop Detector",
+
+"Safety Edge"
+
+],
+
+installation: [
+
+"Supply Only",
+
+"Supply & Installation"
+
+]
+
+},
+
+extras: [
+
+{
+name: "Centurion Nova Remote",
+price: 0
+},
+
+{
+name: "Centurion Battery Backup",
+price: 0
+},
+
+{
+name: "Solar Panel Kit",
+price: 0
+},
+
+{
+name: "Gate Rack Section",
+price: 0
+},
+
+{
+name: "Safety Infrared Beams",
+price: 0
+},
+
+{
+name: "GSM Module",
+price: 0
+},
+
+{
+name: "Wi-Fi Module",
+price: 0
+},
+
+{
+name: "Intercom System",
+price: 0
+},
+
+{
+name: "Exit Button",
+price: 0
+},
+
+{
+name: "Magnetic Lock",
+price: 0
+}
+
+]
+
+},  
+
+/* =====================================================
+   ALARM SYSTEM SOLUTION KIT
+===================================================== */
+
+{
+id: "ALARM-KIT",
+
+name: "Professional Alarm System Kit",
+
+category: "Alarm Systems",
+
+type: "configurable",
+
+basePrice: 0,
+
+description: "Configure a complete intrusion detection alarm system for residential, commercial and industrial properties.",
+
+image: "images/products/alarm-kit.jpg",
+
+icon: "🚨",
+
+options: {
+
+brand: [
+
+"Paradox",
+
+"IDS",
+
+"Ajax",
+
+"Texecom"
+
+],
+
+systemType: [
+
+"Wired Alarm System",
+
+"Wireless Alarm System",
+
+"Hybrid Alarm System"
+
+],
+
+alarmPanel: [
+
+"4 Zone Panel",
+
+"8 Zone Panel",
+
+"16 Zone Panel",
+
+"32 Zone Panel"
+
+],
+
+keypad: [
+
+"LED Keypad",
+
+"LCD Keypad",
+
+"Touch Keypad",
+
+"Wireless Keypad"
+
+],
+
+motionSensors: [
+
+"1 PIR Sensor",
+
+"2 PIR Sensors",
+
+"4 PIR Sensors",
+
+"8 PIR Sensors"
+
+],
+
+outdoorProtection: [
+
+"None",
+
+"Outdoor PIR",
+
+"Dual Beam Detector",
+
+"Outdoor Wireless Beam"
+
+],
+
+doorProtection: [
+
+"None",
+
+"Magnetic Door Contact",
+
+"Wireless Door Contact"
+
+],
+
+communication: [
+
+"None",
+
+"GSM Module",
+
+"Wi-Fi Module",
+
+"GSM + Wi-Fi Module"
+
+],
+
+battery: [
+
+"7Ah Lead Acid Battery",
+
+"7Ah Gel Battery",
+
+"12Ah Battery"
+
+],
+
+siren: [
+
+"Indoor Siren",
+
+"Outdoor Siren",
+
+"Outdoor Siren + Strobe"
+
+],
+
+panicButtons: [
+
+"None",
+
+"Wireless Panic Button",
+
+"Fixed Panic Button"
+
+],
+
+installation: [
+
+"Supply Only",
+
+"Supply & Installation"
+
+]
+
+},
+
+extras: [
+
+{
+name: "Additional PIR Sensor",
+price: 0
+},
+
+{
+name: "Additional Door Contact",
+price: 0
+},
+
+{
+name: "Remote Control",
+price: 0
+},
+
+{
+name: "Wireless Receiver",
+price: 0
+},
+
+{
+name: "Smoke Detector",
+price: 0
+},
+
+{
+name: "Heat Detector",
+price: 0
+},
+
+{
+name: "External Beam",
+price: 0
+},
+
+{
+name: "DMC Enclosure Box",
+price: 0
+}
+
+]
+
+},
+
+/* =====================================================
+   ROBOGUARD OUTDOOR BEAM SYSTEMS
+===================================================== */
+
+{
+id: "ROBOGUARD-KITS",
+
+name: "Roboguard Outdoor Beam Security Systems",
+
+category: "Outdoor Security",
+
+type: "configurable",
+
+basePrice: 0,
+
+description: "Complete Roboguard outdoor perimeter protection beam kits.",
+
+image: "images/products/roboguard-kit.jpg",
+
+icon: "🛡️",
+
+options: {
+
+kitSelection: [
+
+"Roboguard Beam Kit 4",
+
+"Roboguard Beam Kit 6",
+
+"Roboguard Beam Kit 8"
+
+],
+
+beamColour: [
+
+"Green",
+
+"Black",
+
+"White"
+
+],
+
+kitComponents: {
+
+"Roboguard Beam Kit 4": [
+
+"4 x Roboguard Beams",
+
+"1 x HQ",
+
+"1 x Robalarm Powerback",
+
+"1 x Siren",
+
+"2 x 4 Button Remotes"
+
+],
+
+"Roboguard Beam Kit 6": [
+
+"6 x Roboguard Beams",
+
+"1 x HQ",
+
+"1 x Robalarm Powerback",
+
+"1 x Siren",
+
+"2 x 4 Button Remotes"
+
+],
+
+"Roboguard Beam Kit 8": [
+
+"8 x Roboguard Beams",
+
+"1 x HQ",
+
+"1 x Robalarm Powerback",
+
+"1 x Siren",
+
+"2 x 4 Button Remotes"
+
+]
+
+},
+
+installation: [
+
+"Supply Only",
+
+"Supply & Installation"
+
+]
+
+},
+
+extras: [
+
+{
+name: "Additional Roboguard Beam",
+price: 0
+},
+
+{
+name: "Additional 4 Button Remote",
+price: 0
+},
+
+{
+name: "Additional Siren",
+price: 0
+}
+
+]
+
+},
+
+   /* =====================================================
+   ACCESS CONTROL SYSTEMS
+===================================================== */
+
+{
+id: "ACCESS-CONTROL-KIT",
+
+name: "Access Control Security Systems",
+
+category: "Access Control",
+
+type: "configurable",
+
+basePrice: 0,
+
+description: "Configure professional access control solutions for homes, offices and commercial properties.",
+
+image: "images/products/access-control-kit.jpg",
+
+icon: "🔐",
+
+options: {
+
+accessType: [
+
+"RFID Access Control",
+
+"Fingerprint Access Control",
+
+"Facial Recognition Access Control",
+
+"Keypad Access Control",
+
+"Multi-Technology Access Control"
+
+],
+
+readerType: [
+
+"Single Door Reader",
+
+"Outdoor Weatherproof Reader",
+
+"Standalone Reader",
+
+"Network Reader"
+
+],
+
+controller: [
+
+"Single Door Controller",
+
+"2 Door Controller",
+
+"4 Door Controller",
+
+"8 Door Controller"
+
+],
+
+lockType: [
+
+"Magnetic Lock 180kg",
+
+"Magnetic Lock 280kg",
+
+"Magnetic Lock 300kg",
+
+"Electric Strike Lock",
+
+"Drop Bolt Lock"
+
+],
+
+exitOptions: [
+
+"Exit Button",
+
+"No Touch Exit Button",
+
+"Emergency Break Glass"
+
+],
+
+powerSupply: [
+
+"12V 3A PSU",
+
+"12V 5A PSU",
+
+"Boxed Power Supply With Battery Backup"
+
+],
+
+batteryBackup: [
+
+"7Ah Lead Acid Battery",
+
+"7Ah Gel Battery",
+
+"12Ah Battery"
+
+],
+
+communication: [
+
+"Standalone",
+
+"TCP/IP Network",
+
+"Wi-Fi"
+
+],
+
+doorType: [
+
+"Single Door",
+
+"Double Door",
+
+"Gate Access"
+
+],
+
+installation: [
+
+"Supply Only",
+
+"Supply & Installation"
+
+]
+
+},
+
+extras: [
+
+{
+name: "RFID Cards",
+price: 0
+},
+
+{
+name: "RFID Tags",
+price: 0
+},
+
+{
+name: "Exit Button",
+price: 0
+},
+
+{
+name: "Door Contact",
+price: 0
+},
+
+{
+name: "Request To Exit Sensor",
+price: 0
+},
+
+{
+name: "Video Intercom Integration",
+price: 0
+}
+
+]
+
+},
+
+   /* =====================================================
+   CCTV CAMERA SYSTEMS
+===================================================== */
+
+{
+id: "CCTV-SYSTEM-KIT",
+
+name: "Professional CCTV Surveillance Systems",
+
+category: "CCTV",
+
+type: "configurable",
+
+basePrice: 0,
+
+description: "Configure a complete CCTV surveillance system for residential, commercial and industrial security.",
+
+image: "images/products/cctv-kit.jpg",
+
+icon: "📹",
+
+options: {
+
+brand: [
+
+"Hikvision",
+
+"Dahua"
+
+],
+
+systemType: [
+
+"Turbo HD CCTV",
+
+"IP CCTV"
+
+],
+
+cameraQuantity: [
+
+"2 Camera System",
+
+"4 Camera System",
+
+"6 Camera System",
+
+"8 Camera System",
+
+"16 Camera System",
+
+"32 Camera System"
+
+],
+
+cameraType: [
+
+"Bullet Camera",
+
+"Dome Camera",
+
+"Turret Camera",
+
+"ColorVu Camera",
+
+"Full Colour Night Vision",
+
+"AI Smart Detection Camera"
+
+],
+
+cameraResolution: [
+
+"2MP",
+
+"4MP",
+
+"5MP",
+
+"8MP 4K"
+
+],
+
+recorder: [
+
+"DVR",
+
+"NVR",
+
+"XVR Hybrid Recorder"
+
+],
+
+storage: [
+
+"1TB Hard Drive",
+
+"2TB Hard Drive",
+
+"4TB Hard Drive",
+
+"8TB Hard Drive"
+
+],
+
+monitor: [
+
+"None",
+
+"22 inch Monitor",
+
+"24 inch Monitor",
+
+"32 inch Monitor"
+
+],
+
+networkOptions: [
+
+"Remote Viewing Setup",
+
+"Mobile App Setup",
+
+"Cloud Access"
+
+],
+
+powerOptions: [
+
+"12V Power Supply",
+
+"PoE Switch",
+
+"PoE NVR"
+
+],
+
+cabling: [
+
+"RG59 Cable Kit",
+
+"CAT6 Cable Kit",
+
+"Pre-made Cable Kit"
+
+],
+
+installation: [
+
+"Supply Only",
+
+"Supply & Installation"
+
+]
+
+},
+
+extras: [
+
+{
+name: "Additional Camera",
+price: 0
+},
+
+{
+name: "Additional Hard Drive",
+price: 0
+},
+
+{
+name: "PoE Switch",
+price: 0
+},
+
+{
+name: "CAT6 Cable",
+price: 0
+},
+
+{
+name: "BNC Connectors",
+price: 0
+},
+
+{
+name: "Power Connectors",
+price: 0
+},
+
+{
+name: "Camera Junction Box",
+price: 0
+},
+
+{
+name: "Surge Protection",
+price: 0
+}
+
+]
+
+}, 
+
+    /* =====================================================
+   INTERCOM & SMART SECURITY SYSTEMS
+===================================================== */
+
+{
+id: "INTERCOM-SYSTEM-KIT",
+
+name: "Video Intercom & Smart Security Systems",
+
+category: "Intercom",
+
+type: "configurable",
+
+basePrice: 0,
+
+description: "Configure professional video intercom solutions for homes, offices and commercial properties.",
+
+image: "images/products/intercom-kit.jpg",
+
+icon: "📞",
+
+options: {
+
+brand: [
+
+"Hikvision",
+
+"Dahua",
+
+"Commax",
+
+"Other"
+
+],
+
+systemType: [
+
+"Audio Intercom",
+
+"Video Intercom",
+
+"IP Video Intercom",
+
+"Wi-Fi Smart Intercom"
+
+],
+
+doorStation: [
+
+"Single Button Outdoor Station",
+
+"Multi Button Outdoor Station",
+
+"Villa Door Station",
+
+"Commercial Door Station"
+
+],
+
+indoorMonitor: [
+
+"None",
+
+"7 inch Indoor Monitor",
+
+"10 inch Indoor Monitor",
+
+"Touch Screen Indoor Monitor"
+
+],
+
+connection: [
+
+"2 Wire System",
+
+"4 Wire System",
+
+"IP Network",
+
+"Wi-Fi"
+
+],
+
+gateControl: [
+
+"Gate Release",
+
+"Electric Lock Control",
+
+"Magnetic Lock Control"
+
+],
+
+cameraIntegration: [
+
+"Built-in Camera",
+
+"CCTV Integration",
+
+"Additional Camera"
+
+],
+
+accessOptions: [
+
+"PIN Code",
+
+"RFID Card",
+
+"Fingerprint",
+
+"Facial Recognition"
+
+],
+
+mobileAccess: [
+
+"None",
+
+"Mobile App Viewing",
+
+"Remote Gate Opening"
+
+],
+
+powerSupply: [
+
+"12V Power Supply",
+
+"24V Power Supply",
+
+"PoE Power"
+
+],
+
+installation: [
+
+"Supply Only",
+
+"Supply & Installation"
+
+]
+
+},
+
+extras: [
+
+{
+name: "Additional Indoor Monitor",
+price: 0
+},
+
+{
+name: "Additional Outdoor Station",
+price: 0
+},
+
+{
+name: "Electric Strike Lock",
+price: 0
+},
+
+{
+name: "Magnetic Lock",
+price: 0
+},
+
+{
+name: "Exit Button",
+price: 0
+},
+
+{
+name: "Gate Motor Integration",
+price: 0
+},
+
+{
+name: "Wi-Fi Module",
+price: 0
+}
+
+]
+
+},
+
+    /* =====================================================
+   SECURITY ACCESSORIES & CONSUMABLES
+===================================================== */
+
+{
+id: "SECURITY-ACCESSORIES",
+
+name: "Security Accessories & Components",
+
+category: "Accessories",
+
+type: "configurable",
+
+basePrice: 0,
+
+description: "Security system accessories, replacement parts and installation components.",
+
+image: "images/products/security-accessories.jpg",
+
+icon: "🔧",
+
+options: {
+
+electricFenceAccessories: [
+
+"Electric Fence Remote",
+
+"Electric Fence Key Switch",
+
+"Fence Alarm Indicator",
+
+"Gate Contact",
+
+"Lightning Diverter",
+
+"Earth Clamp",
+
+"Earth Cable",
+
+"High Voltage Cable",
+
+"Fence Joiner",
+
+"Fence Warning Signs"
+
+],
+
+alarmAccessories: [
+
+"PIR Motion Detector",
+
+"Outdoor PIR Detector",
+
+"Magnetic Door Contact",
+
+"Wireless Door Contact",
+
+"Remote Control",
+
+"Panic Button",
+
+"Siren",
+
+"Strobe Light",
+
+"Smoke Detector",
+
+"Heat Detector"
+
+],
+
+cctvAccessories: [
+
+"Camera Junction Box",
+
+"BNC Connector",
+
+"DC Power Connector",
+
+"CAT6 Cable",
+
+"RG59 Cable",
+
+"PoE Switch",
+
+"Hard Drive",
+
+"Monitor"
+
+],
+
+gateAccessories: [
+
+"Gate Remote",
+
+"Safety Beam",
+
+"Loop Detector",
+
+"Gate Rack",
+
+"Battery",
+
+"Solar Panel",
+
+"Keypad",
+
+"GSM Module"
+
+],
+
+powerProducts: [
+
+"12V PSU",
+
+"24V PSU",
+
+"7Ah Battery",
+
+"12Ah Battery",
+
+"18Ah Battery"
+
+],
+
+cables: [
+
+"Alarm Cable",
+
+"CCTV Cable",
+
+"CAT5 Cable",
+
+"CAT6 Cable",
+
+"Power Cable"
+
+],
+
+installationHardware: [
+
+"Wall Plugs",
+
+"Screws",
+
+"Cable Clips",
+
+"Junction Boxes",
+
+"Enclosure Boxes"
+
+],
+
+installation: [
+
+"Supply Only",
+
+"Supply & Installation"
+
+]
+
+},
+
+extras: [
+
+{
+name: "Technician Installation Pack",
+price: 0
+},
+
+{
+name: "Replacement Battery",
+price: 0
+},
+
+{
+name: "Replacement Power Supply",
+price: 0
+},
+
+{
+name: "Maintenance Call Out",
+price: 0
+}
+
+]
+
+},
