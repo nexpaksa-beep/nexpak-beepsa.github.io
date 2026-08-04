@@ -1,1368 +1,2513 @@
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS V9
- cart.js
- PART 1/6
+// =========================================================
+// NEXPAK SECURITY SOLUTIONS V15
+// cart.js
+// PART 1/5
+//
+// ADVANCED SHOPPING CART ENGINE
+// COMPATIBLE WITH configurator.js V15
+// =========================================================
 
- ADVANCED SHOPPING CART ENGINE
-=========================================================*/
 
-document.addEventListener("DOMContentLoaded", initCart);
 
-/*=========================================================
- GLOBAL VARIABLES
-=========================================================*/
+// =========================================================
+// GLOBAL CART VARIABLES
+// =========================================================
+
 
 let cart = [];
-let cartSubtotal = 0;
-let cartVAT = 0;
-let cartShipping = 0;
-let cartTotal = 0;
 
-const VAT_RATE = 0.15;
+const CART_STORAGE_KEY =
+"nexpak_cart";
 
-/*=========================================================
- INITIALIZE CART
-=========================================================*/
 
-function initCart(){
 
-    loadCart();
 
-    updateCartCount();
+// =========================================================
+// INITIALIZE CART
+// =========================================================
 
-    renderCart();
 
-    calculateTotals();
+document.addEventListener(
+
+"DOMContentLoaded",
+
+()=>{
+
+
+loadCart();
+
+
+updateCartCounter();
+
 
 }
 
-/*=========================================================
- LOAD CART
-=========================================================*/
+);
+
+
+
+
+
+// =========================================================
+// LOAD CART FROM STORAGE
+// =========================================================
+
 
 function loadCart(){
 
-    const saved =
-    localStorage.getItem("nexpak_cart");
 
-    if(saved){
+const savedCart =
 
-        try{
+localStorage.getItem(
+CART_STORAGE_KEY
+);
 
-            cart = JSON.parse(saved);
 
-        }catch(error){
 
-            cart = [];
+if(savedCart){
 
-        }
 
-    }else{
+try{
 
-        cart = [];
 
-    }
+cart =
+JSON.parse(
+savedCart
+);
+
+
 
 }
 
-/*=========================================================
- SAVE CART
-=========================================================*/
+catch(error){
+
+
+console.error(
+"Cart loading error:",
+error
+);
+
+
+
+cart = [];
+
+
+}
+
+
+
+}
+
+else{
+
+
+cart = [];
+
+
+}
+
+
+
+}
+
+
+
+
+
+// =========================================================
+// SAVE CART
+// =========================================================
+
 
 function saveCart(){
 
-    localStorage.setItem(
 
-        "nexpak_cart",
+localStorage.setItem(
 
-        JSON.stringify(cart)
+CART_STORAGE_KEY,
 
-    );
+JSON.stringify(
+cart
+)
 
-}
+);
 
-/*=========================================================
- ADD PRODUCT
-=========================================================*/
 
-function addToCart(item){
-
-    if(!item) return;
-
-    const existing = cart.find(product =>
-
-        product.id === item.id &&
-
-        JSON.stringify(product.options || {}) ===
-        JSON.stringify(item.options || {})
-
-    );
-
-    if(existing){
-
-        existing.quantity += item.quantity || 1;
-
-    }else{
-
-        cart.push({
-
-            id:item.id,
-
-            name:item.name,
-
-            image:item.image,
-
-            price:item.price,
-
-            quantity:item.quantity || 1,
-
-            options:item.options || {}
-
-        });
-
-    }
-
-    saveCart();
-
-    updateCartCount();
-
-    calculateTotals();
-
-    animateCart();
 
 }
 
-/*=========================================================
- REMOVE PRODUCT
-=========================================================*/
 
-function removeFromCart(index){
 
-    if(index < 0 || index >= cart.length)
-        return;
 
-    cart.splice(index,1);
 
-    saveCart();
+// =========================================================
+// GET CURRENT CART
+// =========================================================
 
-    renderCart();
-
-    updateCartCount();
-
-    calculateTotals();
-
-}
-
-/*=========================================================
- CLEAR CART
-=========================================================*/
-
-function clearCart(){
-
-    cart = [];
-
-    saveCart();
-
-    renderCart();
-
-    updateCartCount();
-
-    calculateTotals();
-
-}
-
-/*=========================================================
- CART COUNT
-=========================================================*/
-
-function updateCartCount(){
-
-    const counter =
-    document.querySelector(".cart-count");
-
-    if(!counter)
-        return;
-
-    let total = 0;
-
-    cart.forEach(item=>{
-
-        total += item.quantity;
-
-    });
-
-    counter.textContent = total;
-
-}
-
-/*=========================================================
- GET CART
-=========================================================*/
 
 function getCart(){
 
-    return cart;
+
+return cart;
+
 
 }
 
+
+
+
+
+// =========================================================
+// ADD ITEM TO CART
+// =========================================================
+
+
+function addToCart(item){
+
+
+if(
+!item ||
+!item.id
+){
+
+console.error(
+"Invalid cart item."
+);
+
+
+return;
+
+}
+
+
+
+
+
+const existingItem =
+
+cart.find(
+
+product =>
+
+product.id === item.id
+
+&&
+
+JSON.stringify(
+product.options
+)
+
+===
+
+JSON.stringify(
+item.options
+)
+
+);
+
+
+
+if(existingItem){
+
+
+existingItem.quantity +=
+
+item.quantity || 1;
+
+
+
+}
+
+else{
+
+
+cart.push({
+
+id:
+item.id,
+
+
+name:
+item.name,
+
+
+image:
+item.image,
+
+
+quantity:
+item.quantity || 1,
+
+
+price:
+item.price || 0,
+
+
+options:
+item.options || {},
+
+
+extras:
+item.extras || []
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+saveCart();
+
+
+updateCartCounter();
+
+
+}
+
+
+
+
+
+// =========================================================
+// CART ITEM COUNT
+// =========================================================
+
+
+function updateCartCounter(){
+
+
+const counters =
+
+document.querySelectorAll(
+
+".cart-count"
+
+);
+
+
+
+const total =
+
+cart.reduce(
+
+(sum,item)=>
+
+sum + item.quantity,
+
+0
+
+);
+
+
+
+counters.forEach(
+
+counter=>{
+
+
+counter.textContent =
+total;
+
+
+}
+
+);
+
+
+
+}
+
+
+
+
+
+// =========================================================
+// CLEAR CART
+// =========================================================
+
+
+function clearCart(){
+
+
+cart = [];
+
+
+saveCart();
+
+
+updateCartCounter();
+
+
+}
+
+
+
+
+
 console.log(
 
-"%cNEXPAK CART V9 PART 1 LOADED",
+"%cNEXPAK CART V15 PART 1 READY",
 
 "color:#00B4FF;font-size:18px;font-weight:bold;"
 
 );
 
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS V9
- cart.js
- PART 2/6
+// =========================================================
+// NEXPAK SECURITY SOLUTIONS V15
+// cart.js
+// PART 2/5
+//
+// CART DISPLAY ENGINE
+// RENDER ITEMS
+// QUANTITY CONTROLS
+// TOTAL CALCULATION
+// =========================================================
 
- CART RENDERING ENGINE
-=========================================================*/
 
-/*=========================================================
- RENDER CART
-=========================================================*/
 
-function renderCart(){
 
-    const container =
-    document.querySelector(".cart-items");
+// =========================================================
+// DISPLAY CART
+// =========================================================
 
-    if(!container) return;
 
-    container.innerHTML = "";
+function displayCart(){
 
-    if(cart.length === 0){
 
-        container.innerHTML = `
+const container =
+
+document.querySelector(
+".cart-items"
+);
+
+
+
+if(!container){
+
+return;
+
+}
+
+
+
+container.innerHTML = "";
+
+
+
+
+
+if(cart.length === 0){
+
+
+container.innerHTML = `
 
 <div class="empty-cart">
 
-<i class="fas fa-cart-shopping"></i>
+<h3>
+Your cart is empty
+</h3>
 
-<h2>Your cart is empty</h2>
-
-<p>Add products from our Security Shop.</p>
-
-<a href="shop.html" class="primary-btn">
-
-Continue Shopping
-
-</a>
+<p>
+Browse our security solutions and add products.
+</p>
 
 </div>
 
 `;
 
-        return;
 
-    }
 
-    cart.forEach((item,index)=>{
+updateCartTotals();
 
-        container.innerHTML += createCartItem(item,index);
 
-    });
+return;
+
 
 }
 
-/*=========================================================
- CREATE CART ITEM
-=========================================================*/
 
-function createCartItem(item,index){
 
-    return `
+
+
+cart.forEach(
+
+(item,index)=>{
+
+
+const itemTotal =
+
+item.price *
+
+item.quantity;
+
+
+
+container.innerHTML += `
+
 
 <div class="cart-item">
 
+
 <div class="cart-image">
 
-<img src="${item.image}"
+<img
+
+src="${item.image}"
+
 alt="${item.name}">
 
 </div>
 
+
+
 <div class="cart-details">
 
-<h3>${item.name}</h3>
 
-${buildOptions(item)}
+<h3>
+
+${item.name}
+
+</h3>
+
+
+
+<div class="cart-options">
+
+${renderCartOptions(item)}
+
+</div>
+
+
 
 <div class="cart-price">
 
-R${item.price.toLocaleString("en-ZA")}
+${formatCurrency(item.price)}
 
 </div>
 
-<div class="cart-quantity">
 
-<button
-onclick="changeQuantity(${index},-1)">
 
-<i class="fas fa-minus"></i>
+<div class="quantity-control">
+
+
+<button onclick="changeCartQuantity(${index},-1)">
+
+−
 
 </button>
+
+
 
 <input
+
 type="number"
-min="1"
+
 value="${item.quantity}"
-onchange="setQuantity(${index},this.value)">
 
-<button
-onclick="changeQuantity(${index},1)">
+onchange="updateCartQuantity(${index},this.value)">
 
-<i class="fas fa-plus"></i>
+
+<button onclick="changeCartQuantity(${index},1)">
+
++
 
 </button>
 
+
 </div>
 
-<div class="cart-subtotal">
 
-Subtotal:
+
+<div class="item-total">
+
+Total:
 
 <strong>
 
-R${getItemSubtotal(item).toLocaleString("en-ZA")}
+${formatCurrency(itemTotal)}
 
 </strong>
 
 </div>
 
-<button
-class="remove-btn"
-onclick="removeFromCart(${index})">
 
-<i class="fas fa-trash"></i>
+
+<button
+
+class="remove-cart-item"
+
+onclick="removeCartItem(${index})">
 
 Remove
 
 </button>
 
-</div>
+
 
 </div>
+
+
+</div>
+
 
 `;
 
+
+
 }
 
-/*=========================================================
- BUILD OPTIONS HTML
-=========================================================*/
 
-function buildOptions(item){
 
-    if(!item.options)
-        return "";
+);
 
-    let html =
 
-'<ul class="cart-options">';
 
-    Object.keys(item.options).forEach(option=>{
 
-        html += `
+updateCartTotals();
 
-<li>
+
+
+}
+
+
+
+
+// =========================================================
+// RENDER OPTIONS
+// =========================================================
+
+
+function renderCartOptions(item){
+
+
+let html = "";
+
+
+
+
+if(item.options){
+
+
+Object.entries(
+
+item.options
+
+)
+
+.forEach(
+
+([key,value])=>{
+
+
+html += `
+
+<div>
 
 <strong>
-
-${formatOption(option)}
-
+${formatOptionName(key)}
+:
 </strong>
 
-${item.options[option]}
+${value}
 
-</li>
+</div>
 
 `;
 
-    });
 
-    html += "</ul>";
-
-    return html;
 
 }
 
-/*=========================================================
- FORMAT OPTION NAME
-=========================================================*/
 
-function formatOption(text){
-
-    return text
-
-    .replace(/([A-Z])/g," $1")
-
-    .replace(/^./,
-    letter=>letter.toUpperCase());
-
-}
-
-/*=========================================================
- ITEM SUBTOTAL
-=========================================================*/
-
-function getItemSubtotal(item){
-
-    return item.price * item.quantity;
-
-}
-
-/*=========================================================
- REFRESH CART
-=========================================================*/
-
-function refreshCart(){
-
-    renderCart();
-
-    calculateTotals();
-
-    updateCartCount();
-
-    saveCart();
-
-}
-
-console.log(
-
-"%cCART V9 PART 2 LOADED",
-
-"color:#00B4FF;font-weight:bold;"
 
 );
 
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS V9
- cart.js
- PART 3/6
 
- TOTALS • VAT • SHIPPING
-=========================================================*/
-
-/*=========================================================
- CALCULATE TOTALS
-=========================================================*/
-
-function calculateTotals(){
-
-    cartSubtotal = 0;
-
-    cart.forEach(item=>{
-
-        cartSubtotal +=
-        getItemSubtotal(item);
-
-    });
-
-    cartVAT =
-    cartSubtotal * VAT_RATE;
-
-    cartShipping =
-    calculateShipping(cartSubtotal);
-
-    cartTotal =
-    cartSubtotal +
-    cartVAT +
-    cartShipping;
-
-    updateTotalsDisplay();
 
 }
 
-/*=========================================================
- SHIPPING CALCULATOR
-=========================================================*/
 
-function calculateShipping(subtotal){
 
-    if(subtotal <= 0)
-        return 0;
 
-    /* Free delivery over R10 000 */
 
-    if(subtotal >= 10000)
-        return 0;
+if(
 
-    return 250;
+item.extras
 
-}
+&&
 
-/*=========================================================
- UPDATE TOTAL DISPLAY
-=========================================================*/
+item.extras.length
 
-function updateTotalsDisplay(){
+){
 
-    const subtotal =
-    document.querySelector(".cart-subtotal-value");
 
-    const vat =
-    document.querySelector(".cart-vat-value");
+html += `
 
-    const shipping =
-    document.querySelector(".cart-shipping-value");
+<div>
 
-    const total =
-    document.querySelector(".cart-total-value");
+<strong>
+Extras:
+</strong>
 
-    if(subtotal){
+</div>
 
-        subtotal.innerHTML =
-        "R" +
-        cartSubtotal.toLocaleString(
-        "en-ZA",
-        {
-            minimumFractionDigits:2
-        });
+`;
 
-    }
 
-    if(vat){
 
-        vat.innerHTML =
-        "R" +
-        cartVAT.toLocaleString(
-        "en-ZA",
-        {
-            minimumFractionDigits:2
-        });
+item.extras.forEach(
 
-    }
+extra=>{
 
-    if(shipping){
 
-        shipping.innerHTML =
-        cartShipping === 0 ?
+html += `
 
-        "FREE"
+<div>
 
-        :
+${extra.name}
 
-        "R" +
-        cartShipping.toLocaleString(
-        "en-ZA",
-        {
-            minimumFractionDigits:2
-        });
+(+${formatCurrency(extra.price)})
 
-    }
+</div>
 
-    if(total){
+`;
 
-        total.innerHTML =
-        "R" +
-        cartTotal.toLocaleString(
-        "en-ZA",
-        {
-            minimumFractionDigits:2
-        });
 
-    }
 
 }
 
-/*=========================================================
- CHANGE QUANTITY
-=========================================================*/
 
-function changeQuantity(index, amount){
-
-    if(!cart[index]) return;
-
-    cart[index].quantity += amount;
-
-    if(cart[index].quantity < 1){
-
-        cart[index].quantity = 1;
-
-    }
-
-    refreshCart();
-
-}
-
-/*=========================================================
- SET QUANTITY
-=========================================================*/
-
-function setQuantity(index, value){
-
-    let qty =
-    parseInt(value);
-
-    if(isNaN(qty) || qty < 1){
-
-        qty = 1;
-
-    }
-
-    cart[index].quantity = qty;
-
-    refreshCart();
-
-}
-
-/*=========================================================
- CART SUMMARY
-=========================================================*/
-
-function getCartSummary(){
-
-    return {
-
-        items: cart,
-
-        subtotal: cartSubtotal,
-
-        vat: cartVAT,
-
-        shipping: cartShipping,
-
-        total: cartTotal,
-
-        totalItems:
-
-        cart.reduce((sum,item)=>
-
-            sum + item.quantity
-
-        ,0)
-
-    };
-
-}
-
-console.log(
-
-"%cCART V9 PART 3 LOADED",
-
-"color:#00B4FF;font-weight:bold;"
 
 );
 
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS V9
- cart.js
- PART 4/6
 
- CUSTOMER DETAILS • ORDERS • QUOTATIONS
-=========================================================*/
-
-/*=========================================================
- CUSTOMER DETAILS
-=========================================================*/
-
-let customer = {
-
-    name:"",
-    company:"",
-    phone:"",
-    email:"",
-    address:"",
-    notes:""
-
-};
-
-/*=========================================================
- SAVE CUSTOMER
-=========================================================*/
-
-function saveCustomer(){
-
-    customer.name =
-    document.getElementById("customer-name")?.value || "";
-
-    customer.company =
-    document.getElementById("customer-company")?.value || "";
-
-    customer.phone =
-    document.getElementById("customer-phone")?.value || "";
-
-    customer.email =
-    document.getElementById("customer-email")?.value || "";
-
-    customer.address =
-    document.getElementById("customer-address")?.value || "";
-
-    customer.notes =
-    document.getElementById("customer-notes")?.value || "";
-
-    localStorage.setItem(
-        "nexpak_customer",
-        JSON.stringify(customer)
-    );
 
 }
 
-/*=========================================================
- LOAD CUSTOMER
-=========================================================*/
 
-function loadCustomer(){
 
-    const saved =
-    localStorage.getItem("nexpak_customer");
+return html;
 
-    if(!saved) return;
 
-    customer = JSON.parse(saved);
 
 }
 
-/*=========================================================
- VALIDATE CUSTOMER
-=========================================================*/
 
-function validateCustomer(){
 
-    saveCustomer();
 
-    if(customer.name === ""){
 
-        alert("Please enter your name.");
-        return false;
+// =========================================================
+// CHANGE CART QUANTITY
+// =========================================================
 
-    }
 
-    if(customer.phone === ""){
+function changeCartQuantity(index,change){
 
-        alert("Please enter your phone number.");
-        return false;
 
-    }
+if(!cart[index]){
 
-    return true;
+return;
 
 }
 
-/*=========================================================
- ORDER NUMBER
-=========================================================*/
 
-function generateOrderNumber(){
 
-    const now = new Date();
+cart[index].quantity += change;
 
-    const random =
-    Math.floor(Math.random()*9000)+1000;
 
-    return "NP-" +
 
-    now.getFullYear() +
+if(cart[index].quantity < 1){
 
-    String(now.getMonth()+1).padStart(2,"0") +
 
-    String(now.getDate()).padStart(2,"0") +
+cart[index].quantity = 1;
 
-    "-" +
-
-    random;
 
 }
 
-/*=========================================================
- CREATE ORDER OBJECT
-=========================================================*/
 
-function createOrder(){
 
-    return{
+saveCart();
 
-        orderNumber:
-        generateOrderNumber(),
 
-        date:
-        new Date().toISOString(),
+displayCart();
 
-        customer:
-        customer,
 
-        items:
-        cart,
+updateCartCounter();
 
-        subtotal:
-        cartSubtotal,
 
-        vat:
-        cartVAT,
-
-        shipping:
-        cartShipping,
-
-        total:
-        cartTotal
-
-    };
 
 }
 
-/*=========================================================
- SAVE ORDER
-=========================================================*/
 
-function saveOrder(){
 
-    const order =
-    createOrder();
 
-    const orders =
-    JSON.parse(
 
-        localStorage.getItem(
-        "nexpak_orders"
-        ) || "[]"
+// =========================================================
+// UPDATE MANUAL QUANTITY
+// =========================================================
 
-    );
 
-    orders.push(order);
+function updateCartQuantity(index,value){
 
-    localStorage.setItem(
 
-        "nexpak_orders",
+let quantity =
+parseInt(value);
 
-        JSON.stringify(orders)
 
-    );
 
-    return order;
+if(
 
-}
+isNaN(quantity)
 
-/*=========================================================
- BUILD QUOTE MESSAGE
-=========================================================*/
+||
 
-function buildQuoteMessage(){
+quantity < 1
 
-    let message =
+){
 
-`NEXPAK SECURITY SOLUTIONS
-
-Quotation Request
-
-Order:
-${generateOrderNumber()}
-
-Customer:
-${customer.name}
-
-Company:
-${customer.company}
-
-Phone:
-${customer.phone}
-
-Email:
-${customer.email}
-
---------------------------------
-
-`;
-
-    cart.forEach(item=>{
-
-        message +=
-
-`${item.name}
-
-`;
-
-        if(item.options){
-
-            Object.keys(item.options).forEach(option=>{
-
-                message +=
-
-`${formatOption(option)}:
-${item.options[option]}
-
-`;
-
-            });
-
-        }
-
-        message +=
-
-`Qty:
-${item.quantity}
-
-Subtotal:
-R${getItemSubtotal(item).toLocaleString("en-ZA")}
-
---------------------------------
-
-`;
-
-    });
-
-    message +=
-
-`Subtotal:
-R${cartSubtotal.toLocaleString("en-ZA")}
-
-VAT:
-R${cartVAT.toLocaleString("en-ZA")}
-
-Shipping:
-${cartShipping===0?"FREE":"R"+cartShipping.toLocaleString("en-ZA")}
-
-TOTAL:
-R${cartTotal.toLocaleString("en-ZA")}
-
-`;
-
-    return message;
+quantity = 1;
 
 }
 
-console.log(
 
-"%cCART V9 PART 4 LOADED",
 
-"color:#00B4FF;font-weight:bold;"
+if(cart[index]){
+
+
+cart[index].quantity =
+quantity;
+
+
+
+}
+
+
+
+saveCart();
+
+
+displayCart();
+
+
+updateCartCounter();
+
+
+
+}
+
+
+
+
+
+// =========================================================
+// REMOVE ITEM
+// =========================================================
+
+
+function removeCartItem(index){
+
+
+cart.splice(
+index,
+1
+);
+
+
+
+saveCart();
+
+
+displayCart();
+
+
+updateCartCounter();
+
+
+
+}
+
+
+
+
+
+// =========================================================
+// CALCULATE TOTALS
+// =========================================================
+
+
+function getCartSubtotal(){
+
+
+return cart.reduce(
+
+(total,item)=>{
+
+
+return total +
+
+(
+item.price *
+
+item.quantity
 
 );
 
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS V9
- cart.js
- PART 5/6
 
- CHECKOUT • WHATSAPP • EMAIL • ORDER COMPLETE
-=========================================================*/
 
-/*=========================================================
- SEND WHATSAPP QUOTE
-=========================================================*/
+},
 
-function checkoutWhatsApp(){
+0
 
-    if(cart.length===0){
+);
 
-        alert("Your cart is empty.");
-        return;
 
-    }
-
-    if(!validateCustomer()) return;
-
-    const order = saveOrder();
-
-    let message = buildQuoteMessage();
-
-    message += `
-
-Reference:
-${order.orderNumber}
-
-Thank you.
-`;
-
-    window.open(
-
-        "https://wa.me/27836308249?text=" +
-
-        encodeURIComponent(message),
-
-        "_blank"
-
-    );
 
 }
 
-/*=========================================================
- EMAIL QUOTE
-=========================================================*/
 
-function checkoutEmail(){
 
-    if(cart.length===0){
 
-        alert("Your cart is empty.");
-        return;
+function updateCartTotals(){
 
-    }
 
-    if(!validateCustomer()) return;
+const subtotal =
+getCartSubtotal();
 
-    const order = saveOrder();
 
-    const subject =
 
-    "Security Quote Request - " +
+const subtotalBox =
 
-    order.orderNumber;
+document.querySelector(
+".cart-subtotal"
+);
 
-    const body = buildQuoteMessage();
 
-    window.location.href =
 
-    "mailto:info@nexpaksecurity.co.za"
+const totalBox =
 
-    +
+document.querySelector(
+".cart-total"
+);
 
-    "?subject="
 
-    +
 
-    encodeURIComponent(subject)
+if(subtotalBox){
 
-    +
+subtotalBox.textContent =
 
-    "&body="
+formatCurrency(
+subtotal
+);
 
-    +
-
-    encodeURIComponent(body);
 
 }
 
-/*=========================================================
- COMPLETE CHECKOUT
-=========================================================*/
 
-function completeCheckout(){
 
-    if(cart.length===0){
+if(totalBox){
 
-        alert("Your cart is empty.");
-        return;
+totalBox.textContent =
 
-    }
+formatCurrency(
+subtotal
+);
 
-    if(!validateCustomer()) return;
-
-    saveOrder();
-
-    showNotification(
-
-        "Quote created successfully."
-
-    );
-
-    clearCart();
 
 }
 
-/*=========================================================
- SUCCESS NOTIFICATION
-=========================================================*/
 
-function showNotification(message){
-
-    let box = document.createElement("div");
-
-    box.className = "cart-notification";
-
-    box.innerHTML = `
-
-<i class="fas fa-circle-check"></i>
-
-<span>${message}</span>
-
-`;
-
-    document.body.appendChild(box);
-
-    setTimeout(()=>{
-
-        box.classList.add("show");
-
-    },100);
-
-    setTimeout(()=>{
-
-        box.classList.remove("show");
-
-        setTimeout(()=>{
-
-            box.remove();
-
-        },300);
-
-    },2500);
 
 }
 
-/*=========================================================
- CART ANIMATION
-=========================================================*/
 
-function animateCart(){
 
-    const icon =
 
-    document.querySelector(".cart-icon");
 
-    if(!icon) return;
+// =========================================================
+// FORMAT OPTION NAME FALLBACK
+// =========================================================
 
-    icon.classList.add("cart-bounce");
 
-    setTimeout(()=>{
+function formatOptionName(text){
 
-        icon.classList.remove("cart-bounce");
 
-    },700);
+return text
 
-}
+.replace(
+/([A-Z])/g,
+" $1"
+)
 
-/*=========================================================
- EMPTY CART MESSAGE
-=========================================================*/
+.replace(
+/^./,
+letter =>
+letter.toUpperCase()
+);
 
-function isCartEmpty(){
 
-    return cart.length===0;
 
 }
 
-/*=========================================================
- CONTINUE SHOPPING
-=========================================================*/
 
-function continueShopping(){
 
-    window.location.href = "shop.html";
+
+
+// =========================================================
+// FORMAT CURRENCY FALLBACK
+// =========================================================
+
+
+function formatCurrency(value){
+
+
+return "R" +
+
+Number(value || 0)
+
+.toLocaleString(
+"en-ZA",
+{
+
+minimumFractionDigits:2,
+
+maximumFractionDigits:2
 
 }
+
+);
+
+
+}
+
+
+
+
+
+// =========================================================
+// AUTO DISPLAY CART PAGE
+// =========================================================
+
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+()=>{
+
+
+displayCart();
+
+
+});
+
+
+
+
 
 console.log(
 
-"%cNEXPAK CART V9 PART 5 LOADED",
+"%cNEXPAK CART V15 PART 2 READY",
 
 "color:#00B4FF;font-size:18px;font-weight:bold;"
 
 );
 
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS V9
- cart.js
- PART 6/6
+// =========================================================
+// NEXPAK SECURITY SOLUTIONS V15
+// cart.js
+// PART 3/5
+//
+// CHECKOUT ENGINE
+// CART SUMMARY
+// WHATSAPP CART QUOTE
+// EMAIL CART QUOTE
+// =========================================================
 
- DISCOUNTS • UTILITIES • FINAL INITIALIZATION
-=========================================================*/
 
-/*=========================================================
- DISCOUNT VARIABLES
-=========================================================*/
 
-let discount = 0;
-let discountCode = "";
+// =========================================================
+// CART TOTAL ITEMS
+// =========================================================
 
-/*=========================================================
- APPLY DISCOUNT CODE
-=========================================================*/
 
-function applyDiscount(){
+function getCartItemCount(){
 
-    const input =
-    document.getElementById("discount-code");
 
-    if(!input) return;
+return cart.reduce(
 
-    discountCode =
-    input.value.trim().toUpperCase();
+(total,item)=>
 
-    discount = 0;
+total + item.quantity,
 
-    switch(discountCode){
+0
 
-        case "NEXPAK5":
-            discount = cartSubtotal * 0.05;
-            break;
+);
 
-        case "NEXPAK10":
-            discount = cartSubtotal * 0.10;
-            break;
-
-        case "SECURITY15":
-            discount = cartSubtotal * 0.15;
-            break;
-
-        default:
-
-            alert("Invalid discount code.");
-
-            discount = 0;
-
-    }
-
-    calculateTotals();
 
 }
 
-/*=========================================================
- OVERRIDE TOTAL CALCULATION
-=========================================================*/
 
-const originalCalculateTotals =
-calculateTotals;
 
-calculateTotals = function(){
 
-    originalCalculateTotals();
 
-    cartTotal -= discount;
+// =========================================================
+// CART SUBTOTAL
+// =========================================================
 
-    if(cartTotal < 0){
 
-        cartTotal = 0;
+function calculateCartTotal(){
 
-    }
 
-    updateTotalsDisplay();
+let total = 0;
+
+
+
+cart.forEach(
+
+item=>{
+
+
+total +=
+
+(item.price * item.quantity);
+
+
+
+}
+
+);
+
+
+
+return total;
+
+
+
+}
+
+
+
+
+
+// =========================================================
+// DISPLAY CART SUMMARY
+// =========================================================
+
+
+function displayCartSummary(){
+
+
+const summaryBox =
+
+document.querySelector(
+".cart-summary"
+);
+
+
+
+if(!summaryBox){
+
+return;
+
+}
+
+
+
+summaryBox.innerHTML = "";
+
+
+
+
+
+cart.forEach(
+
+item=>{
+
+
+summaryBox.innerHTML += `
+
+
+<div class="summary-item">
+
+
+<span>
+
+${item.name}
+
+</span>
+
+
+
+<strong>
+
+${formatCurrency(
+item.price * item.quantity
+)}
+
+</strong>
+
+
+</div>
+
+
+`;
+
+
+
+}
+
+);
+
+
+
+
+
+summaryBox.innerHTML += `
+
+
+<div class="summary-total">
+
+
+<strong>
+
+Total
+
+</strong>
+
+
+<strong>
+
+${formatCurrency(
+calculateCartTotal()
+)}
+
+</strong>
+
+
+</div>
+
+
+`;
+
+
+
+}
+
+
+
+
+
+// =========================================================
+// CREATE CART MESSAGE
+// =========================================================
+
+
+function createCartMessage(){
+
+
+let message =
+
+
+`*NEXPAK SECURITY SOLUTIONS*
+
+Quotation Request
+
+`;
+
+
+
+
+
+cart.forEach(
+
+(item,index)=>{
+
+
+message +=
+
+
+`
+${index + 1}.
+${item.name}
+
+Quantity:
+${item.quantity}
+
+Price:
+${formatCurrency(
+item.price
+)}
+
+`;
+
+
+
+
+
+if(
+item.options
+){
+
+
+message +=
+
+"Configuration:\n";
+
+
+
+Object.entries(
+item.options
+)
+
+.forEach(
+
+([key,value])=>{
+
+
+message +=
+
+`${formatOptionName(key)}:
+${value}
+
+`;
+
+
+
+}
+
+);
+
+
+
+}
+
+
+
+
+
+if(
+
+item.extras
+
+&&
+
+item.extras.length > 0
+
+){
+
+
+message +=
+
+"Extras:\n";
+
+
+
+item.extras.forEach(
+
+extra=>{
+
+
+message +=
+
+`${extra.name}
+
+`;
+
+
+
+}
+
+);
+
+
+
+}
+
+
+
+message += "\n";
+
+
+
+}
+
+);
+
+
+
+
+
+message +=
+
+
+`
+Total:
+
+${formatCurrency(
+calculateCartTotal()
+)}
+
+Please send me a quotation.
+
+`;
+
+
+
+return message;
+
+
+
+}
+
+
+
+
+
+// =========================================================
+// WHATSAPP CART QUOTE
+// =========================================================
+
+
+function sendWhatsAppQuote(){
+
+
+if(
+cart.length === 0
+){
+
+
+alert(
+"Your cart is empty."
+);
+
+
+
+return;
+
+
+}
+
+
+
+const message =
+
+createCartMessage();
+
+
+
+window.open(
+
+"https://wa.me/27836308249?text="
+
++
+
+encodeURIComponent(message),
+
+"_blank"
+
+);
+
+
+
+}
+
+
+
+
+
+// =========================================================
+// EMAIL CART QUOTE
+// =========================================================
+
+
+function sendEmailQuote(){
+
+
+if(
+cart.length === 0
+){
+
+alert(
+"Your cart is empty."
+);
+
+
+
+return;
+
+
+}
+
+
+
+const subject =
+
+"Nexpak Security Solutions Quote Request";
+
+
+
+const body =
+
+createCartMessage();
+
+
+
+window.location =
+
+
+"mailto:info@nexpaksecurity.co.za"
+
++
+
+"?subject="
+
++
+
+encodeURIComponent(subject)
+
++
+
+"&body="
+
++
+
+encodeURIComponent(body);
+
+
+
+}
+
+
+
+
+
+// =========================================================
+// UPDATE CART DISPLAY
+// =========================================================
+
+
+function refreshCart(){
+
+
+saveCart();
+
+
+displayCart();
+
+
+displayCartSummary();
+
+
+updateCartCounter();
+
+
+
+}
+
+
+
+
+
+console.log(
+
+"%cNEXPAK CART V15 PART 3 READY",
+
+"color:#00B4FF;font-size:18px;font-weight:bold;"
+
+);
+
+// =========================================================
+// NEXPAK SECURITY SOLUTIONS V15
+// cart.js
+// PART 4/5
+//
+// CART VALIDATION
+// CUSTOMER INFORMATION
+// QUOTE PREPARATION
+// ORDER SUMMARY
+// =========================================================
+
+
+
+// =========================================================
+// VALIDATE CART
+// =========================================================
+
+
+function validateCart(){
+
+
+if(
+cart.length === 0
+){
+
+
+alert(
+"Your cart is empty."
+);
+
+
+
+return false;
+
+
+}
+
+
+
+let valid = true;
+
+
+
+cart.forEach(
+
+item=>{
+
+
+if(
+!item.id ||
+!item.name
+){
+
+
+valid = false;
+
+
+}
+
+
+
+}
+
+);
+
+
+
+if(!valid){
+
+
+alert(
+"Some cart items are invalid."
+);
+
+
+
+}
+
+
+
+return valid;
+
+
+
+}
+
+
+
+
+
+// =========================================================
+// BUILD ORDER SUMMARY
+// =========================================================
+
+
+function buildOrderSummary(){
+
+
+let summary =
+
+"NEXPAK SECURITY SOLUTIONS\n\n";
+
+
+summary +=
+
+"Product Quote Request\n\n";
+
+
+
+
+
+cart.forEach(
+
+(item,index)=>{
+
+
+summary +=
+
+`${index + 1}. ${item.name}\n`;
+
+
+
+summary +=
+
+`Quantity:
+${item.quantity}\n`;
+
+
+
+summary +=
+
+`Price:
+${formatCurrency(item.price)}\n`;
+
+
+
+
+
+if(
+item.options
+){
+
+
+summary +=
+
+"Configuration:\n";
+
+
+
+Object.entries(
+item.options
+)
+
+.forEach(
+
+([key,value])=>{
+
+
+summary +=
+
+`${formatOptionName(key)}:
+${value}\n`;
+
+
+
+}
+
+);
+
+
+
+}
+
+
+
+
+if(
+
+item.extras
+
+&&
+
+item.extras.length
+
+){
+
+
+summary +=
+
+"Extras:\n";
+
+
+
+item.extras.forEach(
+
+extra=>{
+
+
+summary +=
+
+`${extra.name}\n`;
+
+
+
+}
+
+);
+
+
+
+}
+
+
+
+summary +=
+
+"\n";
+
+
+
+}
+
+);
+
+
+
+
+
+summary +=
+
+"TOTAL:\n"
+
++
+
+formatCurrency(
+getCartSubtotal()
+);
+
+
+
+return summary;
+
+
+
+}
+
+
+
+
+
+// =========================================================
+// CUSTOMER DETAILS STORAGE
+// =========================================================
+
+
+function saveCustomerDetails(){
+
+
+const customer = {
+
+
+name:
+
+document.getElementById(
+"customerName"
+)?.value || "",
+
+
+
+email:
+
+document.getElementById(
+"customerEmail"
+)?.value || "",
+
+
+
+phone:
+
+document.getElementById(
+"customerPhone"
+)?.value || "",
+
+
+
+company:
+
+document.getElementById(
+"customerCompany"
+)?.value || "",
+
+
+
+address:
+
+document.getElementById(
+"customerAddress"
+)?.value || ""
+
+
 
 };
 
-/*=========================================================
- EMPTY CART AFTER ORDER
-=========================================================*/
 
-function clearAfterOrder(){
 
-    cart = [];
+localStorage.setItem(
 
-    saveCart();
+"nexpak_customer",
 
-    renderCart();
+JSON.stringify(
+customer
+)
 
-    updateCartCount();
+);
 
-    calculateTotals();
+
 
 }
 
-/*=========================================================
- EXPORT ORDER
-=========================================================*/
 
-function exportOrder(){
 
-    const order =
-    createOrder();
 
-    console.log(order);
 
-    return order;
+// =========================================================
+// LOAD CUSTOMER DETAILS
+// =========================================================
+
+
+function loadCustomerDetails(){
+
+
+const saved =
+
+localStorage.getItem(
+"nexpak_customer"
+);
+
+
+
+if(!saved){
+
+return;
 
 }
 
-/*=========================================================
- RECOVER SAVED CUSTOMER
-=========================================================*/
 
-window.addEventListener("load",()=>{
 
-    loadCustomer();
+const customer =
+
+JSON.parse(
+saved
+);
+
+
+
+Object.entries(
+customer
+)
+
+.forEach(
+
+([key,value])=>{
+
+
+const field =
+
+document.getElementById(
+"customer" +
+
+key.charAt(0).toUpperCase()
+
++
+
+key.slice(1)
+
+);
+
+
+
+if(field){
+
+field.value =
+value;
+
+}
+
+
+
+}
+
+);
+
+
+
+}
+
+
+
+
+
+// =========================================================
+// CREATE QUOTE DATA OBJECT
+// =========================================================
+
+
+function createQuoteData(){
+
+
+return {
+
+
+company:
+
+"Nexpak Security Solutions",
+
+
+
+date:
+
+new Date()
+.toLocaleDateString(
+"en-ZA"
+),
+
+
+
+items:
+
+cart,
+
+
+
+subtotal:
+
+getCartSubtotal(),
+
+
+
+customer:
+
+JSON.parse(
+
+localStorage.getItem(
+"nexpak_customer"
+)
+
+)
+
+|| {}
+
+
+
+};
+
+
+
+}
+
+
+
+
+
+// =========================================================
+// PREPARE QUOTE
+// =========================================================
+
+
+function prepareQuote(){
+
+
+if(
+!validateCart()
+){
+
+return null;
+
+}
+
+
+
+saveCustomerDetails();
+
+
+
+const quote =
+
+createQuoteData();
+
+
+
+localStorage.setItem(
+
+"nexpak_quote",
+
+JSON.stringify(
+quote
+)
+
+);
+
+
+
+return quote;
+
+
+
+}
+
+
+
+
+
+// =========================================================
+// LOAD QUOTE DATA
+// =========================================================
+
+
+function loadQuoteData(){
+
+
+const quote =
+
+localStorage.getItem(
+"nexpak_quote"
+);
+
+
+
+if(!quote){
+
+return null;
+
+}
+
+
+
+return JSON.parse(
+quote
+);
+
+
+
+}
+
+
+
+
+
+// =========================================================
+// CLEAR QUOTE
+// =========================================================
+
+
+function clearQuote(){
+
+
+localStorage.removeItem(
+"nexpak_quote"
+);
+
+
+
+}
+
+
+
+
+
+console.log(
+
+"%cNEXPAK CART V15 PART 4 READY",
+
+"color:#00B4FF;font-size:18px;font-weight:bold;"
+
+);
+
+// =========================================================
+// NEXPAK SECURITY SOLUTIONS V15
+// cart.js
+// PART 5/5
+//
+// CHECKOUT
+// WHATSAPP QUOTE
+// EMAIL QUOTE
+// PDF QUOTE HANDOFF
+// FINAL INITIALIZATION
+// =========================================================
+
+
+
+
+// =========================================================
+// SEND CART VIA WHATSAPP
+// =========================================================
+
+
+function sendCartWhatsApp(){
+
+
+if(
+!validateCart()
+){
+
+return;
+
+}
+
+
+
+let message =
+
+buildOrderSummary();
+
+
+
+window.open(
+
+"https://wa.me/27836308249?text="
+
++
+
+encodeURIComponent(message),
+
+"_blank"
+
+);
+
+
+
+}
+
+
+
+
+
+// =========================================================
+// SEND CART VIA EMAIL
+// =========================================================
+
+
+function sendCartEmail(){
+
+
+if(
+!validateCart()
+){
+
+return;
+
+}
+
+
+
+const subject =
+
+"Security Quote Request - Nexpak Security Solutions";
+
+
+
+const body =
+
+buildOrderSummary();
+
+
+
+window.location =
+
+
+"mailto:info@nexpaksecurity.co.za"
+
++
+
+"?subject="
+
++
+
+encodeURIComponent(subject)
+
++
+
+"&body="
+
++
+
+encodeURIComponent(body);
+
+
+
+}
+
+
+
+
+
+// =========================================================
+// PROCEED TO QUOTE PAGE
+// =========================================================
+
+
+function proceedToQuote(){
+
+
+const quote =
+
+prepareQuote();
+
+
+
+if(!quote){
+
+return;
+
+}
+
+
+
+window.location =
+
+"quote.html";
+
+
+
+}
+
+
+
+
+
+// =========================================================
+// GENERATE QUOTE ID
+// =========================================================
+
+
+function generateQuoteNumber(){
+
+
+const date =
+
+new Date();
+
+
+
+const year =
+
+date.getFullYear();
+
+
+
+const month =
+
+String(
+date.getMonth()+1
+)
+
+.padStart(
+2,
+"0"
+);
+
+
+
+const day =
+
+String(
+date.getDate()
+)
+
+.padStart(
+2,
+"0"
+);
+
+
+
+const random =
+
+Math.floor(
+1000 +
+Math.random()*9000
+);
+
+
+
+return (
+
+"NEX-"
+
++
+
+year
+
++
+
+month
+
++
+
+day
+
++
+
+"-"
+
++
+
+random
+
+);
+
+
+
+}
+
+
+
+
+
+// =========================================================
+// SAVE FINAL QUOTE
+// =========================================================
+
+
+function saveFinalQuote(){
+
+
+const quote =
+
+prepareQuote();
+
+
+
+if(!quote){
+
+return;
+
+}
+
+
+
+quote.quoteNumber =
+
+generateQuoteNumber();
+
+
+
+localStorage.setItem(
+
+"nexpak_final_quote",
+
+JSON.stringify(
+quote
+)
+
+);
+
+
+
+return quote;
+
+
+
+}
+
+
+
+
+
+// =========================================================
+// CHECKOUT BUTTON HANDLER
+// =========================================================
+
+
+function checkout(){
+
+
+const quote =
+
+saveFinalQuote();
+
+
+
+if(!quote){
+
+return;
+
+}
+
+
+
+alert(
+
+"Quote prepared successfully."
+
+);
+
+
+
+window.location =
+
+"quote.html";
+
+
+
+}
+
+
+
+
+
+// =========================================================
+// CART INITIALIZATION
+// =========================================================
+
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+()=>{
+
+
+loadCart();
+
+
+displayCart();
+
+
+updateCartCounter();
+
+
+loadCustomerDetails();
+
+
 
 });
 
-/*=========================================================
- RESET CART
-=========================================================*/
 
-function resetCart(){
 
-    if(confirm("Clear your shopping cart?")){
 
-        clearCart();
 
-    }
+// =========================================================
+// EXPOSE CART DATA
+// =========================================================
 
-}
 
-/*=========================================================
- DEBUG MODE
-=========================================================*/
+function getCartTotal(){
 
-function viewCart(){
 
-    console.table(cart);
+return getCartSubtotal();
+
 
 }
 
-/*=========================================================
- CART READY
-=========================================================*/
 
-window.addEventListener("load",()=>{
 
-    loadCart();
 
-    renderCart();
 
-    updateCartCount();
+function getCartQuantity(){
 
-    calculateTotals();
 
-});
+return cart.reduce(
 
-/*=========================================================
- VERSION
-=========================================================*/
+(total,item)=>
 
-const CART_VERSION = "9.0";
+total + item.quantity,
 
-/*=========================================================
- STARTUP MESSAGE
-=========================================================*/
-
-console.log(
-
-"%cNEXPAK SECURITY SOLUTIONS",
-
-"color:#00B4FF;font-size:22px;font-weight:bold;"
+0
 
 );
 
-console.log(
 
-"%cSHOPPING CART V9 READY",
+}
 
-"color:#00CC66;font-size:18px;font-weight:bold;"
 
-);
 
-console.log(
 
-"Version:",
 
-CART_VERSION
+// =========================================================
+// FINAL MESSAGE
+// =========================================================
 
-);
 
 console.log(
 
-"Products Loaded:",
+"%cNEXPAK SECURITY SOLUTIONS V15 CART ENGINE READY",
 
-cart.length
+"color:#00B4FF;font-size:18px;font-weight:bold;"
 
 );
-
-/*=========================================================
- FEATURES
-
-✓ Product Configurator Support
-✓ Multiple Quantities
-✓ Local Storage
-✓ Customer Details
-✓ WhatsApp Quotes
-✓ Email Quotes
-✓ Discount Codes
-✓ VAT
-✓ Shipping
-✓ Order Numbers
-✓ CRM Ready
-✓ Invoice Ready
-✓ Future PayFast / Paystack Ready
-
-=========================================================*/
