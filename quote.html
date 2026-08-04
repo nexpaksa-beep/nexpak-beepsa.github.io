@@ -1,110 +1,1429 @@
+<!-- =========================================================
+ NEXPAK SECURITY SOLUTIONS V15
+ 
+ quote.html
+ 
+ PART 1/5
+ 
+ QUOTE REQUEST PAGE STRUCTURE
+ 
+========================================================= -->
+
+
 <!DOCTYPE html>
 <html lang="en">
+
+
 <head>
+
+
 <meta charset="UTF-8">
+
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Request a Quote | Nexpak Solutions</title>
 
-<style>
-:root{
-  --primary:#2563eb;
-  --dark:#0f172a;
-  --light:#f8fafc;
-  --accent:#f59e0b;
-}
 
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:var(--light);
-}
+<title>
+Request Security Equipment Quote | Nexpak Security Solutions
+</title>
 
-.hero{
-  background:linear-gradient(135deg,var(--dark),var(--primary));
-  color:white;
-  text-align:center;
-  padding:60px 20px;
-}
 
-.container{
-  max-width:800px;
-  margin:40px auto;
-  padding:20px;
-}
+<meta name="description"
+content="Request a security equipment quotation from Nexpak Security Solutions. CCTV, electric fencing, alarms, gate automation, access control and more.">
 
-.card{
-  background:white;
-  padding:25px;
-  border-radius:10px;
-  border:1px solid #e5e7eb;
-}
 
-input, textarea{
-  width:100%;
-  padding:12px;
-  margin-bottom:15px;
-  border:1px solid #d1d5db;
-  border-radius:6px;
-  box-sizing:border-box;
-}
+<link rel="stylesheet" href="CSS/style.css">
 
-button{
-  background:var(--primary);
-  color:white;
-  border:none;
-  padding:12px 20px;
-  border-radius:6px;
-  cursor:pointer;
-}
 
-button:hover{
-  background:#1d4ed8;
-}
-</style>
+<link rel="stylesheet" href="shop-styles.css">
+
+
+<link rel="canonical" href="quote.html">
+
+
+
+<!-- Open Graph -->
+
+<meta property="og:title"
+content="Request Security Quote | Nexpak Security Solutions">
+
+
+<meta property="og:description"
+content="Get a quotation for CCTV systems, electric fencing, alarms and security solutions.">
+
+
+<meta property="og:type"
+content="website">
+
+
 </head>
+
+
 
 <body>
 
-<div class="hero">
-  <h1>Request a Quote</h1>
-  <p>Tell us what packaging products you need and we'll get back to you.</p>
+
+
+<!-- =========================================================
+ HEADER
+========================================================= -->
+
+
+<header>
+
+
+<div class="logo">
+
+<a href="index.html">
+
+NEXPAK SECURITY SOLUTIONS
+
+</a>
+
 </div>
 
-<div class="container">
-  <div class="card">
 
-    <form>
 
-      <input type="text" id="product" name="product" placeholder="Product Interested In">
+<nav>
 
-      <input type="text" name="name" placeholder="Your Name" required>
 
-      <input type="email" name="email" placeholder="Email Address" required>
+<a href="index.html">
+Home
+</a>
 
-      <input type="text" name="phone" placeholder="Phone Number">
 
-      <textarea name="message" rows="5" placeholder="Quantity, specifications or requirements"></textarea>
+<a href="products.html">
+Products
+</a>
 
-      <button type="submit">Request Quote</button>
 
-    </form>
+<a href="shop.html">
+Shop
+</a>
 
-  </div>
+
+<a href="aboutus.html">
+About Us
+</a>
+
+
+<a href="contact.html">
+Contact
+</a>
+
+
+</nav>
+
+
+</header>
+
+
+
+
+
+<!-- =========================================================
+ QUOTE HERO
+========================================================= -->
+
+
+<section class="quote-hero">
+
+
+<h1>
+Request Your Security Quote
+</h1>
+
+
+<p>
+Complete the form below and our team will prepare your quotation.
+</p>
+
+
+</section>
+
+
+
+
+
+<!-- =========================================================
+ QUOTE CONTAINER START
+========================================================= -->
+
+
+<section class="quote-container">
+
+
+<div class="quote-grid">
+
+
+
+<!-- CUSTOMER FORM -->
+
+
+<div class="customer-details">
+
+
+<h2>
+Customer Details
+</h2>
+
+
+
+<form id="quoteForm">
+
+
+
+<label>
+Full Name
+</label>
+
+
+<input 
+type="text"
+id="customerName"
+placeholder="Enter your name"
+required>
+
+
+
+<label>
+Company Name
+</label>
+
+
+<input 
+type="text"
+id="companyName"
+placeholder="Company (optional)">
+
+
+
+<label>
+Email Address
+</label>
+
+
+<input 
+type="email"
+id="customerEmail"
+placeholder="Email address"
+required>
+
+
+
+<label>
+Phone / WhatsApp Number
+</label>
+
+
+<input 
+type="tel"
+id="customerPhone"
+placeholder="WhatsApp number"
+required>
+
+
+
+<label>
+Installation Address
+</label>
+
+
+<textarea
+id="customerAddress"
+placeholder="Site address"></textarea>
+
+
+
+<label>
+Additional Requirements
+</label>
+
+
+<textarea
+id="customerMessage"
+placeholder="Tell us about your security requirements"></textarea>
+
+
+
+</form>
+
+
+
 </div>
 
-<script>
-const params = new URLSearchParams(window.location.search);
-const product = params.get("product");
+  <!-- =========================================================
+ NEXPAK SECURITY SOLUTIONS V15
+ 
+ quote.html
+ 
+ PART 2/5
+ 
+ CART SUMMARY SECTION
+ 
+========================================================= -->
 
-if(product){
-  document.getElementById("product").value = product;
+
+<!-- =========================================================
+ CART SUMMARY
+========================================================= -->
+
+
+<div class="quote-summary">
+
+
+
+<h2>
+Your Quote Items
+</h2>
+
+
+
+<div id="quoteItems">
+
+
+<!-- 
+    Cart items loaded dynamically
+    from localStorage
+
+    Source:
+    cart.js
+
+    Storage:
+    nexpak_cart
+
+-->
+
+
+<p class="empty-quote">
+
+No items added to quotation yet.
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+<!-- =========================================================
+ TOTALS
+========================================================= -->
+
+
+<div class="quote-total-box">
+
+
+<div class="quote-row">
+
+
+<span>
+Subtotal
+</span>
+
+
+<strong id="quoteSubtotal">
+
+R0.00
+
+</strong>
+
+
+</div>
+
+
+
+
+<div class="quote-row">
+
+
+<span>
+Installation / Delivery
+</span>
+
+
+<strong>
+
+To be confirmed
+
+</strong>
+
+
+</div>
+
+
+
+
+<div class="quote-row total">
+
+
+<span>
+Estimated Total
+</span>
+
+
+<strong id="quoteTotal">
+
+R0.00
+
+</strong>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+<!-- =========================================================
+ QUOTE REFERENCE
+========================================================= -->
+
+
+<div class="quote-reference">
+
+
+<h3>
+Quote Reference
+</h3>
+
+
+
+<p id="quoteReference">
+
+Generating reference...
+
+</p>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- =========================================================
+ SUBMISSION AREA
+========================================================= -->
+
+
+<section class="quote-submit-section">
+
+
+<div class="submit-container">
+
+
+
+<h2>
+Submit Quote Request
+</h2>
+
+
+
+<p>
+
+Review your information and submit your quotation request.
+
+Our security team will contact you with pricing and availability.
+
+</p>
+
+
+
+<button 
+type="button"
+id="submitQuoteBtn"
+class="quote-button">
+
+
+Request Quote
+
+
+</button>
+
+
+
+<button
+type="button"
+id="whatsappQuoteBtn"
+class="whatsapp-button">
+
+
+Send via WhatsApp
+
+
+</button>
+
+
+
+</div>
+
+
+  </section>
+
+  <script>
+
+/* =========================================================
+ NEXPAK SECURITY SOLUTIONS V15
+
+ quote.html
+
+ PART 3/5
+
+ QUOTE ENGINE
+
+ FEATURES:
+
+ - Load cart from localStorage
+ - Generate quote reference
+ - Display items
+ - Calculate totals
+ - Prepare customer data
+
+========================================================= */
+
+
+
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
+
+
+loadQuoteCart();
+
+generateQuoteReference();
+
+
+});
+
+
+
+
+
+/* =========================================================
+ LOAD CART DATA
+========================================================= */
+
+
+function loadQuoteCart(){
+
+
+const cart = JSON.parse(
+
+localStorage.getItem(
+"nexpak_cart"
+)
+
+) || [];
+
+
+
+const container = document.getElementById(
+"quoteItems"
+);
+
+
+
+if(cart.length === 0){
+
+
+container.innerHTML = `
+
+<p class="empty-quote">
+
+Your cart is empty.
+
+</p>
+
+`;
+
+
+return;
+
 }
+
+
+
+let subtotal = 0;
+
+
+
+container.innerHTML = "";
+
+
+
+
+
+cart.forEach(item=>{
+
+
+const itemTotal =
+
+Number(item.price) *
+
+Number(item.quantity);
+
+
+
+subtotal += itemTotal;
+
+
+
+
+
+const itemBox = document.createElement(
+"div"
+);
+
+
+
+itemBox.className =
+"quote-item";
+
+
+
+itemBox.innerHTML = `
+
+
+<div class="quote-item-image">
+
+
+<img 
+src="${item.image}"
+alt="${item.name}"
+loading="lazy">
+
+
+</div>
+
+
+
+
+<div class="quote-item-details">
+
+
+<h3>
+
+${item.name}
+
+</h3>
+
+
+
+<p>
+
+Quantity:
+${item.quantity}
+
+</p>
+
+
+
+<p>
+
+Price:
+R${Number(item.price).toFixed(2)}
+
+</p>
+
+
+${renderOptions(item.options)}
+
+
+${renderExtras(item.extras)}
+
+
+</div>
+
+
+
+<div class="quote-item-total">
+
+R${itemTotal.toFixed(2)}
+
+</div>
+
+
+`;
+
+
+
+container.appendChild(
+itemBox
+);
+
+
+
+});
+
+
+
+
+
+document.getElementById(
+"quoteSubtotal"
+).textContent =
+
+"R" + subtotal.toFixed(2);
+
+
+
+document.getElementById(
+"quoteTotal"
+).textContent =
+
+"R" + subtotal.toFixed(2);
+
+
+
+}
+
+
+
+
+
+/* =========================================================
+ OPTIONS DISPLAY
+========================================================= */
+
+
+function renderOptions(options){
+
+
+if(!options ||
+Object.keys(options).length === 0){
+
+return "";
+
+}
+
+
+
+let html = "<ul class='quote-options'>";
+
+
+
+Object.entries(options).forEach(
+([key,value])=>{
+
+
+html += `
+
+<li>
+
+${key}:
+${value}
+
+</li>
+
+`;
+
+});
+
+
+html += "</ul>";
+
+
+
+return html;
+
+
+}
+
+
+
+
+
+/* =========================================================
+ EXTRAS DISPLAY
+========================================================= */
+
+
+function renderExtras(extras){
+
+
+if(!extras ||
+extras.length === 0){
+
+return "";
+
+}
+
+
+
+let html = `
+
+<div class="quote-extras">
+
+<strong>
+Extras:
+</strong>
+
+<ul>
+
+`;
+
+
+
+extras.forEach(extra=>{
+
+
+html += `
+
+<li>
+
+${extra.name}
+
+-
+
+R${Number(extra.price).toFixed(2)}
+
+</li>
+
+`;
+
+
+});
+
+
+
+html += `
+
+</ul>
+
+</div>
+
+`;
+
+
+
+return html;
+
+
+}
+
+
+
+
+
+/* =========================================================
+ QUOTE REFERENCE GENERATOR
+========================================================= */
+
+
+function generateQuoteReference(){
+
+
+const date = new Date();
+
+
+
+const year =
+date.getFullYear();
+
+
+
+const random =
+
+Math.floor(
+10000 +
+Math.random() *
+90000
+);
+
+
+
+const reference =
+
+"NEX-" +
+year +
+"-" +
+random;
+
+
+
+document.getElementById(
+"quoteReference"
+).textContent = reference;
+
+
+
+localStorage.setItem(
+"nexpak_quote_reference",
+reference
+);
+
+
+
+}
+
+
+  </script>
+
+  <script>
+
+/* =========================================================
+ NEXPAK SECURITY SOLUTIONS V15
+
+ quote.html
+
+ PART 4/5
+
+ QUOTE SUBMISSION ENGINE
+
+ FEATURES:
+
+ - Customer data collection
+ - WhatsApp quotation
+ - Email quotation
+ - Quote message builder
+
+========================================================= */
+
+
+
+/* =========================================================
+ COLLECT CUSTOMER DETAILS
+========================================================= */
+
+
+function getCustomerDetails(){
+
+
+return {
+
+
+name:
+
+document.getElementById(
+"customerName"
+).value,
+
+
+
+company:
+
+document.getElementById(
+"companyName"
+).value,
+
+
+
+email:
+
+document.getElementById(
+"customerEmail"
+).value,
+
+
+
+phone:
+
+document.getElementById(
+"customerPhone"
+).value,
+
+
+
+address:
+
+document.getElementById(
+"customerAddress"
+).value,
+
+
+
+message:
+
+document.getElementById(
+"customerMessage"
+).value
+
+
+};
+
+
+}
+
+
+
+
+
+/* =========================================================
+ BUILD QUOTE MESSAGE
+========================================================= */
+
+
+function buildQuoteMessage(){
+
+
+
+const customer =
+getCustomerDetails();
+
+
+
+const reference =
+
+localStorage.getItem(
+"nexpak_quote_reference"
+);
+
+
+
+const cart = JSON.parse(
+
+localStorage.getItem(
+"nexpak_cart"
+)
+
+) || [];
+
+
+
+
+
+let message = `
+
+NEXPAK SECURITY SOLUTIONS
+
+QUOTE REQUEST
+
+
+Quote Reference:
+${reference}
+
+
+
+CUSTOMER DETAILS
+
+Name:
+${customer.name}
+
+
+Company:
+${customer.company}
+
+
+Email:
+${customer.email}
+
+
+Phone:
+${customer.phone}
+
+
+Address:
+${customer.address}
+
+
+
+
+SECURITY REQUIREMENTS:
+
+${customer.message}
+
+
+
+PRODUCTS REQUESTED:
+
+
+`;
+
+
+
+
+
+cart.forEach(item=>{
+
+
+message += `
+
+
+${item.name}
+
+Quantity:
+${item.quantity}
+
+Price:
+R${Number(item.price).toFixed(2)}
+
+
+`;
+
+});
+
+
+
+
+
+message += `
+
+
+Thank you.
+
+Nexpak Security Solutions
+
+`;
+
+
+
+return message;
+
+
+}
+
+
+
+
+
+/* =========================================================
+ WHATSAPP SUBMISSION
+========================================================= */
+
+
+document.getElementById(
+"whatsappQuoteBtn"
+)
+.addEventListener(
+"click",
+()=>{
+
+
+const message =
+buildQuoteMessage();
+
+
+
+const whatsappNumber =
+
+"27820000000";
+
+
+
+const url =
+
+"https://wa.me/" +
+
+whatsappNumber +
+
+"?text=" +
+
+encodeURIComponent(
+message
+);
+
+
+
+window.open(
+url,
+"_blank"
+);
+
+
+
+});
+
+
+
+
+
+/* =========================================================
+ EMAIL SUBMISSION
+========================================================= */
+
+
+document.getElementById(
+"submitQuoteBtn"
+)
+.addEventListener(
+"click",
+()=>{
+
+
+const message =
+
+buildQuoteMessage();
+
+
+
+const email =
+
+"sales@nexpak.co.za";
+
+
+
+const subject =
+
+"Security Quote Request - " +
+
+localStorage.getItem(
+"nexpak_quote_reference"
+);
+
+
+
+
+const mailURL =
+
+"mailto:" +
+
+email +
+
+"?subject=" +
+
+encodeURIComponent(
+subject
+)
+
++
+
+"&body=" +
+
+encodeURIComponent(
+message
+);
+
+
+
+
+window.location.href =
+mailURL;
+
+
+
+});
+
+
+
+  </script>
+
+  <!-- =========================================================
+ NEXPAK SECURITY SOLUTIONS V15
+
+ quote.html
+
+ PART 5/5
+
+ FINAL STRUCTURE
+
+ - SEO SCHEMA
+ - FOOTER
+ - SCRIPT CONNECTIONS
+ - PAGE CLOSING
+
+========================================================= -->
+
+
+
+<!-- =========================================================
+ SEO STRUCTURED DATA
+========================================================= -->
+
+
+<script type="application/ld+json">
+
+
+{
+
+"@context":"https://schema.org",
+
+
+"@type":"LocalBusiness",
+
+
+"name":"Nexpak Security Solutions",
+
+
+"description":
+"Security equipment supplier providing CCTV systems, electric fencing, alarms, gate automation and access control solutions.",
+
+
+"url":"quote.html",
+
+
+"serviceType":[
+
+"CCTV Installation",
+
+"Electric Fencing",
+
+"Gate Automation",
+
+"Alarm Systems",
+
+"Access Control"
+
+]
+
+}
+
+
 </script>
 
-</body>const params = new URLSearchParams(window.location.search);
-const product = params.get("product");
 
-if(product){
-  document.getElementById("product").value = product;
-}
-</html>
+
+
+
+<!-- =========================================================
+ FOOTER
+========================================================= -->
+
+
+<footer>
+
+
+
+<div class="footer-container">
+
+
+
+<div class="footer-company">
+
+
+<h3>
+Nexpak Security Solutions
+</h3>
+
+
+<p>
+
+Professional security solutions for homes and businesses.
+
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="footer-links">
+
+
+<h3>
+Quick Links
+</h3>
+
+
+<a href="index.html">
+Home
+</a>
+
+
+<a href="shop.html">
+Shop
+</a>
+
+
+<a href="products.html">
+Products
+</a>
+
+
+<a href="contact.html">
+Contact
+</a>
+
+
+</div>
+
+
+
+
+
+<div class="footer-contact">
+
+
+<h3>
+Contact
+</h3>
+
+
+<p>
+WhatsApp:
+082 000 0000
+</p>
+
+
+<p>
+Email:
+sales@nexpak.co.za
+</p>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+<div class="copyright">
+
+
+© 2026 Nexpak Security Solutions.
+All Rights Reserved.
+
+
+</div>
+
+
+
+</footer>
+
+
+
+
+
+<!-- =========================================================
+ JAVASCRIPT FILES
+========================================================= -->
+
+
+<script src="shop-data.js"></script>
+
+
+<script src="js/cart.js"></script>
+
+
+<script src="js/configurator.js"></script>
+
+
+<script src="js/product.js"></script>
+
+
+
+
+
+<!-- =========================================================
+ PAGE END
+========================================================= -->
+
+
+</body>
+
+
+  </html>
