@@ -1,25 +1,27 @@
 /*=========================================================
- NEXPAK SECURITY SOLUTIONS V15
+ NEXPAK SECURITY SOLUTIONS V16
 
  shop-script.js
 
  PART 1/5
 
- FINAL SHOP ENGINE
-
- CLEAN INITIALIZATION
+ INITIALIZATION + GLOBAL ENGINE
 
 =========================================================*/
 
 
 
 document.addEventListener(
+
 "DOMContentLoaded",
+
 ()=>{
 
 initializeShop();
 
-});
+}
+
+);
 
 
 
@@ -28,7 +30,6 @@ initializeShop();
 /*=========================================================
  GLOBAL VARIABLES
 =========================================================*/
-
 
 let shopProducts=[];
 
@@ -40,6 +41,16 @@ let searchTerm="";
 
 let currentSort="default";
 
+let currentView=
+
+localStorage.getItem(
+"nexpak_shop_view"
+)
+
+||
+
+"grid";
+
 
 
 
@@ -47,7 +58,6 @@ let currentSort="default";
 /*=========================================================
  INITIALIZE SHOP
 =========================================================*/
-
 
 function initializeShop(){
 
@@ -61,7 +71,7 @@ typeof products==="undefined"
 
 console.error(
 
-"Product database missing."
+"Nexpak Shop Database Missing."
 
 );
 
@@ -105,11 +115,23 @@ initializeSorting();
 
 
 
+initializeViewButtons();
+
+
+
 loadURLFilters();
 
 
 
 applyFilters();
+
+
+
+console.log(
+
+"V16 Shop Initialized"
+
+);
 
 
 
@@ -123,7 +145,6 @@ applyFilters();
  DATABASE VALIDATION
 =========================================================*/
 
-
 function validateShopDatabase(){
 
 
@@ -136,7 +157,7 @@ if(
 
 console.error(
 
-"Invalid shop database."
+"Invalid Product Database"
 
 );
 
@@ -157,7 +178,6 @@ return true;
 /*=========================================================
  CATEGORY GENERATOR
 =========================================================*/
-
 
 function generateCategories(){
 
@@ -181,6 +201,10 @@ return;
 
 
 
+container.innerHTML="";
+
+
+
 const categories=[
 
 "all",
@@ -196,10 +220,6 @@ product=>product.category
 )
 
 ];
-
-
-
-container.innerHTML="";
 
 
 
@@ -251,6 +271,10 @@ button
 
 
 
+refreshCategoryButtons();
+
+
+
 }
 
 
@@ -258,9 +282,8 @@ button
 
 
 /*=========================================================
- CATEGORY FORMATTER
+ FORMAT CATEGORY
 =========================================================*/
-
 
 function formatCategoryName(category){
 
@@ -268,7 +291,7 @@ function formatCategoryName(category){
 
 if(category==="all"){
 
-return "All Products";
+return"All Products";
 
 }
 
@@ -293,23 +316,103 @@ letter=>letter.toUpperCase()
 );
 
 
+
+}
+
+
+
+
+
+/*=========================================================
+ PRODUCT HELPERS
+=========================================================*/
+
+function isConfigurable(product){
+
+
+
+return(
+
+product.options &&
+
+Object.keys(
+
+product.options
+
+).length>0
+
+);
+
+
+
+}
+
+
+
+function hasExtras(product){
+
+
+
+return(
+
+Array.isArray(
+
+product.extras
+
+)
+
+&&
+
+product.extras.length>0
+
+);
+
+
+
+}
+
+
+
+function getDisplayPrice(product){
+
+
+
+if(
+
+Number(product.basePrice)>0
+
+){
+
+return
+
+"R"+
+
+Number(
+
+product.basePrice
+
+).toLocaleString(
+
+"en-ZA"
+
+);
+
+}
+
+
+
+return"Request Quote";
+
 }
 
 /*=========================================================
- NEXPAK SECURITY SOLUTIONS V15
+ NEXPAK SECURITY SOLUTIONS V16
 
  shop-script.js
 
  PART 2/5
 
- FILTER + SEARCH ENGINE
-
- FEATURES:
-
- - Live Search
- - Category Filtering
- - Combined Filters
- - Active Button State
+ FILTERS • SEARCH • SORTING • VIEW
 
 =========================================================*/
 
@@ -321,30 +424,35 @@ letter=>letter.toUpperCase()
  INITIALIZE SHOP CONTROLS
 =========================================================*/
 
-
 function initializeShopControls(){
 
 
 
-const searchInput =
+const searchInput=
 
 document.getElementById(
+
 "shopSearch"
+
 );
 
 
 
 if(searchInput){
 
-searchInput.value = searchTerm;
+searchInput.value=
+
+searchTerm;
 
 
 
 searchInput.addEventListener(
-"input",
-(event)=>{
 
-searchTerm =
+"input",
+
+event=>{
+
+searchTerm=
 
 event.target.value
 
@@ -356,43 +464,317 @@ event.target.value
 
 applyFilters();
 
-});
+}
+
+);
 
 }
 
 
 
-const categoryButtons =
+/*-----------------------
+CATEGORY BUTTONS
+-----------------------*/
 
-document.querySelectorAll(
+document
+
+.querySelectorAll(
+
 ".category-button"
-);
 
+)
 
-
-categoryButtons.forEach(button=>{
+.forEach(button=>{
 
 button.addEventListener(
+
 "click",
+
 ()=>{
 
-activeCategory =
+activeCategory=
 
 button.dataset.category;
 
 
 
-setActiveCategoryButton(
-button
-);
+refreshCategoryButtons();
 
 
 
 applyFilters();
 
-});
+}
+
+);
 
 });
+
+
+
+}
+
+
+
+
+
+/*=========================================================
+ INITIALIZE SORTING
+=========================================================*/
+
+function initializeSorting(){
+
+
+
+const sort=
+
+document.getElementById(
+
+"productSort"
+
+);
+
+
+
+if(!sort){
+
+return;
+
+}
+
+
+
+sort.value=
+
+currentSort;
+
+
+
+sort.addEventListener(
+
+"change",
+
+()=>{
+
+currentSort=
+
+sort.value;
+
+applyFilters();
+
+}
+
+);
+
+
+
+}
+
+
+
+
+
+/*=========================================================
+ GRID / LIST VIEW
+=========================================================*/
+
+function initializeViewButtons(){
+
+
+
+const grid=
+
+document.getElementById(
+
+"gridView"
+
+);
+
+
+
+const list=
+
+document.getElementById(
+
+"listView"
+
+);
+
+
+
+if(grid){
+
+grid.addEventListener(
+
+"click",
+
+()=>{
+
+setView(
+
+"grid"
+
+);
+
+}
+
+);
+
+}
+
+
+
+if(list){
+
+list.addEventListener(
+
+"click",
+
+()=>{
+
+setView(
+
+"list"
+
+);
+
+}
+
+);
+
+}
+
+
+
+setView(
+
+currentView,
+
+false
+
+);
+
+
+
+}
+
+
+
+
+
+/*=========================================================
+ SET VIEW
+=========================================================*/
+
+function setView(
+
+view,
+
+render=true
+
+){
+
+
+
+currentView=view;
+
+
+
+localStorage.setItem(
+
+"nexpak_shop_view",
+
+view
+
+);
+
+
+
+const container=
+
+document.getElementById(
+
+"productsGrid"
+
+);
+
+
+
+if(container){
+
+container.classList.remove(
+
+"grid-view",
+
+"list-view"
+
+);
+
+
+
+container.classList.add(
+
+view+"-view"
+
+);
+
+}
+
+
+
+const grid=
+
+document.getElementById(
+
+"gridView"
+
+);
+
+const list=
+
+document.getElementById(
+
+"listView"
+
+);
+
+
+
+if(grid){
+
+grid.classList.toggle(
+
+"active",
+
+view==="grid"
+
+);
+
+}
+
+
+
+if(list){
+
+list.classList.toggle(
+
+"active",
+
+view==="list"
+
+);
+
+}
+
+
+
+if(render){
+
+renderProducts();
+
+}
+
+
 
 }
 
@@ -404,58 +786,43 @@ applyFilters();
  APPLY FILTERS
 =========================================================*/
 
-
 function applyFilters(){
 
 
 
-filteredProducts =
+filteredProducts=
 
 shopProducts.filter(product=>{
 
 
 
-/*-----------------------------
- CATEGORY FILTER
------------------------------*/
-
-const categoryMatch =
+const categoryMatch=
 
 activeCategory==="all"
 
 ||
 
-product.category===activeCategory;
+product.category===
+
+activeCategory;
 
 
 
+const searchable=(
 
+(product.name||"")
 
-/*-----------------------------
- SEARCH FILTER
------------------------------*/
++" "+
 
-const searchable =
+(product.category||"")
 
-(
++" "+
 
-(product.name || "")
+(product.description||"")
 
-+
++" "+
 
-" "
-
-+
-
-(product.category || "")
-
-+
-
-" "
-
-+
-
-(product.description || "")
+(product.id||"")
 
 )
 
@@ -463,13 +830,13 @@ const searchable =
 
 
 
-const searchMatch =
+const searchMatch=
 
 searchable.includes(
+
 searchTerm
+
 );
-
-
 
 
 
@@ -490,9 +857,16 @@ searchMatch
 
 
 sortProducts(
+
 currentSort,
+
 false
+
 );
+
+
+
+renderProducts();
 
 
 
@@ -507,128 +881,34 @@ saveShopState();
 
 
 /*=========================================================
- ACTIVE CATEGORY BUTTON
-=========================================================*/
-
-
-function setActiveCategoryButton(
-
-activeButton
-
-){
-
-
-
-document
-
-.querySelectorAll(
-".category-button"
-)
-
-.forEach(button=>{
-
-button.classList.remove(
-"active"
-);
-
-});
-
-
-
-activeButton.classList.add(
-"active"
-);
-
-
-
-}
-
-
-
-
-
-/*=========================================================
- UPDATE ACTIVE BUTTON
-=========================================================*/
-
-
-function refreshCategoryButtons(){
-
-
-
-const button =
-
-document.querySelector(
-
-`[data-category="${activeCategory}"]`
-
-);
-
-
-
-if(button){
-
-setActiveCategoryButton(
-button
-);
-
-}
-
-
-
-}
-
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS V15
-
- shop-script.js
-
- PART 3/5
-
- SORTING + PRODUCT RENDERING
-
- FEATURES:
-
- - Product sorting
- - Product rendering
- - Product cards
- - Featured badges
- - Product counter
-
-=========================================================*/
-
-
-
-
-
-/*=========================================================
  SORT PRODUCTS
 =========================================================*/
 
-
 function sortProducts(
 
-sortType = "default",
+type="default",
 
-render = true
+render=true
 
 ){
 
-currentSort = sortType;
+
+
+switch(type){
 
 
 
-switch(sortType){
-
-
-
-case "price-low":
+case"name-a-z":
 
 filteredProducts.sort(
 
 (a,b)=>
 
-Number(a.basePrice)-Number(b.basePrice)
+a.name.localeCompare(
+
+b.name
+
+)
 
 );
 
@@ -636,15 +916,17 @@ break;
 
 
 
-
-
-case "price-high":
+case"name-z-a":
 
 filteredProducts.sort(
 
 (a,b)=>
 
-Number(b.basePrice)-Number(a.basePrice)
+b.name.localeCompare(
+
+a.name
+
+)
 
 );
 
@@ -652,15 +934,17 @@ break;
 
 
 
-
-
-case "name-a-z":
+case"price-low":
 
 filteredProducts.sort(
 
 (a,b)=>
 
-a.name.localeCompare(b.name)
+Number(a.basePrice)
+
+-
+
+Number(b.basePrice)
 
 );
 
@@ -668,29 +952,47 @@ break;
 
 
 
-
-
-case "name-z-a":
+case"price-high":
 
 filteredProducts.sort(
 
 (a,b)=>
 
-b.name.localeCompare(a.name)
+Number(b.basePrice)
+
+-
+
+Number(a.basePrice)
 
 );
 
 break;
-
-
 
 
 
 default:
 
+filteredProducts.sort(
+
+(a,b)=>
+
+a.name.localeCompare(
+
+b.name
+
+)
+
+);
+
 break;
 
+
+
 }
+
+
+
+currentSort=type;
 
 
 
@@ -700,6 +1002,8 @@ renderProducts();
 
 }
 
+
+
 }
 
 
@@ -707,55 +1011,53 @@ renderProducts();
 
 
 /*=========================================================
- INITIALIZE SORTING
+ ACTIVE CATEGORY BUTTON
 =========================================================*/
 
-
-function initializeSorting(){
-
-
-
-const sortSelect=
-
-document.getElementById(
-
-"productSort"
-
-);
+function refreshCategoryButtons(){
 
 
 
-if(!sortSelect){
+document
 
-return;
+.querySelectorAll(
 
-}
+".category-button"
+
+)
+
+.forEach(button=>{
 
 
 
-sortSelect.value=currentSort;
+button.classList.toggle(
 
+"active",
 
+button.dataset.category===
 
-sortSelect.addEventListener(
-
-"change",
-
-()=>{
-
-sortProducts(
-
-sortSelect.value
-
-);
-
-}
+activeCategory
 
 );
 
 
 
+});
+
+
+
 }
+
+/*=========================================================
+ NEXPAK SECURITY SOLUTIONS V16
+
+ shop-script.js
+
+ PART 3/5
+
+ PRODUCT RENDERING ENGINE
+
+=========================================================*/
 
 
 
@@ -764,7 +1066,6 @@ sortSelect.value
 /*=========================================================
  RENDER PRODUCTS
 =========================================================*/
-
 
 function renderProducts(){
 
@@ -802,15 +1103,11 @@ container.innerHTML=`
 
 <i class="fa-solid fa-box-open"></i>
 
-<h3>
-
-No Products Found
-
-</h3>
+<h2>No Products Found</h2>
 
 <p>
 
-Try changing your search or category.
+Try another category or search term.
 
 </p>
 
@@ -830,9 +1127,13 @@ return;
 
 filteredProducts.forEach(product=>{
 
-container.innerHTML+=
+container.insertAdjacentHTML(
 
-createProductCard(product);
+"beforeend",
+
+createProductCard(product)
+
+);
 
 });
 
@@ -846,6 +1147,10 @@ filteredProducts.length
 
 
 
+preloadImages();
+
+
+
 }
 
 
@@ -856,60 +1161,79 @@ filteredProducts.length
  PRODUCT CARD
 =========================================================*/
 
-
 function createProductCard(product){
 
 
 
-const configurable =
+const configurable=
 
-product.options
-
-&&
-
-product.options.length>0;
+isConfigurable(product);
 
 
 
-const extras =
+const extras=
 
-product.extras
-
-&&
-
-product.extras.length>0;
+hasExtras(product);
 
 
 
-return `
+const price=
+
+getDisplayPrice(product);
+
+
+
+const image=
+
+product.image ||
+
+"images/product-placeholder.png";
+
+
+
+return`
 
 <div class="product-card">
 
-${configurable ?
 
-'<span class="product-badge">Configurable</span>'
+
+<div class="product-image">
+
+
+
+${product.featured ?
+
+'<span class="badge featured">Featured</span>'
 
 :
 
-''
+''}
 
-}
+
+
+${configurable ?
+
+'<span class="badge configurable">Configurable</span>'
+
+:
+
+''}
+
+
 
 ${extras ?
 
-'<span class="product-badge extra">Extras Available</span>'
+'<span class="badge extras">Extras</span>'
 
 :
 
-''
+''}
 
-}
 
-<a href="product.html?id=${product.id}">
 
 <img
 
-src="${product.image}"
+src="${image}"
 
 alt="${product.name}"
 
@@ -919,55 +1243,103 @@ onerror="this.src='images/product-placeholder.png'"
 
 >
 
-</a>
 
-<div class="product-content">
-
-<div class="product-category">
-
-${formatCategoryName(product.category)}
 
 </div>
 
-<h3>
+
+
+<div class="product-content">
+
+
+
+<div class="product-category">
+
+${formatCategoryName(
+
+product.category
+
+)}
+
+</div>
+
+
+
+<h3 class="product-name">
 
 ${product.name}
 
 </h3>
 
-<p>
+
+
+<p class="product-description">
 
 ${product.description}
 
 </p>
 
+
+
 <div class="product-price">
 
-Starting From
-
-<strong>
-
-R${Number(product.basePrice).toLocaleString("en-ZA")}
-
-</strong>
+${price}
 
 </div>
+
+
+
+<div class="product-actions">
+
+
 
 <a
 
 href="product.html?id=${product.id}"
 
-class="primary-btn">
+class="primary-btn"
 
-Configure / View
+>
+
+${configurable ?
+
+"Configure"
+
+:
+
+"View Product"}
 
 </a>
 
+
+
+<button
+
+class="secondary-btn"
+
+onclick="quickQuote('${product.id}')"
+
+>
+
+Request Quote
+
+</button>
+
+
+
 </div>
+
+
+
+</div>
+
+
 
 </div>
 
 `;
+
+
 
 }
 
@@ -978,7 +1350,6 @@ Configure / View
 /*=========================================================
  PRODUCT COUNTER
 =========================================================*/
-
 
 function updateProductCount(count){
 
@@ -998,30 +1369,80 @@ if(counter){
 
 counter.textContent=
 
-`${count} Security Products`;
+`${count} Products`;
 
 }
 
 
 
+}
+
+
+
+
+
+/*=========================================================
+ QUICK QUOTE
+=========================================================*/
+
+function quickQuote(id){
+
+
+
+window.location.href=
+
+`quote.html?product=${encodeURIComponent(id)}`;
+
+
+
+}
+
+
+
+
+
+/*=========================================================
+ PRELOAD IMAGES
+=========================================================*/
+
+function preloadImages(){
+
+
+
+filteredProducts
+
+.slice(0,10)
+
+.forEach(product=>{
+
+
+
+const img=
+
+new Image();
+
+
+
+img.src=
+
+product.image;
+
+
+
+});
+
+
+
  }
 
- /*=========================================================
- NEXPAK SECURITY SOLUTIONS V15
+/*=========================================================
+ NEXPAK SECURITY SOLUTIONS V16
 
  shop-script.js
 
  PART 4/5
 
- URL HANDLING + SHOP STATE
-
- FEATURES:
-
- - URL Parameters
- - Category Links
- - Search Links
- - Local Storage
- - Performance Helpers
+ URLS • STATE • STORAGE • HELPERS
 
 =========================================================*/
 
@@ -1033,12 +1454,11 @@ counter.textContent=
  LOAD URL PARAMETERS
 =========================================================*/
 
-
 function loadURLFilters(){
 
 
 
-const params =
+const params=
 
 new URLSearchParams(
 
@@ -1048,19 +1468,41 @@ window.location.search
 
 
 
-const category =
+const category=
 
-params.get("category");
+params.get(
 
-const search =
+"category"
 
-params.get("search");
+);
+
+
+
+const search=
+
+params.get(
+
+"search"
+
+);
+
+
+
+const sort=
+
+params.get(
+
+"sort"
+
+);
 
 
 
 if(category){
 
-activeCategory = category;
+activeCategory=
+
+category;
 
 }
 
@@ -1068,13 +1510,23 @@ activeCategory = category;
 
 if(search){
 
-searchTerm =
+searchTerm=
 
 search
 
 .toLowerCase()
 
 .trim();
+
+}
+
+
+
+if(sort){
+
+currentSort=
+
+sort;
 
 }
 
@@ -1090,18 +1542,27 @@ search
  SAVE SHOP STATE
 =========================================================*/
 
-
 function saveShopState(){
 
 
 
 const state={
 
-category:activeCategory,
+category:
 
-search:searchTerm,
+activeCategory,
 
-sort:currentSort
+search:
+
+searchTerm,
+
+sort:
+
+currentSort,
+
+view:
+
+currentView
 
 };
 
@@ -1111,7 +1572,11 @@ localStorage.setItem(
 
 "nexpak_shop_state",
 
-JSON.stringify(state)
+JSON.stringify(
+
+state
+
+)
 
 );
 
@@ -1126,7 +1591,6 @@ JSON.stringify(state)
 /*=========================================================
  RESTORE SHOP STATE
 =========================================================*/
-
 
 function restoreShopState(){
 
@@ -1152,9 +1616,15 @@ return;
 
 try{
 
+
+
 const state=
 
-JSON.parse(saved);
+JSON.parse(
+
+saved
+
+);
 
 
 
@@ -1188,9 +1658,21 @@ state.sort
 
 
 
+currentView=
+
+state.view
+
+||
+
+"grid";
+
+
+
 }
 
 catch(error){
+
+
 
 console.error(
 
@@ -1199,6 +1681,8 @@ console.error(
 error
 
 );
+
+
 
 }
 
@@ -1214,8 +1698,11 @@ error
  OPEN CATEGORY
 =========================================================*/
 
+function openCategory(
 
-function openCategory(category){
+category
+
+){
 
 
 
@@ -1232,11 +1719,14 @@ window.location.href=
 
 
 /*=========================================================
- SEARCH PAGE
+ SEARCH PRODUCTS
 =========================================================*/
 
+function searchProducts(
 
-function searchProducts(keyword){
+keyword
+
+){
 
 
 
@@ -1256,26 +1746,51 @@ window.location.href=
  PRELOAD PRODUCT IMAGES
 =========================================================*/
 
-
 function preloadImages(){
 
 
 
 filteredProducts
 
-.slice(0,8)
+.slice(
+
+0,
+
+12
+
+)
 
 .forEach(product=>{
+
+
+
+if(
+
+!product.image
+
+){
+
+return;
+
+}
+
+
 
 const image=
 
 new Image();
 
+
+
 image.src=
 
 product.image;
 
+
+
 });
+
+
 
 }
 
@@ -1284,9 +1799,8 @@ product.image;
 
 
 /*=========================================================
- REFRESH SHOP DISPLAY
+ REFRESH SHOP
 =========================================================*/
-
 
 function refreshShop(){
 
@@ -1336,233 +1850,324 @@ currentSort;
 
 
 
+setView(
+
+currentView,
+
+false
+
+);
+
+
+
 renderProducts();
 
 
 
-preloadImages();
+}
+
+
+
+
+
+/*=========================================================
+ FEATURED PRODUCTS
+=========================================================*/
+
+function loadFeaturedProducts(){
+
+
+
+const featured=
+
+shopProducts.filter(
+
+product=>
+
+product.featured===true
+
+);
+
+
+
+if(
+
+featured.length===0
+
+){
+
+return;
+
+}
+
+
+
+filteredProducts=[
+
+...featured
+
+];
+
+
+
+renderProducts();
+
+
+
+}
+
+
+
+
+
+/*=========================================================
+ CLEAR FILTERS
+=========================================================*/
+
+function clearFilters(){
+
+
+
+activeCategory=
+
+"all";
+
+
+
+searchTerm="";
+
+
+
+currentSort=
+
+"default";
+
+
+
+const input=
+
+document.getElementById(
+
+"shopSearch"
+
+);
+
+
+
+if(input){
+
+input.value="";
+
+}
+
+
+
+const sort=
+
+document.getElementById(
+
+"productSort"
+
+);
+
+
+
+if(sort){
+
+sort.value=
+
+"default";
+
+}
+
+
+
+refreshCategoryButtons();
+
+
+
+applyFilters();
 
 
 
 }
 
 /*=========================================================
- NEXPAK SECURITY SOLUTIONS V15
+ NEXPAK SECURITY SOLUTIONS V16
 
  shop-script.js
 
  PART 5/5
 
- FINAL SHOP ENGINE
-
- FEATURES:
-
- - Shop Startup
- - Public API
- - Featured Products
- - Global Functions
- - Final Initialization
+ CART + FINAL STARTUP
 
 =========================================================*/
-
-
-
 
 
 /*=========================================================
  LOAD FEATURED PRODUCTS
 =========================================================*/
 
-
 function loadFeaturedProducts(){
 
+    filteredProducts =
+    shopProducts.filter(
+        product => product.featured === true
+    );
 
-
-const featured =
-
-shopProducts.filter(
-
-product => product.featured === true
-
-);
-
-
-
-if(featured.length){
-
-filteredProducts = [...featured];
-
-renderProducts();
-
-}
+    renderProducts();
 
 }
 
 
+/*=========================================================
+ ADD PRODUCT TO CART
+=========================================================*/
 
+function addProductToCart(productId){
+
+    if(
+        typeof window.addToCart !== "function"
+    ){
+        window.location.href =
+        `product.html?id=${productId}`;
+        return;
+    }
+
+    const product =
+    shopProducts.find(
+        item => item.id == productId
+    );
+
+    if(!product){
+        return;
+    }
+
+    window.addToCart({
+        id:product.id,
+        name:product.name,
+        image:product.image,
+        price:product.basePrice,
+        quantity:1
+    });
+
+}
 
 
 /*=========================================================
  START SHOP
 =========================================================*/
 
+function startShop(){
 
-function startShopV15(){
+    refreshShop();
 
-
-
-refreshShop();
-
-
-
-console.log(
-
-"Nexpak Security Solutions V15 Shop Engine Loaded"
-
-);
-
-
+    console.log(
+        "Nexpak Security Solutions Shop V16 Loaded"
+    );
 
 }
-
-
-
 
 
 /*=========================================================
  PUBLIC SHOP API
 =========================================================*/
 
+window.NexpakShop={
 
-window.NexpakShop = {
+    filter(category){
 
+        activeCategory=category;
 
+        applyFilters();
 
-filter(category){
+    },
 
-activeCategory = category;
+    search(keyword){
 
-applyFilters();
+        searchTerm=
+        (keyword||"")
+        .toLowerCase()
+        .trim();
 
-},
+        applyFilters();
 
+    },
 
+    sort(type){
 
-search(keyword){
+        sortProducts(type);
 
-searchTerm =
+    },
 
-(keyword || "")
+    clear(){
 
-.toLowerCase()
+        activeCategory="all";
 
-.trim();
+        searchTerm="";
 
-applyFilters();
+        currentSort="default";
 
-},
+        refreshShop();
 
+        applyFilters();
 
+    },
 
-sort(type){
+    featured(){
 
-sortProducts(type);
+        loadFeaturedProducts();
 
-},
+    },
 
+    refresh(){
 
+        refreshShop();
 
-clearFilters(){
+    },
 
-activeCategory = "all";
+    reload(){
 
-searchTerm = "";
+        initializeShop();
 
-currentSort = "default";
-
-
-
-refreshShop();
-
-applyFilters();
-
-},
-
-
-
-showFeatured(){
-
-loadFeaturedProducts();
-
-},
-
-
-
-reload(){
-
-initializeShop();
-
-}
-
-
+    }
 
 };
-
-
-
 
 
 /*=========================================================
  FINAL STARTUP
 =========================================================*/
 
-
 document.addEventListener(
-
 "DOMContentLoaded",
-
 ()=>{
 
-startShopV15();
+    startShop();
 
-}
-
-);
-
-
-
+});
 
 
 /*=========================================================
- VERSION INFORMATION
+ VERSION INFO
 =========================================================*/
 
 console.info(
-
-"==================================================="
-
+"=========================================="
 );
 
 console.info(
-
 "NEXPAK SECURITY SOLUTIONS"
-
 );
 
 console.info(
-
-"SHOP ENGINE V15"
-
+"SHOP ENGINE V16"
 );
 
 console.info(
-
-"STATUS : COMPLETE"
-
+"STATUS : PRODUCTION READY"
 );
 
 console.info(
-
-"==================================================="
-
+"=========================================="
 );
