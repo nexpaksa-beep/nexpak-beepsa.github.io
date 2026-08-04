@@ -1,26 +1,29 @@
 /*=========================================================
- NEXPAK SECURITY SOLUTIONS V5
+ NEXPAK SECURITY SOLUTIONS V8
 
  products.js
 
  PART 1/5
 
- Product Database
+ PRODUCT DATABASE
+
+ CCTV SYSTEMS
 =========================================================*/
 
 
 const products = [
 
+
 /*=========================================================
- CCTV SYSTEMS
+ HIKVISION CCTV SYSTEM
 =========================================================*/
 
 
 {
 
-id:"hikvision-cctv-8ch",
+id:"hikvision-cctv-system",
 
-name:"Hikvision 8 Channel CCTV System",
+name:"Hikvision Professional CCTV System",
 
 category:"CCTV",
 
@@ -28,52 +31,89 @@ brand:"Hikvision",
 
 price:4999,
 
-image:"images/products/hikvision-cctv.jpg",
+
+image:
+"images/products/hikvision-cctv.jpg",
+
 
 
 description:
 
-"Professional HD CCTV surveillance system with DVR recorder, cameras, remote viewing and mobile monitoring.",
+"Professional Hikvision CCTV surveillance package with configurable recording channels, cameras, storage, cabling and accessories.",
+
 
 
 features:[
 
-"8 Channel DVR",
-
-"HD Cameras",
+"HD / Full HD Surveillance",
 
 "Remote Mobile Viewing",
 
-"Night Vision",
+"Night Vision Cameras",
 
-"Motion Detection"
+"Motion Detection",
+
+"Professional Security Monitoring"
 
 ],
+
 
 
 options:{
 
 
+/* CHANNEL OPTION */
+
 channel:[
 
 {
-name:"8 Channel",
+name:"8 Channel DVR System",
 price:0
 },
 
 {
-name:"16 Channel",
+name:"16 Channel DVR System",
 price:1500
 },
 
 {
-name:"32 Channel",
+name:"32 Channel DVR System",
 price:3500
 }
 
 ],
 
 
+
+/* CAMERA QUANTITY */
+
+cameraQuantity:[
+
+{
+name:"4 Cameras",
+price:0
+},
+
+{
+name:"6 Cameras",
+price:1500
+},
+
+{
+name:"8 Cameras",
+price:3000
+},
+
+{
+name:"16 Cameras",
+price:6500
+}
+
+],
+
+
+
+/* STORAGE */
 
 storage:[
 
@@ -95,6 +135,152 @@ price:1600
 {
 name:"4TB HDD",
 price:2800
+},
+
+{
+name:"8TB HDD",
+price:5500
+}
+
+],
+
+
+
+/* POWER SUPPLY */
+
+psu:[
+
+{
+name:"Single Camera PSU",
+price:0
+},
+
+{
+name:"9 Way CCTV PSU",
+price:450
+}
+
+],
+
+
+
+/* CONNECTORS */
+
+connectors:[
+
+{
+name:"Standard BNC + DC Connector Pack",
+price:0
+},
+
+{
+name:"Premium CCTV Connector Pack",
+price:350
+}
+
+],
+
+
+
+/* CABLE TYPE */
+
+cable:[
+
+{
+name:"Coax Cable 100m",
+price:850
+},
+
+{
+name:"CAT5 Cable 100m",
+price:650
+},
+
+{
+name:"CAT6 Cable 100m",
+price:850
+}
+
+],
+
+
+
+/* JUNCTION BOXES */
+
+junctionBoxes:[
+
+{
+name:"No Junction Boxes",
+price:0
+},
+
+{
+name:"Plastic Weatherproof Junction Boxes",
+price:450
+},
+
+{
+name:"Metal Junction Boxes",
+price:900
+}
+
+],
+
+
+
+/* MONITOR */
+
+monitor:[
+
+{
+name:"No Monitor",
+price:0
+},
+
+{
+name:"22 Inch Security Monitor",
+price:1800
+},
+
+{
+name:"32 Inch Security Monitor",
+price:3200
+}
+
+],
+
+
+
+/* BACKUP POWER */
+
+ups:[
+
+{
+name:"No UPS Backup",
+price:0
+},
+
+{
+name:"CCTV UPS Backup System",
+price:1500
+}
+
+],
+
+
+
+/* SURGE PROTECTION */
+
+surgeProtection:[
+
+{
+name:"No Surge Protection",
+price:0
+},
+
+{
+name:"CCTV Surge Protection Kit",
+price:750
 }
 
 ]
@@ -103,44 +289,59 @@ price:2800
 }
 
 
-},
+}
+
+];
+/*=========================================================
+ NEXPAK SECURITY SOLUTIONS V8
+
+ products.js
+
+ PART 1/6
+
+ ADVANCED PRODUCT CONFIGURATOR
+=========================================================*/
 
 
+const products = [
 
+
+/*=========================================================
+ CCTV SYSTEMS
+=========================================================*/
 
 
 {
 
-id:"dahua-cctv-system",
+id:"cctv-system",
 
-name:"Dahua CCTV Surveillance System",
+name:"Professional CCTV Security System",
 
 category:"CCTV",
 
-brand:"Dahua",
+brand:"Hikvision / Dahua",
 
-price:4599,
+price:4500,
 
-
-image:
-"images/products/dahua-cctv.jpg",
-
+image:"images/products/cctv.jpg",
 
 
 description:
 
-"Reliable Dahua CCTV solution for homes, offices, warehouses and commercial properties.",
+"Complete CCTV surveillance solution including recorder, cameras, storage and installation accessories.",
 
 
 features:[
 
-"Full HD Recording",
+"Remote Viewing",
 
-"AI Detection",
+"Night Vision",
 
-"Remote Access",
+"Motion Detection",
 
-"Weather Resistant Cameras"
+"Mobile Monitoring",
+
+"Commercial Grade"
 
 ],
 
@@ -148,45 +349,177 @@ features:[
 options:{
 
 
+
 channel:[
 
+
 {
-name:"8 Channel",
+name:"8 Channel DVR",
 price:0
 },
 
-{
-name:"16 Channel",
-price:1400
-},
 
 {
-name:"32 Channel",
-price:3200
+name:"16 Channel DVR",
+price:1800
+},
+
+
+{
+name:"32 Channel DVR",
+price:4200
 }
 
 
 ],
+
+
+
+
+camera:[
+
+
+{
+name:"4 Camera Package",
+price:0
+},
+
+
+{
+name:"8 Camera Package",
+price:2500
+},
+
+
+{
+name:"16 Camera Package",
+price:6000
+}
+
+
+],
+
 
 
 
 storage:[
 
-{
-name:"1TB HDD",
-price:900
-},
 
 {
-name:"2TB HDD",
-price:1600
+name:"No HDD",
+price:0
+},
+
+
+{
+name:"1TB Surveillance HDD",
+price:1200
+},
+
+
+{
+name:"2TB Surveillance HDD",
+price:2000
+},
+
+
+{
+name:"4TB Surveillance HDD",
+price:3500
 }
+
+
+],
+
+
+
+
+psu:[
+
+
+{
+name:"Single Power Supply",
+price:0
+},
+
+
+{
+name:"9 Way Power Supply Box",
+price:850
+}
+
+
+],
+
+
+
+
+cable:[
+
+
+{
+name:"Coax Cable 100m",
+price:750
+},
+
+
+{
+name:"CAT5 Cable 100m",
+price:950
+}
+
+
+],
+
+
+
+
+connectors:[
+
+
+{
+name:"BNC Connectors Pack",
+price:180
+},
+
+
+{
+name:"DC Connectors Pack",
+price:150
+},
+
+
+{
+name:"BNC + DC Complete Pack",
+price:300
+}
+
+
+],
+
+
+
+
+junctionBox:[
+
+
+{
+name:"Standard Junction Boxes",
+price:300
+},
+
+
+{
+name:"Weatherproof Junction Boxes",
+price:650
+}
+
 
 ]
 
 
-}
 
+}
 
 },
 
@@ -194,62 +527,70 @@ price:1600
 
 
 
+
+/*=========================================================
+ IP CCTV SYSTEMS
+=========================================================*/
+
+
 {
 
-id:"hikvision-ip-cctv",
+id:"ip-cctv-system",
 
-name:"Hikvision IP CCTV System",
+name:"Professional IP CCTV System",
 
 category:"IP CCTV",
 
-brand:"Hikvision",
+brand:"Hikvision / Dahua",
+
+price:7500,
 
 
-price:7999,
-
-
-image:
-
-"images/products/ip-cctv.jpg",
+image:"images/products/ip-cctv.jpg",
 
 
 
 description:
 
-"Advanced IP camera surveillance system with NVR recording and high resolution cameras.",
+"Advanced IP surveillance system using network cameras and NVR technology.",
 
 
 features:[
 
-"IP Cameras",
+"4K Resolution",
 
-"NVR Recorder",
+"AI Detection",
 
-"AI Analytics",
+"Network Cameras",
 
-"Remote Monitoring"
+"Remote Access"
 
 ],
+
 
 
 
 options:{
 
 
+
 channels:[
 
+
 {
-name:"8 Channel IP",
+name:"8 Channel NVR",
 price:0
 },
 
+
 {
-name:"16 Channel IP",
+name:"16 Channel NVR",
 price:2500
 },
 
+
 {
-name:"32 Channel IP",
+name:"32 Channel NVR",
 price:5500
 }
 
@@ -257,39 +598,139 @@ price:5500
 ],
 
 
-resolution:[
+
+
+cameraResolution:[
+
 
 {
-name:"4MP Cameras",
+name:"4MP IP Cameras",
 price:0
 },
 
+
 {
-name:"8MP 4K Cameras",
-price:3000
+name:"6MP IP Cameras",
+price:2500
+},
+
+
+{
+name:"8MP 4K IP Cameras",
+price:5000
 }
+
+
+],
+
+
+
+
+storage:[
+
+
+{
+name:"1TB HDD",
+price:1200
+},
+
+
+{
+name:"2TB HDD",
+price:2000
+},
+
+
+{
+name:"4TB HDD",
+price:3500
+}
+
+
+],
+
+
+
+
+poeSwitch:[
+
+
+{
+name:"No POE Switch",
+price:0
+},
+
+
+{
+name:"8 Port POE Switch",
+price:1200
+},
+
+
+{
+name:"16 Port POE Switch",
+price:2500
+}
+
+
+],
+
+
+
+
+cable:[
+
+
+{
+name:"CAT5 Cable 100m",
+price:950
+},
+
+
+{
+name:"CAT6 Cable 100m",
+price:1400
+}
+
+
+],
+
+
+
+
+junctionBox:[
+
+
+{
+name:"Standard IP Junction Box",
+price:350
+},
+
+
+{
+name:"Outdoor Waterproof Box",
+price:700
+}
+
 
 ]
 
 
-}
-
 
 }
 
 
-
-];
-/*=========================================================
- ELECTRIC FENCING SYSTEMS
+},
+ /*=========================================================
+ ELECTRIC FENCING CONFIGURATOR
 =========================================================*/
 
 
 {
 
-id:"electric-fence-builder",
+id:"electric-fencing-system",
 
-name:"Complete Electric Fence System",
+name:"Complete Electric Fence Security System",
 
 category:"Electric Fencing",
 
@@ -298,14 +739,13 @@ brand:"Nexpak Security Solutions",
 price:15000,
 
 
-image:
-"images/products/electric-fence.jpg",
+image:"images/products/electric-fence.jpg",
 
 
 
 description:
 
-"Complete electric fencing solution including fence structure, energizer, wire, accessories and security components.",
+"Complete electric fencing solution with fence structure, energizer, wire, accessories and monitoring options.",
 
 
 
@@ -313,9 +753,9 @@ features:[
 
 "Residential & Industrial Protection",
 
-"High Voltage Security",
+"Multiple Fence Designs",
 
-"Multiple Fence Configurations",
+"High Security Energizers",
 
 "Optional GSM & WiFi Monitoring"
 
@@ -327,47 +767,47 @@ options:{
 
 
 
-/*---------------------------------
+/*==============================
  FENCE STRUCTURE
----------------------------------*/
+==============================*/
 
 
-structure:[
+fenceType:[
 
 
 {
-name:"Round Bar - 6 Line",
+name:"Round Bar 6 Line",
 price:0
 },
 
 
 {
-name:"Flat Bar - 6 Line",
-price:500
+name:"Flat Bar 6 Line",
+price:600
 },
 
 
 {
-name:"Square Tube - 6 Line",
+name:"Square Tube 6 Line",
 price:1200
 },
 
 
 {
-name:"Square Tube - 8 Line",
+name:"Square Tube 8 Line",
 price:1800
 },
 
 
 {
-name:"Square Tube - 10 Line",
+name:"Square Tube 10 Line",
 price:2500
 },
 
 
 {
-name:"Square Tube - 12 Line",
-price:3200
+name:"Square Tube 12 Line",
+price:3500
 }
 
 
@@ -376,13 +816,55 @@ price:3200
 
 
 
+/*==============================
+ PROPERTY LENGTH
+==============================*/
 
-/*---------------------------------
- WIRE OPTIONS
----------------------------------*/
+
+propertyLength:[
 
 
-wire:[
+{
+name:"50 Metres",
+price:0
+},
+
+
+{
+name:"100 Metres",
+price:3000
+},
+
+
+{
+name:"150 Metres",
+price:5000
+},
+
+
+{
+name:"200 Metres",
+price:7500
+},
+
+
+{
+name:"300 Metres",
+price:10000
+}
+
+
+],
+
+
+
+
+/*==============================
+ WIRE TYPE
+==============================*/
+
+
+wireType:[
 
 
 {
@@ -393,7 +875,7 @@ price:1200
 
 {
 name:"Aluminium Solid Wire 1000m",
-price:900
+price:950
 },
 
 
@@ -414,48 +896,9 @@ price:850
 
 
 
-
-/*---------------------------------
- PROPERTY LENGTH
----------------------------------*/
-
-
-propertyLength:[
-
-
-{
-name:"50 Metres",
-price:0
-},
-
-
-{
-name:"100 Metres",
-price:2500
-},
-
-
-{
-name:"200 Metres",
-price:5000
-},
-
-
-{
-name:"300 Metres",
-price:7500
-}
-
-
-],
-
-
-
-
-
-/*---------------------------------
- ENERGIZERS
----------------------------------*/
+/*==============================
+ ENERGIZER
+==============================*/
 
 
 energizer:[
@@ -469,19 +912,19 @@ price:0
 
 {
 name:"4 Joule Energizer",
-price:1500
+price:1800
 },
 
 
 {
 name:"8 Joule Energizer",
-price:3000
+price:3500
 },
 
 
 {
 name:"14 Joule Energizer",
-price:5500
+price:6000
 }
 
 
@@ -490,10 +933,66 @@ price:5500
 
 
 
+/*==============================
+ TENSIONERS
+==============================*/
 
-/*---------------------------------
- EARTH SPIKES
----------------------------------*/
+
+tensioner:[
+
+
+{
+name:"Standard Tensioner",
+price:10
+},
+
+
+{
+name:"Heavy Duty Tensioner",
+price:20
+},
+
+
+{
+name:"Stainless Steel Tensioner",
+price:35
+}
+
+
+],
+
+
+
+
+tensionerQuantity:[
+
+
+{
+name:"100 Units",
+price:0
+},
+
+
+{
+name:"200 Units",
+price:500
+},
+
+
+{
+name:"500 Units",
+price:1200
+}
+
+
+],
+
+
+
+
+/*==============================
+ EARTH SPIKE
+==============================*/
 
 
 earthSpike:[
@@ -507,7 +1006,7 @@ price:250
 
 {
 name:"1.2m Copper Plated Earth Spike",
-price:450
+price:500
 }
 
 
@@ -516,30 +1015,24 @@ price:450
 
 
 
-
-/*---------------------------------
- TENSIONERS
----------------------------------*/
-
-
-tensioners:[
+earthSpikeQuantity:[
 
 
 {
-name:"Standard Tensioner",
-price:10
+name:"1 Spike",
+price:0
 },
 
 
 {
-name:"Heavy Duty Tensioner",
-price:18
+name:"3 Spikes",
+price:500
 },
 
 
 {
-name:"Stainless Steel Tensioner",
-price:25
+name:"5 Spikes",
+price:900
 }
 
 
@@ -548,10 +1041,40 @@ price:25
 
 
 
+/*==============================
+ HOOKS
+==============================*/
 
-/*---------------------------------
+
+hooks:[
+
+
+{
+name:"Fence Hooks 100 Pack",
+price:150
+},
+
+
+{
+name:"Fence Hooks 500 Pack",
+price:600
+},
+
+
+{
+name:"Fence Hooks 1000 Pack",
+price:1000
+}
+
+
+],
+
+
+
+
+/*==============================
  WARNING SIGNS
----------------------------------*/
+==============================*/
 
 
 warningSigns:[
@@ -574,23 +1097,42 @@ price:90
 
 
 
+warningQuantity:[
 
-/*---------------------------------
+
+{
+name:"10 Signs",
+price:0
+},
+
+
+{
+name:"20 Signs",
+price:500
+}
+
+
+],
+
+
+
+
+/*==============================
  NAIL IN ANCHORS
----------------------------------*/
+==============================*/
 
 
 anchors:[
 
 
 {
-name:"6x60 Nail In Anchors - 100 Pack",
+name:"6x60 Nail In Anchors 100 Pack",
 price:450
 },
 
 
 {
-name:"8x80 Nail In Anchors - 100 Pack",
+name:"8x80 Nail In Anchors 100 Pack",
 price:650
 }
 
@@ -600,35 +1142,34 @@ price:650
 
 
 
-
-/*---------------------------------
+/*==============================
  HT CABLE
----------------------------------*/
+==============================*/
 
 
 htCable:[
 
 
 {
-name:"HT Cable Soft 50m",
+name:"Soft HT Cable 50m",
 price:350
 },
 
 
 {
-name:"HT Cable Soft 100m",
+name:"Soft HT Cable 100m",
 price:650
 },
 
 
 {
-name:"HT Cable Hard 100m",
+name:"Hard HT Cable 100m",
 price:900
 },
 
 
 {
-name:"HT Cable Hard 200m",
+name:"Hard HT Cable 200m",
 price:1600
 }
 
@@ -638,36 +1179,209 @@ price:1600
 
 
 
-
-/*---------------------------------
+/*==============================
  FERRULES
----------------------------------*/
+==============================*/
 
 
 ferrules:[
 
 
 {
-name:"Aluminium Ferrules 6mm - 100 Pack",
+name:"Aluminium Ferrules 6mm 100 Pack",
 price:180
 },
 
 
 {
-name:"Aluminium Ferrules 10mm - 100 Pack",
+name:"Aluminium Ferrules 10mm 100 Pack",
 price:250
 },
 
 
 {
-name:"Solid Ferrules 6mm - 100 Pack",
-price:300
+name:"Solid Ferrules 6mm 100 Pack",
+price:350
 },
 
 
 {
-name:"Solid Ferrules 10mm - 100 Pack",
+name:"Solid Ferrules 10mm 100 Pack",
+price:500
+}
+
+
+],
+
+
+
+
+/*==============================
+ GATE CONTACT
+==============================*/
+
+
+gateContact:[
+
+
+{
+name:"Single Gate Contact",
 price:450
+},
+
+
+{
+name:"Double Gate Contact",
+price:850
+}
+
+
+],
+
+
+
+
+/*==============================
+ EARTH LOOP
+==============================*/
+
+
+earthLoop:[
+
+
+{
+name:"Stainless Steel Earth Loop",
+price:250
+},
+
+
+{
+name:"Aluminium Earth Loop",
+price:180
+},
+
+
+{
+name:"Galvanised Earth Loop",
+price:150
+}
+
+
+],
+
+
+
+
+/*==============================
+ ENCLOSURE BOX
+==============================*/
+
+
+enclosure:[
+
+
+{
+name:"430 Enclosure Box",
+price:900
+},
+
+
+{
+name:"530 Enclosure Box",
+price:1400
+}
+
+
+],
+
+
+
+
+/*==============================
+ CONNECTIVITY
+==============================*/
+
+
+connectivity:[
+
+
+{
+name:"No Module",
+price:0
+},
+
+
+{
+name:"WiFi Module",
+price:1500
+},
+
+
+{
+name:"GSM Module",
+price:2200
+}
+
+
+],
+
+
+
+
+/*==============================
+ CABLE CORE
+==============================*/
+
+
+cable:[
+
+
+{
+name:"4 Core Cable 100m",
+price:800
+},
+
+
+{
+name:"6 Core Cable 100m",
+price:1100
+},
+
+
+{
+name:"8 Core Cable 100m",
+price:1500
+}
+
+
+],
+
+
+
+
+/*==============================
+ ACCESSORIES
+==============================*/
+
+
+extras:[
+
+
+{
+name:"Siren",
+price:600
+},
+
+
+{
+name:"Stone Siren",
+price:750
+},
+
+
+{
+name:"Keypad",
+price:1200
 }
 
 
@@ -676,56 +1390,103 @@ price:450
 
 
 }
+
+
 },
-/*=========================================================
- GATE AUTOMATION SYSTEMS
+ /*=========================================================
+ GATE AUTOMATION CONFIGURATOR
 =========================================================*/
 
 
 {
 
-id:"centurion-d5-evo",
 
-name:"Centurion D5 Evo Sliding Gate Motor",
+id:"gate-automation",
 
-category:"Gate Automation",
+name:"Centurion Gate Automation Systems",
+
+category:"Gate Motors",
 
 brand:"Centurion",
 
 price:8500,
 
 
-image:
-"images/products/centurion-d5-evo.jpg",
+image:"images/products/gate-motor.jpg",
 
 
 
 description:
 
-"Heavy duty sliding gate motor designed for residential and commercial applications. Includes intelligent control technology and reliable operation.",
+"Professional sliding gate automation solutions with battery backup, rack options and smart connectivity.",
 
 
 
 features:[
 
-"Sliding Gate Automation",
+"Residential & Commercial Use",
 
 "Battery Backup",
 
-"Remote Control Compatible",
+"Remote Control",
 
-"High Security Locking",
+"Solar Compatible",
 
-"Solar Compatible"
+"Smart Connectivity"
 
 ],
+
 
 
 
 options:{
 
 
+
+/*==============================
+ MOTOR MODEL
+==============================*/
+
+
+motorModel:[
+
+
+{
+name:"Centurion D5 Evo",
+price:0
+},
+
+
+{
+name:"Centurion D5 Smart",
+price:2500
+},
+
+
+{
+name:"Centurion D10 Smart",
+price:6000
+},
+
+
+{
+name:"Centurion D10 Turbo",
+price:10000
+}
+
+
+],
+
+
+
+
+/*==============================
+ BATTERY OPTIONS
+==============================*/
+
+
 battery:[
+
 
 {
 name:"Standard 7Ah Battery",
@@ -735,145 +1496,22 @@ price:0
 
 {
 name:"9 Amp Gel Battery",
-price:800
-}
-
-],
-
-
-
-rack:[
-
-{
-name:"Nylon Rack",
-price:0
-},
-
-
-{
-name:"Steel Rack",
-price:120
-}
-
-],
-
-
-
-rackLength:[
-
-{
-name:"4 Metre Rack",
-price:0
-},
-
-
-{
-name:"6 Metre Rack",
-price:250
-},
-
-
-{
-name:"8 Metre Rack",
-price:500
-}
-
-],
-
-
-
-accessories:[
-
-{
-name:"2 Button Remote",
-price:350
-},
-
-
-{
-name:"4 Button Remote",
-price:550
-},
-
-
-{
-name:"Additional Receiver",
 price:900
 }
 
-]
-
-
-}
-
-
-},
-
-
-
-
-
-
-
-{
-
-id:"centurion-d5-smart",
-
-name:"Centurion D5 Smart Gate Motor",
-
-category:"Gate Automation",
-
-brand:"Centurion",
-
-price:10500,
-
-
-image:
-"images/products/d5-smart.jpg",
-
-
-
-description:
-
-"Smart sliding gate automation solution with advanced connectivity and improved security features.",
-
-
-
-features:[
-
-"Smart Technology",
-
-"Mobile Connectivity",
-
-"Battery Backup",
-
-"Residential Security"
 
 ],
 
 
 
-options:{
+
+/*==============================
+ RACK TYPE
+==============================*/
 
 
-battery:[
+rackType:[
 
-{
-name:"7Ah Battery",
-price:0
-},
-
-
-{
-name:"9 Amp Gel Battery",
-price:850
-}
-
-],
-
-
-
-rack:[
 
 {
 name:"Nylon Rack",
@@ -886,119 +1524,19 @@ name:"Steel Rack",
 price:150
 }
 
+
 ],
 
+
+
+
+/*==============================
+ RACK LENGTH
+==============================*/
 
 
 rackLength:[
 
-{
-name:"4 Metre Rack",
-price:0
-},
-
-
-{
-name:"6 Metre Rack",
-price:250
-},
-
-
-{
-name:"8 Metre Rack",
-price:500
-}
-
-]
-
-
-}
-
-
-},
-
-
-
-
-
-
-
-{
-
-id:"centurion-d10-smart",
-
-name:"Centurion D10 Smart Gate Motor",
-
-category:"Gate Automation",
-
-brand:"Centurion",
-
-price:14500,
-
-
-image:
-"images/products/d10-smart.jpg",
-
-
-
-description:
-
-"High performance sliding gate automation system for heavier gates and commercial applications.",
-
-
-
-features:[
-
-"Heavy Duty Operation",
-
-"Smart Control",
-
-"High Security",
-
-"Large Gate Capacity"
-
-],
-
-
-
-options:{
-
-
-battery:[
-
-{
-name:"7Ah Battery",
-price:0
-},
-
-
-{
-name:"9 Amp Gel Battery",
-price:1000
-}
-
-],
-
-
-
-rack:[
-
-{
-name:"Nylon Rack",
-price:0
-},
-
-
-{
-name:"Steel Rack",
-price:180
-}
-
-],
-
-
-
-rackLength:[
 
 {
 name:"4 Metre Rack",
@@ -1017,156 +1555,182 @@ name:"8 Metre Rack",
 price:600
 }
 
-]
-
-
-}
-
-
-},
-
-
-
-
-
-
-
-{
-
-id:"centurion-d10-turbo",
-
-name:"Centurion D10 Turbo Gate Motor",
-
-category:"Gate Automation",
-
-brand:"Centurion",
-
-price:18500,
-
-
-image:
-"images/products/d10-turbo.jpg",
-
-
-
-description:
-
-"Premium high speed gate automation solution for industrial and high traffic applications.",
-
-
-
-features:[
-
-"Turbo Speed Operation",
-
-"Industrial Grade",
-
-"Advanced Safety Features",
-
-"Smart Control Ready"
 
 ],
 
 
 
-options:{
+
+/*==============================
+ REMOTES
+==============================*/
 
 
-battery:[
+remote:[
+
 
 {
-name:"7Ah Battery",
+name:"1 x Remote",
 price:0
 },
 
 
 {
-name:"9 Amp Gel Battery",
-price:1200
+name:"2 x Remotes",
+price:500
+},
+
+
+{
+name:"4 x Remotes",
+price:900
 }
+
 
 ],
 
 
 
-rack:[
+
+/*==============================
+ SAFETY OPTIONS
+==============================*/
+
+
+safety:[
+
 
 {
-name:"Nylon Rack",
+name:"No Safety Beam",
 price:0
 },
 
 
 {
-name:"Steel Rack",
-price:200
-}
-
-],
-
-
-
-rackLength:[
-
-{
-name:"4 Metre Rack",
-price:0
-},
-
-
-{
-name:"6 Metre Rack",
-price:350
-},
-
-
-{
-name:"8 Metre Rack",
-price:700
-}
-
-],
-
-
-
-extras:[
-
-
-{
-name:"Infrared Safety Beams",
+name:"Infrared Safety Beam",
 price:1200
 },
 
 
 {
-name:"GSM Module",
+name:"Heavy Duty Safety Beam",
 price:1800
+}
+
+
+],
+
+
+
+
+/*==============================
+ ACCESS CONTROL
+==============================*/
+
+
+accessControl:[
+
+
+{
+name:"Standard Receiver",
+price:0
 },
 
 
 {
-name:"WiFi Module",
-price:1500
+name:"Keypad Entry",
+price:1200
+},
+
+
+{
+name:"GSM Remote Access",
+price:2200
+},
+
+
+{
+name:"WiFi Smart Module",
+price:1800
+}
+
+
+],
+
+
+
+
+/*==============================
+ SOLAR OPTIONS
+==============================*/
+
+
+solar:[
+
+
+{
+name:"No Solar Backup",
+price:0
+},
+
+
+{
+name:"Solar Ready Kit",
+price:2500
+},
+
+
+{
+name:"Complete Solar System",
+price:6500
+}
+
+
+],
+
+
+
+
+/*==============================
+ INSTALLATION
+==============================*/
+
+
+installation:[
+
+
+{
+name:"Supply Only",
+price:0
+},
+
+
+{
+name:"Professional Installation",
+price:2500
 }
 
 
 ]
 
 
+
 }
 
 
+
 },
-/*=========================================================
- ROBOGUARD SECURITY SYSTEMS
+ /*=========================================================
+ ROBOGUARD OUTDOOR SECURITY CONFIGURATOR
 =========================================================*/
 
 
 {
 
-id:"roboguard-beam-system",
 
-name:"Roboguard Wireless Outdoor Beam System",
+id:"roboguard-system",
+
+name:"Roboguard Wireless Perimeter Security System",
 
 category:"Outdoor Security",
 
@@ -1175,32 +1739,37 @@ brand:"Roboguard",
 price:3999,
 
 
-image:
-"images/products/roboguard.jpg",
+image:"images/products/roboguard.jpg",
 
 
 
 description:
 
-"Wireless outdoor perimeter security system with selectable beam configurations and colour options.",
+"Wireless outdoor beam detection system with multiple beam configurations and colour options.",
 
 
 
 features:[
 
-"Wireless Detection",
+"Wireless Outdoor Detection",
 
-"Outdoor Protection",
+"Long Range Protection",
 
-"Long Range Detection",
+"Low Maintenance",
 
-"Low Maintenance"
+"Multiple Beam Options"
 
 ],
 
 
 
 options:{
+
+
+
+/*==============================
+ BEAM KIT
+==============================*/
 
 
 beamKit:[
@@ -1229,6 +1798,11 @@ price:3000
 
 
 
+/*==============================
+ COLOUR SELECTOR
+==============================*/
+
+
 colour:[
 
 
@@ -1254,13 +1828,38 @@ price:0
 
 
 
-extras:[
+
+/*==============================
+ RECEIVER
+==============================*/
+
+
+receiver:[
 
 
 {
-name:"Additional Receiver",
-price:850
+name:"Standard Receiver",
+price:0
 },
+
+
+{
+name:"Advanced Receiver",
+price:1200
+}
+
+
+],
+
+
+
+
+/*==============================
+ ACCESSORIES
+==============================*/
+
+
+accessories:[
 
 
 {
@@ -1270,19 +1869,26 @@ price:450
 
 
 {
-name:"Battery Pack",
+name:"Extra Battery Pack",
 price:350
+},
+
+
+{
+name:"Outdoor Siren",
+price:900
 }
 
 
 ]
 
 
+
 }
 
 
-},
 
+},
 
 
 
@@ -1290,45 +1896,31 @@ price:350
 
 
 /*=========================================================
- ALARM SYSTEMS
+ ALARM SYSTEM CONFIGURATOR
 =========================================================*/
 
 
 {
 
-id:"ajax-alarm-system",
 
-name:"Ajax Wireless Alarm System",
+id:"alarm-system",
+
+name:"Smart Alarm System",
 
 category:"Alarm Systems",
 
-brand:"Ajax",
+brand:"Ajax / Paradox",
 
-price:6999,
+price:6500,
 
 
-image:
-"images/products/ajax-alarm.jpg",
+image:"images/products/alarm.jpg",
 
 
 
 description:
 
-"Professional wireless alarm system with smart detection, mobile alerts and security automation.",
-
-
-
-features:[
-
-"Wireless Sensors",
-
-"Mobile Notifications",
-
-"Smart Hub",
-
-"Remote Control"
-
-],
+"Professional alarm system with sensors, keypad, sirens and smart monitoring options.",
 
 
 
@@ -1336,24 +1928,18 @@ options:{
 
 
 
-hub:[
+controlPanel:[
 
 
 {
-name:"Ajax Hub",
+name:"Basic Alarm Panel",
 price:0
 },
 
 
 {
-name:"Ajax Hub Plus",
+name:"Smart Alarm Hub",
 price:2500
-},
-
-
-{
-name:"Ajax Hub 2",
-price:3500
 }
 
 
@@ -1361,28 +1947,56 @@ price:3500
 
 
 
-sensor:[
+
+keypad:[
+
+
+{
+name:"No Keypad",
+price:0
+},
+
+
+{
+name:"Wireless Keypad",
+price:1200
+},
+
+
+{
+name:"Touch Screen Keypad",
+price:2500
+}
+
+
+],
+
+
+
+
+sensors:[
 
 
 {
 name:"Door Contact",
-price:500
+price:350
 },
 
 
 {
-name:"Motion Sensor",
-price:850
+name:"PIR Motion Sensor",
+price:550
 },
 
 
 {
-name:"Glass Break Sensor",
-price:950
+name:"Outdoor Beam Sensor",
+price:1200
 }
 
 
 ],
+
 
 
 
@@ -1391,24 +2005,57 @@ siren:[
 
 {
 name:"Indoor Siren",
-price:800
+price:500
 },
 
 
 {
 name:"Outdoor Siren",
+price:1200
+},
+
+
+{
+name:"Stone Siren",
+price:900
+}
+
+
+],
+
+
+
+
+monitoring:[
+
+
+{
+name:"No Monitoring",
+price:0
+},
+
+
+{
+name:"GSM Monitoring",
 price:1500
+},
+
+
+{
+name:"WiFi Monitoring",
+price:1200
 }
 
 
 ]
 
 
+
 }
 
 
-},
 
+},
 
 
 
@@ -1416,45 +2063,31 @@ price:1500
 
 
 /*=========================================================
- ACCESS CONTROL
+ ACCESS CONTROL CONFIGURATOR
 =========================================================*/
 
 
 {
 
-id:"biometric-access-control",
 
-name:"Biometric Access Control System",
+id:"access-control",
+
+name:"Access Control Security System",
 
 category:"Access Control",
 
-brand:"Nexpak Security Solutions",
+brand:"Nexpak",
 
 price:4500,
 
 
-image:
-"images/products/access-control.jpg",
+image:"images/products/access-control.jpg",
 
 
 
 description:
 
-"Secure biometric and RFID access control solution for offices, warehouses and restricted areas.",
-
-
-
-features:[
-
-"Fingerprint Access",
-
-"RFID Cards",
-
-"User Management",
-
-"Attendance Tracking"
-
-],
+"Secure access management systems for offices, warehouses and residential properties.",
 
 
 
@@ -1466,43 +2099,25 @@ reader:[
 
 
 {
-name:"Fingerprint Reader",
+name:"RFID Reader",
 price:0
 },
 
 
 {
-name:"Fingerprint + RFID",
+name:"Fingerprint Reader",
 price:1200
 },
 
 
 {
-name:"Face Recognition",
+name:"Face Recognition Reader",
 price:3500
 }
 
 
 ],
 
-
-
-installation:[
-
-
-{
-name:"Indoor Installation",
-price:0
-},
-
-
-{
-name:"Outdoor Weatherproof Installation",
-price:1500
-}
-
-
-],
 
 
 
@@ -1521,75 +2136,22 @@ price:1200
 }
 
 
-]
-
-
-}
-
-
-},
-
-
-
-
-
-
-
-/*=========================================================
- KEYPADS & SENSORS
-=========================================================*/
-
-
-{
-
-id:"security-accessories",
-
-name:"Security Accessories",
-
-category:"Security Accessories",
-
-brand:"Nexpak",
-
-price:350,
-
-
-image:
-"images/products/security-accessories.jpg",
-
-
-
-description:
-
-"Additional security accessories including keypads, sirens, sensors and control equipment.",
-
-
-
-features:[
-
-"Security Expansion",
-
-"Compatible Equipment",
-
-"Professional Grade"
-
 ],
 
 
 
-options:{
 
-
-keypad:[
+exitButton:[
 
 
 {
-name:"Standard Keypad",
-price:0
+name:"Standard Exit Button",
+price:250
 },
 
 
 {
-name:"Wireless Keypad",
+name:"No Touch Exit Button",
 price:650
 }
 
@@ -1598,18 +2160,94 @@ price:650
 
 
 
-siren:[
+
+cards:[
 
 
 {
-name:"Indoor Siren",
-price:400
+name:"10 RFID Cards",
+price:300
 },
 
 
 {
-name:"Outdoor Siren",
-price:900
+name:"50 RFID Cards",
+price:1200
+}
+
+
+]
+
+
+
+}
+
+
+
+},
+
+
+
+
+
+
+/*=========================================================
+ SECURITY ACCESSORIES
+=========================================================*/
+
+
+{
+
+
+id:"security-accessories",
+
+name:"Security Accessories",
+
+category:"Accessories",
+
+brand:"Nexpak",
+
+price:300,
+
+
+image:"images/products/accessories.jpg",
+
+
+
+description:
+
+"Additional security equipment including sirens, sensors, cables and accessories.",
+
+
+
+options:{
+
+
+
+accessoryType:[
+
+
+{
+name:"Siren",
+price:500
+},
+
+
+{
+name:"Keypad",
+price:1200
+},
+
+
+{
+name:"Sensor",
+price:350
+},
+
+
+{
+name:"Gate Contact",
+price:450
 }
 
 
@@ -1617,58 +2255,53 @@ price:900
 
 
 
-sensor:[
+quantity:[
 
 
 {
-name:"PIR Motion Sensor",
-price:350
+name:"1 Unit",
+price:0
 },
 
 
 {
-name:"Door Sensor",
-price:250
+name:"5 Units",
+price:1200
 },
 
 
 {
-name:"Beam Sensor",
-price:750
+name:"10 Units",
+price:2500
 }
 
 
 ]
 
 
+
 }
 
 
-},
-/*=========================================================
- PRODUCT FUNCTIONS
- PART 5/5
 
- SHOP LOADER
- PRODUCT PAGE ENGINE
+},
+ /*=========================================================
+ PRODUCT ENGINE
+ PART 6/6
 =========================================================*/
 
 
 
-//=========================================================
-// GET PRODUCT BY ID
-//=========================================================
+/*=========================================================
+ FIND PRODUCT
+=========================================================*/
 
 
 function getProductById(id){
 
-
-    return products.find(product =>
-
+    return products.find(product => 
         product.id === id
-
     );
-
 
 }
 
@@ -1677,503 +2310,17 @@ function getProductById(id){
 
 
 
-//=========================================================
-// LOAD SHOP PRODUCTS
-//=========================================================
+/*=========================================================
+ LOAD SHOP PRODUCTS
+=========================================================*/
 
 
 function loadProducts(){
 
 
-    const container =
-
-    document.querySelector(
-    ".products-grid"
-    );
-
-
-
-    if(!container) return;
-
-
-
-    container.innerHTML="";
-
-
-
-    products.forEach(product=>{
-
-
-        container.innerHTML += `
-
-
-        <div class="product-card">
-
-
-            <img src="${product.image}"
-            alt="${product.name}">
-
-
-
-            <div class="product-content">
-
-
-            <span class="badge">
-
-            ${product.category}
-
-            </span>
-
-
-
-            <h3>
-
-            ${product.name}
-
-            </h3>
-
-
-
-            <p>
-
-            ${product.description.substring(0,120)}
-            ...
-
-            </p>
-
-
-
-            <div class="price">
-
-            <span class="current-price">
-
-            R${product.price}
-
-            </span>
-
-            </div>
-
-
-
-
-            <div class="product-buttons">
-
-
-            <a href="product.html?id=${product.id}"
-            class="quote-btn">
-
-            View Details
-
-            </a>
-
-
-
-            <button onclick="quickAdd('${product.id}')"
-            class="cart-btn">
-
-            Add Cart
-
-            </button>
-
-
-
-            </div>
-
-
-            </div>
-
-
-        </div>
-
-
-        `;
-
-
-    });
-
-
-}
-
-
-
-
-
-
-
-//=========================================================
-// PRODUCT DETAIL PAGE
-//=========================================================
-
-
-function loadProductDetails(){
-
-
-
-    const params =
-
-    new URLSearchParams(
-    window.location.search
-    );
-
-
-
-    const id =
-
-    params.get("id");
-
-
-
-    const product =
-
-    getProductById(id);
-
-
-
-    if(!product) return;
-
-
-
-
-    document.querySelector(
-    ".product-title"
-    ).innerHTML = product.name;
-
-
-
-    document.querySelector(
-    ".product-image"
-    ).src = product.image;
-
-
-
-    document.querySelector(
-    ".product-description"
-    ).innerHTML =
-    product.description;
-
-
-
-    generateOptions(product);
-
-
-
-}
-
-
-
-
-
-
-
-
-//=========================================================
-// CREATE PRODUCT OPTIONS
-//=========================================================
-
-
-function generateOptions(product){
-
-
-const area =
-
-document.querySelector(
-".product-options"
-);
-
-
-
-if(!area) return;
-
-
-
-area.innerHTML="";
-
-
-
-if(!product.options) return;
-
-
-
-Object.keys(product.options)
-.forEach(option=>{
-
-
-
-let html = `
-
-<label>
-
-${option}
-
-</label>
-
-
-<select data-option="${option}">
-
-`;
-
-
-
-product.options[option]
-.forEach(choice=>{
-
-
-html += `
-
-
-<option value="${choice.name}"
-data-price="${choice.price}">
-
-
-${choice.name}
-(+R${choice.price})
-
-
-</option>
-
-
-`;
-
-
-
-});
-
-
-
-html += `
-
-</select>
-
-`;
-
-
-
-area.innerHTML += html;
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-//=========================================================
-// QUICK ADD TO CART
-//=========================================================
-
-
-function quickAdd(id){
-
-
-
-const product =
-
-getProductById(id);
-
-
-
-if(!product) return;
-
-
-
-
-const item = {
-
-
-id:product.id,
-
-
-name:product.name,
-
-
-image:product.image,
-
-
-price:product.price,
-
-
-quantity:1,
-
-
-options:{}
-
-
-
-};
-
-
-
-addToCart(item);
-
-
-
-alert(
-
-product.name +
-
-" added to cart"
-
-);
-
-
-
-}
-
-
-
-
-
-
-
-//=========================================================
-// ADD CONFIGURED PRODUCT
-//=========================================================
-
-
-function addConfiguredProduct(){
-
-
-
-const params =
-
-new URLSearchParams(
-window.location.search
-);
-
-
-
-const product =
-
-getProductById(
-params.get("id")
-);
-
-
-
-if(!product) return;
-
-
-
-
-let finalPrice = product.price;
-
-
-
-let selectedOptions={};
-
-
-
-
-document
-.querySelectorAll(
-".product-options select"
-)
-
-.forEach(select=>{
-
-
-const selected =
-
-select.options[
-select.selectedIndex
-];
-
-
-
-const extra =
-
-Number(
-selected.dataset.price
-);
-
-
-
-finalPrice += extra;
-
-
-
-selectedOptions[
-select.dataset.option
-]
-=
-selected.value;
-
-
-
-});
-
-
-
-
-
-
-const item={
-
-
-
-id:product.id,
-
-
-name:product.name,
-
-
-image:product.image,
-
-
-price:finalPrice,
-
-
-quantity:1,
-
-
-options:selectedOptions
-
-
-
-};
-
-
-
-addToCart(item);
-
-
-
-alert(
-"Added to cart"
-);
-
-
-
-}
-
-
-
-
-
-
-
-//=========================================================
-// CATEGORY FILTER
-//=========================================================
-
-
-function filterProducts(category){
-
-
-
-const container =
-
-document.querySelector(
+const container = document.querySelector(
 ".products-grid"
 );
-
 
 
 if(!container) return;
@@ -2184,15 +2331,7 @@ container.innerHTML="";
 
 
 
-products
-
-.filter(product=>
-
-product.category === category
-
-)
-
-.forEach(product=>{
+products.forEach(product=>{
 
 
 container.innerHTML += `
@@ -2201,22 +2340,81 @@ container.innerHTML += `
 <div class="product-card">
 
 
-<img src="${product.image}">
+
+<img src="${product.image}"
+alt="${product.name}">
+
+
+
+<div class="product-content">
+
+
+
+<span class="badge">
+
+${product.category}
+
+</span>
+
 
 
 <h3>
+
 ${product.name}
+
 </h3>
 
 
+
 <p>
-R${product.price}
+
+${product.description.substring(0,140)}
+
+...
+
 </p>
 
 
-<a href="product.html?id=${product.id}">
-View
+
+<div class="price">
+
+<span class="current-price">
+
+R${product.price.toLocaleString()}
+
+</span>
+
+</div>
+
+
+
+
+<div class="product-buttons">
+
+
+
+<a href="product.html?id=${product.id}"
+class="quote-btn">
+
+View Details
+
 </a>
+
+
+
+<button onclick="quickAdd('${product.id}')"
+class="cart-btn">
+
+Add Cart
+
+</button>
+
+
+
+</div>
+
+
+</div>
 
 
 </div>
@@ -2239,9 +2437,614 @@ View
 
 
 
-//=========================================================
-// START PRODUCT ENGINE
-//=========================================================
+/*=========================================================
+ PRODUCT DETAILS PAGE
+=========================================================*/
+
+
+function loadProductDetails(){
+
+
+const id =
+
+new URLSearchParams(
+window.location.search
+).get("id");
+
+
+
+const product =
+
+getProductById(id);
+
+
+
+if(!product) return;
+
+
+
+
+const title =
+document.querySelector(".product-title");
+
+
+const image =
+document.querySelector(".product-image");
+
+
+const description =
+document.querySelector(".product-description");
+
+
+
+if(title)
+
+title.textContent =
+product.name;
+
+
+
+if(image)
+
+image.src =
+product.image;
+
+
+
+if(description)
+
+description.textContent =
+product.description;
+
+
+
+generateOptions(product);
+
+
+updateLivePrice(product.price);
+
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+ CREATE DROPDOWN SELECTORS
+=========================================================*/
+
+
+function generateOptions(product){
+
+
+const box =
+document.querySelector(".product-options");
+
+
+
+if(!box) return;
+
+
+
+box.innerHTML="";
+
+
+
+if(!product.options)
+
+return;
+
+
+
+
+Object.entries(product.options)
+
+.forEach(([key,value])=>{
+
+
+
+let html = `
+
+<div class="option-group">
+
+
+<label>
+
+${key.replace(/([A-Z])/g,' $1')}
+
+</label>
+
+
+
+<select 
+class="config-option"
+data-option="${key}"
+onchange="calculatePrice()">
+
+
+`;
+
+
+
+
+value.forEach(option=>{
+
+
+html += `
+
+
+<option 
+value="${option.name}"
+data-price="${option.price}">
+
+
+${option.name}
+
+(+R${option.price.toLocaleString()})
+
+
+</option>
+
+
+`;
+
+
+});
+
+
+
+html +=`
+
+</select>
+
+
+</div>
+
+`;
+
+
+
+box.innerHTML += html;
+
+
+
+});
+
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+ LIVE PRICE CALCULATOR
+=========================================================*/
+
+
+function calculatePrice(){
+
+
+const basePrice =
+
+Number(
+document.querySelector(".base-price")
+?.dataset.price || 0
+);
+
+
+
+let total = basePrice;
+
+
+
+document.querySelectorAll(
+".config-option"
+)
+
+.forEach(option=>{
+
+
+const selected =
+
+option.options[
+option.selectedIndex
+];
+
+
+
+total += Number(
+selected.dataset.price
+);
+
+
+
+});
+
+
+
+const output =
+document.querySelector(".live-price");
+
+
+
+if(output)
+
+output.innerHTML =
+
+"R" + total.toLocaleString();
+
+
+
+return total;
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+ QUICK ADD
+=========================================================*/
+
+
+function quickAdd(id){
+
+
+
+const product =
+getProductById(id);
+
+
+
+if(!product)
+
+return;
+
+
+
+const item = {
+
+
+id:
+product.id,
+
+
+name:
+product.name,
+
+
+image:
+product.image,
+
+
+price:
+product.price,
+
+
+quantity:1,
+
+
+options:{}
+
+
+};
+
+
+
+addToCart(item);
+
+
+
+showCartMessage(
+product.name + 
+" added to cart"
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+ ADD CONFIGURED PRODUCT
+=========================================================*/
+
+
+function addConfiguredProduct(){
+
+
+
+const id =
+
+new URLSearchParams(
+window.location.search
+).get("id");
+
+
+
+const product =
+
+getProductById(id);
+
+
+
+if(!product)
+
+return;
+
+
+
+let total =
+product.price;
+
+
+
+let selected = {};
+
+
+
+document.querySelectorAll(
+".config-option"
+)
+
+.forEach(option=>{
+
+
+let choice =
+
+option.options[
+option.selectedIndex
+];
+
+
+
+total += Number(
+choice.dataset.price
+);
+
+
+
+selected[
+option.dataset.option
+]
+
+=
+
+choice.value;
+
+
+
+});
+
+
+
+
+const quantity =
+
+Number(
+document.querySelector(
+"#productQuantity"
+)?.value || 1
+);
+
+
+
+const item = {
+
+
+id:product.id,
+
+
+name:product.name,
+
+
+image:product.image,
+
+
+price:total,
+
+
+quantity:quantity,
+
+
+options:selected
+
+
+};
+
+
+
+addToCart(item);
+
+
+
+showCartMessage(
+"Configured product added to cart"
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+ QUANTITY CONTROL
+=========================================================*/
+
+
+function changeQuantity(amount){
+
+
+const input =
+
+document.querySelector(
+"#productQuantity"
+);
+
+
+
+if(!input)
+
+return;
+
+
+
+let value =
+
+Number(input.value);
+
+
+
+value += amount;
+
+
+
+if(value < 1)
+
+value=1;
+
+
+
+input.value=value;
+
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+ CART MESSAGE
+=========================================================*/
+
+
+function showCartMessage(message){
+
+
+
+let box =
+document.querySelector(
+".cart-message"
+);
+
+
+
+if(!box){
+
+
+box=document.createElement(
+"div"
+);
+
+
+box.className="cart-message";
+
+
+document.body.appendChild(box);
+
+
+}
+
+
+
+box.innerHTML=message;
+
+
+
+box.classList.add("show");
+
+
+
+setTimeout(()=>{
+
+
+box.classList.remove("show");
+
+
+},3000);
+
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+ SEARCH PRODUCTS
+=========================================================*/
+
+
+function searchProducts(text){
+
+
+const result =
+
+products.filter(product=>
+
+
+product.name
+.toLowerCase()
+.includes(
+text.toLowerCase()
+)
+
+
+);
+
+
+
+return result;
+
+
+}
+
+
+
+
+
+
+
+
+/*=========================================================
+ INITIALIZE
+=========================================================*/
 
 
 document.addEventListener(
@@ -2253,6 +3056,7 @@ loadProducts();
 
 
 loadProductDetails();
+
 
 
 });
