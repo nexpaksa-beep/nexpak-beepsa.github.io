@@ -1,4 +1,3 @@
-```javascript
 /*=========================================================
  NEXPAK SECURITY SOLUTIONS V15
 
@@ -6,17 +5,11 @@
 
  PART 1/5
 
- SHOP ENGINE INITIALIZATION
+ FINAL SHOP ENGINE
 
- FEATURES:
+ CLEAN INITIALIZATION
 
- - Load product database
- - Initialize shop
- - Prepare filters
- - Prepare search
- - Prepare sorting
-
-========================================================= */
+=========================================================*/
 
 
 
@@ -24,9 +17,7 @@ document.addEventListener(
 "DOMContentLoaded",
 ()=>{
 
-
 initializeShop();
-
 
 });
 
@@ -35,19 +26,19 @@ initializeShop();
 
 
 /*=========================================================
- GLOBAL SHOP VARIABLES
+ GLOBAL VARIABLES
 =========================================================*/
 
 
-let shopProducts = [];
+let shopProducts=[];
 
-let filteredProducts = [];
+let filteredProducts=[];
 
-let currentCategory = "all";
+let activeCategory="all";
 
-let currentSearch = "";
+let searchTerm="";
 
-let currentSort = "default";
+let currentSort="default";
 
 
 
@@ -62,39 +53,63 @@ function initializeShop(){
 
 
 
-if(typeof products === "undefined"){
+if(
 
+typeof products==="undefined"
+
+){
 
 console.error(
-"Nexpak shop database not loaded."
+
+"Product database missing."
+
 );
 
-
 return;
-
 
 }
 
 
 
-shopProducts = products;
+shopProducts=[...products];
+
+filteredProducts=[...shopProducts];
 
 
 
-filteredProducts = [...shopProducts];
+if(
+
+!validateShopDatabase()
+
+){
+
+return;
+
+}
 
 
 
-createCategoryFilters();
+restoreShopState();
 
 
-setupSearch();
+
+generateCategories();
 
 
-setupSorting();
+
+initializeShopControls();
 
 
-renderProducts();
+
+initializeSorting();
+
+
+
+loadURLFilters();
+
+
+
+applyFilters();
 
 
 
@@ -105,23 +120,60 @@ renderProducts();
 
 
 /*=========================================================
- CATEGORY FILTER SETUP
+ DATABASE VALIDATION
 =========================================================*/
 
 
-function createCategoryFilters(){
+function validateShopDatabase(){
 
 
 
-const categoryContainer =
+if(
+
+!Array.isArray(shopProducts)
+
+){
+
+console.error(
+
+"Invalid shop database."
+
+);
+
+return false;
+
+}
+
+
+
+return true;
+
+}
+
+
+
+
+
+/*=========================================================
+ CATEGORY GENERATOR
+=========================================================*/
+
+
+function generateCategories(){
+
+
+
+const container=
 
 document.getElementById(
+
 "categoryFilters"
+
 );
 
 
 
-if(!categoryContainer){
+if(!container){
 
 return;
 
@@ -129,7 +181,7 @@ return;
 
 
 
-let categories = [
+const categories=[
 
 "all",
 
@@ -147,70 +199,50 @@ product=>product.category
 
 
 
-
-
-categoryContainer.innerHTML = "";
-
-
+container.innerHTML="";
 
 
 
 categories.forEach(category=>{
 
 
-const button =
+
+const button=
 
 document.createElement(
+
 "button"
+
 );
 
 
 
-button.className =
-"category-btn";
+button.className=
+
+"category-button";
 
 
 
-button.textContent =
+button.dataset.category=
 
-category === "all"
-
-?
-
-"All Products"
-
-:
-
-formatCategory(category);
-
-
-
-
-
-button.dataset.category =
 category;
 
 
 
+button.textContent=
+
+formatCategoryName(
+
+category
+
+);
 
 
-button.addEventListener(
-"click",
-()=>{
 
+container.appendChild(
 
-currentCategory =
-category;
-
-
-filterProducts();
-
-
-});
-
-
-categoryContainer.appendChild(
 button
+
 );
 
 
@@ -226,22 +258,36 @@ button
 
 
 /*=========================================================
- CATEGORY NAME FORMATTER
+ CATEGORY FORMATTER
 =========================================================*/
 
 
-function formatCategory(text){
+function formatCategoryName(category){
 
 
-return text
+
+if(category==="all"){
+
+return "All Products";
+
+}
+
+
+
+return category
 
 .replace(
-"-",
+
+/-/g,
+
 " "
+
 )
 
 .replace(
+
 /\b\w/g,
+
 letter=>letter.toUpperCase()
 
 );
@@ -249,7 +295,6 @@ letter=>letter.toUpperCase()
 
 }
 
-```javascript
 /*=========================================================
  NEXPAK SECURITY SOLUTIONS V15
 
@@ -261,12 +306,12 @@ letter=>letter.toUpperCase()
 
  FEATURES:
 
- - Category filtering
- - Product searching
- - Live search
- - Database filtering
+ - Live Search
+ - Category Filtering
+ - Combined Filters
+ - Active Button State
 
-========================================================= */
+=========================================================*/
 
 
 
@@ -281,7 +326,9 @@ function initializeShopControls(){
 
 
 
-const searchInput = document.getElementById(
+const searchInput =
+
+document.getElementById(
 "shopSearch"
 );
 
@@ -289,48 +336,45 @@ const searchInput = document.getElementById(
 
 if(searchInput){
 
+searchInput.value = searchTerm;
+
+
 
 searchInput.addEventListener(
 "input",
 (event)=>{
 
+searchTerm =
 
-searchTerm = event.target.value
+event.target.value
+
 .toLowerCase()
+
 .trim();
 
 
 
 applyFilters();
 
-
-
 });
 
-
 }
-
-
-
 
 
 
 const categoryButtons =
 
 document.querySelectorAll(
-"[data-category]"
+".category-button"
 );
-
 
 
 
 categoryButtons.forEach(button=>{
 
-
 button.addEventListener(
 "click",
 ()=>{
-
 
 activeCategory =
 
@@ -346,14 +390,9 @@ button
 
 applyFilters();
 
-
-
 });
 
-
 });
-
-
 
 }
 
@@ -362,7 +401,7 @@ applyFilters();
 
 
 /*=========================================================
- APPLY ALL FILTERS
+ APPLY FILTERS
 =========================================================*/
 
 
@@ -370,71 +409,37 @@ function applyFilters(){
 
 
 
-let results = [...shopProducts];
+filteredProducts =
+
+shopProducts.filter(product=>{
 
 
 
-
-
-/*=========================================================
+/*-----------------------------
  CATEGORY FILTER
-=========================================================*/
+-----------------------------*/
 
+const categoryMatch =
 
-if(
-activeCategory !== "all"
-){
+activeCategory==="all"
 
+||
 
-results = results.filter(
-(product)=>{
-
-
-return (
-
-product.category
-&&
-
-product.category
-.toLowerCase()
-
-===
-
-activeCategory
-.toLowerCase()
-
-
-);
-
-
-
-});
-
-
-}
+product.category===activeCategory;
 
 
 
 
 
-/*=========================================================
+/*-----------------------------
  SEARCH FILTER
-=========================================================*/
-
-
-if(searchTerm){
-
-
-results = results.filter(
-(product)=>{
-
+-----------------------------*/
 
 const searchable =
 
-
 (
 
-product.name
+(product.name || "")
 
 +
 
@@ -442,7 +447,7 @@ product.name
 
 +
 
-product.category
+(product.category || "")
 
 +
 
@@ -450,7 +455,7 @@ product.category
 
 +
 
-product.description
+(product.description || "")
 
 )
 
@@ -458,9 +463,24 @@ product.description
 
 
 
+const searchMatch =
 
-return searchable.includes(
+searchable.includes(
 searchTerm
+);
+
+
+
+
+
+return(
+
+categoryMatch
+
+&&
+
+searchMatch
+
 );
 
 
@@ -468,19 +488,15 @@ searchTerm
 });
 
 
-}
 
-
-
-
-
-filteredProducts = results;
-
-
-
-renderProducts(
-filteredProducts
+sortProducts(
+currentSort,
+false
 );
+
+
+
+saveShopState();
 
 
 
@@ -491,34 +507,31 @@ filteredProducts
 
 
 /*=========================================================
- CATEGORY BUTTON STATE
+ ACTIVE CATEGORY BUTTON
 =========================================================*/
 
 
 function setActiveCategoryButton(
+
 activeButton
+
 ){
 
 
 
-const buttons =
+document
 
-document.querySelectorAll(
-"[data-category]"
-);
+.querySelectorAll(
+".category-button"
+)
 
-
-
-buttons.forEach(button=>{
-
+.forEach(button=>{
 
 button.classList.remove(
 "active"
 );
 
-
 });
-
 
 
 
@@ -535,153 +548,35 @@ activeButton.classList.add(
 
 
 /*=========================================================
- CATEGORY LIST GENERATOR
+ UPDATE ACTIVE BUTTON
 =========================================================*/
 
 
-function generateCategories(){
+function refreshCategoryButtons(){
 
 
 
-const categoryContainer =
+const button =
 
-document.getElementById(
-"categoryFilters"
+document.querySelector(
+
+`[data-category="${activeCategory}"]`
+
 );
 
 
 
-if(!categoryContainer){
+if(button){
 
-return;
-
-}
-
-
-
-
-let categories = [
-
-"all"
-
-];
-
-
-
-
-shopProducts.forEach(product=>{
-
-
-if(
-product.category
-&&
-
-!categories.includes(
-product.category
-)
-
-){
-
-
-categories.push(
-product.category
+setActiveCategoryButton(
+button
 );
 
-
-}
-
-
-});
-
-
-
-
-
-categoryContainer.innerHTML = "";
-
-
-
-
-
-categories.forEach(category=>{
-
-
-
-categoryContainer.innerHTML += `
-
-
-<button
-
-data-category="${category}"
-
-class="category-button"
-
-
->
-
-
-${formatCategoryName(category)}
-
-
-</button>
-
-
-`;
-
-
-
-});
-
-
-
-
-
-initializeShopControls();
-
-
-
 }
 
 
 
-
-
-/*=========================================================
- CATEGORY NAME FORMATTER
-=========================================================*/
-
-
-function formatCategoryName(
-category
-){
-
-
-if(
-category === "all"
-){
-
-
-return "All Products";
-
-
 }
-
-
-
-return category
-
-.replace(
-"-",
-" "
-)
-
-.replace(
-/\b\w/g,
-letter=>letter.toUpperCase()
-);
-
-
-   }
 
 /*=========================================================
  NEXPAK SECURITY SOLUTIONS V15
@@ -690,17 +585,17 @@ letter=>letter.toUpperCase()
 
  PART 3/5
 
- SORTING ENGINE + PRODUCT CARD ENHANCEMENTS
+ SORTING + PRODUCT RENDERING
 
  FEATURES:
 
- - Price sorting
- - Name sorting
- - Featured products
- - Configurator badges
- - Product category display
+ - Product sorting
+ - Product rendering
+ - Product cards
+ - Featured badges
+ - Product counter
 
-========================================================= */
+=========================================================*/
 
 
 
@@ -711,13 +606,15 @@ letter=>letter.toUpperCase()
 =========================================================*/
 
 
-function sortProducts(sortType){
+function sortProducts(
 
+sortType = "default",
 
+render = true
 
-let results = [...filteredProducts];
+){
 
-
+currentSort = sortType;
 
 
 
@@ -727,20 +624,13 @@ switch(sortType){
 
 case "price-low":
 
+filteredProducts.sort(
 
-results.sort(
 (a,b)=>
 
-
-Number(a.basePrice)
-
--
-
-Number(b.basePrice)
-
+Number(a.basePrice)-Number(b.basePrice)
 
 );
-
 
 break;
 
@@ -750,20 +640,13 @@ break;
 
 case "price-high":
 
+filteredProducts.sort(
 
-results.sort(
 (a,b)=>
 
-
-Number(b.basePrice)
-
--
-
-Number(a.basePrice)
-
+Number(b.basePrice)-Number(a.basePrice)
 
 );
-
 
 break;
 
@@ -773,16 +656,13 @@ break;
 
 case "name-a-z":
 
+filteredProducts.sort(
 
-results.sort(
 (a,b)=>
 
-a.name.localeCompare(
-b.name
-)
+a.name.localeCompare(b.name)
 
 );
-
 
 break;
 
@@ -792,16 +672,13 @@ break;
 
 case "name-z-a":
 
+filteredProducts.sort(
 
-results.sort(
 (a,b)=>
 
-b.name.localeCompare(
-a.name
-)
+b.name.localeCompare(a.name)
 
 );
-
 
 break;
 
@@ -811,22 +688,17 @@ break;
 
 default:
 
-
 break;
-
-
 
 }
 
 
 
+if(render){
 
+renderProducts();
 
-renderProducts(
-results
-);
-
-
+}
 
 }
 
@@ -835,7 +707,7 @@ results
 
 
 /*=========================================================
- SORT CONTROL
+ INITIALIZE SORTING
 =========================================================*/
 
 
@@ -843,12 +715,13 @@ function initializeSorting(){
 
 
 
-const sortSelect =
+const sortSelect=
 
 document.getElementById(
-"productSort"
-);
 
+"productSort"
+
+);
 
 
 
@@ -860,20 +733,25 @@ return;
 
 
 
+sortSelect.value=currentSort;
+
 
 
 sortSelect.addEventListener(
+
 "change",
+
 ()=>{
 
-
 sortProducts(
+
 sortSelect.value
+
 );
 
+}
 
-
-});
+);
 
 
 
@@ -884,7 +762,98 @@ sortSelect.value
 
 
 /*=========================================================
- ENHANCED PRODUCT CARD
+ RENDER PRODUCTS
+=========================================================*/
+
+
+function renderProducts(){
+
+
+
+const container=
+
+document.getElementById(
+
+"productsGrid"
+
+);
+
+
+
+if(!container){
+
+return;
+
+}
+
+
+
+container.innerHTML="";
+
+
+
+if(filteredProducts.length===0){
+
+
+
+container.innerHTML=`
+
+<div class="empty-products">
+
+<i class="fa-solid fa-box-open"></i>
+
+<h3>
+
+No Products Found
+
+</h3>
+
+<p>
+
+Try changing your search or category.
+
+</p>
+
+</div>
+
+`;
+
+
+
+updateProductCount(0);
+
+return;
+
+}
+
+
+
+filteredProducts.forEach(product=>{
+
+container.innerHTML+=
+
+createProductCard(product);
+
+});
+
+
+
+updateProductCount(
+
+filteredProducts.length
+
+);
+
+
+
+}
+
+
+
+
+
+/*=========================================================
+ PRODUCT CARD
 =========================================================*/
 
 
@@ -892,77 +861,51 @@ function createProductCard(product){
 
 
 
-let badge = "";
+const configurable =
 
-
-
-
-if(
 product.options
+
 &&
 
-product.options.length > 0
-
-){
-
-
-badge = `
-
-<span class="product-badge">
-
-Configurable
-
-</span>
-
-`;
-
-
-}
+product.options.length>0;
 
 
 
+const extras =
 
-if(
 product.extras
+
 &&
 
-product.extras.length > 0
-
-){
-
-
-badge += `
-
-<span class="product-badge extra">
-
-Extras Available
-
-</span>
-
-`;
-
-
-
-}
-
-
+product.extras.length>0;
 
 
 
 return `
 
-
 <div class="product-card">
 
+${configurable ?
 
-${badge}
+'<span class="product-badge">Configurable</span>'
 
+:
 
+''
 
+}
 
+${extras ?
+
+'<span class="product-badge extra">Extras Available</span>'
+
+:
+
+''
+
+}
 
 <a href="product.html?id=${product.id}">
-
 
 <img
 
@@ -972,10 +915,19 @@ alt="${product.name}"
 
 loading="lazy"
 
+onerror="this.src='images/product-placeholder.png'"
 
 >
 
+</a>
 
+<div class="product-content">
+
+<div class="product-category">
+
+${formatCategoryName(product.category)}
+
+</div>
 
 <h3>
 
@@ -983,89 +935,40 @@ ${product.name}
 
 </h3>
 
-
-</a>
-
-
-
-
-
-<div class="product-category">
-
-
-${formatCategoryName(
-product.category
-)}
-
-
-</div>
-
-
-
-
-
-
 <p>
 
 ${product.description}
 
 </p>
 
-
-
-
-
-
 <div class="product-price">
-
 
 Starting From
 
-
 <strong>
 
-R${Number(
-product.basePrice
-).toFixed(2)}
+R${Number(product.basePrice).toLocaleString("en-ZA")}
 
 </strong>
 
-
-
 </div>
-
-
-
-
-
-
 
 <a
 
 href="product.html?id=${product.id}"
 
-class="product-button"
-
-
->
-
+class="primary-btn">
 
 Configure / View
 
-
 </a>
-
-
-
-
 
 </div>
 
+</div>
 
 `;
 
-
-
 }
 
 
@@ -1073,87 +976,61 @@ Configure / View
 
 
 /*=========================================================
- FEATURED PRODUCTS
+ PRODUCT COUNTER
 =========================================================*/
 
 
-function loadFeaturedProducts(){
+function updateProductCount(count){
 
 
 
-const featured =
+const counter=
 
-shopProducts.filter(
-product=>
+document.getElementById(
 
-product.featured === true
+"productCount"
 
 );
 
 
 
+if(counter){
 
+counter.textContent=
 
-if(
-featured.length
-){
-
-
-renderProducts(
-featured
-);
-
+`${count} Security Products`;
 
 }
 
 
 
-}
+ }
 
-
-
-
-
-/*=========================================================
- START SORTING AFTER SHOP LOAD
-=========================================================*/
-
-
-document.addEventListener(
-"DOMContentLoaded",
-()=>{
-
-
-initializeSorting();
-
-
-});
-
-/*=========================================================
+ /*=========================================================
  NEXPAK SECURITY SOLUTIONS V15
 
  shop-script.js
 
  PART 4/5
 
- SHOP URL HANDLING + PERFORMANCE
+ URL HANDLING + SHOP STATE
 
  FEATURES:
 
- - Category URL parameters
- - Search URL parameters
- - Product count
- - Lazy loading support
- - Empty state improvements
+ - URL Parameters
+ - Category Links
+ - Search Links
+ - Local Storage
+ - Performance Helpers
 
-========================================================= */
+=========================================================*/
 
 
 
 
 
 /*=========================================================
- LOAD URL FILTERS
+ LOAD URL PARAMETERS
 =========================================================*/
 
 
@@ -1164,321 +1041,42 @@ function loadURLFilters(){
 const params =
 
 new URLSearchParams(
+
 window.location.search
+
 );
-
-
 
 
 
 const category =
 
-params.get(
-"category"
-);
-
-
-
-
+params.get("category");
 
 const search =
 
-params.get(
-"search"
-);
-
-
+params.get("search");
 
 
 
 if(category){
 
-
-activeCategory =
-category;
-
-
+activeCategory = category;
 
 }
-
-
 
 
 
 if(search){
 
-
 searchTerm =
 
-search.toLowerCase();
+search
 
+.toLowerCase()
 
-const input =
-
-document.getElementById(
-"shopSearch"
-);
-
-
-
-if(input){
-
-input.value =
-search;
-
+.trim();
 
 }
-
-
-
-}
-
-
-
-
-
-applyFilters();
-
-
-
-}
-
-
-
-
-
-/*=========================================================
- PRODUCT COUNT DISPLAY
-=========================================================*/
-
-
-function updateProductCount(
-count
-){
-
-
-
-const counter =
-
-document.getElementById(
-"productCount"
-);
-
-
-
-
-if(counter){
-
-
-counter.textContent =
-
-count +
-
-" security products found";
-
-
-}
-
-
-
-}
-
-
-
-
-
-/*=========================================================
- UPDATE RENDER FUNCTION
-=========================================================*/
-
-
-const originalRenderProducts = renderProducts;
-
-
-
-
-renderProducts = function(
-productList
-){
-
-
-
-originalRenderProducts(
-productList
-);
-
-
-
-updateProductCount(
-productList.length
-);
-
-
-
-};
-
-
-
-
-
-/*=========================================================
- CATEGORY LINK HANDLER
-=========================================================*/
-
-
-function openCategory(
-category
-){
-
-
-
-window.location.href =
-
-"shop.html?category=" +
-
-encodeURIComponent(
-category
-);
-
-
-
-}
-
-
-
-
-
-/*=========================================================
- SEARCH LINK HANDLER
-=========================================================*/
-
-
-function searchProducts(
-keyword
-){
-
-
-
-window.location.href =
-
-"shop.html?search=" +
-
-encodeURIComponent(
-keyword
-);
-
-
-
-}
-
-
-
-
-
-/*=========================================================
- IMAGE ERROR PROTECTION
-=========================================================*/
-
-
-document.addEventListener(
-"error",
-function(event){
-
-
-
-if(
-event.target.tagName === "IMG"
-){
-
-
-
-event.target.src =
-
-"images/product-placeholder.png";
-
-
-
-}
-
-
-
-},
-true
-);
-
-
-
-
-
-/*=========================================================
- INITIALIZE URL FEATURES
-=========================================================*/
-
-
-document.addEventListener(
-"DOMContentLoaded",
-()=>{
-
-
-loadURLFilters();
-
-
-});
-
-```javascript
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS V15
-
- shop-script.js
-
- PART 5/5
-
- FINAL SHOP ENGINE INTEGRATION
-
- FEATURES:
-
- - Complete initialization
- - Database validation
- - Category generation
- - Sorting activation
- - Shop state saving
- - Public functions
-
-========================================================= */
-
-
-
-
-
-/*=========================================================
- DATABASE VALIDATION
-=========================================================*/
-
-
-function validateShopDatabase(){
-
-
-
-if(
-!Array.isArray(shopProducts)
-){
-
-
-console.error(
-"Nexpak shop database format invalid."
-);
-
-
-
-return false;
-
-
-}
-
-
-
-
-return true;
 
 
 
@@ -1497,24 +1095,15 @@ function saveShopState(){
 
 
 
-const state = {
+const state={
 
+category:activeCategory,
 
-category:
+search:searchTerm,
 
-activeCategory,
-
-
-
-search:
-
-searchTerm
-
-
+sort:currentSort
 
 };
-
-
 
 
 
@@ -1522,9 +1111,7 @@ localStorage.setItem(
 
 "nexpak_shop_state",
 
-JSON.stringify(
-state
-)
+JSON.stringify(state)
 
 );
 
@@ -1545,18 +1132,17 @@ function restoreShopState(){
 
 
 
-const saved =
+const saved=
 
 localStorage.getItem(
+
 "nexpak_shop_state"
+
 );
 
 
 
-
-if(
-!saved
-){
+if(!saved){
 
 return;
 
@@ -1566,44 +1152,39 @@ return;
 
 try{
 
+const state=
 
-const state =
-
-JSON.parse(
-saved
-);
+JSON.parse(saved);
 
 
 
+activeCategory=
 
-if(
 state.category
-){
 
+||
 
-activeCategory =
-
-state.category;
-
-
-}
+"all";
 
 
 
+searchTerm=
 
-
-if(
 state.search
-){
+
+||
+
+"";
 
 
-searchTerm =
 
-state.search;
+currentSort=
 
+state.sort
 
-}
+||
 
+"default";
 
 
 
@@ -1611,12 +1192,13 @@ state.search;
 
 catch(error){
 
-
 console.error(
-"Shop state restore failed",
-error
-);
 
+"Unable to restore shop state.",
+
+error
+
+);
 
 }
 
@@ -1629,7 +1211,199 @@ error
 
 
 /*=========================================================
- COMPLETE SHOP STARTUP
+ OPEN CATEGORY
+=========================================================*/
+
+
+function openCategory(category){
+
+
+
+window.location.href=
+
+`shop.html?category=${encodeURIComponent(category)}`;
+
+
+
+}
+
+
+
+
+
+/*=========================================================
+ SEARCH PAGE
+=========================================================*/
+
+
+function searchProducts(keyword){
+
+
+
+window.location.href=
+
+`shop.html?search=${encodeURIComponent(keyword)}`;
+
+
+
+}
+
+
+
+
+
+/*=========================================================
+ PRELOAD PRODUCT IMAGES
+=========================================================*/
+
+
+function preloadImages(){
+
+
+
+filteredProducts
+
+.slice(0,8)
+
+.forEach(product=>{
+
+const image=
+
+new Image();
+
+image.src=
+
+product.image;
+
+});
+
+}
+
+
+
+
+
+/*=========================================================
+ REFRESH SHOP DISPLAY
+=========================================================*/
+
+
+function refreshShop(){
+
+
+
+refreshCategoryButtons();
+
+
+
+const searchInput=
+
+document.getElementById(
+
+"shopSearch"
+
+);
+
+
+
+if(searchInput){
+
+searchInput.value=
+
+searchTerm;
+
+}
+
+
+
+const sortSelect=
+
+document.getElementById(
+
+"productSort"
+
+);
+
+
+
+if(sortSelect){
+
+sortSelect.value=
+
+currentSort;
+
+}
+
+
+
+renderProducts();
+
+
+
+preloadImages();
+
+
+
+}
+
+/*=========================================================
+ NEXPAK SECURITY SOLUTIONS V15
+
+ shop-script.js
+
+ PART 5/5
+
+ FINAL SHOP ENGINE
+
+ FEATURES:
+
+ - Shop Startup
+ - Public API
+ - Featured Products
+ - Global Functions
+ - Final Initialization
+
+=========================================================*/
+
+
+
+
+
+/*=========================================================
+ LOAD FEATURED PRODUCTS
+=========================================================*/
+
+
+function loadFeaturedProducts(){
+
+
+
+const featured =
+
+shopProducts.filter(
+
+product => product.featured === true
+
+);
+
+
+
+if(featured.length){
+
+filteredProducts = [...featured];
+
+renderProducts();
+
+}
+
+}
+
+
+
+
+
+/*=========================================================
+ START SHOP
 =========================================================*/
 
 
@@ -1637,26 +1411,15 @@ function startShopV15(){
 
 
 
-if(
-!validateShopDatabase()
-){
-
-return;
-
-}
+refreshShop();
 
 
 
+console.log(
 
-restoreShopState();
+"Nexpak Security Solutions V15 Shop Engine Loaded"
 
-
-
-generateCategories();
-
-
-
-applyFilters();
+);
 
 
 
@@ -1667,103 +1430,79 @@ applyFilters();
 
 
 /*=========================================================
- UPDATE STATE AFTER FILTERING
-=========================================================*/
-
-
-const originalApplyFilters = applyFilters;
-
-
-
-
-applyFilters = function(){
-
-
-
-originalApplyFilters();
-
-
-
-saveShopState();
-
-
-
-};
-
-
-
-
-
-/*=========================================================
- GLOBAL SHOP FUNCTIONS
-
- AVAILABLE FOR HTML BUTTONS
-
+ PUBLIC SHOP API
 =========================================================*/
 
 
 window.NexpakShop = {
 
 
-filter:
 
-function(category){
-
+filter(category){
 
 activeCategory = category;
 
-
 applyFilters();
-
 
 },
 
 
 
-
-search:
-
-function(keyword){
-
+search(keyword){
 
 searchTerm =
 
-keyword
-.toLowerCase();
+(keyword || "")
 
+.toLowerCase()
+
+.trim();
 
 applyFilters();
 
-
 },
 
 
 
-
-
-sort:
-
-function(type){
-
+sort(type){
 
 sortProducts(type);
 
+},
+
+
+
+clearFilters(){
+
+activeCategory = "all";
+
+searchTerm = "";
+
+currentSort = "default";
+
+
+
+refreshShop();
+
+applyFilters();
 
 },
 
 
 
+showFeatured(){
 
-category:
+loadFeaturedProducts();
 
-openCategory,
-
-
+},
 
 
-searchPage:
 
-searchProducts
+reload(){
+
+initializeShop();
+
+}
 
 
 
@@ -1774,17 +1513,56 @@ searchProducts
 
 
 /*=========================================================
- FINAL INITIALIZATION
+ FINAL STARTUP
 =========================================================*/
 
 
 document.addEventListener(
-"DOMContentLoaded",
-()=>{
 
+"DOMContentLoaded",
+
+()=>{
 
 startShopV15();
 
+}
+
+);
 
 
-});
+
+
+
+/*=========================================================
+ VERSION INFORMATION
+=========================================================*/
+
+console.info(
+
+"==================================================="
+
+);
+
+console.info(
+
+"NEXPAK SECURITY SOLUTIONS"
+
+);
+
+console.info(
+
+"SHOP ENGINE V15"
+
+);
+
+console.info(
+
+"STATUS : COMPLETE"
+
+);
+
+console.info(
+
+"==================================================="
+
+);
