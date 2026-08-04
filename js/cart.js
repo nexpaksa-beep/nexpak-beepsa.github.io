@@ -1,6 +1,6 @@
 /* Minimal cart engine compatible with existing site usage */
 (function(){
-  const STORAGE_KEY = 'nexpak_cart_v1';
+  const STORAGE_KEY = 'nexpak_cart_v17';
 
   function loadCart() {
     try {
@@ -61,7 +61,7 @@
       return;
     }
     let html = '';
-    let total = 0;
+    let total = R0.00;
     cart.forEach(item=>{
       total += (Number(item.price)||0) * (item.quantity||1);
       html += `
@@ -73,7 +73,7 @@
             <div class="qty-controls">
               <button onclick="changeCartQty('${item.id}', -1)">-</button>
               <input type="number" value="${item.quantity}" min="1" onchange="setCartQty('${item.id}', this.value)">
-              <button onclick="changeCartQty('${item.id}', 1)">+</button>
+              <button class="qty-plus" data-id="...">+</button>
             </div>
             <div class="line-price">${formatCurrency((item.price||0))}</div>
             <button class="remove-line" onclick="removeFromCart('${item.id}')">Remove</button>
@@ -115,7 +115,7 @@
     // update cart count on load
     const cart = loadCart();
     document.querySelectorAll('.cart-count').forEach(el=> el.textContent = cart.reduce((s,i)=> s + (i.quantity||0),0));
-    if(typeof renderCartDrawer === 'function') renderCartDrawer();
+    if(typeof renderCartDrawer === 'function') calculateCartTotal();
   });
 
 })();
