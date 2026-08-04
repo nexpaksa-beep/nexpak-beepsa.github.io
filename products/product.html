@@ -12,7 +12,7 @@
 
 
 <meta name="description"
-content="Configure your Nexpak Security Solutions product with custom options and add to cart.">
+content="Configure CCTV, electric fencing, gate motors, Roboguard and security solutions from Nexpak Security Solutions.">
 
 
 <link rel="stylesheet" href="css/style.css">
@@ -28,9 +28,10 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
 <body>
 
 
-<!-- ==========================
+
+<!-- =================================
 HEADER
-========================== -->
+================================= -->
 
 
 <header>
@@ -39,11 +40,13 @@ HEADER
 <div class="container header">
 
 
+
 <a href="index.html" class="logo">
 
 
 <img src="images/logo-security.png"
 alt="Nexpak Security Solutions">
+
 
 
 <div class="logo-text">
@@ -60,30 +63,46 @@ alt="Nexpak Security Solutions">
 
 
 
+
+
 <nav>
 
 
 <a href="index.html">
+
 Home
+
 </a>
+
 
 
 <a href="products.html">
+
 Products
+
 </a>
+
 
 
 <a href="shop.html">
+
 Shop
+
 </a>
 
 
+
 <a href="contact.html">
+
 Contact
+
 </a>
 
 
 </nav>
+
+
+
 
 
 
@@ -92,6 +111,7 @@ Contact
 <i class="fas fa-bars"></i>
 
 </button>
+
 
 
 </div>
@@ -104,51 +124,72 @@ Contact
 
 
 
-
-<!-- ==========================
+<!-- =================================
 PRODUCT HERO
-========================== -->
+================================= -->
 
 
 <section class="hero product-hero">
 
 
+
 <div class="hero-content fade">
 
 
+
 <h5>
-CONFIGURE YOUR SYSTEM
+
+CONFIGURE SECURITY SYSTEM
+
 </h5>
 
 
-<h1 id="product-title">
+
+<h1 class="product-title">
 
 Loading Product...
 
 </h1>
 
 
-<p id="product-description">
 
-Please wait while we load your selected security solution.
+
+<p class="product-description">
+
+Loading product information...
 
 </p>
+
+
+
+<div class="hero-buttons">
+
+
+<a href="shop.html"
+class="secondary-btn">
+
+
+<i class="fas fa-arrow-left"></i>
+
+Back To Shop
+
+
+</a>
+
 
 
 </div>
 
 
+
+</div>
+
+
+
 </section>
-
-
-
-
-
-
-
-<!-- ==========================
+<!-- =================================
 PRODUCT CONFIGURATOR
-========================== -->
+================================= -->
 
 
 <section class="product-detail">
@@ -162,58 +203,115 @@ PRODUCT CONFIGURATOR
 
 
 
+
+
+
+<!-- ===============================
+PRODUCT IMAGE
+================================ -->
+
+
 <div class="product-image-box">
 
 
-<img id="product-image"
+
+<img class="product-image"
+
 src="images/products/default.jpg"
-alt="Product Image">
+
+alt="Security Product">
+
 
 
 </div>
 
 
 
+
+
+
+
+
+<!-- ===============================
+CONFIGURATION AREA
+================================ -->
 
 
 <div class="product-config-box">
 
 
-<h2 id="config-title">
 
-Product Options
+<h2>
+
+Configure Your System
 
 </h2>
 
 
 
-<div id="options-container">
 
 
-<!-- Dynamic options loaded by configurator.js -->
 
+<!-- Dynamic selectors from products.js -->
+
+
+
+<div class="product-options">
+
+
+<!--
+
+Example generated automatically:
+
+Channel
+[ 8 Channel DVR ▼ ]
+
+Storage
+[ 2TB HDD ▼ ]
+
+PSU
+[ 9 Way PSU ▼ ]
+
+Cable
+[ CAT5 100m ▼ ]
+
+-->
 
 </div>
-<!-- ==========================
-PRICE DISPLAY
-========================== -->
+
+
+
+
+
+
+
+<!-- ===============================
+LIVE PRICE
+================================ -->
 
 
 <div class="product-price-box">
 
 
+
 <h3>
-Total Price
+
+Current Price
+
 </h3>
 
 
-<div id="product-price">
 
-R0.00
+<div class="live-price">
+
+
+R0
+
 
 </div>
 
 
+
 </div>
 
 
@@ -221,24 +319,34 @@ R0.00
 
 
 
-<!-- ==========================
+
+
+
+<!-- ===============================
 QUANTITY
-========================== -->
+================================ -->
 
 
 <div class="quantity-box">
 
 
+
 <label>
+
 Quantity
+
 </label>
+
 
 
 <div class="quantity-control">
 
 
+
+
+
 <button type="button"
-id="minus-btn">
+onclick="changeQuantity(-1)">
 
 <i class="fas fa-minus"></i>
 
@@ -246,89 +354,66 @@ id="minus-btn">
 
 
 
+
+
 <input type="number"
-id="product-quantity"
+
+id="productQuantity"
+
 value="1"
+
 min="1">
 
 
 
+
+
+
 <button type="button"
-id="plus-btn">
+onclick="changeQuantity(1)">
 
 <i class="fas fa-plus"></i>
 
 </button>
 
 
-</div>
 
 
 </div>
 
 
+</div>
 
 
 
 
 
 
-<!-- ==========================
-ADD TO CART
-========================== -->
 
 
-<button class="add-cart-btn"
-id="add-cart">
+<!-- ===============================
+ADD CART
+================================ -->
+
+
+<button
+
+class="add-cart-btn"
+
+onclick="addConfiguredProduct()">
 
 
 <i class="fas fa-cart-shopping"></i>
 
-Add To Cart
+
+Add Configured Product
+
 
 </button>
 
 
 
 
-
-
-<!-- ==========================
-PRODUCT INFORMATION
-========================== -->
-
-
-<div class="product-information">
-
-
-<h2>
-Product Description
-</h2>
-
-
-<p id="full-description">
-
-Professional security solution supplied and configured
-by Nexpak Security Solutions.
-
-</p>
-
-
-
-<h3>
-Included Features
-</h3>
-
-
-<ul id="product-features">
-
-
-<!-- Features loaded dynamically -->
-
-
-</ul>
-
-
 </div>
 
 
@@ -340,47 +425,91 @@ Included Features
 
 
 </section>
+<!-- =================================
+PRODUCT INFORMATION
+================================= -->
 
 
-
-
-
-
-
-
-<!-- ==========================
-RELATED PRODUCTS
-========================== -->
-
-
-<section class="services">
+<section class="product-information-section">
 
 
 <div class="container">
 
 
-<div class="section-title">
 
 
-<h5>
-YOU MAY ALSO NEED
-</h5>
+
+<div class="product-information">
+
+
+
 
 
 <h2>
-Related Security Products
+
+Product Description
+
 </h2>
 
 
-</div>
 
 
 
-<div class="services-grid"
-id="related-products">
+<p class="full-description">
+
+Professional security equipment supplied and configured by Nexpak Security Solutions.
+
+</p>
 
 
-<!-- Loaded from products.js -->
+
+
+
+
+
+<h3>
+
+System Features
+
+</h3>
+
+
+
+
+
+
+<ul class="product-features">
+
+
+<!-- Loaded dynamically from products.js -->
+
+
+<li>
+
+Professional Installation Ready
+
+</li>
+
+
+<li>
+
+Quality Security Components
+
+</li>
+
+
+<li>
+
+Remote Monitoring Options Available
+
+</li>
+
+
+</ul>
+
+
+
+
 
 
 </div>
@@ -399,9 +528,99 @@ id="related-products">
 
 
 
-<!-- ==========================
+
+<!-- =================================
+RELATED PRODUCTS
+================================= -->
+
+
+<section class="services">
+
+
+
+<div class="container">
+
+
+
+
+
+<div class="section-title">
+
+
+
+<h5>
+
+COMPLETE YOUR SECURITY SYSTEM
+
+</h5>
+
+
+
+
+<h2>
+
+Related Products
+
+</h2>
+
+
+
+<p>
+
+Recommended accessories and additional security solutions.
+
+</p>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="services-grid"
+
+id="related-products">
+
+
+
+<!--
+
+Automatically populated by products.js
+
+Example:
+
+CCTV Accessories
+
+Gate Motors
+
+Alarm Systems
+
+Electric Fence Accessories
+
+-->
+
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+</section>
+<!-- =================================
 FOOTER
-========================== -->
+================================= -->
 
 
 <footer>
@@ -416,17 +635,18 @@ FOOTER
 
 <div>
 
-
 <h3>
+
 Nexpak Security Solutions
+
 </h3>
 
 
 <p>
 
 Professional CCTV, electric fencing,
-gate automation and perimeter security
-solutions across South Africa.
+gate automation, access control and
+perimeter security solutions.
 
 </p>
 
@@ -436,35 +656,56 @@ solutions across South Africa.
 
 
 
+
+
+
 <div>
 
 
 <h4>
+
 Quick Links
+
 </h4>
+
 
 
 <a href="index.html">
+
 Home
+
 </a>
+
 
 
 <a href="products.html">
+
 Products
+
 </a>
+
 
 
 <a href="shop.html">
+
 Shop
+
 </a>
+
 
 
 <a href="contact.html">
+
 Contact
+
 </a>
 
 
+
 </div>
+
+
+
 
 
 
@@ -473,25 +714,97 @@ Contact
 
 
 <h4>
-Contact
+
+Security Categories
+
 </h4>
 
 
+
+<a href="products/cctv.html">
+
+CCTV Systems
+
+</a>
+
+
+
+<a href="products/electric-fencing.html">
+
+Electric Fencing
+
+</a>
+
+
+
+<a href="products/gate-motors.html">
+
+Gate Automation
+
+</a>
+
+
+
+<a href="products/roboguard.html">
+
+Roboguard
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div>
+
+
+<h4>
+
+Contact
+
+</h4>
+
+
+
 <p>
+
 📱 +27 83 630 8249
+
 </p>
+
 
 
 <p>
-📧 info@nexpaksolutions.co.za
+
+📧 info@nexpaksecurity.co.za
+
 </p>
 
 
-</div>
+
+<p>
+
+📍 Johannesburg, South Africa
+
+</p>
 
 
 
 </div>
+
+
+
+
+</div>
+
+
+
 
 
 
@@ -502,7 +815,7 @@ Contact
 
 <p>
 
-© 2024 Nexpak Security Solutions.
+© 2026 Nexpak Security Solutions.
 All Rights Reserved.
 
 </p>
@@ -511,25 +824,41 @@ All Rights Reserved.
 </div>
 
 
+
 </div>
 
 
-  </footer>
-  <!-- ==========================
-SCRIPTS
-========================== -->
+</footer>
+
+
+
+
+
+
+
+
+
+<!-- =================================
+JAVASCRIPT
+================================= -->
 
 
 <script src="js/products.js"></script>
 
+
 <script src="js/configurator.js"></script>
 
+
 <script src="js/cart.js"></script>
+
 
 <script src="js/script.js"></script>
 
 
 
+
+
 </body>
 
-</html>
+
+  </html>
