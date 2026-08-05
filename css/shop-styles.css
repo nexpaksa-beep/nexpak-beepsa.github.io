@@ -306,7 +306,98 @@ header .container {
 }
 
 /* --------------------------------------------------------------------------
-   6. Responsive Breakpoints
+   6. Configurator Specific Styles (Selectors & Steppers)
+   -------------------------------------------------------------------------- */
+.selector-group {
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.selector-group h4 {
+    margin-bottom: 12px;
+    font-size: 1rem;
+    color: var(--text-main);
+}
+
+.pill-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.selector-pill {
+    padding: 10px 16px;
+    border: 1px solid var(--border-color);
+    background: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.selector-pill:hover { 
+    border-color: var(--primary-color); 
+}
+
+.selector-pill.active {
+    background: #e8f4fd;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.price-mod { 
+    color: #888; 
+    font-size: 0.8rem; 
+}
+
+.selector-pill.active .price-mod { 
+    color: var(--primary-color); 
+}
+
+/* Quantity Steppers */
+.stepper-control {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.stepper-actions {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.btn-step {
+    background: #f9f9f9;
+    border: none;
+    padding: 8px 15px;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.btn-step:hover { 
+    background: #eee; 
+}
+
+.step-input {
+    width: 40px;
+    text-align: center;
+    border: none;
+    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
+    font-weight: bold;
+}
+
+/* --------------------------------------------------------------------------
+   7. Responsive Breakpoints
    -------------------------------------------------------------------------- */
 @media (max-width: 850px) {
   .product-layout {
@@ -328,4 +419,4 @@ header .container {
     overflow-x: auto;
     padding-bottom: 8px;
   }
-}
+   }
