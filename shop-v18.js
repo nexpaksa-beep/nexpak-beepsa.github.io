@@ -587,3 +587,239 @@ addToCart = function(id){
     showToast("✔ Product added to cart");
 
 };
+
+/*=========================================================
+NEXPAK SECURITY SOLUTIONS
+SHOP V18
+PART 7/8
+
+RECENTLY VIEWED
+RECOMMENDED PRODUCTS
+=========================================================*/
+
+let recentlyViewed = [];
+
+function addRecentlyViewed(id){
+
+    const product = products.find(p => p.id === id);
+ 
+    addRecentlyViewed(id);
+ 
+    if(!product) return;
+
+    recentlyViewed = recentlyViewed.filter(item => item.id !== id);
+
+    recentlyViewed.unshift(product);
+
+    if(recentlyViewed.length > 8){
+
+        recentlyViewed.pop();
+
+    }
+
+    renderRecentlyViewed();
+
+}
+
+function renderRecentlyViewed(){
+
+    const container = document.getElementById("recentProducts");
+
+    if(!container) return;
+
+    container.innerHTML = "";
+
+    recentlyViewed.forEach(product=>{
+
+        container.innerHTML += `
+
+        <div class="product-card small">
+
+            <div class="product-image">
+
+                <img src="${product.image}" alt="${product.name}">
+
+            </div>
+
+            <div class="product-content">
+
+                <div class="product-title">
+
+                    ${product.name}
+
+                </div>
+
+                <div class="current-price">
+
+                    R${product.price.toFixed(2)}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+function renderRecommendedProducts(){
+
+    const container = document.getElementById("recommendedProducts");
+
+    if(!container) return;
+
+    container.innerHTML = "";
+
+    products.slice(0,8).forEach(product=>{
+
+        container.innerHTML += `
+
+        <div class="product-card small">
+
+            <div class="product-image"
+            onclick="quickView(${product.id})">
+
+                <img src="${product.image}" alt="${product.name}">
+
+            </div>
+
+            <div class="product-content">
+
+                <div class="product-title">
+
+                    ${product.name}
+
+                </div>
+
+                <div class="current-price">
+
+                    R${product.price.toFixed(2)}
+
+                </div>
+
+                <button
+                class="add-cart"
+                onclick="addToCart(${product.id})">
+
+                    Add To Cart
+
+                </button>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+     }
+
+/*=========================================================
+NEXPAK SECURITY SOLUTIONS
+SHOP V18
+PART 8/8
+
+FINAL INITIALIZATION
+=========================================================*/
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    renderRecommendedProducts();
+
+    updateWishlist();
+
+    updateProductCount();
+
+    if(typeof Cart !== "undefined"){
+
+        if(typeof Cart.updateUI === "function"){
+
+            Cart.updateUI();
+
+        }
+
+    }
+
+});
+
+
+/*=========================================================
+MOBILE MENU
+=========================================================*/
+
+const mobileButton = document.querySelector(".mobile-menu");
+
+if(mobileButton){
+
+    mobileButton.addEventListener("click",()=>{
+
+        document.body.classList.toggle("menu-open");
+
+    });
+
+}
+
+
+/*=========================================================
+SCROLL TO TOP
+=========================================================*/
+
+const scrollButton = document.createElement("button");
+
+scrollButton.className="scroll-top";
+
+scrollButton.innerHTML='<i class="fas fa-arrow-up"></i>';
+
+document.body.appendChild(scrollButton);
+
+window.addEventListener("scroll",()=>{
+
+    if(window.scrollY>400){
+
+        scrollButton.classList.add("show");
+
+    }else{
+
+        scrollButton.classList.remove("show");
+
+    }
+
+});
+
+scrollButton.addEventListener("click",()=>{
+
+    window.scrollTo({
+
+        top:0,
+
+        behavior:"smooth"
+
+    });
+
+});
+
+
+/*=========================================================
+IMAGE FALLBACK
+=========================================================*/
+
+document.addEventListener("error",(e)=>{
+
+    if(e.target.tagName==="IMG"){
+
+        e.target.src="images/no-image.png";
+
+    }
+
+},true);
+
+
+/*=========================================================
+SHOP READY
+=========================================================*/
+
+console.log("NEXPAK SHOP V18 LOADED");
