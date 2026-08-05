@@ -49,8 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Render each custom kit in the cart
         checkoutState.cart.forEach((kit, index) => {
-            // Estimate a base weight for kits (e.g., standard 6-line is ~15kg, Gate motor ~12kg)
-            // In a real DB, this comes from shop-data.js
             let kitWeight = 15; 
             if (kit.category === 'gate-motors') kitWeight = 12;
             if (kit.category === 'cctv-hd') kitWeight = 5;
@@ -77,13 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. FINANCIAL CALCULATIONS (VAT & Delivery)
     // ----------------------------------------------------------------------
     function updateFinancials() {
-        // Taxable Base = Subtotal + Delivery
         const taxableBase = checkoutState.subtotalExclVat + checkoutState.deliveryFee;
         
         // 15% SARS VAT
         checkoutState.vatAmount = taxableBase * 0.15;
-        
-        // Grand Total
         checkoutState.grandTotal = taxableBase + checkoutState.vatAmount;
 
         // Update DOM
@@ -108,33 +103,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // SIMULATED GOOGLE MAPS API CALL
-            // In production, this would call your backend endpoint or Google Distance Matrix
             calculateDeliveryBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Calculating...';
             
             setTimeout(() => {
-                // Mock distance logic: Random distance between 5km and 85km for demo purposes
                 checkoutState.distanceKm = Math.floor(Math.random() * 80) + 5; 
                 
-                // Fallback algorithm if delivery.js isn't loaded yet
-                const baseRate = 85.00;        // Base courier fee
-                const ratePerKm = 4.50;        // Cost per additional km over 10km
-                const ratePerKg = 7.50;        // Cost per additional kg over 5kg
+                const baseRate = 85.00;        
+                const ratePerKm = 4.50;        
+                const ratePerKg = 7.50;        
                 
                 const extraKm = Math.max(0, checkoutState.distanceKm - 10);
                 const extraKg = Math.max(0, checkoutState.totalWeightKg - 5);
                 
                 checkoutState.deliveryFee = baseRate + (extraKm * ratePerKm) + (extraKg * ratePerKg);
                 
-                // Alert user of the calculation
-                const toastStr = `Distance estimated: ${checkoutState.distanceKm}km.\nTotal Weight: ${checkoutState.totalWeightKg}kg.\nDelivery Fee: R${checkoutState.deliveryFee.toFixed(2)}`;
-                console.log(toastStr);
-
                 updateFinancials();
                 
                 calculateDeliveryBtn.innerHTML = '<i class="fa-solid fa-check"></i> Calculated';
                 calculateDeliveryBtn.classList.add('btn-success');
-                calculateDeliveryBtn.disabled = true; // Lock it in
+                calculateDeliveryBtn.disabled = true; 
             }, 1200);
         });
     }
@@ -146,7 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
         radio.addEventListener('change', (e) => {
             checkoutState.paymentMethod = e.target.value;
             
-            // Show/Hide EFT Bank Details panel
             if (checkoutState.paymentMethod === 'eft' && eftDetailsPanel) {
                 eftDetailsPanel.style.display = 'block';
             } else if (eftDetailsPanel) {
@@ -182,26 +168,52 @@ document.addEventListener('DOMContentLoaded', () => {
             };
 
             if (checkoutState.paymentMethod === 'payfast') {
-                // ROUTE 1: PAYFAST & SCAN TO PAY
-                console.log("Routing to PayFast API with payload:", payload);
+                // ROUTE 1: PAYFAST (Automatic Direct Routing to Instant EFT Tab)
+                console.log("Routing directly to PayFast Instant EFT with payload:", payload);
                 
-                // In production, POST this payload to your backend (/api/payfast-signature)
-                // The backend will generate the MD5 signature and return a form that auto-submits to PayFast
-                alert(`Redirecting to PayFast Secure Gateway for Nexpak Security Solutions...\nOrder Ref: ${orderRef}\nAmount: R${payload.amount}`);
+                const payfastUrl = "https://www.payfast.co.za/eng/process"; // Switch to sandbox.payfast.co.za/eng/process for live test mode if needed
+                const merchantId = "YOUR_MERCHANT_ID";   // Replace with Nexpak's PayFast Merchant ID
+                const merchantKey = "YOUR_MERCHANT_KEY"; // Replace with Nexpak's PayFast Merchant Key
                 
-                // Simulate redirect
-                // window.location.href = '/api/payfast-checkout?ref=' + orderRef;
+                // Construct an auto-submitting form to push user straight to PayFast Instant EFT
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = payfastUrl;
+
+                const payloadFields = {
+                    merchant_id: merchantId,
+                    merchant_key: merchantKey,
+                    return_url: window.location.origin + '/success.html',
+                    cancel_url: window.location.origin + '/cancel.html',
+                    notify_url: window.location.origin + '/api/notify',
+                    name_first: customerName.split(' ')[0],
+                    name_last: customerName.split(' ').slice(1).join(' ') || 'Customer',
+                    email_address: customerEmail,
+                    m_payment_id: orderRef,
+                    amount: checkoutState.grandTotal.toFixed(2),
+                    item_name: `Nexpak Security Solutions Order ${orderRef}`,
+                    payment_method: 'eft' // Forces PayFast to open directly on the Instant EFT tab
+                };
+
+                for (const key in payloadFields) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = payloadFields[key];
+                    form.appendChild(input);
+                }
+
+                document.body.appendChild(form);
+                form.submit();
                 
             } else {
                 // ROUTE 2: MANUAL EFT
                 console.log("Processing Manual EFT order:", payload);
                 
-                // Clear the cart
                 localStorage.removeItem('nexpak_cart');
                 
-                // Redirect to success page or show modal
                 alert(`Order Placed Successfully!\n\nPlease EFT R${payload.amount} to Nexpak Security Solutions.\nUse reference: ${orderRef}\n\nWe have emailed you the invoice and banking details.`);
-                window.location.href = 'index.html'; // Or 'payment-success.html'
+                window.location.href = 'index.html';
             }
         });
     }
@@ -209,4 +221,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // Run on script load
     initCheckout();
 });
-
+           
