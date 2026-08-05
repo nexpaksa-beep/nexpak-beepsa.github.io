@@ -1,4788 +1,1784 @@
-// ======================================================
-// NEXPAK SECURITY SOLUTIONS V15
-// SHOP DATA
-// PART 1/6
-// ELECTRIC FENCING DATABASE
-// ======================================================
-
-
-const products = [
-
-
-/* =====================================================
-   WALL TOP ELECTRIC FENCE SYSTEM
-===================================================== */
-
-
-{
-id:"EF-WALLTOP-KIT",
-
-name:"Wall Top Electric Fence System",
-
-category:"Electric Fencing",
-
-type:"configurable",
-
-basePrice:0,
-
-description:
-"Configure a complete wall top electric fence system including brackets, stays, wire, high voltage cable and accessories.",
-
-image:
-"images/products/wall-top-electric-fence.jpg",
-
-icon:"⚡",
-
-
-options:{
-
-
-bracketLines:[
-
-"6 Line",
-"8 Line",
-"10 Line",
-"12 Line"
-
-],
-
-
-bracketStyle:[
-
-"Flat Bar",
-"Round Bar"
-
-],
-
-
-installationStyle:[
-
-"Straight",
-"Angle"
-
-],
-
-
-colour:[
-
-"Black",
-"White"
-
-],
-
-
-wallTopStay:[
-
-"600mm Wall Top Stay",
-"750mm Wall Top Stay"
-
-],
-
-
-wire:[
-
-"Stainless Steel Solid 1.2mm",
-
-"Stainless Steel Braided 1.2mm 1000m",
-
-"Galvanised Braided 1.2mm 680m",
-
-"Aluminium Braided 1.6mm 1000m",
-
-"Aluminium Solid 1.6mm 1000m"
-
-],
-
-
-htCable:[
-
-"50m Soft HT Cable",
-"100m Soft HT Cable",
-"200m Soft HT Cable",
-
-"50m Hard HT Cable",
-"100m Hard HT Cable",
-"200m Hard HT Cable"
-
-],
-
-
-tensionComponents:[
-
-"Stay Sleeves",
-"Lugs",
-"Tensioners",
-"Tweakers",
-"Compression Springs"
-
-],
-
-
-anchors:[
-
-"6x60 Nail Anchors 100s",
-"8x80 Nail Anchors 100s"
-
-],
-
-
-ferrules:[
-
-"6mm Aluminium Ferrules 100s",
-"6mm Solid Ferrules"
-
-],
-
-
-warningSigns:[
-
-"Medium Warning Sign",
-"Large Warning Sign"
-
-],
-
-
-earthSystem:[
-
-"1.2m Galvanised Earth Spike",
-"1.2m Copper Plated Earth Spike"
-
-],
-
-
-lightningProtection:[
-
-"Lightning Diverter"
-
-],
-
-
-enclosure:[
-
-"DMC Box 430",
-"DMC Box 530"
-
-]
-
-
-}
-
-},
-
-
-
-/* =====================================================
-   ELECTRIC FENCE ENERGIZERS
-===================================================== */
-
-
-{
-id:"EF-ENERGIZERS",
-
-name:"Electric Fence Energizers",
-
-category:"Electric Fencing",
-
-type:"configurable",
-
-basePrice:0,
-
-description:
-"High voltage electric fence energizers for residential, commercial and industrial security.",
-
-image:
-"images/products/electric-fence-energizer.jpg",
-
-icon:"⚡",
-
-
-options:{
-
-
-jouleRating:[
-
-"1 Joule",
-"3 Joule",
-"4 Joule",
-"8 Joule",
-"8 Joule 2 Zone",
-"14 Joule"
-
-],
-
-
-powerBackup:[
-
-"7Ah Lead Acid Battery",
-"7Ah Gel Battery",
-"12V PSU"
-
-],
-
-
-communication:[
-
-"None",
-"GSM Module",
-"Wi-Fi Module"
-
-],
-
-
-control:[
-
-"Keypad",
-"Remote Control"
-
-],
-
-
-alerts:[
-
-"Sirens",
-
-"Strobe Light",
-
-"Night Light"
-
-],
-
-
-installation:[
-
-"Supply Only",
-
-"Supply & Installation"
-
-]
-
-
-}
-
-
-},
-
-
-
-/* =====================================================
-   ELECTRIC FENCE ACCESSORIES
-===================================================== */
-
-
-{
-id:"EF-ACCESSORIES",
-
-name:"Electric Fence Accessories",
-
-category:"Electric Fencing",
-
-type:"standard",
-
-basePrice:0,
-
-description:
-"Replacement components and installation accessories for electric fencing systems.",
-
-image:
-"images/products/electric-fence-accessories.jpg",
-
-icon:"🔧",
-
-
-options:{
-
-
-components:[
-
-"Stay Sleeve",
-
-"Electric Fence Lug",
-
-"Wire Tensioner",
-
-"Fence Tweaker",
-
-"Compression Spring",
-
-"Aluminium Ferrule",
-
-"Solid Ferrule",
-
-"HT Cable",
-
-"Warning Sign",
-
-"Lightning Diverter",
-
-"Earth Clamp",
-
-"Earth Cable"
-
-]
-
-
-}
-
-
-}
-
-
-];
-
-// ======================================================
-// NEXPAK SECURITY SOLUTIONS V15
-// SHOP DATA
-// PART 2/6
-// ROBOGUARD DATABASE
-// ======================================================
-
-
-
-/* =====================================================
-   ROBOGUARD OUTDOOR BEAM SECURITY SYSTEMS
-===================================================== */
-
-
-products.push(
-
-
-{
-id:"ROBOGUARD-KIT-4",
-
-name:"Roboguard 4 Beam Security Kit",
-
-category:"Roboguard",
-
-type:"configurable",
-
-basePrice:0,
-
-description:
-"Complete outdoor perimeter protection system with four Roboguard beams, receiver and alarm accessories.",
-
-image:
-"images/products/roboguard-kit-4.jpg",
-
-icon:"🛡️",
-
-
-options:{
-
-
-beamColour:[
-
-"Green",
-"Black",
-"White"
-
-],
-
-
-kitContents:[
-
-"4 x Roboguard Beams",
-
-"1 x HQ Receiver",
-
-"1 x Robalarm Power Back",
-
-"1 x Siren",
-
-"2 x 4 Button Remotes"
-
-],
-
-
-powerOptions:[
-
-"Battery Backup",
-
-"AC Power"
-
-],
-
-
-installation:[
-
-"Supply Only",
-
-"Supply & Installation"
-
-]
-
-
-},
-
-
-extras:[
-
-
-{
-name:"Additional Roboguard Beam",
-price:0
-},
-
-
-{
-name:"Additional 4 Button Remote",
-price:0
-},
-
-
-{
-name:"Additional Siren",
-price:0
-}
-
-
-]
-
-
-},
-
-
-
-
-/* =====================================================
-   ROBOGUARD 6 BEAM SYSTEM
-===================================================== */
-
-
-{
-id:"ROBOGUARD-KIT-6",
-
-name:"Roboguard 6 Beam Security Kit",
-
-category:"Roboguard",
-
-type:"configurable",
-
-basePrice:0,
-
-description:
-"Extended perimeter protection system using six outdoor Roboguard detection beams.",
-
-image:
-"images/products/roboguard-kit-6.jpg",
-
-icon:"🛡️",
-
-
-options:{
-
-
-beamColour:[
-
-"Green",
-"Black",
-"White"
-
-],
-
-
-kitContents:[
-
-"6 x Roboguard Beams",
-
-"1 x HQ Receiver",
-
-"1 x Robalarm Power Back",
-
-"1 x Siren",
-
-"2 x 4 Button Remotes"
-
-],
-
-
-powerOptions:[
-
-"Battery Backup",
-
-"AC Power"
-
-],
-
-
-installation:[
-
-"Supply Only",
-
-"Supply & Installation"
-
-]
-
-
-},
-
-
-extras:[
-
-
-{
-name:"Additional Roboguard Beam",
-price:0
-},
-
-
-{
-name:"Additional Remote",
-price:0
-}
-
-
-]
-
-
-},
-
-
-
-
-/* =====================================================
-   ROBOGUARD 8 BEAM SYSTEM
-===================================================== */
-
-
-{
-id:"ROBOGUARD-KIT-8",
-
-name:"Roboguard 8 Beam Security Kit",
-
-category:"Roboguard",
-
-type:"configurable",
-
-basePrice:0,
-
-description:
-"Maximum outdoor perimeter protection with eight Roboguard detection beams.",
-
-image:
-"images/products/roboguard-kit-8.jpg",
-
-icon:"🛡️",
-
-
-options:{
-
-
-beamColour:[
-
-"Green",
-"Black",
-"White"
-
-],
-
-
-kitContents:[
-
-"8 x Roboguard Beams",
-
-"1 x HQ Receiver",
-
-"1 x Robalarm Power Back",
-
-"1 x Siren",
-
-"2 x 4 Button Remotes"
-
-],
-
-
-powerOptions:[
-
-"Battery Backup",
-
-"AC Power"
-
-],
-
-
-installation:[
-
-"Supply Only",
-
-"Supply & Installation"
-
-]
-
-
-},
-
-
-extras:[
-
-
-{
-name:"Additional Roboguard Beam",
-price:0
-},
-
-
-{
-name:"Additional Remote",
-price:0
-},
-
-
-{
-name:"Additional Siren",
-price:0
-}
-
-
-]
-
-
-},
-
-
-
-
-/* =====================================================
-   ROBOGUARD ACCESSORIES
-===================================================== */
-
-
-{
-id:"ROBOGUARD-ACCESSORIES",
-
-name:"Roboguard Accessories",
-
-category:"Roboguard",
-
-type:"standard",
-
-basePrice:0,
-
-description:
-"Replacement parts and accessories for Roboguard outdoor security systems.",
-
-image:
-"images/products/roboguard-accessories.jpg",
-
-icon:"🔧",
-
-
-options:{
-
-
-components:[
-
-"Roboguard Beam",
-
-"HQ Receiver",
-
-"Robalarm Power Back",
-
-"4 Button Remote",
-
-"Siren",
-
-"Battery",
-
-"Mounting Accessories"
-
-]
-
-
-}
-
-
-}
-
-
-);
-
-// ======================================================
-// NEXPAK SECURITY SOLUTIONS V15
-// SHOP DATA
-// PART 3/6
-// CCTV + IP CCTV DATABASE
-// ======================================================
-
-
-
-/* =====================================================
-   CCTV SURVEILLANCE SYSTEMS
-===================================================== */
-
-
-products.push(
-
-
-{
-id:"CCTV-SYSTEM-KIT",
-
-name:"Professional CCTV Surveillance System",
-
-category:"CCTV",
-
-type:"configurable",
-
-basePrice:0,
-
-description:
-"Configure a complete analogue CCTV surveillance system using professional security equipment.",
-
-image:
-"images/products/cctv-system.jpg",
-
-icon:"📹",
-
-
-options:{
-
-
-brand:[
-
-"Hikvision",
-"Dahua"
-
-],
-
-
-systemType:[
-
-"Turbo HD CCTV",
-"Hybrid CCTV"
-
-],
-
-
-cameraQuantity:[
-
-"2 Camera System",
-"4 Camera System",
-"6 Camera System",
-"8 Camera System",
-"16 Camera System",
-"32 Camera System"
-
-],
-
-
-cameraType:[
-
-"Bullet Camera",
-"Dome Camera",
-"Turret Camera",
-"ColorVu Camera",
-"AI Smart Detection Camera"
-
-],
-
-
-resolution:[
-
-"2MP",
-"4MP",
-"5MP",
-"8MP 4K"
-
-],
-
-
-recorder:[
-
-"DVR",
-"XVR Hybrid Recorder"
-
-],
-
-
-hardDrive:[
-
-"None",
-"1TB",
-"2TB",
-"4TB",
-"6TB",
-"8TB"
-
-],
-
-
-monitor:[
-
-"None",
-"22 inch Monitor",
-"24 inch Monitor",
-"32 inch Monitor"
-
-],
-
-
-remoteViewing:[
-
-"Mobile App Setup",
-"Remote Viewing Setup",
-"Cloud Access"
-
-],
-
-
-cabling:[
-
-"RG59 Cable Kit",
-"CAT5e Cable Kit",
-"CAT6 Cable Kit"
-
-],
-
-
-power:[
-
-"12V Power Supply",
-"UPS Backup Power"
-
-],
-
-
-installation:[
-
-"Supply Only",
-"Supply & Installation"
-
-]
-
-
-},
-
-
-extras:[
-
-
-{
-name:"Additional Camera",
-price:0
-},
-
-
-{
-name:"Additional Hard Drive",
-price:0
-},
-
-
-{
-name:"Camera Junction Box",
-price:0
-},
-
-
-{
-name:"Surge Protection",
-price:0
-},
-
-
-{
-name:"UPS Backup",
-price:0
-}
-
-
-]
-
-
-},
-
-
-
-
-/* =====================================================
-   IP CCTV SYSTEMS
-===================================================== */
-
-
-{
-id:"IP-CCTV-SYSTEM-KIT",
-
-name:"Professional IP CCTV Surveillance System",
-
-category:"IP CCTV",
-
-type:"configurable",
-
-basePrice:0,
-
-description:
-"Configure a high resolution IP camera surveillance system with network recording and smart security features.",
-
-image:
-"images/products/ip-cctv-system.jpg",
-
-icon:"🌐📹",
-
-
-options:{
-
-
-brand:[
-
-"Hikvision",
-"Dahua"
-
-],
-
-
-cameraQuantity:[
-
-"2 Camera System",
-"4 Camera System",
-"8 Camera System",
-"16 Camera System",
-"32 Camera System"
-
-],
-
-
-cameraType:[
-
-"IP Bullet Camera",
-"IP Dome Camera",
-"Turret IP Camera",
-"PTZ Camera",
-"AI Smart Camera"
-
-],
-
-
-resolution:[
-
-"2MP",
-"4MP",
-"5MP",
-"8MP 4K"
-
-],
-
-
-nightVision:[
-
-"IR Night Vision",
-"Color Night Vision",
-"Full Colour AI Vision"
-
-],
-
-
-recorder:[
-
-"NVR",
-"PoE NVR"
-
-],
-
-
-storage:[
-
-"1TB",
-"2TB",
-"4TB",
-"8TB",
-"10TB"
-
-],
-
-
-networkEquipment:[
-
-"PoE Switch",
-"Network Switch",
-"Router Integration"
-
-],
-
-
-remoteAccess:[
-
-"Mobile App",
-"Cloud Access",
-"Remote Monitoring"
-
-],
-
-
-cabling:[
-
-"CAT5e Cable",
-"CAT6 Cable"
-
-],
-
-
-installation:[
-
-"Supply Only",
-"Supply & Installation"
-
-]
-
-
-},
-
-
-extras:[
-
-
-{
-name:"Additional IP Camera",
-price:0
-},
-
-
-{
-name:"PoE Switch",
-price:0
-},
-
-
-{
-name:"Additional Hard Drive",
-price:0
-},
-
-
-{
-name:"CAT6 Cable",
-price:0
-},
-
-
-{
-name:"Camera Junction Box",
-price:0
-},
-
-
-{
-name:"Network Cabinet",
-price:0
-}
-
-
-]
-
-
-},
-
-
-
-
-/* =====================================================
-   CCTV ACCESSORIES
-===================================================== */
-
-
-{
-id:"CCTV-ACCESSORIES",
-
-name:"CCTV Installation Accessories",
-
-category:"CCTV",
-
-type:"standard",
-
-basePrice:0,
-
-description:
-"Security camera installation accessories and replacement components.",
-
-image:
-"images/products/cctv-accessories.jpg",
-
-icon:"🔧",
-
-
-options:{
-
-
-components:[
-
-"BNC Connectors",
-
-"DC Power Connectors",
-
-"Camera Junction Box",
-
-"RG59 Cable",
-
-"CAT5e Cable",
-
-"CAT6 Cable",
-
-"PoE Switch",
-
-"Hard Drive",
-
-"Monitor",
-
-"Power Supply",
-
-"Surge Protector"
-
-]
-
-
-}
-
-
-}
-
-
-);
-
-// ======================================================
-// NEXPAK SECURITY SOLUTIONS V15
-// SHOP DATA
-// PART 4/6
-// GATE AUTOMATION + ACCESS CONTROL DATABASE
-// ======================================================
-
-
-
-/* =====================================================
-   GATE AUTOMATION SYSTEMS
-===================================================== */
-
-
-products.push(
-
-
-{
-id:"GATE-AUTOMATION-KIT",
-
-name:"Automatic Gate Automation System",
-
-category:"Gate Automation",
-
-type:"configurable",
-
-basePrice:0,
-
-description:
-"Configure a complete automatic gate solution for residential, commercial and industrial properties.",
-
-image:
-"images/products/gate-automation.jpg",
-
-icon:"🚪",
-
-
-options:{
-
-
-brand:[
-
-"Centurion",
-"Hansa",
-"Gemini",
-"ET Nice"
-
-],
-
-
-gateType:[
-
-"Sliding Gate",
-"Swing Gate"
-
-],
-
-
-motorSelection:[
-
-"Centurion D5 Smart",
-"Centurion D10 Smart",
-"Centurion D10 Turbo",
-"Centurion A10",
-"Centurion D5 Evo"
-
-],
-
-
-gateWeight:[
-
-"Up to 500kg",
-"Up to 1000kg",
-"Up to 1500kg",
-"Up to 2000kg"
-
-],
-
-
-powerSystem:[
-
-"AC Powered",
-"Solar Powered"
-
-],
-
-
-batteryBackup:[
-
-"7Ah Battery",
-"12Ah Battery",
-"18Ah Battery"
-
-],
-
-
-rackLength:[
-
-"3m Rack",
-"4m Rack",
-"5m Rack",
-"6m Rack",
-"Custom Length"
-
-],
-
-
-remoteControls:[
-
-"1 Remote",
-"2 Remotes",
-"4 Remotes",
-"Additional Remotes"
-
-],
-
-
-accessControl:[
-
-"Remote Control Only",
-"Keypad Access",
-"GSM Access",
-"Wi-Fi Access"
-
-],
-
-
-safetyDevices:[
-
-"Safety Beams",
-"Loop Detector",
-"Safety Edge"
-
-],
-
-
-installation:[
-
-"Supply Only",
-"Supply & Installation"
-
-]
-
-
-},
-
-
-extras:[
-
-
-{
-name:"Additional Gate Remote",
-price:0
-},
-
-
-{
-name:"Solar Panel Kit",
-price:0
-},
-
-
-{
-name:"Safety Infrared Beams",
-price:0
-},
-
-
-{
-name:"GSM Module",
-price:0
-},
-
-
-{
-name:"Wi-Fi Module",
-price:0
-},
-
-
-{
-name:"Intercom Integration",
-price:0
-}
-
-
-]
-
-
-},
-
-
-
-
-/* =====================================================
-   ACCESS CONTROL SYSTEMS
-===================================================== */
-
-
-{
-id:"ACCESS-CONTROL-KIT",
-
-name:"Professional Access Control System",
-
-category:"Access Control",
-
-type:"configurable",
-
-basePrice:0,
-
-description:
-"Configure access control solutions for homes, offices, warehouses and commercial buildings.",
-
-image:
-"images/products/access-control.jpg",
-
-icon:"🔐",
-
-
-options:{
-
-
-brand:[
-
-"Hikvision",
-"Dahua",
-"ZKTeco",
-"Other"
-
-],
-
-
-accessMethod:[
-
-"RFID Card Access",
-
-"Fingerprint Access",
-
-"Facial Recognition",
-
-"PIN Code Access",
-
-"Multi Technology Access"
-
-],
-
-
-readerType:[
-
-"Standalone Reader",
-
-"Outdoor Weatherproof Reader",
-
-"Network Reader"
-
-],
-
-
-doorController:[
-
-"Single Door Controller",
-
-"2 Door Controller",
-
-"4 Door Controller",
-
-"8 Door Controller"
-
-],
-
-
-lockType:[
-
-"Magnetic Lock 180kg",
-
-"Magnetic Lock 280kg",
-
-"Magnetic Lock 300kg",
-
-"Electric Strike Lock",
-
-"Drop Bolt Lock"
-
-],
-
-
-exitDevices:[
-
-"Exit Button",
-
-"No Touch Exit Button",
-
-"Emergency Break Glass"
-
-],
-
-
-powerSupply:[
-
-"12V 3A PSU",
-
-"12V 5A PSU",
-
-"Boxed PSU With Battery Backup"
-
-],
-
-
-batteryBackup:[
-
-"7Ah Lead Acid Battery",
-
-"7Ah Gel Battery",
-
-"12Ah Battery"
-
-],
-
-
-communication:[
-
-"Standalone",
-
-"TCP/IP Network",
-
-"Wi-Fi"
-
-],
-
-
-doorType:[
-
-"Single Door",
-
-"Double Door",
-
-"Gate Access"
-
-],
-
-
-installation:[
-
-"Supply Only",
-
-"Supply & Installation"
-
-]
-
-
-},
-
-
-extras:[
-
-
-{
-name:"RFID Cards",
-price:0
-},
-
-
-{
-name:"RFID Tags",
-price:0
-},
-
-
-{
-name:"Additional Reader",
-price:0
-},
-
-
-{
-name:"Additional Lock",
-price:0
-},
-
-
-{
-name:"Door Contact",
-price:0
-},
-
-
-{
-name:"Video Intercom Integration",
-price:0
-}
-
-
-]
-
-
-},
-
-
-
-
-/* =====================================================
-   GATE ACCESSORIES
-===================================================== */
-
-
-{
-id:"GATE-ACCESSORIES",
-
-name:"Gate Automation Accessories",
-
-category:"Gate Automation",
-
-type:"standard",
-
-basePrice:0,
-
-description:
-"Replacement parts and accessories for automatic gate systems.",
-
-image:
-"images/products/gate-accessories.jpg",
-
-icon:"🔧",
-
-
-options:{
-
-
-components:[
-
-"Gate Remote",
-
-"Gate Rack",
-
-"Safety Beam",
-
-"Loop Detector",
-
-"Gate Battery",
-
-"Solar Panel",
-
-"GSM Module",
-
-"Wi-Fi Module",
-
-"Keypad",
-
-"Exit Button",
-
-"Intercom Integration"
-
-]
-
-
-}
-
-
-}
-
-
-);
-
-// ======================================================
-// NEXPAK SECURITY SOLUTIONS V15
-// SHOP DATA
-// PART 5/6
-// ALARM SYSTEMS + INTERCOM DATABASE
-// ======================================================
-
-
-
-/* =====================================================
-   ALARM SYSTEMS
-===================================================== */
-
-
-products.push(
-
-
-{
-id:"ALARM-SYSTEM-KIT",
-
-name:"Professional Alarm System",
-
-category:"Alarm Systems",
-
-type:"configurable",
-
-basePrice:0,
-
-description:
-"Configure a complete intrusion detection alarm solution for residential, commercial and industrial security.",
-
-image:
-"images/products/alarm-system.jpg",
-
-icon:"🚨",
-
-
-options:{
-
-
-brand:[
-
-"Paradox",
-"IDS",
-"Ajax",
-"Texecom"
-
-],
-
-
-systemType:[
-
-"Wired Alarm System",
-"Wireless Alarm System",
-"Hybrid Alarm System"
-
-],
-
-
-alarmPanel:[
-
-"4 Zone Panel",
-"8 Zone Panel",
-"16 Zone Panel",
-"32 Zone Panel"
-
-],
-
-
-keypad:[
-
-"LED Keypad",
-"LCD Keypad",
-"Touch Keypad",
-"Wireless Keypad"
-
-],
-
-
-motionDetection:[
-
-"1 PIR Sensor",
-"2 PIR Sensors",
-"4 PIR Sensors",
-"8 PIR Sensors"
-
-],
-
-
-outdoorProtection:[
-
-"None",
-"Outdoor PIR",
-"Dual Beam Detector",
-"Outdoor Wireless Beam"
-
-],
-
-
-doorProtection:[
-
-"None",
-"Magnetic Door Contact",
-"Wireless Door Contact"
-
-],
-
-
-communication:[
-
-"None",
-"GSM Module",
-"Wi-Fi Module",
-"GSM + Wi-Fi Module"
-
-],
-
-
-battery:[
-
-"7Ah Lead Acid Battery",
-"7Ah Gel Battery",
-"12Ah Battery"
-
-],
-
-
-siren:[
-
-"Indoor Siren",
-"Outdoor Siren",
-"Outdoor Siren + Strobe"
-
-],
-
-
-panicOptions:[
-
-"None",
-"Wireless Panic Button",
-"Fixed Panic Button"
-
-],
-
-
-installation:[
-
-"Supply Only",
-"Supply & Installation"
-
-]
-
-
-},
-
-
-extras:[
-
-
-{
-name:"Additional PIR Sensor",
-price:0
-},
-
-
-{
-name:"Additional Door Contact",
-price:0
-},
-
-
-{
-name:"Remote Control",
-price:0
-},
-
-
-{
-name:"Wireless Receiver",
-price:0
-},
-
-
-{
-name:"Smoke Detector",
-price:0
-},
-
-
-{
-name:"Heat Detector",
-price:0
-},
-
-
-{
-name:"Outdoor Beam Detector",
-price:0
-},
-
-
-{
-name:"DMC Enclosure Box",
-price:0
-}
-
-
-]
-
-
-},
-
-
-
-
-/* =====================================================
-   INTERCOM SYSTEMS
-===================================================== */
-
-
-{
-id:"VIDEO-INTERCOM-KIT",
-
-name:"Video Intercom & Smart Entry System",
-
-category:"Intercom",
-
-type:"configurable",
-
-basePrice:0,
-
-description:
-"Professional video intercom solutions for homes, offices, complexes and commercial properties.",
-
-image:
-"images/products/video-intercom.jpg",
-
-icon:"📞",
-
-
-options:{
-
-
-brand:[
-
-"Hikvision",
-"Dahua",
-"Commax",
-"Other"
-
-],
-
-
-systemType:[
-
-"Audio Intercom",
-"Video Intercom",
-"IP Video Intercom",
-"Wi-Fi Smart Intercom"
-
-],
-
-
-doorStation:[
-
-"Single Button Outdoor Station",
-"Multi Button Outdoor Station",
-"Villa Door Station",
-"Commercial Door Station"
-
-],
-
-
-indoorMonitor:[
-
-"None",
-"7 Inch Indoor Monitor",
-"10 Inch Indoor Monitor",
-"Touch Screen Monitor"
-
-],
-
-
-connection:[
-
-"2 Wire System",
-"4 Wire System",
-"IP Network",
-"Wi-Fi"
-
-],
-
-
-gateControl:[
-
-"Gate Release",
-"Electric Lock Control",
-"Magnetic Lock Control"
-
-],
-
-
-cameraIntegration:[
-
-"Built-in Camera",
-"CCTV Integration",
-"Additional Camera"
-
-],
-
-
-accessOptions:[
-
-"PIN Code",
-"RFID Card",
-"Fingerprint",
-"Facial Recognition"
-
-],
-
-
-mobileAccess:[
-
-"None",
-"Mobile App Viewing",
-"Remote Gate Opening"
-
-],
-
-
-powerSupply:[
-
-"12V Power Supply",
-"24V Power Supply",
-"PoE Power"
-
-],
-
-
-installation:[
-
-"Supply Only",
-"Supply & Installation"
-
-]
-
-
-},
-
-
-extras:[
-
-
-{
-name:"Additional Indoor Monitor",
-price:0
-},
-
-
-{
-name:"Additional Outdoor Station",
-price:0
-},
-
-
-{
-name:"Electric Strike Lock",
-price:0
-},
-
-
-{
-name:"Magnetic Lock",
-price:0
-},
-
-
-{
-name:"Exit Button",
-price:0
-},
-
-
-{
-name:"Gate Motor Integration",
-price:0
-},
-
-
-{
-name:"Wi-Fi Module",
-price:0
-}
-
-
-]
-
-
-},
-
-
-
-
-/* =====================================================
-   ALARM & INTERCOM ACCESSORIES
-===================================================== */
-
-
-{
-id:"ALARM-INTERCOM-ACCESSORIES",
-
-name:"Alarm & Intercom Accessories",
-
-category:"Security Accessories",
-
-type:"standard",
-
-basePrice:0,
-
-description:
-"Replacement accessories and additional components for alarm and intercom systems.",
-
-image:
-"images/products/alarm-accessories.jpg",
-
-icon:"🔧",
-
-
-options:{
-
-
-components:[
-
-"PIR Motion Sensor",
-
-"Outdoor PIR",
-
-"Magnetic Door Contact",
-
-"Wireless Contact",
-
-"Alarm Remote",
-
-"Panic Button",
-
-"Siren",
-
-"Strobe Light",
-
-"Smoke Detector",
-
-"Heat Detector",
-
-"Intercom Monitor",
-
-"Door Station"
-
-]
-
-
-}
-
-
-}
-
-
-);
-
-// ======================================================
-// NEXPAK SECURITY SOLUTIONS V15
-// SHOP DATA
-// PART 6/6
-// SECURITY ACCESSORIES + DATABASE CLOSE
-// ======================================================
-
-
-
-/* =====================================================
-   SECURITY ACCESSORIES
-===================================================== */
-
-
-products.push(
-
-
-{
-id:"SECURITY-ACCESSORIES",
-
-name:"Security System Accessories",
-
-category:"Security Accessories",
-
-type:"configurable",
-
-basePrice:0,
-
-description:
-"Professional security system accessories, replacement parts and installation components.",
-
-image:
-"images/products/security-accessories.jpg",
-
-icon:"🔧",
-
-
-options:{
-
-
-electricFence:[
-
-"Electric Fence Remote",
-
-"Fence Alarm Indicator",
-
-"Gate Contact",
-
-"Lightning Diverter",
-
-"Earth Clamp",
-
-"Earth Cable",
-
-"High Voltage Cable",
-
-"Fence Joiner",
-
-"Warning Signs"
-
-],
-
-
-alarmAccessories:[
-
-"PIR Motion Detector",
-
-"Outdoor PIR Detector",
-
-"Magnetic Door Contact",
-
-"Wireless Door Contact",
-
-"Remote Control",
-
-"Panic Button",
-
-"Indoor Siren",
-
-"Outdoor Siren",
-
-"Strobe Light",
-
-"Smoke Detector",
-
-"Heat Detector"
-
-],
-
-
-cctvAccessories:[
-
-"Camera Junction Box",
-
-"BNC Connector",
-
-"DC Power Connector",
-
-"RG59 Cable",
-
-"CAT5e Cable",
-
-"CAT6 Cable",
-
-"PoE Switch",
-
-"Hard Drive",
-
-"Monitor",
-
-"Power Supply",
-
-"Surge Protector"
-
-],
-
-
-gateAccessories:[
-
-"Gate Remote",
-
-"Safety Beam",
-
-"Loop Detector",
-
-"Gate Rack",
-
-"Battery",
-
-"Solar Panel",
-
-"Keypad",
-
-"GSM Module",
-
-"Wi-Fi Module"
-
-],
-
-
-accessControl:[
-
-"RFID Cards",
-
-"RFID Tags",
-
-"Exit Button",
-
-"Magnetic Lock",
-
-"Electric Strike",
-
-"Door Contact"
-
-],
-
-
-powerProducts:[
-
-"12V PSU",
-
-"24V PSU",
-
-"7Ah Battery",
-
-"12Ah Battery",
-
-"18Ah Battery"
-
-],
-
-
-cables:[
-
-"Alarm Cable",
-
-"CCTV Cable",
-
-"CAT5 Cable",
-
-"CAT6 Cable",
-
-"Power Cable",
-
-"HT Cable"
-
-],
-
-
-installationHardware:[
-
-"Wall Plugs",
-
-"Screws",
-
-"Cable Clips",
-
-"Junction Boxes",
-
-"Enclosure Boxes"
-
-],
-
-
-installation:[
-
-"Supply Only",
-
-"Supply & Installation"
-
-]
-
-
-},
-
-
-extras:[
-
-
-{
-name:"Technician Installation Pack",
-price:0
-},
-
-
-{
-name:"Replacement Battery",
-price:0
-},
-
-
-{
-name:"Replacement Power Supply",
-price:0
-},
-
-
-{
-name:"Maintenance Call Out",
-price:0
-}
-
-
-]
-
-
-},
-
-
-
-
-/* =====================================================
-   SECURITY SERVICE PACKAGES
-===================================================== */
-
-
-{
-id:"SECURITY-SERVICE-PACKAGES",
-
-name:"Security Installation Packages",
-
-category:"Security Solutions",
-
-type:"configurable",
-
-basePrice:0,
-
-description:
-"Complete security packages combining equipment supply, installation and setup.",
-
-image:
-"images/products/security-package.jpg",
-
-icon:"🛡️",
-
-
-options:{
-
-
-solutionType:[
-
-"Home Security Package",
-
-"Small Business Security Package",
-
-"Warehouse Security Package",
-
-"Industrial Security Package",
-
-"Estate Security Package"
-
-],
-
-
-systemsIncluded:[
-
-"CCTV System",
-
-"Electric Fence",
-
-"Alarm System",
-
-"Gate Automation",
-
-"Access Control",
-
-"Intercom System",
-
-"Roboguard Outdoor Protection"
-
-],
-
-
-installationLevel:[
-
-"Equipment Supply Only",
-
-"Professional Installation",
-
-"Full Security Assessment & Installation"
-
-],
-
-
-monitoring:[
-
-"No Monitoring",
-
-"Alarm Monitoring",
-
-"Remote CCTV Monitoring"
-
-]
-
-
-}
-
-
-}
-
-
-);
-
-
-
-// ======================================================
-// DATABASE EXPORT
-// ======================================================
-
-
-if(typeof module !== "undefined"){
-
-module.exports = products;
-
-   }
-// ======================================================
-// NEXPAK SECURITY SOLUTIONS V17
-// SHOP DATA ENGINE BRIDGE
-// ======================================================
-
-
-const shopConfig = {
-
-name:
-"Nexpak Security Solutions",
-
-currency:
-"ZAR",
-
-symbol:
-"R",
-
-
-delivery:{
-
-enabled:true,
-
-standardRate:150,
-
-freeDeliveryAmount:5000
-
-}
-
-};
-
-
-
-
-const shopCategories = [
-
-"Electric Fencing",
-
-"Roboguard",
-
-"CCTV",
-
-"IP CCTV",
-
-"Gate Automation",
-
-"Access Control",
-
-"Alarm Systems",
-
-"Intercom",
-
-"Security Accessories"
-
-];
-
-
-
-
-const shopBrands = [
-
-"Hikvision",
-
-"Dahua",
-
-"Centurion",
-
-"Paradox",
-
-"IDS",
-
-"Ajax",
-
-"Roboguard",
-
-"ZKTeco"
-
-];
-
-
-
-
-window.NexpakShop = {
-
-
-config:
-shopConfig,
-
-
-products:
-products,
-
-
-categories:
-shopCategories,
-
-
-brands:
-shopBrands
-
-
-};
-
-// ======================================================
-// NEXPAK SECURITY SOLUTIONS V17
-// SHOP DATA ENGINE UPGRADE
-// PART 1
-// V15 DATABASE COMPATIBILITY LAYER
-// ======================================================
-
-
-
-// ======================================================
-// SHOP CONFIGURATION
-// ======================================================
-
-
-const shopConfig = {
-
-
-name:
-"Nexpak Security Solutions",
-
-
-currency:
-"ZAR",
-
-
-currencySymbol:
-"R",
-
-
-delivery:{
-
-enabled:true,
-
-standardRate:150,
-
-freeDeliveryMinimum:5000
-
-},
-
-
-features:{
-
-
-cart:true,
-
-wishlist:true,
-
-compare:true,
-
-checkout:true,
-
-reviews:true,
-
-quickView:true
-
-}
-
-
-};
-
-
-
-
-
-// ======================================================
-// CATEGORY ENGINE
-// ======================================================
-
-
-const shopCategories = [
-
-
-{
-id:"electric-fencing",
-name:"Electric Fencing",
-icon:"⚡"
-},
-
-
-{
-id:"roboguard",
-name:"Roboguard",
-icon:"🛡️"
-},
-
-
-{
-id:"cctv",
-name:"CCTV",
-icon:"📹"
-},
-
-
-{
-id:"ip-cctv",
-name:"IP CCTV",
-icon:"🌐"
-},
-
-
-{
-id:"gate-automation",
-name:"Gate Automation",
-icon:"🚪"
-},
-
-
-{
-id:"access-control",
-name:"Access Control",
-icon:"🔐"
-},
-
-
-{
-id:"alarm-systems",
-name:"Alarm Systems",
-icon:"🚨"
-},
-
-
-{
-id:"intercom",
-name:"Intercom",
-icon:"📞"
-},
-
-
-{
-id:"security-accessories",
-name:"Security Accessories",
-icon:"🔧"
-}
-
-
-];
-
-
-
-
-
-// ======================================================
-// BRAND DATABASE
-// ======================================================
-
-
-const shopBrands = [
-
-
-"Hikvision",
-
-"Dahua",
-
-"Centurion",
-
-"Paradox",
-
-"IDS",
-
-"Ajax",
-
-"Roboguard",
-
-"ZKTeco",
-
-"Gemini",
-
-"ET Nice"
-
-
-];
-
-
-
-
-
-// ======================================================
-// V17 SHOP ENGINE CONNECTION
-// ======================================================
-
-
-window.NexpakShop = {
-
-
-config:
-shopConfig,
-
-
-products:
-products,
-
-
-categories:
-shopCategories,
-
-
-brands:
-shopBrands
-
-
-};
-
-
-
-
-
-console.log(
-
-"Nexpak Security Solutions V17 Shop Data Loaded:",
-
-products.length,
-
-"products"
-
-);
-
-   // ======================================================
-// NEXPAK SECURITY SOLUTIONS V17
-// SHOP DATA
-// PART 2
-// PRICING + STOCK ENGINE
-// ======================================================
-
-
-
-// ======================================================
-// PRICING SETTINGS
-// ======================================================
-
-
-const pricingConfig = {
-
-
-currency:
-"ZAR",
-
-
-taxIncluded:
-false,
-
-
-vatRate:
-15,
-
-
-tradeDiscount:
-20,
-
-
-installationAvailable:
-true
-
-
-};
-
-
-
-
-
-// ======================================================
-// PRODUCT PRICE HELPERS
-// ======================================================
-
-
-function getProductPrice(product){
-
-
-if(product.basePrice && product.basePrice > 0){
-
-return product.basePrice;
-
-}
-
-
-return null;
-
-
-}
-
-
-
-
-function calculateVAT(amount){
-
-
-return amount * 
-(pricingConfig.vatRate / 100);
-
-
-}
-
-
-
-
-function calculateTradePrice(amount){
-
-
-return amount -
-(amount *
-(pricingConfig.tradeDiscount / 100));
-
-
-}
-
-
-
-
-
-// ======================================================
-// V17 PRODUCT ENHANCEMENT DEFAULTS
-// ======================================================
-
-
-products.forEach(product => {
-
-
-
-if(!product.stock){
-
-product.stock =
-"Quote Required";
-
-}
-
-
-
-if(!product.rating){
-
-product.rating =
-0;
-
-}
-
-
-
-if(!product.reviews){
-
-product.reviews =
-0;
-
-}
-
-
-
-if(!product.badge){
-
-
-product.badge =
-"Professional Security";
-
-
-}
-
-
-
-if(!product.featured){
-
-
-product.featured =
-false;
-
-
-}
-
-
-
-if(!product.deal){
-
-
-product.deal =
-false;
-
-
-}
-
-
-
-if(!product.oldPrice){
-
-
-product.oldPrice =
-null;
-
-
-}
-
-
-
-});
-
-
-
-
-
-// ======================================================
-// FEATURED PRODUCTS
-// ======================================================
-
-
-const featuredProducts = products.filter(product => {
-
-
-return product.featured === true;
-
-
-});
-
-
-
-
-
-// ======================================================
-// DEAL PRODUCTS
-// ======================================================
-
-
-const dealProducts = products.filter(product => {
-
-
-return product.deal === true;
-
-
-});
-
-
-
-
-
-// ======================================================
-// EXPORT V17 PRICING ENGINE
-// ======================================================
-
-
-window.NexpakShop.pricing = {
-
-
-config:
-pricingConfig,
-
-
-getPrice:
-getProductPrice,
-
-
-vat:
-calculateVAT,
-
-
-tradePrice:
-calculateTradePrice,
-
-
-featured:
-featuredProducts,
-
-
-deals:
-dealProducts
-
-
-};
-
-
-
-
-
-console.log(
-
-"Nexpak V17 Pricing Engine Loaded"
-
-);
-
-// ======================================================
-// NEXPAK SECURITY SOLUTIONS V17
-// SHOP DATA
-// PART 3
-// SEARCH + SEO METADATA ENGINE
-// ======================================================
-
-
-
-// ======================================================
-// SEARCH CONFIGURATION
-// ======================================================
-
-
-const searchConfig = {
-
-
-minCharacters:2,
-
-
-maxResults:10,
-
-
-searchFields:[
-
-"name",
-
-"category",
-
-"description",
-
-"brand",
-
-"keywords"
-
-]
-
-
-};
-
-
-
-
-
-// ======================================================
-// ADD SEARCH METADATA TO PRODUCTS
-// ======================================================
-
-
-products.forEach(product => {
-
-
-
-/*
- Create searchable keyword storage
-*/
-
-
-if(!product.keywords){
-
-
-product.keywords=[];
-
-
-}
-
-
-
-// Category keywords
-
-
-if(product.category){
-
-
-product.keywords.push(
-
-product.category.toLowerCase()
-
-);
-
-
-}
-
-
-
-// Product name keywords
-
-
-if(product.name){
-
-
-product.keywords.push(
-
-...product.name
-.toLowerCase()
-.split(" ")
-
-);
-
-
-}
-
-
-
-// Description keywords
-
-
-if(product.description){
-
-
-product.keywords.push(
-
-...product.description
-.toLowerCase()
-.split(" ")
-
-);
-
-
-}
-
-
-
-// Remove duplicates
-
-
-product.keywords = [
-
-...new Set(product.keywords)
-
-];
-
-
-
-});
-
-
-
-
-
-// ======================================================
-// SEARCH ENGINE FUNCTION
-// ======================================================
-
-
-function searchProducts(query){
-
-
-
-if(!query){
-
-return products;
-
-}
-
-
-
-query = query
-.toLowerCase()
-.trim();
-
-
-
-
-return products.filter(product => {
-
-
-
-let searchableText = [
-
-product.name,
-
-product.category,
-
-product.description,
-
-product.keywords.join(" ")
-
-
-]
-
-.join(" ")
-
-.toLowerCase();
-
-
-
-return searchableText.includes(query);
-
-
-
-});
-
-
-}
-
-
-
-
-
-// ======================================================
-// CATEGORY FILTER ENGINE
-// ======================================================
-
-
-function filterByCategory(category){
-
-
-
-if(
-
-!category ||
-
-category==="all"
-
-){
-
-return products;
-
-}
-
-
-
-return products.filter(product=>{
-
-
-return product.category
-.toLowerCase()
-
-===
-
-category
-.toLowerCase();
-
-
-
-});
-
-
-}
-
-
-
-
-
-// ======================================================
-// BRAND FILTER ENGINE
-// ======================================================
-
-
-function filterByBrand(brand){
-
-
-
-if(!brand){
-
-return products;
-
-}
-
-
-
-return products.filter(product=>{
-
-
-return product.brand &&
-
-product.brand
-.toLowerCase()
-
-===
-
-brand
-.toLowerCase();
-
-
-
-});
-
-
-}
-
-
-
-
-
-// ======================================================
-// SORTING ENGINE
-// ======================================================
-
-
-function sortProducts(list, method){
-
-
-
-let sorted=[...list];
-
-
-
-switch(method){
-
-
-
-case "name":
-
-sorted.sort((a,b)=>
-
-a.name.localeCompare(b.name)
-
-);
-
-break;
-
-
-
-
-case "price-low":
-
-
-sorted.sort((a,b)=>
-
-(a.basePrice||0)
-
--
-
-(b.basePrice||0)
-
-);
-
-break;
-
-
-
-
-case "price-high":
-
-
-sorted.sort((a,b)=>
-
-(b.basePrice||0)
-
--
-
-(a.basePrice||0)
-
-);
-
-break;
-
-
-
-
-case "rating":
-
-
-sorted.sort((a,b)=>
-
-(b.rating||0)
-
--
-
-(a.rating||0)
-
-);
-
-break;
-
-
-
-}
-
-
-
-return sorted;
-
-
-}
-
-
-
-
-
-// ======================================================
-// SEO PRODUCT DATA
-// ======================================================
-
-
-products.forEach(product=>{
-
-
-product.seo={
-
-
-
-title:
-
-`${product.name} | Nexpak Security Solutions`,
-
-
-
-description:
-
-product.description,
-
-
-
-url:
-
-product.id
-.toLowerCase()
-
-.replaceAll(
-" ",
-"-"
-)
-
-
-};
-
-
-
-});
-
-
-
-
-
-// ======================================================
-// EXPORT SEARCH ENGINE
-// ======================================================
-
-
-window.NexpakShop.search = {
-
-
-config:
-
-searchConfig,
-
-
-search:
-
-searchProducts,
-
-
-category:
-
-filterByCategory,
-
-
-brand:
-
-filterByBrand,
-
-
-sort:
-
-sortProducts
-
-
-};
-
-
-
-
-
-console.log(
-
-"Nexpak V17 Search Engine Loaded"
-
-);
-
-// ======================================================
-// NEXPAK SECURITY SOLUTIONS V17
-// SHOP DATA
-// PART 4
-// PRODUCT DISPLAY + UI DATA ENGINE
-// ======================================================
-
-
-
-// ======================================================
-// PRODUCT DISPLAY DEFAULTS
-// ======================================================
-
-
-products.forEach(product => {
-
-
-
-/*
- PRODUCT IMAGE GALLERY
-*/
-
-
-if(!product.gallery){
-
-
-product.gallery=[
-
-product.image
-
-];
-
-
-}
-
-
-
-
-/*
- PRODUCT DISPLAY BADGE
-*/
-
-
-if(!product.badge){
-
-
-if(product.type==="configurable"){
-
-
-product.badge="Configure System";
-
-
-}
-
-else{
-
-
-product.badge="Security Product";
-
-
-}
-
-
-}
-
-
-
-
-/*
- PRODUCT SHORT DESCRIPTION
-*/
-
-
-if(!product.shortDescription){
-
-
-product.shortDescription =
-
-product.description
-.substring(0,120)
-+
-"...";
-
-
-}
-
-
-
-
-
-/*
- STOCK DISPLAY
-*/
-
-
-if(product.basePrice===0){
-
-
-product.stockStatus=
-
-"Request Quote";
-
-
-}
-
-else{
-
-
-product.stockStatus=
-
-"In Stock";
-
-
-}
-
-
-
-
-
-/*
- PRODUCT FLAGS
-*/
-
-
-if(!product.flags){
-
-
-product.flags={
-
-
-featured:false,
-
-
-popular:false,
-
-
-new:false,
-
-
-deal:false
-
-
-};
-
-
-}
-
-
-
-});
-
-
-
-
-
-// ======================================================
-// PRODUCT CARD FORMATTER
-// ======================================================
-
-
-function createProductCardData(product){
-
-
-
-return{
-
-
-id:
-
-product.id,
-
-
-
-name:
-
-product.name,
-
-
-
-category:
-
-product.category,
-
-
-
-image:
-
-product.image,
-
-
-
-icon:
-
-product.icon,
-
-
-
-price:
-
-product.basePrice,
-
-
-
-badge:
-
-product.badge,
-
-
-
-rating:
-
-product.rating,
-
-
-
-reviews:
-
-product.reviews,
-
-
-
-stock:
-
-product.stockStatus,
-
-
-
-type:
-
-product.type
-
-
-
-};
-
-
-}
-
-
-
-
-
-// ======================================================
-// QUICK VIEW DATA
-// ======================================================
-
-
-function getQuickView(productID){
-
-
-
-return products.find(product=>{
-
-
-return product.id===productID;
-
-
-});
-
-
-}
-
-
-
-
-
-// ======================================================
-// PRODUCT GALLERY DATA
-// ======================================================
-
-
-function getGallery(productID){
-
-
-
-let product = products.find(product=>{
-
-
-return product.id===productID;
-
-
-});
-
-
-
-if(!product){
-
-return [];
-
-}
-
-
-
-return product.gallery;
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// RELATED PRODUCTS ENGINE
-// ======================================================
-
-
-function getRelatedProducts(productID){
-
-
-
-let current = products.find(product=>{
-
-
-return product.id===productID;
-
-
-});
-
-
-
-if(!current){
-
-
-return [];
-
-
-}
-
-
-
-return products.filter(product=>{
-
-
-return (
-
-product.id!==productID &&
-
-product.category===current.category
-
-
-);
-
-
-}).slice(0,4);
-
-
-
-}
-
-
-
-
-
-// ======================================================
-// FEATURED DISPLAY PRODUCTS
-// ======================================================
-
-
-function getFeaturedProducts(){
-
-
-
-return products.filter(product=>{
-
-
-return product.flags.featured===true;
-
-
-});
-
-
-}
-
-
-
-
-
-// ======================================================
-// POPULAR PRODUCTS
-// ======================================================
-
-
-function getPopularProducts(){
-
-
-
-return products.filter(product=>{
-
-
-return product.flags.popular===true;
-
-
-});
-
-
-}
-
-
-
-
-
-// ======================================================
-// EXPORT DISPLAY ENGINE
-// ======================================================
-
-
-window.NexpakShop.display = {
-
-
-card:
-
-createProductCardData,
-
-
-quickView:
-
-getQuickView,
-
-
-gallery:
-
-getGallery,
-
-
-related:
-
-getRelatedProducts,
-
-
-featured:
-
-getFeaturedProducts,
-
-
-popular:
-
-getPopularProducts
-
-
-};
-
-
-
-
-
-console.log(
-
-"Nexpak V17 Product Display Engine Loaded"
-
-);
+/*=========================================================
+NEXPAK SECURITY SOLUTIONS
+SHOP DATA V18
+PART 1/8
+
+MASTER PRODUCT DATABASE
+=========================================================*/
+
+const SHOP_PRODUCTS = [
 
 /*=========================================================
- NEXPAK SECURITY SOLUTIONS V17
+CCTV SYSTEMS
+=========================================================*/
 
- shop-data.js
+{
+    id: 1001,
+    sku: "CCTV-001",
+    category: "cctv",
+    brand: "Hikvision",
 
- PART 5
+    name: "4 Camera Hikvision CCTV Kit",
 
- CART • WISHLIST • COMPARE DATA ENGINE
+    description:
+    "4 Channel DVR with 4 x 2MP Cameras, 1TB HDD and accessories.",
+
+    price: 4999.00,
+    oldPrice: 5799.00,
+
+    discount: 14,
+
+    stock: 15,
+
+    featured: true,
+
+    bestseller: true,
+
+    image:
+    "images/products/cctv/hikvision-4-camera-kit.jpg",
+
+    page:
+    "products/cctv.html"
+},
+
+{
+    id:1002,
+    sku:"CCTV-002",
+    category:"cctv",
+    brand:"Hikvision",
+
+    name:"8 Camera Hikvision CCTV Kit",
+
+    description:
+    "Complete 8 Camera surveillance package.",
+
+    price:8999.00,
+    oldPrice:9999.00,
+
+    discount:10,
+
+    stock:8,
+
+    featured:true,
+
+    bestseller:true,
+
+    image:
+    "images/products/cctv/hikvision-8-camera-kit.jpg",
+
+    page:
+    "products/cctv.html"
+},
+
+{
+    id:1003,
+    sku:"CCTV-003",
+    category:"cctv",
+    brand:"Dahua",
+
+    name:"4 Camera Dahua IP Kit",
+
+    description:
+    "Professional IP CCTV security package.",
+
+    price:6299.00,
+    oldPrice:6999.00,
+
+    discount:10,
+
+    stock:10,
+
+    featured:false,
+
+    bestseller:false,
+
+    image:
+    "images/products/cctv/dahua-ip-kit.jpg",
+
+    page:
+    "products/cctv.html"
+},
+
+/*=========================================================
+END OF PART 1
+=========================================================*/
+];
+
+/*=========================================================
+NEXPAK SECURITY SOLUTIONS
+SHOP DATA V18
+PART 2/8
+
+ELECTRIC FENCING
+=========================================================*/
+
+/*=========================================================
+ELECTRIC FENCING
+=========================================================*/
+
+,
+
+{
+    id:2001,
+    sku:"EF-001",
+    category:"electric-fencing",
+    brand:"Nemtek",
+
+    name:"Nemtek Wizord 4 Electric Fence Energizer",
+
+    description:
+    "4 Joule electric fence energizer for residential security.",
+
+    price:3699.00,
+    oldPrice:3999.00,
+
+    discount:8,
+
+    stock:18,
+
+    featured:true,
+
+    bestseller:true,
+
+    image:
+    "images/products/electric-fencing/nemtek-wizord4.jpg",
+
+    page:
+    "products/electric-fencing.html"
+},
+
+{
+    id:2002,
+    sku:"EF-002",
+    category:"electric-fencing",
+    brand:"Nemtek",
+
+    name:"Nemtek Druid 13 LCD Energizer",
+
+    description:
+    "Professional dual-zone LCD electric fence energizer.",
+
+    price:7999.00,
+    oldPrice:8499.00,
+
+    discount:6,
+
+    stock:8,
+
+    featured:true,
+
+    bestseller:false,
+
+    image:
+    "images/products/electric-fencing/druid13.jpg",
+
+    page:
+    "products/electric-fencing.html"
+},
+
+{
+    id:2003,
+    sku:"EF-003",
+    category:"electric-fencing",
+    brand:"Stafix",
+
+    name:"Stafix X2 Energizer",
+
+    description:
+    "Reliable residential electric fencing energizer.",
+
+    price:2999.00,
+    oldPrice:3299.00,
+
+    discount:9,
+
+    stock:14,
+
+    featured:false,
+
+    bestseller:false,
+
+    image:
+    "images/products/electric-fencing/stafix-x2.jpg",
+
+    page:
+    "products/electric-fencing.html"
+},
+
+{
+    id:2004,
+    sku:"EF-004",
+    category:"electric-fencing",
+    brand:"Nemtek",
+
+    name:"Nemtek Galvanised Wire 1.2mm",
+
+    description:
+    "High tensile galvanised electric fence wire.",
+
+    price:799.00,
+    oldPrice:899.00,
+
+    discount:11,
+
+    stock:120,
+
+    featured:false,
+
+    bestseller:true,
+
+    image:
+    "images/products/electric-fencing/wire.jpg",
+
+    page:
+    "products/electric-fencing.html"
+},
+
+{
+    id:2005,
+    sku:"EF-005",
+    category:"electric-fencing",
+    brand:"Nemtek",
+
+    name:"Electric Fence Angled Bracket",
+
+    description:
+    "Heavy-duty wall bracket for electric fencing.",
+
+    price:149.00,
+    oldPrice:179.00,
+
+    discount:17,
+
+    stock:500,
+
+    featured:false,
+
+    bestseller:true,
+
+    image:
+    "images/products/electric-fencing/bracket.jpg",
+
+    page:
+    "products/electric-fencing.html"
+},
+
+{
+    id:2006,
+    sku:"EF-006",
+    category:"electric-fencing",
+    brand:"Nemtek",
+
+    name:"Electric Fence Insulator Pack",
+
+    description:
+    "UV resistant insulators for electric fence systems.",
+
+    price:129.00,
+    oldPrice:149.00,
+
+    discount:13,
+
+    stock:300,
+
+    featured:false,
+
+    bestseller:false,
+
+    image:
+    "images/products/electric-fencing/insulators.jpg",
+
+    page:
+    "products/electric-fencing.html"
+}
+
+/*=========================================================
+END OF PART 2
+=========================================================*/
+
+/*=========================================================
+NEXPAK SECURITY SOLUTIONS
+SHOP DATA V18
+PART 3/8
+
+GATE AUTOMATION
+=========================================================*/
+
+,
+
+{
+    id:3001,
+    sku:"GA-001",
+    category:"gate-automation",
+    brand:"Centurion",
+
+    name:"Centurion D5 EVO Gate Motor Kit",
+
+    description:
+    "Complete sliding gate motor kit for residential properties.",
+
+    price:7499.00,
+    oldPrice:8199.00,
+
+    discount:9,
+
+    stock:12,
+
+    featured:true,
+
+    bestseller:true,
+
+    image:
+    "images/products/gate-automation/d5-evo.jpg",
+
+    page:
+    "products/gate-automation.html"
+},
+
+{
+    id:3002,
+    sku:"GA-002",
+    category:"gate-automation",
+    brand:"Centurion",
+
+    name:"Centurion D6 SMART Gate Motor Kit",
+
+    description:
+    "Smart sliding gate motor with battery backup and controller.",
+
+    price:9999.00,
+    oldPrice:10999.00,
+
+    discount:9,
+
+    stock:8,
+
+    featured:true,
+
+    bestseller:true,
+
+    image:
+    "images/products/gate-automation/d6-smart.jpg",
+
+    page:
+    "products/gate-automation.html"
+},
+
+{
+    id:3003,
+    sku:"GA-003",
+    category:"gate-automation",
+    brand:"ET Nice",
+
+    name:"ET Drive 500 Gate Motor",
+
+    description:
+    "Reliable domestic sliding gate motor kit.",
+
+    price:6899.00,
+    oldPrice:7499.00,
+
+    discount:8,
+
+    stock:10,
+
+    featured:false,
+
+    bestseller:false,
+
+    image:
+    "images/products/gate-automation/et-drive500.jpg",
+
+    page:
+    "products/gate-automation.html"
+},
+
+{
+    id:3004,
+    sku:"GA-004",
+    category:"gate-automation",
+    brand:"Centurion",
+
+    name:"Nova 4 Button Remote",
+
+    description:
+    "Original Centurion Nova rolling code remote control.",
+
+    price:249.00,
+    oldPrice:299.00,
+
+    discount:17,
+
+    stock:250,
+
+    featured:false,
+
+    bestseller:true,
+
+    image:
+    "images/products/gate-automation/nova-remote.jpg",
+
+    page:
+    "products/gate-automation.html"
+},
+
+{
+    id:3005,
+    sku:"GA-005",
+    category:"gate-automation",
+    brand:"Centurion",
+
+    name:"Gate Motor Battery 7Ah",
+
+    description:
+    "Replacement sealed lead acid battery for gate motors.",
+
+    price:399.00,
+    oldPrice:449.00,
+
+    discount:11,
+
+    stock:80,
+
+    featured:false,
+
+    bestseller:true,
+
+    image:
+    "images/products/gate-automation/gate-battery.jpg",
+
+    page:
+    "products/gate-automation.html"
+},
+
+{
+    id:3006,
+    sku:"GA-006",
+    category:"gate-automation",
+    brand:"Centurion",
+
+    name:"Infrared Safety Beam Kit",
+
+    description:
+    "Infrared safety beams for automatic gate systems.",
+
+    price:649.00,
+    oldPrice:749.00,
+
+    discount:13,
+
+    stock:45,
+
+    featured:false,
+
+    bestseller:false,
+
+    image:
+    "images/products/gate-automation/ir-beams.jpg",
+
+    page:
+    "products/gate-automation.html"
+}
+
+/*=========================================================
+END OF PART 3
+=========================================================*/
+
+/*=========================================================
+NEXPAK SECURITY SOLUTIONS
+SHOP DATA V18
+PART 4/8
+
+ALARM SYSTEMS
+=========================================================*/
+
+,
+
+{
+    id:4001,
+    sku:"AL-001",
+    category:"alarm-systems",
+    brand:"IDS",
+
+    name:"IDS X-Series Alarm Kit",
+
+    description:
+    "Complete IDS alarm system with keypad, PIR sensors and battery backup.",
+
+    price:3999.00,
+    oldPrice:4499.00,
+
+    discount:11,
+
+    stock:14,
+
+    featured:true,
+
+    bestseller:true,
+
+    image:
+    "images/products/alarm-systems/ids-xseries-kit.jpg",
+
+    page:
+    "products/alarm-systems.html"
+},
+
+{
+    id:4002,
+    sku:"AL-002",
+    category:"alarm-systems",
+    brand:"Paradox",
+
+    name:"Paradox SP6000 Alarm Kit",
+
+    description:
+    "Professional alarm panel with LCD keypad and PIR detectors.",
+
+    price:5299.00,
+    oldPrice:5899.00,
+
+    discount:10,
+
+    stock:10,
+
+    featured:true,
+
+    bestseller:true,
+
+    image:
+    "images/products/alarm-systems/paradox-sp6000.jpg",
+
+    page:
+    "products/alarm-systems.html"
+},
+
+{
+    id:4003,
+    sku:"AL-003",
+    category:"alarm-systems",
+    brand:"Ajax",
+
+    name:"Ajax StarterKit",
+
+    description:
+    "Wireless smart security alarm system with mobile app support.",
+
+    price:6999.00,
+    oldPrice:7599.00,
+
+    discount:8,
+
+    stock:9,
+
+    featured:true,
+
+    bestseller:false,
+
+    image:
+    "images/products/alarm-systems/ajax-starterkit.jpg",
+
+    page:
+    "products/alarm-systems.html"
+},
+
+{
+    id:4004,
+    sku:"AL-004",
+    category:"alarm-systems",
+    brand:"Texecom",
+
+    name:"Texecom PIR Motion Detector",
+
+    description:
+    "Digital passive infrared detector for indoor security.",
+
+    price:399.00,
+    oldPrice:459.00,
+
+    discount:13,
+
+    stock:85,
+
+    featured:false,
+
+    bestseller:true,
+
+    image:
+    "images/products/alarm-systems/pir-detector.jpg",
+
+    page:
+    "products/alarm-systems.html"
+},
+
+{
+    id:4005,
+    sku:"AL-005",
+    category:"alarm-systems",
+    brand:"Optex",
+
+    name:"Outdoor Dual Beam Sensor",
+
+    description:
+    "Long-range outdoor infrared beam detector.",
+
+    price:1399.00,
+    oldPrice:1549.00,
+
+    discount:10,
+
+    stock:28,
+
+    featured:false,
+
+    bestseller:true,
+
+    image:
+    "images/products/alarm-systems/outdoor-beam.jpg",
+
+    page:
+    "products/alarm-systems.html"
+},
+
+{
+    id:4006,
+    sku:"AL-006",
+    category:"alarm-systems",
+    brand:"Ritar",
+
+    name:"12V 7Ah Alarm Battery",
+
+    description:
+    "Sealed rechargeable backup battery for alarm systems.",
+
+    price:329.00,
+    oldPrice:369.00,
+
+    discount:11,
+
+    stock:120,
+
+    featured:false,
+
+    bestseller:true,
+
+    image:
+    "images/products/alarm-systems/alarm-battery.jpg",
+
+    page:
+    "products/alarm-systems.html"
+}
+
+/*=========================================================
+END OF PART 4
+=========================================================*/
+
+/*=========================================================
+NEXPAK SECURITY SOLUTIONS
+SHOP DATA V18
+PART 5/8
+
+ACCESS CONTROL
+INTERCOM SYSTEMS
+=========================================================*/
+
+,
+
+{
+    id:5001,
+    sku:"AC-001",
+    category:"access-control",
+    brand:"ZKTeco",
+
+    name:"ZKTeco F18 Fingerprint Access Terminal",
+
+    description:
+    "Fingerprint and RFID access control terminal with TCP/IP communication.",
+
+    price:4299.00,
+    oldPrice:4799.00,
+
+    discount:10,
+
+    stock:15,
+
+    featured:true,
+
+    bestseller:true,
+
+    image:
+    "images/products/access-control/zkteco-f18.jpg",
+
+    page:
+    "products/access-control.html"
+},
+
+{
+    id:5002,
+    sku:"AC-002",
+    category:"access-control",
+    brand:"Hikvision",
+
+    name:"Hikvision Face Recognition Terminal",
+
+    description:
+    "AI facial recognition and fingerprint access controller.",
+
+    price:9999.00,
+    oldPrice:10999.00,
+
+    discount:9,
+
+    stock:6,
+
+    featured:true,
+
+    bestseller:false,
+
+    image:
+    "images/products/access-control/hikvision-face-terminal.jpg",
+
+    page:
+    "products/access-control.html"
+},
+
+{
+    id:5003,
+    sku:"AC-003",
+    category:"access-control",
+    brand:"ZKTeco",
+
+    name:"RFID Card Reader",
+
+    description:
+    "13.56MHz RFID proximity card reader.",
+
+    price:899.00,
+    oldPrice:999.00,
+
+    discount:10,
+
+    stock:40,
+
+    featured:false,
+
+    bestseller:true,
+
+    image:
+    "images/products/access-control/rfid-reader.jpg",
+
+    page:
+    "products/access-control.html"
+},
+
+{
+    id:5004,
+    sku:"AC-004",
+    category:"access-control",
+    brand:"Generic",
+
+    name:"600lb Magnetic Lock",
+
+    description:
+    "Electromagnetic door lock for access control installations.",
+
+    price:1299.00,
+    oldPrice:1450.00,
+
+    discount:10,
+
+    stock:35,
+
+    featured:false,
+
+    bestseller:true,
+
+    image:
+    "images/products/access-control/maglock.jpg",
+
+    page:
+    "products/access-control.html"
+},
+
+{
+    id:5005,
+    sku:"AC-005",
+    category:"access-control",
+    brand:"Generic",
+
+    name:"No Touch Exit Button",
+
+    description:
+    "Infrared touchless exit button with LED indicator.",
+
+    price:349.00,
+    oldPrice:399.00,
+
+    discount:13,
+
+    stock:90,
+
+    featured:false,
+
+    bestseller:false,
+
+    image:
+    "images/products/access-control/exit-button.jpg",
+
+    page:
+    "products/access-control.html"
+},
+
+{
+    id:5006,
+    sku:"AC-006",
+    category:"access-control",
+    brand:"Generic",
+
+    name:"12V Access Control Power Supply",
+
+    description:
+    "Power supply with battery charging circuit for access systems.",
+
+    price:699.00,
+    oldPrice:799.00,
+
+    discount:13,
+
+    stock:55,
+
+    featured:false,
+
+    bestseller:true,
+
+    image:
+    "images/products/access-control/power-supply.jpg",
+
+    page:
+    "products/access-control.html"
+},
+
+/*=========================================================
+INTERCOM SYSTEMS
+=========================================================*/
+
+{
+    id:5101,
+    sku:"INT-001",
+    category:"intercom",
+    brand:"Hikvision",
+
+    name:"Hikvision IP Video Intercom Kit",
+
+    description:
+    "Complete IP video intercom kit with indoor monitor.",
+
+    price:7999.00,
+    oldPrice:8699.00,
+
+    discount:8,
+
+    stock:8,
+
+    featured:true,
+
+    bestseller:true,
+
+    image:
+    "images/products/intercom/hikvision-ip-kit.jpg",
+
+    page:
+    "products/intercom.html"
+},
+
+{
+    id:5102,
+    sku:"INT-002",
+    category:"intercom",
+    brand:"Commax",
+
+    name:"Commax Audio Intercom Kit",
+
+    description:
+    "Reliable residential audio intercom system.",
+
+    price:2499.00,
+    oldPrice:2799.00,
+
+    discount:11,
+
+    stock:18,
+
+    featured:false,
+
+    bestseller:true,
+
+    image:
+    "images/products/intercom/commax-audio.jpg",
+
+    page:
+    "products/intercom.html"
+},
+
+{
+    id:5103,
+    sku:"INT-003",
+    category:"intercom",
+    brand:"Hikvision",
+
+    name:"Villa Video Door Station",
+
+    description:
+    "Outdoor IP video door station with HD camera.",
+
+    price:3199.00,
+    oldPrice:3499.00,
+
+    discount:9,
+
+    stock:20,
+
+    featured:false,
+
+    bestseller:false,
+
+    image:
+    "images/products/intercom/villa-door-station.jpg",
+
+    page:
+    "products/intercom.html"
+}
+
+/*=========================================================
+END OF PART 5
+=========================================================*/
+
+/*=========================================================
+NEXPAK SECURITY SOLUTIONS
+SHOP DATA V18
+PART 6/8
+
+ROBOGUARD
+SOLAR SECURITY
+SECURITY LIGHTING
+=========================================================*/
+
+,
+
+{
+    id:6001,
+    sku:"ROB-001",
+    category:"roboguard",
+    brand:"Roboguard",
+
+    name:"Roboguard Outdoor Wireless Beam Kit",
+
+    description:
+    "Wireless outdoor perimeter beam system with receiver.",
+
+    price:5899.00,
+    oldPrice:6499.00,
+
+    discount:9,
+
+    stock:12,
+
+    featured:true,
+
+    bestseller:true,
+
+    image:
+    "images/products/roboguard/beam-kit.jpg",
+
+    page:
+    "products/roboguard.html"
+},
+
+{
+    id:6002,
+    sku:"ROB-002",
+    category:"roboguard",
+    brand:"Roboguard",
+
+    name:"Roboguard Wireless Receiver",
+
+    description:
+    "Multi-zone Roboguard wireless beam receiver.",
+
+    price:2899.00,
+    oldPrice:3199.00,
+
+    discount:9,
+
+    stock:18,
+
+    featured:false,
+
+    bestseller:true,
+
+    image:
+    "images/products/roboguard/receiver.jpg",
+
+    page:
+    "products/roboguard.html"
+},
+
+{
+    id:6003,
+    sku:"ROB-003",
+    category:"roboguard",
+    brand:"Roboguard",
+
+    name:"Roboguard Outdoor Beam Pair",
+
+    description:
+    "Replacement outdoor infrared beam pair.",
+
+    price:1999.00,
+    oldPrice:2199.00,
+
+    discount:9,
+
+    stock:25,
+
+    featured:false,
+
+    bestseller:false,
+
+    image:
+    "images/products/roboguard/beam-pair.jpg",
+
+    page:
+    "products/roboguard.html"
+},
+
+/*=========================================================
+SOLAR SECURITY
+=========================================================*/
+
+{
+    id:6101,
+    sku:"SOL-001",
+    category:"solar-security",
+    brand:"Generic",
+
+    name:"Solar CCTV Power Kit",
+
+    description:
+    "Solar powered CCTV backup solution with battery.",
+
+    price:6499.00,
+    oldPrice:6999.00,
+
+    discount:7,
+
+    stock:10,
+
+    featured:true,
+
+    bestseller:false,
+
+    image:
+    "images/products/solar/solar-cctv-kit.jpg",
+
+    page:
+    "products/solar-security.html"
+},
+
+{
+    id:6102,
+    sku:"SOL-002",
+    category:"solar-security",
+    brand:"Generic",
+
+    name:"100Ah Deep Cycle Battery",
+
+    description:
+    "Deep cycle battery for CCTV, alarms and electric fencing.",
+
+    price:3499.00,
+    oldPrice:3799.00,
+
+    discount:8,
+
+    stock:30,
+
+    featured:false,
+
+    bestseller:true,
+
+    image:
+    "images/products/solar/deep-cycle-battery.jpg",
+
+    page:
+    "products/solar-security.html"
+},
+
+{
+    id:6103,
+    sku:"SOL-003",
+    category:"solar-security",
+    brand:"Victron",
+
+    name:"Victron Smart Charger",
+
+    description:
+    "Professional smart battery charger for backup systems.",
+
+    price:2699.00,
+    oldPrice:2999.00,
+
+    discount:10,
+
+    stock:20,
+
+    featured:false,
+
+    bestseller:false,
+
+    image:
+    "images/products/solar/victron-charger.jpg",
+
+    page:
+    "products/solar-security.html"
+},
+
+/*=========================================================
+SECURITY LIGHTING
+=========================================================*/
+
+{
+    id:6201,
+    sku:"LGT-001",
+    category:"lighting",
+    brand:"Eurolux",
+
+    name:"30W LED Floodlight",
+
+    description:
+    "High brightness outdoor LED security floodlight.",
+
+    price:449.00,
+    oldPrice:499.00,
+
+    discount:10,
+
+    stock:120,
+
+    featured:false,
+
+    bestseller:true,
+
+    image:
+    "images/products/lighting/30w-floodlight.jpg",
+
+    page:
+    "products/security-lighting.html"
+},
+
+{
+    id:6202,
+    sku:"LGT-002",
+    category:"lighting",
+    brand:"Eurolux",
+
+    name:"50W LED Floodlight",
+
+    description:
+    "Commercial LED security floodlight.",
+
+    price:699.00,
+    oldPrice:799.00,
+
+    discount:13,
+
+    stock:80,
+
+    featured:false,
+
+    bestseller:true,
+
+    image:
+    "images/products/lighting/50w-floodlight.jpg",
+
+    page:
+    "products/security-lighting.html"
+},
+
+{
+    id:6203,
+    sku:"LGT-003",
+    category:"lighting",
+    brand:"Generic",
+
+    name:"Solar Motion Sensor Light",
+
+    description:
+    "Outdoor solar powered motion activated security light.",
+
+    price:599.00,
+    oldPrice:699.00,
+
+    discount:14,
+
+    stock:65,
+
+    featured:true,
+
+    bestseller:true,
+
+    image:
+    "images/products/lighting/solar-motion-light.jpg",
+
+    page:
+    "products/security-lighting.html"
+}
+
+/*=========================================================
+END OF PART 6
+=========================================================*/
+
+/*=========================================================
+NEXPAK SECURITY SOLUTIONS
+SHOP DATA V18
+PART 7/8
+
+SECURITY ACCESSORIES
+NETWORKING
+CABLES
+TOOLS
+=========================================================*/
+
+,
+
+{
+    id:7001,
+    sku:"ACC-001",
+    category:"accessories",
+    brand:"Hikvision",
+
+    name:"1TB Surveillance Hard Drive",
+
+    description:
+    "WD Purple surveillance hard drive for DVR and NVR systems.",
+
+    price:1199.00,
+    oldPrice:1399.00,
+
+    discount:14,
+
+    stock:40,
+
+    featured:true,
+
+    bestseller:true,
+
+    image:
+    "images/products/accessories/1tb-purple.jpg",
+
+    page:
+    "products/accessories.html"
+},
+
+{
+    id:7002,
+    sku:"ACC-002",
+    category:"accessories",
+    brand:"Western Digital",
+
+    name:"4TB WD Purple Surveillance Hard Drive",
+
+    description:
+    "Professional surveillance storage drive.",
+
+    price:2899.00,
+    oldPrice:3199.00,
+
+    discount:9,
+
+    stock:25,
+
+    featured:true,
+
+    bestseller:true,
+
+    image:
+    "images/products/accessories/4tb-purple.jpg",
+
+    page:
+    "products/accessories.html"
+},
+
+{
+    id:7003,
+    sku:"CAB-001",
+    category:"cabling",
+    brand:"Generic",
+
+    name:"305m Cat5e Network Cable",
+
+    description:
+    "Professional outdoor network cable for CCTV and networking.",
+
+    price:1699.00,
+    oldPrice:1899.00,
+
+    discount:11,
+
+    stock:35,
+
+    featured:false,
+
+    bestseller:true,
+
+    image:
+    "images/products/cabling/cat5e-box.jpg",
+
+    page:
+    "products/accessories.html"
+},
+
+{
+    id:7004,
+    sku:"CAB-002",
+    category:"cabling",
+    brand:"Generic",
+
+    name:"305m Cat6 Network Cable",
+
+    description:
+    "High performance Cat6 cable for IP CCTV installations.",
+
+    price:2499.00,
+    oldPrice:2799.00,
+
+    discount:11,
+
+    stock:30,
+
+    featured:false,
+
+    bestseller:true,
+
+    image:
+    "images/products/cabling/cat6-box.jpg",
+
+    page:
+    "products/accessories.html"
+},
+
+{
+    id:7005,
+    sku:"CAB-003",
+    category:"cabling",
+    brand:"Generic",
+
+    name:"RG59 Siamese CCTV Cable 100m",
+
+    description:
+    "Combined video and power cable for analog CCTV systems.",
+
+    price:999.00,
+    oldPrice:1099.00,
+
+    discount:9,
+
+    stock:50,
+
+    featured:false,
+
+    bestseller:true,
+
+    image:
+    "images/products/cabling/rg59.jpg",
+
+    page:
+    "products/accessories.html"
+},
+
+{
+    id:7006,
+    sku:"ACC-003",
+    category:"accessories",
+    brand:"Generic",
+
+    name:"BNC Connector Pack (10)",
+
+    description:
+    "Professional compression BNC connectors.",
+
+    price:149.00,
+    oldPrice:179.00,
+
+    discount:17,
+
+    stock:250,
+
+    featured:false,
+
+    bestseller:false,
+
+    image:
+    "images/products/accessories/bnc.jpg",
+
+    page:
+    "products/accessories.html"
+},
+
+{
+    id:7007,
+    sku:"ACC-004",
+    category:"accessories",
+    brand:"Generic",
+
+    name:"RJ45 Connector Pack (100)",
+
+    description:
+    "CAT5e/CAT6 modular connectors.",
+
+    price:199.00,
+    oldPrice:249.00,
+
+    discount:20,
+
+    stock:180,
+
+    featured:false,
+
+    bestseller:true,
+
+    image:
+    "images/products/accessories/rj45.jpg",
+
+    page:
+    "products/accessories.html"
+},
+
+{
+    id:7008,
+    sku:"NET-001",
+    category:"networking",
+    brand:"TP-Link",
+
+    name:"8 Port Gigabit PoE Switch",
+
+    description:
+    "Gigabit PoE switch ideal for IP CCTV installations.",
+
+    price:1999.00,
+    oldPrice:2199.00,
+
+    discount:9,
+
+    stock:18,
+
+    featured:true,
+
+    bestseller:true,
+
+    image:
+    "images/products/networking/poe-switch.jpg",
+
+    page:
+    "products/accessories.html"
+},
+
+{
+    id:7009,
+    sku:"TOOL-001",
+    category:"tools",
+    brand:"Major Tech",
+
+    name:"Professional CCTV Installation Toolkit",
+
+    description:
+    "Complete toolkit for CCTV and security installers.",
+
+    price:1499.00,
+    oldPrice:1699.00,
+
+    discount:12,
+
+    stock:15,
+
+    featured:false,
+
+    bestseller:false,
+
+    image:
+    "images/products/tools/toolkit.jpg",
+
+    page:
+    "products/accessories.html"
+},
+
+{
+    id:7010,
+    sku:"ACC-005",
+    category:"accessories",
+    brand:"Generic",
+
+    name:"Cable Tie Pack (100)",
+
+    description:
+    "UV resistant cable ties for security installations.",
+
+    price:99.00,
+    oldPrice:129.00,
+
+    discount:23,
+
+    stock:500,
+
+    featured:false,
+
+    bestseller:true,
+
+    image:
+    "images/products/accessories/cable-ties.jpg",
+
+    page:
+    "products/accessories.html"
+}
+
+/*=========================================================
+END OF PART 7
+=========================================================*/
+
+/*=========================================================
+NEXPAK SECURITY SOLUTIONS
+SHOP DATA V18
+PART 8/8
+
+HELPER FUNCTIONS
+SHOP COLLECTIONS
+END OF FILE
 =========================================================*/
 
 
-
-// ======================================================
-// STORAGE KEYS
-// ======================================================
-
-
-const storageKeys = {
-
-
-cart:
-
-"nexpak_cart_v17",
-
-
-wishlist:
-
-"nexpak_wishlist_v17",
-
-
-compare:
-
-"nexpak_compare_v17"
-
-
-};
-
-
-
-
-
-// ======================================================
-// CART DATA ENGINE
-// ======================================================
-
-
-function getCart(){
-
-
-
-let cart =
-
-localStorage.getItem(
-storageKeys.cart
-);
-
-
-
-return cart ?
-
-JSON.parse(cart)
-
-:
-
-[];
-
-}
-
-
-
-
-
-function saveCart(cart){
-
-
-localStorage.setItem(
-
-storageKeys.cart,
-
-JSON.stringify(cart)
-
-);
-
-
-}
-
-
-
-
-
-function addToCart(productID, quantity=1){
-
-
-
-let cart=getCart();
-
-
-
-let existing = cart.find(item=>{
-
-
-return item.id===productID;
-
-
-});
-
-
-
-
-if(existing){
-
-
-existing.quantity += quantity;
-
-
-}
-
-else{
-
-
-cart.push({
-
-
-id:productID,
-
-
-quantity:quantity,
-
-
-date:Date.now()
-
-
-});
-
-
-}
-
-
-
-saveCart(cart);
-
-
-
-return cart;
-
-
-}
-
-
-
-
-
-function removeFromCart(productID){
-
-
-
-let cart=getCart();
-
-
-
-cart = cart.filter(item=>{
-
-
-return item.id!==productID;
-
-
-});
-
-
-
-saveCart(cart);
-
-
-
-return cart;
-
-
-}
-
-
-
-
-
-function updateCartQuantity(productID, quantity){
-
-
-
-let cart=getCart();
-
-
-
-let item = cart.find(item=>{
-
-
-return item.id===productID;
-
-
-});
-
-
-
-if(item){
-
-
-item.quantity=quantity;
-
-
-}
-
-
-
-saveCart(cart);
-
-
-
-return cart;
-
-
-}
-
-
-
-
-
-function clearCart(){
-
-
-
-localStorage.removeItem(
-
-storageKeys.cart
-
-);
-
-
-}
-
-
-
-
-
-// ======================================================
-// CART TOTAL ENGINE
-// ======================================================
-
-
-function calculateCartTotal(){
-
-
-
-let cart=getCart();
-
-
-let total=0;
-
-
-
-cart.forEach(item=>{
-
-
-
-let product = products.find(product=>{
-
-
-return product.id===item.id;
-
-
-});
-
-
-
-if(product){
-
-
-total +=
-
-(product.basePrice || 0)
-
-*
-
-item.quantity;
-
-
-}
-
-
-
-});
-
-
-
-return total;
-
-
-}
-
-
-
-
-
-// ======================================================
-// WISHLIST ENGINE
-// ======================================================
-
-
-function getWishlist(){
-
-
-
-let list =
-
-localStorage.getItem(
-
-storageKeys.wishlist
-
-);
-
-
-
-return list ?
-
-JSON.parse(list)
-
-:
-
-[];
-
-}
-
-
-
-
-
-function toggleWishlist(productID){
-
-
-
-let wishlist=getWishlist();
-
-
-
-let exists = wishlist.includes(productID);
-
-
-
-if(exists){
-
-
-wishlist = wishlist.filter(id=>id!==productID);
-
-
-}
-
-else{
-
-
-wishlist.push(productID);
-
-
-}
-
-
-
-localStorage.setItem(
-
-storageKeys.wishlist,
-
-JSON.stringify(wishlist)
-
-);
-
-
-
-return wishlist;
-
-
-}
-
-
-
-
-
-// ======================================================
-// COMPARE ENGINE
-// ======================================================
-
-
-const compareLimit = 4;
-
-
-
-function getCompare(){
-
-
-let compare =
-
-localStorage.getItem(
-
-storageKeys.compare
-
-);
-
-
-
-return compare ?
-
-JSON.parse(compare)
-
-:
-
-[];
-
-}
-
-
-
-
-
-function addCompare(productID){
-
-
-
-let compare=getCompare();
-
-
-
-if(compare.includes(productID)){
-
-
-return compare;
-
-
-}
-
-
-
-
-if(compare.length >= compareLimit){
-
-
-return compare;
-
-
-}
-
-
-
-compare.push(productID);
-
-
-
-localStorage.setItem(
-
-storageKeys.compare,
-
-JSON.stringify(compare)
-
-);
-
-
-
-return compare;
-
-
-}
-
-
-
-
-
-function removeCompare(productID){
-
-
-
-let compare=getCompare();
-
-
-
-compare = compare.filter(id=>{
-
-
-return id!==productID;
-
-
-});
-
-
-
-localStorage.setItem(
-
-storageKeys.compare,
-
-JSON.stringify(compare)
-
-);
-
-
-
-return compare;
-
-
-}
-
-
-
-
-
-// ======================================================
-// EXPORT SHOP STORAGE ENGINE
-// ======================================================
-
-
-window.NexpakShop.storage = {
-
-
-keys:
-
-storageKeys,
-
-
-cart:{
-
-
-get:getCart,
-
-
-add:addToCart,
-
-
-remove:removeFromCart,
-
-
-update:updateCartQuantity,
-
-
-total:calculateCartTotal,
-
-
-clear:clearCart
-
-
-},
-
-
-
-wishlist:{
-
-
-get:getWishlist,
-
-
-toggle:toggleWishlist
-
-
-},
-
-
-
-compare:{
-
-
-get:getCompare,
-
-
-add:addCompare,
-
-
-remove:removeCompare
-
-
-}
-
-
-};
-
-
-
-
-
-console.log(
-
-"Nexpak V17 Cart Wishlist Compare Engine Loaded"
-
-);
-
 /*=========================================================
- NEXPAK SECURITY SOLUTIONS V17
-
- shop-data.js
-
- PART 6
-
- FINAL DATABASE INTEGRATION
- VALIDATION + ENGINE READY
+FEATURED PRODUCTS
 =========================================================*/
 
+const FEATURED_PRODUCTS =
+SHOP_PRODUCTS.filter(product => product.featured);
 
 
-// ======================================================
-// DATABASE VALIDATION
-// ======================================================
+/*=========================================================
+BEST SELLERS
+=========================================================*/
+
+const BESTSELLERS =
+SHOP_PRODUCTS.filter(product => product.bestseller);
 
 
-function validateProducts(){
+/*=========================================================
+NEW ARRIVALS
+=========================================================*/
+
+const NEW_ARRIVALS =
+SHOP_PRODUCTS
+.slice(-12)
+.reverse();
 
 
-let errors=[];
+/*=========================================================
+IN STOCK PRODUCTS
+=========================================================*/
+
+const IN_STOCK =
+SHOP_PRODUCTS.filter(product => product.stock > 0);
 
 
+/*=========================================================
+CATEGORY FILTER
+=========================================================*/
 
-products.forEach(product=>{
+function getProductsByCategory(category){
 
+    if(
+        !category ||
+        category === "all"
+    ){
 
+        return SHOP_PRODUCTS;
 
-if(!product.id){
+    }
 
+    return SHOP_PRODUCTS.filter(product =>
 
-errors.push(
-"Missing Product ID"
-);
+        product.category
+        .toLowerCase() ===
+        category.toLowerCase()
 
-
-}
-
-
-
-if(!product.name){
-
-
-errors.push(
-"Missing Product Name"
-);
-
-
-}
-
-
-
-if(!product.category){
-
-
-errors.push(
-product.id + " missing category"
-);
-
-
-}
-
-
-
-if(!product.image){
-
-
-errors.push(
-product.id + " missing image"
-);
-
+    );
 
 }
 
 
+/*=========================================================
+PRODUCT LOOKUP
+=========================================================*/
 
-});
+function getProductById(id){
 
+    return SHOP_PRODUCTS.find(product=>
 
+        Number(product.id)===Number(id)
 
-return errors;
-
+    );
 
 }
 
 
+/*=========================================================
+SEARCH ENGINE
+=========================================================*/
+
+function searchProducts(search){
+
+    if(!search){
+
+        return SHOP_PRODUCTS;
+
+    }
+
+    search=search.toLowerCase();
+
+    return SHOP_PRODUCTS.filter(product=>
+
+        product.name.toLowerCase().includes(search) ||
+
+        product.brand.toLowerCase().includes(search) ||
+
+        product.category.toLowerCase().includes(search) ||
+
+        product.description.toLowerCase().includes(search) ||
+
+        product.sku.toLowerCase().includes(search)
+
+    );
+
+}
 
 
+/*=========================================================
+PRICE SORT
+=========================================================*/
 
-// ======================================================
-// DATABASE STATISTICS
-// ======================================================
+function sortProducts(products,sort){
 
+    const list=[...products];
 
-function getShopStatistics(){
+    switch(sort){
 
+        case "price-low":
 
+            return list.sort((a,b)=>
 
-return {
+                a.price-b.price
 
+            );
 
-totalProducts:
+        case "price-high":
 
-products.length,
+            return list.sort((a,b)=>
 
+                b.price-a.price
 
+            );
 
-categories:
+        case "name":
 
-[
+            return list.sort((a,b)=>
 
-...new Set(
+                a.name.localeCompare(b.name)
 
-products.map(product=>
+            );
 
-product.category
+        case "brand":
 
-)
+            return list.sort((a,b)=>
 
-)
+                a.brand.localeCompare(b.brand)
 
-],
+            );
 
+        default:
 
+            return list;
 
-configurableProducts:
+    }
 
-products.filter(product=>{
-
-
-return product.type==="configurable";
-
-
-}).length,
-
-
-
-standardProducts:
-
-products.filter(product=>{
+}
 
 
-return product.type==="standard";
+/*=========================================================
+PRODUCT COUNTS
+=========================================================*/
+
+function getCategoryCount(category){
+
+    return getProductsByCategory(category).length;
+
+}
 
 
-}).length
+/*=========================================================
+SHOP STATISTICS
+=========================================================*/
 
+const SHOP_STATS={
+
+    totalProducts:
+    SHOP_PRODUCTS.length,
+
+    featuredProducts:
+    FEATURED_PRODUCTS.length,
+
+    bestSellers:
+    BESTSELLERS.length,
+
+    newArrivals:
+    NEW_ARRIVALS.length
 
 };
 
 
-}
-
-
-
-
-
-// ======================================================
-// FINAL V17 SHOP OBJECT
-// ======================================================
-
-
-window.NexpakShop = {
-
-
-config:
-
-shopConfig,
-
-
-products:
-
-products,
-
-
-categories:
-
-shopCategories,
-
-
-brands:
-
-shopBrands,
-
-
-pricing:
-
-window.NexpakShop.pricing,
-
-
-search:
-
-window.NexpakShop.search,
-
-
-display:
-
-window.NexpakShop.display,
-
-
-storage:
-
-window.NexpakShop.storage,
-
-
-statistics:
-
-getShopStatistics,
-
-
-validate:
-
-validateProducts
-
-
-};
-
-
-
-
-
-// ======================================================
-// STARTUP CHECK
-// ======================================================
-
-
-const databaseErrors = validateProducts();
-
-
-
-if(databaseErrors.length){
-
-
-
-console.warn(
-
-"Nexpak V17 Database Warnings:",
-
-databaseErrors
-
-);
-
-
-
-}
-
-else{
-
-
+/*=========================================================
+SHOP DATA READY
+=========================================================*/
 
 console.log(
 
-"✅ Nexpak V17 Shop Database Valid"
+"NEXPAK SHOP V18 READY"
 
 );
-
-
-
-}
-
-
 
 console.log(
 
-"Nexpak V17 Products Loaded:",
+"Products:",
 
-products.length
+SHOP_STATS.totalProducts
 
 );
-
-
 
 console.log(
 
-"Nexpak V17 Statistics:",
+"Featured:",
 
-getShopStatistics()
+SHOP_STATS.featuredProducts
 
 );
+
+console.log(
+
+"Best Sellers:",
+
+SHOP_STATS.bestSellers
+
+);
+
+
+/*=========================================================
+END OF SHOP-DATA.JS V18
+=========================================================*/
