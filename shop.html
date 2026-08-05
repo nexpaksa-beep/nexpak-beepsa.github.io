@@ -1,145 +1,295 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Nexpak Security Solutions | Security Superstore</title>
-    <meta name="description" content="Buy CCTV, Electric Fencing, Gate Motors, Alarm Systems, Access Control and Security Equipment online.">
-    <meta name="theme-color" content="#0057ff">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link rel="stylesheet" href="shop-v18.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexpak Security Solutions | Takealot Style Shop & Kit Builder</title>
+  
+  <!-- Modern Typography (Roboto) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons (Includes WhatsApp icon) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Takealot Stylesheet -->
+  <link rel="stylesheet" href="css/shop-style.css">
 </head>
 <body>
 
-<div class="topbar">
-    <div class="container">
-        <span><i class="fas fa-shield-halved"></i> Professional Security Equipment</span>
-        <div class="top-links">
-            <a href="contact.html">Contact</a>
-            <a href="quote.html">Request Quote</a>
-            <a href="track-order.html">Track Order</a>
+  <!-- ========================================== -->
+  <!-- 1. HEADER WITH NEXPAK LOGO                 -->
+  <!-- ========================================== -->
+  <header class="takealot-header">
+    <div class="header-container">
+      <!-- Brand Logo -->
+      <a href="shop.html" class="brand-logo">
+        <img src="images/logo.png" alt="Nexpak Security Solutions" class="header-logo-img">
+        <div class="logo-text-group">
+          <span class="logo-text">Nexpak <span class="logo-highlight">Security Solutions</span></span>
+          <span class="logo-sub">Your Premier Security Partner</span>
         </div>
-    </div>
-</div>
+      </a>
 
-<header class="header">
-    <div class="container header-row">
-        <a href="index.html" class="logo">
-            <img src="images/logo.png" alt="Nexpak">
+      <!-- Main Search Bar -->
+      <div class="header-search">
+        <input type="text" id="searchInput" placeholder="Search electric fencing, CCTV, gate motors, alarm kits...">
+        <button type="button" class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </div>
+
+      <!-- User & Cart Controls -->
+      <div class="header-actions">
+        <div class="delivery-location">
+          <i class="fa-solid fa-location-dot"></i>
+          <div>
+            <span class="loc-label">Deliver to</span>
+            <strong id="userLocation">Johannesburg</strong>
+          </div>
+        </div>
+
+        <a href="cart.html" class="cart-btn">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <span class="cart-label">Cart</span>
+          <span class="cart-count-badge" id="cartCountBadge">0</span>
         </a>
-        <div class="search">
-            <!-- Added id="shopSearch" -->
-            <input type="search" id="shopSearch" placeholder="Search CCTV, Electric Fencing, Alarms, Gate Motors...">
-            <button><i class="fas fa-search"></i></button>
-        </div>
-        <div class="header-icons">
-            <button class="user-icon">
-                <i class="far fa-user"></i>
-            </button>
-            <!-- Added wishlist-icon class -->
-            <button class="wishlist-icon">
-                <i class="far fa-heart pointer-events-none"></i>
-                <span class="badge" id="wishlistCount">0</span>
-            </button>
-            <!-- Added cart-icon class and id="cartCount" -->
-            <button class="cart-icon">
-                <i class="fas fa-shopping-cart pointer-events-none"></i>
-                <span class="badge" id="cartCount">0</span>
-            </button>
-        </div>
+      </div>
     </div>
-</header>
+  </header>
 
-<nav class="categories">
-    <div class="container">
-        <button class="category-btn" data-category="all">All</button>
-        <button class="category-btn" data-category="cctv">CCTV</button>
-        <button class="category-btn" data-category="electric-fencing">Electric Fencing</button>
-        <button class="category-btn" data-category="roboguard">Roboguard</button>
-        <button class="category-btn" data-category="gate-automation">Gate Automation</button>
-        <button class="category-btn" data-category="alarm-systems">Alarm Systems</button>
-        <button class="category-btn" data-category="access-control">Access Control</button>
-        <button class="category-btn" data-category="intercom">Intercom</button>
+  <!-- ========================================== -->
+  <!-- 2. CATEGORY TABS NAVBAR                    -->
+  <!-- ========================================== -->
+  <nav class="category-nav">
+    <div class="nav-container">
+      <button class="nav-tab active" data-category="electric-fencing">
+        <i class="fa-solid fa-bolt"></i> Electric Fencing
+      </button>
+      <button class="nav-tab" data-category="cctv-hd">
+        <i class="fa-solid fa-video"></i> CCTV HD Systems
+      </button>
+      <button class="nav-tab" data-category="cctv-ip">
+        <i class="fa-solid fa-network-wired"></i> IP CCTV Systems
+      </button>
+      <button class="nav-tab" data-category="roboguard">
+        <i class="fa-solid fa-shield-cat"></i> Roboguard Beams
+      </button>
+      <button class="nav-tab" data-category="gate-motors">
+        <i class="fa-solid fa-door-open"></i> Gate Motors
+      </button>
+      <button class="nav-tab" data-category="ids-alarm">
+        <i class="fa-solid fa-bell"></i> IDS Alarm Kits
+      </button>
+      <button class="nav-tab" data-category="ajax-security">
+        <i class="fa-solid fa-house-lock"></i> Ajax Systems
+      </button>
+      <button class="nav-tab" data-category="stafix-agri">
+        <i class="fa-solid fa-wheat-awn"></i> Stafix Agri
+      </button>
     </div>
-</nav>
+  </nav>
 
-<section class="hero">
-    <div class="container hero-grid">
-        <div>
-            <h1>South Africa's Security Superstore</h1>
-            <p>Professional CCTV, Electric Fencing, Alarm Systems, Gate Automation, Access Control and Installation.</p>
-            <a href="#products" class="btn">Shop Now</a>
-        </div>
-        <div>
-            <img src="images/banners/security-banner.png" alt="Security Equipment">
-        </div>
-    </div>
-</section>
+  <!-- ========================================== -->
+  <!-- 3. MAIN SHOP LAYOUT                        -->
+  <!-- ========================================== -->
+  <main class="shop-main-layout">
+    <div class="layout-container">
 
-<section id="products" class="shop">
-    <div class="container shop-grid">
-        <aside class="sidebar">
-            <h2>Categories</h2>
-            <!-- Changed ID to match JS -->
-            <div id="categoryList"></div>
-        </aside>
-        
-        <main>
-            <div class="toolbar">
-                <h3 id="productCount">0 Products</h3>
-                <select id="sortProducts">
-                    <option value="default">Recommended</option>
-                    <option value="price-low">Price Low-High</option>
-                    <option value="price-high">Price High-Low</option>
-                    <option value="name">Name A-Z</option>
-                </select>
+      <!-- LEFT COLUMN: CONFIGURATOR & SELECTORS -->
+      <section class="configurator-workspace">
+
+        <!-- Category Banner -->
+        <div class="category-header-banner">
+          <div class="banner-info">
+            <h1 id="currentCategoryTitle">Electric Fencing Kits</h1>
+            <p id="currentCategoryDesc">Configure complete electric fence installations, energizers, brackets, wire, and accessories.</p>
+          </div>
+          <span class="stock-badge"><i class="fa-solid fa-circle-check"></i> In Stock - Fast Courier Delivery</span>
+        </div>
+
+        <!-- COMPLETE PRE-BUILT KITS ROW -->
+        <div id="prebuiltKitsSection" class="kits-grid-section">
+          <h3>1. Choose a Base Kit (Optional)</h3>
+          <div class="kits-cards-grid">
+            <div class="kit-card selected" data-kit-id="ef-kit-6line-50m">
+              <div class="badge-discount">Best Seller</div>
+              <img src="https://images.unsplash.com/photo-1558002038-1055907df827?w=300" alt="6 Line Kit">
+              <h4>Standard 6-Line Kit (50m)</h4>
+              <p class="kit-specs">Includes 1J Energizer, brackets, HT Cable & Earth Spikes</p>
+              <div class="kit-price">R 4,850.00 <span class="vat-tag">excl. VAT</span></div>
+              <button class="btn-select-kit active">Selected</button>
             </div>
-            <div id="productGrid"></div>
-        </main>
+
+            <div class="kit-card" data-kit-id="ef-kit-8line-100m">
+              <img src="https://images.unsplash.com/photo-1558002038-1055907df827?w=300" alt="8 Line Kit">
+              <h4>Heavy Duty 8-Line Kit (100m)</h4>
+              <p class="kit-specs">Includes 4J Energizer, Square Tube Brackets, Siren & Strobe</p>
+              <div class="kit-price">R 8,290.00 <span class="vat-tag">excl. VAT</span></div>
+              <button class="btn-select-kit">Select Kit</button>
+            </div>
+
+            <div class="kit-card" data-kit-id="ef-kit-10line-200m">
+              <img src="https://images.unsplash.com/photo-1558002038-1055907df827?w=300" alt="10 Line Kit">
+              <h4>Perimeter 10-Line Kit (200m)</h4>
+              <p class="kit-specs">Includes 8J Nemtek, Aluminium Wire & GSM Module</p>
+              <div class="kit-price">R 14,500.00 <span class="vat-tag">excl. VAT</span></div>
+              <button class="btn-select-kit">Select Kit</button>
+            </div>
+
+            <div class="kit-card" data-kit-id="ef-kit-12line-estate">
+              <img src="https://images.unsplash.com/photo-1558002038-1055907df827?w=300" alt="12 Line Kit">
+              <h4>High Security 12-Line Estate Kit</h4>
+              <p class="kit-specs">Includes 14J Dual-Zone Energizer, WiFi Module & Backup</p>
+              <div class="kit-price">R 22,900.00 <span class="vat-tag">excl. VAT</span></div>
+              <button class="btn-select-kit">Select Kit</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- DYNAMIC SELECTOR CONTAINER -->
+        <div class="selectors-container" id="configuratorSelectors">
+          <div class="configurator-loading">
+            <i class="fa-solid fa-spinner fa-spin"></i> Loading product configuration selectors...
+          </div>
+        </div>
+
+      </section>
+
+      <!-- RIGHT COLUMN: ORDER SUMMARY -->
+      <aside class="cart-sidebar">
+        <div class="summary-card sticky-card">
+          <div class="summary-header">
+            <h3>Order Summary</h3>
+            <span class="delivery-badge"><i class="fa-solid fa-truck-fast"></i> Nationwide Delivery</span>
+          </div>
+
+          <!-- Active Selections Breakdown -->
+          <div class="selected-items-list" id="summaryItemList">
+            <div class="summary-line-item">
+              <span>Selected Category</span>
+              <strong id="summaryCategory">Electric Fencing</strong>
+            </div>
+            <div class="summary-line-item">
+              <span>Base Kit</span>
+              <strong id="summaryBaseKit">Standard 6-Line Kit</strong>
+            </div>
+            <div class="summary-line-item">
+              <span>Configured Addons</span>
+              <strong id="summaryAddonCount">0 items</strong>
+            </div>
+          </div>
+
+          <hr class="summary-divider">
+
+          <!-- Pricing Calculations -->
+          <div class="price-breakdown">
+            <div class="price-row">
+              <span>Subtotal (Excl. VAT)</span>
+              <strong id="summarySubtotal">R 0.00</strong>
+            </div>
+
+            <div class="price-row">
+              <span>Estimated Delivery Fee</span>
+              <span id="summaryDelivery">Calculated at checkout</span>
+            </div>
+
+            <div class="price-row vat-row">
+              <span>15% SARS VAT</span>
+              <strong id="summaryVat">R 0.00</strong>
+            </div>
+
+            <hr class="summary-divider">
+
+            <div class="price-row total-row">
+              <span>Total (Incl. VAT)</span>
+              <strong id="summaryGrandTotal" class="highlight-price">R 0.00</strong>
+            </div>
+          </div>
+
+          <!-- Action CTA Buttons -->
+          <div class="summary-actions">
+            <button type="button" class="btn-add-cart" id="btnAddToCart">
+              <i class="fa-solid fa-cart-plus"></i> Add Configured Kit to Cart
+            </button>
+            <a href="checkout.html" class="btn-direct-checkout" id="btnDirectCheckout">
+              Proceed to Checkout <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </div>
+
+          <!-- Trust & Payment Methods -->
+          <div class="trust-badges">
+            <p><i class="fa-solid fa-lock"></i> Guaranteed Safe & Secure Checkout</p>
+            <div class="payment-icons">
+              <span class="pay-pill">PayFast</span>
+              <span class="pay-pill">Scan to Pay</span>
+              <span class="pay-pill">SnapScan</span>
+              <span class="pay-pill">Instant EFT</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+
     </div>
-</section>
+  </main>
 
-<footer>
-    <div class="container">
-        <p>© 2026 Nexpak Security Solutions</p>
+  <!-- ========================================== -->
+  <!-- 4. FLOATING WHATSAPP BUTTON (0836308249)    -->
+  <!-- ========================================== -->
+  <a href="https://wa.me/27836308249?text=Hi%20Nexpak%20Security%20Solutions,%20I%20need%20assistance%20with%20a%20quote." 
+     class="whatsapp-float" 
+     target="_blank" 
+     rel="noopener noreferrer" 
+     aria-label="Chat on WhatsApp with Nexpak Security">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <!-- ========================================== -->
+  <!-- 5. FOOTER                                  -->
+  <!-- ========================================== -->
+  <footer class="takealot-footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4>Nexpak Support</h4>
+        <ul>
+          <li><a href="#">Help Centre & FAQ</a></li>
+          <li><a href="https://wa.me/27836308249" target="_blank">WhatsApp Direct Support</a></li>
+          <li><a href="#">Returns & Refunds</a></li>
+          <li><a href="#">Delivery Rates & Km Calculator</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Product Categories</h4>
+        <ul>
+          <li><a href="#">Nemtek & JVA Electric Fencing</a></li>
+          <li><a href="#">Dahua & Hikvision CCTV Systems</a></li>
+          <li><a href="#">Centurion Gate Motors</a></li>
+          <li><a href="#">IDS & Ajax Security Alarms</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Secure Payment Methods</h4>
+        <p>We accept PayFast, Scan to Pay, SnapScan, Masterpass, Visa, Mastercard, and Bank EFT.</p>
+        <p class="vat-notice">All prices displayed are subject to 15% South African Value Added Tax (VAT).</p>
+      </div>
     </div>
-</footer>
-
-<!-- MISSING UI COMPONENTS REQUIRED BY JS -->
-<div id="cartDrawer" class="drawer">
-    <button class="close-cart">✕</button>
-    <h2>Your Cart</h2>
-    <div id="cartItems"></div>
-    <div class="cart-summary">
-        <h3>Total: <span id="cartTotal">R0</span></h3>
-        <button class="btn checkout-btn">Checkout</button>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2026 Nexpak Security Solutions. All rights reserved. Prices include 15% VAT where applicable.</p>
     </div>
-</div>
+  </footer>
 
-<div id="wishlistPanel" class="panel">
-    <button class="close-wishlist">✕</button>
-    <h2>Wishlist</h2>
-    <div id="wishlistItems"></div>
-</div>
+  <!-- Notification Toast Container -->
+  <div id="toastContainer" class="toast-container"></div>
 
-<div id="comparePanel" class="panel">
-    <button class="close-compare">✕</button>
-    <h2>Compare</h2>
-    <div id="compareItems"></div>
-</div>
-
-<div id="quickViewModal" class="modal"></div>
-<div id="shopToast" class="toast"></div>
-
-<!-- Scripts -->
-<script src="shop-data.js"></script>
-<script src="wishlist.js"></script>
-<script src="js/cart.js"></script>
-<script src="shop-v18.js"></script>
+  <!-- JAVASCRIPT INCLUDES -->
+  <script src="js/shop-data.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/delivery.js"></script>
+  <script src="js/configurator.js"></script>
+  <script src="js/ui.js"></script>
 
 </body>
-  </html>
-  
+            </html>
+            
