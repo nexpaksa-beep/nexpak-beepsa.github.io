@@ -1,466 +1,589 @@
 /*=========================================================
- NEXPAK SECURITY SOLUTIONS V18
- shop-v18.js
- CORE SHOP ENGINE & CONTROLLERS
+NEXPAK SECURITY SOLUTIONS
+SHOP V18
+PART 1/8
+
+INITIALIZATION
+GLOBAL VARIABLES
 =========================================================*/
-"use strict";
 
-// ======================================================
-// GLOBAL SHOP VARIABLES
-// ======================================================
-let shopProducts = [];
-let displayedProducts = [];
-let activeCategory = "all";
-let activeSearch = "";
-let activeSort = "default";
 
-// ======================================================
-// INITIALIZE SHOP
-// ======================================================
-document.addEventListener("DOMContentLoaded", () => {
-    initializeShop();
-    initializeSearchControls();
-    initializeCart();
-    renderWishlist();
-    renderCompare();
+/*=========================================================
+GLOBAL VARIABLES
+=========================================================*/
+
+let products = [];
+
+let filteredProducts = [];
+
+let currentCategory = "all";
+
+let currentSort = "default";
+
+let searchText = "";
+
+
+/*=========================================================
+INITIALIZE SHOP
+=========================================================*/
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+()=>{
+
+initializeShop();
+
+}
+
+);
+
+
+/*=========================================================
+MAIN INITIALIZER
+=========================================================*/
+
+function initializeShop(){
+
+products=[...SHOP_PRODUCTS];
+
+filteredProducts=[...SHOP_PRODUCTS];
+
+renderProducts(filteredProducts);
+
+updateProductCount();
+
+initializeSearch();
+
+initializeSorting();
+
+initializeCategories();
+
+initializeHeaderButtons();
+initializeCategories();
+ 
+console.log(
+
+"SHOP V18 INITIALIZED"
+
+);
+
+}
+
+
+/*=========================================================
+UPDATE PRODUCT COUNT
+=========================================================*/
+
+function updateProductCount(){
+
+const count=document.getElementById("productCount");
+
+if(!count) return;
+
+count.textContent=
+
+filteredProducts.length+
+
+" Products";
+
+}
+
+
+/*=========================================================
+REFRESH SHOP
+=========================================================*/
+
+function refreshShop(){
+
+renderProducts(filteredProducts);
+
+updateProductCount();
+
+}
+
+
+/*=========================================================
+END PART 1
+=========================================================*/
+/*=========================================================
+NEXPAK SECURITY SOLUTIONS
+SHOP V18
+PART 2/8
+
+PRODUCT RENDER ENGINE
+=========================================================*/
+
+
+/*=========================================================
+RENDER PRODUCTS
+=========================================================*/
+
+function renderProducts(productList){
+
+const grid=document.getElementById("productGrid");
+
+if(!grid) return;
+
+grid.innerHTML="";
+
+if(productList.length===0){
+
+grid.innerHTML=`
+
+<div class="no-products">
+
+<i class="fas fa-box-open"></i>
+
+<h2>No Products Found</h2>
+
+<p>Try another search or category.</p>
+
+</div>
+
+`;
+
+return;
+
+}
+
+productList.forEach(product=>{
+
+grid.innerHTML+=createProductCard(product);
+
 });
 
-function initializeShop() {
-    if (!window.NexpakShop) {
-        console.error("Nexpak Shop Data Not Loaded");
-        return;
-    }
-
-    shopProducts = window.NexpakShop.products || [];
-    displayedProducts = [...shopProducts];
-
-    console.log("Nexpak V18 Shop Engine Started");
-    console.log("Products Available:", shopProducts.length);
-
-    loadShopInterface();
 }
 
-function loadShopInterface() {
-    renderProducts();
-    loadCategories();
-    updateShopCounters();
+
+/*=========================================================
+CREATE PRODUCT CARD
+=========================================================*/
+
+function createProductCard(product){
+
+return `
+
+<div class="product-card">
+
+<div class="product-image"
+onclick="quickView(${product.id})">
+
+    <img src="${product.image}" alt="${product.name}">
+
+</div>
+
+
+${product.discount>0?`
+
+<div class="discount">
+
+-${product.discount}%
+
+</div>
+
+`:''}
+
+<button class="wishlist" onclick="addToWishlist(${product.id})">
+    <i class="far fa-heart"></i>
+</button>
+
+</div>
+
+<div class="product-content">
+
+<div class="product-brand">
+
+${product.brand}
+
+</div>
+
+<h3 class="product-title">
+
+${product.name}
+
+</h3>
+
+<div class="rating">
+
+★★★★★
+
+</div>
+
+<div class="price">
+
+<span class="current-price">
+
+R${product.price.toLocaleString()}
+
+</span>
+
+${product.oldPrice?`
+
+<span class="old-price">
+
+R${product.oldPrice.toLocaleString()}
+
+</span>
+
+`:''}
+
+</div>
+
+<div class="product-stock">
+
+${product.stock>0
+
+?'<span class="instock">In Stock</span>'
+
+:'<span class="outstock">Out Of Stock</span>'}
+
+</div>
+
+<div class="product-buttons">
+
+<button
+class="view-btn"
+onclick="viewProduct('${product.page}')">
+
+View
+
+</button>
+
+<button
+class="add-cart"
+onclick="addToCart(${product.id})">
+
+<i class="fas fa-shopping-cart"></i>
+
+Add
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
 }
 
-// ======================================================
-// PRODUCT GRID LOADER
-// ======================================================
-function renderProducts() {
-    const container = document.querySelector("#productGrid");
-    if (!container) return;
 
-    container.innerHTML = "";
+/*=========================================================
+VIEW PRODUCT
+=========================================================*/
 
-    if (displayedProducts.length === 0) {
-        container.innerHTML = `
-            <div class="empty-products">
-                <h3>No products found</h3>
-                <p>Try another search or category.</p>
-            </div>`;
-        return;
-    }
+function viewProduct(page){
 
-    displayedProducts.forEach(product => {
-        container.innerHTML += createProductCard(product);
+window.location.href=page;
+
+}
+
+
+/*=========================================================
+END PART 2
+=========================================================*/
+
+/*=========================================================
+NEXPAK SECURITY SOLUTIONS
+SHOP V18
+PART 3/8
+
+CATEGORY FILTER ENGINE
+=========================================================*/
+
+function initializeCategories() {
+
+    const buttons = document.querySelectorAll(".category-btn");
+
+    buttons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            buttons.forEach(btn =>
+                btn.classList.remove("active")
+            );
+
+            button.classList.add("active");
+
+            const category = button.dataset.category;
+
+            if (category === "all") {
+
+                filteredProducts = [...products];
+
+            } else {
+
+                filteredProducts = products.filter(product =>
+                    product.category.toLowerCase() === category.toLowerCase()
+                );
+
+            }
+
+            renderProducts(filteredProducts);
+
+            updateProductCount();
+
+        });
+
     });
+
+       /*=========================================================
+NEXPAK SECURITY SOLUTIONS
+SHOP V18
+PART 4/8
+
+WISHLIST ENGINE
+=========================================================*/
+
+let wishlist = [];
+
+function addToWishlist(id){
+
+    const product = products.find(p => p.id === id);
+
+    if(!product) return;
+
+    const exists = wishlist.find(item => item.id === id);
+
+    if(exists){
+        return;
+    }
+
+    wishlist.push(product);
+
+    updateWishlist();
+
 }
 
-// ======================================================
-// BASIC PRODUCT CARD
-// ======================================================
-function createProductCard(product) {
-    // FIXED: The broken string literal bug for price
-    let priceDisplay = product.basePrice > 0 
-        ? (window.NexpakShop?.config?.currencySymbol || "R") + product.basePrice 
-        : "Request Quote";
+function removeFromWishlist(id){
 
-    return `
-    <div class="product-card" data-id="${product.id}">
-        <div class="product-image">
-            <img src="${product.image}" alt="${product.name}">
-            <span class="product-badge">${product.badge || ""}</span>
+    wishlist = wishlist.filter(item => item.id !== id);
+
+    updateWishlist();
+
+}
+
+function updateWishlist(){
+
+    const count = document.getElementById("wishlistCount");
+
+    if(count){
+
+        count.textContent = wishlist.length;
+
+    }
+
+    const panel = document.getElementById("wishlistItems");
+
+    if(!panel) return;
+
+    panel.innerHTML = "";
+
+    if(wishlist.length === 0){
+
+        panel.innerHTML = "<p>Your wishlist is empty.</p>";
+
+        return;
+
+    }
+
+    wishlist.forEach(product=>{
+
+        panel.innerHTML += `
+        <div class="wishlist-item">
+
+            <strong>${product.name}</strong>
+
+            <br>
+
+            R${product.price.toFixed(2)}
+
+            <br><br>
+
+            <button onclick="addToCart(${product.id})">
+
+                Add To Cart
+
+            </button>
+
+            <button onclick="removeFromWishlist(${product.id})">
+
+                Remove
+
+            </button>
+
         </div>
-        <div class="product-content">
-            <h3>${product.name}</h3>
-            <p class="product-category">${product.category}</p>
-            <p class="product-description">${product.shortDescription || product.description}</p>
-            <div class="product-price">${priceDisplay}</div>
-            
-            <button class="btn add-cart" data-id="${product.id}">Add To Cart</button>
-            <button class="quick-view" data-id="${product.id}">Quick View</button>
-            <button class="wishlist-btn" data-id="${product.id}">♥</button>
-        </div>
-    </div>`;
-}
+        `;
 
-// ======================================================
-// CATEGORY LOADER
-// ======================================================
-function loadCategories() {
-    const categoryBox = document.querySelector("#categoryList");
-    if (!categoryBox || !window.NexpakShop.categories) return;
-
-    categoryBox.innerHTML = "";
-
-    window.NexpakShop.categories.forEach(category => {
-        categoryBox.innerHTML += `
-        <button class="category-btn" data-category="${category.id}">
-            ${category.icon || ""} ${category.name}
-        </button>`;
     });
-}
 
-function updateShopCounters() {
-    const count = document.querySelector("#productCount");
-    if (count) {
-        count.textContent = displayedProducts.length + " Products";
-    }
-}
+      /*=========================================================
+NEXPAK SECURITY SOLUTIONS
+SHOP V18
+PART 5/8
 
-// ======================================================
-// SEARCH • FILTER • SORT ENGINE
-// ======================================================
-function initializeSearchControls() {
-    const searchInput = document.querySelector("#shopSearch");
-    if (searchInput) {
-        searchInput.addEventListener("input", (e) => {
-            activeSearch = e.target.value.toLowerCase();
-            applyFilters();
-        });
-    }
+QUICK VIEW ENGINE
+=========================================================*/
 
-    const sortSelect = document.querySelector("#sortProducts");
-    if (sortSelect) {
-        sortSelect.addEventListener("change", (e) => {
-            activeSort = e.target.value;
-            applyFilters();
-        });
-    }
+function quickView(id){
 
-    document.addEventListener("click", (e) => {
-        if (e.target.classList.contains("category-btn")) {
-            activeCategory = e.target.dataset.category;
-            applyFilters();
-        }
-    });
-}
+    const product = products.find(p => p.id === id);
 
-function applyFilters() {
-    let results = [...shopProducts];
+    if(!product) return;
 
-    if (activeSearch) {
-        results = results.filter(product => {
-            let text = [
-                product.name,
-                product.category,
-                product.description,
-                (product.keywords || []).join(" ")
-            ].join(" ").toLowerCase();
-            return text.includes(activeSearch);
-        });
-    }
+    const modal = document.getElementById("quickViewModal");
 
-    if (activeCategory && activeCategory !== "all") {
-        results = results.filter(product => {
-            return product.category.toLowerCase().includes(activeCategory.toLowerCase());
-        });
-    }
-
-    results = sortProducts(results, activeSort);
-    displayedProducts = results;
-    renderProducts();
-    updateResultCount();
-}
-
-function sortProducts(list, method) {
-    let sorted = [...list];
-    switch(method) {
-        case "name":
-            sorted.sort((a,b) => a.name.localeCompare(b.name));
-            break;
-        case "price-low":
-            sorted.sort((a,b) => (a.basePrice || 0) - (b.basePrice || 0));
-            break;
-        case "price-high":
-            sorted.sort((a,b) => (b.basePrice || 0) - (a.basePrice || 0));
-            break;
-        case "popular":
-            sorted.sort((a,b) => (b.rating || 0) - (a.rating || 0));
-            break;
-    }
-    return sorted;
-}
-
-function updateResultCount() {
-    const count = document.querySelector("#productCount");
-    if (count) count.textContent = displayedProducts.length + " Products";
-}
-
-// ======================================================
-// PRODUCT CARD ACTIONS ENGINE
-// ======================================================
-document.addEventListener("click", (e) => {
-    if (e.target.classList.contains("add-cart")) {
-        addProductToCart(e.target.dataset.id);
-    }
-    if (e.target.classList.contains("wishlist-btn")) {
-        toggleProductWishlist(e.target.dataset.id);
-    }
-    if (e.target.classList.contains("compare-btn")) {
-        compareProduct(e.target.dataset.id);
-    }
-    if (e.target.classList.contains("quick-view")) {
-        openQuickView(e.target.dataset.id);
-    }
-});
-
-function addProductToCart(productID) {
-    if (!window.NexpakShop?.storage) {
-        console.error("Cart engine unavailable");
-        return;
-    }
-    window.NexpakShop.storage.cart.add(productID, 1);
-    updateCartCount();
-    showNotification("Product added to cart");
-    openCart();
-}
-
-function updateCartCount() {
-    let countElement = document.querySelector("#cartCount");
-    if (!countElement || !window.NexpakShop?.storage) return;
-
-    let cart = window.NexpakShop.storage.cart.get() || [];
-    let total = 0;
-    cart.forEach(item => { total += item.quantity; });
-    countElement.textContent = total;
-}
-
-function toggleProductWishlist(productID) {
-    if(!window.NexpakShop?.storage) return;
-    window.NexpakShop.storage.wishlist.toggle(productID);
-    showNotification("Wishlist updated");
-    renderWishlist();
-}
-
-function compareProduct(productID) {
-    if(!window.NexpakShop?.storage) return;
-    let compare = window.NexpakShop.storage.compare.add(productID);
-    if (compare.length >= 4) {
-        showNotification("Maximum 4 products can be compared");
-    } else {
-        showNotification("Added to comparison");
-        renderCompare();
-    }
-}
-
-function openQuickView(productID) {
-    let product = window.NexpakShop?.display?.quickView(productID) 
-                  || shopProducts.find(p => p.id === productID || p.id == productID);
-    if (!product) return;
-
-    let modal = document.querySelector("#quickViewModal");
-    if (!modal) return;
-
-    let priceDisplay = product.basePrice > 0 ? "R" + product.basePrice : "Request Quote";
+    if(!modal) return;
 
     modal.innerHTML = `
-    <div class="quick-view-box">
-        <button class="close-quick" style="position:absolute; top:10px; right:15px; border:none; background:none; font-size:20px;">✕</button>
-        <img src="${product.image}" alt="${product.name}" style="max-width:100%;">
-        <h2>${product.name}</h2>
-        <p>${product.description}</p>
-        <h3>${priceDisplay}</h3>
-        <button class="btn add-cart" data-id="${product.id}">Add To Cart</button>
-    </div>`;
-    modal.classList.add("active");
+
+    <div class="quick-view-card">
+
+        <button class="close-modal"
+        onclick="closeQuickView()">
+
+            <i class="fas fa-times"></i>
+
+        </button>
+
+        <div class="quick-view-image">
+
+            <img src="${product.image}" alt="${product.name}">
+
+        </div>
+
+        <div class="quick-view-content">
+
+            <h2>${product.name}</h2>
+
+            <h4>${product.brand}</h4>
+
+            <p>${product.description || "Professional security equipment."}</p>
+
+            <h3>R${product.price.toFixed(2)}</h3>
+
+            <button
+            class="btn"
+            onclick="addToCart(${product.id})">
+
+                Add To Cart
+
+            </button>
+
+        </div>
+
+    </div>
+
+    `;
+
+    modal.style.display = "flex";
+
 }
 
-document.addEventListener("click", (e) => {
-    if (e.target.classList.contains("close-quick")) {
-        document.querySelector("#quickViewModal").classList.remove("active");
+function closeQuickView(){
+
+    const modal = document.getElementById("quickViewModal");
+
+    if(modal){
+
+        modal.style.display = "none";
+
+        modal.innerHTML = "";
+
     }
+
+}
+
+window.addEventListener("click",(e)=>{
+
+    const modal = document.getElementById("quickViewModal");
+
+    if(e.target === modal){
+
+        closeQuickView();
+
+    }
+
+});                           
+}
+
+/*=========================================================
+NEXPAK SECURITY SOLUTIONS
+SHOP V18
+PART 6/8
+
+CART DRAWER
+TOAST NOTIFICATIONS
+=========================================================*/
+
+function openCart(){
+
+    const drawer = document.getElementById("cartDrawer");
+
+    if(drawer){
+
+        drawer.classList.add("open");
+
+    }
+
+}
+
+function closeCart(){
+
+    const drawer = document.getElementById("cartDrawer");
+
+    if(drawer){
+
+        drawer.classList.remove("open");
+
+    }
+
+}
+
+document.addEventListener("click",(e)=>{
+
+    if(e.target.closest(".cart-icon")){
+
+        openCart();
+
+    }
+
+    if(e.target.closest(".close-cart")){
+
+        closeCart();
+
+    }
+
 });
 
-function showNotification(message) {
-    let toast = document.querySelector("#shopToast");
-    if (!toast) return;
+function showToast(message){
+
+    const toast = document.getElementById("shopToast");
+
+    if(!toast) return;
+
     toast.textContent = message;
-    toast.classList.add("active");
-    setTimeout(() => {
-        toast.classList.remove("active");
-    }, 2500);
+
+    toast.classList.add("show");
+
+    setTimeout(()=>{
+
+        toast.classList.remove("show");
+
+    },2500);
+
 }
 
-// ======================================================
-// CART DRAWER ENGINE
-// ======================================================
-function initializeCart() {
-    updateCartCount();
-    renderCart();
-}
+const originalAddToCart = addToCart;
 
-function openCart() {
-    const drawer = document.querySelector("#cartDrawer");
-    if (drawer) {
-        drawer.classList.add("active");
-        renderCart();
-    }
-}
+addToCart = function(id){
 
-function closeCart() {
-    const drawer = document.querySelector("#cartDrawer");
-    if (drawer) drawer.classList.remove("active");
-}
+    originalAddToCart(id);
 
-document.addEventListener("click", (e) => {
-    if (e.target.closest(".cart-icon")) openCart();
-    if (e.target.classList.contains("close-cart")) closeCart();
-    if (e.target.classList.contains("remove-cart-item")) removeCartItem(e.target.dataset.id);
-    if (e.target.classList.contains("qty-plus")) changeCartQuantity(e.target.dataset.id, 1);
-    if (e.target.classList.contains("qty-minus")) changeCartQuantity(e.target.dataset.id, -1);
-    if (e.target.classList.contains("checkout-btn")) window.location.href = "checkout.html";
-});
+    showToast("✔ Product added to cart");
 
-function renderCart() {
-    const container = document.querySelector("#cartItems");
-    if (!container || !window.NexpakShop?.storage) return;
-
-    let cart = window.NexpakShop.storage.cart.get() || [];
-    if (cart.length === 0) {
-        container.innerHTML = `<div class="empty-cart"><p>Your cart is empty</p></div>`;
-        updateCartSummary();
-        return;
-    }
-
-    container.innerHTML = "";
-    cart.forEach(item => {
-        let product = shopProducts.find(p => p.id === item.id || p.id == item.id);
-        if (!product) return;
-
-        container.innerHTML += `
-        <div class="cart-item" style="display:flex; gap:10px; margin-bottom:15px; border-bottom:1px solid #ddd; padding-bottom:10px;">
-            <img src="${product.image}" alt="${product.name}" width="50">
-            <div>
-                <h4>${product.name}</h4>
-                <div>
-                    <button class="qty-minus" data-id="${product.id}">-</button>
-                    <span>${item.quantity}</span>
-                    <button class="qty-plus" data-id="${product.id}">+</button>
-                </div>
-            </div>
-            <button class="remove-cart-item" data-id="${product.id}" style="margin-left:auto;">✕</button>
-        </div>`;
-    });
-    updateCartSummary();
-}
-
-function changeCartQuantity(productID, amount) {
-    let cart = window.NexpakShop.storage.cart.get();
-    let item = cart.find(i => i.id === productID || i.id == productID);
-    if (item) {
-        item.quantity += amount;
-        if (item.quantity <= 0) item.quantity = 1;
-        window.NexpakShop.storage.cart.update(productID, item.quantity);
-    }
-    renderCart();
-    updateCartCount();
-}
-
-function removeCartItem(productID) {
-    window.NexpakShop.storage.cart.remove(productID);
-    renderCart();
-    updateCartCount();
-}
-
-function updateCartSummary() {
-    const totalBox = document.querySelector("#cartTotal");
-    if (!totalBox || !window.NexpakShop?.storage) return;
-    let total = window.NexpakShop.storage.cart.total() || 0;
-    totalBox.textContent = "R" + total.toLocaleString();
-}
-
-// ======================================================
-// WISHLIST & COMPARE PANELS
-// ======================================================
-function renderWishlist() {
-    const container = document.querySelector("#wishlistItems");
-    if (!container || !window.NexpakShop?.storage) return;
-
-    const wishlist = window.NexpakShop.storage.wishlist.get() || [];
-    if (wishlist.length === 0) {
-        container.innerHTML = `<div class="empty-state"><p>Your wishlist is empty</p></div>`;
-        return;
-    }
-
-    container.innerHTML = "";
-    wishlist.forEach(id => {
-        const product = shopProducts.find(p => p.id === id || p.id == id);
-        if (!product) return;
-        container.innerHTML += `
-        <div class="wishlist-item" style="margin-bottom:15px; padding-bottom:15px; border-bottom:1px solid #ddd;">
-            <h4>${product.name}</h4>
-            <button class="btn add-cart" data-id="${product.id}">Add To Cart</button>
-            <button class="remove-wishlist" data-id="${product.id}">Remove</button>
-        </div>`;
-    });
-}
-
-function removeWishlistItem(productID) {
-    window.NexpakShop.storage.wishlist.toggle(productID);
-    renderWishlist();
-    showNotification("Removed from wishlist");
-}
-
-function renderCompare() {
-    const container = document.querySelector("#compareItems");
-    if (!container || !window.NexpakShop?.storage) return;
-
-    const compare = window.NexpakShop.storage.compare.get() || [];
-    if (compare.length === 0) {
-        container.innerHTML = `<div class="empty-state"><p>No products selected</p></div>`;
-        return;
-    }
-
-    container.innerHTML = "";
-    compare.forEach(id => {
-        const product = shopProducts.find(p => p.id === id || p.id == id);
-        if (!product) return;
-        container.innerHTML += `
-        <div class="compare-item" style="margin-bottom:15px; padding-bottom:15px; border-bottom:1px solid #ddd;">
-            <h4>${product.name}</h4>
-            <button class="remove-compare" data-id="${product.id}">Remove</button>
-        </div>`;
-    });
-}
-
-function removeCompareItem(productID) {
-    window.NexpakShop.storage.compare.remove(productID);
-    renderCompare();
-    showNotification("Removed from comparison");
-}
-
-document.addEventListener("click", (e) => {
-    if (e.target.classList.contains("remove-wishlist")) removeWishlistItem(e.target.dataset.id);
-    if (e.target.classList.contains("remove-compare")) removeCompareItem(e.target.dataset.id);
-    
-    if (e.target.closest(".wishlist-icon")) {
-        document.querySelector("#wishlistPanel")?.classList.add("active");
-        renderWishlist();
-    }
-    if (e.target.classList.contains("close-wishlist")) {
-        document.querySelector("#wishlistPanel")?.classList.remove("active");
-    }
-    
-    if (e.target.classList.contains("compare-icon")) {
-        document.querySelector("#comparePanel")?.classList.add("active");
-        renderCompare();
-    }
-    if (e.target.classList.contains("close-compare")) {
-        document.querySelector("#comparePanel")?.classList.remove("active");
-    }
-});
-                              
+};
