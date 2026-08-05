@@ -167,4 +167,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // Adding a slight delay ensures the image has a width/height calculated
     setTimeout(setupZoom, 100);
 });
-      
+                                      
