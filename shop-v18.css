@@ -7678,3 +7678,54 @@ font-size:26px;
 }
 
  }
+
+/*=========================================================
+SHOP V18
+PART 8/8
+=========================================================*/
+
+.scroll-top{
+
+    position:fixed;
+
+    right:25px;
+
+    bottom:25px;
+
+    width:55px;
+
+    height:55px;
+
+    border-radius:50%;
+
+    background:#0057ff;
+
+    color:#fff;
+
+    border:none;
+
+    cursor:pointer;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.3s;
+
+    z-index:9999;
+
+}
+
+.scroll-top.show{
+
+    opacity:1;
+
+    visibility:visible;
+
+}
+
+.scroll-top:hover{
+
+    background:#003fb5;
+
+}
