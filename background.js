@@ -1,9 +1,9 @@
 const images = [
-    "hero.png",
-    "hero2.png",
-    "hero3.png",
-    "hero4.png",
-    "hero5.png"
+    "images/hero.png",
+    "images/hero2.png",
+    "images/hero3.png",
+    "images/hero4.png",
+    "images/hero5.png"
 ];
 
 let index = 0;
