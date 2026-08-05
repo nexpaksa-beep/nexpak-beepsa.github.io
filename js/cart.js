@@ -1,121 +1,170 @@
-/* Minimal cart engine compatible with existing site usage */
-(function(){
-  const STORAGE_KEY = 'nexpak_cart_v17';
+/* ==========================================================================
+   Nexpak Security Solutions - Storefront Interactions (cart.js)
+   ========================================================================== */
 
-  function loadCart() {
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    } catch(e){ return []; }
-  }
+document.addEventListener('DOMContentLoaded', () => {
+    
+    /* --------------------------------------------------------------------------
+       1. Cart Drawer Toggle
+       -------------------------------------------------------------------------- */
+    const cartPanel = document.querySelector('.cart-panel');
+    const cartToggleBtn = document.querySelector('.cart-toggle-btn');
+    const closeCartBtn = document.querySelector('.close-cart-btn');
 
-  function saveCart(cart) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
-    document.querySelectorAll('.cart-count').forEach(el=>{
-      const qty = cart.reduce((s,i)=> s + (i.quantity||0),0);
-      el.textContent = qty;
-    });
-    // update mini-cart display if open
-    if(typeof renderCartDrawer === 'function') renderCartDrawer();
-  }
-
-  window.getCart = loadCart;
-
-  window.addToCart = function(item) {
-    const cart = loadCart();
-    const existing = cart.find(i => i.id === item.id && JSON.stringify(i.options) === JSON.stringify(item.options));
-    if(existing){
-      existing.quantity = (existing.quantity || 0) + (item.quantity || 1);
-    } else {
-      cart.push(item);
+    if (cartToggleBtn && cartPanel) {
+        cartToggleBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            cartPanel.classList.add('active');
+        });
     }
-    saveCart(cart);
-    showCartNotification('Added to cart');
-  };
 
-  window.updateCartItem = function(productId, quantity){
-    const cart = loadCart();
-    cart.forEach(item=>{
-      if(item.id === productId) item.quantity = quantity;
-    });
-    saveCart(cart);
-  };
-
-  window.removeFromCart = function(productId){
-    const cart = loadCart().filter(i => i.id !== productId);
-    saveCart(cart);
-  };
-
-  window.renderCartDrawer = function() {
-    let panel = document.querySelector('.cart-panel');
-    if(!panel){
-      // try to find in shop.html
-      panel = document.querySelector('.cart-panel');
+    if (closeCartBtn && cartPanel) {
+        closeCartBtn.addEventListener('click', () => {
+            cartPanel.classList.remove('active');
+        });
     }
-    if(!panel) return;
-    const container = panel.querySelector('#cartItems');
-    const cart = loadCart();
-    if(!container) return;
-    if(cart.length===0){
-      container.innerHTML = '<p>Your cart is empty.</p>';
-      const totalEl = panel.querySelector('#cartTotal'); if(totalEl) totalEl.textContent = 'R0.00';
-      return;
+
+    // Close cart when clicking outside of the panel
+    document.addEventListener('click', (e) => {
+        if (cartPanel && cartPanel.classList.contains('active')) {
+            // Check if the click was outside the cart panel and not on the toggle button
+            if (!cartPanel.contains(e.target) && !cartToggleBtn.contains(e.target)) {
+                cartPanel.classList.remove('active');
+            }
+        }
+    });
+
+    /* --------------------------------------------------------------------------
+       2. Add to Cart & Notification Toast
+       -------------------------------------------------------------------------- */
+    const addToCartBtn = document.querySelector('.add-to-cart-btn');
+    const cartNotification = document.querySelector('.cart-notification');
+
+    if (addToCartBtn && cartNotification) {
+        addToCartBtn.addEventListener('click', () => {
+            // Show the notification toast
+            cartNotification.classList.add('show');
+            
+            // Automatically hide it after 3 seconds
+            setTimeout(() => {
+                cartNotification.classList.remove('show');
+            }, 3000);
+
+            // Optional: Automatically open the cart drawer when an item is added
+            // cartPanel.classList.add('active'); 
+        });
     }
-    let html = '';
-    let total = R0.00;
-    cart.forEach(item=>{
-      total += (Number(item.price)||0) * (item.quantity||1);
-      html += `
-        <div class="cart-line">
-          <img src="${item.image}" alt="${item.name}">
-          <div class="cart-line-meta">
-            <strong>${item.name}</strong>
-            <div class="cart-line-opts">${Object.entries(item.options||{}).map(([k,v])=>`<small>${k}: ${v}</small>`).join('<br>')}</div>
-            <div class="qty-controls">
-              <button onclick="changeCartQty('${item.id}', -1)">-</button>
-              <input type="number" value="${item.quantity}" min="1" onchange="setCartQty('${item.id}', this.value)">
-              <button class="qty-plus" data-id="...">+</button>
-            </div>
-            <div class="line-price">${formatCurrency((item.price||0))}</div>
-            <button class="remove-line" onclick="removeFromCart('${item.id}')">Remove</button>
-          </div>
-        </div>
-      `;
-    });
-    container.innerHTML = html;
-    const totalEl = panel.querySelector('#cartTotal'); if(totalEl) totalEl.textContent = formatCurrency(total);
-  };
 
-  window.changeCartQty = function(id, delta){
-    const cart = loadCart();
-    cart.forEach(item=>{
-      if(item.id === id) item.quantity = Math.max(1, (item.quantity||1) + delta);
-    });
-    saveCart(cart);
-  };
-  window.setCartQty = function(id, qty){
-    qty = Math.max(1, parseInt(qty)||1);
-    const cart = loadCart().map(i=> { if(i.id===id) i.quantity = qty; return i; });
-    saveCart(cart);
-  };
+    /* --------------------------------------------------------------------------
+       3. Product Image Gallery (Thumbnails)
+       -------------------------------------------------------------------------- */
+    const mainImage = document.querySelector('.product-image');
+    const thumbnails = document.querySelectorAll('.thumbnail-strip img');
 
-  function showCartNotification(message){
-    const n = document.querySelector('.cart-notification') || (function(){ const div = document.createElement('div'); div.className = 'cart-notification'; div.innerHTML = '<i class="fas fa-check-circle"></i><span></span>'; document.body.appendChild(div); return div; })();
-    n.querySelector('span').textContent = message;
-    n.classList.add('show');
-    setTimeout(()=>n.classList.remove('show'), 2200);
-  }
+    if (mainImage && thumbnails.length > 0) {
+        thumbnails.forEach(thumb => {
+            thumb.addEventListener('click', function() {
+                // Swap the main image source with the clicked thumbnail's source
+                mainImage.src = this.src;
+                
+                // Re-initialize zoom if the lens is active
+                setupZoom(); 
+            });
+        });
+    }
 
-  window.showCartNotification = showCartNotification;
+    /* --------------------------------------------------------------------------
+       4. Image Magnifier Zoom
+       -------------------------------------------------------------------------- */
+    function setupZoom() {
+        const img = document.querySelector('.product-image');
+        if (!img) return;
 
-  window.formatCurrency = function(value){
-    return 'R' + Number(value).toLocaleString('en-ZA', {minimumFractionDigits:2, maximumFractionDigits:2});
-  };
+        // Remove existing lens if present (useful when swapping images)
+        let existingLens = document.querySelector('.img-zoom-lens');
+        if (existingLens) {
+            existingLens.remove();
+        }
 
-  document.addEventListener('DOMContentLoaded', function(){
-    // update cart count on load
-    const cart = loadCart();
-    document.querySelectorAll('.cart-count').forEach(el=> el.textContent = cart.reduce((s,i)=> s + (i.quantity||0),0));
-    if(typeof renderCartDrawer === 'function') calculateCartTotal();
-  });
+        // Create lens element
+        const lens = document.createElement('div');
+        lens.setAttribute('class', 'img-zoom-lens');
+        
+        // Insert lens
+        img.parentElement.insertBefore(lens, img);
 
-})();
+        // Calculate the ratio between the lens and the main image
+        const cx = lens.offsetWidth / img.width;
+        const cy = lens.offsetHeight / img.height;
+
+        // Set background properties for the lens
+        // Using the same source as the main image (or use a higher-res version if available)
+        lens.style.backgroundImage = `url('${img.src}')`;
+        // We multiply the width and height by 2.5 to simulate the "zoom" level
+        lens.style.backgroundSize = (img.width * 2.5) + "px " + (img.height * 2.5) + "px";
+
+        // Hide lens by default
+        lens.style.display = 'none';
+
+        // Event listeners for mouse movement
+        lens.addEventListener('mousemove', moveLens);
+        img.addEventListener('mousemove', moveLens);
+        
+        // Touch support for mobile
+        lens.addEventListener('touchmove', moveLens);
+        img.addEventListener('touchmove', moveLens);
+
+        // Show/Hide lens on hover
+        img.addEventListener('mouseenter', () => lens.style.display = 'block');
+        img.addEventListener('mouseleave', () => lens.style.display = 'none');
+
+        function moveLens(e) {
+            let pos, x, y;
+            
+            // Prevent default actions that could interfere with tracking
+            e.preventDefault();
+            
+            // Get cursor's x and y positions
+            pos = getCursorPos(e);
+            x = pos.x - (lens.offsetWidth / 2);
+            y = pos.y - (lens.offsetHeight / 2);
+            
+            // Prevent the lens from being positioned outside the image
+            if (x > img.width - lens.offsetWidth) { x = img.width - lens.offsetWidth; }
+            if (x < 0) { x = 0; }
+            if (y > img.height - lens.offsetHeight) { y = img.height - lens.offsetHeight; }
+            if (y < 0) { y = 0; }
+            
+            // Set the position of the lens
+            lens.style.left = x + "px";
+            lens.style.top = y + "px";
+            
+            // Move the background image of the lens to match the cursor
+            // Notice the negative values to move the background opposite to the cursor
+            lens.style.backgroundPosition = "-" + (x * 2.5) + "px -" + (y * 2.5) + "px";
+        }
+
+        function getCursorPos(e) {
+            let a, x = 0, y = 0;
+            e = e || window.event;
+            
+            // Get the x and y positions of the image
+            a = img.getBoundingClientRect();
+            
+            // Calculate the cursor's x and y coordinates, relative to the image
+            x = e.pageX - a.left;
+            y = e.pageY - a.top;
+            
+            // Consider any page scrolling
+            x = x - window.pageXOffset;
+            y = y - window.pageYOffset;
+            
+            return {x : x, y : y};
+        }
+    }
+
+    // Initialize zoom on page load
+    // Adding a slight delay ensures the image has a width/height calculated
+    setTimeout(setupZoom, 100);
+});
+      
