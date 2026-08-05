@@ -1,9 +1,6 @@
 const images = [
     "images/hero.png",
-    "images/hero2.png",
-    "images/hero3.png",
-    "images/hero4.png",
-    "images/hero5.png"
+    "images/hero2.png"
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
