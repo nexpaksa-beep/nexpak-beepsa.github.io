@@ -10183,3 +10183,1952 @@ function setPage(page) {
  END OF online.js — PART 6/8
 =========================================================*/
     
+/*=========================================================
+ NEXPAK SECURITY SOLUTIONS
+ ONLINE STORE ENGINE
+ ---------------------------------------------------------
+ File: online.js
+ Part: 7/8
+ Purpose:
+ - Product compatibility engine
+ - Compatibility lookup
+ - Compatible product matching
+ - System/component relationships
+ - Configurator integration hooks
+ - Recommended compatible products
+ - Compatibility validation
+ - Configurator events
+
+ Continues directly from:
+ online.js — Part 1/8
+ online.js — Part 2/8
+ online.js — Part 3/8
+ online.js — Part 4/8
+ online.js — Part 5/8
+ online.js — Part 6/8
+=========================================================*/
+
+(function (window, document) {
+
+    "use strict";
+
+
+    /*=====================================================
+      145. STORE CONNECTION
+    =====================================================*/
+
+    const STORE =
+        window.NEXPAK_ONLINE;
+
+
+    if (!STORE) {
+
+        console.error(
+            "[NEXPAK ONLINE] Part 7 could not start. " +
+            "Parts 1–6 must load first."
+        );
+
+        return;
+    }
+
+
+    const helpers =
+        STORE.helpers;
+
+
+    /*=====================================================
+      146. CONFIGURATOR STATE
+    =====================================================*/
+
+    if (!STORE.state.configurator) {
+
+        STORE.state.configurator = {
+
+            active: false,
+
+            mode: null,
+
+            baseProduct: null,
+
+            selectedProducts: [],
+
+            compatibleProducts: [],
+
+            incompatibleProducts: [],
+
+            warnings: [],
+
+            validation: {
+
+                valid: true,
+
+                errors: [],
+
+                warnings: []
+            }
+        };
+    }
+
+
+    /*=====================================================
+      147. COMPATIBILITY MAP
+    =====================================================*/
+
+    function getCompatibilityMap() {
+
+        /*
+         * The database created earlier owns the actual
+         * compatibility information.
+         *
+         * This engine only reads it.
+         */
+
+        return (
+            window.NEXPAK_COMPATIBILITY_MAP ||
+            STORE.data &&
+            STORE.data.compatibilityMap ||
+            {}
+        );
+    }
+
+
+    /*=====================================================
+      148. NORMALIZE COMPATIBILITY VALUE
+    =====================================================*/
+
+    function normalizeCompatibilityValue(
+        value
+    ) {
+
+        if (
+            value === null ||
+            value === undefined
+        ) {
+
+            return "";
+        }
+
+
+        return helpers.safeLower(
+            String(value)
+        )
+            .replace(/[_-]+/g, " ")
+            .replace(/\s+/g, " ")
+            .trim();
+    }
+
+
+    /*=====================================================
+      149. CONVERT VALUE TO ARRAY
+    =====================================================*/
+
+    function valueToArray(
+        value
+    ) {
+
+        if (
+            value === null ||
+            value === undefined
+        ) {
+
+            return [];
+        }
+
+
+        if (Array.isArray(value)) {
+
+            return value
+                .flat(Infinity)
+                .filter(function (item) {
+
+                    return (
+                        item !== null &&
+                        item !== undefined &&
+                        String(item).trim() !== ""
+                    );
+                });
+        }
+
+
+        if (
+            typeof value === "string"
+        ) {
+
+            return value
+                .split(/[,\n;|]+/)
+                .map(function (item) {
+
+                    return item.trim();
+
+                })
+                .filter(Boolean);
+        }
+
+
+        return [value];
+    }
+
+
+    /*=====================================================
+      150. PRODUCT COMPATIBILITY DATA
+    =====================================================*/
+
+    function getProductCompatibility(
+        product
+    ) {
+
+        if (!product) {
+            return {};
+        }
+
+
+        return (
+            product.compatibility ||
+            product.compatibleWith ||
+            product.compatible_with ||
+            product.compatibilityMap ||
+            product.compatibility_map ||
+            {}
+        );
+    }
+
+
+    /*=====================================================
+      151. COMPATIBLE WITH PRODUCT IDS
+    =====================================================*/
+
+    function getExplicitCompatibleIDs(
+        product
+    ) {
+
+        if (!product) {
+            return [];
+        }
+
+
+        const compatibility =
+            getProductCompatibility(
+                product
+            );
+
+
+        let values = [];
+
+
+        if (
+            typeof compatibility ===
+            "object" &&
+            !Array.isArray(
+                compatibility
+            )
+        ) {
+
+            values = [
+                compatibility.products,
+                compatibility.productIDs,
+                compatibility.productIds,
+                compatibility.ids,
+                compatibility.skus,
+                compatibility.models,
+                compatibility.compatibleProducts
+            ];
+
+
+        } else {
+
+            values = [
+                compatibility
+            ];
+        }
+
+
+        return valueToArray(
+            values
+        )
+            .map(function (value) {
+
+                return normalizeCompatibilityValue(
+                    value
+                );
+
+            })
+            .filter(Boolean);
+    }
+
+
+    /*=====================================================
+      152. COMPATIBILITY KEY/VALUE EXTRACTION
+    =====================================================*/
+
+    function getCompatibilityAttributes(
+        product
+    ) {
+
+        if (!product) {
+            return {};
+        }
+
+
+        const compatibility =
+            getProductCompatibility(
+                product
+            );
+
+
+        if (
+            !compatibility ||
+            typeof compatibility !== "object" ||
+            Array.isArray(compatibility)
+        ) {
+
+            return {};
+        }
+
+
+        const attributes = {};
+
+
+        Object.keys(
+            compatibility
+        ).forEach(
+            function (key) {
+
+                const normalizedKey =
+                    normalizeCompatibilityValue(
+                        key
+                    );
+
+
+                if (
+                    [
+                        "products",
+                        "product ids",
+                        "productids",
+                        "product ids",
+                        "ids",
+                        "skus",
+                        "models",
+                        "compatible products"
+                    ].indexOf(
+                        normalizedKey
+                    ) !== -1
+                ) {
+
+                    return;
+                }
+
+
+                const values =
+                    valueToArray(
+                        compatibility[key]
+                    )
+                        .map(
+                            normalizeCompatibilityValue
+                        )
+                        .filter(Boolean);
+
+
+                if (
+                    values.length
+                ) {
+
+                    attributes[
+                        normalizedKey
+                    ] = values;
+                }
+            }
+        );
+
+
+        return attributes;
+    }
+
+
+    /*=====================================================
+      153. PRODUCT ID MATCH
+    =====================================================*/
+
+    function productIdentifierMatches(
+        productA,
+        productB
+    ) {
+
+        if (
+            !productA ||
+            !productB
+        ) {
+
+            return false;
+        }
+
+
+        const identifiersA = [
+
+            helpers.getProductID(
+                productA
+            ),
+
+            helpers.getProductSKU(
+                productA
+            ),
+
+            productA.model,
+
+            productA.modelNumber,
+
+            productA.productCode
+
+        ]
+            .map(
+                normalizeCompatibilityValue
+            )
+            .filter(Boolean);
+
+
+        const identifiersB = [
+
+            helpers.getProductID(
+                productB
+            ),
+
+            helpers.getProductSKU(
+                productB
+            ),
+
+            productB.model,
+
+            productB.modelNumber,
+
+            productB.productCode
+
+        ]
+            .map(
+                normalizeCompatibilityValue
+            )
+            .filter(Boolean);
+
+
+        return identifiersA.some(
+            function (identifier) {
+
+                return identifiersB.indexOf(
+                    identifier
+                ) !== -1;
+            }
+        );
+    }
+
+
+    /*=====================================================
+      154. EXPLICIT COMPATIBILITY CHECK
+    =====================================================*/
+
+    function hasExplicitCompatibility(
+        productA,
+        productB
+    ) {
+
+        if (
+            !productA ||
+            !productB
+        ) {
+
+            return false;
+        }
+
+
+        const idB = [
+
+            helpers.getProductID(
+                productB
+            ),
+
+            helpers.getProductSKU(
+                productB
+            ),
+
+            productB.model,
+
+            productB.modelNumber,
+
+            productB.productCode
+
+        ]
+            .map(
+                normalizeCompatibilityValue
+            )
+            .filter(Boolean);
+
+
+        const idA = [
+
+            helpers.getProductID(
+                productA
+            ),
+
+            helpers.getProductSKU(
+                productA
+            ),
+
+            productA.model,
+
+            productA.modelNumber,
+
+            productA.productCode
+
+        ]
+            .map(
+                normalizeCompatibilityValue
+            )
+            .filter(Boolean);
+
+
+        const compatibleA =
+            getExplicitCompatibleIDs(
+                productA
+            );
+
+
+        const compatibleB =
+            getExplicitCompatibleIDs(
+                productB
+            );
+
+
+        return (
+            compatibleA.some(
+                function (value) {
+
+                    return idB.indexOf(
+                        value
+                    ) !== -1;
+                }
+            ) ||
+            compatibleB.some(
+                function (value) {
+
+                    return idA.indexOf(
+                        value
+                    ) !== -1;
+                }
+            )
+        );
+    }
+
+
+    /*=====================================================
+      155. ATTRIBUTE COMPATIBILITY
+    =====================================================*/
+
+    function hasAttributeCompatibility(
+        productA,
+        productB
+    ) {
+
+        const attributesA =
+            getCompatibilityAttributes(
+                productA
+            );
+
+
+        const attributesB =
+            getCompatibilityAttributes(
+                productB
+            );
+
+
+        const keys =
+            Object.keys(
+                attributesA
+            );
+
+
+        if (!keys.length) {
+            return false;
+        }
+
+
+        let matches = 0;
+
+
+        keys.forEach(
+            function (key) {
+
+                if (
+                    !attributesB[key]
+                ) {
+
+                    return;
+                }
+
+
+                const valuesA =
+                    attributesA[key];
+
+
+                const valuesB =
+                    attributesB[key];
+
+
+                const match =
+                    valuesA.some(
+                        function (value) {
+
+                            return valuesB.indexOf(
+                                value
+                            ) !== -1;
+                        }
+                    );
+
+
+                if (match) {
+                    matches++;
+                }
+            }
+        );
+
+
+        return (
+            matches > 0
+        );
+    }
+
+
+    /*=====================================================
+      156. CATEGORY COMPATIBILITY
+    =====================================================*/
+
+    function getCategoryRelationship(
+        productA,
+        productB
+    ) {
+
+        if (
+            !productA ||
+            !productB
+        ) {
+
+            return false;
+        }
+
+
+        const categoryA =
+            normalizeCompatibilityValue(
+                helpers.getProductCategory(
+                    productA
+                )
+            );
+
+
+        const categoryB =
+            normalizeCompatibilityValue(
+                helpers.getProductCategory(
+                    productB
+                )
+            );
+
+
+        /*
+         * Same category does NOT automatically mean
+         * compatible.
+         *
+         * This function only identifies potentially
+         * related system components.
+         */
+
+        const relationships = {
+
+            "cctv": [
+                "cctv",
+                "cctv accessories",
+                "cctv hard drives",
+                "power and backup",
+                "installation accessories",
+                "cabling"
+            ],
+
+            "ip cctv": [
+                "ip cctv",
+                "cctv",
+                "cabling",
+                "installation accessories",
+                "power and backup"
+            ],
+
+            "electric fencing": [
+                "electric fencing",
+                "power and backup",
+                "installation accessories"
+            ],
+
+            "gate automation": [
+                "gate automation",
+                "access control",
+                "intercom",
+                "power and backup"
+            ],
+
+            "access control": [
+                "access control",
+                "intercom",
+                "gate automation",
+                "power and backup"
+            ],
+
+            "intercom": [
+                "intercom",
+                "access control",
+                "gate automation",
+                "power and backup"
+            ],
+
+            "roboguard": [
+                "roboguard",
+                "agricultural security",
+                "power and backup"
+            ],
+
+            "agricultural security": [
+                "agricultural security",
+                "roboguard",
+                "electric fencing",
+                "cctv",
+                "power and backup"
+            ]
+        };
+
+
+        const relatedCategories =
+            relationships[
+                categoryA
+            ] || [];
+
+
+        return (
+            relatedCategories.indexOf(
+                categoryB
+            ) !== -1
+        );
+    }
+
+
+    /*=====================================================
+      157. COMPATIBILITY SCORE
+    =====================================================*/
+
+    function calculateCompatibilityScore(
+        source,
+        candidate
+    ) {
+
+        if (
+            !source ||
+            !candidate
+        ) {
+
+            return {
+
+                score: 0,
+
+                reasons: [],
+
+                explicit: false,
+
+                compatible: false
+            };
+        }
+
+
+        if (
+            productIdentifierMatches(
+                source,
+                candidate
+            )
+        ) {
+
+            return {
+
+                score: 0,
+
+                reasons: [],
+
+                explicit: false,
+
+                compatible: false
+            };
+        }
+
+
+        let score = 0;
+
+
+        const reasons = [];
+
+
+        const explicit =
+            hasExplicitCompatibility(
+                source,
+                candidate
+            );
+
+
+        const attributeMatch =
+            hasAttributeCompatibility(
+                source,
+                candidate
+            );
+
+
+        const categoryMatch =
+            getCategoryRelationship(
+                source,
+                candidate
+            );
+
+
+        if (explicit) {
+
+            score += 100;
+
+            reasons.push(
+                "Explicit database compatibility"
+            );
+        }
+
+
+        if (attributeMatch) {
+
+            score += 50;
+
+            reasons.push(
+                "Matching compatibility attributes"
+            );
+        }
+
+
+        if (categoryMatch) {
+
+            score += 20;
+
+            reasons.push(
+                "Related security-system category"
+            );
+        }
+
+
+        const sourceBrand =
+            normalizeCompatibilityValue(
+                helpers.getProductBrand(
+                    source
+                )
+            );
+
+
+        const candidateBrand =
+            normalizeCompatibilityValue(
+                helpers.getProductBrand(
+                    candidate
+                )
+            );
+
+
+        if (
+            sourceBrand &&
+            candidateBrand &&
+            sourceBrand === candidateBrand
+        ) {
+
+            score += 5;
+
+            reasons.push(
+                "Same brand"
+            );
+        }
+
+
+        return {
+
+            score: score,
+
+            reasons: reasons,
+
+            explicit: explicit,
+
+            compatible: (
+                explicit ||
+                attributeMatch
+            )
+        };
+    }
+
+
+    /*=====================================================
+      158. FIND COMPATIBLE PRODUCTS
+    =====================================================*/
+
+    function findCompatibleProducts(
+        sourceProduct,
+        options
+    ) {
+
+        let source =
+            sourceProduct;
+
+
+        if (
+            !source ||
+            typeof source !== "object"
+        ) {
+
+            source =
+                STORE.details &&
+                typeof STORE.details.find ===
+                "function"
+                    ? STORE.details.find(
+                        sourceProduct
+                    )
+                    : null;
+        }
+
+
+        if (!source) {
+            return [];
+        }
+
+
+        const settings =
+            options || {};
+
+
+        const explicitOnly =
+            settings.explicitOnly === true;
+
+
+        const limit =
+            Number.isFinite(
+                Number(
+                    settings.limit
+                )
+            )
+                ? Math.max(
+                    1,
+                    Math.floor(
+                        Number(
+                            settings.limit
+                        )
+                    )
+                )
+                : 20;
+
+
+        const results = [];
+
+
+        getAllProducts()
+            .forEach(
+                function (candidate) {
+
+                    const result =
+                        calculateCompatibilityScore(
+                            source,
+                            candidate
+                        );
+
+
+                    if (
+                        explicitOnly &&
+                        !result.explicit
+                    ) {
+
+                        return;
+                    }
+
+
+                    if (
+                        result.compatible ||
+                        (
+                            !explicitOnly &&
+                            result.score >= 20
+                        )
+                    ) {
+
+                        results.push({
+
+                            product:
+                                candidate,
+
+                            score:
+                                result.score,
+
+                            reasons:
+                                result.reasons,
+
+                            explicit:
+                                result.explicit
+                        });
+                    }
+                }
+            );
+
+
+        results.sort(
+            function (a, b) {
+
+                return (
+                    b.score -
+                    a.score
+                );
+            }
+        );
+
+
+        return results.slice(
+            0,
+            limit
+        );
+    }
+
+
+    /*=====================================================
+      159. COMPATIBILITY CHECK
+    =====================================================*/
+
+    function checkCompatibility(
+        productA,
+        productB
+    ) {
+
+        let first =
+            productA;
+
+
+        let second =
+            productB;
+
+
+        if (
+            typeof first !== "object"
+        ) {
+
+            first =
+                STORE.details.find(
+                    first
+                );
+        }
+
+
+        if (
+            typeof second !== "object"
+        ) {
+
+            second =
+                STORE.details.find(
+                    second
+                );
+        }
+
+
+        if (
+            !first ||
+            !second
+        ) {
+
+            return {
+
+                compatible: false,
+
+                score: 0,
+
+                reasons: [
+                    "One or both products could not be found."
+                ],
+
+                error: true
+            };
+        }
+
+
+        const result =
+            calculateCompatibilityScore(
+                first,
+                second
+            );
+
+
+        return {
+
+            compatible:
+                result.compatible,
+
+            explicit:
+                result.explicit,
+
+            score:
+                result.score,
+
+            reasons:
+                result.reasons,
+
+            productA:
+                first,
+
+            productB:
+                second,
+
+            error:
+                false
+        };
+    }
+
+
+    /*=====================================================
+      160. CONFIGURATOR START
+    =====================================================*/
+
+    function startConfigurator(
+        baseProduct,
+        options
+    ) {
+
+        let product =
+            baseProduct;
+
+
+        if (
+            !product ||
+            typeof product !== "object"
+        ) {
+
+            product =
+                STORE.details &&
+                STORE.details.find
+                    ? STORE.details.find(
+                        baseProduct
+                    )
+                    : null;
+        }
+
+
+        if (!product) {
+
+            helpers.warn(
+                "Unable to start configurator. " +
+                "Base product not found."
+            );
+
+            return null;
+        }
+
+
+        const settings =
+            options || {};
+
+
+        STORE.state.configurator = {
+
+            active: true,
+
+            mode:
+                settings.mode ||
+                "security-system",
+
+            baseProduct:
+                product,
+
+            selectedProducts: [
+                product
+            ],
+
+            compatibleProducts:
+                findCompatibleProducts(
+                    product,
+                    {
+                        limit: 50
+                    }
+                ),
+
+            incompatibleProducts: [],
+
+            warnings: [],
+
+            validation: {
+
+                valid: true,
+
+                errors: [],
+
+                warnings: []
+            }
+        };
+
+
+        document.dispatchEvent(
+            new CustomEvent(
+                "nexpak:configurator-started",
+                {
+                    detail: {
+                        state:
+                            STORE.state.configurator,
+
+                        product:
+                            product
+                    }
+                }
+            )
+        );
+
+
+        return STORE.state.configurator;
+    }
+
+
+    /*=====================================================
+      161. ADD CONFIGURATOR PRODUCT
+    =====================================================*/
+
+    function addConfiguratorProduct(
+        product
+    ) {
+
+        let selected =
+            product;
+
+
+        if (
+            !selected ||
+            typeof selected !== "object"
+        ) {
+
+            selected =
+                STORE.details.find(
+                    product
+                );
+        }
+
+
+        if (!selected) {
+
+            return {
+
+                success: false,
+
+                reason:
+                    "Product not found."
+            };
+        }
+
+
+        const state =
+            STORE.state.configurator;
+
+
+        if (
+            !state.active
+        ) {
+
+            startConfigurator(
+                selected
+            );
+
+            return {
+
+                success: true,
+
+                added: true,
+
+                product:
+                    selected
+            };
+        }
+
+
+        const existing =
+            state.selectedProducts.some(
+                function (item) {
+
+                    return (
+                        helpers.getProductID(
+                            item
+                        ) ===
+                        helpers.getProductID(
+                            selected
+                        )
+                    );
+                }
+            );
+
+
+        if (existing) {
+
+            return {
+
+                success: false,
+
+                added: false,
+
+                reason:
+                    "Product is already in the configuration.",
+
+                product:
+                    selected
+            };
+        }
+
+
+        /*
+         * Validate against every existing product.
+         */
+
+        const conflicts = [];
+
+
+        state.selectedProducts.forEach(
+            function (existingProduct) {
+
+                const result =
+                    checkCompatibility(
+                        existingProduct,
+                        selected
+                    );
+
+
+                if (
+                    !result.compatible
+                ) {
+
+                    conflicts.push(
+                        result
+                    );
+                }
+            }
+        );
+
+
+        if (
+            conflicts.length
+        ) {
+
+            state.incompatibleProducts.push(
+                selected
+            );
+
+
+            state.warnings.push({
+
+                product:
+                    selected,
+
+                conflicts:
+                    conflicts
+            });
+
+
+            document.dispatchEvent(
+                new CustomEvent(
+                    "nexpak:configurator-incompatible",
+                    {
+                        detail: {
+
+                            product:
+                                selected,
+
+                            conflicts:
+                                conflicts
+                        }
+                    }
+                )
+            );
+
+
+            return {
+
+                success: false,
+
+                added: false,
+
+                compatible: false,
+
+                reason:
+                    "Product is not compatible with the current configuration.",
+
+                conflicts:
+                    conflicts,
+
+                product:
+                    selected
+            };
+        }
+
+
+        state.selectedProducts.push(
+            selected
+        );
+
+
+        /*
+         * Refresh recommendations.
+         */
+
+        refreshConfiguratorRecommendations();
+
+
+        document.dispatchEvent(
+            new CustomEvent(
+                "nexpak:configurator-product-added",
+                {
+                    detail: {
+
+                        product:
+                            selected,
+
+                        state:
+                            state
+                    }
+                }
+            )
+        );
+
+
+        return {
+
+            success: true,
+
+            added: true,
+
+            compatible: true,
+
+            product:
+                selected,
+
+            state:
+                state
+        };
+    }
+
+
+    /*=====================================================
+      162. REMOVE CONFIGURATOR PRODUCT
+    =====================================================*/
+
+    function removeConfiguratorProduct(
+        product
+    ) {
+
+        const state =
+            STORE.state.configurator;
+
+
+        if (
+            !state.active
+        ) {
+
+            return false;
+        }
+
+
+        const productID =
+            typeof product === "object"
+                ? helpers.getProductID(
+                    product
+                )
+                : product;
+
+
+        const normalizedID =
+            normalizeCompatibilityValue(
+                productID
+            );
+
+
+        /*
+         * Base product cannot be removed through the
+         * standard component-removal function.
+         */
+
+        const baseID =
+            normalizeCompatibilityValue(
+                helpers.getProductID(
+                    state.baseProduct
+                )
+            );
+
+
+        if (
+            normalizedID ===
+            baseID
+        ) {
+
+            return false;
+        }
+
+
+        const originalLength =
+            state.selectedProducts.length;
+
+
+        state.selectedProducts =
+            state.selectedProducts.filter(
+                function (item) {
+
+                    return (
+                        normalizeCompatibilityValue(
+                            helpers.getProductID(
+                                item
+                            )
+                        ) !==
+                        normalizedID
+                    );
+                }
+            );
+
+
+        const removed =
+            state.selectedProducts.length <
+            originalLength;
+
+
+        if (removed) {
+
+            validateConfiguration();
+
+
+            refreshConfiguratorRecommendations();
+
+
+            document.dispatchEvent(
+                new CustomEvent(
+                    "nexpak:configurator-product-removed",
+                    {
+                        detail: {
+
+                            productID:
+                                productID,
+
+                            state:
+                                state
+                        }
+                    }
+                )
+            );
+        }
+
+
+        return removed;
+    }
+
+
+    /*=====================================================
+      163. VALIDATE CONFIGURATION
+    =====================================================*/
+
+    function validateConfiguration() {
+
+        const state =
+            STORE.state.configurator;
+
+
+        const errors = [];
+
+
+        const warnings = [];
+
+
+        if (
+            !state.active
+        ) {
+
+            state.validation = {
+
+                valid: true,
+
+                errors: [],
+
+                warnings: []
+            };
+
+
+            return state.validation;
+        }
+
+
+        const products =
+            state.selectedProducts;
+
+
+        /*
+         * Compare every selected product against every
+         * other selected product.
+         */
+
+        for (
+            let i = 0;
+            i < products.length;
+            i++
+        ) {
+
+            for (
+                let j = i + 1;
+                j < products.length;
+                j++
+            ) {
+
+                const result =
+                    checkCompatibility(
+                        products[i],
+                        products[j]
+                    );
+
+
+                if (
+                    !result.compatible
+                ) {
+
+                    errors.push({
+
+                        productA:
+                            products[i],
+
+                        productB:
+                            products[j],
+
+                        message:
+                            "Products may not be compatible."
+                    });
+                }
+            }
+        }
+
+
+        /*
+         * Store validation.
+         */
+
+        state.validation = {
+
+            valid:
+                errors.length === 0,
+
+            errors:
+                errors,
+
+            warnings:
+                warnings
+        };
+
+
+        return state.validation;
+    }
+
+
+    /*=====================================================
+      164. REFRESH CONFIGURATOR RECOMMENDATIONS
+    =====================================================*/
+
+    function refreshConfiguratorRecommendations() {
+
+        const state =
+            STORE.state.configurator;
+
+
+        if (
+            !state.active
+        ) {
+
+            return [];
+        }
+
+
+        const selected =
+            state.selectedProducts;
+
+
+        const candidates =
+            getAllProducts()
+                .filter(
+                    function (candidate) {
+
+                        return !selected.some(
+                            function (selectedProduct) {
+
+                                return (
+                                    helpers.getProductID(
+                                        selectedProduct
+                                    ) ===
+                                    helpers.getProductID(
+                                        candidate
+                                    )
+                                );
+                            }
+                        );
+                    }
+                );
+
+
+        const compatible = [];
+
+
+        candidates.forEach(
+            function (candidate) {
+
+                let compatibleWithAll =
+                    true;
+
+
+                let strongestScore =
+                    0;
+
+
+                selected.forEach(
+                    function (selectedProduct) {
+
+                        const result =
+                            checkCompatibility(
+                                selectedProduct,
+                                candidate
+                            );
+
+
+                        if (
+                            !result.compatible
+                        ) {
+
+                            compatibleWithAll =
+                                false;
+                        }
+
+
+                        strongestScore =
+                            Math.max(
+                                strongestScore,
+                                result.score
+                            );
+                    }
+                );
+
+
+                if (
+                    compatibleWithAll &&
+                    strongestScore > 0
+                ) {
+
+                    compatible.push({
+
+                        product:
+                            candidate,
+
+                        score:
+                            strongestScore
+                    });
+                }
+            }
+        );
+
+
+        compatible.sort(
+            function (a, b) {
+
+                return (
+                    b.score -
+                    a.score
+                );
+            }
+        );
+
+
+        state.compatibleProducts =
+            compatible.map(
+                function (item) {
+
+                    return item.product;
+                }
+            );
+
+
+        return state.compatibleProducts;
+    }
+
+
+    /*=====================================================
+      165. GET CONFIGURATION
+    =====================================================*/
+
+    function getConfiguration() {
+
+        return STORE.state.configurator;
+    }
+
+
+    /*=====================================================
+      166. RESET CONFIGURATOR
+    =====================================================*/
+
+    function resetConfigurator() {
+
+        STORE.state.configurator = {
+
+            active: false,
+
+            mode: null,
+
+            baseProduct: null,
+
+            selectedProducts: [],
+
+            compatibleProducts: [],
+
+            incompatibleProducts: [],
+
+            warnings: [],
+
+            validation: {
+
+                valid: true,
+
+                errors: [],
+
+                warnings: []
+            }
+        };
+
+
+        document.dispatchEvent(
+            new CustomEvent(
+                "nexpak:configurator-reset"
+            )
+        );
+
+
+        return STORE.state.configurator;
+    }
+
+
+    /*=====================================================
+      167. CONFIGURATOR EVENT HANDLER
+    =====================================================*/
+
+    function handleConfiguratorProductRequest(
+        event
+    ) {
+
+        if (
+            !event.detail
+        ) {
+
+            return;
+        }
+
+
+        const product =
+            event.detail.product ||
+            event.detail.productID;
+
+
+        if (!product) {
+            return;
+        }
+
+
+        startConfigurator(
+            product
+        );
+    }
+
+
+    /*=====================================================
+      168. PUBLIC COMPATIBILITY API
+    =====================================================*/
+
+    STORE.compatibility = {
+
+        map:
+            getCompatibilityMap,
+
+        get:
+            getProductCompatibility,
+
+        check:
+            checkCompatibility,
+
+        score:
+            calculateCompatibilityScore,
+
+        find:
+            findCompatibleProducts,
+
+        explicit:
+            getExplicitCompatibleIDs,
+
+        attributes:
+            getCompatibilityAttributes,
+
+        categoryRelationship:
+            getCategoryRelationship
+    };
+
+
+    /*=====================================================
+      169. PUBLIC CONFIGURATOR API
+    =====================================================*/
+
+    STORE.configurator = {
+
+        start:
+            startConfigurator,
+
+        add:
+            addConfiguratorProduct,
+
+        remove:
+            removeConfiguratorProduct,
+
+        validate:
+            validateConfiguration,
+
+        refresh:
+            refreshConfiguratorRecommendations,
+
+        get:
+            getConfiguration,
+
+        reset:
+            resetConfigurator,
+
+        compatible:
+            function (
+                product,
+                options
+            ) {
+
+                return findCompatibleProducts(
+                    product,
+                    options
+                );
+            }
+    };
+
+
+    /*=====================================================
+      170. CONFIGURATOR EVENTS
+    =====================================================*/
+
+    document.addEventListener(
+        "nexpak:start-configurator",
+        handleConfiguratorProductRequest
+    );
+
+
+    /*=====================================================
+      171. PART 7 READY
+    =====================================================*/
+
+    helpers.log(
+        "online.js Part 7 loaded — Compatibility & Configurator integration ready."
+    );
+
+
+})(window, document);
+
+
+/*=========================================================
+ END OF online.js — PART 7/8
+=========================================================*/
