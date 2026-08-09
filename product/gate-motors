@@ -1,0 +1,8317 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Gate Motors & Gate Automation South Africa | Nexpak Security Solutions
+    </title>
+
+    <meta name="description"
+          content="Professional gate motors and gate automation solutions in South Africa. Sliding and swing gate motors, access control, remotes, safety accessories and complete automated gate solutions from Nexpak Security Solutions.">
+
+    <meta name="keywords"
+          content="gate motors South Africa, gate automation South Africa, sliding gate motors, swing gate motors, automatic gates, gate openers, gate motor installation, residential gate motors, commercial gate automation, Nexpak Security Solutions">
+
+    <meta name="author"
+          content="Nexpak Security Solutions">
+
+    <meta name="robots"
+          content="index, follow">
+
+    <link rel="canonical"
+          href="https://nexpak.co.za/products/gate-motors.html">
+
+
+    <!-- =========================================
+         GOOGLE FONTS
+    ========================================= -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap"
+          rel="stylesheet">
+
+
+    <!-- =========================================
+         FONT AWESOME
+    ========================================= -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <!-- =========================================
+         MAIN SITE STYLES
+    ========================================= -->
+
+    <link rel="stylesheet"
+          href="../style.css">
+
+
+    <!-- =========================================
+         PRODUCT PAGE STYLES
+    ========================================= -->
+
+    <style>
+
+        /* =========================================
+           GATE MOTORS PRODUCT PAGE
+        ========================================= */
+
+        :root{
+
+            --primary:#0b0f14;
+            --secondary:#111820;
+            --accent:#f5b400;
+            --accent-dark:#d99b00;
+            --white:#ffffff;
+            --text:#20262d;
+            --muted:#6b7280;
+            --light:#f5f7f9;
+            --border:#e5e7eb;
+
+        }
+
+
+        *{
+            box-sizing:border-box;
+        }
+
+
+        html{
+            scroll-behavior:smooth;
+        }
+
+
+        body{
+
+            margin:0;
+
+            font-family:"Inter",sans-serif;
+
+            color:var(--text);
+
+            background:#ffffff;
+
+            line-height:1.7;
+
+        }
+
+
+        h1,
+        h2,
+        h3,
+        h4{
+
+            font-family:"Poppins",sans-serif;
+
+            line-height:1.2;
+
+        }
+
+
+        a{
+            text-decoration:none;
+        }
+
+
+        img{
+            max-width:100%;
+            display:block;
+        }
+
+
+        .container{
+
+            width:min(1180px,92%);
+
+            margin:auto;
+
+        }
+
+
+        /* =========================================
+           PRODUCT HERO
+        ========================================= */
+
+        .product-hero{
+
+            position:relative;
+
+            min-height:540px;
+
+            display:flex;
+
+            align-items:center;
+
+            overflow:hidden;
+
+            background:
+
+                linear-gradient(
+                    90deg,
+                    rgba(5,9,13,.96) 0%,
+                    rgba(5,9,13,.90) 45%,
+                    rgba(5,9,13,.45) 75%,
+                    rgba(5,9,13,.25) 100%
+                ),
+
+                url("../images/gate-motors.jpg")
+                center/cover no-repeat;
+
+        }
+
+
+        .product-hero-content{
+
+            max-width:720px;
+
+            padding:90px 0;
+
+            color:#ffffff;
+
+        }
+
+
+        .product-badge{
+
+            display:inline-flex;
+
+            align-items:center;
+
+            gap:9px;
+
+            padding:8px 16px;
+
+            margin-bottom:22px;
+
+            border:1px solid rgba(245,180,0,.55);
+
+            border-radius:30px;
+
+            background:rgba(245,180,0,.10);
+
+            color:var(--accent);
+
+            font-size:13px;
+
+            font-weight:700;
+
+            text-transform:uppercase;
+
+            letter-spacing:1px;
+
+        }
+
+
+        .product-badge i{
+            font-size:14px;
+        }
+
+
+        .product-hero h1{
+
+            margin:0 0 22px;
+
+            font-size:clamp(38px,5vw,64px);
+
+            font-weight:800;
+
+            letter-spacing:-1.5px;
+
+        }
+
+
+        .product-hero h1 span{
+
+            color:var(--accent);
+
+        }
+
+
+        .product-hero p{
+
+            max-width:650px;
+
+            margin:0 0 30px;
+
+            color:#e5e7eb;
+
+            font-size:18px;
+
+            line-height:1.8;
+
+        }
+
+
+        .hero-actions{
+
+            display:flex;
+
+            flex-wrap:wrap;
+
+            gap:14px;
+
+        }
+
+
+        .hero-btn{
+
+            display:inline-flex;
+
+            align-items:center;
+
+            justify-content:center;
+
+            gap:10px;
+
+            padding:14px 24px;
+
+            border-radius:7px;
+
+            font-weight:700;
+
+            transition:.25s ease;
+
+        }
+
+
+        .hero-btn.primary{
+
+            background:var(--accent);
+
+            color:#111111;
+
+        }
+
+
+        .hero-btn.primary:hover{
+
+            background:var(--accent-dark);
+
+            transform:translateY(-2px);
+
+        }
+
+
+        .hero-btn.secondary{
+
+            border:1px solid rgba(255,255,255,.35);
+
+            color:#ffffff;
+
+            background:rgba(255,255,255,.06);
+
+        }
+
+
+        .hero-btn.secondary:hover{
+
+            background:rgba(255,255,255,.14);
+
+            transform:translateY(-2px);
+
+        }
+
+
+        /* =========================================
+           HERO RESPONSIVE
+        ========================================= */
+
+        @media(max-width:768px){
+
+            .product-hero{
+
+                min-height:620px;
+
+                background:
+
+                    linear-gradient(
+                        180deg,
+                        rgba(5,9,13,.72),
+                        rgba(5,9,13,.96)
+                    ),
+
+                    url("../images/gate-motors.jpg")
+                    center/cover no-repeat;
+
+            }
+
+
+            .product-hero-content{
+
+                padding:80px 0;
+
+            }
+
+
+            .product-hero h1{
+
+                font-size:42px;
+
+            }
+
+
+            .product-hero p{
+
+                font-size:16px;
+
+            }
+
+
+            .hero-actions{
+
+                flex-direction:column;
+
+                align-items:stretch;
+
+            }
+
+
+            .hero-btn{
+
+                width:100%;
+
+            }
+
+        }
+
+    </style>
+
+
+    <!-- =========================================
+         OPEN GRAPH
+    ========================================= -->
+
+    <meta property="og:type"
+          content="website">
+
+    <meta property="og:title"
+          content="Gate Motors & Gate Automation | Nexpak Security Solutions">
+
+    <meta property="og:description"
+          content="Reliable gate motors and automated gate solutions for residential, commercial and industrial security applications.">
+
+    <meta property="og:url"
+          content="https://nexpak.co.za/products/gate-motors.html">
+
+    <meta property="og:site_name"
+          content="Nexpak Security Solutions">
+
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     NAVIGATION
+========================================= -->
+
+<header>
+
+    <!--
+        USE THE SAME HEADER / NAVIGATION
+        STRUCTURE AS products/cctv.html
+    -->
+
+</header>
+
+
+<!-- =========================================
+     GATE MOTORS HERO
+========================================= -->
+
+<section class="product-hero">
+
+    <div class="container">
+
+        <div class="product-hero-content">
+
+            <div class="product-badge">
+
+                <i class="fa-solid fa-gears"></i>
+
+                Gate Automation Solutions
+
+            </div>
+
+
+            <h1>
+
+                Gate Motors &
+
+                <span>Gate Automation</span>
+
+            </h1>
+
+
+            <p>
+
+                Secure and automate your entrance with reliable
+                gate motor solutions designed for homes, businesses,
+                estates and commercial properties.
+
+            </p>
+
+
+            <div class="hero-actions">
+
+                <a href="../quote.html"
+                   class="hero-btn primary">
+
+                    <i class="fa-solid fa-file-signature"></i>
+
+                    Request a Quote
+
+                </a>
+
+
+                <a href="#gate-motor-solutions"
+                   class="hero-btn secondary">
+
+                    <i class="fa-solid fa-arrow-down"></i>
+
+                    Explore Gate Motors
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================================
+     GATE MOTOR SOLUTIONS
+========================================= -->
+
+<section id="gate-motor-solutions"
+         class="product-section gate-solutions">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="section-eyebrow">
+                <i class="fa-solid fa-gears"></i>
+                Automated Access
+            </span>
+
+            <h2>
+                Gate Automation
+                <span>Solutions</span>
+            </h2>
+
+            <p>
+                Automate your entrance with dependable gate motors
+                designed to improve security, convenience and
+                controlled access for residential and commercial
+                properties.
+            </p>
+
+        </div>
+
+
+        <!-- =========================================
+             INTRODUCTION
+        ========================================= -->
+
+        <div class="gate-intro">
+
+            <div class="gate-intro-content">
+
+                <h3>
+                    Reliable Gate Motors for
+                    Modern Security
+                </h3>
+
+                <p>
+                    A properly selected gate motor does more than
+                    open and close your gate. It forms part of your
+                    property's overall access-control and security
+                    system.
+                </p>
+
+                <p>
+                    Nexpak Security Solutions supplies gate
+                    automation solutions for different gate sizes,
+                    weights, operating frequencies and security
+                    requirements. From residential entrances to
+                    busy commercial access points, the right
+                    automation system can provide smooth,
+                    controlled and convenient operation.
+                </p>
+
+                <p>
+                    We can also integrate automated gates with
+                    access control, intercoms, remote controls,
+                    safety accessories and other security solutions.
+                </p>
+
+            </div>
+
+
+            <div class="gate-intro-highlight">
+
+                <div class="highlight-icon">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                </div>
+
+                <h4>
+                    Security + Convenience
+                </h4>
+
+                <p>
+                    Control vehicle access without having to
+                    manually open and close the gate.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             GATE TYPES
+        ========================================= -->
+
+        <div class="gate-types">
+
+            <!-- SLIDING GATE -->
+
+            <article class="gate-type-card">
+
+                <div class="gate-type-icon">
+
+                    <i class="fa-solid fa-arrows-left-right"></i>
+
+                </div>
+
+                <div class="gate-type-content">
+
+                    <span class="card-label">
+                        Gate Type
+                    </span>
+
+                    <h3>
+                        Sliding Gate Motors
+                    </h3>
+
+                    <p>
+                        Sliding gate automation is ideal for
+                        properties where the gate moves horizontally
+                        along a track.
+                    </p>
+
+                    <ul>
+
+                        <li>
+                            <i class="fa-solid fa-check"></i>
+                            Residential sliding gates
+                        </li>
+
+                        <li>
+                            <i class="fa-solid fa-check"></i>
+                            Commercial entrances
+                        </li>
+
+                        <li>
+                            <i class="fa-solid fa-check"></i>
+                            Estate and complex entrances
+                        </li>
+
+                        <li>
+                            <i class="fa-solid fa-check"></i>
+                            High-use access points
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </article>
+
+
+            <!-- SWING GATE -->
+
+            <article class="gate-type-card">
+
+                <div class="gate-type-icon">
+
+                    <i class="fa-solid fa-door-open"></i>
+
+                </div>
+
+                <div class="gate-type-content">
+
+                    <span class="card-label">
+                        Gate Type
+                    </span>
+
+                    <h3>
+                        Swing Gate Motors
+                    </h3>
+
+                    <p>
+                        Swing gate automation is designed for
+                        hinged gates that open inward or outward
+                        from fixed pivot points.
+                    </p>
+
+                    <ul>
+
+                        <li>
+                            <i class="fa-solid fa-check"></i>
+                            Single swing gates
+                        </li>
+
+                        <li>
+                            <i class="fa-solid fa-check"></i>
+                            Double swing gates
+                        </li>
+
+                        <li>
+                            <i class="fa-solid fa-check"></i>
+                            Residential entrances
+                        </li>
+
+                        <li>
+                            <i class="fa-solid fa-check"></i>
+                            Commercial properties
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </article>
+
+        </div>
+
+
+        <!-- =========================================
+             SOLUTION TYPES
+        ========================================= -->
+
+        <div class="automation-range">
+
+            <div class="range-heading">
+
+                <span class="section-eyebrow">
+                    <i class="fa-solid fa-list-check"></i>
+                    Automation Range
+                </span>
+
+                <h3>
+                    Choose the Right
+                    Gate Automation
+                </h3>
+
+            </div>
+
+
+            <div class="range-grid">
+
+                <div class="range-item">
+
+                    <i class="fa-solid fa-house"></i>
+
+                    <div>
+
+                        <h4>
+                            Residential
+                        </h4>
+
+                        <p>
+                            Practical automation for homes,
+                            driveways and private entrances.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="range-item">
+
+                    <i class="fa-solid fa-building"></i>
+
+                    <div>
+
+                        <h4>
+                            Commercial
+                        </h4>
+
+                        <p>
+                            Gate automation for offices,
+                            businesses and commercial properties.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="range-item">
+
+                    <i class="fa-solid fa-city"></i>
+
+                    <div>
+
+                        <h4>
+                            Estates & Complexes
+                        </h4>
+
+                        <p>
+                            Solutions for controlled vehicle
+                            access at shared entrances.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="range-item">
+
+                    <i class="fa-solid fa-industry"></i>
+
+                    <div>
+
+                        <h4>
+                            Industrial
+                        </h4>
+
+                        <p>
+                            Automation options for demanding
+                            access environments and higher traffic.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     GATE SOLUTIONS STYLES
+========================================= -->
+
+<style>
+
+    /* =========================================
+       SECTION
+    ========================================= */
+
+    .product-section{
+
+        padding:95px 0;
+
+        background:#ffffff;
+
+    }
+
+
+    .section-heading{
+
+        max-width:760px;
+
+        margin:0 auto 60px;
+
+        text-align:center;
+
+    }
+
+
+    .section-eyebrow{
+
+        display:inline-flex;
+
+        align-items:center;
+
+        gap:8px;
+
+        margin-bottom:14px;
+
+        color:#d99b00;
+
+        font-size:13px;
+
+        font-weight:800;
+
+        text-transform:uppercase;
+
+        letter-spacing:1.2px;
+
+    }
+
+
+    .section-heading h2{
+
+        margin:0 0 18px;
+
+        font-size:clamp(32px,4vw,48px);
+
+        color:#111820;
+
+    }
+
+
+    .section-heading h2 span{
+
+        color:#d99b00;
+
+    }
+
+
+    .section-heading p{
+
+        margin:0;
+
+        color:#6b7280;
+
+        font-size:17px;
+
+    }
+
+
+    /* =========================================
+       INTRO
+    ========================================= */
+
+    .gate-intro{
+
+        display:grid;
+
+        grid-template-columns:minmax(0,1fr) 330px;
+
+        gap:50px;
+
+        align-items:center;
+
+        margin-bottom:75px;
+
+    }
+
+
+    .gate-intro-content h3{
+
+        margin:0 0 20px;
+
+        font-size:32px;
+
+        color:#111820;
+
+    }
+
+
+    .gate-intro-content p{
+
+        margin:0 0 18px;
+
+        color:#5f6872;
+
+        font-size:16px;
+
+    }
+
+
+    .gate-intro-content p:last-child{
+
+        margin-bottom:0;
+
+    }
+
+
+    .gate-intro-highlight{
+
+        padding:35px 30px;
+
+        border-radius:14px;
+
+        background:#111820;
+
+        color:#ffffff;
+
+        box-shadow:0 15px 40px rgba(0,0,0,.12);
+
+    }
+
+
+    .highlight-icon{
+
+        width:58px;
+
+        height:58px;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        margin-bottom:22px;
+
+        border-radius:12px;
+
+        background:#f5b400;
+
+        color:#111820;
+
+        font-size:24px;
+
+    }
+
+
+    .gate-intro-highlight h4{
+
+        margin:0 0 12px;
+
+        font-size:22px;
+
+    }
+
+
+    .gate-intro-highlight p{
+
+        margin:0;
+
+        color:#cbd5df;
+
+        line-height:1.7;
+
+    }
+
+
+    /* =========================================
+       GATE TYPE CARDS
+    ========================================= */
+
+    .gate-types{
+
+        display:grid;
+
+        grid-template-columns:repeat(2,1fr);
+
+        gap:28px;
+
+        margin-bottom:80px;
+
+    }
+
+
+    .gate-type-card{
+
+        display:flex;
+
+        gap:24px;
+
+        padding:34px;
+
+        border:1px solid #e5e7eb;
+
+        border-radius:14px;
+
+        background:#ffffff;
+
+        box-shadow:0 8px 30px rgba(0,0,0,.05);
+
+        transition:.25s ease;
+
+    }
+
+
+    .gate-type-card:hover{
+
+        transform:translateY(-5px);
+
+        border-color:#f5b400;
+
+        box-shadow:0 15px 40px rgba(0,0,0,.09);
+
+    }
+
+
+    .gate-type-icon{
+
+        flex:0 0 58px;
+
+        width:58px;
+
+        height:58px;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        border-radius:12px;
+
+        background:#111820;
+
+        color:#f5b400;
+
+        font-size:23px;
+
+    }
+
+
+    .gate-type-content{
+
+        flex:1;
+
+    }
+
+
+    .card-label{
+
+        display:block;
+
+        margin-bottom:6px;
+
+        color:#d99b00;
+
+        font-size:11px;
+
+        font-weight:800;
+
+        letter-spacing:1px;
+
+        text-transform:uppercase;
+
+    }
+
+
+    .gate-type-content h3{
+
+        margin:0 0 12px;
+
+        color:#111820;
+
+        font-size:24px;
+
+    }
+
+
+    .gate-type-content p{
+
+        margin:0 0 18px;
+
+        color:#68717b;
+
+        font-size:15px;
+
+    }
+
+
+    .gate-type-content ul{
+
+        list-style:none;
+
+        padding:0;
+
+        margin:0;
+
+        display:grid;
+
+        gap:9px;
+
+    }
+
+
+    .gate-type-content li{
+
+        display:flex;
+
+        align-items:center;
+
+        gap:9px;
+
+        color:#3f4750;
+
+        font-size:14px;
+
+        font-weight:600;
+
+    }
+
+
+    .gate-type-content li i{
+
+        color:#d99b00;
+
+        font-size:13px;
+
+    }
+
+
+    /* =========================================
+       AUTOMATION RANGE
+    ========================================= */
+
+    .automation-range{
+
+        padding:55px;
+
+        border-radius:18px;
+
+        background:#f5f7f9;
+
+    }
+
+
+    .range-heading{
+
+        margin-bottom:35px;
+
+    }
+
+
+    .range-heading h3{
+
+        margin:0;
+
+        color:#111820;
+
+        font-size:30px;
+
+    }
+
+
+    .range-grid{
+
+        display:grid;
+
+        grid-template-columns:repeat(4,1fr);
+
+        gap:18px;
+
+    }
+
+
+    .range-item{
+
+        display:flex;
+
+        gap:15px;
+
+        padding:22px;
+
+        border:1px solid #e1e5e9;
+
+        border-radius:12px;
+
+        background:#ffffff;
+
+    }
+
+
+    .range-item > i{
+
+        flex:0 0 38px;
+
+        width:38px;
+
+        height:38px;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        border-radius:9px;
+
+        background:#111820;
+
+        color:#f5b400;
+
+        font-size:16px;
+
+    }
+
+
+    .range-item h4{
+
+        margin:0 0 7px;
+
+        color:#111820;
+
+        font-size:17px;
+
+    }
+
+
+    .range-item p{
+
+        margin:0;
+
+        color:#6b7280;
+
+        font-size:13px;
+
+        line-height:1.6;
+
+    }
+
+
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
+
+    @media(max-width:900px){
+
+        .gate-intro{
+
+            grid-template-columns:1fr;
+
+        }
+
+
+        .gate-types{
+
+            grid-template-columns:1fr;
+
+        }
+
+
+        .range-grid{
+
+            grid-template-columns:repeat(2,1fr);
+
+        }
+
+    }
+
+
+    @media(max-width:600px){
+
+        .product-section{
+
+            padding:70px 0;
+
+        }
+
+
+        .gate-intro-content h3{
+
+            font-size:27px;
+
+        }
+
+
+        .gate-type-card{
+
+            flex-direction:column;
+
+            padding:27px;
+
+        }
+
+
+        .automation-range{
+
+            padding:30px 22px;
+
+        }
+
+
+        .range-grid{
+
+            grid-template-columns:1fr;
+
+        }
+
+    }
+
+</style>
+
+<!-- =========================================
+     GATE AUTOMATION COMPONENTS
+========================================= -->
+
+<section class="product-section automation-components">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="section-eyebrow">
+
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+
+                Complete Gate Automation
+
+            </span>
+
+
+            <h2>
+
+                More Than Just a
+
+                <span>Gate Motor</span>
+
+            </h2>
+
+
+            <p>
+
+                A reliable automated gate is made up of several
+                components working together. We help you select
+                the right combination for your gate and access
+                requirements.
+
+            </p>
+
+        </div>
+
+
+        <!-- =========================================
+             COMPONENT GRID
+        ========================================= -->
+
+        <div class="component-grid">
+
+
+            <!-- GATE MOTOR -->
+
+            <article class="component-card">
+
+                <div class="component-number">
+                    01
+                </div>
+
+
+                <div class="component-icon">
+
+                    <i class="fa-solid fa-gears"></i>
+
+                </div>
+
+
+                <h3>
+                    Gate Motors
+                </h3>
+
+
+                <p>
+
+                    The main automation unit that drives your
+                    sliding or swing gate and controls its
+                    opening and closing movement.
+
+                </p>
+
+
+                <div class="component-tag">
+                    Core Automation
+                </div>
+
+            </article>
+
+
+            <!-- REMOTES -->
+
+            <article class="component-card">
+
+                <div class="component-number">
+                    02
+                </div>
+
+
+                <div class="component-icon">
+
+                    <i class="fa-solid fa-square-rss"></i>
+
+                </div>
+
+
+                <h3>
+                    Remote Controls
+                </h3>
+
+
+                <p>
+
+                    Convenient wireless access using compatible
+                    remote transmitters for authorised users.
+
+                </p>
+
+
+                <div class="component-tag">
+                    Remote Access
+                </div>
+
+            </article>
+
+
+            <!-- BATTERY -->
+
+            <article class="component-card">
+
+                <div class="component-number">
+                    03
+                </div>
+
+
+                <div class="component-icon">
+
+                    <i class="fa-solid fa-car-battery"></i>
+
+                </div>
+
+
+                <h3>
+                    Backup Batteries
+                </h3>
+
+
+                <p>
+
+                    Battery backup helps maintain gate operation
+                    during electrical power interruptions.
+
+                </p>
+
+
+                <div class="component-tag">
+                    Backup Power
+                </div>
+
+            </article>
+
+
+            <!-- SAFETY -->
+
+            <article class="component-card">
+
+                <div class="component-number">
+                    04
+                </div>
+
+
+                <div class="component-icon">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                </div>
+
+
+                <h3>
+                    Safety Accessories
+                </h3>
+
+
+                <p>
+
+                    Safety devices such as beams and warning
+                    equipment can help improve the safe operation
+                    of an automated gate.
+
+                </p>
+
+
+                <div class="component-tag">
+                    Safety
+                </div>
+
+            </article>
+
+
+            <!-- INTERCOM -->
+
+            <article class="component-card">
+
+                <div class="component-number">
+                    05
+                </div>
+
+
+                <div class="component-icon">
+
+                    <i class="fa-solid fa-phone-volume"></i>
+
+                </div>
+
+
+                <h3>
+                    Intercom Systems
+                </h3>
+
+
+                <p>
+
+                    Integrate your gate with an intercom so users
+                    can identify and communicate with visitors
+                    before granting access.
+
+                </p>
+
+
+                <div class="component-tag">
+                    Visitor Access
+                </div>
+
+            </article>
+
+
+            <!-- ACCESS CONTROL -->
+
+            <article class="component-card">
+
+                <div class="component-number">
+                    06
+                </div>
+
+
+                <div class="component-icon">
+
+                    <i class="fa-solid fa-id-card"></i>
+
+                </div>
+
+
+                <h3>
+                    Access Control
+                </h3>
+
+
+                <p>
+
+                    Connect automated gates with access-control
+                    solutions for more controlled and traceable
+                    vehicle entry.
+
+                </p>
+
+
+                <div class="component-tag">
+                    Controlled Access
+                </div>
+
+            </article>
+
+
+        </div>
+
+
+        <!-- =========================================
+             SYSTEM FLOW
+        ========================================= -->
+
+        <div class="automation-flow">
+
+            <div class="flow-heading">
+
+                <span class="section-eyebrow">
+
+                    <i class="fa-solid fa-diagram-project"></i>
+
+                    How It Works
+
+                </span>
+
+
+                <h3>
+
+                    A Complete Automated
+
+                    <span>Entrance</span>
+
+                </h3>
+
+            </div>
+
+
+            <div class="flow-steps">
+
+
+                <div class="flow-step">
+
+                    <div class="flow-icon">
+
+                        <i class="fa-solid fa-hand-pointer"></i>
+
+                    </div>
+
+                    <strong>
+                        Authorised User
+                    </strong>
+
+                    <span>
+                        Sends an access command
+                    </span>
+
+                </div>
+
+
+                <div class="flow-arrow">
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </div>
+
+
+                <div class="flow-step">
+
+                    <div class="flow-icon">
+
+                        <i class="fa-solid fa-microchip"></i>
+
+                    </div>
+
+                    <strong>
+                        Control System
+                    </strong>
+
+                    <span>
+                        Receives and processes the command
+                    </span>
+
+                </div>
+
+
+                <div class="flow-arrow">
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </div>
+
+
+                <div class="flow-step">
+
+                    <div class="flow-icon">
+
+                        <i class="fa-solid fa-gears"></i>
+
+                    </div>
+
+                    <strong>
+                        Gate Motor
+                    </strong>
+
+                    <span>
+                        Opens or closes the gate
+                    </span>
+
+                </div>
+
+
+                <div class="flow-arrow">
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </div>
+
+
+                <div class="flow-step">
+
+                    <div class="flow-icon">
+
+                        <i class="fa-solid fa-shield-halved"></i>
+
+                    </div>
+
+                    <strong>
+                        Secure Access
+                    </strong>
+
+                    <span>
+                        Controlled entry and exit
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     COMPONENT STYLES
+========================================= -->
+
+<style>
+
+    /* =========================================
+       COMPONENT SECTION
+    ========================================= */
+
+    .automation-components{
+
+        background:#ffffff;
+
+    }
+
+
+    /* =========================================
+       COMPONENT GRID
+    ========================================= */
+
+    .component-grid{
+
+        display:grid;
+
+        grid-template-columns:
+            repeat(3,1fr);
+
+        gap:22px;
+
+        margin-bottom:80px;
+
+    }
+
+
+    .component-card{
+
+        position:relative;
+
+        overflow:hidden;
+
+        padding:32px;
+
+        border:1px solid #e3e7eb;
+
+        border-radius:15px;
+
+        background:#ffffff;
+
+        box-shadow:
+            0 8px 28px rgba(0,0,0,.045);
+
+        transition:
+            transform .25s ease,
+            box-shadow .25s ease,
+            border-color .25s ease;
+
+    }
+
+
+    .component-card:hover{
+
+        transform:translateY(-6px);
+
+        border-color:#f5b400;
+
+        box-shadow:
+            0 18px 42px rgba(0,0,0,.09);
+
+    }
+
+
+    .component-number{
+
+        position:absolute;
+
+        top:18px;
+
+        right:22px;
+
+        color:#dfe3e7;
+
+        font-family:"Poppins",sans-serif;
+
+        font-size:28px;
+
+        font-weight:800;
+
+    }
+
+
+    .component-icon{
+
+        width:60px;
+
+        height:60px;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        margin-bottom:23px;
+
+        border-radius:13px;
+
+        background:#111820;
+
+        color:#f5b400;
+
+        font-size:23px;
+
+    }
+
+
+    .component-card h3{
+
+        margin:0 0 13px;
+
+        color:#111820;
+
+        font-size:22px;
+
+    }
+
+
+    .component-card p{
+
+        margin:0 0 22px;
+
+        color:#68717b;
+
+        font-size:14px;
+
+        line-height:1.75;
+
+    }
+
+
+    .component-tag{
+
+        display:inline-flex;
+
+        padding:6px 11px;
+
+        border-radius:20px;
+
+        background:#fff7dc;
+
+        color:#9b7000;
+
+        font-size:11px;
+
+        font-weight:800;
+
+        text-transform:uppercase;
+
+        letter-spacing:.7px;
+
+    }
+
+
+    /* =========================================
+       AUTOMATION FLOW
+    ========================================= */
+
+    .automation-flow{
+
+        padding:55px;
+
+        border-radius:18px;
+
+        background:#111820;
+
+        color:#ffffff;
+
+    }
+
+
+    .flow-heading{
+
+        margin-bottom:45px;
+
+        text-align:center;
+
+    }
+
+
+    .flow-heading .section-eyebrow{
+
+        color:#f5b400;
+
+    }
+
+
+    .flow-heading h3{
+
+        margin:0;
+
+        color:#ffffff;
+
+        font-size:31px;
+
+    }
+
+
+    .flow-heading h3 span{
+
+        color:#f5b400;
+
+    }
+
+
+    .flow-steps{
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        gap:15px;
+
+    }
+
+
+    .flow-step{
+
+        flex:1;
+
+        min-width:130px;
+
+        text-align:center;
+
+    }
+
+
+    .flow-icon{
+
+        width:58px;
+
+        height:58px;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        margin:0 auto 15px;
+
+        border-radius:50%;
+
+        background:#f5b400;
+
+        color:#111820;
+
+        font-size:20px;
+
+    }
+
+
+    .flow-step strong{
+
+        display:block;
+
+        margin-bottom:6px;
+
+        color:#ffffff;
+
+        font-size:15px;
+
+    }
+
+
+    .flow-step span{
+
+        display:block;
+
+        color:#aeb8c2;
+
+        font-size:12px;
+
+        line-height:1.5;
+
+    }
+
+
+    .flow-arrow{
+
+        flex:0 0 auto;
+
+        color:#f5b400;
+
+        font-size:18px;
+
+    }
+
+
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
+
+    @media(max-width:950px){
+
+        .component-grid{
+
+            grid-template-columns:
+                repeat(2,1fr);
+
+        }
+
+
+        .flow-steps{
+
+            flex-wrap:wrap;
+
+        }
+
+
+        .flow-step{
+
+            flex:0 0 calc(50% - 25px);
+
+        }
+
+
+        .flow-arrow{
+
+            display:none;
+
+        }
+
+    }
+
+
+    @media(max-width:600px){
+
+        .component-grid{
+
+            grid-template-columns:1fr;
+
+        }
+
+
+        .automation-flow{
+
+            padding:35px 20px;
+
+        }
+
+
+        .flow-step{
+
+            flex:0 0 100%;
+
+            margin-bottom:25px;
+
+        }
+
+
+        .flow-step:last-child{
+
+            margin-bottom:0;
+
+        }
+
+    }
+
+</style>
+
+<!-- =========================================
+     GATE MOTOR SELECTION GUIDE
+========================================= -->
+
+<section class="product-section selection-guide">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="section-eyebrow">
+
+                <i class="fa-solid fa-list-check"></i>
+
+                Selection Guide
+
+            </span>
+
+
+            <h2>
+
+                Which Gate Motor Is
+
+                <span>Right For You?</span>
+
+            </h2>
+
+
+            <p>
+
+                Choosing the correct automation starts with
+                understanding your gate, how it is used and the
+                level of access control required.
+
+            </p>
+
+        </div>
+
+
+        <!-- =========================================
+             SELECTION INTRO
+        ========================================= -->
+
+        <div class="selection-intro">
+
+            <div class="selection-intro-icon">
+
+                <i class="fa-solid fa-circle-info"></i>
+
+            </div>
+
+
+            <div>
+
+                <h3>
+                    The right motor depends on the gate
+                </h3>
+
+                <p>
+
+                    Gate motors are not one-size-fits-all.
+                    Gate construction, dimensions, weight,
+                    condition, operating frequency and available
+                    power can all affect which automation solution
+                    is appropriate.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             SELECTION FACTORS
+        ========================================= -->
+
+        <div class="selection-grid">
+
+
+            <!-- FACTOR 01 -->
+
+            <article class="selection-card">
+
+                <div class="selection-card-top">
+
+                    <span class="selection-number">
+                        01
+                    </span>
+
+                    <div class="selection-icon">
+
+                        <i class="fa-solid fa-arrows-left-right"></i>
+
+                    </div>
+
+                </div>
+
+
+                <h3>
+                    Gate Type
+                </h3>
+
+
+                <p>
+
+                    First determine whether the gate is a
+                    sliding gate or a swing gate. The automation
+                    mechanism required will differ between the
+                    two.
+
+                </p>
+
+
+                <div class="selection-options">
+
+                    <span>
+                        <i class="fa-solid fa-check"></i>
+                        Sliding
+                    </span>
+
+                    <span>
+                        <i class="fa-solid fa-check"></i>
+                        Swing
+                    </span>
+
+                </div>
+
+            </article>
+
+
+            <!-- FACTOR 02 -->
+
+            <article class="selection-card">
+
+                <div class="selection-card-top">
+
+                    <span class="selection-number">
+                        02
+                    </span>
+
+                    <div class="selection-icon">
+
+                        <i class="fa-solid fa-ruler-horizontal"></i>
+
+                    </div>
+
+                </div>
+
+
+                <h3>
+                    Gate Size
+                </h3>
+
+
+                <p>
+
+                    The dimensions and overall construction of
+                    the gate help determine the appropriate
+                    automation solution.
+
+                </p>
+
+
+                <div class="selection-options">
+
+                    <span>
+                        <i class="fa-solid fa-check"></i>
+                        Gate width
+                    </span>
+
+                    <span>
+                        <i class="fa-solid fa-check"></i>
+                        Gate height
+                    </span>
+
+                </div>
+
+            </article>
+
+
+            <!-- FACTOR 03 -->
+
+            <article class="selection-card">
+
+                <div class="selection-card-top">
+
+                    <span class="selection-number">
+                        03
+                    </span>
+
+                    <div class="selection-icon">
+
+                        <i class="fa-solid fa-weight-hanging"></i>
+
+                    </div>
+
+                </div>
+
+
+                <h3>
+                    Gate Weight
+                </h3>
+
+
+                <p>
+
+                    Heavy steel, wooden or other substantial
+                    gates may require a different motor solution
+                    from a lightweight residential gate.
+
+                </p>
+
+
+                <div class="selection-options">
+
+                    <span>
+                        <i class="fa-solid fa-check"></i>
+                        Gate construction
+                    </span>
+
+                    <span>
+                        <i class="fa-solid fa-check"></i>
+                        Approximate weight
+                    </span>
+
+                </div>
+
+            </article>
+
+
+            <!-- FACTOR 04 -->
+
+            <article class="selection-card">
+
+                <div class="selection-card-top">
+
+                    <span class="selection-number">
+                        04
+                    </span>
+
+                    <div class="selection-icon">
+
+                        <i class="fa-solid fa-repeat"></i>
+
+                    </div>
+
+                </div>
+
+
+                <h3>
+                    Usage Frequency
+                </h3>
+
+
+                <p>
+
+                    How often the gate operates is an important
+                    consideration. A private driveway may have
+                    very different usage requirements from a busy
+                    commercial entrance.
+
+                </p>
+
+
+                <div class="selection-options">
+
+                    <span>
+                        <i class="fa-solid fa-check"></i>
+                        Low usage
+                    </span>
+
+                    <span>
+                        <i class="fa-solid fa-check"></i>
+                        Higher traffic
+                    </span>
+
+                </div>
+
+            </article>
+
+
+            <!-- FACTOR 05 -->
+
+            <article class="selection-card">
+
+                <div class="selection-card-top">
+
+                    <span class="selection-number">
+                        05
+                    </span>
+
+                    <div class="selection-icon">
+
+                        <i class="fa-solid fa-bolt"></i>
+
+                    </div>
+
+                </div>
+
+
+                <h3>
+                    Power Availability
+                </h3>
+
+
+                <p>
+
+                    Available electrical power and the need for
+                    battery backup should be considered when
+                    planning the automation system.
+
+                </p>
+
+
+                <div class="selection-options">
+
+                    <span>
+                        <i class="fa-solid fa-check"></i>
+                        Mains power
+                    </span>
+
+                    <span>
+                        <i class="fa-solid fa-check"></i>
+                        Battery backup
+                    </span>
+
+                </div>
+
+            </article>
+
+
+            <!-- FACTOR 06 -->
+
+            <article class="selection-card">
+
+                <div class="selection-card-top">
+
+                    <span class="selection-number">
+                        06
+                    </span>
+
+                    <div class="selection-icon">
+
+                        <i class="fa-solid fa-shield-halved"></i>
+
+                    </div>
+
+                </div>
+
+
+                <h3>
+                    Security Requirements
+                </h3>
+
+
+                <p>
+
+                    Your gate can form part of a wider security
+                    system. Consider whether access control,
+                    intercoms or other security devices need to
+                    be integrated.
+
+                </p>
+
+
+                <div class="selection-options">
+
+                    <span>
+                        <i class="fa-solid fa-check"></i>
+                        Access control
+                    </span>
+
+                    <span>
+                        <i class="fa-solid fa-check"></i>
+                        Intercom
+                    </span>
+
+                </div>
+
+            </article>
+
+        </div>
+
+
+        <!-- =========================================
+             CUSTOMER CHECKLIST
+        ========================================= -->
+
+        <div class="gate-quote-checklist">
+
+            <div class="checklist-content">
+
+                <span class="section-eyebrow">
+
+                    <i class="fa-solid fa-clipboard-check"></i>
+
+                    Before You Request A Quote
+
+                </span>
+
+
+                <h3>
+
+                    Have These Details
+
+                    <span>Ready?</span>
+
+                </h3>
+
+
+                <p>
+
+                    Providing a few basic details helps us
+                    understand your requirements and recommend
+                    a suitable automation solution.
+
+                </p>
+
+
+                <div class="checklist">
+
+                    <div class="checklist-item">
+
+                        <span class="check-icon">
+
+                            <i class="fa-solid fa-check"></i>
+
+                        </span>
+
+                        <span>
+                            Sliding or swing gate
+                        </span>
+
+                    </div>
+
+
+                    <div class="checklist-item">
+
+                        <span class="check-icon">
+
+                            <i class="fa-solid fa-check"></i>
+
+                        </span>
+
+                        <span>
+                            Approximate gate width
+                        </span>
+
+                    </div>
+
+
+                    <div class="checklist-item">
+
+                        <span class="check-icon">
+
+                            <i class="fa-solid fa-check"></i>
+
+                        </span>
+
+                        <span>
+                            Gate construction and approximate weight
+                        </span>
+
+                    </div>
+
+
+                    <div class="checklist-item">
+
+                        <span class="check-icon">
+
+                            <i class="fa-solid fa-check"></i>
+
+                        </span>
+
+                        <span>
+                            Residential or commercial application
+                        </span>
+
+                    </div>
+
+
+                    <div class="checklist-item">
+
+                        <span class="check-icon">
+
+                            <i class="fa-solid fa-check"></i>
+
+                        </span>
+
+                        <span>
+                            Approximate number of daily operations
+                        </span>
+
+                    </div>
+
+
+                    <div class="checklist-item">
+
+                        <span class="check-icon">
+
+                            <i class="fa-solid fa-check"></i>
+
+                        </span>
+
+                        <span>
+                            Existing motor or new installation
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="checklist-action">
+
+                <div class="action-icon">
+
+                    <i class="fa-solid fa-file-signature"></i>
+
+                </div>
+
+
+                <h4>
+                    Need Help Choosing?
+                </h4>
+
+
+                <p>
+
+                    Send us your gate details and our team can
+                    help identify a suitable automation solution.
+
+                </p>
+
+
+                <a href="../quote.html"
+                   class="selection-btn">
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                    Request A Gate Motor Quote
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     SELECTION GUIDE STYLES
+========================================= -->
+
+<style>
+
+    /* =========================================
+       SELECTION INTRO
+    ========================================= */
+
+    .selection-intro{
+
+        display:flex;
+
+        align-items:center;
+
+        gap:22px;
+
+        margin-bottom:55px;
+
+        padding:28px 32px;
+
+        border-left:4px solid #f5b400;
+
+        border-radius:10px;
+
+        background:#f5f7f9;
+
+    }
+
+
+    .selection-intro-icon{
+
+        flex:0 0 52px;
+
+        width:52px;
+
+        height:52px;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        border-radius:50%;
+
+        background:#111820;
+
+        color:#f5b400;
+
+        font-size:20px;
+
+    }
+
+
+    .selection-intro h3{
+
+        margin:0 0 6px;
+
+        color:#111820;
+
+        font-size:20px;
+
+    }
+
+
+    .selection-intro p{
+
+        margin:0;
+
+        color:#68717b;
+
+        font-size:14px;
+
+    }
+
+
+    /* =========================================
+       SELECTION GRID
+    ========================================= */
+
+    .selection-grid{
+
+        display:grid;
+
+        grid-template-columns:
+            repeat(3,1fr);
+
+        gap:22px;
+
+        margin-bottom:75px;
+
+    }
+
+
+    .selection-card{
+
+        padding:30px;
+
+        border:1px solid #e3e7eb;
+
+        border-radius:15px;
+
+        background:#ffffff;
+
+        box-shadow:
+            0 7px 25px rgba(0,0,0,.04);
+
+        transition:.25s ease;
+
+    }
+
+
+    .selection-card:hover{
+
+        transform:translateY(-5px);
+
+        border-color:#f5b400;
+
+        box-shadow:
+            0 15px 35px rgba(0,0,0,.08);
+
+    }
+
+
+    .selection-card-top{
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:space-between;
+
+        margin-bottom:22px;
+
+    }
+
+
+    .selection-number{
+
+        color:#d9dde1;
+
+        font-family:"Poppins",sans-serif;
+
+        font-size:25px;
+
+        font-weight:800;
+
+    }
+
+
+    .selection-icon{
+
+        width:52px;
+
+        height:52px;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        border-radius:11px;
+
+        background:#111820;
+
+        color:#f5b400;
+
+        font-size:19px;
+
+    }
+
+
+    .selection-card h3{
+
+        margin:0 0 12px;
+
+        color:#111820;
+
+        font-size:21px;
+
+    }
+
+
+    .selection-card p{
+
+        min-height:100px;
+
+        margin:0 0 20px;
+
+        color:#68717b;
+
+        font-size:14px;
+
+        line-height:1.7;
+
+    }
+
+
+    .selection-options{
+
+        display:flex;
+
+        flex-wrap:wrap;
+
+        gap:8px;
+
+    }
+
+
+    .selection-options span{
+
+        display:inline-flex;
+
+        align-items:center;
+
+        gap:6px;
+
+        padding:6px 9px;
+
+        border-radius:20px;
+
+        background:#f5f7f9;
+
+        color:#4d5660;
+
+        font-size:11px;
+
+        font-weight:700;
+
+    }
+
+
+    .selection-options i{
+
+        color:#d99b00;
+
+    }
+
+
+    /* =========================================
+       QUOTE CHECKLIST
+    ========================================= */
+
+    .gate-quote-checklist{
+
+        display:grid;
+
+        grid-template-columns:
+            minmax(0,1.5fr)
+            minmax(300px,.8fr);
+
+        gap:45px;
+
+        padding:50px;
+
+        border-radius:18px;
+
+        background:#111820;
+
+    }
+
+
+    .gate-quote-checklist .section-eyebrow{
+
+        color:#f5b400;
+
+    }
+
+
+    .checklist-content h3{
+
+        margin:0 0 15px;
+
+        color:#ffffff;
+
+        font-size:31px;
+
+    }
+
+
+    .checklist-content h3 span{
+
+        color:#f5b400;
+
+    }
+
+
+    .checklist-content > p{
+
+        max-width:650px;
+
+        margin:0 0 30px;
+
+        color:#b7c0c9;
+
+        font-size:15px;
+
+    }
+
+
+    .checklist{
+
+        display:grid;
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+        gap:13px 25px;
+
+    }
+
+
+    .checklist-item{
+
+        display:flex;
+
+        align-items:center;
+
+        gap:11px;
+
+        color:#e7ebef;
+
+        font-size:13px;
+
+    }
+
+
+    .check-icon{
+
+        flex:0 0 25px;
+
+        width:25px;
+
+        height:25px;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        border-radius:50%;
+
+        background:#f5b400;
+
+        color:#111820;
+
+        font-size:11px;
+
+    }
+
+
+    /* =========================================
+       ACTION CARD
+    ========================================= */
+
+    .checklist-action{
+
+        align-self:center;
+
+        padding:32px;
+
+        border-radius:14px;
+
+        background:#ffffff;
+
+        text-align:center;
+
+    }
+
+
+    .action-icon{
+
+        width:58px;
+
+        height:58px;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        margin:0 auto 18px;
+
+        border-radius:50%;
+
+        background:#111820;
+
+        color:#f5b400;
+
+        font-size:20px;
+
+    }
+
+
+    .checklist-action h4{
+
+        margin:0 0 10px;
+
+        color:#111820;
+
+        font-size:21px;
+
+    }
+
+
+    .checklist-action p{
+
+        margin:0 0 22px;
+
+        color:#68717b;
+
+        font-size:13px;
+
+        line-height:1.7;
+
+    }
+
+
+    .selection-btn{
+
+        display:inline-flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        gap:9px;
+
+        width:100%;
+
+        padding:13px 18px;
+
+        border-radius:7px;
+
+        background:#f5b400;
+
+        color:#111820;
+
+        font-size:13px;
+
+        font-weight:800;
+
+        transition:.25s ease;
+
+    }
+
+
+    .selection-btn:hover{
+
+        background:#d99b00;
+
+        transform:translateY(-2px);
+
+    }
+
+
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
+
+    @media(max-width:950px){
+
+        .selection-grid{
+
+            grid-template-columns:
+                repeat(2,1fr);
+
+        }
+
+
+        .gate-quote-checklist{
+
+            grid-template-columns:1fr;
+
+        }
+
+    }
+
+
+    @media(max-width:600px){
+
+        .selection-intro{
+
+            align-items:flex-start;
+
+            padding:23px;
+
+        }
+
+
+        .selection-grid{
+
+            grid-template-columns:1fr;
+
+        }
+
+
+        .selection-card p{
+
+            min-height:auto;
+
+        }
+
+
+        .gate-quote-checklist{
+
+            padding:32px 22px;
+
+        }
+
+
+        .checklist{
+
+            grid-template-columns:1fr;
+
+        }
+
+    }
+
+</style>
+
+<!-- =========================================
+     GATE MOTOR RANGE
+========================================= -->
+
+<section class="product-section motor-range">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="section-eyebrow">
+
+                <i class="fa-solid fa-gears"></i>
+
+                Gate Motor Range
+
+            </span>
+
+
+            <h2>
+
+                Automation For
+
+                <span>Every Entrance</span>
+
+            </h2>
+
+
+            <p>
+
+                From everyday residential access to demanding
+                commercial environments, we can help you identify
+                a gate automation solution suited to the application.
+
+            </p>
+
+        </div>
+
+
+        <!-- =========================================
+             MOTOR RANGE GRID
+        ========================================= -->
+
+        <div class="motor-range-grid">
+
+
+            <!-- =====================================
+                 RESIDENTIAL SLIDING
+            ====================================== -->
+
+            <article class="motor-range-card">
+
+                <div class="motor-card-image">
+
+                    <div class="motor-card-overlay">
+
+                        <span class="motor-card-category">
+                            Residential
+                        </span>
+
+                    </div>
+
+                    <div class="motor-placeholder-icon">
+
+                        <i class="fa-solid fa-house"></i>
+
+                    </div>
+
+                </div>
+
+
+                <div class="motor-card-body">
+
+                    <h3>
+                        Residential Sliding Gate Motors
+                    </h3>
+
+
+                    <p>
+
+                        Designed for private homes and driveways
+                        where reliable everyday automated access
+                        is required.
+
+                    </p>
+
+
+                    <ul>
+
+                        <li>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Sliding gate applications
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Remote access
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Battery backup options
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Safety accessory integration
+
+                        </li>
+
+                    </ul>
+
+
+                    <a href="../quote.html"
+                       class="motor-card-link">
+
+                        Ask About This Solution
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- =====================================
+                 HEAVY DUTY SLIDING
+            ====================================== -->
+
+            <article class="motor-range-card">
+
+                <div class="motor-card-image">
+
+                    <div class="motor-card-overlay">
+
+                        <span class="motor-card-category">
+                            Commercial
+                        </span>
+
+                    </div>
+
+                    <div class="motor-placeholder-icon">
+
+                        <i class="fa-solid fa-building"></i>
+
+                    </div>
+
+                </div>
+
+
+                <div class="motor-card-body">
+
+                    <h3>
+                        Commercial Sliding Gate Motors
+                    </h3>
+
+
+                    <p>
+
+                        Automation solutions for entrances where
+                        increased traffic and regular operation
+                        require careful motor selection.
+
+                    </p>
+
+
+                    <ul>
+
+                        <li>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Commercial access points
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Higher-use applications
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Access-control integration
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Safety system integration
+
+                        </li>
+
+                    </ul>
+
+
+                    <a href="../quote.html"
+                       class="motor-card-link">
+
+                        Ask About This Solution
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- =====================================
+                 SWING GATE
+            ====================================== -->
+
+            <article class="motor-range-card">
+
+                <div class="motor-card-image">
+
+                    <div class="motor-card-overlay">
+
+                        <span class="motor-card-category">
+                            Swing Gates
+                        </span>
+
+                    </div>
+
+                    <div class="motor-placeholder-icon">
+
+                        <i class="fa-solid fa-door-open"></i>
+
+                    </div>
+
+                </div>
+
+
+                <div class="motor-card-body">
+
+                    <h3>
+                        Swing Gate Automation
+                    </h3>
+
+
+                    <p>
+
+                        Automated solutions for hinged gates,
+                        including single-leaf and double-leaf
+                        swing gate configurations.
+
+                    </p>
+
+
+                    <ul>
+
+                        <li>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Single swing gates
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Double swing gates
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Remote access
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Safety accessory integration
+
+                        </li>
+
+                    </ul>
+
+
+                    <a href="../quote.html"
+                       class="motor-card-link">
+
+                        Ask About This Solution
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- =====================================
+                 ESTATE / COMPLEX
+            ====================================== -->
+
+            <article class="motor-range-card">
+
+                <div class="motor-card-image">
+
+                    <div class="motor-card-overlay">
+
+                        <span class="motor-card-category">
+                            Estates & Complexes
+                        </span>
+
+                    </div>
+
+                    <div class="motor-placeholder-icon">
+
+                        <i class="fa-solid fa-city"></i>
+
+                    </div>
+
+                </div>
+
+
+                <div class="motor-card-body">
+
+                    <h3>
+                        Estate & Complex Gate Automation
+                    </h3>
+
+
+                    <p>
+
+                        Gate automation can be combined with
+                        access-control systems to manage vehicle
+                        entry at shared residential entrances.
+
+                    </p>
+
+
+                    <ul>
+
+                        <li>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Controlled vehicle access
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Access-control integration
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Intercom integration
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Remote and managed access options
+
+                        </li>
+
+                    </ul>
+
+
+                    <a href="../quote.html"
+                       class="motor-card-link">
+
+                        Discuss Your Entrance
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- =====================================
+                 INDUSTRIAL
+            ====================================== -->
+
+            <article class="motor-range-card">
+
+                <div class="motor-card-image">
+
+                    <div class="motor-card-overlay">
+
+                        <span class="motor-card-category">
+                            Industrial
+                        </span>
+
+                    </div>
+
+                    <div class="motor-placeholder-icon">
+
+                        <i class="fa-solid fa-industry"></i>
+
+                    </div>
+
+                </div>
+
+
+                <div class="motor-card-body">
+
+                    <h3>
+                        Industrial Gate Automation
+                    </h3>
+
+
+                    <p>
+
+                        Gate automation for industrial entrances
+                        where gate dimensions, operating frequency
+                        and site conditions require detailed
+                        assessment.
+
+                    </p>
+
+
+                    <ul>
+
+                        <li>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Industrial access points
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Application-specific selection
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Access-control integration
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Safety system options
+
+                        </li>
+
+                    </ul>
+
+
+                    <a href="../quote.html"
+                       class="motor-card-link">
+
+                        Request An Assessment
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- =====================================
+                 ACCESSORIES
+            ====================================== -->
+
+            <article class="motor-range-card">
+
+                <div class="motor-card-image">
+
+                    <div class="motor-card-overlay">
+
+                        <span class="motor-card-category">
+                            Accessories
+                        </span>
+
+                    </div>
+
+                    <div class="motor-placeholder-icon">
+
+                        <i class="fa-solid fa-toolbox"></i>
+
+                    </div>
+
+                </div>
+
+
+                <div class="motor-card-body">
+
+                    <h3>
+                        Gate Motor Accessories
+                    </h3>
+
+
+                    <p>
+
+                        Supporting equipment can enhance the
+                        functionality, convenience and safety of
+                        your automated gate system.
+
+                    </p>
+
+
+                    <ul>
+
+                        <li>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Remote controls
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Batteries
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Safety beams
+
+                        </li>
+
+
+                        <li>
+
+                            <i class="fa-solid fa-check"></i>
+
+                            Warning and control accessories
+
+                        </li>
+
+                    </ul>
+
+
+                    <a href="../quote.html"
+                       class="motor-card-link">
+
+                        Ask About Accessories
+
+                        <i class="fa-solid fa-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </article>
+
+        </div>
+
+
+        <!-- =========================================
+             IMPORTANT SELECTION NOTE
+        ========================================= -->
+
+        <div class="motor-selection-note">
+
+            <div class="note-icon">
+
+                <i class="fa-solid fa-circle-info"></i>
+
+            </div>
+
+
+            <div>
+
+                <h3>
+                    Motor selection should match the application
+                </h3>
+
+                <p>
+
+                    Motor specifications, gate weight ratings,
+                    operating cycles and other technical limits
+                    differ between products and manufacturers.
+                    We recommend confirming the gate dimensions,
+                    construction and usage requirements before
+                    selecting a specific motor.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     MOTOR RANGE STYLES
+========================================= -->
+
+<style>
+
+    /* =========================================
+       MOTOR RANGE GRID
+    ========================================= */
+
+    .motor-range{
+
+        background:#f5f7f9;
+
+    }
+
+
+    .motor-range-grid{
+
+        display:grid;
+
+        grid-template-columns:
+            repeat(3,1fr);
+
+        gap:25px;
+
+        margin-bottom:55px;
+
+    }
+
+
+    /* =========================================
+       MOTOR CARD
+    ========================================= */
+
+    .motor-range-card{
+
+        overflow:hidden;
+
+        border:1px solid #e1e5e9;
+
+        border-radius:15px;
+
+        background:#ffffff;
+
+        box-shadow:
+            0 8px 28px rgba(0,0,0,.045);
+
+        transition:
+            transform .25s ease,
+            box-shadow .25s ease,
+            border-color .25s ease;
+
+    }
+
+
+    .motor-range-card:hover{
+
+        transform:translateY(-6px);
+
+        border-color:#f5b400;
+
+        box-shadow:
+            0 18px 40px rgba(0,0,0,.09);
+
+    }
+
+
+    /* =========================================
+       IMAGE AREA
+    ========================================= */
+
+    .motor-card-image{
+
+        position:relative;
+
+        height:185px;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        overflow:hidden;
+
+        background:
+
+            linear-gradient(
+                135deg,
+                #171f27,
+                #0b0f14
+            );
+
+    }
+
+
+    .motor-card-overlay{
+
+        position:absolute;
+
+        top:18px;
+
+        left:18px;
+
+        z-index:2;
+
+    }
+
+
+    .motor-card-category{
+
+        display:inline-flex;
+
+        padding:7px 12px;
+
+        border-radius:20px;
+
+        background:#f5b400;
+
+        color:#111820;
+
+        font-size:10px;
+
+        font-weight:800;
+
+        text-transform:uppercase;
+
+        letter-spacing:.7px;
+
+    }
+
+
+    .motor-placeholder-icon{
+
+        width:85px;
+
+        height:85px;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        border:1px solid rgba(245,180,0,.25);
+
+        border-radius:50%;
+
+        background:rgba(245,180,0,.08);
+
+        color:#f5b400;
+
+        font-size:34px;
+
+    }
+
+
+    /* =========================================
+       CARD BODY
+    ========================================= */
+
+    .motor-card-body{
+
+        padding:28px;
+
+    }
+
+
+    .motor-card-body h3{
+
+        min-height:52px;
+
+        margin:0 0 12px;
+
+        color:#111820;
+
+        font-size:20px;
+
+    }
+
+
+    .motor-card-body > p{
+
+        min-height:75px;
+
+        margin:0 0 20px;
+
+        color:#68717b;
+
+        font-size:14px;
+
+        line-height:1.7;
+
+    }
+
+
+    .motor-card-body ul{
+
+        display:grid;
+
+        gap:9px;
+
+        list-style:none;
+
+        margin:0 0 25px;
+
+        padding:0;
+
+    }
+
+
+    .motor-card-body li{
+
+        display:flex;
+
+        align-items:flex-start;
+
+        gap:9px;
+
+        color:#4e5862;
+
+        font-size:13px;
+
+    }
+
+
+    .motor-card-body li i{
+
+        margin-top:4px;
+
+        color:#d99b00;
+
+        font-size:11px;
+
+    }
+
+
+    .motor-card-link{
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:space-between;
+
+        gap:10px;
+
+        padding-top:18px;
+
+        border-top:1px solid #edf0f2;
+
+        color:#111820;
+
+        font-size:13px;
+
+        font-weight:800;
+
+        transition:.2s ease;
+
+    }
+
+
+    .motor-card-link i{
+
+        color:#d99b00;
+
+        transition:.2s ease;
+
+    }
+
+
+    .motor-card-link:hover{
+
+        color:#d99b00;
+
+    }
+
+
+    .motor-card-link:hover i{
+
+        transform:translateX(4px);
+
+    }
+
+
+    /* =========================================
+       SELECTION NOTE
+    ========================================= */
+
+    .motor-selection-note{
+
+        display:flex;
+
+        align-items:flex-start;
+
+        gap:20px;
+
+        padding:28px 32px;
+
+        border:1px solid #e1e5e9;
+
+        border-radius:13px;
+
+        background:#ffffff;
+
+    }
+
+
+    .note-icon{
+
+        flex:0 0 48px;
+
+        width:48px;
+
+        height:48px;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        border-radius:10px;
+
+        background:#111820;
+
+        color:#f5b400;
+
+        font-size:18px;
+
+    }
+
+
+    .motor-selection-note h3{
+
+        margin:0 0 7px;
+
+        color:#111820;
+
+        font-size:18px;
+
+    }
+
+
+    .motor-selection-note p{
+
+        margin:0;
+
+        color:#68717b;
+
+        font-size:13px;
+
+        line-height:1.7;
+
+    }
+
+
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
+
+    @media(max-width:950px){
+
+        .motor-range-grid{
+
+            grid-template-columns:
+                repeat(2,1fr);
+
+        }
+
+    }
+
+
+    @media(max-width:600px){
+
+        .motor-range-grid{
+
+            grid-template-columns:1fr;
+
+        }
+
+
+        .motor-card-body h3,
+        .motor-card-body > p{
+
+            min-height:auto;
+
+        }
+
+
+        .motor-selection-note{
+
+            flex-direction:column;
+
+            padding:25px;
+
+        }
+
+    }
+
+</style>
+
+<!-- =========================================
+     GATE AUTOMATION FEATURES & INTEGRATION
+========================================= -->
+
+<section class="product-section gate-integration">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="section-eyebrow">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+                Integrated Security
+
+            </span>
+
+
+            <h2>
+
+                Turn Your Gate Into a
+
+                <span>Security Gateway</span>
+
+            </h2>
+
+
+            <p>
+
+                Automated gates can work together with other
+                security technologies to create a more convenient
+                and controlled entrance to your property.
+
+            </p>
+
+        </div>
+
+
+        <!-- =========================================
+             FEATURE SPLIT
+        ========================================= -->
+
+        <div class="integration-feature">
+
+            <div class="integration-feature-content">
+
+                <span class="feature-label">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    Access & Security
+
+                </span>
+
+
+                <h3>
+
+                    Control Who Enters
+
+                    <span>Your Property</span>
+
+                </h3>
+
+
+                <p>
+
+                    Gate automation provides the physical movement
+                    of the gate, while additional security systems
+                    can determine how access is requested,
+                    authorised and managed.
+
+                </p>
+
+
+                <p>
+
+                    Depending on the application, your automated
+                    entrance can be combined with remote controls,
+                    access-control systems, intercoms and other
+                    security equipment.
+
+                </p>
+
+
+                <div class="integration-benefits">
+
+                    <div class="integration-benefit">
+
+                        <div class="benefit-icon">
+
+                            <i class="fa-solid fa-key"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h4>
+                                Controlled Access
+                            </h4>
+
+                            <p>
+                                Give authorised users a convenient
+                                way to operate the entrance.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="integration-benefit">
+
+                        <div class="benefit-icon">
+
+                            <i class="fa-solid fa-user-shield"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h4>
+                                Improved Security
+                            </h4>
+
+                            <p>
+                                Integrate the gate with a wider
+                                security strategy for your property.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="integration-benefit">
+
+                        <div class="benefit-icon">
+
+                            <i class="fa-solid fa-mobile-screen-button"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h4>
+                                Convenient Operation
+                            </h4>
+
+                            <p>
+                                Reduce the need to manually open
+                                and close the gate.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="integration-benefit">
+
+                        <div class="benefit-icon">
+
+                            <i class="fa-solid fa-plug-circle-bolt"></i>
+
+                        </div>
+
+                        <div>
+
+                            <h4>
+                                Backup Power
+                            </h4>
+
+                            <p>
+                                Suitable battery backup can help
+                                maintain access during power outages.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================
+                 SECURITY GATE VISUAL
+            ====================================== -->
+
+            <div class="integration-visual">
+
+                <div class="visual-glow"></div>
+
+
+                <div class="gate-visual">
+
+                    <div class="gate-visual-header">
+
+                        <span>
+                            NEXPAK
+                        </span>
+
+                        <i class="fa-solid fa-shield-halved"></i>
+
+                    </div>
+
+
+                    <div class="gate-visual-body">
+
+                        <div class="gate-visual-icon">
+
+                            <i class="fa-solid fa-lock"></i>
+
+                        </div>
+
+
+                        <strong>
+                            SECURE ACCESS
+                        </strong>
+
+
+                        <span>
+                            Automated Entrance
+                        </span>
+
+                    </div>
+
+
+                    <div class="gate-visual-status">
+
+                        <span class="status-dot"></span>
+
+                        System Ready
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             INTEGRATION CARDS
+        ========================================= -->
+
+        <div class="integration-grid">
+
+
+            <!-- REMOTE -->
+
+            <article class="integration-card">
+
+                <div class="integration-card-icon">
+
+                    <i class="fa-solid fa-satellite-dish"></i>
+
+                </div>
+
+
+                <span class="integration-card-label">
+                    ACCESS
+                </span>
+
+
+                <h3>
+                    Remote Controls
+                </h3>
+
+
+                <p>
+
+                    Convenient wireless operation for authorised
+                    users with compatible gate motor systems.
+
+                </p>
+
+
+                <div class="integration-card-footer">
+
+                    <span>
+                        Convenient Entry
+                    </span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </div>
+
+            </article>
+
+
+            <!-- ACCESS CONTROL -->
+
+            <article class="integration-card">
+
+                <div class="integration-card-icon">
+
+                    <i class="fa-solid fa-id-card"></i>
+
+                </div>
+
+
+                <span class="integration-card-label">
+                    SECURITY
+                </span>
+
+
+                <h3>
+                    Access Control
+                </h3>
+
+
+                <p>
+
+                    Connect the entrance to compatible access
+                    control equipment for managed vehicle access.
+
+                </p>
+
+
+                <div class="integration-card-footer">
+
+                    <span>
+                        Managed Access
+                    </span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </div>
+
+            </article>
+
+
+            <!-- INTERCOM -->
+
+            <article class="integration-card">
+
+                <div class="integration-card-icon">
+
+                    <i class="fa-solid fa-video"></i>
+
+                </div>
+
+
+                <span class="integration-card-label">
+                    VISITORS
+                </span>
+
+
+                <h3>
+                    Intercom Systems
+                </h3>
+
+
+                <p>
+
+                    Communicate with visitors at the entrance
+                    before granting access to the property.
+
+                </p>
+
+
+                <div class="integration-card-footer">
+
+                    <span>
+                        Visitor Verification
+                    </span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </div>
+
+            </article>
+
+
+            <!-- SAFETY BEAMS -->
+
+            <article class="integration-card">
+
+                <div class="integration-card-icon">
+
+                    <i class="fa-solid fa-eye"></i>
+
+                </div>
+
+
+                <span class="integration-card-label">
+                    SAFETY
+                </span>
+
+
+                <h3>
+                    Safety Beams
+                </h3>
+
+
+                <p>
+
+                    Compatible safety equipment can help detect
+                    objects in the gate's operating path.
+
+                </p>
+
+
+                <div class="integration-card-footer">
+
+                    <span>
+                        Safer Operation
+                    </span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </div>
+
+            </article>
+
+
+            <!-- BATTERY -->
+
+            <article class="integration-card">
+
+                <div class="integration-card-icon">
+
+                    <i class="fa-solid fa-car-battery"></i>
+
+                </div>
+
+
+                <span class="integration-card-label">
+                    POWER
+                </span>
+
+
+                <h3>
+                    Battery Backup
+                </h3>
+
+
+                <p>
+
+                    Backup batteries can provide continued
+                    operation when mains power is unavailable,
+                    subject to the system configuration.
+
+                </p>
+
+
+                <div class="integration-card-footer">
+
+                    <span>
+                        Power Continuity
+                    </span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </div>
+
+            </article>
+
+
+            <!-- WARNING LIGHT -->
+
+            <article class="integration-card">
+
+                <div class="integration-card-icon">
+
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                </div>
+
+
+                <span class="integration-card-label">
+                    VISIBILITY
+                </span>
+
+
+                <h3>
+                    Warning & Status Devices
+                </h3>
+
+
+                <p>
+
+                    Suitable warning and status devices can help
+                    provide visual indication while the gate is
+                    operating.
+
+                </p>
+
+
+                <div class="integration-card-footer">
+
+                    <span>
+                        Gate Awareness
+                    </span>
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </div>
+
+            </article>
+
+        </div>
+
+
+        <!-- =========================================
+             SECURITY ECOSYSTEM
+        ========================================= -->
+
+        <div class="security-ecosystem">
+
+            <div class="ecosystem-heading">
+
+                <span class="section-eyebrow">
+
+                    <i class="fa-solid fa-diagram-project"></i>
+
+                    Nexpak Security Ecosystem
+
+                </span>
+
+
+                <h3>
+
+                    Build a More Complete
+
+                    <span>Entrance Solution</span>
+
+                </h3>
+
+            </div>
+
+
+            <div class="ecosystem-flow">
+
+
+                <div class="ecosystem-node">
+
+                    <i class="fa-solid fa-mobile-screen"></i>
+
+                    <strong>
+                        User
+                    </strong>
+
+                    <span>
+                        Requests access
+                    </span>
+
+                </div>
+
+
+                <div class="ecosystem-line">
+
+                    <i class="fa-solid fa-chevron-right"></i>
+
+                </div>
+
+
+                <div class="ecosystem-node">
+
+                    <i class="fa-solid fa-id-card"></i>
+
+                    <strong>
+                        Access Control
+                    </strong>
+
+                    <span>
+                        Controls entry
+                    </span>
+
+                </div>
+
+
+                <div class="ecosystem-line">
+
+                    <i class="fa-solid fa-chevron-right"></i>
+
+                </div>
+
+
+                <div class="ecosystem-node active">
+
+                    <i class="fa-solid fa-gears"></i>
+
+                    <strong>
+                        Gate Motor
+                    </strong>
+
+                    <span>
+                        Operates gate
+                    </span>
+
+                </div>
+
+
+                <div class="ecosystem-line">
+
+                    <i class="fa-solid fa-chevron-right"></i>
+
+                </div>
+
+
+                <div class="ecosystem-node">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                    <strong>
+                        Secure Entrance
+                    </strong>
+
+                    <span>
+                        Controlled access
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     GATE INTEGRATION STYLES
+========================================= -->
+
+<style>
+
+    /* =========================================
+       FEATURE SECTION
+    ========================================= */
+
+    .gate-integration{
+
+        background:#ffffff;
+
+    }
+
+
+    .integration-feature{
+
+        display:grid;
+
+        grid-template-columns:
+            minmax(0,1.2fr)
+            minmax(340px,.8fr);
+
+        gap:65px;
+
+        align-items:center;
+
+        margin-bottom:75px;
+
+    }
+
+
+    .feature-label{
+
+        display:inline-flex;
+
+        align-items:center;
+
+        gap:8px;
+
+        margin-bottom:17px;
+
+        color:#d99b00;
+
+        font-size:12px;
+
+        font-weight:800;
+
+        letter-spacing:1px;
+
+        text-transform:uppercase;
+
+    }
+
+
+    .integration-feature-content h3{
+
+        margin:0 0 20px;
+
+        color:#111820;
+
+        font-size:34px;
+
+    }
+
+
+    .integration-feature-content h3 span{
+
+        color:#d99b00;
+
+    }
+
+
+    .integration-feature-content > p{
+
+        margin:0 0 17px;
+
+        color:#68717b;
+
+        font-size:15px;
+
+        line-height:1.8;
+
+    }
+
+
+    /* =========================================
+       BENEFITS
+    ========================================= */
+
+    .integration-benefits{
+
+        display:grid;
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+        gap:22px;
+
+        margin-top:32px;
+
+    }
+
+
+    .integration-benefit{
+
+        display:flex;
+
+        gap:13px;
+
+    }
+
+
+    .benefit-icon{
+
+        flex:0 0 40px;
+
+        width:40px;
+
+        height:40px;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        border-radius:9px;
+
+        background:#111820;
+
+        color:#f5b400;
+
+        font-size:15px;
+
+    }
+
+
+    .integration-benefit h4{
+
+        margin:0 0 4px;
+
+        color:#111820;
+
+        font-size:15px;
+
+    }
+
+
+    .integration-benefit p{
+
+        margin:0;
+
+        color:#737c85;
+
+        font-size:12px;
+
+        line-height:1.55;
+
+    }
+
+
+    /* =========================================
+       VISUAL
+    ========================================= */
+
+    .integration-visual{
+
+        position:relative;
+
+        min-height:390px;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        overflow:hidden;
+
+        border-radius:20px;
+
+        background:
+
+            radial-gradient(
+                circle at center,
+                rgba(245,180,0,.12),
+                transparent 55%
+            ),
+
+            #0b0f14;
+
+    }
+
+
+    .visual-glow{
+
+        position:absolute;
+
+        width:240px;
+
+        height:240px;
+
+        border-radius:50%;
+
+        background:rgba(245,180,0,.08);
+
+        filter:blur(25px);
+
+    }
+
+
+    .gate-visual{
+
+        position:relative;
+
+        z-index:2;
+
+        width:260px;
+
+        overflow:hidden;
+
+        border:1px solid rgba(245,180,0,.28);
+
+        border-radius:15px;
+
+        background:#111820;
+
+        box-shadow:
+            0 20px 50px rgba(0,0,0,.4);
+
+    }
+
+
+    .gate-visual-header{
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:space-between;
+
+        padding:15px 18px;
+
+        border-bottom:1px solid rgba(255,255,255,.08);
+
+        color:#f5b400;
+
+        font-size:12px;
+
+        font-weight:800;
+
+        letter-spacing:1px;
+
+    }
+
+
+    .gate-visual-header i{
+
+        font-size:15px;
+
+    }
+
+
+    .gate-visual-body{
+
+        display:flex;
+
+        flex-direction:column;
+
+        align-items:center;
+
+        padding:45px 25px;
+
+        text-align:center;
+
+    }
+
+
+    .gate-visual-icon{
+
+        width:82px;
+
+        height:82px;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        margin-bottom:22px;
+
+        border:1px solid rgba(245,180,0,.4);
+
+        border-radius:50%;
+
+        background:rgba(245,180,0,.08);
+
+        color:#f5b400;
+
+        font-size:30px;
+
+    }
+
+
+    .gate-visual-body strong{
+
+        margin-bottom:7px;
+
+        color:#ffffff;
+
+        font-family:"Poppins",sans-serif;
+
+        font-size:18px;
+
+        letter-spacing:.5px;
+
+    }
+
+
+    .gate-visual-body span{
+
+        color:#8e9aa5;
+
+        font-size:12px;
+
+    }
+
+
+    .gate-visual-status{
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        gap:7px;
+
+        padding:12px;
+
+        border-top:1px solid rgba(255,255,255,.08);
+
+        color:#b9c2ca;
+
+        font-size:11px;
+
+    }
+
+
+    .status-dot{
+
+        width:7px;
+
+        height:7px;
+
+        border-radius:50%;
+
+        background:#f5b400;
+
+    }
+
+
+    /* =========================================
+       INTEGRATION CARDS
+    ========================================= */
+
+    .integration-grid{
+
+        display:grid;
+
+        grid-template-columns:
+            repeat(3,1fr);
+
+        gap:20px;
+
+        margin-bottom:75px;
+
+    }
+
+
+    .integration-card{
+
+        padding:27px;
+
+        border:1px solid #e3e7eb;
+
+        border-radius:14px;
+
+        background:#ffffff;
+
+        box-shadow:
+            0 7px 25px rgba(0,0,0,.04);
+
+        transition:.25s ease;
+
+    }
+
+
+    .integration-card:hover{
+
+        transform:translateY(-5px);
+
+        border-color:#f5b400;
+
+        box-shadow:
+            0 15px 35px rgba(0,0,0,.08);
+
+    }
+
+
+    .integration-card-icon{
+
+        width:50px;
+
+        height:50px;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        margin-bottom:20px;
+
+        border-radius:10px;
+
+        background:#111820;
+
+        color:#f5b400;
+
+        font-size:18px;
+
+    }
+
+
+    .integration-card-label{
+
+        display:block;
+
+        margin-bottom:6px;
+
+        color:#d99b00;
+
+        font-size:10px;
+
+        font-weight:800;
+
+        letter-spacing:1px;
+
+    }
+
+
+    .integration-card h3{
+
+        margin:0 0 10px;
+
+        color:#111820;
+
+        font-size:19px;
+
+    }
+
+
+    .integration-card p{
+
+        min-height:70px;
+
+        margin:0 0 20px;
+
+        color:#68717b;
+
+        font-size:13px;
+
+        line-height:1.7;
+
+    }
+
+
+    .integration-card-footer{
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:space-between;
+
+        padding-top:15px;
+
+        border-top:1px solid #edf0f2;
+
+        color:#4d5660;
+
+        font-size:11px;
+
+        font-weight:800;
+
+    }
+
+
+    .integration-card-footer i{
+
+        color:#d99b00;
+
+    }
+
+
+    /* =========================================
+       SECURITY ECOSYSTEM
+    ========================================= */
+
+    .security-ecosystem{
+
+    padding:50px;
+
+    border-radius:18px;
+
+    background:#111820;
+
+}
+
+
+/* =========================================
+   ECOSYSTEM HEADING
+========================================= */
+
+.ecosystem-heading{
+
+    margin-bottom:45px;
+
+    text-align:center;
+
+}
+
+
+.ecosystem-heading .section-eyebrow{
+
+    color:#f5b400;
+
+}
+
+
+.ecosystem-heading h3{
+
+    margin:0;
+
+    color:#ffffff;
+
+    font-size:30px;
+
+}
+
+
+.ecosystem-heading h3 span{
+
+    color:#f5b400;
+
+}
+
+
+/* =========================================
+   ECOSYSTEM FLOW
+========================================= */
+
+.ecosystem-flow{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:14px;
+
+}
+
+
+.ecosystem-node{
+
+    flex:1;
+
+    max-width:190px;
+
+    padding:22px 15px;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.04);
+
+    text-align:center;
+
+    transition:.25s ease;
+
+}
+
+
+.ecosystem-node:hover{
+
+    transform:translateY(-4px);
+
+    border-color:rgba(245,180,0,.35);
+
+}
+
+
+.ecosystem-node.active{
+
+    border-color:rgba(245,180,0,.45);
+
+    background:rgba(245,180,0,.08);
+
+}
+
+
+.ecosystem-node i{
+
+    display:block;
+
+    margin-bottom:12px;
+
+    color:#f5b400;
+
+    font-size:22px;
+
+}
+
+
+.ecosystem-node strong{
+
+    display:block;
+
+    margin-bottom:5px;
+
+    color:#ffffff;
+
+    font-size:13px;
+
+}
+
+
+.ecosystem-node span{
+
+    display:block;
+
+    color:#8f9aa5;
+
+    font-size:10px;
+
+    line-height:1.5;
+
+}
+
+
+/* =========================================
+   ECOSYSTEM ARROWS
+========================================= */
+
+.ecosystem-line{
+
+    flex:0 0 auto;
+
+    color:#f5b400;
+
+    font-size:14px;
+
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width:950px){
+
+    .integration-feature{
+
+        grid-template-columns:1fr;
+
+        gap:40px;
+
+    }
+
+
+    .integration-grid{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+
+    .ecosystem-flow{
+
+        flex-wrap:wrap;
+
+    }
+
+
+    .ecosystem-line{
+
+        display:none;
+
+    }
+
+
+    .ecosystem-node{
+
+        flex:0 0 calc(50% - 10px);
+
+        max-width:none;
+
+    }
+
+}
+
+
+@media(max-width:600px){
+
+    .integration-benefits{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .integration-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .integration-card p{
+
+        min-height:auto;
+
+    }
+
+
+    .security-ecosystem{
+
+        padding:32px 20px;
+
+    }
+
+
+    .ecosystem-heading{
+
+        margin-bottom:32px;
+
+    }
+
+
+    .ecosystem-heading h3{
+
+        font-size:25px;
+
+    }
+
+
+    .ecosystem-node{
+
+        flex:0 0 100%;
+
+        max-width:none;
+
+    }
+
+}
+</style>
+
+<!-- =========================================
+     INSTALLATION & MAINTENANCE
+========================================= -->
+
+<section class="product-section gate-support">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="section-eyebrow">
+
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+
+                Installation & Support
+
+            </span>
+
+
+            <h2>
+
+                Reliable Automation Starts With
+
+                <span>Proper Setup</span>
+
+            </h2>
+
+
+            <p>
+
+                A gate motor is only one part of the system.
+                Correct installation, gate condition, setup and
+                ongoing maintenance all contribute to dependable
+                operation.
+
+            </p>
+
+        </div>
+
+
+        <!-- =========================================
+             INSTALLATION PROCESS
+        ========================================= -->
+
+        <div class="installation-process">
+
+            <div class="process-step">
+
+                <span class="process-number">
+                    01
+                </span>
+
+
+                <div class="process-icon">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                </div>
+
+
+                <h3>
+                    Assess
+                </h3>
+
+
+                <p>
+
+                    We consider the gate type, dimensions,
+                    construction, condition and intended usage.
+
+                </p>
+
+            </div>
+
+
+            <div class="process-connector">
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </div>
+
+
+            <div class="process-step">
+
+                <span class="process-number">
+                    02
+                </span>
+
+
+                <div class="process-icon">
+
+                    <i class="fa-solid fa-gears"></i>
+
+                </div>
+
+
+                <h3>
+                    Select
+                </h3>
+
+
+                <p>
+
+                    A suitable automation solution is identified
+                    based on the requirements of the application.
+
+                </p>
+
+            </div>
+
+
+            <div class="process-connector">
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </div>
+
+
+            <div class="process-step">
+
+                <span class="process-number">
+                    03
+                </span>
+
+
+                <div class="process-icon">
+
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+
+                </div>
+
+
+                <h3>
+                    Install
+                </h3>
+
+
+                <p>
+
+                    The automation equipment and compatible
+                    accessories are installed and configured.
+
+                </p>
+
+            </div>
+
+
+            <div class="process-connector">
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+            </div>
+
+
+            <div class="process-step">
+
+                <span class="process-number">
+                    04
+                </span>
+
+
+                <div class="process-icon">
+
+                    <i class="fa-solid fa-circle-check"></i>
+
+                </div>
+
+
+                <h3>
+                    Test
+                </h3>
+
+
+                <p>
+
+                    The system is checked to ensure the gate,
+                    controls and applicable safety equipment
+                    operate correctly.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             MAINTENANCE + TROUBLESHOOTING
+        ========================================= -->
+
+        <div class="support-columns">
+
+
+            <!-- =====================================
+                 MAINTENANCE
+            ====================================== -->
+
+            <div class="support-panel">
+
+                <div class="support-panel-header">
+
+                    <div class="support-panel-icon">
+
+                        <i class="fa-solid fa-calendar-check"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            KEEP IT RUNNING
+                        </span>
+
+                        <h3>
+                            Gate Motor Maintenance
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <p class="support-intro">
+
+                    Regular inspection and maintenance can help
+                    identify wear, alignment problems and other
+                    issues before they become bigger problems.
+
+                </p>
+
+
+                <div class="maintenance-list">
+
+                    <div class="maintenance-item">
+
+                        <i class="fa-solid fa-check"></i>
+
+                        <div>
+
+                            <strong>
+                                Check gate movement
+                            </strong>
+
+                            <span>
+                                The gate should move smoothly without
+                                unusual resistance or obstruction.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="maintenance-item">
+
+                        <i class="fa-solid fa-check"></i>
+
+                        <div>
+
+                            <strong>
+                                Inspect mechanical components
+                            </strong>
+
+                            <span>
+                                Check relevant wheels, rollers, hinges,
+                                brackets and other moving components.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="maintenance-item">
+
+                        <i class="fa-solid fa-check"></i>
+
+                        <div>
+
+                            <strong>
+                                Keep the operating area clear
+                            </strong>
+
+                            <span>
+                                Remove objects, vegetation and debris
+                                that may interfere with gate movement.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="maintenance-item">
+
+                        <i class="fa-solid fa-check"></i>
+
+                        <div>
+
+                            <strong>
+                                Check remotes and batteries
+                            </strong>
+
+                            <span>
+                                Replace remote-control batteries when
+                                required and monitor system response.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="maintenance-item">
+
+                        <i class="fa-solid fa-check"></i>
+
+                        <div>
+
+                            <strong>
+                                Inspect safety equipment
+                            </strong>
+
+                            <span>
+                                Compatible safety devices should be
+                                checked as part of routine servicing.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================
+                 TROUBLESHOOTING
+            ====================================== -->
+
+            <div class="support-panel troubleshooting-panel">
+
+                <div class="support-panel-header">
+
+                    <div class="support-panel-icon">
+
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            COMMON ISSUES
+                        </span>
+
+                        <h3>
+                            Gate Motor Troubleshooting
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+                <p class="support-intro">
+
+                    Some basic checks can help identify the cause
+                    of a problem. Electrical or mechanical repairs
+                    should be handled by a suitably qualified
+                    technician.
+
+                </p>
+
+
+                <div class="troubleshooting-list">
+
+
+                    <details class="troubleshooting-item">
+
+                        <summary>
+
+                            <span>
+
+                                <i class="fa-solid fa-circle-question"></i>
+
+                                Gate does not open
+
+                            </span>
+
+                            <i class="fa-solid fa-plus"></i>
+
+                        </summary>
+
+
+                        <div class="troubleshooting-answer">
+
+                            Check whether the power supply is
+                            available, whether the remote is
+                            functioning and whether the gate is
+                            physically obstructed.
+
+                            If the issue continues, professional
+                            assessment may be required.
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="troubleshooting-item">
+
+                        <summary>
+
+                            <span>
+
+                                <i class="fa-solid fa-circle-question"></i>
+
+                                Remote is not working
+
+                            </span>
+
+                            <i class="fa-solid fa-plus"></i>
+
+                        </summary>
+
+
+                        <div class="troubleshooting-answer">
+
+                            Check the remote-control battery and
+                            confirm that the remote is operating
+                            within the expected range.
+
+                            A replacement or reprogramming may be
+                            required depending on the system.
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="troubleshooting-item">
+
+                        <summary>
+
+                            <span>
+
+                                <i class="fa-solid fa-circle-question"></i>
+
+                                Gate moves slowly
+
+                            </span>
+
+                            <i class="fa-solid fa-plus"></i>
+
+                        </summary>
+
+
+                        <div class="troubleshooting-answer">
+
+                            Unusual resistance, mechanical wear,
+                            alignment problems, power issues or
+                            other system faults may affect gate
+                            movement.
+
+                            The system should be inspected rather
+                            than forcing the gate to operate.
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="troubleshooting-item">
+
+                        <summary>
+
+                            <span>
+
+                                <i class="fa-solid fa-circle-question"></i>
+
+                                Gate stops during operation
+
+                            </span>
+
+                            <i class="fa-solid fa-plus"></i>
+
+                        </summary>
+
+
+                        <div class="troubleshooting-answer">
+
+                            Check for visible obstructions and
+                            consider whether safety equipment or
+                            system protection has activated.
+
+                            Persistent faults should be professionally
+                            diagnosed.
+
+                        </div>
+
+                    </details>
+
+
+                    <details class="troubleshooting-item">
+
+                        <summary>
+
+                            <span>
+
+                                <i class="fa-solid fa-circle-question"></i>
+
+                                Motor is making unusual noise
+
+                            </span>
+
+                            <i class="fa-solid fa-plus"></i>
+
+                        </summary>
+
+
+                        <div class="troubleshooting-answer">
+
+                            Unusual sounds may indicate mechanical
+                            resistance, wear or another system issue.
+                            Continued operation should be avoided
+                            until the cause has been established.
+
+                        </div>
+
+                    </details>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             SERVICE CTA
+        ========================================= -->
+
+        <div class="maintenance-cta">
+
+            <div class="maintenance-cta-icon">
+
+                <i class="fa-solid fa-headset"></i>
+
+            </div>
+
+
+            <div class="maintenance-cta-content">
+
+                <span>
+                    NEED ASSISTANCE?
+                </span>
+
+
+                <h3>
+                    Having Problems With Your Gate Motor?
+                </h3>
+
+
+                <p>
+
+                    Tell us what is happening and provide the
+                    gate motor model if known. We can help you
+                    determine the next step.
+
+                </p>
+
+            </div>
+
+
+            <a href="../contact.html"
+               class="maintenance-cta-button">
+
+                <i class="fa-solid fa-arrow-right"></i>
+
+                Contact Nexpak
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     GATE SUPPORT STYLES
+========================================= -->
+
+<style>
+
+    /* =========================================
+       INSTALLATION PROCESS
+    ========================================= */
+
+    .installation-process{
+
+        display:flex;
+
+        align-items:stretch;
+
+        justify-content:center;
+
+        gap:14px;
+
+        margin-bottom:70px;
+
+    }
+
+
+    .process-step{
+
+        position:relative;
+
+        flex:1;
+
+        padding:30px 24px;
+
+        border:1px solid #e2e6ea;
+
+        border-radius:14px;
+
+        background:#ffffff;
+
+        text-align:center;
+
+        box-shadow:
+            0 7px 25px rgba(0,0,0,.04);
+
+        transition:.25s ease;
+
+    }
+
+
+    .process-step:hover{
+
+        transform:translateY(-5px);
+
+        border-color:#f5b400;
+
+        box-shadow:
+            0 15px 35px rgba(0,0,0,.08);
+
+    }
+
+
+    .process-number{
+
+        position:absolute;
+
+        top:13px;
+
+        right:16px;
+
+        color:#dfe3e7;
+
+        font-size:22px;
+
+        font-weight:800;
+
+    }
+
+
+    .process-icon{
+
+        width:58px;
+
+        height:58px;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        margin:0 auto 20px;
+
+        border-radius:50%;
+
+        background:#111820;
+
+        color:#f5b400;
+
+        font-size:20px;
+
+    }
+
+
+    .process-step h3{
+
+        margin:0 0 10px;
+
+        color:#111820;
+
+        font-size:19px;
+
+    }
+
+
+    .process-step p{
+
+        margin:0;
+
+        color:#68717b;
+
+        font-size:13px;
+
+        line-height:1.7;
+
+    }
+
+
+    .process-connector{
+
+        display:flex;
+
+        align-items:center;
+
+        color:#d99b00;
+
+        font-size:15px;
+
+    }
+
+
+    /* =========================================
+       SUPPORT COLUMNS
+    ========================================= */
+
+    .support-columns{
+
+        display:grid;
+
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+
+        gap:25px;
+
+        margin-bottom:55px;
+
+    }
+
+
+    .support-panel{
+
+        padding:32px;
+
+        border:1px solid #e2e6ea;
+
+        border-radius:15px;
+
+        background:#ffffff;
+
+        box-shadow:
+            0 8px 28px rgba(0,0,0,.045);
+
+    }
+
+
+    .support-panel-header{
+
+        display:flex;
+
+        align-items:center;
+
+        gap:15px;
+
+        margin-bottom:20px;
+
+    }
+
+
+    .support-panel-icon{
+
+        flex:0 0 52px;
+
+        width:52px;
+
+        height:52px;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        border-radius:11px;
+
+        background:#111820;
+
+        color:#f5b400;
+
+        font-size:19px;
+
+    }
+
+
+    .support-panel-header span{
+
+        display:block;
+
+        margin-bottom:4px;
+
+        color:#d99b00;
+
+        font-size:10px;
+
+        font-weight:800;
+
+        letter-spacing:1px;
+
+    }
+
+
+    .support-panel-header h3{
+
+        margin:0;
+
+        color:#111820;
+
+        font-size:20px;
+
+    }
+
+
+    .support-intro{
+
+        margin:0 0 25px;
+
+        color:#68717b;
+
+        font-size:13px;
+
+        line-height:1.75;
+
+    }
+
+
+    /* =========================================
+       MAINTENANCE LIST
+    ========================================= */
+
+    .maintenance-list{
+
+        display:grid;
+
+        gap:18px;
+
+    }
+
+
+    .maintenance-item{
+
+        display:flex;
+
+        align-items:flex-start;
+
+        gap:12px;
+
+    }
+
+
+    .maintenance-item > i{
+
+        flex:0 0 23px;
+
+        width:23px;
+
+        height:23px;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        margin-top:2px;
+
+        border-radius:50%;
+
+        background:#fff6d8;
+
+        color:#c58e00;
+
+        font-size:9px;
+
+    }
+
+
+    .maintenance-item strong{
+
+        display:block;
+
+        margin-bottom:3px;
+
+        color:#202830;
+
+        font-size:13px;
+
+    }
+
+
+    .maintenance-item span{
+
+        display:block;
+
+        color:#727b84;
+
+        font-size:12px;
+
+        line-height:1.6;
+
+    }
+
+
+    /* =========================================
+       TROUBLESHOOTING
+    ========================================= */
+
+    .troubleshooting-list{
+
+        display:grid;
+
+        gap:9px;
+
+    }
+
+
+    .troubleshooting-item{
+
+        overflow:hidden;
+
+        border:1px solid #e7eaed;
+
+        border-radius:9px;
+
+        background:#f8f9fa;
+
+    }
+
+
+    .troubleshooting-item summary{
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:space-between;
+
+        gap:15px;
+
+        padding:15px 17px;
+
+        cursor:pointer;
+
+        list-style:none;
+
+        color:#202830;
+
+        font-size:13px;
+
+        font-weight:700;
+
+    }
+
+
+    .troubleshooting-item summary::-webkit-details-marker{
+
+        display:none;
+
+    }
+
+
+    .troubleshooting-item summary > span{
+
+        display:flex;
+
+        align-items:center;
+
+        gap:9px;
+
+    }
+
+
+    .troubleshooting-item summary > span i{
+
+        color:#d99b00;
+
+    }
+
+
+    .troubleshooting-item summary > i{
+
+        color:#9aa3ab;
+
+        font-size:11px;
+
+        transition:.2s ease;
+
+    }
+
+
+    .troubleshooting-item[open] summary > i{
+
+        transform:rotate(45deg);
+
+        color:#d99b00;
+
+    }
+
+
+    .troubleshooting-answer{
+
+        padding:0 17px 17px 43px;
+
+        color:#68717b;
+
+        font-size:12px;
+
+        line-height:1.7;
+
+    }
+
+
+    /* =========================================
+       MAINTENANCE CTA
+    ========================================= */
+
+    .maintenance-cta{
+
+        display:flex;
+
+        align-items:center;
+
+        gap:22px;
+
+        padding:28px 32px;
+
+        border-radius:14px;
+
+        background:#111820;
+
+    }
+
+
+    .maintenance-cta-icon{
+
+        flex:0 0 55px;
+
+        width:55px;
+
+        height:55px;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        border-radius:50%;
+
+        background:#f5b400;
+
+        color:#111820;
+
+        font-size:20px;
+
+    }
+
+
+    .maintenance-cta-content{
+
+        flex:1;
+
+    }
+
+
+            .maintenance-cta-content > span{
+
+            display:block;
+
+            margin-bottom:5px;
+
+            color:#f5b400;
+
+            font-size:10px;
+
+            font-weight:800;
+
+            letter-spacing:1px;
+
+        }
+
+
+        .maintenance-cta-content h3{
+
+            margin:0 0 5px;
+
+            color:#ffffff;
+
+            font-size:20px;
+
+        }
+
+
+        .maintenance-cta-content p{
+
+            margin:0;
+
+            color:#aeb8c2;
+
+            font-size:12px;
+
+            line-height:1.6;
+
+        }
+
+
+        /* =========================================
+           CTA BUTTON
+        ========================================= */
+
+        .maintenance-cta-button{
+
+            display:inline-flex;
+
+            align-items:center;
+
+            justify-content:center;
+
+            gap:9px;
+
+            flex:0 0 auto;
+
+            padding:13px 20px;
+
+            border-radius:7px;
+
+            background:#f5b400;
+
+            color:#111820;
+
+            font-size:12px;
+
+            font-weight:800;
+
+            text-decoration:none;
+
+            transition:
+                background .25s ease,
+                transform .25s ease;
+
+        }
+
+
+        .maintenance-cta-button:hover{
+
+            background:#d99b00;
+
+            transform:translateY(-2px);
+
+        }
+
+
+        /* =========================================
+           RESPONSIVE
+        ========================================= */
+
+        @media(max-width:950px){
+
+            .installation-process{
+
+                display:grid;
+
+                grid-template-columns:
+                    repeat(2,1fr);
+
+            }
+
+
+            .process-connector{
+
+                display:none;
+
+            }
+
+
+            .support-columns{
+
+                grid-template-columns:1fr;
+
+            }
+
+        }
+
+
+        @media(max-width:600px){
+
+            .installation-process{
+
+                grid-template-columns:1fr;
+
+            }
+
+
+            .support-panel{
+
+                padding:25px 21px;
+
+            }
+
+
+            .maintenance-cta{
+
+                flex-direction:column;
+
+                align-items:flex-start;
+
+                padding:28px 23px;
+
+            }
+
+
+            .maintenance-cta-button{
+
+                width:100%;
+
+            }
+
+        }
+
+    </style>
+
+<!-- =========================================
+     GATE MOTORS FAQ & FINAL CTA
+========================================= -->
+
+<section class="product-section gate-faq-section">
+
+    <div class="container">
+
+        <!-- =========================================
+             FAQ HEADING
+        ========================================= -->
+
+        <div class="section-heading">
+
+            <span class="section-eyebrow">
+
+                <i class="fa-solid fa-circle-question"></i>
+
+                Gate Motor FAQ
+
+            </span>
+
+
+            <h2>
+
+                Frequently Asked
+
+                <span>Questions</span>
+
+            </h2>
+
+
+            <p>
+
+                Find answers to some of the most common questions
+                about automated gates and gate motors.
+
+            </p>
+
+        </div>
+
+
+        <!-- =========================================
+             FAQ GRID
+        ========================================= -->
+
+        <div class="gate-faq-grid">
+
+
+            <!-- FAQ 01 -->
+
+            <details class="gate-faq-item">
+
+                <summary>
+
+                    <span>
+
+                        <i class="fa-solid fa-gears"></i>
+
+                        What type of gate motor do I need?
+
+                    </span>
+
+
+                    <i class="fa-solid fa-plus"></i>
+
+                </summary>
+
+
+                <div class="gate-faq-answer">
+
+                    The correct motor depends on factors such as
+                    whether the gate is sliding or swinging, its
+                    dimensions and construction, approximate weight,
+                    operating frequency and the requirements of the
+                    property.
+
+                    <br><br>
+
+                    Providing these details allows the appropriate
+                    solution to be identified.
+
+                </div>
+
+            </details>
+
+
+            <!-- FAQ 02 -->
+
+            <details class="gate-faq-item">
+
+                <summary>
+
+                    <span>
+
+                        <i class="fa-solid fa-house"></i>
+
+                        Can gate motors be used at homes?
+
+                    </span>
+
+
+                    <i class="fa-solid fa-plus"></i>
+
+                </summary>
+
+
+                <div class="gate-faq-answer">
+
+                    Yes. Gate automation is commonly used for
+                    residential driveways and entrances.
+
+                    The motor should be selected according to the
+                    specific gate and expected usage rather than
+                    simply choosing a motor based on price.
+
+                </div>
+
+            </details>
+
+
+            <!-- FAQ 03 -->
+
+            <details class="gate-faq-item">
+
+                <summary>
+
+                    <span>
+
+                        <i class="fa-solid fa-building"></i>
+
+                        Can gate automation be used for businesses?
+
+                    </span>
+
+
+                    <i class="fa-solid fa-plus"></i>
+
+                </summary>
+
+
+                <div class="gate-faq-answer">
+
+                    Yes. Automated gates can be used for commercial,
+                    industrial, estate and other controlled-access
+                    environments.
+
+                    Higher-traffic applications require careful
+                    consideration of the motor's intended operating
+                    requirements.
+
+                </div>
+
+            </details>
+
+
+            <!-- FAQ 04 -->
+
+            <details class="gate-faq-item">
+
+                <summary>
+
+                    <span>
+
+                        <i class="fa-solid fa-battery-half"></i>
+
+                        Will my gate work during a power outage?
+
+                    </span>
+
+
+                    <i class="fa-solid fa-plus"></i>
+
+                </summary>
+
+
+                <div class="gate-faq-answer">
+
+                    Many automation systems can incorporate battery
+                    backup.
+
+                    Actual backup performance depends on the motor,
+                    battery configuration, gate condition and how
+                    frequently the system is operated.
+
+                </div>
+
+            </details>
+
+
+            <!-- FAQ 05 -->
+
+            <details class="gate-faq-item">
+
+                <summary>
+
+                    <span>
+
+                        <i class="fa-solid fa-id-card"></i>
+
+                        Can a gate motor work with access control?
+
+                    </span>
+
+
+                    <i class="fa-solid fa-plus"></i>
+
+                </summary>
+
+
+                <div class="gate-faq-answer">
+
+                    Compatible gate automation systems can be
+                    integrated with access-control equipment.
+
+                    This can allow vehicle access to be managed
+                    using suitable credentials or access-control
+                    devices.
+
+                </div>
+
+            </details>
+
+
+            <!-- FAQ 06 -->
+
+            <details class="gate-faq-item">
+
+                <summary>
+
+                    <span>
+
+                        <i class="fa-solid fa-phone"></i>
+
+                        Can I connect an intercom to my gate?
+
+                    </span>
+
+
+                    <i class="fa-solid fa-plus"></i>
+
+                </summary>
+
+
+                <div class="gate-faq-answer">
+
+                    Compatible gate automation and intercom systems
+                    can be integrated so that visitors can be
+                    communicated with before access is granted.
+
+                    Compatibility should be confirmed for the
+                    specific equipment being installed.
+
+                </div>
+
+            </details>
+
+
+            <!-- FAQ 07 -->
+
+            <details class="gate-faq-item">
+
+                <summary>
+
+                    <span>
+
+                        <i class="fa-solid fa-wrench"></i>
+
+                        Does an automated gate require maintenance?
+
+                    </span>
+
+
+                    <i class="fa-solid fa-plus"></i>
+
+                </summary>
+
+
+                <div class="gate-faq-answer">
+
+                    Regular inspection is recommended.
+
+                    Gate alignment, mechanical components, safety
+                    equipment, batteries and other system components
+                    can affect reliable operation.
+
+                </div>
+
+            </details>
+
+
+            <!-- FAQ 08 -->
+
+            <details class="gate-faq-item">
+
+                <summary>
+
+                    <span>
+
+                        <i class="fa-solid fa-file-invoice"></i>
+
+                        Can Nexpak help me choose a gate motor?
+
+                    </span>
+
+
+                    <i class="fa-solid fa-plus"></i>
+
+                </summary>
+
+
+                <div class="gate-faq-answer">
+
+                    Yes.
+
+                    Provide details such as the gate type,
+                    approximate width, construction, estimated weight,
+                    intended usage and whether the installation is
+                    residential, commercial or industrial.
+
+                    Our team can then help identify a suitable
+                    automation solution.
+
+                </div>
+
+            </details>
+
+        </div>
+
+
+        <!-- =========================================
+             FINAL QUOTE CTA
+        ========================================= -->
+
+        <div class="gate-final-cta">
+
+            <div class="gate-final-cta-content">
+
+                <span class="final-cta-eyebrow">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                    Nexpak Security Solutions
+
+                </span>
+
+
+                <h2>
+
+                    Ready to Automate
+
+                    <span>Your Gate?</span>
+
+                </h2>
+
+
+                <p>
+
+                    Tell us about your gate and we'll help you
+                    identify the right automation solution for your
+                    property.
+
+                </p>
+
+
+                <div class="final-cta-buttons">
+
+                    <a href="../quote.html"
+                       class="final-btn final-btn-primary">
+
+                        <i class="fa-solid fa-file-signature"></i>
+
+                        Request A Quote
+
+                    </a>
+
+
+                    <a href="../contact.html"
+                       class="final-btn final-btn-secondary">
+
+                        <i class="fa-solid fa-phone"></i>
+
+                        Contact Nexpak
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="gate-final-cta-visual">
+
+                <div class="cta-shield">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                </div>
+
+
+                <div class="cta-ring ring-one"></div>
+
+                <div class="cta-ring ring-two"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             RELATED SECURITY SOLUTIONS
+        ========================================= -->
+
+        <div class="related-solutions">
+
+            <div class="related-heading">
+
+                <span class="section-eyebrow">
+
+                    <i class="fa-solid fa-shield-halved"></i>
+
+                    Explore More
+
+                </span>
+
+
+                <h3>
+
+                    Complete Your
+
+                    <span>Security System</span>
+
+                </h3>
+
+            </div>
+
+
+            <div class="related-grid">
+
+
+                <!-- CCTV -->
+
+                <a href="cctv.html"
+                   class="related-card">
+
+                    <div class="related-icon">
+
+                        <i class="fa-solid fa-video"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h4>
+                            CCTV Systems
+                        </h4>
+
+                        <p>
+                            Monitor your property.
+                        </p>
+
+                    </div>
+
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+
+                <!-- ELECTRIC FENCING -->
+
+                <a href="electric-fencing.html"
+                   class="related-card">
+
+                    <div class="related-icon">
+
+                        <i class="fa-solid fa-bolt"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h4>
+                            Electric Fencing
+                        </h4>
+
+                        <p>
+                            Add perimeter protection.
+                        </p>
+
+                    </div>
+
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+
+                <!-- ALARMS -->
+
+                <a href="alarm-systems.html"
+                   class="related-card">
+
+                    <div class="related-icon">
+
+                        <i class="fa-solid fa-bell"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h4>
+                            Alarm Systems
+                        </h4>
+
+                        <p>
+                            Protect against intrusion.
+                        </p>
+
+                    </div>
+
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+
+                <!-- ACCESS CONTROL -->
+
+                <a href="access-control.html"
+                   class="related-card">
+
+                    <div class="related-icon">
+
+                        <i class="fa-solid fa-id-card"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <h4>
+                            Access Control
+                        </h4>
+
+                        <p>
+                            Manage who enters.
+                        </p>
+
+                    </div>
+
+
+                    <i class="fa-solid fa-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================
+     GATE FAQ & FINAL CTA STYLES
+========================================= -->
+
+<style>
+
+    /* =========================================
+       FAQ GRID
+    ========================================= */
+
+    .gate-faq-section{
+
+        background:#f5f7f9;
+
+    }
+
+
+    .gate-faq-grid{
+
+        max-width:900px;
+
+        margin:0 auto 75px;
+
+        display:grid;
+
+        gap:10px;
+
+    }
+
+
+    .gate-faq-item{
+
+        overflow:hidden;
+
+        border:1px solid #e0e4e8;
+
+        border-radius:10px;
+
+        background:#ffffff;
+
+        transition:
+            border-color .25s ease,
+            box-shadow .25s ease;
+
+    }
+
+
+    .gate-faq-item:hover{
+
+        border-color:#f5b400;
+
+    }
+
+
+    .gate-faq-item[open]{
+
+        border-color:#f5b400;
+
+        box-shadow:
+            0 8px 25px rgba(0,0,0,.06);
+
+    }
+
+
+    .gate-faq-item summary{
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:space-between;
+
+        gap:20px;
+
+        padding:19px 22px;
+
+        cursor:pointer;
+
+        list-style:none;
+
+        color:#111820;
+
+        font-size:14px;
+
+        font-weight:700;
+
+    }
+
+
+    .gate-faq-item summary::-webkit-details-marker{
+
+        display:none;
+
+    }
+
+
+    .gate-faq-item summary > span{
+
+        display:flex;
+
+        align-items:center;
+
+        gap:12px;
+
+    }
+
+
+    .gate-faq-item summary > span i{
+
+        color:#d99b00;
+
+        font-size:15px;
+
+    }
+
+
+    .gate-faq-item summary > i{
+
+        color:#9ba3aa;
+
+        font-size:11px;
+
+        transition:.25s ease;
+
+    }
+
+
+    .gate-faq-item[open] summary > i{
+
+        transform:rotate(45deg);
+
+        color:#d99b00;
+
+    }
+
+
+    .gate-faq-answer{
+
+        padding:0 22px 21px 49px;
+
+        color:#68717b;
+
+        font-size:13px;
+
+        line-height:1.8;
+
+    }
+
+
+    /* =========================================
+       FINAL CTA
+    ========================================= */
+
+    .gate-final-cta{
+
+        position:relative;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:space-between;
+
+        gap:40px;
+
+        overflow:hidden;
+
+        margin-bottom:75px;
+
+        padding:55px 60px;
+
+        border-radius:20px;
+
+        background:#111820;
+
+    }
+
+
+    .gate-final-cta-content{
+
+        position:relative;
+
+        z-index:2;
+
+        max-width:650px;
+
+    }
+
+
+    .final-cta-eyebrow{
+
+        display:inline-flex;
+
+        align-items:center;
+
+        gap:8px;
+
+        margin-bottom:15px;
+
+        color:#f5b400;
+
+        font-size:11px;
+
+        font-weight:800;
+
+        letter-spacing:1px;
+
+        text-transform:uppercase;
+
+    }
+
+
+    .gate-final-cta h2{
+
+        margin:0 0 15px;
+
+        color:#ffffff;
+
+        font-size:38px;
+
+        line-height:1.15;
+
+    }
+
+
+    .gate-final-cta h2 span{
+
+        color:#f5b400;
+
+    }
+
+
+    .gate-final-cta-content > p{
+
+        max-width:570px;
+
+        margin:0 0 28px;
+
+        color:#b6c0c9;
+
+        font-size:15px;
+
+        line-height:1.75;
+
+    }
+
+
+    /* =========================================
+       CTA BUTTONS
+    ========================================= */
+
+    .final-cta-buttons{
+
+        display:flex;
+
+        flex-wrap:wrap;
+
+        gap:12px;
+
+    }
+
+
+    .final-btn{
+
+        display:inline-flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        gap:9px;
+
+        padding:14px 21px;
+
+        border-radius:7px;
+
+        font-size:12px;
+
+        font-weight:800;
+
+        text-decoration:none;
+
+        transition:.25s ease;
+
+    }
+
+
+    .final-btn-primary{
+
+        background:#f5b400;
+
+        color:#111820;
+
+    }
+
+
+    .final-btn-primary:hover{
+
+        background:#d99b00;
+
+        transform:translateY(-2px);
+
+    }
+
+
+    .final-btn-secondary{
+
+        border:1px solid rgba(255,255,255,.2);
+
+        background:transparent;
+
+        color:#ffffff;
+
+    }
+
+
+    .final-btn-secondary:hover{
+
+        border-color:#f5b400;
+
+        color:#f5b400;
+
+        transform:translateY(-2px);
+
+    }
+
+
+    /* =========================================
+       CTA VISUAL
+    ========================================= */
+
+    .gate-final-cta-visual{
+
+        position:relative;
+
+        flex:0 0 220px;
+
+        width:220px;
+
+        height:220px;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+    }
+
+
+    .cta-shield{
+
+        position:relative;
+
+        z-index:3;
+
+        width:95px;
+
+        height:95px;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        border:1px solid rgba(245,180,0,.45);
+
+        border-radius:50%;
+
+        background:rgba(245,180,0,.1);
+
+        color:#f5b400;
+
+        font-size:32px;
+
+        box-shadow:
+            0 0 45px rgba(245,180,0,.12);
+
+    }
+
+
+    .cta-ring{
+
+        position:absolute;
+
+        border:1px solid rgba(245,180,0,.18);
+
+        border-radius:50%;
+
+    }
+
+
+    .ring-one{
+
+        width:150px;
+
+        height:150px;
+
+    }
+
+
+    .ring-two{
+
+        width:210px;
+
+        height:210px;
+
+    }
+
+
+    /* =========================================
+       RELATED SOLUTIONS
+    ========================================= */
+
+    .related-solutions{
+
+        padding-top:10px;
+
+    }
+
+
+    .related-heading{
+
+        margin-bottom:30px;
+
+        text-align:center;
+
+    }
+
+
+    .related-heading .section-eyebrow{
+
+        color:#d99b00;
+
+    }
+
+
+    .related-heading h3{
+
+        margin:0;
+
+        color:#111820;
+
+        font-size:29px;
+
+    }
+
+
+    .related-heading h3 span{
+
+        color:#d99b00;
+
+    }
+
+
+    .related-grid{
+
+        display:grid;
+
+        grid-template-columns:
+            repeat(4,1fr);
+
+        gap:15px;
+
+    }
+
+
+    .related-card{
+
+        display:flex;
+
+        align-items:center;
+
+        gap:13px;
+
+        padding:20px;
+
+        border:1px solid #e1e5e9;
+
+        border-radius:12px;
+
+        background:#ffffff;
+
+        color:#111820;
+
+        text-decoration:none;
+
+        transition:.25s ease;
+
+    }
+
+
+    .related-card:hover{
+
+        transform:translateY(-4px);
+
+        border-color:#f5b400;
+
+        box-shadow:
+            0 12px 30px rgba(0,0,0,.07);
+
+    }
+
+
+    .related-icon{
+
+        flex:0 0 43px;
+
+        width:43px;
+
+        height:43px;
+
+        display:flex;
+
+        align-items:center;
+
+        justify-content:center;
+
+        border-radius:9px;
+
+        background:#111820;
+
+        color:#f5b400;
+
+        font-size:16px;
+
+    }
+
+
+    .related-card h4{
+
+        margin:0 0 3px;
+
+        font-size:14px;
+
+    }
+
+
+    .related-card p{
+
+        margin:0;
+
+        color:#7a838c;
+
+        font-size:10px;
+
+    }
+
+
+    .related-card > i{
+
+        margin-left:auto;
+
+        color:#d99b00;
+
+        font-size:11px;
+
+        transition:.2s ease;
+
+    }
+
+
+    .related-card:hover > i{
+
+        transform:translateX(4px);
+
+    }
+
+
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
+
+    @media(max-width:950px){
+
+        .gate-final-cta{
+
+            padding:45px;
+
+        }
+
+
+        .gate-final-cta-visual{
+
+            flex:0 0 180px;
+
+            width:180px;
+
+            height:180px;
+
+        }
+
+
+        .related-grid{
+
+            grid-template-columns:
+                repeat(2,1fr);
+
+        }
+
+    }
+
+
+    @media(max-width:600px){
+
+        .gate-faq-item summary{
+
+            padding:17px;
+
+            font-size:13px;
+
+        }
+
+
+        .gate-faq-item summary > span{
+
+            align-items:flex-start;
+
+        }
+
+
+        .gate-faq-answer{
+
+            padding:
+                0 17px 18px 44px;
+
+        }
+
+
+        .gate-final-cta{
+
+            flex-direction:column;
+
+            align-items:flex-start;
+
+            padding:35px 25px;
+
+        }
+
+
+        .gate-final-cta h2{
+
+            font-size:30px;
+
+        }
+
+
+        .gate-final-cta-visual{
+
+            align-self:center;
+
+            flex:0 0 180px;
+
+            width:180px;
+
+          <style>
+
+    /* =========================================
+       FINAL CTA VISUAL — CONTINUED
+    ========================================= */
+
+    .gate-final-cta-visual{
+
+        align-self:center;
+
+        flex:0 0 180px;
+
+        width:180px;
+
+        height:180px;
+
+    }
+
+
+    .cta-shield{
+
+        width:80px;
+
+        height:80px;
+
+        font-size:27px;
+
+    }
+
+
+    .ring-one{
+
+        width:125px;
+
+        height:125px;
+
+    }
+
+
+    .ring-two{
+
+        width:170px;
+
+        height:170px;
+
+    }
+
+
+    /* =========================================
+       FINAL CTA BUTTONS — MOBILE
+    ========================================= */
+
+    .final-cta-buttons{
+
+        flex-direction:column;
+
+        width:100%;
+
+    }
+
+
+    .final-btn{
+
+        width:100%;
+
+    }
+
+
+    /* =========================================
+       RELATED SOLUTIONS — MOBILE
+    ========================================= */
+
+    .related-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .related-card{
+
+        width:100%;
+
+    }
+
+}
+
+
+/* =========================================
+   EXTRA SMALL DEVICES
+========================================= */
+
+@media(max-width:400px){
+
+    .gate-final-cta{
+
+        padding:30px 20px;
+
+    }
+
+
+    .gate-final-cta h2{
+
+        font-size:27px;
+
+    }
+
+
+    .gate-final-cta-content > p{
+
+        font-size:13px;
+
+    }
+
+
+    .gate-final-cta-visual{
+
+        width:160px;
+
+        height:160px;
+
+        flex-basis:160px;
+
+    }
+
+
+    .cta-shield{
+
+        width:72px;
+
+        height:72px;
+
+        font-size:24px;
+
+    }
+
+
+    .ring-one{
+
+        width:110px;
+
+        height:110px;
+
+    }
+
+
+    .ring-two{
+
+        width:150px;
+
+        height:150px;
+
+    }
+
+
+    .gate-faq-item summary{
+
+        font-size:12px;
+
+    }
+
+
+    .gate-faq-answer{
+
+        font-size:12px;
+
+    }
+
+}
+
+</style>
+
