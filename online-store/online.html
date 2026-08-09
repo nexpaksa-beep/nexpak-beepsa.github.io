@@ -1,4828 +1,5001 @@
-<!DOCTYPE html><html lang="en"><head><!-- =====================================================
-     NEXPAK SECURITY SOLUTIONS
-     ONLINE STORE
-     online.html
-     PART 1/8
+<!DOCTYPE html>
+<html lang="en">
 
-     CLEAN MASTER VERSION
-====================================================== -->
+<head>
 
 <meta charset="UTF-8">
 
 <meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+content="width=device-width, initial-scale=1.0">
 
 <meta name="theme-color"
-      content="#0057ff">
+content="#0057ff">
 
 <meta name="description"
-      content="Shop Nexpak Security Solutions online. Buy CCTV kits, gate motors, Roboguard, alarms, access control, intercoms, electric fencing kits and professional security equipment.">
-
-<meta name="keywords"
-      content="security equipment South Africa, CCTV kits, gate motors, electric fencing kits, Roboguard, alarm systems, access control, intercoms, security store">
-
-<meta name="author"
-      content="Nexpak Security Solutions">
+content="Nexpak Security Solutions Online Store - Professional security equipment and complete security kits.">
 
 <title>
-    Nexpak Security Solutions | Online Security Store
+Nexpak Security Solutions | Online Store
 </title>
 
-
-<!-- =====================================================
-     GOOGLE FONTS
-====================================================== -->
+<!-- GOOGLE FONT -->
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
 
 <link rel="preconnect"
-      href="https://fonts.googleapis.com">
+href="https://fonts.gstatic.com"
+crossorigin>
 
-<link rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-      rel="stylesheet">
+
+<!-- FONT AWESOME -->
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+
+<!-- STORE CSS -->
+
+<link rel="stylesheet"
+href="online.css">
+
+
+<style>
+
+/* =========================================================
+   NEXPAK ONLINE STORE
+   CLEAN KIT-FIRST STORE
+========================================================= */
+
+
+:root{
+
+--nex-blue:#0057ff;
+
+--nex-dark:#071a2d;
+
+--nex-text:#142235;
+
+--nex-muted:#667085;
+
+--nex-line:#e4e8ef;
+
+--nex-bg:#f6f8fb;
+
+--white:#ffffff;
+
+}
+
+
+*{
+
+box-sizing:border-box;
+
+margin:0;
+
+padding:0;
+
+}
+
+
+body{
+
+font-family:Inter,Arial,sans-serif;
+
+color:var(--nex-text);
+
+background:#ffffff;
+
+line-height:1.5;
+
+}
+
+
+button,
+input,
+select{
+
+font:inherit;
+
+}
+
+
+.online-container{
+
+width:min(1180px,92%);
+
+margin:auto;
+
+}
+
+
+/* =========================================================
+   STORE HEADER
+========================================================= */
+
+.online-header{
+
+background:#ffffff;
+
+border-bottom:1px solid var(--nex-line);
+
+position:sticky;
+
+top:0;
+
+z-index:100;
+
+}
+
+
+.online-header
+.online-container{
+
+min-height:78px;
+
+display:flex;
+
+align-items:center;
+
+gap:20px;
+
+}
+
+
+.online-logo{
+
+display:block;
+
+}
+
+
+.online-logo img{
+
+width:180px;
+
+max-width:42vw;
+
+display:block;
+
+}
+
+
+/* SEARCH */
+
+.online-search{
+
+flex:1;
+
+display:flex;
+
+max-width:600px;
+
+margin:auto;
+
+}
+
+
+.online-search input{
+
+width:100%;
+
+padding:12px 14px;
+
+border:1px solid #d7dce5;
+
+border-right:0;
+
+border-radius:8px 0 0 8px;
+
+outline:none;
+
+}
+
+
+.online-search input:focus{
+
+border-color:var(--nex-blue);
+
+}
+
+
+.online-search button{
+
+width:50px;
+
+border:0;
+
+border-radius:0 8px 8px 0;
+
+background:var(--nex-blue);
+
+color:#ffffff;
+
+cursor:pointer;
+
+}
+
+
+/* HEADER ACTIONS */
+
+.online-actions{
+
+display:flex;
+
+gap:8px;
+
+}
+
+
+.online-action{
+
+position:relative;
+
+border:1px solid var(--nex-line);
+
+background:#ffffff;
+
+border-radius:8px;
+
+padding:10px 12px;
+
+color:var(--nex-text);
+
+cursor:pointer;
+
+}
+
+
+.online-action:hover{
+
+border-color:var(--nex-blue);
+
+color:var(--nex-blue);
+
+}
+
+
+.online-action b{
+
+position:absolute;
+
+top:-7px;
+
+right:-7px;
+
+min-width:19px;
+
+height:19px;
+
+border-radius:50%;
+
+background:var(--nex-blue);
+
+color:#ffffff;
+
+font-size:11px;
+
+display:grid;
+
+place-items:center;
+
+}
+
+
+/* =========================================================
+   CATEGORY NAVIGATION
+========================================================= */
+
+.online-navigation{
+
+background:var(--nex-dark);
+
+overflow:auto;
+
+white-space:nowrap;
+
+}
+
+
+.online-navigation
+.online-container{
+
+display:flex;
+
+gap:3px;
+
+}
+
+
+.online-category{
+
+border:0;
+
+background:transparent;
+
+color:#ffffff;
+
+padding:11px 14px;
+
+cursor:pointer;
+
+}
+
+
+.online-category:hover,
+.online-category.active{
+
+background:rgba(255,255,255,.12);
+
+}
+
+
+/* =========================================================
+   BLUE HERO BANNER
+========================================================= */
+
+.online-hero{
+
+background:
+
+linear-gradient(
+110deg,
+#06192c,
+#0b3558 60%,
+#0057ff
+);
+
+color:#ffffff;
+
+padding:70px 0;
+
+}
+
+
+.online-hero-content{
+
+max-width:720px;
+
+}
+
+
+.online-hero-label{
+
+text-transform:uppercase;
+
+letter-spacing:.12em;
+
+font-size:12px;
+
+opacity:.85;
+
+}
+
+
+.online-hero h1{
+
+font-size:
+
+clamp(
+32px,
+5vw,
+58px
+);
+
+line-height:1.05;
+
+margin:15px 0;
+
+font-weight:800;
+
+}
+
+
+.online-hero h1 strong{
+
+color:#62a0ff;
+
+}
+
+
+.online-hero p{
+
+max-width:620px;
+
+color:#dce9f8;
+
+font-size:16px;
+
+line-height:1.6;
+
+}
+
+
+.online-hero-actions{
+
+display:flex;
+
+gap:10px;
+
+flex-wrap:wrap;
+
+margin-top:24px;
+
+}
+
+
+.hero-shop-btn{
+
+display:inline-flex;
+
+align-items:center;
+
+gap:8px;
+
+background:#ffffff;
+
+color:var(--nex-dark);
+
+border:0;
+
+border-radius:8px;
+
+padding:13px 18px;
+
+font-weight:800;
+
+text-decoration:none;
+
+}
+
+
+.hero-shop-btn:hover{
+
+background:#eef4ff;
+
+}
+
+
+/* =========================================================
+   MOBILE HEADER
+========================================================= */
+
+@media(max-width:700px){
+
+.online-header
+.online-container{
+
+flex-wrap:wrap;
+
+padding:10px 0;
+
+}
+
+
+.online-logo{
+
+order:1;
+
+}
+
+
+.online-actions{
+
+order:2;
+
+margin-left:auto;
+
+}
+
+
+.online-search{
+
+order:3;
+
+flex-basis:100%;
+
+max-width:none;
+
+}
+
+
+.online-action span{
+
+display:none;
+
+}
+
+
+.online-action{
+
+padding:10px;
+
+}
+
+
+.online-hero{
+
+padding:48px 0;
+
+}
+
+
+.online-hero h1{
+
+font-size:36px;
+
+}
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
 
 
 <!-- =====================================================
-     FONT AWESOME
-====================================================== -->
-
-<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
-
-<!-- =====================================================
-     ONLINE STORE CSS
-====================================================== -->
-
-<link rel="stylesheet"
-      href="online.css">
-
-</head><body><!-- =====================================================
      STORE HEADER
-====================================================== -->
+===================================================== -->
 
 <header class="online-header">
 
-    <div class="online-container">
+<div class="online-container">
 
 
-        <!-- LOGO -->
+<!-- LOGO -->
 
-        <a href="../index.html"
-           class="online-logo">
+<a href="../index.html"
+class="online-logo"
+aria-label="Nexpak Security Solutions Home">
 
-            <img
-                src="../images/logo.png"
-                alt="Nexpak Security Solutions"
-            >
+<img
+src="../images/logo.png"
+alt="Nexpak Security Solutions">
 
-        </a>
-
-
-        <!-- SEARCH -->
-
-        <div class="online-search">
-
-            <input
-                type="search"
-                id="onlineSearch"
-                placeholder="Search security products..."
-                autocomplete="off"
-                aria-label="Search security products"
-            >
-
-            <button
-                type="button"
-                id="onlineSearchButton"
-                aria-label="Search">
-
-                <i class="fas fa-search"></i>
-
-            </button>
-
-        </div>
+</a>
 
 
-        <!-- HEADER ACTIONS -->
+<!-- SEARCH -->
 
-        <div class="online-actions">
+<div class="online-search">
 
-
-            <!-- ACCOUNT -->
-
-            <button
-                type="button"
-                id="onlineAccountButton"
-                class="online-action"
-                aria-label="My Account">
-
-                <i class="far fa-user"></i>
-
-                <span>
-                    Account
-                </span>
-
-            </button>
+<input
+type="search"
+id="onlineSearch"
+placeholder="Search security kits..."
+autocomplete="off"
+aria-label="Search security kits">
 
 
-            <!-- WISHLIST -->
+<button
+type="button"
+id="onlineSearchButton"
+aria-label="Search">
 
-            <button
-                type="button"
-                id="onlineWishlistButton"
-                class="online-action"
-                aria-label="Wishlist">
+<i class="fas fa-search"></i>
 
-                <i class="far fa-heart"></i>
+</button>
 
-                <span>
-                    Wishlist
-                </span>
-
-                <b id="onlineWishlistCount">
-                    0
-                </b>
-
-            </button>
+</div>
 
 
-            <!-- CART -->
+<!-- HEADER ACTIONS -->
 
-            <button
-                type="button"
-                id="onlineCartButton"
-                class="online-action cart-action"
-                aria-label="Shopping Cart">
-
-                <i class="fas fa-shopping-cart"></i>
-
-                <span>
-                    Cart
-                </span>
-
-                <b id="onlineCartCount">
-                    0
-                </b>
-
-            </button>
+<div class="online-actions">
 
 
-        </div>
+<button
+type="button"
+id="onlineAccountButton"
+class="online-action"
+aria-label="My Account">
 
-    </div>
+<i class="far fa-user"></i>
+
+<span> Account</span>
+
+</button>
+
+
+<button
+type="button"
+id="onlineWishlistButton"
+class="online-action"
+aria-label="Wishlist">
+
+<i class="far fa-heart"></i>
+
+<span> Wishlist</span>
+
+<b id="onlineWishlistCount">0</b>
+
+</button>
+
+
+<button
+type="button"
+id="onlineCartButton"
+class="online-action"
+aria-label="Shopping Cart">
+
+<i class="fas fa-shopping-cart"></i>
+
+<span> Cart</span>
+
+<b id="onlineCartCount">0</b>
+
+</button>
+
+
+</div>
+
+
+</div>
 
 </header>
 
 
 
 <!-- =====================================================
-     STORE NAVIGATION
-====================================================== -->
+     CATEGORY NAVIGATION
+===================================================== -->
 
 <nav
-    class="online-navigation"
-    aria-label="Store categories">
+class="online-navigation"
+aria-label="Store Categories">
 
-    <div class="online-container">
-
-
-        <!-- ALL PRODUCTS -->
-
-        <button
-            type="button"
-            class="online-category active"
-            data-category="all">
-
-            <i class="fas fa-store"></i>
-
-            <span>
-                All Products
-            </span>
-
-        </button>
+<div class="online-container">
 
 
-        <!-- CCTV -->
+<button
+type="button"
+class="online-category active"
+data-category="all">
 
-        <button
-            type="button"
-            class="online-category"
-            data-category="cctv">
+<i class="fas fa-store"></i>
 
-            <i class="fas fa-video"></i>
+All Kits
 
-            <span>
-                CCTV
-            </span>
-
-        </button>
+</button>
 
 
-        <!-- GATE AUTOMATION -->
+<button
+type="button"
+class="online-category"
+data-category="electric-fencing">
 
-        <button
-            type="button"
-            class="online-category"
-            data-category="gate-automation">
+<i class="fas fa-bolt"></i>
 
-            <i class="fas fa-house-lock"></i>
+Electric Fencing
 
-            <span>
-                Gate Automation
-            </span>
-
-        </button>
+</button>
 
 
-        <!-- ELECTRIC FENCING -->
+<button
+type="button"
+class="online-category"
+data-category="roboguard">
 
-        <button
-            type="button"
-            class="online-category"
-            data-category="electric-fencing">
+<i class="fas fa-shield-halved"></i>
 
-            <i class="fas fa-bolt"></i>
+Roboguard
 
-            <span>
-                Electric Fencing
-            </span>
-
-        </button>
+</button>
 
 
-        <!-- ALARM SYSTEMS -->
+<button
+type="button"
+class="online-category"
+data-category="cctv">
 
-        <button
-            type="button"
-            class="online-category"
-            data-category="alarms">
+<i class="fas fa-video"></i>
 
-            <i class="fas fa-bell"></i>
+HD CCTV
 
-            <span>
-                Alarm Systems
-            </span>
-
-        </button>
+</button>
 
 
-        <!-- ROBOGUARD -->
+<button
+type="button"
+class="online-category"
+data-category="ip-cctv">
 
-        <button
-            type="button"
-            class="online-category"
-            data-category="roboguard">
+<i class="fas fa-network-wired"></i>
 
-            <i class="fas fa-shield-halved"></i>
+IP CCTV
 
-            <span>
-                Roboguard
-            </span>
-
-        </button>
+</button>
 
 
-        <!-- ACCESS CONTROL -->
+<button
+type="button"
+class="online-category"
+data-category="alarms">
 
-        <button
-            type="button"
-            class="online-category"
-            data-category="access-control">
+<i class="fas fa-bell"></i>
 
-            <i class="fas fa-fingerprint"></i>
+Alarms
 
-            <span>
-                Access Control
-            </span>
-
-        </button>
+</button>
 
 
-        <!-- INTERCOM -->
+<button
+type="button"
+class="online-category"
+data-category="gate-automation">
 
-        <button
-            type="button"
-            class="online-category"
-            data-category="intercom">
+<i class="fas fa-house-lock"></i>
 
-            <i class="fas fa-door-open"></i>
+Gate Automation
 
-            <span>
-                Intercoms
-            </span>
-
-        </button>
+</button>
 
 
-        <!-- ACCESSORIES -->
-
-        <button
-            type="button"
-            class="online-category"
-            data-category="accessories">
-
-            <i class="fas fa-toolbox"></i>
-
-            <span>
-                Accessories
-            </span>
-
-        </button>
-
-
-    </div>
+</div>
 
 </nav>
 
 
-<!-- =====================================================
-     PART 1/8 COMPLETE
-     PART 2/8 CONTINUES BELOW
-====================================================== -->
-    <!-- =====================================================
-         ONLINE STORE HERO
-         PART 2/8
-    ====================================================== --><main>
-
-
-    <!-- =================================================
-         HERO SECTION
-    ================================================== -->
-
-    <section class="online-hero">
-
-        <div class="online-container">
-
-
-            <div class="online-hero-content">
-
-
-                <!-- HERO LABEL -->
-
-                <span class="online-hero-label">
-
-                    <i class="fas fa-shield-halved"></i>
-
-                    NEXPAK SECURITY STORE
-
-                </span>
-
-
-                <!-- HERO TITLE -->
-
-                <h1>
-
-                    Professional Security.
-
-                    <br>
-
-                    <strong>
-                        Delivered To Your Door.
-                    </strong>
-
-                </h1>
-
-
-                <!-- HERO DESCRIPTION -->
-
-                <p>
-
-                    Shop complete security kits and professional
-                    equipment for homes, businesses, estates,
-                    warehouses and agricultural properties.
-
-                </p>
-
-
-                <!-- HERO ACTIONS -->
-
-                <div class="online-hero-buttons">
-
-
-                    <a
-                        href="#onlineProducts"
-                        class="online-primary-btn">
-
-                        <i class="fas fa-cart-shopping"></i>
-
-                        Shop Security Products
-
-                    </a>
-
-
-                    <a
-                        href="../quote.html"
-                        class="online-secondary-btn">
-
-                        <i class="fas fa-file-invoice"></i>
-
-                        Request Custom Quote
-
-                    </a>
-
-
-                </div>
-
-
-                <!-- HERO TRUST POINTS -->
-
-                <div class="online-hero-trust">
-
-
-                    <div>
-
-                        <i class="fas fa-check-circle"></i>
-
-                        <span>
-                            Professional Equipment
-                        </span>
-
-                    </div>
-
-
-                    <div>
-
-                        <i class="fas fa-check-circle"></i>
-
-                        <span>
-                            South African Support
-                        </span>
-
-                    </div>
-
-
-                    <div>
-
-                        <i class="fas fa-check-circle"></i>
-
-                        <span>
-                            Complete Security Kits
-                        </span>
-
-                    </div>
-
-
-                </div>
-
-
-            </div>
-
-
-            <!-- HERO IMAGE -->
-
-            <div class="online-hero-image">
-
-                <img
-                    src="../images/banners/security-banner.png"
-                    alt="Nexpak Security Solutions"
-                    loading="eager"
-                >
-
-            </div>
-
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =================================================
-         SHOP BY CATEGORY
-    ================================================== -->
-
-    <section
-        class="online-category-section"
-        aria-labelledby="onlineCategoryHeading">
-
-        <div class="online-container">
-
-
-            <!-- SECTION HEADING -->
-
-            <div class="online-section-heading">
-
-                <span>
-                    SHOP BY CATEGORY
-                </span>
-
-                <h2 id="onlineCategoryHeading">
-                    Everything You Need To Secure Your Property
-                </h2>
-
-                <p>
-                    Browse complete security solutions and
-                    professional equipment.
-                </p>
-
-            </div>
-
-
-            <!-- CATEGORY GRID -->
-
-            <div
-                class="online-category-grid"
-                id="onlineCategoryGrid">
-
-
-                <!-- CCTV -->
-
-                <button
-                    type="button"
-                    class="online-category-card"
-                    data-category="cctv">
-
-                    <div class="online-category-icon">
-
-                        <i class="fas fa-video"></i>
-
-                    </div>
-
-                    <h3>
-                        CCTV Systems
-                    </h3>
-
-                    <p>
-                        HD, DVR, NVR &amp; IP CCTV kits
-                    </p>
-
-                    <span>
-
-                        Shop Now
-
-                        <i class="fas fa-arrow-right"></i>
-
-                    </span>
-
-                </button>
-
-
-                <!-- GATE AUTOMATION -->
-
-                <button
-                    type="button"
-                    class="online-category-card"
-                    data-category="gate-automation">
-
-                    <div class="online-category-icon">
-
-                        <i class="fas fa-house-lock"></i>
-
-                    </div>
-
-                    <h3>
-                        Gate Automation
-                    </h3>
-
-                    <p>
-                        Sliding &amp; swing gate motor kits
-                    </p>
-
-                    <span>
-
-                        Shop Now
-
-                        <i class="fas fa-arrow-right"></i>
-
-                    </span>
-
-                </button>
-
-
-                <!-- ELECTRIC FENCING -->
-
-                <button
-                    type="button"
-                    class="online-category-card"
-                    data-category="electric-fencing">
-
-                    <div class="online-category-icon">
-
-                        <i class="fas fa-bolt"></i>
-
-                    </div>
-
-                    <h3>
-                        Electric Fencing
-                    </h3>
-
-                    <p>
-                        Residential, commercial &amp; agricultural
-                    </p>
-
-                    <span>
-
-                        Shop Now
-
-                        <i class="fas fa-arrow-right"></i>
-
-                    </span>
-
-                </button>
-
-
-                <!-- ALARM SYSTEMS -->
-
-                <button
-                    type="button"
-                    class="online-category-card"
-                    data-category="alarms">
-
-                    <div class="online-category-icon">
-
-                        <i class="fas fa-bell"></i>
-
-                    </div>
-
-                    <h3>
-                        Alarm Systems
-                    </h3>
-
-                    <p>
-                        Complete alarm security kits
-                    </p>
-
-                    <span>
-
-                        Shop Now
-
-                        <i class="fas fa-arrow-right"></i>
-
-                    </span>
-
-                </button>
-
-
-                <!-- ROBOGUARD -->
-
-                <button
-                    type="button"
-                    class="online-category-card"
-                    data-category="roboguard">
-
-                    <div class="online-category-icon">
-
-                        <i class="fas fa-shield-halved"></i>
-
-                    </div>
-
-                    <h3>
-                        Roboguard
-                    </h3>
-
-                    <p>
-                        Perimeter detection systems
-                    </p>
-
-                    <span>
-
-                        Shop Now
-
-                        <i class="fas fa-arrow-right"></i>
-
-                    </span>
-
-                </button>
-
-
-                <!-- ACCESS CONTROL -->
-
-                <button
-                    type="button"
-                    class="online-category-card"
-                    data-category="access-control">
-
-                    <div class="online-category-icon">
-
-                        <i class="fas fa-fingerprint"></i>
-
-                    </div>
-
-                    <h3>
-                        Access Control
-                    </h3>
-
-                    <p>
-                        Secure doors &amp; entry points
-                    </p>
-
-                    <span>
-
-                        Shop Now
-
-                        <i class="fas fa-arrow-right"></i>
-
-                    </span>
-
-                </button>
-
-
-                <!-- INTERCOMS -->
-
-                <button
-                    type="button"
-                    class="online-category-card"
-                    data-category="intercom">
-
-                    <div class="online-category-icon">
-
-                        <i class="fas fa-door-open"></i>
-
-                    </div>
-
-                    <h3>
-                        Intercoms
-                    </h3>
-
-                    <p>
-                        Audio &amp; video entry communication
-                    </p>
-
-                    <span>
-
-                        Shop Now
-
-                        <i class="fas fa-arrow-right"></i>
-
-                    </span>
-
-                </button>
-
-
-                <!-- ACCESSORIES -->
-
-                <button
-                    type="button"
-                    class="online-category-card"
-                    data-category="accessories">
-
-                    <div class="online-category-icon">
-
-                        <i class="fas fa-toolbox"></i>
-
-                    </div>
-
-                    <h3>
-                        Security Accessories
-                    </h3>
-
-                    <p>
-                        Cables, power supplies, locks &amp; accessories
-                    </p>
-
-                    <span>
-
-                        Shop Now
-
-                        <i class="fas fa-arrow-right"></i>
-
-                    </span>
-
-                </button>
-
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         PART 2/8 COMPLETE
-         PART 3/8 CONTINUES BELOW
-    ====================================================== -->
-        <!-- =====================================================
-             ONLINE PRODUCT STORE
-             PART 3/8
-        ====================================================== -->    <section
-        class="online-products-section"
-        id="onlineProducts"
-        aria-labelledby="onlineProductsHeading">
-
-        <div class="online-container">
-
-
-            <!-- =============================================
-                 PRODUCT SECTION HEADER
-            ============================================== -->
-
-            <div class="online-section-heading products-heading">
-
-                <div>
-
-                    <span>
-                        NEXPAK ONLINE STORE
-                    </span>
-
-                    <h2 id="onlineProductsHeading">
-                        Shop Security Equipment
-                    </h2>
-
-                    <p>
-                        Complete security kits and professional
-                        equipment ready to order online.
-                    </p>
-
-                </div>
-
-
-                <!-- VIEW CONTROLS -->
-
-                <div
-                    class="online-view-controls"
-                    role="group"
-                    aria-label="Product view">
-
-                    <button
-                        type="button"
-                        class="online-view-btn active"
-                        id="onlineGridView"
-                        aria-label="Grid View"
-                        aria-pressed="true">
-
-                        <i class="fas fa-grip"></i>
-
-                    </button>
-
-
-                    <button
-                        type="button"
-                        class="online-view-btn"
-                        id="onlineListView"
-                        aria-label="List View"
-                        aria-pressed="false">
-
-                        <i class="fas fa-list"></i>
-
-                    </button>
-
-                </div>
-
-            </div>
-
-
-
-            <!-- =============================================
-                 STORE TOOLBAR
-            ============================================== -->
-
-            <div class="online-toolbar">
-
-
-                <!-- RESULT COUNT -->
-
-                <div class="online-results">
-
-                    <strong id="onlineProductCount">
-                        0
-                    </strong>
-
-                    <span>
-                        Products
-                    </span>
-
-                </div>
-
-
-                <!-- ACTIVE CATEGORY -->
-
-                <div class="online-active-filter">
-
-                    <span>
-                        Showing:
-                    </span>
-
-                    <strong id="onlineActiveCategory">
-                        All Products
-                    </strong>
-
-                </div>
-
-
-                <!-- MOBILE FILTER BUTTON -->
-
-                <button
-                    type="button"
-                    class="online-filter-toggle"
-                    id="onlineFilterToggle"
-                    aria-label="Open product filters"
-                    aria-controls="onlineFilterSidebar"
-                    aria-expanded="false">
-
-                    <i class="fas fa-sliders"></i>
-
-                    <span>
-                        Filters
-                    </span>
-
-                </button>
-
-
-                <!-- SORT -->
-
-                <div class="online-sort">
-
-                    <label
-                        for="onlineSortProducts">
-
-                        Sort By:
-
-                    </label>
-
-
-                    <select
-                        id="onlineSortProducts"
-                        aria-label="Sort products">
-
-                        <option value="featured">
-                            Featured
-                        </option>
-
-                        <option value="price-low">
-                            Price: Low to High
-                        </option>
-
-                        <option value="price-high">
-                            Price: High to Low
-                        </option>
-
-                        <option value="name">
-                            Name: A to Z
-                        </option>
-
-                        <option value="rating">
-                            Customer Rating
-                        </option>
-
-                        <option value="newest">
-                            Newest
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-            </div>
-
-
-
-            <!-- =============================================
-                 STORE LAYOUT
-            ============================================== -->
-
-            <div class="online-store-layout">
-
-
-                <!-- =========================================
-                     FILTER SIDEBAR
-                ========================================== -->
-
-                <aside
-                    class="online-filter-sidebar"
-                    id="onlineFilterSidebar"
-                    aria-label="Product filters">
-
-
-                    <!-- FILTER HEADER -->
-
-                    <div class="online-filter-header">
-
-                        <h3>
-                            Shop By Category
-                        </h3>
-
-
-                        <button
-                            type="button"
-                            id="onlineCloseFilters"
-                            aria-label="Close filters">
-
-                            <i class="fas fa-xmark"></i>
-
-                        </button>
-
-                    </div>
-
-
-
-                    <!-- CATEGORY FILTER -->
-
-                    <div class="online-filter-group">
-
-                        <h4>
-                            Categories
-                        </h4>
-
-                        <div
-                            id="onlineCategoryFilters"
-                            class="online-category-filters">
-
-                            <!--
-                                Categories populated dynamically
-                                by online.js.
-                            -->
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- PRICE FILTER -->
-
-                    <div class="online-filter-group">
-
-                        <h4>
-                            Price Range
-                        </h4>
-
-
-                        <div class="online-price-inputs">
-
-                            <input
-                                type="number"
-                                id="onlineMinPrice"
-                                placeholder="Min"
-                                min="0"
-                                inputmode="decimal"
-                                aria-label="Minimum price"
-                            >
-
-
-                            <span>
-                                —
-                            </span>
-
-
-                            <input
-                                type="number"
-                                id="onlineMaxPrice"
-                                placeholder="Max"
-                                min="0"
-                                inputmode="decimal"
-                                aria-label="Maximum price"
-                            >
-
-                        </div>
-
-
-                        <button
-                            type="button"
-                            id="onlineApplyPrice"
-                            class="online-filter-apply">
-
-                            Apply
-
-                        </button>
-
-                    </div>
-
-
-
-                    <!-- BRAND FILTER -->
-
-                    <div class="online-filter-group">
-
-                        <h4>
-                            Brands
-                        </h4>
-
-
-                        <div
-                            id="onlineBrandFilters"
-                            class="online-brand-filters">
-
-                            <!--
-                                Brands populated dynamically
-                                by online.js.
-                            -->
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- CLEAR FILTERS -->
-
-                    <button
-                        type="button"
-                        id="onlineClearFilters"
-                        class="online-clear-filters">
-
-                        <i class="fas fa-rotate-left"></i>
-
-                        Clear All Filters
-
-                    </button>
-
-
-                </aside>
-
-
-
-                <!-- =========================================
-                     PRODUCT AREA
-                ========================================== -->
-
-                <main
-                    class="online-product-area"
-                    aria-live="polite">
-
-
-                    <!-- ACTIVE FILTERS -->
-
-                    <div
-                        id="onlineActiveFilters"
-                        class="online-active-filters">
-
-                        <!--
-                            Active filters populated dynamically.
-                        -->
-
-                    </div>
-
-
-
-                    <!-- SEARCH RESULT STATUS -->
-
-                    <div
-                        class="online-search-status"
-                        id="onlineSearchStatus"
-                        aria-live="polite"
-                        hidden>
-
-                    </div>
-
-
-
-                    <!-- PRODUCT GRID -->
-
-                    <div
-                        id="onlineProductGrid"
-                        class="online-product-grid">
-
-                        <!--
-                            Products are generated dynamically
-                            by online.js from online-data.js.
-
-                            DO NOT add duplicate product grids.
-                        -->
-
-                    </div>
-
-
-
-                    <!-- NO PRODUCTS MESSAGE -->
-
-                    <div
-                        id="onlineNoProducts"
-                        class="online-no-products"
-                        hidden>
-
-                        <div class="online-empty-icon">
-
-                            <i class="fas fa-box-open"></i>
-
-                        </div>
-
-
-                        <h3>
-                            No Products Found
-                        </h3>
-
-
-                        <p>
-                            Try changing your search or filters.
-                        </p>
-
-
-                        <button
-                            type="button"
-                            id="onlineResetSearch"
-                            class="online-primary-btn">
-
-                            Reset Search
-
-                        </button>
-
-                    </div>
-
-
-
-                    <!-- LOAD MORE -->
-
-                    <div class="online-load-more">
-
-                        <button
-                            type="button"
-                            id="onlineLoadMore"
-                            class="online-secondary-btn">
-
-                            <span>
-                                Load More Products
-                            </span>
-
-                            <i class="fas fa-chevron-down"></i>
-
-                        </button>
-
-                    </div>
-
-
-                </main>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         PART 3/8 COMPLETE
-         PART 4/8 CONTINUES BELOW
-    ====================================================== -->
-        <!-- =====================================================
-             FEATURED SECURITY COLLECTIONS
-             PART 4/8
-        ====================================================== -->    <section
-        class="online-featured-section"
-        aria-labelledby="onlineFeaturedHeading">
-
-        <div class="online-container">
-
-
-            <!-- =============================================
-                 SECTION HEADING
-            ============================================== -->
-
-            <div class="online-section-heading">
-
-                <span>
-                    SECURITY SOLUTIONS
-                </span>
-
-                <h2 id="onlineFeaturedHeading">
-                    Complete Kits. Ready To Secure.
-                </h2>
-
-                <p>
-                    Choose a complete security package or browse
-                    individual equipment for your installation.
-                </p>
-
-            </div>
-
-
-
-            <!-- =============================================
-                 FEATURED COLLECTION GRID
-            ============================================== -->
-
-            <div class="online-featured-grid">
-
-
-                <!-- =========================================
-                     GATE AUTOMATION
-                ========================================== -->
-
-                <article class="online-featured-card">
-
-                    <div class="online-featured-content">
-
-                        <span class="online-featured-label">
-                            GATE AUTOMATION
-                        </span>
-
-                        <h3>
-                            Smart Gate Motor Kits
-                        </h3>
-
-                        <p>
-                            Complete sliding and swing gate
-                            automation solutions for residential
-                            and commercial properties.
-                        </p>
-
-                        <button
-                            type="button"
-                            class="online-featured-btn"
-                            data-category="gate-automation">
-
-                            Shop Gate Motors
-
-                            <i class="fas fa-arrow-right"></i>
-
-                        </button>
-
-                    </div>
-
-
-                    <div class="online-featured-image">
-
-                        <img
-                            src="../images/products/gate-motor.jpg"
-                            alt="Gate automation kit"
-                            loading="lazy"
-                        >
-
-                    </div>
-
-                </article>
-
-
-
-                <!-- =========================================
-                     CCTV
-                ========================================== -->
-
-                <article class="online-featured-card">
-
-                    <div class="online-featured-content">
-
-                        <span class="online-featured-label">
-                            CCTV SECURITY
-                        </span>
-
-                        <h3>
-                            CCTV Surveillance Kits
-                        </h3>
-
-                        <p>
-                            HD and IP CCTV packages with
-                            cameras, recorders and storage
-                            options.
-                        </p>
-
-                        <button
-                            type="button"
-                            class="online-featured-btn"
-                            data-category="cctv">
-
-                            Shop CCTV
-
-                            <i class="fas fa-arrow-right"></i>
-
-                        </button>
-
-                    </div>
-
-
-                    <div class="online-featured-image">
-
-                        <img
-                            src="../images/products/cctv-system.jpg"
-                            alt="CCTV security kit"
-                            loading="lazy"
-                        >
-
-                    </div>
-
-                </article>
-
-
-
-                <!-- =========================================
-                     ELECTRIC FENCING
-                ========================================== -->
-
-                <article class="online-featured-card">
-
-                    <div class="online-featured-content">
-
-                        <span class="online-featured-label">
-                            PERIMETER SECURITY
-                        </span>
-
-                        <h3>
-                            Electric Fencing Kits
-                        </h3>
-
-                        <p>
-                            Complete electric fencing kits
-                            for homes, businesses and farms.
-                        </p>
-
-                        <button
-                            type="button"
-                            class="online-featured-btn"
-                            data-category="electric-fencing">
-
-                            Shop Electric Fencing
-
-                            <i class="fas fa-arrow-right"></i>
-
-                        </button>
-
-                    </div>
-
-
-                    <div class="online-featured-image">
-
-                        <img
-                            src="../images/products/electric-fence-kit.jpg"
-                            alt="Electric fencing kit"
-                            loading="lazy"
-                        >
-
-                    </div>
-
-                </article>
-
-
-
-                <!-- =========================================
-                     ALARM SYSTEMS
-                ========================================== -->
-
-                <article class="online-featured-card">
-
-                    <div class="online-featured-content">
-
-                        <span class="online-featured-label">
-                            INTRUSION SECURITY
-                        </span>
-
-                        <h3>
-                            Alarm Security Kits
-                        </h3>
-
-                        <p>
-                            Reliable alarm systems designed
-                            for homes and commercial properties.
-                        </p>
-
-                        <button
-                            type="button"
-                            class="online-featured-btn"
-                            data-category="alarms">
-
-                            Shop Alarm Systems
-
-                            <i class="fas fa-arrow-right"></i>
-
-                        </button>
-
-                    </div>
-
-
-                    <div class="online-featured-image">
-
-                        <img
-                            src="../images/products/alarm-kit.jpg"
-                            alt="Alarm security kit"
-                            loading="lazy"
-                        >
-
-                    </div>
-
-                </article>
-
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         ONLINE SHOPPING BENEFITS
-    ====================================================== -->
-
-    <section
-        class="online-benefits-section"
-        aria-labelledby="onlineBenefitsHeading">
-
-        <div class="online-container">
-
-
-            <div class="online-section-heading">
-
-                <span>
-                    WHY NEXPAK
-                </span>
-
-                <h2 id="onlineBenefitsHeading">
-                    Security Equipment You Can Depend On
-                </h2>
-
-                <p>
-                    Professional products, convenient ordering
-                    and support for your security requirements.
-                </p>
-
-            </div>
-
-
-            <div class="online-benefits-grid">
-
-
-                <!-- PROFESSIONAL EQUIPMENT -->
-
-                <div class="online-benefit">
-
-                    <div class="online-benefit-icon">
-
-                        <i class="fas fa-shield-halved"></i>
-
-                    </div>
-
-                    <div>
-
-                        <h3>
-                            Professional Equipment
-                        </h3>
-
-                        <p>
-                            Security products selected for
-                            residential, commercial and
-                            industrial applications.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- SECURE ORDERING -->
-
-                <div class="online-benefit">
-
-                    <div class="online-benefit-icon">
-
-                        <i class="fas fa-lock"></i>
-
-                    </div>
-
-                    <div>
-
-                        <h3>
-                            Secure Ordering
-                        </h3>
-
-                        <p>
-                            Add products to your cart and
-                            complete your order through our
-                            secure checkout process.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- DELIVERY -->
-
-                <div class="online-benefit">
-
-                    <div class="online-benefit-icon">
-
-                        <i class="fas fa-truck-fast"></i>
-
-                    </div>
-
-                    <div>
-
-                        <h3>
-                            Delivery Available
-                        </h3>
-
-                        <p>
-                            Delivery options are calculated
-                            according to your order and
-                            delivery location.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- SUPPORT -->
-
-                <div class="online-benefit">
-
-                    <div class="online-benefit-icon">
-
-                        <i class="fas fa-headset"></i>
-
-                    </div>
-
-                    <div>
-
-                        <h3>
-                            Security Support
-                        </h3>
-
-                        <p>
-                            Need help choosing equipment?
-                            Contact Nexpak for professional
-                            assistance.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         CUSTOM QUOTE CTA
-    ====================================================== -->
-
-    <section
-        class="online-quote-section"
-        aria-labelledby="onlineQuoteHeading">
-
-        <div class="online-container">
-
-            <div class="online-quote-box">
-
-
-                <!-- QUOTE ICON -->
-
-                <div class="online-quote-icon">
-
-                    <i class="fas fa-file-invoice-dollar"></i>
-
-                </div>
-
-
-                <!-- QUOTE CONTENT -->
-
-                <div class="online-quote-content">
-
-                    <span>
-                        NEED SOMETHING CUSTOM?
-                    </span>
-
-                    <h2 id="onlineQuoteHeading">
-                        Building a Larger Security System?
-                    </h2>
-
-                    <p>
-                        If you need a custom combination of
-                        CCTV, electric fencing, gate automation,
-                        alarms, access control or other equipment,
-                        request a tailored quotation.
-                    </p>
-
-                </div>
-
-
-                <!-- QUOTE ACTIONS -->
-
-                <div class="online-quote-actions">
-
-
-                    <a
-                        href="../quote.html"
-                        class="online-primary-btn">
-
-                        <i class="fas fa-file-signature"></i>
-
-                        Request A Quote
-
-                    </a>
-
-
-                    <!--
-                        WhatsApp number intentionally kept as
-                        the existing project value.
-                        Replace with the confirmed Nexpak number
-                        before production release if required.
-                    -->
-
-                    <a
-                        href="https://wa.me/27820000000"
-                        class="online-whatsapp-btn"
-                        target="_blank"
-                        rel="noopener noreferrer">
-
-                        <i class="fab fa-whatsapp"></i>
-
-                        WhatsApp Us
-
-                    </a>
-
-
-                </div>
-
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         PART 4/8 COMPLETE
-         PART 5/8 CONTINUES BELOW
-    ====================================================== -->
-        <!-- =====================================================
-             PRODUCT SUPPORT / STORE GUIDANCE
-             PART 5/8
-        ====================================================== -->    <section
-        class="online-store-guidance"
-        aria-labelledby="onlineGuidanceHeading">
-
-        <div class="online-container">
-
-
-            <!-- =============================================
-                 GUIDANCE HEADER
-            ============================================== -->
-
-            <div class="online-section-heading">
-
-                <span>
-                    NEXPAK SECURITY SOLUTIONS
-                </span>
-
-                <h2 id="onlineGuidanceHeading">
-                    Build The Right Security Solution
-                </h2>
-
-                <p>
-                    Not sure which equipment you need?
-                    Start with a complete kit or contact
-                    Nexpak for assistance selecting the
-                    right security solution.
-                </p>
-
-            </div>
-
-
-
-            <!-- =============================================
-                 GUIDANCE CARDS
-            ============================================== -->
-
-            <div class="online-guidance-grid">
-
-
-                <!-- CCTV -->
-
-                <article class="online-guidance-card">
-
-                    <div class="online-guidance-icon">
-
-                        <i class="fas fa-video"></i>
-
-                    </div>
-
-                    <div class="online-guidance-content">
-
-                        <span>
-                            SURVEILLANCE
-                        </span>
-
-                        <h3>
-                            CCTV &amp; IP CCTV
-                        </h3>
-
-                        <p>
-                            Protect your property with
-                            cameras, recorders, storage and
-                            complete surveillance kits.
-                        </p>
-
-                        <button
-                            type="button"
-                            class="online-guidance-btn"
-                            data-category="cctv">
-
-                            Browse CCTV
-
-                            <i class="fas fa-arrow-right"></i>
-
-                        </button>
-
-                    </div>
-
-                </article>
-
-
-
-                <!-- PERIMETER -->
-
-                <article class="online-guidance-card">
-
-                    <div class="online-guidance-icon">
-
-                        <i class="fas fa-bolt"></i>
-
-                    </div>
-
-                    <div class="online-guidance-content">
-
-                        <span>
-                            PERIMETER SECURITY
-                        </span>
-
-                        <h3>
-                            Electric Fencing
-                        </h3>
-
-                        <p>
-                            Find energizers, fence accessories
-                            and complete electric fencing
-                            solutions.
-                        </p>
-
-                        <button
-                            type="button"
-                            class="online-guidance-btn"
-                            data-category="electric-fencing">
-
-                            Browse Electric Fencing
-
-                            <i class="fas fa-arrow-right"></i>
-
-                        </button>
-
-                    </div>
-
-                </article>
-
-
-
-                <!-- ACCESS -->
-
-                <article class="online-guidance-card">
-
-                    <div class="online-guidance-icon">
-
-                        <i class="fas fa-fingerprint"></i>
-
-                    </div>
-
-                    <div class="online-guidance-content">
-
-                        <span>
-                            ACCESS SECURITY
-                        </span>
-
-                        <h3>
-                            Access Control &amp; Intercoms
-                        </h3>
-
-                        <p>
-                            Secure entry points with access
-                            control, intercom and door
-                            communication equipment.
-                        </p>
-
-                        <button
-                            type="button"
-                            class="online-guidance-btn"
-                            data-category="access-control">
-
-                            Browse Access Control
-
-                            <i class="fas fa-arrow-right"></i>
-
-                        </button>
-
-                    </div>
-
-                </article>
-
-
-
-                <!-- ALARMS -->
-
-                <article class="online-guidance-card">
-
-                    <div class="online-guidance-icon">
-
-                        <i class="fas fa-bell"></i>
-
-                    </div>
-
-                    <div class="online-guidance-content">
-
-                        <span>
-                            INTRUSION SECURITY
-                        </span>
-
-                        <h3>
-                            Alarm Systems
-                        </h3>
-
-                        <p>
-                            Choose alarm panels, detectors,
-                            sirens and complete alarm kits
-                            for your property.
-                        </p>
-
-                        <button
-                            type="button"
-                            class="online-guidance-btn"
-                            data-category="alarms">
-
-                            Browse Alarm Systems
-
-                            <i class="fas fa-arrow-right"></i>
-
-                        </button>
-
-                    </div>
-
-                </article>
-
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         RECENTLY VIEWED PRODUCTS
-    ====================================================== -->
-
-    <section
-        class="online-recent-section"
-        id="onlineRecentlyViewed"
-        aria-labelledby="onlineRecentHeading"
-        hidden>
-
-        <div class="online-container">
-
-
-            <div class="online-section-heading">
-
-                <span>
-                    YOUR RECENT ACTIVITY
-                </span>
-
-                <h2 id="onlineRecentHeading">
-                    Recently Viewed
-                </h2>
-
-                <p>
-                    Products you viewed recently will appear here.
-                </p>
-
-            </div>
-
-
-            <!--
-                onlineui.js / online.js may populate this
-                container when recently viewed functionality
-                is available.
-            -->
-
-            <div
-                class="online-recent-grid"
-                id="onlineRecentGrid">
-
-            </div>
-
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         STORE HELP CTA
-    ====================================================== -->
-
-    <section
-        class="online-help-section"
-        aria-labelledby="onlineHelpHeading">
-
-        <div class="online-container">
-
-            <div class="online-help-box">
-
-
-                <div class="online-help-icon">
-
-                    <i class="fas fa-headset"></i>
-
-                </div>
-
-
-                <div class="online-help-content">
-
-                    <span>
-                        NEED HELP CHOOSING?
-                    </span>
-
-                    <h2 id="onlineHelpHeading">
-                        Speak To Nexpak Security Solutions
-                    </h2>
-
-                    <p>
-                        Tell us what you need to secure and
-                        we can help you identify suitable
-                        equipment or prepare a custom quote.
-                    </p>
-
-                </div>
-
-
-                <div class="online-help-actions">
-
-                    <a
-                        href="../quote.html"
-                        class="online-primary-btn">
-
-                        <i class="fas fa-file-invoice"></i>
-
-                        Request A Quote
-
-                    </a>
-
-
-                    <a
-                        href="../contact.html"
-                        class="online-secondary-btn">
-
-                        <i class="fas fa-envelope"></i>
-
-                        Contact Nexpak
-
-                    </a>
-
-                </div>
-
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         PART 5/8 COMPLETE
-         PART 6/8 CONTINUES BELOW
-    ====================================================== -->
-        <!-- =====================================================
-             ONLINE STORE OVERLAYS
-             PART 6/8
-
-             CART
-             WISHLIST
-             ACCOUNT
-             PRODUCT QUICK VIEW
-        ====================================================== -->    <!-- =====================================================
-         CART DRAWER OVERLAY
-    ====================================================== -->
-
-    <div
-        class="online-overlay"
-        id="onlineCartOverlay"
-        hidden
-        aria-hidden="true">
-    </div>
-
-
-    <!-- CART DRAWER -->
-
-    <aside
-        class="online-cart-drawer"
-        id="onlineCartDrawer"
-        aria-labelledby="onlineCartTitle"
-        aria-hidden="true">
-
-        <div class="online-drawer-header">
-
-            <div>
-
-                <span>
-                    NEXPAK ONLINE STORE
-                </span>
-
-                <h2 id="onlineCartTitle">
-                    Your Cart
-                </h2>
-
-            </div>
-
-
-            <button
-                type="button"
-                id="onlineCloseCart"
-                class="online-drawer-close"
-                aria-label="Close shopping cart">
-
-                <i class="fas fa-xmark"></i>
-
-            </button>
-
-        </div>
-
-
-        <!-- CART ITEMS -->
-
-        <div
-            class="online-cart-items"
-            id="onlineCartItems"
-            aria-live="polite">
-
-            <!--
-                onlinecart.js populates cart items here.
-            -->
-
-        </div>
-
-
-        <!-- EMPTY CART -->
-
-        <div
-            class="online-cart-empty"
-            id="onlineCartEmpty"
-            hidden>
-
-            <div class="online-empty-icon">
-
-                <i class="fas fa-cart-shopping"></i>
-
-            </div>
-
-            <h3>
-                Your Cart Is Empty
-            </h3>
-
-            <p>
-                Add security products to your cart
-                to continue.
-            </p>
-
-
-            <button
-                type="button"
-                id="onlineContinueShopping"
-                class="online-primary-btn">
-
-                Continue Shopping
-
-            </button>
-
-        </div>
-
-
-        <!-- CART SUMMARY -->
-
-        <div
-            class="online-cart-summary"
-            id="onlineCartSummary">
-
-            <div class="online-summary-row">
-
-                <span>
-                    Subtotal
-                </span>
-
-                <strong id="onlineCartSubtotal">
-                    R0.00
-                </strong>
-
-            </div>
-
-
-            <div class="online-summary-row">
-
-                <span>
-                    Delivery
-                </span>
-
-                <strong id="onlineCartDelivery">
-                    Calculated at checkout
-                </strong>
-
-            </div>
-
-
-            <div class="online-summary-total">
-
-                <span>
-                    Total
-                </span>
-
-                <strong id="onlineCartTotal">
-                    R0.00
-                </strong>
-
-            </div>
-
-
-            <button
-                type="button"
-                id="onlineCheckoutButton"
-                class="online-primary-btn online-checkout-btn">
-
-                <i class="fas fa-lock"></i>
-
-                Proceed To Checkout
-
-            </button>
-
-
-            <button
-                type="button"
-                id="onlineCartContinueButton"
-                class="online-secondary-btn">
-
-                Continue Shopping
-
-            </button>
-
-        </div>
-
-    </aside>
-
-
-
-    <!-- =====================================================
-         WISHLIST DRAWER
-    ====================================================== -->
-
-    <div
-        class="online-overlay"
-        id="onlineWishlistOverlay"
-        hidden
-        aria-hidden="true">
-    </div>
-
-
-    <aside
-        class="online-wishlist-drawer"
-        id="onlineWishlistDrawer"
-        aria-labelledby="onlineWishlistTitle"
-        aria-hidden="true">
-
-        <div class="online-drawer-header">
-
-            <div>
-
-                <span>
-                    NEXPAK ONLINE STORE
-                </span>
-
-                <h2 id="onlineWishlistTitle">
-                    Wishlist
-                </h2>
-
-            </div>
-
-
-            <button
-                type="button"
-                id="onlineCloseWishlist"
-                class="online-drawer-close"
-                aria-label="Close wishlist">
-
-                <i class="fas fa-xmark"></i>
-
-            </button>
-
-        </div>
-
-
-        <!-- WISHLIST ITEMS -->
-
-        <div
-            class="online-wishlist-items"
-            id="onlineWishlistItems"
-            aria-live="polite">
-
-            <!--
-                Wishlist products populated by onlineui.js.
-            -->
-
-        </div>
-
-
-        <!-- EMPTY WISHLIST -->
-
-        <div
-            class="online-wishlist-empty"
-            id="onlineWishlistEmpty"
-            hidden>
-
-            <div class="online-empty-icon">
-
-                <i class="far fa-heart"></i>
-
-            </div>
-
-            <h3>
-                Your Wishlist Is Empty
-            </h3>
-
-            <p>
-                Save products here while you decide
-                what security equipment you need.
-            </p>
-
-        </div>
-
-    </aside>
-
-
-
-    <!-- =====================================================
-         ACCOUNT MODAL
-    ====================================================== -->
-
-    <div
-        class="online-modal"
-        id="onlineAccountModal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="onlineAccountTitle"
-        hidden>
-
-        <div
-            class="online-modal-backdrop"
-            data-close-modal="onlineAccountModal">
-        </div>
-
-
-        <div class="online-modal-content">
-
-            <div class="online-modal-header">
-
-                <div>
-
-                    <span>
-                        NEXPAK SECURITY
-                    </span>
-
-                    <h2 id="onlineAccountTitle">
-                        My Account
-                    </h2>
-
-                </div>
-
-
-                <button
-                    type="button"
-                    class="online-modal-close"
-                    id="onlineCloseAccount"
-                    aria-label="Close account">
-
-                    <i class="fas fa-xmark"></i>
-
-                </button>
-
-            </div>
-
-
-            <div class="online-account-content">
-
-                <div class="online-account-icon">
-
-                    <i class="far fa-user"></i>
-
-                </div>
-
-
-                <h3>
-                    Customer Account
-                </h3>
-
-
-                <p>
-                    Account functionality can be connected
-                    to the Nexpak customer system.
-                </p>
-
-
-                <div class="online-account-actions">
-
-                    <a
-                        href="../contact.html"
-                        class="online-primary-btn">
-
-                        Contact Nexpak
-
-                    </a>
-
-
-                    <button
-                        type="button"
-                        class="online-secondary-btn"
-                        id="onlineCloseAccountButton">
-
-                        Continue Shopping
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- =====================================================
-         PRODUCT QUICK VIEW MODAL
-    ====================================================== -->
-
-    <div
-        class="online-modal"
-        id="onlineProductModal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="onlineProductModalTitle"
-        hidden>
-
-        <div
-            class="online-modal-backdrop"
-            data-close-modal="onlineProductModal">
-        </div>
-
-
-        <div
-            class="online-modal-content online-product-modal-content">
-
-
-            <!-- MODAL HEADER -->
-
-            <div class="online-modal-header">
-
-                <div>
-
-                    <span>
-                        PRODUCT DETAILS
-                    </span>
-
-                    <h2 id="onlineProductModalTitle">
-                        Security Product
-                    </h2>
-
-                </div>
-
-
-                <button
-                    type="button"
-                    class="online-modal-close"
-                    id="onlineCloseProductModal"
-                    aria-label="Close product details">
-
-                    <i class="fas fa-xmark"></i>
-
-                </button>
-
-            </div>
-
-
-
-            <!-- PRODUCT QUICK VIEW -->
-
-            <div
-                class="online-product-quick-view"
-                id="onlineProductQuickView">
-
-
-                <!-- PRODUCT IMAGE -->
-
-                <div class="online-quick-view-image">
-
-                    <img
-                        id="onlineQuickViewImage"
-                        src="../images/products/security-placeholder.jpg"
-                        alt="Security product"
-                    >
-
-                </div>
-
-
-                <!-- PRODUCT INFORMATION -->
-
-                <div class="online-quick-view-details">
-
-                    <span
-                        id="onlineQuickViewCategory"
-                        class="online-product-category">
-
-                        Security Equipment
-
-                    </span>
-
-
-                    <h3 id="onlineQuickViewName">
-                        Security Product
-                    </h3>
-
-
-                    <div
-                        id="onlineQuickViewRating"
-                        class="online-product-rating"
-                        aria-label="Product rating">
-
-                    </div>
-
-
-                    <p
-                        id="onlineQuickViewDescription">
-
-                        Product information will appear here.
-
-                    </p>
-
-
-                    <strong
-                        id="onlineQuickViewPrice"
-                        class="online-product-price">
-
-                        R0.00
-
-                    </strong>
-
-
-                    <!-- QUANTITY -->
-
-                    <div class="online-quantity-control">
-
-                        <label for="onlineQuickViewQuantity">
-                            Quantity
-                        </label>
-
-
-                        <div>
-
-                            <button
-                                type="button"
-                                id="onlineQuickViewMinus"
-                                aria-label="Decrease quantity">
-
-                                <i class="fas fa-minus"></i>
-
-                            </button>
-
-
-                            <input
-                                type="number"
-                                id="onlineQuickViewQuantity"
-                                value="1"
-                                min="1"
-                                step="1"
-                                inputmode="numeric"
-                                aria-label="Product quantity"
-                            >
-
-
-                            <button
-                                type="button"
-                                id="onlineQuickViewPlus"
-                                aria-label="Increase quantity">
-
-                                <i class="fas fa-plus"></i>
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- ACTIONS -->
-
-                    <div class="online-quick-view-actions">
-
-                        <button
-                            type="button"
-                            id="onlineQuickViewAdd"
-                            class="online-primary-btn">
-
-                            <i class="fas fa-cart-plus"></i>
-
-                            Add To Cart
-
-                        </button>
-
-
-                        <button
-                            type="button"
-                            id="onlineQuickViewWishlist"
-                            class="online-secondary-btn">
-
-                            <i class="far fa-heart"></i>
-
-                            Add To Wishlist
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- =====================================================
-         PART 6/8 COMPLETE
-         PART 7/8 CONTINUES BELOW
-    ====================================================== -->
-                            
 
 <!-- =====================================================
-             CHECKOUT / DELIVERY / CONFIGURATOR UI
-             PART 7/8
-        ====================================================== -->    <!-- =====================================================
-         CHECKOUT MODAL
-    ====================================================== -->
+     MAIN
+===================================================== -->
 
-    <div
-        class="online-modal online-checkout-modal"
-        id="onlineCheckoutModal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="onlineCheckoutTitle"
-        hidden>
+<main>
 
-        <div
-            class="online-modal-backdrop"
-            data-close-modal="onlineCheckoutModal">
-        </div>
 
-
-        <div class="online-modal-content online-checkout-content">
-
-
-            <!-- CHECKOUT HEADER -->
-
-            <div class="online-modal-header">
-
-                <div>
-
-                    <span>
-                        NEXPAK SECURITY STORE
-                    </span>
-
-                    <h2 id="onlineCheckoutTitle">
-                        Secure Checkout
-                    </h2>
-
-                </div>
-
-
-                <button
-                    type="button"
-                    class="online-modal-close"
-                    id="onlineCloseCheckout"
-                    aria-label="Close checkout">
-
-                    <i class="fas fa-xmark"></i>
-
-                </button>
-
-            </div>
-
-
-
-            <!-- CHECKOUT PROGRESS -->
-
-            <div
-                class="online-checkout-progress"
-                aria-label="Checkout progress">
-
-
-                <div
-                    class="online-checkout-step active"
-                    data-checkout-step="1">
-
-                    <span>
-                        1
-                    </span>
-
-                    <strong>
-                        Details
-                    </strong>
-
-                </div>
-
-
-                <div
-                    class="online-checkout-step"
-                    data-checkout-step="2">
-
-                    <span>
-                        2
-                    </span>
-
-                    <strong>
-                        Delivery
-                    </strong>
-
-                </div>
-
-
-                <div
-                    class="online-checkout-step"
-                    data-checkout-step="3">
-
-                    <span>
-                        3
-                    </span>
-
-                    <strong>
-                        Payment
-                    </strong>
-
-                </div>
-
-
-                <div
-                    class="online-checkout-step"
-                    data-checkout-step="4">
-
-                    <span>
-                        4
-                    </span>
-
-                    <strong>
-                        Confirm
-                    </strong>
-
-                </div>
-
-
-            </div>
-
-
-
-            <!-- CHECKOUT BODY -->
-
-            <div
-                class="online-checkout-body"
-                id="onlineCheckoutBody">
-
-
-                <!-- =========================================
-                     CUSTOMER DETAILS
-                ========================================== -->
-
-                <section
-                    class="online-checkout-panel active"
-                    id="onlineCheckoutDetails"
-                    data-checkout-panel="1">
-
-                    <div class="online-checkout-panel-heading">
-
-                        <span>
-                            CUSTOMER INFORMATION
-                        </span>
-
-                        <h3>
-                            Your Details
-                        </h3>
-
-                        <p>
-                            Enter the information required
-                            to process your order.
-                        </p>
-
-                    </div>
-
-
-                    <div class="online-form-grid">
-
-
-                        <div class="online-form-field">
-
-                            <label for="onlineCheckoutFirstName">
-                                First Name
-                            </label>
-
-                            <input
-                                type="text"
-                                id="onlineCheckoutFirstName"
-                                name="firstName"
-                                autocomplete="given-name"
-                                required
-                            >
-
-                        </div>
-
-
-                        <div class="online-form-field">
-
-                            <label for="onlineCheckoutLastName">
-                                Last Name
-                            </label>
-
-                            <input
-                                type="text"
-                                id="onlineCheckoutLastName"
-                                name="lastName"
-                                autocomplete="family-name"
-                                required
-                            >
-
-                        </div>
-
-
-                        <div class="online-form-field">
-
-                            <label for="onlineCheckoutEmail">
-                                Email Address
-                            </label>
-
-                            <input
-                                type="email"
-                                id="onlineCheckoutEmail"
-                                name="email"
-                                autocomplete="email"
-                                required
-                            >
-
-                        </div>
-
-
-                        <div class="online-form-field">
-
-                            <label for="onlineCheckoutPhone">
-                                Phone Number
-                            </label>
-
-                            <input
-                                type="tel"
-                                id="onlineCheckoutPhone"
-                                name="phone"
-                                autocomplete="tel"
-                                required
-                            >
-
-                        </div>
-
-
-                        <div class="online-form-field online-form-field-full">
-
-                            <label for="onlineCheckoutCompany">
-                                Company
-                                <span>
-                                    Optional
-                                </span>
-                            </label>
-
-                            <input
-                                type="text"
-                                id="onlineCheckoutCompany"
-                                name="company"
-                                autocomplete="organization"
-                            >
-
-                        </div>
-
-
-                    </div>
-
-
-                    <div class="online-checkout-actions">
-
-                        <button
-                            type="button"
-                            id="onlineCheckoutToDelivery"
-                            class="online-primary-btn">
-
-                            Continue To Delivery
-
-                            <i class="fas fa-arrow-right"></i>
-
-                        </button>
-
-                    </div>
-
-                </section>
-
-
-
-                <!-- =========================================
-                     DELIVERY DETAILS
-                ========================================== -->
-
-                <section
-                    class="online-checkout-panel"
-                    id="onlineCheckoutDelivery"
-                    data-checkout-panel="2"
-                    hidden>
-
-                    <div class="online-checkout-panel-heading">
-
-                        <span>
-                            DELIVERY INFORMATION
-                        </span>
-
-                        <h3>
-                            Delivery Address
-                        </h3>
-
-                        <p>
-                            Enter the address where your order
-                            should be delivered.
-                        </p>
-
-                    </div>
-
-
-                    <div class="online-form-grid">
-
-
-                        <div class="online-form-field online-form-field-full">
-
-                            <label for="onlineCheckoutAddress">
-                                Street Address
-                            </label>
-
-                            <input
-                                type="text"
-                                id="onlineCheckoutAddress"
-                                name="address"
-                                autocomplete="street-address"
-                                required
-                            >
-
-                        </div>
-
-
-                        <div class="online-form-field">
-
-                            <label for="onlineCheckoutCity">
-                                City
-                            </label>
-
-                            <input
-                                type="text"
-                                id="onlineCheckoutCity"
-                                name="city"
-                                autocomplete="address-level2"
-                                required
-                            >
-
-                        </div>
-
-
-                        <div class="online-form-field">
-
-                            <label for="onlineCheckoutProvince">
-                                Province
-                            </label>
-
-                            <select
-                                id="onlineCheckoutProvince"
-                                name="province"
-                                required>
-
-                                <option value="">
-                                    Select Province
-                                </option>
-
-                                <option value="gauteng">
-                                    Gauteng
-                                </option>
-
-                                <option value="western-cape">
-                                    Western Cape
-                                </option>
-
-                                <option value="kwazulu-natal">
-                                    KwaZulu-Natal
-                                </option>
-
-                                <option value="eastern-cape">
-                                    Eastern Cape
-                                </option>
-
-                                <option value="free-state">
-                                    Free State
-                                </option>
-
-                                <option value="limpopo">
-                                    Limpopo
-                                </option>
-
-                                <option value="mpumalanga">
-                                    Mpumalanga
-                                </option>
-
-                                <option value="north-west">
-                                    North West
-                                </option>
-
-                                <option value="northern-cape">
-                                    Northern Cape
-                                </option>
-
-                            </select>
-
-                        </div>
-
-
-                        <div class="online-form-field">
-
-                            <label for="onlineCheckoutPostalCode">
-                                Postal Code
-                            </label>
-
-                            <input
-                                type="text"
-                                id="onlineCheckoutPostalCode"
-                                name="postalCode"
-                                autocomplete="postal-code"
-                                inputmode="numeric"
-                                required
-                            >
-
-                        </div>
-
-
-                        <div class="online-form-field">
-
-                            <label for="onlineCheckoutDeliveryMethod">
-                                Delivery Method
-                            </label>
-
-                            <select
-                                id="onlineCheckoutDeliveryMethod"
-                                name="deliveryMethod"
-                                required>
-
-                                <option value="">
-                                    Select Delivery
-                                </option>
-
-                                <option value="standard">
-                                    Standard Delivery
-                                </option>
-
-                                <option value="express">
-                                    Express Delivery
-                                </option>
-
-                                <option value="collection">
-                                    Collection
-
-                                </option>
-
-                            </select>
-
-                        </div>
-
-
-                    </div>
-
-
-                    <!-- DELIVERY RESULT -->
-
-                    <div
-                        class="online-delivery-result"
-                        id="onlineDeliveryResult"
-                        aria-live="polite">
-
-                        <span>
-                            Delivery Cost
-                        </span>
-
-                        <strong id="onlineDeliveryCost">
-                            Calculating...
-                        </strong>
-
-                    </div>
-
-
-                    <div class="online-checkout-actions">
-
-                        <button
-                            type="button"
-                            id="onlineDeliveryBack"
-                            class="online-secondary-btn">
-
-                            <i class="fas fa-arrow-left"></i>
-
-                            Back
-
-                        </button>
-
-
-                        <button
-                            type="button"
-                            id="onlineCheckoutToPayment"
-                            class="online-primary-btn">
-
-                            Continue To Payment
-
-                            <i class="fas fa-arrow-right"></i>
-
-                        </button>
-
-                    </div>
-
-                </section>
-
-
-
-                <!-- =========================================
-                     PAYMENT
-                ========================================== -->
-
-                <section
-                    class="online-checkout-panel"
-                    id="onlineCheckoutPayment"
-                    data-checkout-panel="3"
-                    hidden>
-
-                    <div class="online-checkout-panel-heading">
-
-                        <span>
-                            PAYMENT
-                        </span>
-
-                        <h3>
-                            Select Payment Method
-                        </h3>
-
-                        <p>
-                            Choose your preferred payment
-                            method for this order.
-                        </p>
-
-                    </div>
-
-
-                    <div
-                        class="online-payment-options"
-                        id="onlinePaymentOptions">
-
-
-                        <label class="online-payment-option">
-
-                            <input
-                                type="radio"
-                                name="paymentMethod"
-                                value="eft"
-                                checked
-                            >
-
-                            <span class="online-payment-icon">
-
-                                <i class="fas fa-building-columns"></i>
-
-                            </span>
-
-                            <span>
-
-                                <strong>
-                                    EFT / Bank Transfer
-                                </strong>
-
-                                <small>
-                                    Pay by electronic bank transfer.
-                                </small>
-
-                            </span>
-
-                        </label>
-
-
-                        <label class="online-payment-option">
-
-                            <input
-                                type="radio"
-                                name="paymentMethod"
-                                value="online"
-                            >
-
-                            <span class="online-payment-icon">
-
-                                <i class="fas fa-credit-card"></i>
-
-                            </span>
-
-                            <span>
-
-                                <strong>
-                                    Online Payment
-                                </strong>
-
-                                <small>
-                                    Continue to the configured
-                                    online payment gateway.
-                                </small>
-
-                            </span>
-
-                        </label>
-
-
-                        <label class="online-payment-option">
-
-                            <input
-                                type="radio"
-                                name="paymentMethod"
-                                value="collection"
-                            >
-
-                            <span class="online-payment-icon">
-
-                                <i class="fas fa-store"></i>
-
-                            </span>
-
-                            <span>
-
-                                <strong>
-                                    Pay On Collection
-                                </strong>
-
-                                <small>
-                                    Available where applicable.
-                                </small>
-
-                            </span>
-
-                        </label>
-
-
-                    </div>
-
-
-                    <div class="online-checkout-actions">
-
-                        <button
-                            type="button"
-                            id="onlinePaymentBack"
-                            class="online-secondary-btn">
-
-                            <i class="fas fa-arrow-left"></i>
-
-                            Back
-
-                        </button>
-
-
-                        <button
-                            type="button"
-                            id="onlineCheckoutToConfirm"
-                            class="online-primary-btn">
-
-                            Review Order
-
-                            <i class="fas fa-arrow-right"></i>
-
-                        </button>
-
-                    </div>
-
-                </section>
-
-
-
-                <!-- =========================================
-                     ORDER CONFIRMATION
-                ========================================== -->
-
-                <section
-                    class="online-checkout-panel"
-                    id="onlineCheckoutConfirm"
-                    data-checkout-panel="4"
-                    hidden>
-
-                    <div class="online-checkout-panel-heading">
-
-                        <span>
-                            ORDER REVIEW
-                        </span>
-
-                        <h3>
-                            Confirm Your Order
-                        </h3>
-
-                        <p>
-                            Review your information and order
-                            total before submitting.
-                        </p>
-
-                    </div>
-
-
-                    <!-- ORDER ITEMS -->
-
-                    <div
-                        class="online-checkout-review"
-                        id="onlineCheckoutReview">
-
-                        <!--
-                            onlinecheckout.js populates
-                            the order review.
-                        -->
-
-                    </div>
-
-
-                                       <!-- ORDER TOTALS -->
-
-                    <div class="online-checkout-totals">
-
-                        <div class="online-summary-row">
-
-                            <span>
-                                Products
-                            </span>
-
-                            <strong id="onlineCheckoutProductsTotal">
-                                R0.00
-                            </strong>
-
-                        </div>
-
-
-                        <div class="online-summary-row">
-
-                            <span>
-                                Delivery
-                            </span>
-
-                            <strong id="onlineCheckoutDeliveryTotal">
-                                R0.00
-                            </strong>
-
-                        </div>
-
-
-                        <div class="online-summary-total">
-
-                            <span>
-                                Order Total
-                            </span>
-
-                            <strong id="onlineCheckoutGrandTotal">
-                                R0.00
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- TERMS -->
-
-                    <label class="online-checkbox-field">
-
-                        <input
-                            type="checkbox"
-                            id="onlineCheckoutTerms"
-                            required
-                        >
-
-                        <span>
-                            I confirm that the order details
-                            provided are correct and agree to
-                            the applicable store terms.
-                        </span>
-
-                    </label>
-
-
-                    <div class="online-checkout-actions">
-
-                        <button
-                            type="button"
-                            id="onlineConfirmBack"
-                            class="online-secondary-btn">
-
-                            <i class="fas fa-arrow-left"></i>
-
-                            Back
-
-                        </button>
-
-
-                        <button
-                            type="button"
-                            id="onlinePlaceOrder"
-                            class="online-primary-btn">
-
-                            <i class="fas fa-lock"></i>
-
-                            Place Order
-
-                        </button>
-
-                    </div>
-
-                </section>
-
-
-
-                <!-- =========================================
-                     ORDER SUCCESS
-                ========================================== -->
-
-                <section
-                    class="online-checkout-success"
-                    id="onlineCheckoutSuccess"
-                    hidden>
-
-                    <div class="online-success-icon">
-
-                        <i class="fas fa-check"></i>
-
-                    </div>
-
-
-                    <span>
-                        ORDER RECEIVED
-                    </span>
-
-
-                    <h3>
-                        Thank You For Your Order
-                    </h3>
-
-
-                    <p>
-                        Your order has been submitted
-                        successfully.
-                    </p>
-
-
-                    <strong id="onlineOrderNumber">
-                        Order #
-                    </strong>
-
-
-                    <button
-                        type="button"
-                        id="onlineCloseCheckoutSuccess"
-                        class="online-primary-btn">
-
-                        Continue Shopping
-
-                    </button>
-
-                </section>
-
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- =====================================================
-         SECURITY CONFIGURATOR MODAL
-    ====================================================== -->
-
-    <div
-        class="online-modal online-configurator-modal"
-        id="onlineConfiguratorModal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="onlineConfiguratorTitle"
-        hidden>
-
-        <div
-            class="online-modal-backdrop"
-            data-close-modal="onlineConfiguratorModal">
-        </div>
-
-
-        <div class="online-modal-content">
-
-
-            <div class="online-modal-header">
-
-                <div>
-
-                    <span>
-                        NEXPAK SECURITY SOLUTIONS
-                    </span>
-
-                    <h2 id="onlineConfiguratorTitle">
-                        Security System Configurator
-                    </h2>
-
-                </div>
-
-
-                <button
-                    type="button"
-                    class="online-modal-close"
-                    id="onlineCloseConfigurator"
-                    aria-label="Close configurator">
-
-                    <i class="fas fa-xmark"></i>
-
-                </button>
-
-            </div>
-
-
-
-            <div
-                class="online-configurator"
-                id="onlineConfigurator">
-
-
-                <!-- CONFIGURATOR PROGRESS -->
-
-                <div
-                    class="online-configurator-progress"
-                    id="onlineConfiguratorProgress">
-
-                    <span
-                        class="active"
-                        data-config-step="1">
-                        1
-                    </span>
-
-                    <span data-config-step="2">
-                        2
-                    </span>
-
-                    <span data-config-step="3">
-                        3
-                    </span>
-
-                    <span data-config-step="4">
-                        4
-                    </span>
-
-                </div>
-
-
-
-                <!-- CONFIGURATOR CONTENT -->
-
-                <div
-                    class="online-configurator-content"
-                    id="onlineConfiguratorContent">
-
-                    <!--
-                        onlineconfigurator.js generates
-                        the configuration questions and
-                        recommended products here.
-                    -->
-
-                </div>
-
-
-
-                <!-- CONFIGURATOR ACTIONS -->
-
-                <div
-                    class="online-configurator-actions">
-
-                    <button
-                        type="button"
-                        id="onlineConfiguratorBack"
-                        class="online-secondary-btn">
-
-                        <i class="fas fa-arrow-left"></i>
-
-                        Back
-
-                    </button>
-
-
-                    <button
-                        type="button"
-                        id="onlineConfiguratorNext"
-                        class="online-primary-btn">
-
-                        Continue
-
-                        <i class="fas fa-arrow-right"></i>
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- =====================================================
-         PART 7/8 COMPLETE
-         PART 8/8 CONTINUES BELOW
-    ======================================================
-
-       <!-- =====================================================
-             GLOBAL STORE TOAST
-        ====================================================== -->    <div
-        class="online-toast-container"
-        id="onlineToastContainer"
-        aria-live="polite"
-        aria-atomic="true">
-
-        <!--
-            onlineui.js creates toast notifications here.
-        -->
-
-    </div>
-
-
-
-    <!-- =====================================================
-         GLOBAL LOADING OVERLAY
-    ====================================================== -->
-
-    <div
-        class="online-loading-overlay"
-        id="onlineLoadingOverlay"
-        hidden
-        aria-hidden="true">
-
-        <div class="online-loading-box">
-
-            <div
-                class="online-loading-spinner"
-                aria-hidden="true">
-            </div>
-
-            <span id="onlineLoadingText">
-                Processing...
-            </span>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- =====================================================
-         CONFIRMATION DIALOG
-    ====================================================== -->
-
-    <div
-        class="online-confirm-dialog"
-        id="onlineConfirmDialog"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="onlineConfirmTitle"
-        hidden>
-
-        <div
-            class="online-confirm-backdrop"
-            data-close-confirm>
-        </div>
-
-
-        <div class="online-confirm-box">
-
-            <div class="online-confirm-icon">
-
-                <i class="fas fa-circle-question"></i>
-
-            </div>
-
-
-            <h2 id="onlineConfirmTitle">
-                Confirm Action
-            </h2>
-
-
-            <p id="onlineConfirmMessage">
-                Are you sure you want to continue?
-            </p>
-
-
-            <div class="online-confirm-actions">
-
-                <button
-                    type="button"
-                    id="onlineConfirmCancel"
-                    class="online-secondary-btn">
-
-                    Cancel
-
-                </button>
-
-
-                <button
-                    type="button"
-                    id="onlineConfirmAccept"
-                    class="online-primary-btn">
-
-                    Confirm
-
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- =====================================================
-         BACK TO TOP
-    ====================================================== -->
-
-    <button
-        type="button"
-        id="onlineBackToTop"
-        class="online-back-to-top"
-        aria-label="Back to top"
-        hidden>
-
-        <i class="fas fa-arrow-up"></i>
-
-    </button>
-
-
-
-    <!-- =====================================================
-         STORE FOOTER
-    ====================================================== -->
-
-    <footer class="online-footer">
-
-        <div class="online-container">
-
-
-            <!-- FOOTER MAIN -->
-
-            <div class="online-footer-grid">
-
-
-                <!-- BRAND -->
-
-                <div class="online-footer-brand">
-
-                    <a
-                        href="../index.html"
-                        class="online-footer-logo">
-
-                        <img
-                            src="../images/logo.png"
-                            alt="Nexpak Security Solutions"
-                            loading="lazy"
-                        >
-
-                    </a>
-
-
-                    <p>
-                        Nexpak Security Solutions supplies
-                        professional security equipment and
-                        complete security solutions for homes,
-                        businesses and other properties.
-                    </p>
-
-
-                    <div class="online-footer-social">
-
-                        <a
-                            href="#"
-                            aria-label="Facebook">
-
-                            <i class="fab fa-facebook-f"></i>
-
-                        </a>
-
-
-                        <a
-                            href="#"
-                            aria-label="Instagram">
-
-                            <i class="fab fa-instagram"></i>
-
-                        </a>
-
-
-                        <a
-                            href="#"
-                            aria-label="LinkedIn">
-
-                            <i class="fab fa-linkedin-in"></i>
-
-                        </a>
-
-
-                        <a
-                            href="#"
-                            aria-label="WhatsApp">
-
-                            <i class="fab fa-whatsapp"></i>
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- SHOP -->
-
-                <div class="online-footer-column">
-
-                    <h3>
-                        Shop
-                    </h3>
-
-
-                    <ul>
-
-                        <li>
-                            <button
-                                type="button"
-                                data-category="cctv">
-                                CCTV Systems
-                            </button>
-                        </li>
-
-                        <li>
-                            <button
-                                type="button"
-                                data-category="gate-automation">
-                                Gate Automation
-                            </button>
-                        </li>
-
-                        <li>
-                            <button
-                                type="button"
-                                data-category="electric-fencing">
-                                Electric Fencing
-                            </button>
-                        </li>
-
-                        <li>
-                            <button
-                                type="button"
-                                data-category="alarms">
-                                Alarm Systems
-                            </button>
-                        </li>
-
-                        <li>
-                            <button
-                                type="button"
-                                data-category="roboguard">
-                                Roboguard
-                            </button>
-                        </li>
-
-                        <li>
-                            <button
-                                type="button"
-                                data-category="access-control">
-                                Access Control
-                            </button>
-                        </li>
-
-                    </ul>
-
-                </div>
-
-
-
-                <!-- CUSTOMER SERVICE -->
-
-                <div class="online-footer-column">
-
-                    <h3>
-                        Customer Service
-                    </h3>
-
-
-                    <ul>
-
-                        <li>
-                            <a href="../contact.html">
-                                Contact Us
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="../quote.html">
-                                Request A Quote
-                            </a>
-                        </li>
-
-                        <li>
-                            <button
-                                type="button"
-                                id="onlineFooterCart">
-                                Shopping Cart
-                            </button>
-                        </li>
-
-                        <li>
-                            <button
-                                type="button"
-                                id="onlineFooterWishlist">
-                                Wishlist
-                            </button>
-                        </li>
-
-                        <li>
-                            <button
-                                type="button"
-                                id="onlineFooterAccount">
-                                My Account
-                            </button>
-                        </li>
-
-                    </ul>
-
-                </div>
-
-
-
-                <!-- INFORMATION -->
-
-                <div class="online-footer-column">
-
-                    <h3>
-                        Information
-                    </h3>
-
-
-                    <ul>
-
-                        <li>
-                            <a href="../index.html">
-                                Home
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="../about.html">
-                                About Nexpak
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="../products.html">
-                                Products
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="../contact.html">
-                                Contact
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="../quote.html">
-                                Custom Solutions
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </div>
-
-
-
-                <!-- CONTACT -->
-
-                <div class="online-footer-column online-footer-contact">
-
-                    <h3>
-                        Contact Nexpak
-                    </h3>
-
-
-                    <div class="online-footer-contact-item">
-
-                        <i class="fas fa-phone"></i>
-
-                        <span>
-                            Contact Nexpak Security Solutions
-                        </span>
-
-                    </div>
-
-
-                    <div class="online-footer-contact-item">
-
-                        <i class="fas fa-envelope"></i>
-
-                        <span>
-                            Email Nexpak Security Solutions
-                        </span>
-
-                    </div>
-
-
-                    <div class="online-footer-contact-item">
-
-                        <i class="fas fa-location-dot"></i>
-
-                        <span>
-                            South Africa
-                        </span>
-
-                    </div>
-
-
-                    <a
-                        href="../contact.html"
-                        class="online-footer-contact-btn">
-
-                        <i class="fas fa-headset"></i>
-
-                        Get In Touch
-
-                    </a>
-
-                </div>
-
-
-            </div>
-
-
-
-            <!-- FOOTER BOTTOM -->
-
-            <div class="online-footer-bottom">
-
-                <p>
-                    &copy;
-                    <span id="onlineCurrentYear">
-                        2026
-                    </span>
-                    Nexpak Security Solutions.
-                    All rights reserved.
-                </p>
-
-
-                <div class="online-footer-legal">
-
-                    <a href="#">
-                        Privacy Policy
-                    </a>
-
-                    <a href="#">
-                        Terms &amp; Conditions
-                    </a>
-
-                    <a href="#">
-                        Delivery Information
-                    </a>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </footer>
-
-
-
-    <!-- =====================================================
-         ACCESSIBILITY LIVE REGION
-    ====================================================== -->
-
-    <div
-        id="onlineAriaLive"
-        class="online-visually-hidden"
-        aria-live="polite"
-        aria-atomic="true">
-    </div>
-
-
-
-    <!-- =====================================================
-         JAVASCRIPT ENGINE LOADING
-         IMPORTANT:
-         Load in dependency order.
-    ====================================================== -->
-
-
-    <!-- PRODUCT DATABASE -->
-
-    <script
-        src="online-data.js"
-        defer>
-    </script>
-
-
-    <!-- MAIN STORE ENGINE -->
-
-    <script
-        src="online.js"
-        defer>
-    </script>
-
-
-    <!-- CART ENGINE -->
-
-    <script
-        src="onlinecart.js"
-        defer>
-    </script>
-
-
-    <!-- CHECKOUT ENGINE -->
-
-    <script
-        src="onlinecheckout.js"
-        defer>
-    </script>
-
-
-    <!-- DELIVERY ENGINE -->
-
-    <script
-        src="onlinedelivery.js"
-        defer>
-    </script>
-
-
-    <!-- SECURITY CONFIGURATOR -->
-
-    <script
-        src="onlineconfigurator.js"
-        defer>
-    </script>
-
-
-    <!-- EXTERNAL / SYSTEM INTEGRATIONS -->
-
-    <script
-        src="onlineintegration.js"
-        defer>
-    </script>
-
-
-    <!-- UI ENGINE -->
-
-    <script
-        src="onlineui.js"
-        defer>
-    </script>
-
-
-
-    <!-- =====================================================
-         SMALL PAGE INITIALISATION
-         Kept separate from the main engines.
-    ====================================================== -->
-
-    <script>
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            function () {
-
-                const year =
-                    document.getElementById(
-                        "onlineCurrentYear"
-                    );
-
-                if (year) {
-                    year.textContent =
-                        new Date().getFullYear();
-                }
-
-            }
-        );
-
-    </script>
-
-
-
-    <!-- =====================================================
-         ONLINE.HTML
-         PART 8/8 COMPLETE 🔒
-    ====================================================== -->
 <!-- =====================================================
-             GLOBAL STORE TOAST
-        ====================================================== -->    <div
-        class="online-toast-container"
-        id="onlineToastContainer"
-        aria-live="polite"
-        aria-atomic="true">
+     BLUE STORE HERO
+===================================================== -->
 
-        <!--
-            onlineui.js creates toast notifications here.
-        -->
+<section class="online-hero">
 
-    </div>
+<div class="online-container">
 
+<div class="online-hero-content">
 
 
-    <!-- =====================================================
-         GLOBAL LOADING OVERLAY
-    ====================================================== -->
+<span class="online-hero-label">
 
-    <div
-        class="online-loading-overlay"
-        id="onlineLoadingOverlay"
-        hidden
-        aria-hidden="true">
+<i class="fas fa-shield-halved"></i>
 
-        <div class="online-loading-box">
+NEXPAK SECURITY STORE
 
-            <div
-                class="online-loading-spinner"
-                aria-hidden="true">
-            </div>
+</span>
 
-            <span id="onlineLoadingText">
-                Processing...
-            </span>
 
-        </div>
+<h1>
 
-    </div>
+Professional Security.
 
+<br>
 
+<strong>
+Delivered To Your Door.
+</strong>
 
-    <!-- =====================================================
-         CONFIRMATION DIALOG
-    ====================================================== -->
+</h1>
 
-    <div
-        class="online-confirm-dialog"
-        id="onlineConfirmDialog"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="onlineConfirmTitle"
-        hidden>
 
-        <div
-            class="online-confirm-backdrop"
-            data-close-confirm>
-        </div>
+<p>
 
+Complete security kits for homes,
+businesses, estates, farms and
+other properties.
 
-        <div class="online-confirm-box">
+</p>
 
-            <div class="online-confirm-icon">
 
-                <i class="fas fa-circle-question"></i>
+<div class="online-hero-actions">
 
-            </div>
 
+<a
+href="#kit-shop"
+class="hero-shop-btn">
 
-            <h2 id="onlineConfirmTitle">
-                Confirm Action
-            </h2>
+<i class="fas fa-cart-shopping"></i>
 
+Shop Security Kits
 
-            <p id="onlineConfirmMessage">
-                Are you sure you want to continue?
-            </p>
+</a>
 
 
-            <div class="online-confirm-actions">
+</div>
 
-                <button
-                    type="button"
-                    id="onlineConfirmCancel"
-                    class="online-secondary-btn">
 
-                    Cancel
+</div>
 
-                </button>
+</div>
 
+</section>
 
-                <button
-                    type="button"
-                    id="onlineConfirmAccept"
-                    class="online-primary-btn">
 
-                    Confirm
+<!-- =====================================================
+     PART 2 WILL START HERE
+===================================================== -->
 
-                </button>
+<section id="kit-shop">
 
-            </div>
+<!-- =====================================================
+     PART 2
+     ELECTRIC FENCING + ROBOGUARD KITS
+===================================================== -->
 
-        </div>
+<style>
 
-    </div>
+/* =========================================================
+   PRODUCT STORE
+========================================================= */
 
+.store-shell{
 
+background:#f6f8fb;
 
-    <!-- =====================================================
-         BACK TO TOP
-    ====================================================== -->
+padding:40px 0 70px;
 
-    <button
-        type="button"
-        id="onlineBackToTop"
-        class="online-back-to-top"
-        aria-label="Back to top"
-        hidden>
+}
 
-        <i class="fas fa-arrow-up"></i>
 
-    </button>
+.store-topbar{
 
+display:flex;
 
+justify-content:space-between;
 
-    <!-- =====================================================
-         STORE FOOTER
-    ====================================================== -->
+align-items:end;
 
-    <footer class="online-footer">
+gap:20px;
 
-        <div class="online-container">
+margin-bottom:30px;
 
+}
 
-            <!-- FOOTER MAIN -->
 
-            <div class="online-footer-grid">
+.store-topbar small{
 
+color:#0057ff;
 
-                <!-- BRAND -->
+font-size:11px;
 
-                <div class="online-footer-brand">
+font-weight:800;
 
-                    <a
-                        href="../index.html"
-                        class="online-footer-logo">
+letter-spacing:.12em;
 
-                        <img
-                            src="../images/logo.png"
-                            alt="Nexpak Security Solutions"
-                            loading="lazy"
-                        >
+}
 
-                    </a>
 
+.store-topbar h2{
 
-                    <p>
-                        Nexpak Security Solutions supplies
-                        professional security equipment and
-                        complete security solutions for homes,
-                        businesses and other properties.
-                    </p>
+font-size:32px;
 
+margin:5px 0 0;
 
-                    <div class="online-footer-social">
+color:#071a2d;
 
-                        <a
-                            href="#"
-                            aria-label="Facebook">
+}
 
-                            <i class="fab fa-facebook-f"></i>
 
-                        </a>
+.kit-section{
 
+margin-bottom:55px;
 
-                        <a
-                            href="#"
-                            aria-label="Instagram">
+scroll-margin-top:140px;
 
-                            <i class="fab fa-instagram"></i>
+}
 
-                        </a>
 
+.section-title{
 
-                        <a
-                            href="#"
-                            aria-label="LinkedIn">
+display:flex;
 
-                            <i class="fab fa-linkedin-in"></i>
+align-items:center;
 
-                        </a>
+gap:13px;
 
+margin-bottom:20px;
 
-                        <a
-                            href="#"
-                            aria-label="WhatsApp">
+}
 
-                            <i class="fab fa-whatsapp"></i>
 
-                        </a>
+.section-title-icon{
 
-                    </div>
+width:44px;
 
-                </div>
+height:44px;
 
+border-radius:10px;
 
+background:#eaf1ff;
 
-                <!-- SHOP -->
+display:grid;
 
-                <div class="online-footer-column">
+place-items:center;
 
-                    <h3>
-                        Shop
-                    </h3>
+font-size:20px;
 
+}
 
-                    <ul>
 
-                        <li>
-                            <button
-                                type="button"
-                                data-category="cctv">
-                                CCTV Systems
-                            </button>
-                        </li>
+.section-title small{
 
-                        <li>
-                            <button
-                                type="button"
-                                data-category="gate-automation">
-                                Gate Automation
-                            </button>
-                        </li>
+display:block;
 
-                        <li>
-                            <button
-                                type="button"
-                                data-category="electric-fencing">
-                                Electric Fencing
-                            </button>
-                        </li>
+color:#0057ff;
 
-                        <li>
-                            <button
-                                type="button"
-                                data-category="alarms">
-                                Alarm Systems
-                            </button>
-                        </li>
+font-size:10px;
 
-                        <li>
-                            <button
-                                type="button"
-                                data-category="roboguard">
-                                Roboguard
-                            </button>
-                        </li>
+font-weight:800;
 
-                        <li>
-                            <button
-                                type="button"
-                                data-category="access-control">
-                                Access Control
-                            </button>
-                        </li>
+letter-spacing:.1em;
 
-                    </ul>
+}
 
-                </div>
 
+.section-title h2{
 
+margin:3px 0 0;
 
-                <!-- CUSTOMER SERVICE -->
+font-size:25px;
 
-                <div class="online-footer-column">
+color:#071a2d;
 
-                    <h3>
-                        Customer Service
-                    </h3>
+}
 
 
-                    <ul>
+/* =========================================================
+   SQUARE PRODUCT GRID
+========================================================= */
 
-                        <li>
-                            <a href="../contact.html">
-                                Contact Us
-                            </a>
-                        </li>
+.kit-grid{
 
-                        <li>
-                            <a href="../quote.html">
-                                Request A Quote
-                            </a>
-                        </li>
+display:grid;
 
-                        <li>
-                            <button
-                                type="button"
-                                id="onlineFooterCart">
-                                Shopping Cart
-                            </button>
-                        </li>
+grid-template-columns:
+repeat(4,minmax(0,1fr));
 
-                        <li>
-                            <button
-                                type="button"
-                                id="onlineFooterWishlist">
-                                Wishlist
-                            </button>
-                        </li>
+gap:18px;
 
-                        <li>
-                            <button
-                                type="button"
-                                id="onlineFooterAccount">
-                                My Account
-                            </button>
-                        </li>
+}
 
-                    </ul>
 
-                </div>
+.kit-card{
 
+background:#ffffff;
 
+border:1px solid #e4e8ef;
 
-                <!-- INFORMATION -->
+border-radius:12px;
 
-                <div class="online-footer-column">
+overflow:hidden;
 
-                    <h3>
-                        Information
-                    </h3>
+box-shadow:
+0 3px 12px rgba(7,26,45,.05);
 
+transition:
+transform .2s ease,
+box-shadow .2s ease;
 
-                    <ul>
+}
 
-                        <li>
-                            <a href="../index.html">
-                                Home
-                            </a>
-                        </li>
 
-                        <li>
-                            <a href="../about.html">
-                                About Nexpak
-                            </a>
-                        </li>
+.kit-card:hover{
 
-                        <li>
-                            <a href="../products.html">
-                                Products
-                            </a>
-                        </li>
+transform:translateY(-4px);
 
-                        <li>
-                            <a href="../contact.html">
-                                Contact
-                            </a>
-                        </li>
+box-shadow:
+0 10px 25px rgba(7,26,45,.12);
 
-                        <li>
-                            <a href="../quote.html">
-                                Custom Solutions
-                            </a>
-                        </li>
+}
 
-                    </ul>
 
-                </div>
+/* =========================================================
+   PRODUCT IMAGE
+========================================================= */
 
+.kit-image-wrap{
 
+position:relative;
 
-                <!-- CONTACT -->
+aspect-ratio:1 / 1;
 
-                <div class="online-footer-column online-footer-contact">
+background:#f4f6f8;
 
-                    <h3>
-                        Contact Nexpak
-                    </h3>
+overflow:hidden;
 
+}
 
-                    <div class="online-footer-contact-item">
 
-                        <i class="fas fa-phone"></i>
+.kit-image-wrap img{
 
-                        <span>
-                            Contact Nexpak Security Solutions
-                        </span>
+width:100%;
 
-                    </div>
+height:100%;
 
+object-fit:contain;
 
-                    <div class="online-footer-contact-item">
+display:block;
 
-                        <i class="fas fa-envelope"></i>
+padding:15px;
 
-                        <span>
-                            Email Nexpak Security Solutions
-                        </span>
+transition:
+transform .25s ease;
 
-                    </div>
+}
 
 
-                    <div class="online-footer-contact-item">
+.kit-card:hover
+.kit-image-wrap img{
 
-                        <i class="fas fa-location-dot"></i>
+transform:scale(1.04);
 
-                        <span>
-                            South Africa
-                        </span>
+}
 
-                    </div>
 
+/* WISHLIST */
 
-                    <a
-                        href="../contact.html"
-                        class="online-footer-contact-btn">
+.kit-wishlist{
 
-                        <i class="fas fa-headset"></i>
+position:absolute;
 
-                        Get In Touch
+top:10px;
 
-                    </a>
+right:10px;
 
-                </div>
+width:36px;
 
+height:36px;
 
-            </div>
+border-radius:50%;
 
+border:1px solid #e4e8ef;
 
+background:#ffffff;
 
-            <!-- FOOTER BOTTOM -->
+font-size:20px;
 
-            <div class="online-footer-bottom">
+cursor:pointer;
 
-                <p>
-                    &copy;
-                    <span id="onlineCurrentYear">
-                        2026
-                    </span>
-                    Nexpak Security Solutions.
-                    All rights reserved.
-                </p>
+z-index:5;
 
+}
 
-                <div class="online-footer-legal">
 
-                    <a href="#">
-                        Privacy Policy
-                    </a>
+.kit-wishlist:hover{
 
-                    <a href="#">
-                        Terms &amp; Conditions
-                    </a>
+color:#0057ff;
 
-                    <a href="#">
-                        Delivery Information
-                    </a>
+}
 
-                </div>
 
-            </div>
+/* =========================================================
+   PRODUCT INFORMATION
+========================================================= */
 
-        </div>
+.kit-body{
 
-    </footer>
+padding:15px;
 
+}
 
 
-    <!-- =====================================================
-         ACCESSIBILITY LIVE REGION
-    ====================================================== -->
+.kit-category{
 
-    <div
-        id="onlineAriaLive"
-        class="online-visually-hidden"
-        aria-live="polite"
-        aria-atomic="true">
-    </div>
+display:block;
 
+color:#0057ff;
 
+font-size:10px;
 
-    <!-- =====================================================
-         JAVASCRIPT ENGINE LOADING
-         IMPORTANT:
-         Load in dependency order.
-    ====================================================== -->
+font-weight:800;
 
+letter-spacing:.08em;
 
-    <!-- PRODUCT DATABASE -->
+margin-bottom:7px;
 
-    <script
-        src="online-data.js"
-        defer>
-    </script>
+}
 
 
-    <!-- MAIN STORE ENGINE -->
+.kit-body h3{
 
-    <script
-        src="online.js"
-        defer>
-    </script>
+font-size:15px;
 
+line-height:1.35;
 
-    <!-- CART ENGINE -->
+margin:0;
 
-    <script
-        src="onlinecart.js"
-        defer>
-    </script>
+min-height:62px;
 
+color:#142235;
 
-    <!-- CHECKOUT ENGINE -->
+}
 
-    <script
-        src="onlinecheckout.js"
-        defer>
-    </script>
 
+.kit-description{
 
-    <!-- DELIVERY ENGINE -->
+font-size:12px;
 
-    <script
-        src="onlinedelivery.js"
-        defer>
-    </script>
+color:#667085;
 
+margin:8px 0;
 
-    <!-- SECURITY CONFIGURATOR -->
+line-height:1.45;
 
-    <script
-        src="onlineconfigurator.js"
-        defer>
-    </script>
+}
 
 
-    <!-- EXTERNAL / SYSTEM INTEGRATIONS -->
+/* PRICE */
 
-    <script
-        src="onlineintegration.js"
-        defer>
-    </script>
+.kit-price{
 
+font-size:20px;
 
-    <!-- UI ENGINE -->
+font-weight:800;
 
-    <script
-        src="onlineui.js"
-        defer>
-    </script>
+color:#071a2d;
 
+margin:12px 0;
 
+}
 
-    <!-- =====================================================
-         SMALL PAGE INITIALISATION
-         Kept separate from the main engines.
-    ====================================================== -->
 
-    <script>
+/* =========================================================
+   PRODUCT OPTIONS
+========================================================= */
 
-        document.addEventListener(
-            "DOMContentLoaded",
-            function () {
+.kit-option{
 
-                const year =
-                    document.getElementById(
-                        "onlineCurrentYear"
-                    );
+display:flex;
 
-                if (year) {
-                    year.textContent =
-                        new Date().getFullYear();
-                }
+justify-content:space-between;
 
-            }
-        );
+align-items:center;
 
-    </script>
+gap:8px;
 
+margin:8px 0;
 
+font-size:12px;
 
-    <!-- =====================================================
-         ONLINE.HTML
-         PART 8/8 COMPLETE 🔒
-    ====================================================== -->
+color:#667085;
+
+}
+
+
+.kit-option select{
+
+width:115px;
+
+padding:7px;
+
+border:1px solid #d9dee7;
+
+border-radius:6px;
+
+background:#ffffff;
+
+color:#142235;
+
+font-size:12px;
+
+}
+
+
+/* =========================================================
+   PRODUCT BUTTONS
+========================================================= */
+
+.kit-actions{
+
+display:grid;
+
+grid-template-columns:
+1fr 1.2fr;
+
+gap:7px;
+
+margin-top:12px;
+
+}
+
+
+.kit-actions button{
+
+border-radius:7px;
+
+padding:10px 7px;
+
+cursor:pointer;
+
+font-size:11px;
+
+font-weight:700;
+
+}
+
+
+.kit-details{
+
+background:#ffffff;
+
+border:1px solid #dfe4eb;
+
+color:#142235;
+
+}
+
+
+.kit-details:hover{
+
+border-color:#0057ff;
+
+color:#0057ff;
+
+}
+
+
+.kit-add{
+
+background:#0057ff;
+
+border:1px solid #0057ff;
+
+color:#ffffff;
+
+}
+
+
+.kit-add:hover{
+
+background:#0046d1;
+
+}
+
+
+/* =========================================================
+   WHATSAPP FLOATING BUTTON
+========================================================= */
+
+.nexpak-whatsapp{
+
+position:fixed;
+
+right:20px;
+
+bottom:20px;
+
+width:58px;
+
+height:58px;
+
+border-radius:50%;
+
+background:#25D366;
+
+color:#ffffff;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:30px;
+
+text-decoration:none;
+
+box-shadow:
+0 5px 18px rgba(0,0,0,.25);
+
+z-index:9999;
+
+transition:
+
+transform .2s ease,
+box-shadow .2s ease;
+
+}
+
+
+.nexpak-whatsapp:hover{
+
+transform:
+scale(1.08);
+
+box-shadow:
+0 8px 25px rgba(0,0,0,.3);
+
+}
+
+
+.nexpak-whatsapp-label{
+
+position:absolute;
+
+right:68px;
+
+white-space:nowrap;
+
+background:#071a2d;
+
+color:#ffffff;
+
+font-size:12px;
+
+font-weight:700;
+
+padding:8px 11px;
+
+border-radius:6px;
+
+opacity:0;
+
+pointer-events:none;
+
+transform:translateX(5px);
+
+transition:.2s ease;
+
+}
+
+
+.nexpak-whatsapp:hover
+.nexpak-whatsapp-label{
+
+opacity:1;
+
+transform:translateX(0);
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media(max-width:950px){
+
+.kit-grid{
+
+grid-template-columns:
+repeat(3,minmax(0,1fr));
+
+}
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:700px){
+
+.store-shell{
+
+padding:30px 0 55px;
+
+}
+
+
+.store-topbar h2{
+
+font-size:27px;
+
+}
+
+
+.kit-grid{
+
+grid-template-columns:
+repeat(2,minmax(0,1fr));
+
+gap:11px;
+
+}
+
+
+.kit-body{
+
+padding:11px;
+
+}
+
+
+.kit-body h3{
+
+font-size:13px;
+
+min-height:60px;
+
+}
+
+
+.kit-description{
+
+font-size:11px;
+
+}
+
+
+.kit-price{
+
+font-size:17px;
+
+}
+
+
+.kit-actions{
+
+grid-template-columns:1fr;
+
+}
+
+
+.kit-actions button{
+
+padding:9px 5px;
+
+}
+
+
+.nexpak-whatsapp{
+
+width:54px;
+
+height:54px;
+
+right:16px;
+
+bottom:16px;
+
+font-size:27px;
+
+}
+
+}
+
+
+</style>
+
+
+
+<div class="store-shell">
+
+<div class="online-container">
+
+
+<!-- =====================================================
+     STORE TITLE
+===================================================== -->
+
+<div class="store-topbar">
+
+<div>
+
+<small>NEXPAK ONLINE STORE</small>
+
+<h2>Security Kits</h2>
+
+</div>
+
+</div>
+
+
+
+<!-- =====================================================
+     ELECTRIC FENCING
+===================================================== -->
+
+<section
+class="kit-section"
+id="section-electric-fencing"
+data-category-section="electric-fencing">
+
+
+<div class="section-title">
+
+<div class="section-title-icon">
+
+⚡
+
+</div>
+
+<div>
+
+<small>SECURITY KITS</small>
+
+<h2>Electric Fencing Kits</h2>
+
+</div>
+
+</div>
+
+
+
+<div class="kit-grid">
+
+
+
+<!-- PRODUCT 1 -->
+
+<article
+class="kit-card"
+data-product-id="efkit1"
+data-category="electric-fencing">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/efkit1.png"
+alt="Electric Fence 100m Round Tube 6 Line Kit"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="efkit1"
+aria-label="Add to wishlist">
+
+♡
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+ELECTRIC FENCING
+</span>
+
+
+<h3>
+Electric Fence 100m Round Tube 6 Line Kit
+</h3>
+
+
+<p class="kit-description">
+Complete 100m electric fence kit with
+round tube and 6 lines.
+</p>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="efkit1">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="efkit1">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+
+<!-- PRODUCT 2 -->
+
+<article
+class="kit-card"
+data-product-id="efkit2"
+data-category="electric-fencing">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/efkit2.png"
+alt="Electric Fence 100m Flat Bar 6 Line Kit"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="efkit2">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+ELECTRIC FENCING
+</span>
+
+
+<h3>
+Electric Fence 100m Flat Bar 6 Line Kit
+</h3>
+
+
+<p class="kit-description">
+Complete 100m electric fence kit
+with flat bar and 6 lines.
+</p>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="efkit2">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="efkit2">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+
+<!-- PRODUCT 3 -->
+
+<article
+class="kit-card"
+data-product-id="efkit3"
+data-category="electric-fencing">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/efkit3.png"
+alt="Electric Fence 100m Square Tube 6 Line Kit"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="efkit3">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+ELECTRIC FENCING
+</span>
+
+
+<h3>
+Electric Fence 100m Square Tube 6 Line Kit
+</h3>
+
+
+<p class="kit-description">
+Complete 100m square tube
+6 line electric fence kit.
+</p>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="efkit3">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="efkit3">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+
+<!-- PRODUCT 4 -->
+
+<article
+class="kit-card"
+data-product-id="efkit4"
+data-category="electric-fencing">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/efkit4.png"
+alt="Electric Fence 100m Square Tube 8 Line Kit"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="efkit4">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+ELECTRIC FENCING
+</span>
+
+
+<h3>
+Electric Fence 100m Square Tube 8 Line Kit
+</h3>
+
+
+<p class="kit-description">
+Complete 100m square tube
+8 line electric fence kit.
+</p>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="efkit4">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="efkit4">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+
+<!-- PRODUCT 5 -->
+
+<article
+class="kit-card"
+data-product-id="efkit5"
+data-category="electric-fencing">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/efkit5.png"
+alt="Electric Fence 100m Square Tube 10 Line Kit"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="efkit5">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+ELECTRIC FENCING
+</span>
+
+
+<h3>
+Electric Fence 100m Square Tube 10 Line Kit
+</h3>
+
+
+<p class="kit-description">
+Complete 100m square tube
+10 line electric fence kit.
+</p>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="efkit5">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="efkit5">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+
+<!-- PRODUCT 6 -->
+
+<article
+class="kit-card"
+data-product-id="efkit6"
+data-category="electric-fencing">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/efkit6.png"
+alt="Electric Fence 100m Square Tube 12 Line Kit"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="efkit6">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+ELECTRIC FENCING
+</span>
+
+
+<h3>
+Electric Fence 100m Square Tube 12 Line Kit
+</h3>
+
+
+<p class="kit-description">
+Complete 100m square tube
+12 line electric fence kit.
+</p>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="efkit6">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="efkit6">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+
+<!-- PRODUCT 7 -->
+
+<article
+class="kit-card"
+data-product-id="efkit7"
+data-category="electric-fencing">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/efkit7.png"
+alt="Electric Fence 200m 6 Line Square Tube Kit"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="efkit7">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+ELECTRIC FENCING
+</span>
+
+
+<h3>
+Electric Fence 200m 6 Line Square Tube Kit
+</h3>
+
+
+<p class="kit-description">
+Complete 200m square tube
+6 line electric fence kit.
+</p>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="efkit7">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="efkit7">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+
+<!-- PRODUCT 8 -->
+
+<article
+class="kit-card"
+data-product-id="efkit8"
+data-category="electric-fencing">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/efkit8.png"
+alt="Electric Fence 200m 8 Line Square Tube Kit"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="efkit8">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+ELECTRIC FENCING
+</span>
+
+
+<h3>
+Electric Fence 200m 8 Line Square Tube Kit
+</h3>
+
+
+<p class="kit-description">
+Complete 200m square tube
+8 line electric fence kit.
+</p>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="efkit8">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="efkit8">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+
+<!-- PRODUCT 9 -->
+
+<article
+class="kit-card"
+data-product-id="efkit9"
+data-category="electric-fencing">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/efkit9.png"
+alt="Electric Fence 200m 10 Line Square Tube Kit"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="efkit9">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+ELECTRIC FENCING
+</span>
+
+
+<h3>
+Electric Fence 200m 10 Line Square Tube Kit
+</h3>
+
+
+<p class="kit-description">
+Complete 200m square tube
+10 line electric fence kit.
+</p>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="efkit9">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="efkit9">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+
+<!-- PRODUCT 10 -->
+
+<article
+class="kit-card"
+data-product-id="efkit10"
+data-category="electric-fencing">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/efkit10.png"
+alt="Electric Fence 200m 12 Line Square Tube Kit"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="efkit10">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+ELECTRIC FENCING
+</span>
+
+
+<h3>
+Electric Fence 200m 12 Line Square Tube Kit
+</h3>
+
+
+<p class="kit-description">
+Complete 200m square tube
+12 line electric fence kit.
+</p>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="efkit10">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="efkit10">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     ROBOGUARD KITS
+===================================================== -->
+
+<section
+class="kit-section"
+id="section-roboguard"
+data-category-section="roboguard">
+
+<div class="section-title">
+
+<div class="section-title-icon">
+🛡️
+</div>
+
+<div>
+
+<small>WIRELESS SECURITY</small>
+
+<h2>Roboguard Kits</h2>
+
+</div>
+
+</div>
+
+
+<div class="kit-grid">
+
+
+<!-- =====================================================
+     ROBOGUARD 2 BEAM
+===================================================== -->
+
+<article
+class="kit-card"
+data-product-id="rb2"
+data-category="roboguard">
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/rb2.png"
+alt="Roboguard Wireless Beam 2 Beam Kit"
+loading="lazy">
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="rb2">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+ROBOGUARD
+</span>
+
+<h3>
+Roboguard Wireless Beam 2 Beam Kit
+</h3>
+
+
+<label class="kit-option">
+
+<span>Colour</span>
+
+<select
+data-option="colour"
+aria-label="Roboguard colour">
+
+<option value="green">
+Green
+</option>
+
+<option value="black">
+Black
+</option>
+
+<option value="white">
+White
+</option>
+
+</select>
+
+</label>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="rb2">
+
+View Details
+
+</button>
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="rb2">
+
+<i class="fas fa-cart-plus"></i>
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+
+<!-- =====================================================
+     ROBOGUARD 4 BEAM
+===================================================== -->
+
+<article
+class="kit-card"
+data-product-id="rb4"
+data-category="roboguard">
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/rb4.png"
+alt="Roboguard Wireless Beam 4 Beam Kit"
+loading="lazy">
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="rb4">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+ROBOGUARD
+</span>
+
+<h3>
+Roboguard Wireless Beam 4 Beam Kit
+</h3>
+
+
+<label class="kit-option">
+
+<span>Colour</span>
+
+<select
+data-option="colour"
+aria-label="Roboguard colour">
+
+<option value="green">
+Green
+</option>
+
+<option value="black">
+Black
+</option>
+
+<option value="white">
+White
+</option>
+
+</select>
+
+</label>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="rb4">
+
+View Details
+
+</button>
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="rb4">
+
+<i class="fas fa-cart-plus"></i>
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+
+<!-- =====================================================
+     ROBOGUARD 6 BEAM
+===================================================== -->
+
+<article
+class="kit-card"
+data-product-id="rb6"
+data-category="roboguard">
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/rb6.png"
+alt="Roboguard Wireless Beam 6 Beam Kit"
+loading="lazy">
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="rb6">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+ROBOGUARD
+</span>
+
+<h3>
+Roboguard Wireless Beam 6 Beam Kit
+</h3>
+
+
+<label class="kit-option">
+
+<span>Colour</span>
+
+<select
+data-option="colour"
+aria-label="Roboguard colour">
+
+<option value="green">
+Green
+</option>
+
+<option value="black">
+Black
+</option>
+
+<option value="white">
+White
+</option>
+
+</select>
+
+</label>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="rb6">
+
+View Details
+
+</button>
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="rb6">
+
+<i class="fas fa-cart-plus"></i>
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+
+<!-- =====================================================
+     ROBOGUARD 8 BEAM
+===================================================== -->
+
+<article
+class="kit-card"
+data-product-id="rb8"
+data-category="roboguard">
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/rb8.png"
+alt="Roboguard Wireless Beam 8 Beam Kit"
+loading="lazy">
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="rb8">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+ROBOGUARD
+</span>
+
+<h3>
+Roboguard Wireless Beam 8 Beam Kit
+</h3>
+
+
+<label class="kit-option">
+
+<span>Colour</span>
+
+<select
+data-option="colour"
+aria-label="Roboguard colour">
+
+<option value="green">
+Green
+</option>
+
+<option value="black">
+Black
+</option>
+
+<option value="white">
+White
+</option>
+
+</select>
+
+</label>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="rb8">
+
+View Details
+
+</button>
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="rb8">
+
+<i class="fas fa-cart-plus"></i>
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+</div>
+
+</section>
+
+     <!-- =====================================================
+     PART 3
+     HD CCTV KITS
+===================================================== -->
+
+<section
+class="kit-section"
+id="section-cctv"
+data-category-section="cctv">
+
+
+<div class="section-title">
+
+<div class="section-title-icon">
+📹
+</div>
+
+<div>
+
+<small>CAMERA SECURITY</small>
+
+<h2>HD CCTV Kits</h2>
+
+</div>
+
+</div>
+
+
+<div class="kit-grid">
+
+
+<!-- =====================================================
+     HD CCTV 8 CAMERA
+===================================================== -->
+
+<article
+class="kit-card"
+data-product-id="cctv8"
+data-category="cctv">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/cctv8.png"
+alt="HD CCTV 8 Camera Kit"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="cctv8">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+HD CCTV
+</span>
+
+
+<h3>
+HD CCTV 8 Camera Kit
+</h3>
+
+
+<label class="kit-option">
+
+<span>Camera Type</span>
+
+<select
+data-option="camera-type"
+aria-label="HD CCTV camera type">
+
+<option value="bullet">
+Bullet
+</option>
+
+<option value="dome">
+Dome
+</option>
+
+</select>
+
+</label>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="cctv8">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="cctv8">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+
+</div>
+
+</div>
+
+</article>
+
+
+
+<!-- =====================================================
+     HD CCTV 16 CAMERA
+===================================================== -->
+
+<article
+class="kit-card"
+data-product-id="cctv16"
+data-category="cctv">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/cctv16.png"
+alt="HD CCTV 16 Camera Kit"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="cctv16">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+HD CCTV
+</span>
+
+
+<h3>
+HD CCTV 16 Camera Kit
+</h3>
+
+
+<label class="kit-option">
+
+<span>Camera Type</span>
+
+<select
+data-option="camera-type"
+aria-label="HD CCTV camera type">
+
+<option value="bullet">
+Bullet
+</option>
+
+<option value="dome">
+Dome
+</option>
+
+</select>
+
+</label>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="cctv16">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="cctv16">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+
+</div>
+
+</div>
+
+</article>
+
+
+
+<!-- =====================================================
+     HD CCTV 32 CAMERA
+===================================================== -->
+
+<article
+class="kit-card"
+data-product-id="cctv32"
+data-category="cctv">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/cctv32.png"
+alt="HD CCTV 32 Camera Kit"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="cctv32">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+HD CCTV
+</span>
+
+
+<h3>
+HD CCTV 32 Camera Kit
+</h3>
+
+
+<label class="kit-option">
+
+<span>Camera Type</span>
+
+<select
+data-option="camera-type"
+aria-label="HD CCTV camera type">
+
+<option value="bullet">
+Bullet
+</option>
+
+<option value="dome">
+Dome
+</option>
+
+</select>
+
+</label>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="cctv32">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="cctv32">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+
+</div>
+
+</div>
+
+</article>
+
+
+</div>
+
+     </section>
+
+     <!-- =====================================================
+     PART 4
+     IP CCTV KITS
+===================================================== -->
+
+<section
+class="kit-section"
+id="section-ip-cctv"
+data-category-section="ip-cctv">
+
+
+<div class="section-title">
+
+<div class="section-title-icon">
+🌐
+</div>
+
+<div>
+
+<small>NETWORK CAMERA SECURITY</small>
+
+<h2>IP CCTV Kits</h2>
+
+</div>
+
+</div>
+
+
+<div class="kit-grid">
+
+
+<!-- =====================================================
+     IP CCTV 8 CAMERA
+===================================================== -->
+
+<article
+class="kit-card"
+data-product-id="ipcctv8"
+data-category="ip-cctv">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/ipcctv8.png"
+alt="IP CCTV 8 Camera Kit"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="ipcctv8">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+IP CCTV
+</span>
+
+
+<h3>
+IP CCTV 8 Camera Kit
+</h3>
+
+
+<label class="kit-option">
+
+<span>Camera Type</span>
+
+<select
+data-option="camera-type"
+aria-label="IP CCTV camera type">
+
+<option value="bullet">
+Bullet
+</option>
+
+<option value="dome">
+Dome
+</option>
+
+</select>
+
+</label>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="ipcctv8">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="ipcctv8">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+
+<!-- =====================================================
+     IP CCTV 16 CAMERA
+===================================================== -->
+
+<article
+class="kit-card"
+data-product-id="ipcctv16"
+data-category="ip-cctv">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/ipcctv16.png"
+alt="IP CCTV 16 Camera Kit"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="ipcctv16">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+IP CCTV
+</span>
+
+
+<h3>
+IP CCTV 16 Camera Kit
+</h3>
+
+
+<label class="kit-option">
+
+<span>Camera Type</span>
+
+<select
+data-option="camera-type"
+aria-label="IP CCTV camera type">
+
+<option value="bullet">
+Bullet
+</option>
+
+<option value="dome">
+Dome
+</option>
+
+</select>
+
+</label>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="ipcctv16">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="ipcctv16">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+
+<!-- =====================================================
+     IP CCTV 32 CAMERA
+===================================================== -->
+
+<article
+class="kit-card"
+data-product-id="ipcctv32"
+data-category="ip-cctv">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/ipcctv32.png"
+alt="IP CCTV 32 Camera Kit"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="ipcctv32">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+IP CCTV
+</span>
+
+
+<h3>
+IP CCTV 32 Camera Kit
+</h3>
+
+
+<label class="kit-option">
+
+<span>Camera Type</span>
+
+<select
+data-option="camera-type"
+aria-label="IP CCTV camera type">
+
+<option value="bullet">
+Bullet
+</option>
+
+<option value="dome">
+Dome
+</option>
+
+</select>
+
+</label>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="ipcctv32">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="ipcctv32">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+</div>
+
+     </section>
+
+     <!-- =====================================================
+     PART 5
+     IDS + AJAX ALARM KITS
+===================================================== -->
+
+<section
+class="kit-section"
+id="section-alarms"
+data-category-section="alarms">
+
+
+<div class="section-title">
+
+<div class="section-title-icon">
+🚨
+</div>
+
+<div>
+
+<small>ALARM SECURITY</small>
+
+<h2>Alarm Kits</h2>
+
+</div>
+
+</div>
+
+
+<div class="kit-grid">
+
+
+<!-- =====================================================
+     IDS 806 KIT
+===================================================== -->
+
+<article
+class="kit-card"
+data-product-id="ids806"
+data-category="alarms">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/ids.png"
+alt="IDS 806 Alarm Kit with 2 PIR and 2 Door Magnets"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="ids806">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+IDS ALARM
+</span>
+
+
+<h3>
+IDS 806 Kit — 2 PIR + 2 Door Magnets
+</h3>
+
+
+<p class="kit-description">
+IDS 806 alarm kit supplied with
+2 PIR sensors and 2 door magnets.
+</p>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="ids806">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="ids806">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+
+<!-- =====================================================
+     IDS X64 KIT
+===================================================== -->
+
+<article
+class="kit-card"
+data-product-id="idsx64"
+data-category="alarms">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/ids2.png"
+alt="IDS X64 Alarm Kit with 5 PIR and 2 Door Magnets"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="idsx64">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+IDS ALARM
+</span>
+
+
+<h3>
+IDS X64 Kit — 5 PIR + 2 Door Magnets
+</h3>
+
+
+<p class="kit-description">
+IDS X64 alarm kit supplied with
+5 PIR sensors and 2 door magnets.
+</p>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="idsx64">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="idsx64">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+
+<!-- =====================================================
+     AJAX WIRELESS KIT
+===================================================== -->
+
+<article
+class="kit-card"
+data-product-id="ajax-kit"
+data-category="alarms">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/ajax.png"
+alt="Ajax Wireless Alarm Kit"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="ajax-kit">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+AJAX SECURITY
+</span>
+
+
+<h3>
+Ajax Wireless Alarm Kit
+</h3>
+
+
+<p class="kit-description">
+Wireless Ajax security alarm kit
+for modern home and business protection.
+</p>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="ajax-kit">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="ajax-kit">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+</div>
+
+</section>
+
+     <!-- =====================================================
+     PART 6
+     GATE AUTOMATION KITS
+===================================================== -->
+
+<section
+class="kit-section"
+id="section-gate-automation"
+data-category-section="gate-automation">
+
+
+<div class="section-title">
+
+<div class="section-title-icon">
+🚪
+</div>
+
+<div>
+
+<small>GATE & GARAGE AUTOMATION</small>
+
+<h2>Gate Automation Kits</h2>
+
+</div>
+
+</div>
+
+
+<div class="kit-grid">
+
+
+<!-- =====================================================
+     D5 SMART
+===================================================== -->
+
+<article
+class="kit-card"
+data-product-id="d5-smart"
+data-category="gate-automation">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/d5-smart.png"
+alt="Centurion D5 Smart Gate Motor Kit"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="d5-smart">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+GATE AUTOMATION
+</span>
+
+
+<h3>
+D5 Smart Gate Motor Kit
+</h3>
+
+
+<p class="kit-description">
+Complete D5 Smart sliding gate
+automation kit.
+</p>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="d5-smart">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="d5-smart">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+
+<!-- =====================================================
+     D10 SMART
+===================================================== -->
+
+<article
+class="kit-card"
+data-product-id="d10-smart"
+data-category="gate-automation">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/d10-smart.png"
+alt="Centurion D10 Smart Gate Motor Kit"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="d10-smart">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+GATE AUTOMATION
+</span>
+
+
+<h3>
+D10 Smart Gate Motor Kit
+</h3>
+
+
+<p class="kit-description">
+Complete D10 Smart sliding gate
+automation kit.
+</p>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="d10-smart">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="d10-smart">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+
+<!-- =====================================================
+     D20 SMART
+===================================================== -->
+
+<article
+class="kit-card"
+data-product-id="d20-smart"
+data-category="gate-automation">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/d20-smart.png"
+alt="Centurion D20 Smart Gate Motor Kit"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="d20-smart">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+GATE AUTOMATION
+</span>
+
+
+<h3>
+D20 Smart Gate Motor Kit
+</h3>
+
+
+<p class="kit-description">
+Complete D20 Smart sliding gate
+automation kit.
+</p>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="d20-smart">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="d20-smart">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+
+<!-- =====================================================
+     VANTAGE SWING KIT
+===================================================== -->
+
+<article
+class="kit-card"
+data-product-id="vantage-swing"
+data-category="gate-automation">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/vantage.png"
+alt="Vantage Swing Gate Kit"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="vantage-swing">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+GATE AUTOMATION
+</span>
+
+
+<h3>
+Vantage Swing Gate Kit
+</h3>
+
+
+<p class="kit-description">
+Complete automated swing gate
+solution.
+</p>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="vantage-swing">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="vantage-swing">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+
+<!-- =====================================================
+     CENTURION SD04 SMART GARAGE
+===================================================== -->
+
+<article
+class="kit-card"
+data-product-id="sd04-smart"
+data-category="gate-automation">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/sd04-smart.png"
+alt="Centurion SD04 Smart Garage Kit"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="sd04-smart">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+GARAGE AUTOMATION
+</span>
+
+
+<h3>
+Centurion SD04 Smart Garage Kit
+</h3>
+
+
+<p class="kit-description">
+Smart garage door automation
+kit.
+</p>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="sd04-smart">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="sd04-smart">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+
+<!-- =====================================================
+     CENTURION RDO ROLL-UP
+===================================================== -->
+
+<article
+class="kit-card"
+data-product-id="rdo-rollup"
+data-category="gate-automation">
+
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/rdo.png"
+alt="Centurion RDO Roll Up Garage Kit"
+loading="lazy">
+
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="rdo-rollup">
+
+♡
+
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+GARAGE AUTOMATION
+</span>
+
+
+<h3>
+Centurion RDO Roll-Up Kit
+</h3>
+
+
+<p class="kit-description">
+Complete RDO roll-up door
+automation kit.
+</p>
+
+
+<div class="kit-price">
+R0.00
+</div>
+
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="rdo-rollup">
+
+View Details
+
+</button>
+
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="rdo-rollup">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+</div>
+
+     </section>
+
+     <!-- =====================================================
+     PART 7
+     ACCESS CONTROL + INTERCOM + SECURITY KITS
+===================================================== -->
+
+<section
+class="kit-section"
+id="section-access-control"
+data-category-section="access-control">
+
+<div class="section-title">
+
+<div class="section-title-icon">
+🔐
+</div>
+
+<div>
+
+<small>ACCESS SECURITY</small>
+
+<h2>Access Control Kits</h2>
+
+</div>
+
+</div>
+
+
+<div class="kit-grid">
+
+
+<!-- ACCESS CONTROL KIT -->
+
+<article
+class="kit-card"
+data-product-id="access-kit"
+data-category="access-control">
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/access.png"
+alt="Access Control Kit"
+loading="lazy">
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="access-kit">
+♡
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+ACCESS CONTROL
+</span>
+
+<h3>
+Access Control Kit
+</h3>
+
+<p class="kit-description">
+Complete access control solution
+for controlled entry points.
+</p>
+
+<div class="kit-price">
+R0.00
+</div>
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="access-kit">
+View Details
+</button>
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="access-kit">
+
+<i class="fas fa-cart-plus"></i>
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+<!-- RFID ACCESS KIT -->
+
+<article
+class="kit-card"
+data-product-id="rfid-kit"
+data-category="access-control">
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/rfid.png"
+alt="RFID Access Control Kit"
+loading="lazy">
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="rfid-kit">
+♡
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+ACCESS CONTROL
+</span>
+
+<h3>
+RFID Access Control Kit
+</h3>
+
+<p class="kit-description">
+RFID reader and access control
+kit for secure entry.
+</p>
+
+<div class="kit-price">
+R0.00
+</div>
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="rfid-kit">
+View Details
+</button>
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="rfid-kit">
+
+<i class="fas fa-cart-plus"></i>
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+<!-- =====================================================
+     INTERCOM
+===================================================== -->
+
+</div>
+
+</section>
+
+
+<section
+class="kit-section"
+id="section-intercom"
+data-category-section="intercom">
+
+<div class="section-title">
+
+<div class="section-title-icon">
+🔔
+</div>
+
+<div>
+
+<small>ENTRY COMMUNICATION</small>
+
+<h2>Intercom Kits</h2>
+
+</div>
+
+</div>
+
+
+<div class="kit-grid">
+
+
+<!-- VIDEO INTERCOM -->
+
+<article
+class="kit-card"
+data-product-id="video-intercom"
+data-category="intercom">
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/intercom.png"
+alt="Video Intercom Kit"
+loading="lazy">
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="video-intercom">
+♡
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+INTERCOM
+</span>
+
+<h3>
+Video Intercom Kit
+</h3>
+
+<p class="kit-description">
+Video intercom solution for
+secure visitor communication.
+</p>
+
+<div class="kit-price">
+R0.00
+</div>
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="video-intercom">
+View Details
+</button>
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="video-intercom">
+
+<i class="fas fa-cart-plus"></i>
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+<!-- AUDIO INTERCOM -->
+
+<article
+class="kit-card"
+data-product-id="audio-intercom"
+data-category="intercom">
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/audio-intercom.png"
+alt="Audio Intercom Kit"
+loading="lazy">
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="audio-intercom">
+♡
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+INTERCOM
+</span>
+
+<h3>
+Audio Intercom Kit
+</h3>
+
+<p class="kit-description">
+Reliable audio communication
+for secure entrances.
+</p>
+
+<div class="kit-price">
+R0.00
+</div>
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="audio-intercom">
+View Details
+</button>
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="audio-intercom">
+
+<i class="fas fa-cart-plus"></i>
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     SECURITY ACCESSORIES
+===================================================== -->
+
+<section
+class="kit-section"
+id="section-accessories"
+data-category-section="accessories">
+
+<div class="section-title">
+
+<div class="section-title-icon">
+🧰
+</div>
+
+<div>
+
+<small>SECURITY HARDWARE</small>
+
+<h2>Security Accessories</h2>
+
+</div>
+
+</div>
+
+
+<div class="kit-grid">
+
+
+<!-- ACCESSORIES -->
+
+<article
+class="kit-card"
+data-product-id="security-accessories"
+data-category="accessories">
+
+<div class="kit-image-wrap">
+
+<img
+src="../images/products/security-accessories.png"
+alt="Security Accessories"
+loading="lazy">
+
+<button
+type="button"
+class="kit-wishlist online-wishlist-product"
+data-product-id="security-accessories">
+♡
+</button>
+
+</div>
+
+
+<div class="kit-body">
+
+<span class="kit-category">
+ACCESSORIES
+</span>
+
+<h3>
+Security Accessories
+</h3>
+
+<p class="kit-description">
+Cables, connectors, power supplies,
+mounting hardware and accessories.
+</p>
+
+<div class="kit-price">
+R0.00
+</div>
+
+<div class="kit-actions">
+
+<button
+type="button"
+class="kit-details online-product-view"
+data-product-id="security-accessories">
+View Details
+</button>
+
+<button
+type="button"
+class="kit-add online-add-to-cart"
+data-product-id="security-accessories">
+
+<i class="fas fa-cart-plus"></i>
+Add To Cart
+
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+     END OF PRODUCT SECTIONS
+===================================================== -->
+
+     <!-- =====================================================
+     PART 8
+     STORE FOOTER + WHATSAPP + STORE ENGINES
+===================================================== -->
+
+
+<!-- =====================================================
+     STORE FOOTER
+===================================================== -->
+
+<footer class="online-store-footer">
+
+<div class="online-container">
+
+<div class="store-footer-grid">
+
+
+<div>
+
+<strong>NEXPAK SECURITY SOLUTIONS</strong>
+
+<p>
+Security equipment and complete security
+solutions for homes, businesses and properties.
+</p>
+
+</div>
+
+
+<div>
+
+<strong>ONLINE STORE</strong>
+
+<a href="#section-electric-fencing">
+Electric Fencing
+</a>
+
+<a href="#section-roboguard">
+Roboguard
+</a>
+
+<a href="#section-cctv">
+HD CCTV
+</a>
+
+<a href="#section-ip-cctv">
+IP CCTV
+</a>
+
+</div>
+
+
+<div>
+
+<strong>SECURITY</strong>
+
+<a href="#section-alarms">
+Alarm Systems
+</a>
+
+<a href="#section-gate-automation">
+Gate Automation
+</a>
+
+<a href="#section-access-control">
+Access Control
+</a>
+
+<a href="#section-intercom">
+Intercom Systems
+</a>
+
+</div>
+
+
+<div>
+
+<strong>NEED HELP?</strong>
+
+<p>
+Speak to Nexpak about your security
+requirements.
+</p>
+
+<a
+href="https://wa.me/27836308249"
+target="_blank"
+rel="noopener noreferrer">
+
+WhatsApp Nexpak
+
+</a>
+
+</div>
+
+
+</div>
+
+
+<div class="store-footer-bottom">
+
+<span>
+© 2026 Nexpak Security Solutions
+</span>
+
+<span>
+All prices currently displayed as R0.00
+</span>
+
+</div>
+
+</div>
+
+</footer>
+
+
+
+<!-- =====================================================
+     FLOATING WHATSAPP BUTTON
+===================================================== -->
+
+<a
+href="https://wa.me/27836308249?text=Hi%20Nexpak%20Security%20Solutions%2C%20I%20would%20like%20more%20information%20about%20your%20security%20products."
+class="nexpak-whatsapp"
+target="_blank"
+rel="noopener noreferrer"
+aria-label="Chat with Nexpak Security Solutions on WhatsApp">
+
+
+<i class="fab fa-whatsapp"></i>
+
+
+<span class="nexpak-whatsapp-label">
+Chat with Nexpak
+</span>
+
+
+</a>
+
+
+
+<!-- =====================================================
+     WHATSAPP BUTTON STYLE
+===================================================== -->
+
+<style>
+
+.nexpak-whatsapp{
+
+position:fixed;
+
+right:20px;
+bottom:20px;
+
+width:60px;
+height:60px;
+
+border-radius:50%;
+
+background:#25D366;
+
+color:#ffffff;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+font-size:31px;
+
+text-decoration:none;
+
+box-shadow:
+0 6px 20px rgba(0,0,0,.25);
+
+z-index:999999;
+
+transition:
+transform .2s ease,
+box-shadow .2s ease;
+
+}
+
+
+.nexpak-whatsapp:hover{
+
+transform:scale(1.08);
+
+box-shadow:
+0 9px 28px rgba(0,0,0,.30);
+
+}
+
+
+.nexpak-whatsapp-label{
+
+position:absolute;
+
+right:72px;
+
+top:50%;
+
+transform:
+translateY(-50%);
+
+white-space:nowrap;
+
+background:#071a2d;
+
+color:#ffffff;
+
+padding:9px 13px;
+
+border-radius:7px;
+
+font-size:12px;
+
+font-weight:700;
+
+opacity:0;
+
+visibility:hidden;
+
+transition:.2s ease;
+
+}
+
+
+.nexpak-whatsapp:hover
+.nexpak-whatsapp-label{
+
+opacity:1;
+
+visibility:visible;
+
+}
+
+
+@media(max-width:700px){
+
+.nexpak-whatsapp{
+
+right:15px;
+bottom:15px;
+
+width:56px;
+height:56px;
+
+font-size:28px;
+
+}
+
+
+.nexpak-whatsapp-label{
+
+display:none;
+
+}
+
+}
+
+</style>
+
+
+
+<!-- =====================================================
+     STORE ENGINES
+===================================================== -->
+
+<script src="online-data.js"></script>
+
+<script src="online.js"></script>
+
+<script src="onlinecart.js"></script>
+
+<script src="onlinecheckout.js"></script>
+
+
+
+<!-- =====================================================
+     END ONLINE STORE
+===================================================== -->
 
 </body>
 
-     </html>
-
-                   
-
-                        
+</html>
