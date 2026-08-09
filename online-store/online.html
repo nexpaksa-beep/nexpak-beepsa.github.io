@@ -4231,10 +4231,597 @@
          ONLINE.HTML
          PART 8/8 COMPLETE 🔒
     ====================================================== -->
+<!-- =====================================================
+             GLOBAL STORE TOAST
+        ====================================================== -->    <div
+        class="online-toast-container"
+        id="onlineToastContainer"
+        aria-live="polite"
+        aria-atomic="true">
+
+        <!--
+            onlineui.js creates toast notifications here.
+        -->
+
+    </div>
+
+
+
+    <!-- =====================================================
+         GLOBAL LOADING OVERLAY
+    ====================================================== -->
+
+    <div
+        class="online-loading-overlay"
+        id="onlineLoadingOverlay"
+        hidden
+        aria-hidden="true">
+
+        <div class="online-loading-box">
+
+            <div
+                class="online-loading-spinner"
+                aria-hidden="true">
+            </div>
+
+            <span id="onlineLoadingText">
+                Processing...
+            </span>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         CONFIRMATION DIALOG
+    ====================================================== -->
+
+    <div
+        class="online-confirm-dialog"
+        id="onlineConfirmDialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="onlineConfirmTitle"
+        hidden>
+
+        <div
+            class="online-confirm-backdrop"
+            data-close-confirm>
+        </div>
+
+
+        <div class="online-confirm-box">
+
+            <div class="online-confirm-icon">
+
+                <i class="fas fa-circle-question"></i>
+
+            </div>
+
+
+            <h2 id="onlineConfirmTitle">
+                Confirm Action
+            </h2>
+
+
+            <p id="onlineConfirmMessage">
+                Are you sure you want to continue?
+            </p>
+
+
+            <div class="online-confirm-actions">
+
+                <button
+                    type="button"
+                    id="onlineConfirmCancel"
+                    class="online-secondary-btn">
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                    type="button"
+                    id="onlineConfirmAccept"
+                    class="online-primary-btn">
+
+                    Confirm
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         BACK TO TOP
+    ====================================================== -->
+
+    <button
+        type="button"
+        id="onlineBackToTop"
+        class="online-back-to-top"
+        aria-label="Back to top"
+        hidden>
+
+        <i class="fas fa-arrow-up"></i>
+
+    </button>
+
+
+
+    <!-- =====================================================
+         STORE FOOTER
+    ====================================================== -->
+
+    <footer class="online-footer">
+
+        <div class="online-container">
+
+
+            <!-- FOOTER MAIN -->
+
+            <div class="online-footer-grid">
+
+
+                <!-- BRAND -->
+
+                <div class="online-footer-brand">
+
+                    <a
+                        href="../index.html"
+                        class="online-footer-logo">
+
+                        <img
+                            src="../images/logo.png"
+                            alt="Nexpak Security Solutions"
+                            loading="lazy"
+                        >
+
+                    </a>
+
+
+                    <p>
+                        Nexpak Security Solutions supplies
+                        professional security equipment and
+                        complete security solutions for homes,
+                        businesses and other properties.
+                    </p>
+
+
+                    <div class="online-footer-social">
+
+                        <a
+                            href="#"
+                            aria-label="Facebook">
+
+                            <i class="fab fa-facebook-f"></i>
+
+                        </a>
+
+
+                        <a
+                            href="#"
+                            aria-label="Instagram">
+
+                            <i class="fab fa-instagram"></i>
+
+                        </a>
+
+
+                        <a
+                            href="#"
+                            aria-label="LinkedIn">
+
+                            <i class="fab fa-linkedin-in"></i>
+
+                        </a>
+
+
+                        <a
+                            href="#"
+                            aria-label="WhatsApp">
+
+                            <i class="fab fa-whatsapp"></i>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SHOP -->
+
+                <div class="online-footer-column">
+
+                    <h3>
+                        Shop
+                    </h3>
+
+
+                    <ul>
+
+                        <li>
+                            <button
+                                type="button"
+                                data-category="cctv">
+                                CCTV Systems
+                            </button>
+                        </li>
+
+                        <li>
+                            <button
+                                type="button"
+                                data-category="gate-automation">
+                                Gate Automation
+                            </button>
+                        </li>
+
+                        <li>
+                            <button
+                                type="button"
+                                data-category="electric-fencing">
+                                Electric Fencing
+                            </button>
+                        </li>
+
+                        <li>
+                            <button
+                                type="button"
+                                data-category="alarms">
+                                Alarm Systems
+                            </button>
+                        </li>
+
+                        <li>
+                            <button
+                                type="button"
+                                data-category="roboguard">
+                                Roboguard
+                            </button>
+                        </li>
+
+                        <li>
+                            <button
+                                type="button"
+                                data-category="access-control">
+                                Access Control
+                            </button>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+
+                <!-- CUSTOMER SERVICE -->
+
+                <div class="online-footer-column">
+
+                    <h3>
+                        Customer Service
+                    </h3>
+
+
+                    <ul>
+
+                        <li>
+                            <a href="../contact.html">
+                                Contact Us
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="../quote.html">
+                                Request A Quote
+                            </a>
+                        </li>
+
+                        <li>
+                            <button
+                                type="button"
+                                id="onlineFooterCart">
+                                Shopping Cart
+                            </button>
+                        </li>
+
+                        <li>
+                            <button
+                                type="button"
+                                id="onlineFooterWishlist">
+                                Wishlist
+                            </button>
+                        </li>
+
+                        <li>
+                            <button
+                                type="button"
+                                id="onlineFooterAccount">
+                                My Account
+                            </button>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+
+                <!-- INFORMATION -->
+
+                <div class="online-footer-column">
+
+                    <h3>
+                        Information
+                    </h3>
+
+
+                    <ul>
+
+                        <li>
+                            <a href="../index.html">
+                                Home
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="../about.html">
+                                About Nexpak
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="../products.html">
+                                Products
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="../contact.html">
+                                Contact
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="../quote.html">
+                                Custom Solutions
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+
+                <!-- CONTACT -->
+
+                <div class="online-footer-column online-footer-contact">
+
+                    <h3>
+                        Contact Nexpak
+                    </h3>
+
+
+                    <div class="online-footer-contact-item">
+
+                        <i class="fas fa-phone"></i>
+
+                        <span>
+                            Contact Nexpak Security Solutions
+                        </span>
+
+                    </div>
+
+
+                    <div class="online-footer-contact-item">
+
+                        <i class="fas fa-envelope"></i>
+
+                        <span>
+                            Email Nexpak Security Solutions
+                        </span>
+
+                    </div>
+
+
+                    <div class="online-footer-contact-item">
+
+                        <i class="fas fa-location-dot"></i>
+
+                        <span>
+                            South Africa
+                        </span>
+
+                    </div>
+
+
+                    <a
+                        href="../contact.html"
+                        class="online-footer-contact-btn">
+
+                        <i class="fas fa-headset"></i>
+
+                        Get In Touch
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- FOOTER BOTTOM -->
+
+            <div class="online-footer-bottom">
+
+                <p>
+                    &copy;
+                    <span id="onlineCurrentYear">
+                        2026
+                    </span>
+                    Nexpak Security Solutions.
+                    All rights reserved.
+                </p>
+
+
+                <div class="online-footer-legal">
+
+                    <a href="#">
+                        Privacy Policy
+                    </a>
+
+                    <a href="#">
+                        Terms &amp; Conditions
+                    </a>
+
+                    <a href="#">
+                        Delivery Information
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- =====================================================
+         ACCESSIBILITY LIVE REGION
+    ====================================================== -->
+
+    <div
+        id="onlineAriaLive"
+        class="online-visually-hidden"
+        aria-live="polite"
+        aria-atomic="true">
+    </div>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT ENGINE LOADING
+         IMPORTANT:
+         Load in dependency order.
+    ====================================================== -->
+
+
+    <!-- PRODUCT DATABASE -->
+
+    <script
+        src="online-data.js"
+        defer>
+    </script>
+
+
+    <!-- MAIN STORE ENGINE -->
+
+    <script
+        src="online.js"
+        defer>
+    </script>
+
+
+    <!-- CART ENGINE -->
+
+    <script
+        src="onlinecart.js"
+        defer>
+    </script>
+
+
+    <!-- CHECKOUT ENGINE -->
+
+    <script
+        src="onlinecheckout.js"
+        defer>
+    </script>
+
+
+    <!-- DELIVERY ENGINE -->
+
+    <script
+        src="onlinedelivery.js"
+        defer>
+    </script>
+
+
+    <!-- SECURITY CONFIGURATOR -->
+
+    <script
+        src="onlineconfigurator.js"
+        defer>
+    </script>
+
+
+    <!-- EXTERNAL / SYSTEM INTEGRATIONS -->
+
+    <script
+        src="onlineintegration.js"
+        defer>
+    </script>
+
+
+    <!-- UI ENGINE -->
+
+    <script
+        src="onlineui.js"
+        defer>
+    </script>
+
+
+
+    <!-- =====================================================
+         SMALL PAGE INITIALISATION
+         Kept separate from the main engines.
+    ====================================================== -->
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const year =
+                    document.getElementById(
+                        "onlineCurrentYear"
+                    );
+
+                if (year) {
+                    year.textContent =
+                        new Date().getFullYear();
+                }
+
+            }
+        );
+
+    </script>
+
+
+
+    <!-- =====================================================
+         ONLINE.HTML
+         PART 8/8 COMPLETE 🔒
+    ====================================================== -->
 
 </body>
 
-                            </html> 
+     </html>
 
                    
 
