@@ -8002,3 +8002,408 @@ body {
 /* ============================================================
    212. END OF NEXPAK BUILD YOUR SYSTEM V3
    ============================================================ */
+
+/* ============================================================
+   NEXPAK SECURITY SOLUTIONS
+   BUILD YOUR SYSTEM — HERO PROPERTY VISUAL PATCH
+   ------------------------------------------------------------
+   Adds the missing property/building visual behind the
+   existing security orbit WITHOUT changing shop.html.
+   ============================================================ */
+
+
+/* ============================================================
+   HERO VISUAL — BASE
+   ============================================================ */
+
+.build-system-hero-visual {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 480px;
+
+    width: 100%;
+
+    overflow: hidden;
+}
+
+
+/* ============================================================
+   HERO ORBIT — POSITIONING
+   ============================================================ */
+
+.hero-security-orbit {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: min(440px, 90vw);
+
+    height: min(440px, 90vw);
+
+    margin: auto;
+
+    z-index: 5;
+}
+
+
+/* ============================================================
+   PROPERTY BUILDING — CSS GENERATED
+   ------------------------------------------------------------
+   Uses pseudo-elements so HTML remains untouched.
+   ============================================================ */
+
+.hero-security-orbit::before {
+
+    content: "";
+
+    position: absolute;
+
+    z-index: 1;
+
+    left: 50%;
+
+    top: 50%;
+
+    width: 220px;
+
+    height: 145px;
+
+    transform:
+        translate(-50%, -32%);
+
+    border-radius:
+        6px 6px 4px 4px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #dfe7ef 0%,
+            #c7d3df 100%
+        );
+
+    border:
+        2px solid rgba(255,255,255,0.75);
+
+    box-shadow:
+        0 22px 45px rgba(0,0,0,0.28);
+}
+
+
+/* ============================================================
+   PROPERTY ROOF
+   ============================================================ */
+
+.hero-security-orbit::after {
+
+    content: "";
+
+    position: absolute;
+
+    z-index: 2;
+
+    left: 50%;
+
+    top: 50%;
+
+    width: 0;
+
+    height: 0;
+
+    transform:
+        translate(-50%, -125%);
+
+    border-left:
+        130px solid transparent;
+
+    border-right:
+        130px solid transparent;
+
+    border-bottom:
+        82px solid #17263a;
+
+    filter:
+        drop-shadow(
+            0 8px 10px rgba(0,0,0,0.22)
+        );
+}
+
+
+/* ============================================================
+   SECURITY CORE
+   ------------------------------------------------------------
+   Keeps the existing shield visible above the property.
+   ============================================================ */
+
+.hero-security-core {
+
+    z-index:
+        10;
+
+    box-shadow:
+        0 0 0 8px rgba(11, 92, 255, 0.08),
+        0 12px 35px rgba(0,0,0,0.28);
+}
+
+
+/* ============================================================
+   PROPERTY WINDOWS
+   ------------------------------------------------------------
+   Generated through the orbit container background layers.
+   ============================================================ */
+
+.hero-security-orbit {
+
+    background:
+
+        /* Left upper window */
+        linear-gradient(
+            #0b5cff,
+            #0b5cff
+        )
+        26% 47% / 31px 27px no-repeat,
+
+        /* Right upper window */
+        linear-gradient(
+            #0b5cff,
+            #0b5cff
+        )
+        74% 47% / 31px 27px no-repeat,
+
+        /* Left lower window */
+        linear-gradient(
+            #183b63,
+            #183b63
+        )
+        30% 70% / 28px 25px no-repeat,
+
+        /* Right lower window */
+        linear-gradient(
+            #183b63,
+            #183b63
+        )
+        70% 70% / 28px 25px no-repeat;
+}
+
+
+/* ============================================================
+   WINDOW GLOW
+   ============================================================ */
+
+.hero-security-orbit {
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,0.03);
+}
+
+
+/* ============================================================
+   SECURITY ICONS — BRING TO FRONT
+   ============================================================ */
+
+.hero-security-icon {
+
+    z-index:
+        20;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.22),
+        0 0 0 5px rgba(255,255,255,0.04);
+}
+
+
+/* ============================================================
+   ORBIT RINGS — ABOVE PROPERTY
+   ============================================================ */
+
+.hero-orbit-ring {
+
+    z-index:
+        15;
+
+    pointer-events:
+        none;
+}
+
+
+/* ============================================================
+   PROPERTY BASE / GROUND
+   ------------------------------------------------------------
+   A subtle illuminated ground beneath the building.
+   ============================================================ */
+
+.build-system-hero-visual::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 48px;
+
+    width: 280px;
+
+    height: 55px;
+
+    transform:
+        translateX(-50%);
+
+    border-radius:
+        50%;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(11,92,255,0.28) 0%,
+            rgba(11,92,255,0.10) 38%,
+            transparent 72%
+        );
+
+    filter:
+        blur(5px);
+
+    z-index:
+        1;
+
+    pointer-events:
+        none;
+}
+
+
+/* ============================================================
+   PROPERTY SECURITY GLOW
+   ============================================================ */
+
+.hero-security-orbit::marker {
+
+    display:
+        none;
+}
+
+
+/* ============================================================
+   MOBILE PROPERTY VISUAL
+   ============================================================ */
+
+@media (max-width: 767px) {
+
+    .build-system-hero-visual {
+
+        min-height:
+            390px;
+    }
+
+    .hero-security-orbit {
+
+        width:
+            min(360px, 92vw);
+
+        height:
+            min(360px, 92vw);
+    }
+
+    .hero-security-orbit::before {
+
+        width:
+            180px;
+
+        height:
+            120px;
+    }
+
+    .hero-security-orbit::after {
+
+        border-left-width:
+            108px;
+
+        border-right-width:
+            108px;
+
+        border-bottom-width:
+            68px;
+    }
+
+    .build-system-hero-visual::after {
+
+        bottom:
+            32px;
+
+        width:
+            230px;
+    }
+
+}
+
+
+/* ============================================================
+   REDMI A3 PROPERTY VISUAL
+   ============================================================ */
+
+@media (max-width: 480px) {
+
+    .build-system-hero-visual {
+
+        min-height:
+            330px;
+    }
+
+    .hero-security-orbit {
+
+        width:
+            310px;
+
+        height:
+            310px;
+    }
+
+    .hero-security-orbit::before {
+
+        width:
+            150px;
+
+        height:
+            100px;
+    }
+
+    .hero-security-orbit::after {
+
+        border-left-width:
+            92px;
+
+        border-right-width:
+            92px;
+
+        border-bottom-width:
+            58px;
+    }
+
+    .build-system-hero-visual::after {
+
+        bottom:
+            24px;
+
+        width:
+            190px;
+
+        height:
+            42px;
+    }
+
+}
+
+
+/* ============================================================
+   END HERO PROPERTY VISUAL PATCH
+   ============================================================ */
