@@ -1,82 +1,72 @@
 /* ==========================================================================
    NEXPAK SECURITY SOLUTIONS
-   BUILD YOUR SYSTEM — CONFIGURATOR V2
+   BUILD YOUR SYSTEM — CONFIGURATOR V3
    configurator.js
+
+   PART 1 — CORE CONFIGURATION, STATE & DATABASE CONNECTION
    ==========================================================================
 
    PURPOSE:
-   - Individual product system builder
+   - Build completely custom security systems
    - NO pre-built kits
-   - Uses SHOP_DATA as the product source
-   - Every selected product has its own quantity
-   - Live system summary
-   - Designed to integrate with cart.js
-   - VAT supplied by SHOP_DATA.company.vatRate
+   - Uses individual products from SHOP_DATA
+   - Every product has its own quantity
+   - Live pricing
+   - 15% VAT from SHOP_DATA
+   - Compatible with cart.js
+   - Compatible with delivery.js
+   - Compatible with checkout.js
+   - Compatible with payment.js
 
    ARCHITECTURE:
 
-   shop-data.js
-        ↓
-   SHOP_DATA
-        ↓
-   configurator.js
-        ↓
-   Build Your System
-        ↓
-   cart.js
-        ↓
-   delivery.js / checkout.js / payment.js
+        shop-data.js
+              ↓
+        Individual Products
+              ↓
+        configurator.js
+              ↓
+        Custom System
+              ↓
+           cart.js
+              ↓
+        delivery.js
+              ↓
+        checkout.js
+              ↓
+        payment.js
 
    ========================================================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
+
+/* ==========================================================================
+   1. WAIT FOR SHOP DATA
+   ========================================================================== */
+
+document.addEventListener("DOMContentLoaded", function () {
 
     "use strict";
 
+
     /* ======================================================================
-       1. CONFIGURATOR STATE
+       2. BASIC SHOP DATA CHECK
        ====================================================================== */
 
-    const state = {
+    if (typeof SHOP_DATA === "undefined") {
 
-        /* Currently selected security system */
-        category: "electric-fencing",
+        console.error(
+            "Nexpak Configurator V3: SHOP_DATA is not available."
+        );
 
-        /* Human-readable category title */
-        categoryTitle: "Electric Fencing",
-
-        /* All selected products
-           Example:
-
-           {
-               "EF-BRACKET-001": {
-                   id: "EF-BRACKET-001",
-                   name: "Wall Top Bracket",
-                   price: 85,
-                   quantity: 4
-               }
-           }
-        */
-        selections: {},
-
-        /* Current totals */
-        totals: {
-            itemCount: 0,
-            productCount: 0,
-            subtotal: 0,
-            vat: 0,
-            grandTotal: 0
-        }
-
-    };
+        return;
+    }
 
 
     /* ======================================================================
-       2. VAT / CURRENCY SETTINGS
+       3. COMPANY SETTINGS
        ====================================================================== */
 
     const VAT_RATE =
-        SHOP_DATA &&
         SHOP_DATA.company &&
         typeof SHOP_DATA.company.vatRate === "number"
 
@@ -86,7 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     const CURRENCY =
-        SHOP_DATA &&
         SHOP_DATA.company &&
         SHOP_DATA.company.currency
 
@@ -96,68 +85,163 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* ======================================================================
-       3. DOM REFERENCES
+       4. CONFIGURATOR STATE
+       ======================================================================
+
+       IMPORTANT:
+
+       There is ONLY ONE state object in V3.
+
+       We do NOT use:
+           systemState
+           selectedState
+           configuratorState
+           multiple competing objects
+
+       Everything belongs here.
        ====================================================================== */
 
-    const elements = {
+    const state = {
 
-        configurator:
-            document.getElementById("configuratorSelectors"),
+        /* ---------------------------------------------------------------
+           CURRENT SECURITY SYSTEM
+           --------------------------------------------------------------- */
 
-        categoryTitle:
-            document.getElementById("currentCategoryTitle"),
+        category: "electric-fencing",
 
-        summaryCategory:
-            document.getElementById("summaryCategory"),
+        categoryTitle: "Electric Fencing",
 
-        summaryAddonCount:
-            document.getElementById("summaryAddonCount"),
 
-        summarySubtotal:
-            document.getElementById("summarySubtotal"),
+        /* ---------------------------------------------------------------
+           SELECTED PRODUCTS
+           ---------------------------------------------------------------
 
-        summaryVat:
-            document.getElementById("summaryVat"),
+           Example:
 
-        summaryGrandTotal:
-            document.getElementById("summaryGrandTotal"),
+           selections: {
+               "ef-walltop-001": {
+                   id: "ef-walltop-001",
+                   name: "Wall Top Bracket",
+                   price: 85,
+                   quantity: 4,
+                   image: "",
+                   group: "brackets"
+               }
+           }
 
-        addToCart:
-            document.getElementById("btnAddToCart"),
+           Every product is independent.
+           --------------------------------------------------------------- */
 
-        cartBadge:
-            document.getElementById("cartCountBadge"),
+        selections: {},
 
-        toast:
-            document.getElementById("toastContainer")
+
+        /* ---------------------------------------------------------------
+           CALCULATED TOTALS
+           --------------------------------------------------------------- */
+
+        totals: {
+
+            productCount: 0,
+
+            itemCount: 0,
+
+            subtotal: 0,
+
+            vat: 0,
+
+            grandTotal: 0
+
+        }
 
     };
 
 
     /* ======================================================================
-       4. BASIC SAFETY CHECK
+       5. DOM ELEMENT REFERENCES
        ====================================================================== */
 
-    if (typeof SHOP_DATA === "undefined") {
+    const elements = {
 
-        console.error(
-            "Nexpak Configurator: SHOP_DATA could not be found. " +
-            "Make sure shop-data.js loads before configurator.js."
-        );
+        /* Main configurator product area */
 
-        return;
-    }
+        configurator:
+            document.getElementById(
+                "configuratorSelectors"
+            ),
+
+
+        /* Current category heading */
+
+        categoryTitle:
+            document.getElementById(
+                "currentCategoryTitle"
+            ),
+
+
+        /* Summary */
+
+        summaryCategory:
+            document.getElementById(
+                "summaryCategory"
+            ),
+
+        summaryAddonCount:
+            document.getElementById(
+                "summaryAddonCount"
+            ),
+
+        summarySubtotal:
+            document.getElementById(
+                "summarySubtotal"
+            ),
+
+        summaryVat:
+            document.getElementById(
+                "summaryVat"
+            ),
+
+        summaryGrandTotal:
+            document.getElementById(
+                "summaryGrandTotal"
+            ),
+
+
+        /* Add to cart */
+
+        addToCart:
+            document.getElementById(
+                "btnAddToCart"
+            ),
+
+
+        /* Cart badge */
+
+        cartBadge:
+            document.getElementById(
+                "cartCountBadge"
+            ),
+
+
+        /* Toast */
+
+        toast:
+            document.getElementById(
+                "toastContainer"
+            )
+
+    };
 
 
     /* ======================================================================
-       5. CATEGORY MASTER DATA
+       6. CATEGORY HELPERS
        ====================================================================== */
 
     function getCategories() {
 
         if (
-            !SHOP_DATA.categories ||
-            !Array.isArray(SHOP_DATA.categories)
+            !Array.isArray(
+                SHOP_DATA.categories
+            )
         ) {
 
             return [];
@@ -169,207 +253,254 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* ======================================================================
-       6. FIND CATEGORY
-       ====================================================================== */
-
     function getCategory(categoryId) {
 
-        const categories = getCategories();
+        return getCategories().find(
+            function (category) {
 
-        return categories.find(
-            category => category.id === categoryId
+                return category.id === categoryId;
+
+            }
         );
 
     }
 
 
     /* ======================================================================
-       7. UPDATE CATEGORY STATE
+       7. SET CURRENT CATEGORY
        ====================================================================== */
 
     function setCategory(categoryId) {
 
-        const category = getCategory(categoryId);
+        const category =
+            getCategory(categoryId);
+
 
         if (!category) {
 
             console.warn(
-                `Nexpak Configurator: Unknown category "${categoryId}".`
+                "Nexpak Configurator V3: " +
+                "Unknown category:",
+                categoryId
             );
 
-            return;
+            return false;
 
         }
 
-        state.category = category.id;
+
+        state.category =
+            category.id;
+
+
+        /* Remove wording such as "Kits" or "Systems"
+           from the display heading where appropriate. */
 
         state.categoryTitle =
-            category.title
-                .replace(/ Kits$/i, "")
-                .replace(/ Systems$/i, "");
+            String(
+                category.title || category.id
+            )
+                .replace(
+                    /\s+Kits$/i,
+                    ""
+                )
+                .replace(
+                    /\s+Systems$/i,
+                    ""
+                );
 
-        /* Every time the customer changes system type,
-           start that system with an empty configuration. */
+
+        /* Changing system type starts a fresh configuration. */
 
         state.selections = {};
 
+
+        resetTotals();
+
+
+        return true;
+
+    }
+
+
+    /* ======================================================================
+       8. RESET TOTALS
+       ====================================================================== */
+
+    function resetTotals() {
+
         state.totals = {
-            itemCount: 0,
+
             productCount: 0,
+
+            itemCount: 0,
+
             subtotal: 0,
+
             vat: 0,
+
             grandTotal: 0
+
         };
 
     }
 
 
     /* ======================================================================
-       8. FORMAT MONEY
+       9. MONEY FORMATTER
        ====================================================================== */
 
     function formatMoney(amount) {
 
-        const numericAmount =
+        const value =
             Number(amount) || 0;
 
-        return new Intl.NumberFormat("en-ZA", {
 
-            style: "currency",
+        try {
 
-            currency: CURRENCY,
+            return new Intl.NumberFormat(
+                "en-ZA",
+                {
+                    style: "currency",
+                    currency: CURRENCY,
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }
+            ).format(value);
 
-            minimumFractionDigits: 2,
+        }
 
-            maximumFractionDigits: 2
+        catch (error) {
 
-        }).format(numericAmount);
+            return (
+                "R " +
+                value.toFixed(2)
+            );
+
+        }
 
     }
 
 
     /* ======================================================================
-       9. NORMALISE PRODUCT PRICE
-       ====================================================================== */
-
-    function getProductPrice(product) {
-
-        if (!product) {
-            return 0;
-        }
-
-        if (typeof product.priceExclVat === "number") {
-            return product.priceExclVat;
-        }
-
-        if (typeof product.price === "number") {
-            return product.price;
-        }
-
-        return 0;
-
-    }
-
-
-    /* ======================================================================
-       10. NORMALISE PRODUCT NAME
-       ====================================================================== */
-
-    function getProductName(product) {
-
-        if (!product) {
-            return "Unnamed Product";
-        }
-
-        return (
-
-            product.name ||
-
-            product.title ||
-
-            product.label ||
-
-            "Unnamed Product"
-
-        );
-
-    }
-
-
-    /* ======================================================================
-       11. NORMALISE PRODUCT ID
+       10. PRODUCT NORMALISATION
        ====================================================================== */
 
     function getProductId(product) {
 
         if (!product) {
+
             return null;
+
         }
 
+
         return (
-
             product.id ||
-
             product.value ||
-
+            product.productId ||
             null
+        );
 
+    }
+
+
+    function getProductName(product) {
+
+        if (!product) {
+
+            return "Unnamed Product";
+
+        }
+
+
+        return (
+            product.name ||
+            product.title ||
+            product.label ||
+            "Unnamed Product"
+        );
+
+    }
+
+
+    function getProductPrice(product) {
+
+        if (!product) {
+
+            return 0;
+
+        }
+
+
+        if (
+            typeof product.priceExclVat ===
+            "number"
+        ) {
+
+            return product.priceExclVat;
+
+        }
+
+
+        if (
+            typeof product.price ===
+            "number"
+        ) {
+
+            return product.price;
+
+        }
+
+
+        return (
+            Number(
+                product.priceExclVat
+            ) ||
+
+            Number(
+                product.price
+            ) ||
+
+            0
         );
 
     }
 
 
     /* ======================================================================
-       12. ADD PRODUCT TO SYSTEM
+       11. NORMALISE PRODUCT FOR CONFIGURATOR
        ====================================================================== */
 
-    function addProduct(product, quantity = 1) {
+    function normaliseProduct(product) {
 
-        const productId = getProductId(product);
+        if (!product) {
 
-        if (!productId) {
-
-            console.warn(
-                "Nexpak Configurator: Product has no valid ID.",
-                product
-            );
-
-            return;
-
-        }
-
-        const price = getProductPrice(product);
-
-        const name = getProductName(product);
-
-        const qty =
-            Math.max(
-                0,
-                parseInt(quantity, 10) || 0
-            );
-
-
-        /* Quantity of zero means remove the product */
-
-        if (qty === 0) {
-
-            removeProduct(productId);
-
-            return;
+            return null;
 
         }
 
 
-        state.selections[productId] = {
+        const id =
+            getProductId(product);
 
-            id: productId,
 
-            name: name,
+        if (!id) {
 
-            price: price,
+            return null;
 
-            quantity: qty,
+        }
+
+
+        return {
+
+            id: id,
+
+            name:
+                getProductName(product),
+
+            price:
+                getProductPrice(product),
 
             image:
                 product.image ||
@@ -378,422 +509,120 @@ document.addEventListener("DOMContentLoaded", () => {
 
             category:
                 product.category ||
+                product.systemCategory ||
                 state.category,
 
             group:
                 product.group ||
                 product.productGroup ||
+                "general",
+
+            groupTitle:
+                product.groupTitle ||
+                product.groupName ||
+                "",
+
+            description:
+                product.description ||
                 "",
 
             unit:
                 product.unit ||
-                "each"
+                "each",
+
+            weightKg:
+                Number(
+                    product.weightKg ||
+                    product.weight ||
+                    0
+                ) || 0
 
         };
 
-
-        updateTotals();
-
     }
 
 
     /* ======================================================================
-       13. CHANGE PRODUCT QUANTITY
-       ====================================================================== */
-
-    function changeQuantity(product, amount) {
-
-        const productId = getProductId(product);
-
-        if (!productId) {
-            return;
-        }
-
-        const existing =
-            state.selections[productId];
-
-
-        const currentQuantity =
-            existing
-                ? existing.quantity
-                : 0;
-
-
-        const newQuantity =
-            Math.max(
-                0,
-                currentQuantity + amount
-            );
-
-
-        if (newQuantity === 0) {
-
-            removeProduct(productId);
-
-            return;
-
-        }
-
-
-        addProduct(product, newQuantity);
-
-    }
-
-
-    /* ======================================================================
-       14. REMOVE PRODUCT
-       ====================================================================== */
-
-    function removeProduct(productId) {
-
-        if (
-            Object.prototype.hasOwnProperty.call(
-                state.selections,
-                productId
-            )
-        ) {
-
-            delete state.selections[productId];
-
-        }
-
-        updateTotals();
-
-    }
-
-
-    /* ======================================================================
-       15. CLEAR CURRENT SYSTEM
-       ====================================================================== */
-
-    function clearSystem() {
-
-        state.selections = {};
-
-        updateTotals();
-
-    }
-
-
-    /* ======================================================================
-       16. CALCULATE TOTALS
-       ====================================================================== */
-
-    function updateTotals() {
-
-        let subtotal = 0;
-
-        let itemCount = 0;
-
-        let productCount = 0;
-
-
-        Object.values(state.selections).forEach(product => {
-
-            const quantity =
-                Number(product.quantity) || 0;
-
-            const price =
-                Number(product.price) || 0;
-
-
-            subtotal += price * quantity;
-
-            itemCount += quantity;
-
-            productCount += 1;
-
-        });
-
-
-        const vat =
-            subtotal * VAT_RATE;
-
-
-        const grandTotal =
-            subtotal + vat;
-
-
-        state.totals = {
-
-            itemCount,
-
-            productCount,
-
-            subtotal,
-
-            vat,
-
-            grandTotal
-
-        };
-
-
-        updateSummary();
-
-    }
-
-
-    /* ======================================================================
-       17. UPDATE SUMMARY PANEL
-       ====================================================================== */
-
-    function updateSummary() {
-
-        if (elements.summaryCategory) {
-
-            elements.summaryCategory.textContent =
-                state.categoryTitle;
-
-        }
-
-
-        if (elements.summaryAddonCount) {
-
-            elements.summaryAddonCount.textContent =
-
-                `${state.totals.itemCount} ` +
-
-                (
-                    state.totals.itemCount === 1
-                        ? "item"
-                        : "items"
-                ) +
-
-                ` configured`;
-
-        }
-
-
-        if (elements.summarySubtotal) {
-
-            elements.summarySubtotal.textContent =
-                formatMoney(
-                    state.totals.subtotal
-                );
-
-        }
-
-
-        if (elements.summaryVat) {
-
-            elements.summaryVat.textContent =
-                formatMoney(
-                    state.totals.vat
-                );
-
-        }
-
-
-        if (elements.summaryGrandTotal) {
-
-            elements.summaryGrandTotal.textContent =
-                formatMoney(
-                    state.totals.grandTotal
-                );
-
-        }
-
-
-        updateCartButtonState();
-
-    }
-
-
-    /* ======================================================================
-       18. CART BUTTON STATE
-       ====================================================================== */
-
-    function updateCartButtonState() {
-
-        if (!elements.addToCart) {
-            return;
-        }
-
-        const hasProducts =
-            state.totals.productCount > 0;
-
-
-        elements.addToCart.disabled =
-            !hasProducts;
-
-
-        if (hasProducts) {
-
-            elements.addToCart.classList.remove(
-                "disabled"
-            );
-
-        } else {
-
-            elements.addToCart.classList.add(
-                "disabled"
-            );
-
-        }
-
-    }
-
-
-    /* ======================================================================
-       19. DISPLAY TOAST
-       ====================================================================== */
-
-    function showToast(message, type = "success") {
-
-        if (!elements.toast) {
-            return;
-        }
-
-
-        const icon =
-            type === "error"
-
-                ? "fa-circle-exclamation"
-
-                : "fa-check";
-
-
-        elements.toast.innerHTML = `
-
-            <div class="cart-notification ${type}">
-
-                <i class="fa-solid ${icon}"></i>
-
-                <span>${message}</span>
-
-            </div>
-
-        `;
-
-
-        window.setTimeout(() => {
-
-            elements.toast.innerHTML = "";
-
-        }, 3000);
-
-    }
-
-
-    /* ======================================================================
-       20. PUBLIC CONFIGURATOR API
+       12. PUBLIC CONFIGURATOR OBJECT
        ====================================================================== */
 
     window.NEXPAK_CONFIGURATOR = {
 
-        state,
+        state: state,
 
-        addProduct,
+        VAT_RATE: VAT_RATE,
 
-        changeQuantity,
+        CURRENCY: CURRENCY,
 
-        removeProduct,
+        getCategories: getCategories,
 
-        clearSystem,
+        getCategory: getCategory,
 
-        setCategory,
+        setCategory: setCategory,
 
-        updateTotals,
+        formatMoney: formatMoney,
 
-        formatMoney
+        normaliseProduct: normaliseProduct
 
     };
 
 
     /* ======================================================================
-       PART 1 INITIALISATION
+       13. INITIAL CATEGORY
        ====================================================================== */
 
-    setCategory(state.category);
+    setCategory(
+        "electric-fencing"
+    );
 
-    updateTotals();
+
+    console.log(
+        "Nexpak Configurator V3 loaded successfully."
+    );
+
 
 });
 
 /* ==========================================================================
    NEXPAK SECURITY SOLUTIONS
-   BUILD YOUR SYSTEM — CONFIGURATOR V2
-   PART 2 — PRODUCT DISCOVERY & PRODUCT CARD RENDERING
+   BUILD YOUR SYSTEM — CONFIGURATOR V3
+   PART 2 — PRODUCT DISCOVERY
    ========================================================================== */
 
 
-/* ========================================================================
-   21. PRODUCT SOURCE DETECTION
-   ========================================================================
+/* ==========================================================================
+   14. GET PRODUCT DATABASE
+   ========================================================================== */
 
-   The current shop-data.js contains configurator products inside:
+function getProductDatabase() {
 
-       SHOP_DATA.configurators[category]
+    /*
+       Preferred structure:
 
-   Some future products may eventually live inside:
+           SHOP_DATA.products
 
-       SHOP_DATA.products
+       This is the cleanest structure because each
+       product exists independently.
 
-   This function supports BOTH structures.
+       Example:
 
-   IMPORTANT:
-   - Pre-built kits are NOT used.
-   - Nothing is automatically selected.
-   - Every product starts at quantity 0.
-   ======================================================================== */
+           {
+               id: "EF-BRACKET-001",
+               name: "Wall Top Bracket",
+               category: "electric-fencing",
+               priceExclVat: 85
+           }
 
-function getConfiguratorSource(categoryId) {
-
-    /* ---------------------------------------------------------------
-       PRIMARY PRODUCT DATABASE
-       --------------------------------------------------------------- */
-
-    if (
-        Array.isArray(SHOP_DATA.products)
-    ) {
-
-        const products =
-            SHOP_DATA.products.filter(product => {
-
-                return (
-                    product.category === categoryId ||
-                    product.systemCategory === categoryId ||
-                    product.system === categoryId
-                );
-
-            });
-
-
-        if (products.length > 0) {
-
-            return products;
-
-        }
-
-    }
-
-
-    /* ---------------------------------------------------------------
-       CURRENT CONFIGURATOR DATABASE
-       ---------------------------------------------------------------
-
-       Your existing shop-data.js uses:
-
-       configurators: {
-           "electric-fencing": [...]
-       }
-
-       Each field can contain multiple product options.
-       We flatten those options into individual products.
-       --------------------------------------------------------------- */
+       No pre-built kits are read here.
+    */
 
     if (
-        SHOP_DATA.configurators &&
         Array.isArray(
-            SHOP_DATA.configurators[categoryId]
+            SHOP_DATA.products
         )
     ) {
 
-        return flattenConfiguratorFields(
-            SHOP_DATA.configurators[categoryId],
-            categoryId
-        );
+        return SHOP_DATA.products;
 
     }
 
@@ -803,16 +632,112 @@ function getConfiguratorSource(categoryId) {
 }
 
 
-/* ========================================================================
-   22. FLATTEN EXISTING CONFIGURATOR OPTIONS
-   ======================================================================== */
+/* ==========================================================================
+   15. GET PRODUCTS FOR CATEGORY
+   ========================================================================== */
 
-function flattenConfiguratorFields(fields, categoryId) {
+function getProductsForCategory(categoryId) {
+
+    const products =
+        getProductDatabase();
+
+
+    if (!categoryId) {
+
+        return [];
+
+    }
+
+
+    return products
+
+        .filter(function (product) {
+
+            if (!product) {
+
+                return false;
+
+            }
+
+
+            /*
+               Support the category naming used
+               throughout the Nexpak database.
+            */
+
+            return (
+
+                product.category === categoryId ||
+
+                product.systemCategory === categoryId ||
+
+                product.system === categoryId
+
+            );
+
+        })
+
+        .map(function (product) {
+
+            return normaliseProduct(product);
+
+        })
+
+        .filter(function (product) {
+
+            return product !== null;
+
+        });
+
+}
+
+
+/* ==========================================================================
+   16. FALLBACK — CONFIGURATOR PRODUCT DATABASE
+   ==========================================================================
+
+   Older versions of shop-data.js may contain products under:
+
+       SHOP_DATA.configurators
+
+   This fallback allows the new configurator to work
+   with that structure while the product database is
+   being completed.
+
+   IMPORTANT:
+
+   This does NOT create pre-built kits.
+
+   It simply converts individual configurator options
+   into individual products.
+   ========================================================================== */
+
+function getProductsFromConfiguratorData(
+    categoryId
+) {
+
+    if (
+        !SHOP_DATA.configurators ||
+        !Array.isArray(
+            SHOP_DATA.configurators[categoryId]
+        )
+    ) {
+
+        return [];
+
+    }
+
+
+    const fields =
+        SHOP_DATA.configurators[
+            categoryId
+        ];
+
 
     const products = [];
 
 
-    fields.forEach(field => {
+    fields.forEach(function (field) {
 
         if (
             !field ||
@@ -824,14 +749,17 @@ function flattenConfiguratorFields(fields, categoryId) {
         }
 
 
-        field.options.forEach(option => {
+        field.options.forEach(function (option) {
 
             if (!option) {
+
                 return;
+
             }
 
 
-            const productId =
+            const generatedId =
+
                 option.productId ||
 
                 option.id ||
@@ -839,9 +767,9 @@ function flattenConfiguratorFields(fields, categoryId) {
                 `${categoryId}-${field.id}-${option.value}`;
 
 
-            products.push({
+            const product = {
 
-                id: productId,
+                id: generatedId,
 
                 name:
                     option.label ||
@@ -849,17 +777,10 @@ function flattenConfiguratorFields(fields, categoryId) {
                     field.label ||
                     "Unnamed Product",
 
-                title:
-                    option.label ||
-                    option.name ||
-                    field.label ||
-                    "Unnamed Product",
-
                 priceExclVat:
-                    Number(option.price) || 0,
-
-                price:
-                    Number(option.price) || 0,
+                    Number(
+                        option.price
+                    ) || 0,
 
                 image:
                     option.image ||
@@ -890,15 +811,24 @@ function flattenConfiguratorFields(fields, categoryId) {
                     "each",
 
                 weightKg:
-                    Number(option.weight) || 0,
+                    Number(
+                        option.weight
+                    ) || 0
 
-                sourceField:
-                    field.id,
+            };
 
-                sourceType:
-                    field.type
 
-            });
+            const normalised =
+                normaliseProduct(product);
+
+
+            if (normalised) {
+
+                products.push(
+                    normalised
+                );
+
+            }
 
         });
 
@@ -910,24 +840,156 @@ function flattenConfiguratorFields(fields, categoryId) {
 }
 
 
-/* ========================================================================
-   23. GET ALL PRODUCTS FOR CURRENT CATEGORY
-   ======================================================================== */
+/* ==========================================================================
+   17. COMBINED CATEGORY PRODUCT SOURCE
+   ========================================================================== */
 
-function getCurrentProducts() {
+function getConfiguratorProducts(
+    categoryId
+) {
 
-    return getConfiguratorSource(
-        state.category
+    /*
+       FIRST:
+       Use the proper individual product database.
+    */
+
+    const databaseProducts =
+        getProductsForCategory(
+            categoryId
+        );
+
+
+    if (
+        databaseProducts.length > 0
+    ) {
+
+        return databaseProducts;
+
+    }
+
+
+    /*
+       FALLBACK:
+       Use individual options from
+       SHOP_DATA.configurators.
+    */
+
+    return getProductsFromConfiguratorData(
+        categoryId
     );
 
 }
 
 
-/* ========================================================================
-   24. NORMALISE PRODUCT GROUP
-   ======================================================================== */
+/* ==========================================================================
+   18. REMOVE DUPLICATE PRODUCTS
+   ========================================================================== */
 
-function getProductGroup(product) {
+function removeDuplicateProducts(
+    products
+) {
+
+    const seen =
+        new Set();
+
+
+    return products.filter(
+        function (product) {
+
+            if (!product || !product.id) {
+
+                return false;
+
+            }
+
+
+            if (
+                seen.has(product.id)
+            ) {
+
+                return false;
+
+            }
+
+
+            seen.add(
+                product.id
+            );
+
+
+            return true;
+
+        }
+    );
+
+}
+
+
+/* ==========================================================================
+   19. GET CURRENT CATEGORY PRODUCTS
+   ========================================================================== */
+
+function getCurrentProducts() {
+
+    const products =
+        getConfiguratorProducts(
+            state.category
+        );
+
+
+    return removeDuplicateProducts(
+        products
+    );
+
+}
+
+
+/* ==========================================================================
+   20. GET PRODUCT BY ID
+   ========================================================================== */
+
+function findConfiguratorProduct(
+    productId
+) {
+
+    if (!productId) {
+
+        return null;
+
+    }
+
+
+    const products =
+        getCurrentProducts();
+
+
+    return (
+
+        products.find(
+            function (product) {
+
+                return (
+                    product.id ===
+                    productId
+                );
+
+            }
+        ) ||
+
+        null
+
+    );
+
+}
+
+
+/* ==========================================================================
+   21. GET PRODUCT GROUP
+   ========================================================================== */
+
+function getProductGroup(
+    product
+) {
 
     if (!product) {
 
@@ -942,387 +1004,271 @@ function getProductGroup(product) {
     }
 
 
-    const rawGroup =
-
-        product.group ||
-
-        product.productGroup ||
-
-        product.groupId ||
-
-        product.sourceField ||
-
-        "general";
-
-
-    const rawTitle =
-
-        product.groupTitle ||
-
-        product.productGroupTitle ||
-
-        product.section ||
-
-        product.categoryGroup ||
-
-        product.sourceField ||
-
-        "Products";
-
-
     return {
 
         id:
-            String(rawGroup)
-                .toLowerCase()
-                .replace(/[^a-z0-9]+/g, "-"),
+            product.group ||
+            "general",
 
         title:
-            formatGroupTitle(rawTitle)
+            product.groupTitle ||
+            product.group ||
+            "Products"
 
     };
 
 }
 
 
-/* ========================================================================
-   25. FORMAT GROUP TITLE
-   ======================================================================== */
+/* ==========================================================================
+   22. GROUP PRODUCTS
+   ========================================================================== */
 
-function formatGroupTitle(value) {
-
-    if (!value) {
-
-        return "Products";
-
-    }
-
-
-    const text =
-        String(value)
-            .replace(/[-_]+/g, " ")
-            .trim();
-
-
-    /* Known professional group names */
-
-    const knownTitles = {
-
-        "brand":
-            "Brands",
-
-        "bracketlines":
-            "Brackets & Mounting",
-
-        "bracket-lines":
-            "Brackets & Mounting",
-
-        "bracketcolour":
-            "Brackets & Mounting",
-
-        "bracket-colour":
-            "Brackets & Mounting",
-
-        "bartype":
-            "Brackets & Mounting",
-
-        "bracketstyle":
-            "Brackets & Mounting",
-
-        "stays":
-            "Stays & Supports",
-
-        "staysleeves":
-            "Stay Sleeves",
-
-        "stay-sleeves":
-            "Stay Sleeves",
-
-        "lugs":
-            "Lugs & Connections",
-
-        "anchors":
-            "Anchors & Fixings",
-
-        "wirerolls":
-            "Electric Fence Wire",
-
-        "wire-rolls":
-            "Electric Fence Wire",
-
-        "ferrules":
-            "Ferrules",
-
-        "hardware":
-            "Tensioners & Hooks",
-
-        "earthspikes":
-            "Earthing",
-
-        "earth-spikes":
-            "Earthing",
-
-        "earthloops":
-            "Earthing",
-
-        "earth-loops":
-            "Earthing",
-
-        "htcable":
-            "HT Cable",
-
-        "ht-cable":
-            "HT Cable",
-
-        "energizeroutput":
-            "Energizers",
-
-        "energizer-output":
-            "Energizers",
-
-        "batterybackup":
-            "Power & Backup",
-
-        "battery-backup":
-            "Power & Backup",
-
-        "powersupply":
-            "Power & Keypads",
-
-        "power-supply":
-            "Power & Keypads",
-
-        "enclosure":
-            "Enclosures",
-
-        "commsmodule":
-            "Communication Modules",
-
-        "comms-module":
-            "Communication Modules",
-
-        "visualaudioalerts":
-            "Sirens, Strobes & Warning Lights",
-
-        "visual-audio-alerts":
-            "Sirens, Strobes & Warning Lights",
-
-        "installation":
-            "Installation"
-
-    };
-
-
-    const normalisedKey =
-        text
-            .toLowerCase()
-            .replace(/\s+/g, "-");
-
-
-    if (
-        knownTitles[normalisedKey]
-    ) {
-
-        return knownTitles[normalisedKey];
-
-    }
-
-
-    return text
-        .split(" ")
-        .map(word => {
-
-            if (!word) {
-                return "";
-            }
-
-            return (
-                word.charAt(0).toUpperCase() +
-                word.slice(1)
-            );
-
-        })
-        .join(" ");
-
-}
-
-
-/* ========================================================================
-   26. GROUP PRODUCTS
-   ======================================================================== */
-
-function groupProducts(products) {
+function groupProducts(
+    products
+) {
 
     const groups = {};
 
 
-    products.forEach(product => {
+    products.forEach(
+        function (product) {
 
-        const group =
-            getProductGroup(product);
+            if (!product) {
+
+                return;
+
+            }
 
 
-        if (!groups[group.id]) {
+            const group =
+                getProductGroup(
+                    product
+                );
 
-            groups[group.id] = {
 
-                id:
-                    group.id,
+            if (
+                !groups[group.id]
+            ) {
 
-                title:
-                    group.title,
+                groups[group.id] = {
 
-                products:
-                    []
+                    id:
+                        group.id,
 
-            };
+                    title:
+                        group.title,
+
+                    products: []
+
+                };
+
+            }
+
+
+            groups[group.id]
+                .products
+                .push(product);
 
         }
+    );
 
 
-        groups[group.id].products.push(
-            product
-        );
-
-    });
-
-
-    return Object.values(groups);
+    return Object.values(
+        groups
+    );
 
 }
 
 
-/* ========================================================================
-   27. ESCAPE HTML
-   ========================================================================
+/* ==========================================================================
+   23. UPDATE PUBLIC API
+   ========================================================================== */
 
-   Prevents product names/descriptions from accidentally being interpreted
-   as HTML.
-   ======================================================================== */
+if (
+    window.NEXPAK_CONFIGURATOR
+) {
+
+    window.NEXPAK_CONFIGURATOR
+        .getProductsForCategory =
+            getConfiguratorProducts;
+
+
+    window.NEXPAK_CONFIGURATOR
+        .getCurrentProducts =
+            getCurrentProducts;
+
+
+    window.NEXPAK_CONFIGURATOR
+        .findProduct =
+            findConfiguratorProduct;
+
+
+    window.NEXPAK_CONFIGURATOR
+        .groupProducts =
+            groupProducts;
+
+}
+
+
+/* ==========================================================================
+   PART 2 COMPLETE
+   ========================================================================== */
+
+/* ==========================================================================
+   NEXPAK SECURITY SOLUTIONS
+   BUILD YOUR SYSTEM — CONFIGURATOR V3
+   PART 3 — PRODUCT CARD RENDERING
+   ========================================================================== */
+
+
+/* ==========================================================================
+   24. ESCAPE HTML
+   ========================================================================== */
 
 function escapeHtml(value) {
 
-    if (
-        value === null ||
-        value === undefined
-    ) {
+    return String(
+        value ?? ""
+    )
 
-        return "";
+        .replace(
+            /&/g,
+            "&amp;"
+        )
 
-    }
+        .replace(
+            /</g,
+            "&lt;"
+        )
 
+        .replace(
+            />/g,
+            "&gt;"
+        )
 
-    return String(value)
+        .replace(
+            /"/g,
+            "&quot;"
+        )
 
-        .replace(/&/g, "&amp;")
-
-        .replace(/</g, "&lt;")
-
-        .replace(/>/g, "&gt;")
-
-        .replace(/"/g, "&quot;")
-
-        .replace(/'/g, "&#039;");
-
-}
-
-
-/* ========================================================================
-   28. GET CURRENT PRODUCT QUANTITY
-   ======================================================================== */
-
-function getProductQuantity(productId) {
-
-    if (
-        state.selections &&
-        state.selections[productId]
-    ) {
-
-        return Number(
-            state.selections[productId].quantity
-        ) || 0;
-
-    }
-
-
-    return 0;
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
 
 
-/* ========================================================================
-   29. PRODUCT CARD HTML
-   ======================================================================== */
+/* ==========================================================================
+   25. FORMAT PRODUCT IMAGE
+   ========================================================================== */
+
+function getProductImage(product) {
+
+    if (
+        product &&
+        product.image
+    ) {
+
+        return product.image;
+
+    }
+
+
+    /*
+       No fake image is generated here.
+       CSS can provide the visual fallback.
+    */
+
+    return "";
+
+}
+
+
+/* ==========================================================================
+   26. CREATE PRODUCT CARD
+   ========================================================================== */
 
 function createProductCard(product) {
 
     const productId =
-        getProductId(product);
+        escapeHtml(
+            product.id
+        );
 
 
-    const name =
-        getProductName(product);
-
-
-    const price =
-        getProductPrice(product);
-
-
-    const quantity =
-        getProductQuantity(productId);
-
-
-    const image =
-        product.image ||
-        product.img ||
-        "";
+    const productName =
+        escapeHtml(
+            product.name
+        );
 
 
     const description =
-        product.description ||
-        "";
+        escapeHtml(
+            product.description
+        );
 
 
-    const unit =
-        product.unit ||
-        "each";
+    const image =
+        getProductImage(
+            product
+        );
 
 
-    const imageHTML = image
+    const price =
+        formatMoney(
+            product.price
+        );
+
+
+    const existing =
+        state.selections[
+            product.id
+        ];
+
+
+    const quantity =
+        existing
+            ? Number(
+                existing.quantity
+            ) || 0
+            : 0;
+
+
+    const selectedClass =
+        quantity > 0
+            ? " selected"
+            : "";
+
+
+    const imageHtml = image
 
         ? `
-
             <div class="system-product-image">
-
                 <img
                     src="${escapeHtml(image)}"
-                    alt="${escapeHtml(name)}"
+                    alt="${productName}"
                     loading="lazy"
                 >
-
             </div>
-
-        `
+          `
 
         : `
-
-            <div class="system-product-image system-product-placeholder">
-
+            <div class="system-product-image no-image">
                 <i class="fa-solid fa-shield-halved"></i>
-
             </div>
-
-        `;
+          `;
 
 
     return `
 
         <article
-            class="system-product-card"
-            data-product-id="${escapeHtml(productId)}"
+            class="system-product-card${selectedClass}"
+            data-product-id="${productId}"
         >
 
-            ${imageHTML}
+            ${imageHtml}
 
 
             <div class="system-product-content">
@@ -1330,9 +1276,7 @@ function createProductCard(product) {
                 <div class="system-product-info">
 
                     <h4 class="system-product-name">
-
-                        ${escapeHtml(name)}
-
+                        ${productName}
                     </h4>
 
 
@@ -1340,72 +1284,60 @@ function createProductCard(product) {
                         description
 
                             ? `
-
                                 <p class="system-product-description">
-
-                                    ${escapeHtml(description)}
-
+                                    ${description}
                                 </p>
-
                               `
 
                             : ""
-
                     }
 
                 </div>
 
 
-                <div class="system-product-bottom">
+                <div class="system-product-price">
 
-                    <div class="system-product-price">
+                    ${price}
 
-                        ${formatMoney(price)}
+                    <span class="system-product-unit">
+                        / ${escapeHtml(product.unit)}
+                    </span>
 
-                        <small>
-                            / ${escapeHtml(unit)}
-                        </small>
-
-                    </div>
+                </div>
 
 
-                    <div class="system-product-controls">
+                <div class="system-product-actions">
 
-                        <button
-                            type="button"
-                            class="system-qty-btn system-qty-minus"
-                            data-product-id="${escapeHtml(productId)}"
-                            aria-label="Decrease ${escapeHtml(name)} quantity"
-                        >
-
-                            <i class="fa-solid fa-minus"></i>
-
-                        </button>
+                    <button
+                        type="button"
+                        class="system-qty-btn system-qty-minus"
+                        data-product-id="${productId}"
+                        aria-label="Decrease ${productName} quantity"
+                    >
+                        <i class="fa-solid fa-minus"></i>
+                    </button>
 
 
-                        <input
-                            type="number"
-                            class="system-qty-input"
-                            data-product-id="${escapeHtml(productId)}"
-                            value="${quantity}"
-                            min="0"
-                            step="1"
-                            aria-label="${escapeHtml(name)} quantity"
-                        >
+                    <input
+                        type="number"
+                        class="system-qty-input"
+                        data-product-id="${productId}"
+                        value="${quantity}"
+                        min="0"
+                        step="1"
+                        inputmode="numeric"
+                        aria-label="${productName} quantity"
+                    >
 
 
-                        <button
-                            type="button"
-                            class="system-qty-btn system-qty-plus"
-                            data-product-id="${escapeHtml(productId)}"
-                            aria-label="Increase ${escapeHtml(name)} quantity"
-                        >
-
-                            <i class="fa-solid fa-plus"></i>
-
-                        </button>
-
-                    </div>
+                    <button
+                        type="button"
+                        class="system-qty-btn system-qty-plus"
+                        data-product-id="${productId}"
+                        aria-label="Increase ${productName} quantity"
+                    >
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
 
                 </div>
 
@@ -1416,20 +1348,13 @@ function createProductCard(product) {
                         quantity > 0
 
                             ? `
-
                                 <i class="fa-solid fa-check"></i>
-
-                                ${quantity}
-                                selected
-
+                                Added to system
                               `
 
                             : `
-
                                 Select quantity
-
                               `
-
                     }
 
                 </div>
@@ -1443,18 +1368,45 @@ function createProductCard(product) {
 }
 
 
-/* ========================================================================
-   30. PRODUCT GROUP HTML
-   ======================================================================== */
+/* ==========================================================================
+   27. CREATE PRODUCT GROUP
+   ========================================================================== */
 
 function createProductGroup(group) {
 
+    if (
+        !group ||
+        !Array.isArray(
+            group.products
+        )
+    ) {
+
+        return "";
+
+    }
+
+
     const productCards =
         group.products
-            .map(product =>
-                createProductCard(product)
+
+            .map(
+                function (product) {
+
+                    return createProductCard(
+                        product
+                    );
+
+                }
             )
+
             .join("");
+
+
+    if (!productCards) {
+
+        return "";
+
+    }
 
 
     return `
@@ -1468,33 +1420,11 @@ function createProductGroup(group) {
 
                 <div>
 
-                    <span class="system-group-eyebrow">
-
-                        BUILD YOUR SYSTEM
-
-                    </span>
-
-
                     <h3>
-
                         ${escapeHtml(group.title)}
-
                     </h3>
 
                 </div>
-
-
-                <span class="system-group-count">
-
-                    ${group.products.length}
-
-                    ${
-                        group.products.length === 1
-                            ? " product"
-                            : " products"
-                    }
-
-                </span>
 
             </div>
 
@@ -1512,54 +1442,18 @@ function createProductGroup(group) {
 }
 
 
-/* ========================================================================
-   31. EMPTY CATEGORY STATE
-   ======================================================================== */
+/* ==========================================================================
+   28. RENDER CURRENT CATEGORY
+   ========================================================================== */
 
-function createEmptyCategoryState() {
+function renderConfigurator() {
 
-    return `
-
-        <div class="system-empty-state">
-
-            <div class="system-empty-icon">
-
-                <i class="fa-solid fa-box-open"></i>
-
-            </div>
-
-
-            <h3>
-
-                Products Coming Soon
-
-            </h3>
-
-
-            <p>
-
-                Individual products for this system are
-                being added to the Nexpak catalogue.
-
-            </p>
-
-        </div>
-
-    `;
-
-}
-
-
-/* ========================================================================
-   32. RENDER PRODUCT CATALOGUE
-   ======================================================================== */
-
-function renderProductCatalogue() {
-
-    if (!elements.configurator) {
+    if (
+        !elements.configurator
+    ) {
 
         console.warn(
-            "Nexpak Configurator: " +
+            "Nexpak Configurator V3: " +
             "#configuratorSelectors was not found."
         );
 
@@ -1572,10 +1466,34 @@ function renderProductCatalogue() {
         getCurrentProducts();
 
 
-    if (!products.length) {
+    /*
+       No products available.
+    */
 
-        elements.configurator.innerHTML =
-            createEmptyCategoryState();
+    if (
+        products.length === 0
+    ) {
+
+        elements.configurator.innerHTML = `
+
+            <div class="system-empty-state">
+
+                <i class="fa-solid fa-box-open"></i>
+
+                <h3>
+                    Products Coming Soon
+                </h3>
+
+                <p>
+                    Products for this system
+                    are currently being prepared.
+                </p>
+
+            </div>
+
+        `;
+
+        updateSummary();
 
         return;
 
@@ -1583,2727 +1501,2582 @@ function renderProductCatalogue() {
 
 
     const groups =
-        groupProducts(products);
+        groupProducts(
+            products
+        );
 
 
     elements.configurator.innerHTML =
+
         groups
-            .map(group =>
-                createProductGroup(group)
+
+            .map(
+                function (group) {
+
+                    return createProductGroup(
+                        group
+                    );
+
+                }
             )
+
             .join("");
 
 
-    attachProductControls();
+    attachProductEvents();
+
+    updateSummary();
 
 }
 
 
-/* ========================================================================
-   33. ATTACH PRODUCT CONTROLS
-   ======================================================================== */
+/* ==========================================================================
+   29. REFRESH CURRENT PRODUCT DISPLAY
+   ========================================================================== */
 
-function attachProductControls() {
+function refreshConfiguratorProducts() {
 
-    /* ---------------------------------------------------------------
+    renderConfigurator();
+
+}
+
+
+/* ==========================================================================
+   30. UPDATE PRODUCT CARD VISUAL STATE
+   ========================================================================== */
+
+function updateProductCard(productId) {
+
+    if (!elements.configurator) {
+
+        return;
+
+    }
+
+
+    const card =
+        elements.configurator.querySelector(
+            `.system-product-card[data-product-id="${CSS.escape(productId)}"]`
+        );
+
+
+    if (!card) {
+
+        return;
+
+    }
+
+
+    const selected =
+        state.selections[
+            productId
+        ];
+
+
+    const quantity =
+        selected
+            ? Number(
+                selected.quantity
+            ) || 0
+            : 0;
+
+
+    const input =
+        card.querySelector(
+            ".system-qty-input"
+        );
+
+
+    const status =
+        card.querySelector(
+            ".system-product-selected"
+        );
+
+
+    if (input) {
+
+        input.value =
+            quantity;
+
+    }
+
+
+    if (quantity > 0) {
+
+        card.classList.add(
+            "selected"
+        );
+
+
+        if (status) {
+
+            status.innerHTML = `
+
+                <i class="fa-solid fa-check"></i>
+                Added to system
+
+            `;
+
+        }
+
+    }
+
+    else {
+
+        card.classList.remove(
+            "selected"
+        );
+
+
+        if (status) {
+
+            status.innerHTML =
+                "Select quantity";
+
+        }
+
+    }
+
+}
+
+
+/* ==========================================================================
+   31. PUBLIC RENDER API
+   ========================================================================== */
+
+if (
+    window.NEXPAK_CONFIGURATOR
+) {
+
+    window.NEXPAK_CONFIGURATOR
+        .render =
+            renderConfigurator;
+
+
+    window.NEXPAK_CONFIGURATOR
+        .refreshProducts =
+            refreshConfiguratorProducts;
+
+}
+
+
+/* ==========================================================================
+   PART 3 COMPLETE
+   ========================================================================== */
+/* ==========================================================================
+   NEXPAK SECURITY SOLUTIONS
+   BUILD YOUR SYSTEM — CONFIGURATOR V3
+   PART 4 — PRODUCT QUANTITY CONTROLS
+   ========================================================================== */
+
+
+/* ==========================================================================
+   32. ATTACH PRODUCT EVENTS
+   ========================================================================== */
+
+function attachProductEvents() {
+
+    if (!elements.configurator) {
+
+        return;
+
+    }
+
+
+    /* ----------------------------------------------------------------------
        PLUS BUTTONS
-       --------------------------------------------------------------- */
+       ---------------------------------------------------------------------- */
 
-    document
+    elements.configurator
         .querySelectorAll(
             ".system-qty-plus"
         )
-        .forEach(button => {
+        .forEach(
+            function (button) {
 
-            button.addEventListener(
-                "click",
-                () => {
+                button.addEventListener(
+                    "click",
+                    function () {
 
-                    const productId =
-                        button.dataset.productId;
+                        const productId =
+                            this.dataset.productId;
 
 
-                    const product =
-                        getCurrentProducts()
-                            .find(
-                                item =>
-                                    getProductId(item) ===
-                                    productId
+                        if (!productId) {
+
+                            return;
+
+                        }
+
+
+                        const product =
+                            findConfiguratorProduct(
+                                productId
                             );
 
 
-                    if (!product) {
-                        return;
+                        if (!product) {
+
+                            return;
+
+                        }
+
+
+                        changeProductQuantity(
+                            product,
+                            1
+                        );
+
                     }
+                );
+
+            }
+        );
 
 
-                    changeQuantity(
-                        product,
-                        1
-                    );
-
-
-                    refreshProductCard(
-                        productId
-                    );
-
-                }
-            );
-
-        });
-
-
-    /* ---------------------------------------------------------------
+    /* ----------------------------------------------------------------------
        MINUS BUTTONS
-       --------------------------------------------------------------- */
+       ---------------------------------------------------------------------- */
 
-    document
+    elements.configurator
         .querySelectorAll(
             ".system-qty-minus"
         )
-        .forEach(button => {
+        .forEach(
+            function (button) {
 
-            button.addEventListener(
-                "click",
-                () => {
+                button.addEventListener(
+                    "click",
+                    function () {
 
-                    const productId =
-                        button.dataset.productId;
+                        const productId =
+                            this.dataset.productId;
 
 
-                    const product =
-                        getCurrentProducts()
-                            .find(
-                                item =>
-                                    getProductId(item) ===
-                                    productId
+                        if (!productId) {
+
+                            return;
+
+                        }
+
+
+                        const product =
+                            findConfiguratorProduct(
+                                productId
                             );
 
 
-                    if (!product) {
-                        return;
+                        if (!product) {
+
+                            return;
+
+                        }
+
+
+                        changeProductQuantity(
+                            product,
+                            -1
+                        );
+
                     }
+                );
+
+            }
+        );
 
 
-                    changeQuantity(
-                        product,
-                        -1
-                    );
-
-
-                    refreshProductCard(
-                        productId
-                    );
-
-                }
-            );
-
-        });
-
-
-    /* ---------------------------------------------------------------
+    /* ----------------------------------------------------------------------
        DIRECT NUMBER INPUT
-       --------------------------------------------------------------- */
+       ---------------------------------------------------------------------- */
 
-        document
+    elements.configurator
         .querySelectorAll(
             ".system-qty-input"
         )
-        .forEach(input => {
+        .forEach(
+            function (input) {
 
-            input.addEventListener(
-                "input",
-                function () {
 
-                    const productId =
-                        this.dataset.productId;
+                /* ----------------------------------------------------------
+                   LIVE INPUT VALIDATION
+                   ---------------------------------------------------------- */
 
-                    let quantity =
-                        parseInt(this.value, 10);
-
-                    if (
-                        isNaN(quantity) ||
-                        quantity < 0
-                    ) {
-                        quantity = 0;
-                    }
-
-                    /*
-                     * Prevent excessively large quantities
-                     */
-                    if (quantity > 999) {
-                        quantity = 999;
-                    }
-
-                    this.value = quantity;
-
-                    updateQuantity(
-                        productId,
-                        quantity
-                    );
-                }
-            );
-
-            /*
-             * Enter key should not submit
-             * the entire configurator form.
-             */
-            input.addEventListener(
-                "keydown",
-                function (event) {
-
-                    if (
-                        event.key === "Enter"
-                    ) {
-                        event.preventDefault();
-
-                        this.blur();
-                    }
-                }
-            );
-        });
-
-
-    /* ---------------------------------------------------------------
-       QUANTITY UPDATE
-       --------------------------------------------------------------- */
-
-    function updateQuantity(
-        productId,
-        quantity
-    ) {
-
-        const product =
-            findProduct(productId);
-
-        if (!product) {
-            return;
-        }
-
-        if (quantity <= 0) {
-
-            delete systemState.items[
-                productId
-            ];
-
-        } else {
-
-            systemState.items[
-                productId
-            ] = {
-                id: product.id,
-                name: product.name,
-                price: Number(
-                    product.price || 0
-                ),
-                quantity: quantity,
-                category:
-                    product.category || "",
-                sku:
-                    product.sku || ""
-            };
-        }
-
-        updateConfiguratorSummary();
-        updateSelectedProductsUI();
-    }
-
-
-    /* ---------------------------------------------------------------
-       FIND PRODUCT
-       --------------------------------------------------------------- */
-
-    function findProduct(productId) {
-
-        let foundProduct = null;
-
-        /*
-         * Search the complete SHOP_DATA
-         * configurator database.
-         */
-
-        if (
-            typeof SHOP_DATA !== "undefined" &&
-            SHOP_DATA.configurators
-        ) {
-
-            Object.values(
-                SHOP_DATA.configurators
-            ).forEach(category => {
-
-                if (foundProduct) {
-                    return;
-                }
-
-                category.forEach(group => {
-
-                    if (foundProduct) {
-                        return;
-                    }
-
-                    if (
-                        !group.options
-                    ) {
-                        return;
-                    }
-
-                    const match =
-                        group.options.find(
-                            option =>
-                                option.value ===
-                                productId
-                        );
-
-                    if (match) {
-
-                        foundProduct = {
-                            id:
-                                match.value,
-
-                            name:
-                                match.label,
-
-                            price:
-                                Number(
-                                    match.price || 0
-                                ),
-
-                            weight:
-                                Number(
-                                    match.weight || 0
-                                ),
-
-                            category:
-                                group.label,
-
-                            sku:
-                                match.sku ||
-                                match.value
-                        };
-                    }
-                });
-            });
-        }
-
-        return foundProduct;
-    }
-
-
-    /* ---------------------------------------------------------------
-       SELECT / OPTION PRODUCTS
-       --------------------------------------------------------------- */
-
-    document
-        .querySelectorAll(
-            ".system-option"
-        )
-        .forEach(option => {
-
-            option.addEventListener(
-                "click",
-                function () {
-
-                    const group =
-                        this.dataset.group;
-
-                    const productId =
-                        this.dataset.productId;
-
-                    /*
-                     * Remove active state from
-                     * other products in same group.
-                     */
-
-                    document
-                        .querySelectorAll(
-                            `.system-option[data-group="${group}"]`
-                        )
-                        .forEach(item => {
-
-                            item.classList.remove(
-                                "active"
-                            );
-                        });
-
-                    this.classList.add(
-                        "active"
-                    );
-
-                    /*
-                     * Store selected product.
-                     */
-
-                    const product =
-                        findProduct(
-                            productId
-                        );
-
-                    if (!product) {
-                        return;
-                    }
-
-                    /*
-                     * Remove any previous
-                     * selection from this group.
-                     */
-
-                    Object.keys(
-                        systemState.selections
-                    ).forEach(key => {
-
-                        if (
-                            systemState
-                                .selections[key]
-                                .group === group
-                        ) {
-
-                            delete systemState
-                                .selections[key];
-                        }
-                    });
-
-                    systemState.selections[
-                        group
-                    ] = {
-
-                        group: group,
-
-                        id:
-                            product.id,
-
-                        name:
-                            product.name,
-
-                        price:
-                            product.price,
-
-                        quantity: 1
-                    };
-
-                    updateConfiguratorSummary();
-                    updateSelectedProductsUI();
-                }
-            );
-        });
-
-
-    /* ---------------------------------------------------------------
-       PRODUCT CARD + BUTTON QUANTITY CONTROLS
-       --------------------------------------------------------------- */
-
-    document
-        .querySelectorAll(
-            ".system-product"
-        )
-        .forEach(card => {
-
-            const productId =
-                card.dataset.productId;
-
-            const plusButton =
-                card.querySelector(
-                    ".system-qty-plus"
-                );
-
-            const minusButton =
-                card.querySelector(
-                    ".system-qty-minus"
-                );
-
-            const input =
-                card.querySelector(
-                    ".system-qty-input"
-                );
-
-            if (plusButton) {
-
-                plusButton.addEventListener(
-                    "click",
+                input.addEventListener(
+                    "input",
                     function () {
 
-                        if (!input) {
-                            return;
-                        }
+                        /*
+                           Prevent negative values.
+                        */
 
-                        let quantity =
+                        let value =
                             parseInt(
-                                input.value,
+                                this.value,
                                 10
-                            ) || 0;
+                            );
 
-                        quantity++;
-
-                        input.value =
-                            quantity;
-
-                        updateQuantity(
-                            productId,
-                            quantity
-                        );
-                    }
-                );
-            }
-
-            if (minusButton) {
-
-                minusButton.addEventListener(
-                    "click",
-                    function () {
-
-                        if (!input) {
-                            return;
-                        }
-
-                        let quantity =
-                            parseInt(
-                                input.value,
-                                10
-                            ) || 0;
 
                         if (
-                            quantity <= 0
+                            Number.isNaN(value) ||
+                            value < 0
                         ) {
-                            return;
+
+                            value = 0;
+
                         }
 
-                        quantity--;
 
-                        input.value =
-                            quantity;
+                        this.value =
+                            value;
 
-                        updateQuantity(
-                            productId,
-                            quantity
-                        );
                     }
                 );
-            }
-        });
 
 
-    /* ---------------------------------------------------------------
-       UPDATE SELECTED PRODUCT DISPLAY
-       --------------------------------------------------------------- */
-
-    function updateSelectedProductsUI() {
-
-        document
-            .querySelectorAll(
-                ".system-product"
-            )
-            .forEach(card => {
-
-                const productId =
-                    card.dataset.productId;
-
-                const item =
-                    systemState.items[
-                        productId
-                    ];
-
-                const input =
-                    card.querySelector(
-                        ".system-qty-input"
-                    );
-
-                const quantity =
-                    item
-                        ? item.quantity
-                        : 0;
-
-                if (input) {
-                    input.value =
-                        quantity;
-                }
-
-                if (item) {
-
-                    card.classList.add(
-                        "selected"
-                    );
-
-                } else {
-
-                    card.classList.remove(
-                        "selected"
-                    );
-                }
-            });
-    }
-
-
-    /* ---------------------------------------------------------------
-       CONFIGURATION SUMMARY
-       --------------------------------------------------------------- */
-
-    function updateConfiguratorSummary() {
-
-        let subtotal = 0;
-        let itemCount = 0;
-
-        /*
-         * Quantity products
-         */
-
-        Object.values(
-            systemState.items
-        ).forEach(item => {
-
-            const quantity =
-                Number(
-                    item.quantity || 0
-                );
-
-            const price =
-                Number(
-                    item.price || 0
-                );
-
-            subtotal +=
-                price * quantity;
-
-            itemCount += quantity;
-        });
-
-
-        /*
-         * Single-select products
-         */
-
-        Object.values(
-            systemState.selections
-        ).forEach(item => {
-
-            subtotal +=
-                Number(
-                    item.price || 0
-                );
-        });
-
-
-        const vat =
-            subtotal *
-            (
-                typeof SHOP_DATA !== "undefined" &&
-                SHOP_DATA.company &&
-                SHOP_DATA.company.vatRate
-                    ? SHOP_DATA.company.vatRate
-                    : 0.15
-            );
-
-        const total =
-            subtotal + vat;
-
-
-        /*
-         * Update summary elements
-         */
-
-        const subtotalElement =
-            document.getElementById(
-                "summarySubtotal"
-            );
-
-        const vatElement =
-            document.getElementById(
-                "summaryVat"
-            );
-
-        const totalElement =
-            document.getElementById(
-                "summaryGrandTotal"
-            );
-
-        const countElement =
-            document.getElementById(
-                "summaryAddonCount"
-            );
-
-
-        if (subtotalElement) {
-
-            subtotalElement.textContent =
-                formatCurrency(
-                    subtotal
-                );
-        }
-
-        if (vatElement) {
-
-            vatElement.textContent =
-                formatCurrency(
-                    vat
-                );
-        }
-
-        if (totalElement) {
-
-            totalElement.textContent =
-                formatCurrency(
-                    total
-                );
-        }
-
-        if (countElement) {
-
-            countElement.textContent =
-                `${itemCount} items configured`;
-        }
-    }
-
-
-    /* ---------------------------------------------------------------
-       CURRENCY FORMATTER
-       --------------------------------------------------------------- */
-
-    function formatCurrency(
-        amount
-    ) {
-
-        return (
-            "R " +
-            Number(amount || 0)
-                .toLocaleString(
-                    "en-ZA",
-                    {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                    }
-                )
-        );
-    }
-
-
-    /* ---------------------------------------------------------------
-       CLEAR CURRENT CONFIGURATION
-       --------------------------------------------------------------- */
-
-    function clearConfiguration() {
-
-        systemState.items = {};
-        systemState.selections = {};
-
-        document
-            .querySelectorAll(
-                ".system-qty-input"
-            )
-            .forEach(input => {
-
-                input.value = 0;
-            });
-
-        document
-            .querySelectorAll(
-                ".system-product"
-            )
-            .forEach(card => {
-
-                card.classList.remove(
-                    "selected"
-                );
-            });
-
-        document
-            .querySelectorAll(
-                ".system-option"
-            )
-            .forEach(option => {
-
-                option.classList.remove(
-                    "active"
-                );
-            });
-
-        updateConfiguratorSummary();
-        updateSelectedProductsUI();
-    }
-
-    /* ---------------------------------------------------------------
-       CATEGORY NAVIGATION
-       --------------------------------------------------------------- */
-
-    function setupCategoryNavigation() {
-
-        const tabs =
-            document.querySelectorAll(
-                ".nav-tab"
-            );
-
-        tabs.forEach(tab => {
-
-            tab.addEventListener(
-                "click",
-                function () {
-
-                    const category =
-                        this.dataset.category;
-
-                    if (!category) {
-                        return;
-                    }
-
-                    /*
-                     * Remove active state
-                     */
-
-                    tabs.forEach(item => {
-
-                        item.classList.remove(
-                            "active"
-                        );
-                    });
-
-                    /*
-                     * Activate clicked category
-                     */
-
-                    this.classList.add(
-                        "active"
-                    );
-
-                    /*
-                     * Update system state
-                     */
-
-                    systemState.category =
-                        category;
-
-                    /*
-                     * Update category title
-                     */
-
-                    const categoryData =
-                        getCategoryData(
-                            category
-                        );
-
-                    if (categoryData) {
-
-                        systemState.categoryTitle =
-                            categoryData.title;
-
-                        const title =
-                            document.getElementById(
-                                "currentCategoryTitle"
-                            );
-
-                        if (title) {
-
-                            title.textContent =
-                                categoryData.title;
-                        }
-                    }
-
-                    /*
-                     * Clear previous configuration
-                     *
-                     * Each system starts clean.
-                     * Nothing from another system
-                     * should accidentally carry over.
-                     */
-
-                    systemState.items = {};
-                    systemState.selections = {};
-
-                    /*
-                     * Render the complete product
-                     * selection interface.
-                     */
-
-                    renderSystemProducts(
-                        category
-                    );
-
-                    updateConfiguratorSummary();
-                }
-            );
-        });
-    }
-
-
-    /* ---------------------------------------------------------------
-       GET CATEGORY INFORMATION
-       --------------------------------------------------------------- */
-
-    function getCategoryData(
-        categoryId
-    ) {
-
-        if (
-            typeof SHOP_DATA === "undefined" ||
-            !SHOP_DATA.categories
-        ) {
-            return null;
-        }
-
-        return SHOP_DATA.categories.find(
-            category =>
-                category.id === categoryId
-        ) || null;
-    }
-
-
-    /* ---------------------------------------------------------------
-       GET CATEGORY CONFIGURATION
-       --------------------------------------------------------------- */
-
-    function getCategoryConfiguration(
-        categoryId
-    ) {
-
-        if (
-            typeof SHOP_DATA === "undefined" ||
-            !SHOP_DATA.configurators
-        ) {
-            return [];
-        }
-
-        return (
-            SHOP_DATA
-                .configurators[
-                    categoryId
-                ] || []
-        );
-    }
-
-
-    /* ---------------------------------------------------------------
-       RENDER COMPLETE SYSTEM PRODUCT
-       SELECTOR
-       --------------------------------------------------------------- */
-
-    function renderSystemProducts(
-        categoryId
-    ) {
-
-        const container =
-            document.getElementById(
-                "configuratorSelectors"
-            );
-
-        if (!container) {
-            return;
-        }
-
-        container.innerHTML = "";
-
-        const configuration =
-            getCategoryConfiguration(
-                categoryId
-            );
-
-        if (
-            !configuration ||
-            configuration.length === 0
-        ) {
-
-            container.innerHTML = `
-                <div class="system-empty-state">
-
-                    <div class="system-empty-icon">
-                        <i class="fa-solid fa-box-open"></i>
-                    </div>
-
-                    <h3>
-                        Products Coming Soon
-                    </h3>
-
-                    <p>
-                        We're currently adding
-                        products for this system.
-                    </p>
-
-                </div>
-            `;
-
-            return;
-        }
-
-
-        /*
-         * Create every product group.
-         */
-
-        configuration.forEach(
-            (group, groupIndex) => {
-
-                const groupElement =
-                    document.createElement(
-                        "section"
-                    );
-
-                groupElement.className =
-                    "system-product-group";
-
-                groupElement.dataset.group =
-                    group.id;
-
-
-                /*
-                 * Group heading
-                 */
-
-                const heading =
-                    document.createElement(
-                        "div"
-                    );
-
-                heading.className =
-                    "system-group-heading";
-
-                heading.innerHTML = `
-
-                    <div>
-                        <span class="system-group-number">
-                            ${String(
-                                groupIndex + 1
-                            ).padStart(2, "0")}
-                        </span>
-
-                        <div class="system-group-title-wrap">
-
-                            <h3>
-                                ${escapeHtml(
-                                    group.label
-                                )}
-                            </h3>
-
-                            <p>
-                                ${
-                                    group.type ===
-                                    "quantity-selector"
-
-                                        ? "Select any products and quantities you need."
-                                        : "Select one option."
-                                }
-                            </p>
-
-                        </div>
-                    </div>
-
-                `;
-
-                groupElement.appendChild(
-                    heading
-                );
-
-
-                /*
-                 * PRODUCT GRID
-                 */
-
-                const productGrid =
-                    document.createElement(
-                        "div"
-                    );
-
-                productGrid.className =
-                    "system-product-grid";
-
-
-                /*
-                 * Render products
-                 */
-
-                if (
-                    Array.isArray(
-                        group.options
-                    )
-                ) {
-
-                    group.options.forEach(
-                        option => {
-
-                            const productCard =
-                                createProductCard(
-                                    option,
-                                    group
-                                );
-
-                            productGrid.appendChild(
-                                productCard
-                            );
-                        }
-                    );
-                }
-
-
-                groupElement.appendChild(
-                    productGrid
-                );
-
-                container.appendChild(
-                    groupElement
-                );
-            }
-        );
-
-
-        /*
-         * Reconnect quantity and selection
-         * events after rendering.
-         */
-
-        attachDynamicProductEvents();
-
-        updateSelectedProductsUI();
-    }
-
-
-    /* ---------------------------------------------------------------
-       CREATE PRODUCT CARD
-       --------------------------------------------------------------- */
-
-    function createProductCard(
-        product,
-        group
-    ) {
-
-        const card =
-            document.createElement(
-                "article"
-            );
-
-        card.className =
-            "system-product";
-
-
-        card.dataset.productId =
-            product.value;
-
-        card.dataset.group =
-            group.id;
-
-
-        const price =
-            Number(
-                product.price || 0
-            );
-
-
-        /*
-         * Different controls depending
-         * on the product group.
-         */
-
-        let controlHTML = "";
-
-
-        if (
-            group.type ===
-            "quantity-selector"
-        ) {
-
-            controlHTML = `
-
-                <div class="system-quantity-control">
-
-                    <button
-                        type="button"
-                        class="system-qty-minus"
-                        aria-label="Decrease quantity"
-                    >
-                        <i class="fa-solid fa-minus"></i>
-                    </button>
-
-                    <input
-                        type="number"
-                        class="system-qty-input"
-                        data-product-id="${escapeAttribute(
-                            product.value
-                        )}"
-                        value="0"
-                        min="0"
-                        max="999"
-                        inputmode="numeric"
-                        aria-label="Quantity"
-                    >
-
-                    <button
-                        type="button"
-                        class="system-qty-plus"
-                        aria-label="Increase quantity"
-                    >
-                        <i class="fa-solid fa-plus"></i>
-                    </button>
-
-                </div>
-
-            `;
-
-        } else {
-
-            controlHTML = `
-
-                <button
-                    type="button"
-                    class="system-option"
-                    data-group="${escapeAttribute(
-                        group.id
-                    )}"
-                    data-product-id="${escapeAttribute(
-                        product.value
-                    )}"
-                >
-
-                    <span>
-                        Select
-                    </span>
-
-                    <i class="fa-solid fa-check"></i>
-
-                </button>
-
-            `;
-        }
-
-
-        /*
-         * Product card HTML
-         */
-
-        card.innerHTML = `
-
-            <div class="system-product-info">
-
-                <div class="system-product-icon">
-
-                    <i class="fa-solid fa-shield-halved"></i>
-
-                </div>
-
-                <div class="system-product-details">
-
-                    <h4>
-                        ${escapeHtml(
-                            product.label
-                        )}
-                    </h4>
-
-                    <div class="system-product-meta">
-
-                        <span class="system-product-price">
-                            ${formatCurrency(
-                                price
-                            )}
-                        </span>
-
-                        ${
-                            product.weight
-                                ? `
-                                    <span class="system-product-weight">
-                                        <i class="fa-solid fa-box"></i>
-                                        ${product.weight} kg
-                                    </span>
-                                  `
-                                : ""
-                        }
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="system-product-action">
-
-                ${
-                    group.type ===
-                    "quantity-selector"
-
-                        ? controlHTML
-
-                        : controlHTML
-                }
-
-            </div>
-
-        `;
-
-
-        return card;
-    }
-
-
-    /* ---------------------------------------------------------------
-       DYNAMIC PRODUCT EVENTS
-       --------------------------------------------------------------- */
-
-    function attachDynamicProductEvents() {
-
-        /*
-         * Quantity + buttons
-         */
-
-        document
-            .querySelectorAll(
-                ".system-qty-plus"
-            )
-            .forEach(button => {
-
-                button.addEventListener(
-                    "click",
-                    function () {
-
-                        const card =
-                            this.closest(
-                                ".system-product"
-                            );
-
-                        if (!card) {
-                            return;
-                        }
-
-                        const input =
-                            card.querySelector(
-                                ".system-qty-input"
-                            );
-
-                        if (!input) {
-                            return;
-                        }
-
-                        let quantity =
-                            parseInt(
-                                input.value,
-                                10
-                            ) || 0;
-
-                        if (
-                            quantity >= 999
-                        ) {
-                            return;
-                        }
-
-                        quantity++;
-
-                        input.value =
-                            quantity;
-
-                        updateQuantity(
-                            card.dataset.productId,
-                            quantity
-                        );
-                    }
-                );
-            });
-
-
-        /*
-         * Quantity - buttons
-         */
-
-        document
-            .querySelectorAll(
-                ".system-qty-minus"
-            )
-            .forEach(button => {
-
-                button.addEventListener(
-                    "click",
-                    function () {
-
-                        const card =
-                            this.closest(
-                                ".system-product"
-                            );
-
-                        if (!card) {
-                            return;
-                        }
-
-                        const input =
-                            card.querySelector(
-                                ".system-qty-input"
-                            );
-
-                        if (!input) {
-                            return;
-                        }
-
-                        let quantity =
-                            parseInt(
-                                input.value,
-                                10
-                            ) || 0;
-
-                        if (
-                            quantity <= 0
-                        ) {
-                            return;
-                        }
-
-                        quantity--;
-
-                        input.value =
-                            quantity;
-
-                        updateQuantity(
-                            card.dataset.productId,
-                            quantity
-                        );
-                    }
-                );
-            });
-
-
-        /*
-         * Direct quantity input
-         */
-
-        document
-            .querySelectorAll(
-                ".system-qty-input"
-            )
-            .forEach(input => {
+                /* ----------------------------------------------------------
+                   COMMIT DIRECT INPUT
+                   ---------------------------------------------------------- */
 
                 input.addEventListener(
                     "change",
                     function () {
 
+                        const productId =
+                            this.dataset.productId;
+
+
+                        if (!productId) {
+
+                            return;
+
+                        }
+
+
+                        const product =
+                            findConfiguratorProduct(
+                                productId
+                            );
+
+
+                        if (!product) {
+
+                            return;
+
+                        }
+
+
                         let quantity =
                             parseInt(
                                 this.value,
                                 10
-                            ) || 0;
+                            );
+
 
                         if (
-                            quantity < 0
+                            Number.isNaN(
+                                quantity
+                            )
                         ) {
+
                             quantity = 0;
+
                         }
 
-                        if (
-                            quantity > 999
-                        ) {
-                            quantity = 999;
-                        }
 
-                        this.value =
-                            quantity;
+                        quantity =
+                            Math.max(
+                                0,
+                                quantity
+                            );
 
-                        updateQuantity(
-                            this.dataset.productId,
+
+                        setProductQuantity(
+                            product,
                             quantity
                         );
+
                     }
                 );
-            });
 
 
-        /*
-         * Single-select products
-         */
+                /* ----------------------------------------------------------
+                   ENTER KEY
+                   ----------------------------------------------------------
 
-        document
-            .querySelectorAll(
-                ".system-option"
-            )
-            .forEach(button => {
+                   Allows the customer to type a quantity
+                   and press Enter without needing to click
+                   somewhere else first.
+                   ---------------------------------------------------------- */
 
-                button.addEventListener(
-                    "click",
-                    function () {
+                input.addEventListener(
+                    "keydown",
+                    function (event) {
 
-                        const group =
-                            this.dataset.group;
+                        if (
+                            event.key !== "Enter"
+                        ) {
 
-                        const productId =
-                            this.dataset.productId;
-
-                        const product =
-                            findProduct(
-                                productId
-                            );
-
-                        if (!product) {
                             return;
+
                         }
 
 
-                        /*
-                         * Remove previous
-                         * selection in group.
-                         */
+                        event.preventDefault();
 
-                        document
-                            .querySelectorAll(
-                                `.system-option[data-group="${group}"]`
-                            )
-                            .forEach(
-                                option => {
 
-                                    option.classList.remove(
-                                        "active"
-                                    );
-
-                                    option
-                                        .closest(
-                                            ".system-product"
-                                        )
-                                        ?.classList.remove(
-                                            "selected"
-                                        );
+                        this.dispatchEvent(
+                            new Event(
+                                "change",
+                                {
+                                    bubbles: true
                                 }
-                            );
-
-
-                        /*
-                         * Activate selected product.
-                         */
-
-                        this.classList.add(
-                            "active"
+                            )
                         );
 
-                        this
-                            .closest(
-                                ".system-product"
-                            )
-                            ?.classList.add(
-                                "selected"
-                            );
 
+                        this.blur();
 
-                        /*
-                         * Save selection.
-                         */
-
-                        systemState.selections[
-                            group
-                        ] = {
-
-                            group: group,
-
-                            id:
-                                product.id,
-
-                            name:
-                                product.name,
-
-                            price:
-                                product.price,
-
-                            quantity: 1
-                        };
-
-
-                        updateConfiguratorSummary();
                     }
                 );
-            });
+
+            }
+        );
+
+}
+
+
+/* ==========================================================================
+   33. CHANGE PRODUCT QUANTITY
+   ========================================================================== */
+
+function changeProductQuantity(
+    product,
+    amount
+) {
+
+    if (!product) {
+
+        return;
+
     }
 
 
-    /* ---------------------------------------------------------------
-       ESCAPE HTML
-       --------------------------------------------------------------- */
+    const productId =
+        getProductId(
+            product
+        );
 
-    function escapeHtml(
-        value
-    ) {
 
-        return String(
-            value ?? ""
+    if (!productId) {
+
+        return;
+
+    }
+
+
+    const existing =
+        state.selections[
+            productId
+        ];
+
+
+    const currentQuantity =
+        existing
+
+            ? Number(
+                existing.quantity
+            ) || 0
+
+            : 0;
+
+
+    const newQuantity =
+        Math.max(
+            0,
+            currentQuantity +
+                Number(amount || 0)
+        );
+
+
+    setProductQuantity(
+        product,
+        newQuantity
+    );
+
+}
+
+
+/* ==========================================================================
+   34. SET PRODUCT QUANTITY
+   ========================================================================== */
+
+function setProductQuantity(
+    product,
+    quantity
+) {
+
+    if (!product) {
+
+        return;
+
+    }
+
+
+    const productId =
+        getProductId(
+            product
+        );
+
+
+    if (!productId) {
+
+        return;
+
+    }
+
+
+    let newQuantity =
+        parseInt(
+            quantity,
+            10
+        );
+
+
+    if (
+        Number.isNaN(
+            newQuantity
         )
-            .replace(
-                /&/g,
-                "&amp;"
-            )
-            .replace(
-                /</g,
-                "&lt;"
-            )
-            .replace(
-                />/g,
-                "&gt;"
-            )
-            .replace(
-                /"/g,
-                "&quot;"
-            )
-            .replace(
-                /'/g,
-                "&#039;"
-            );
+    ) {
+
+        newQuantity = 0;
+
     }
 
 
-    /* ---------------------------------------------------------------
-       12. FORMAT CURRENCY
-       --------------------------------------------------------------- */
-
-    function formatCurrency(
-        amount
-    ) {
-
-        return new Intl.NumberFormat(
-            "en-ZA",
-            {
-                style: "currency",
-                currency: "ZAR",
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            }
-        ).format(
-            Number(amount) || 0
+    newQuantity =
+        Math.max(
+            0,
+            newQuantity
         );
-    }
 
 
-    /* ---------------------------------------------------------------
-       13. FIND CONFIGURATION OPTION
-       --------------------------------------------------------------- */
+    /* ----------------------------------------------------------------------
+       REMOVE PRODUCT WHEN QUANTITY IS ZERO
+       ---------------------------------------------------------------------- */
 
-    function findOption(
-        field,
-        value
+    if (
+        newQuantity === 0
     ) {
 
-        if (
-            !field ||
-            !Array.isArray(
-                field.options
-            )
-        ) {
-            return null;
-        }
-
-        return field.options.find(
-            option =>
-                String(
-                    option.value
-                ) === String(value)
-        ) || null;
-    }
+        delete state.selections[
+            productId
+        ];
 
 
-    /* ---------------------------------------------------------------
-       14. GET SELECTED OPTION
-       --------------------------------------------------------------- */
+        updateTotals();
 
-    function getSelectedOption(
-        fieldId
-    ) {
 
-        const field =
-            getFieldById(
-                fieldId
-            );
-
-        if (!field) {
-            return null;
-        }
-
-        const selected =
-            state.selections[
-                fieldId
-            ];
-
-        if (
-            selected === undefined ||
-            selected === null ||
-            selected === ""
-        ) {
-            return null;
-        }
-
-        return findOption(
-            field,
-            selected
+        updateProductCard(
+            productId
         );
+
+
+        return;
+
     }
 
 
-    /* ---------------------------------------------------------------
-       15. GET FIELD BY ID
-       --------------------------------------------------------------- */
+    /* ----------------------------------------------------------------------
+       SAVE PRODUCT
+       ---------------------------------------------------------------------- */
 
-    function getFieldById(
-        fieldId
-    ) {
+    state.selections[
+        productId
+    ] = {
 
-        const schema =
-            getCurrentSchema();
+        id:
+            productId,
 
-        return schema.find(
-            field =>
-                field.id === fieldId
-        ) || null;
+        name:
+            getProductName(
+                product
+            ),
+
+        price:
+            getProductPrice(
+                product
+            ),
+
+        quantity:
+            newQuantity,
+
+        image:
+            product.image ||
+            "",
+
+        category:
+            product.category ||
+            state.category,
+
+        group:
+            product.group ||
+            "general",
+
+        groupTitle:
+            product.groupTitle ||
+            "",
+
+        description:
+            product.description ||
+            "",
+
+        unit:
+            product.unit ||
+            "each",
+
+        weightKg:
+            Number(
+                product.weightKg
+            ) || 0
+
+    };
+
+
+    /* ----------------------------------------------------------------------
+       UPDATE EVERYTHING
+       ---------------------------------------------------------------------- */
+
+    updateTotals();
+
+
+    updateProductCard(
+        productId
+    );
+
+}
+
+
+/* ==========================================================================
+   35. GET SELECTED PRODUCT QUANTITY
+   ========================================================================== */
+
+function getProductQuantity(
+    productId
+) {
+
+    if (!productId) {
+
+        return 0;
+
     }
 
 
-    /* ---------------------------------------------------------------
-       16. GET CURRENT SCHEMA
-       --------------------------------------------------------------- */
+    const selected =
+        state.selections[
+            productId
+        ];
 
-    function getCurrentSchema() {
 
-        if (
-            typeof SHOP_DATA === "undefined" ||
-            !SHOP_DATA.configurators
-        ) {
-            return [];
-        }
+    if (!selected) {
 
-        return (
-            SHOP_DATA.configurators[
-                state.category
-            ] || []
+        return 0;
+
+    }
+
+
+    return (
+        Number(
+            selected.quantity
+        ) || 0
+    );
+
+}
+
+
+/* ==========================================================================
+   36. CHECK WHETHER PRODUCT IS SELECTED
+   ========================================================================== */
+
+function isProductSelected(
+    productId
+) {
+
+    return (
+        getProductQuantity(
+            productId
+        ) > 0
+    );
+
+}
+
+
+/* ==========================================================================
+   37. PUBLIC QUANTITY API
+   ========================================================================== */
+
+if (
+    window.NEXPAK_CONFIGURATOR
+) {
+
+    window.NEXPAK_CONFIGURATOR
+        .changeProductQuantity =
+            changeProductQuantity;
+
+
+    window.NEXPAK_CONFIGURATOR
+        .setProductQuantity =
+            setProductQuantity;
+
+
+    window.NEXPAK_CONFIGURATOR
+        .getProductQuantity =
+            getProductQuantity;
+
+
+    window.NEXPAK_CONFIGURATOR
+        .isProductSelected =
+            isProductSelected;
+
+}
+
+
+/* ==========================================================================
+   PART 4 COMPLETE
+   ========================================================================== */
+
+/* ==========================================================================
+   NEXPAK SECURITY SOLUTIONS
+   BUILD YOUR SYSTEM — CONFIGURATOR V2
+   PART 5 — SYSTEM SUMMARY + CART INTEGRATION
+   ========================================================================== */
+
+
+/* ========================================================================
+   36. RENDER SELECTED PRODUCTS
+   ======================================================================== */
+
+function renderSelectedProducts() {
+
+    const summaryContainer =
+        document.getElementById(
+            "selectedProducts"
         );
+
+
+    if (!summaryContainer) {
+        return;
     }
 
 
-    /* ---------------------------------------------------------------
-       17. CALCULATE SELECTION TOTAL
-       --------------------------------------------------------------- */
-
-    function calculateSelectionsTotal() {
-
-        let total = 0;
-
-        Object.keys(
+    const selectedProducts =
+        Object.values(
             state.selections
-        ).forEach(
-            fieldId => {
-
-                const field =
-                    getFieldById(
-                        fieldId
-                    );
-
-                if (!field) {
-                    return;
-                }
-
-                const selected =
-                    state.selections[
-                        fieldId
-                    ];
-
-                /*
-                 * Quantity-selector fields are handled separately.
-                 */
-                if (
-                    field.type ===
-                    "quantity-selector"
-                ) {
-                    return;
-                }
-
-                const option =
-                    findOption(
-                        field,
-                        selected
-                    );
-
-                if (option) {
-                    total +=
-                        Number(
-                            option.price
-                        ) || 0;
-                }
-            }
         );
 
-        return total;
-    }
 
-
-    /* ---------------------------------------------------------------
-       18. CALCULATE QUANTITY TOTAL
-       --------------------------------------------------------------- */
-
-    function calculateQuantitiesTotal() {
-
-        let total = 0;
-
-        Object.keys(
-            state.quantities
-        ).forEach(
-            optionValue => {
-
-                const item =
-                    state.quantities[
-                        optionValue
-                    ];
-
-                if (!item) {
-                    return;
-                }
-
-                const qty =
-                    Number(
-                        item.qty
-                    ) || 0;
-
-                const price =
-                    Number(
-                        item.price
-                    ) || 0;
-
-                total +=
-                    qty * price;
-            }
-        );
-
-        return total;
-    }
-
-
-    /* ---------------------------------------------------------------
-       19. CALCULATE GRAND SUBTOTAL
-       --------------------------------------------------------------- */
-
-    function calculateSubtotal() {
-
-        return (
-            calculateSelectionsTotal() +
-            calculateQuantitiesTotal()
-        );
-    }
-
-
-    /* ---------------------------------------------------------------
-       20. CALCULATE VAT
-       --------------------------------------------------------------- */
-
-    function calculateVat(
-        subtotal
+    if (
+        selectedProducts.length === 0
     ) {
 
-        const vatRate =
-            typeof SHOP_DATA !== "undefined" &&
-            SHOP_DATA.company &&
-            typeof SHOP_DATA.company.vatRate === "number"
-                ? SHOP_DATA.company.vatRate
-                : 0.15;
+        summaryContainer.innerHTML = `
 
-        return (
-            Number(subtotal) || 0
-        ) * vatRate;
+            <div class="empty-system">
+
+                <i class="fa-solid fa-box-open"></i>
+
+                <h4>Your system is empty</h4>
+
+                <p>
+                    Select products above to start
+                    building your security system.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
     }
 
 
-    /* ---------------------------------------------------------------
-       21. UPDATE SUMMARY
-       --------------------------------------------------------------- */
+    summaryContainer.innerHTML = "";
 
-    function updateSummary() {
 
-        const subtotal =
-            calculateSubtotal();
+    selectedProducts.forEach(product => {
 
-        const vat =
-            calculateVat(
-                subtotal
-            );
+        const item =
+            document.createElement("div");
 
-        const grandTotal =
-            subtotal + vat;
+        item.className =
+            "selected-system-item";
 
-        const selectedCount =
-            Object.keys(
-                state.selections
-            ).length;
 
-        const quantityCount =
-            Object.values(
-                state.quantities
-            ).reduce(
-                (
-                    total,
-                    item
-                ) => {
-
-                    return total +
-                        (
-                            Number(
-                                item.qty
-                            ) || 0
-                        );
-
-                },
-                0
-            );
-
-        const totalConfigured =
-            selectedCount +
-            quantityCount;
-
-        setText(
-            "summaryAddonCount",
-            `${totalConfigured} item${
-                totalConfigured === 1
-                    ? ""
-                    : "s"
-            } configured`
-        );
-
-        setText(
-            "summarySubtotal",
-            formatCurrency(
-                subtotal
-            )
-        );
-
-        setText(
-            "summaryVat",
-            formatCurrency(
-                vat
-            )
-        );
-
-        setText(
-            "summaryGrandTotal",
-            formatCurrency(
-                grandTotal
-            )
-        );
-
-        updateSummaryBreakdown();
-
-        updateConfiguratorTotals();
-    }
-
-
-    /* ---------------------------------------------------------------
-       22. SUMMARY BREAKDOWN
-       --------------------------------------------------------------- */
-
-    function updateSummaryBreakdown() {
-
-        const container =
-            document.getElementById(
-                "summaryBreakdown"
-            );
-
-        if (!container) {
-            return;
-        }
-
-        container.innerHTML = "";
-
-        const rows = [];
-
-
-        /*
-         * Single-select products
-         */
-        Object.keys(
-            state.selections
-        ).forEach(
-            fieldId => {
-
-                const field =
-                    getFieldById(
-                        fieldId
-                    );
-
-                if (!field) {
-                    return;
-                }
-
-                const option =
-                    findOption(
-                        field,
-                        state.selections[
-                            fieldId
-                        ]
-                    );
-
-                if (!option) {
-                    return;
-                }
-
-                rows.push({
-                    name:
-                        option.label,
-
-                    qty: 1,
-
-                    price:
-                        Number(
-                            option.price
-                        ) || 0
-                });
-            }
-        );
-
-
-        /*
-         * Quantity products
-         */
-        Object.keys(
-            state.quantities
-        ).forEach(
-            optionValue => {
-
-                const item =
-                    state.quantities[
-                        optionValue
-                    ];
-
-
-                      if (
-                    !item ||
-                    Number(item.qty) <= 0
-                ) {
-                    return;
-                }
-
-                const field =
-                    getFieldForOption(
-                        optionValue
-                    );
-
-                const option =
-                    field
-                        ? findOption(
-                            field,
-                            optionValue
-                        )
-                        : null;
-
-                if (!option) {
-                    return;
-                }
-
-                const qty =
-                    Number(item.qty) || 0;
-
-                const price =
-                    Number(option.price) || 0;
-
-                total +=
-                    qty * price;
-            }
-        );
-
-        return total;
-    }
-
-
-    /* ---------------------------------------------------------------
-       30. FIND FIELD FOR OPTION
-       --------------------------------------------------------------- */
-
-    function getFieldForOption(
-        optionValue
-    ) {
-
-        const schema =
-            getCurrentSchema();
-
-        return schema.find(
-            field => {
-
-                if (
-                    !Array.isArray(
-                        field.options
-                    )
-                ) {
-                    return false;
-                }
-
-                return field.options.some(
-                    option =>
-                        String(
-                            option.value
-                        ) ===
-                        String(
-                            optionValue
-                        )
-                );
-            }
-        ) || null;
-    }
-
-
-    /* ---------------------------------------------------------------
-       31. UPDATE QUANTITY STATE
-       --------------------------------------------------------------- */
-
-    function updateQuantity(
-        optionValue,
-        quantity
-    ) {
-
-        const field =
-            getFieldForOption(
-                optionValue
-            );
-
-        if (!field) {
-            return;
-        }
-
-        const option =
-            findOption(
-                field,
-                optionValue
-            );
-
-        if (!option) {
-            return;
-        }
-
-        let qty =
-            Number(quantity) || 0;
-
-        qty =
-            Math.floor(qty);
-
-        if (qty < 0) {
-            qty = 0;
-        }
-
-
-        if (qty === 0) {
-
-            delete state.quantities[
-                optionValue
-            ];
-
-        } else {
-
-            state.quantities[
-                optionValue
-            ] = {
-
-                value:
-                    option.value,
-
-                label:
-                    option.label,
-
-                name:
-                    option.label,
-
-                price:
-                    Number(
-                        option.price
-                    ) || 0,
-
-                weight:
-                    Number(
-                        option.weight
-                    ) || 0,
-
-                qty:
-                    qty
-            };
-        }
-
-
-        const productRow =
-            document.querySelector(
-                `.quantity-option[data-option-value="${CSS.escape(
-                    optionValue
-                )}"]`
-            );
-
-        if (productRow) {
-
-            productRow.classList.toggle(
-                "selected",
-                qty > 0
-            );
-        }
-
-
-        updateQuantityRowTotal(
-            optionValue,
-            qty,
-            option
-        );
-
-        updateSummary();
-    }
-
-
-    /* ---------------------------------------------------------------
-       32. UPDATE QUANTITY ROW TOTAL
-       --------------------------------------------------------------- */
-
-    function updateQuantityRowTotal(
-        optionValue,
-        quantity,
-        option
-    ) {
-
-        const row =
-            document.querySelector(
-                `.quantity-option[data-option-value="${CSS.escape(
-                    optionValue
-                )}"]`
-            );
-
-        if (!row) {
-            return;
-        }
-
-        let totalElement =
-            row.querySelector(
-                ".system-product-line-total"
-            );
-
-        if (!totalElement) {
-
-            totalElement =
-                document.createElement(
-                    "span"
-                );
-
-            totalElement.className =
-                "system-product-line-total";
-
-            const controls =
-                row.querySelector(
-                    ".system-product-controls"
-                );
-
-            if (controls) {
-
-                controls.appendChild(
-                    totalElement
-                );
-            }
-        }
-
-
-        const total =
+        const lineTotal =
             (
-                Number(quantity) || 0
+                Number(product.price) || 0
             ) *
             (
-                Number(option.price) || 0
+                Number(product.quantity) || 0
             );
 
-        totalElement.textContent =
-            total > 0
-                ? formatCurrency(total)
-                : "";
-    }
 
+        item.innerHTML = `
 
-    /* ---------------------------------------------------------------
-       33. CATEGORY TAB EVENTS
-       --------------------------------------------------------------- */
+            <div class="selected-item-info">
 
-    document
-        .querySelectorAll(
-            ".nav-tab"
-        )
-        .forEach(
-            tab => {
+                <strong>
+                    ${escapeHtml(product.name)}
+                </strong>
 
-                tab.addEventListener(
-                    "click",
-                    () => {
+                <span>
+                    ${formatMoney(product.price)}
+                    × ${product.quantity}
+                </span>
 
-                        const category =
-                            tab.dataset.category;
+            </div>
 
-                        if (!category) {
-                            return;
-                        }
 
-                        renderCategory(
-                            category
-                        );
-                    }
-                );
-            }
-        );
+            <div class="selected-item-total">
 
+                ${formatMoney(lineTotal)}
 
-    /* ---------------------------------------------------------------
-       34. CART COUNT
-       --------------------------------------------------------------- */
+            </div>
 
-    function updateCartCount() {
 
-        const badge =
-            document.getElementById(
-                "cartCountBadge"
-            );
+            <button
+                type="button"
+                class="remove-system-item"
+                data-product-id="${escapeHtml(product.id)}"
+                aria-label="Remove ${escapeHtml(product.name)}"
+            >
 
-        if (!badge) {
-            return;
-        }
+                <i class="fa-solid fa-trash"></i>
 
-        let cart = [];
-
-        try {
-
-            cart =
-                JSON.parse(
-                    localStorage.getItem(
-                        "nexpak_cart"
-                    )
-                ) || [];
-
-        } catch (error) {
-
-            cart = [];
-        }
-
-        let count = 0;
-
-        cart.forEach(
-            item => {
-
-                if (
-                    item &&
-                    item.type ===
-                        "configured-system"
-                ) {
-
-                    count++;
-
-                    return;
-                }
-
-                if (
-                    item &&
-                    item.quantity
-                ) {
-
-                    count +=
-                        Number(
-                            item.quantity
-                        ) || 0;
-
-                    return;
-                }
-
-                count++;
-            }
-        );
-
-        badge.textContent =
-            count;
-    }
-
-
-    /* ---------------------------------------------------------------
-       35. ADD CONFIGURED SYSTEM TO CART
-       --------------------------------------------------------------- */
-
-    function addConfiguredSystemToCart() {
-
-        const subtotal =
-            calculateSubtotal();
-
-        if (
-            subtotal <= 0
-        ) {
-
-            showToast(
-                "Please select at least one product before adding your system to the cart.",
-                "warning"
-            );
-
-            return;
-        }
-
-
-        const selectedProducts =
-            [];
-
-
-        /*
-         * Single-select products
-         */
-        Object.keys(
-            state.selections
-        ).forEach(
-            fieldId => {
-
-                const field =
-                    getFieldById(
-                        fieldId
-                    );
-
-                if (!field) {
-                    return;
-                }
-
-                const option =
-                    findOption(
-                        field,
-                        state.selections[
-                            fieldId
-                        ]
-                    );
-
-                if (!option) {
-                    return;
-                }
-
-                selectedProducts.push({
-
-                    fieldId:
-                        field.id,
-
-                    fieldLabel:
-                        field.label,
-
-                    productId:
-                        option.value,
-
-                    productName:
-                        option.label,
-
-                    quantity:
-                        1,
-
-                    unitPrice:
-                        Number(
-                            option.price
-                        ) || 0,
-
-                    lineTotal:
-                        Number(
-                            option.price
-                        ) || 0
-                });
-            }
-        );
-
-
-        /*
-         * Quantity products
-         */
-        Object.keys(
-            state.quantities
-        ).forEach(
-            optionValue => {
-
-                const item =
-                    state.quantities[
-                        optionValue
-                    ];
-
-                if (
-                    !item ||
-                    Number(item.qty) <= 0
-                ) {
-                    return;
-                }
-
-                const field =
-                    getFieldForOption(
-                        optionValue
-                    );
-
-                if (!field) {
-                    return;
-                }
-
-                selectedProducts.push({
-
-                    fieldId:
-                        field.id,
-
-                    fieldLabel:
-                        field.label,
-
-                    productId:
-                        optionValue,
-
-                    productName:
-                        item.label ||
-                        item.name ||
-                        optionValue,
-
-                    quantity:
-                        Number(
-                            item.qty
-                        ),
-
-                    unitPrice:
-                        Number(
-                            item.price
-                        ) || 0,
-
-                    lineTotal:
-                        (
-                            Number(
-                                item.qty
-                            ) || 0
-                        ) *
-                        (
-                            Number(
-                                item.price
-                            ) || 0
-                        )
-                });
-            }
-        );
-
-
-        const vat =
-            calculateVat(
-                subtotal
-            );
-
-        const grandTotal =
-            subtotal + vat;
-
-
-        const configuredSystem = {
-
-            id:
-                `SYSTEM-${Date.now()}`,
-
-            type:
-                "configured-system",
-
-            category:
-                state.category,
-
-            categoryTitle:
-                state.categoryTitle,
-
-            products:
-                selectedProducts,
-
-            subtotalExclVat:
-                Number(
-                    subtotal.toFixed(2)
-                ),
-
-            vat:
-                Number(
-                    vat.toFixed(2)
-                ),
-
-            totalInclVat:
-                Number(
-                    grandTotal.toFixed(2)
-                ),
-
-            createdAt:
-                new Date().toISOString()
-        };
-
-
-        let cart = [];
-
-        try {
-
-            cart =
-                JSON.parse(
-                    localStorage.getItem(
-                        "nexpak_cart"
-                    )
-                ) || [];
-
-        } catch (error) {
-
-            cart = [];
-        }
-
-
-        if (!Array.isArray(cart)) {
-            cart = [];
-        }
-
-
-        cart.push(
-            configuredSystem
-        );
-
-
-        localStorage.setItem(
-            "nexpak_cart",
-            JSON.stringify(
-                cart
-            )
-        );
-
-
-        updateCartCount();
-
-        showToast(
-            "Your configured system was added to the cart.",
-            "success"
-        );
-    }
-
-
-    /* ---------------------------------------------------------------
-       36. ADD TO CART BUTTON
-       --------------------------------------------------------------- */
-
-    const addToCartButton =
-        document.getElementById(
-            "btnAddToCart"
-        );
-
-    if (addToCartButton) {
-
-        addToCartButton.addEventListener(
-            "click",
-            addConfiguredSystemToCart
-        );
-    }
-
-
-    /* ---------------------------------------------------------------
-       37. TOAST NOTIFICATIONS
-       --------------------------------------------------------------- */
-
-    function showToast(
-        message,
-        type = "success"
-    ) {
-
-        let container =
-            document.getElementById(
-                "toastContainer"
-            );
-
-        if (!container) {
-
-            container =
-                document.createElement(
-                    "div"
-                );
-
-            container.id =
-                "toastContainer";
-
-            document.body.appendChild(
-                container
-            );
-        }
-
-
-        const toast =
-            document.createElement(
-                "div"
-            );
-
-        toast.className =
-            `config-toast ${type}`;
-
-
-        let icon =
-            "fa-circle-check";
-
-        if (type === "warning") {
-            icon =
-                "fa-triangle-exclamation";
-        }
-
-        if (type === "error") {
-            icon =
-                "fa-circle-xmark";
-        }
-
-
-        toast.innerHTML = `
-
-            <i class="fa-solid ${icon}"></i>
-
-            <span>
-                ${escapeHtml(
-                    message
-                )}
-            </span>
+            </button>
 
         `;
 
 
-        container.appendChild(
-            toast
+        summaryContainer.appendChild(item);
+
+    });
+
+
+    attachSelectedProductEvents();
+
+}
+
+
+/* ========================================================================
+   37. SELECTED PRODUCT EVENTS
+   ======================================================================== */
+
+function attachSelectedProductEvents() {
+
+    document
+        .querySelectorAll(
+            ".remove-system-item"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    const productId =
+                        this.dataset.productId;
+
+
+                    removeProduct(productId);
+
+
+                    renderSelectedProducts();
+
+                }
+            );
+
+        });
+
+}
+
+
+/* ========================================================================
+   38. RENDER SYSTEM TOTALS
+   ======================================================================== */
+
+function renderSystemTotals() {
+
+    const subtotalElement =
+        document.getElementById(
+            "systemSubtotal"
         );
 
 
-        requestAnimationFrame(
-            () => {
-
-                toast.classList.add(
-                    "show"
-                );
-            }
+    const vatElement =
+        document.getElementById(
+            "systemVat"
         );
 
 
-        setTimeout(
-            () => {
-
-                toast.classList.remove(
-                    "show"
-                );
-
-                setTimeout(
-                    () => {
-
-                        toast.remove();
-
-                    },
-                    300
-                );
-
-            },
-            3200
+    const totalElement =
+        document.getElementById(
+            "systemGrandTotal"
         );
+
+
+    if (subtotalElement) {
+
+        subtotalElement.textContent =
+            formatMoney(
+                state.totals.subtotal
+            );
+
+    }
+
+
+    if (vatElement) {
+
+        vatElement.textContent =
+            formatMoney(
+                state.totals.vat
+            );
+
+    }
+
+
+    if (totalElement) {
+
+        totalElement.textContent =
+            formatMoney(
+                state.totals.grandTotal
+            );
+
+    }
+
+}
+
+
+/* ========================================================================
+   39. REFRESH CONFIGURATOR UI
+   ======================================================================== */
+
+function refreshConfiguratorUI() {
+
+    renderSelectedProducts();
+
+    renderSystemTotals();
+
+    updateSummary();
+
+}
+
+
+/* ========================================================================
+   40. UPDATE TOTALS OVERRIDE
+   ========================================================================
+
+   We extend the original total calculation so that every UI section
+   stays synchronised whenever a product is added, removed or changed.
+   ======================================================================== */
+
+const originalUpdateTotals =
+    updateTotals;
+
+
+function updateTotals() {
+
+    originalUpdateTotals();
+
+    renderSelectedProducts();
+
+    renderSystemTotals();
+
+}
+
+
+/* ========================================================================
+   41. ADD PRODUCT WITH UI REFRESH
+   ======================================================================== */
+
+const originalAddProduct =
+    addProduct;
+
+
+function addProduct(product, quantity = 1) {
+
+    originalAddProduct(
+        product,
+        quantity
+    );
+
+    renderSelectedProducts();
+
+    renderSystemTotals();
+
+}
+
+
+/* ========================================================================
+   42. CHANGE QUANTITY WITH UI REFRESH
+   ======================================================================== */
+
+const originalChangeQuantity =
+    changeQuantity;
+
+
+function changeQuantity(product, amount) {
+
+    originalChangeQuantity(
+        product,
+        amount
+    );
+
+    renderSelectedProducts();
+
+    renderSystemTotals();
+
+}
+
+
+/* ========================================================================
+   43. REMOVE PRODUCT WITH UI REFRESH
+   ======================================================================== */
+
+const originalRemoveProduct =
+    removeProduct;
+
+
+function removeProduct(productId) {
+
+    originalRemoveProduct(
+        productId
+    );
+
+    renderSelectedProducts();
+
+    renderSystemTotals();
+
+}
+
+
+/* ========================================================================
+   44. CLEAR SYSTEM WITH UI REFRESH
+   ======================================================================== */
+
+const originalClearSystem =
+    clearSystem;
+
+
+function clearSystem() {
+
+    originalClearSystem();
+
+    renderSelectedProducts();
+
+    renderSystemTotals();
+
+}
+
+
+/* ========================================================================
+   45. ADD COMPLETE SYSTEM TO CART
+   ======================================================================== */
+
+function addSystemToCart() {
+
+    const products =
+        Object.values(
+            state.selections
+        );
+
+
+    if (
+        products.length === 0
+    ) {
+
+        showToast(
+            "Please select at least one product.",
+            "error"
+        );
+
+        return;
+
     }
 
 
     /* ---------------------------------------------------------------
-       38. INITIALISE CONFIGURATOR
+       BUILD CART OBJECT
        --------------------------------------------------------------- */
 
-    function initialiseConfigurator() {
+    const systemItem = {
 
-        if (
-            typeof SHOP_DATA ===
-            "undefined"
-        ) {
+        id:
+            `SYSTEM-${Date.now()}`,
 
-            console.error(
-                "SHOP_DATA is not available. Make sure shop-data.js loads before configurator.js."
+        type:
+            "custom-system",
+
+        category:
+            state.category,
+
+        categoryTitle:
+            state.categoryTitle,
+
+        name:
+            `${state.categoryTitle} — Custom System`,
+
+        products:
+            products.map(product => ({
+
+                id:
+                    product.id,
+
+                name:
+                    product.name,
+
+                price:
+                    Number(product.price) || 0,
+
+                quantity:
+                    Number(product.quantity) || 0,
+
+                image:
+                    product.image || "",
+
+                category:
+                    product.category ||
+                    state.category,
+
+                group:
+                    product.group || "",
+
+                unit:
+                    product.unit || "each"
+
+            })),
+
+        totals: {
+
+            subtotal:
+                state.totals.subtotal,
+
+            vat:
+                state.totals.vat,
+
+            grandTotal:
+                state.totals.grandTotal
+
+        },
+
+        createdAt:
+            new Date().toISOString()
+
+    };
+
+
+    /* ---------------------------------------------------------------
+       READ EXISTING CART
+       --------------------------------------------------------------- */
+
+    let cart = [];
+
+
+    try {
+
+        const storedCart =
+            localStorage.getItem(
+                "nexpak_cart"
             );
+
+
+        if (storedCart) {
+
+            const parsedCart =
+                JSON.parse(
+                    storedCart
+                );
+
+
+            if (
+                Array.isArray(parsedCart)
+            ) {
+
+                cart = parsedCart;
+
+            }
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Nexpak Configurator: Could not read cart.",
+            error
+        );
+
+    }
+
+
+    /* ---------------------------------------------------------------
+       ADD SYSTEM
+       --------------------------------------------------------------- */
+
+    cart.push(
+        systemItem
+    );
+
+
+    /* ---------------------------------------------------------------
+       SAVE CART
+       --------------------------------------------------------------- */
+
+    try {
+
+        localStorage.setItem(
+            "nexpak_cart",
+            JSON.stringify(cart)
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Nexpak Configurator: Could not save cart.",
+            error
+        );
+
+
+        showToast(
+            "Unable to save your system to the cart.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    /* ---------------------------------------------------------------
+       UPDATE CART BADGE
+       --------------------------------------------------------------- */
+
+    updateCartBadge(
+        cart
+    );
+
+
+    /* ---------------------------------------------------------------
+       SUCCESS MESSAGE
+       --------------------------------------------------------------- */
+
+    showToast(
+        "Your custom system has been added to the cart."
+    );
+
+
+    /* ---------------------------------------------------------------
+       OPTIONAL CART EVENT
+       --------------------------------------------------------------- */
+
+    document.dispatchEvent(
+        new CustomEvent(
+            "nexpak:systemAdded",
+            {
+                detail: systemItem
+            }
+        )
+    );
+
+}
+
+
+/* ========================================================================
+   46. UPDATE CART BADGE
+   ======================================================================== */
+
+function updateCartBadge(
+    cart
+) {
+
+    if (!elements.cartBadge) {
+        return;
+    }
+
+
+    const count =
+        Array.isArray(cart)
+            ? cart.length
+            : 0;
+
+
+    elements.cartBadge.textContent =
+        count;
+
+
+    elements.cartBadge.style.display =
+        count > 0
+            ? ""
+            : "none";
+
+}
+
+
+/* ========================================================================
+   47. ADD TO CART BUTTON
+   ======================================================================== */
+
+if (elements.addToCart) {
+
+    elements.addToCart.addEventListener(
+        "click",
+        addSystemToCart
+    );
+
+}
+
+
+/* ========================================================================
+   48. CLEAR SYSTEM BUTTON
+   ======================================================================== */
+
+const clearSystemButton =
+    document.getElementById(
+        "clearSystem"
+    );
+
+
+if (clearSystemButton) {
+
+    clearSystemButton.addEventListener(
+        "click",
+        () => {
+
+            if (
+                Object.keys(
+                    state.selections
+                ).length === 0
+            ) {
+
+                showToast(
+                    "Your system is already empty.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            clearSystem();
+
 
             showToast(
-                "Product database could not be loaded.",
-                "error"
+                "System cleared."
             );
 
-            return;
+        }
+    );
+
+}
+
+
+/* ========================================================================
+   49. INITIAL SUMMARY RENDER
+   ======================================================================== */
+
+renderSelectedProducts();
+
+renderSystemTotals();
+
+updateSummary();
+
+
+/* ========================================================================
+   END OF PART 5
+   ======================================================================== */
+
+/* ==========================================================================
+   NEXPAK SECURITY SOLUTIONS
+   BUILD YOUR SYSTEM — CONFIGURATOR V2
+   PART 6 — DELIVERY + SYSTEM ACTIONS
+   ========================================================================== */
+
+
+/* ========================================================================
+   50. GET CURRENT SYSTEM PRODUCTS
+   ======================================================================== */
+
+function getCurrentSystemProducts() {
+
+    return Object.values(
+        state.selections || {}
+    );
+
+}
+
+
+/* ========================================================================
+   51. CALCULATE SYSTEM WEIGHT
+   ======================================================================== */
+
+function calculateSystemWeight() {
+
+    const products =
+        getCurrentSystemProducts();
+
+
+    return products.reduce(
+        (total, product) => {
+
+            const weight =
+                Number(
+                    product.weight
+                ) || 0;
+
+            const quantity =
+                Number(
+                    product.quantity
+                ) || 0;
+
+
+            return total +
+                (weight * quantity);
+
+        },
+        0
+    );
+
+}
+
+
+/* ========================================================================
+   52. CALCULATE SYSTEM ITEM COUNT
+   ======================================================================== */
+
+function calculateSystemItemCount() {
+
+    const products =
+        getCurrentSystemProducts();
+
+
+    return products.reduce(
+        (total, product) => {
+
+            return total +
+                (
+                    Number(
+                        product.quantity
+                    ) || 0
+                );
+
+        },
+        0
+    );
+
+}
+
+
+/* ========================================================================
+   53. RENDER SYSTEM ITEM COUNT
+   ======================================================================== */
+
+function renderSystemItemCount() {
+
+    const countElement =
+        document.getElementById(
+            "systemItemCount"
+        );
+
+
+    if (!countElement) {
+        return;
+    }
+
+
+    const count =
+        calculateSystemItemCount();
+
+
+    countElement.textContent =
+        count;
+
+
+    countElement.style.display =
+        count > 0
+            ? ""
+            : "none";
+
+}
+
+
+/* ========================================================================
+   54. RENDER SYSTEM WEIGHT
+   ======================================================================== */
+
+function renderSystemWeight() {
+
+    const weightElement =
+        document.getElementById(
+            "systemWeight"
+        );
+
+
+    if (!weightElement) {
+        return;
+    }
+
+
+    const weight =
+        calculateSystemWeight();
+
+
+    weightElement.textContent =
+        `${weight.toFixed(2)} kg`;
+
+}
+
+
+/* ========================================================================
+   55. DELIVERY CALCULATOR BRIDGE
+   ========================================================================
+
+   The configurator does not replace the existing delivery calculator.
+   It simply exposes the current system totals so delivery.js can use
+   them when required.
+   ======================================================================== */
+
+function getConfiguratorDeliveryData() {
+
+    return {
+
+        subtotal:
+            Number(
+                state.totals.subtotal
+            ) || 0,
+
+        vat:
+            Number(
+                state.totals.vat
+            ) || 0,
+
+        grandTotal:
+            Number(
+                state.totals.grandTotal
+            ) || 0,
+
+        itemCount:
+            calculateSystemItemCount(),
+
+        weight:
+            calculateSystemWeight(),
+
+        category:
+            state.category || "",
+
+        categoryTitle:
+            state.categoryTitle || "",
+
+        products:
+            getCurrentSystemProducts()
+
+    };
+
+}
+
+
+/* ========================================================================
+   56. DISPATCH DELIVERY UPDATE EVENT
+   ======================================================================== */
+
+function dispatchDeliveryUpdate() {
+
+    document.dispatchEvent(
+        new CustomEvent(
+            "nexpak:configuratorUpdated",
+            {
+                detail:
+                    getConfiguratorDeliveryData()
+            }
+        )
+    );
+
+}
+
+
+/* ========================================================================
+   57. EXTENDED UI REFRESH
+   ======================================================================== */
+
+const originalRefreshConfiguratorUI =
+    refreshConfiguratorUI;
+
+
+function refreshConfiguratorUI() {
+
+    originalRefreshConfiguratorUI();
+
+    renderSystemItemCount();
+
+    renderSystemWeight();
+
+    dispatchDeliveryUpdate();
+
+}
+
+
+/* ========================================================================
+   58. SAVE CONFIGURATOR STATE
+   ======================================================================== */
+
+function saveConfiguratorState() {
+
+    const saveData = {
+
+        category:
+            state.category || "",
+
+        categoryTitle:
+            state.categoryTitle || "",
+
+        selections:
+            state.selections || {},
+
+        totals:
+            state.totals || {},
+
+        savedAt:
+            new Date().toISOString()
+
+    };
+
+
+    try {
+
+        localStorage.setItem(
+            "nexpak_configurator_state",
+            JSON.stringify(
+                saveData
+            )
+        );
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            "Nexpak Configurator: Could not save configurator state.",
+            error
+        );
+
+        return false;
+
+    }
+
+}
+
+
+/* ========================================================================
+   59. LOAD CONFIGURATOR STATE
+   ======================================================================== */
+
+function loadConfiguratorState() {
+
+    try {
+
+        const storedState =
+            localStorage.getItem(
+                "nexpak_configurator_state"
+            );
+
+
+        if (!storedState) {
+            return false;
         }
 
 
-        /*
-         * Start with the first available category.
-         */
-        const firstCategory =
-            SHOP_DATA.categories &&
-            SHOP_DATA.categories.length
-                ? SHOP_DATA.categories[0].id
-                : "electric-fencing";
+        const savedState =
+            JSON.parse(
+                storedState
+            );
 
 
-        renderCategory(
-            state.category ||
-            firstCategory
+        if (
+            !savedState ||
+            typeof savedState !== "object"
+        ) {
+
+            return false;
+
+        }
+
+
+        if (
+            savedState.category !== undefined
+        ) {
+
+            state.category =
+                savedState.category;
+
+        }
+
+
+        if (
+            savedState.categoryTitle !== undefined
+        ) {
+
+            state.categoryTitle =
+                savedState.categoryTitle;
+
+        }
+
+
+        if (
+            savedState.selections &&
+            typeof savedState.selections === "object"
+        ) {
+
+            state.selections =
+                savedState.selections;
+
+        }
+
+
+        if (
+            savedState.totals &&
+            typeof savedState.totals === "object"
+        ) {
+
+            state.totals =
+                savedState.totals;
+
+        }
+
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            "Nexpak Configurator: Could not load saved state.",
+            error
+        );
+
+        return false;
+
+    }
+
+}
+
+
+/* ========================================================================
+   60. CLEAR SAVED CONFIGURATOR STATE
+   ======================================================================== */
+
+function clearSavedConfiguratorState() {
+
+    try {
+
+        localStorage.removeItem(
+            "nexpak_configurator_state"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Nexpak Configurator: Could not clear saved state.",
+            error
+        );
+
+    }
+
+}
+
+
+/* ========================================================================
+   61. SAVE SYSTEM AUTOMATICALLY
+   ======================================================================== */
+
+document.addEventListener(
+    "nexpak:configuratorUpdated",
+    () => {
+
+        saveConfiguratorState();
+
+    }
+);
+
+
+/* ========================================================================
+   62. CONTINUE BUILDING BUTTON
+   ======================================================================== */
+
+const continueBuildingButton =
+    document.getElementById(
+        "continueBuilding"
+    );
+
+
+if (continueBuildingButton) {
+
+    continueBuildingButton.addEventListener(
+        "click",
+        () => {
+
+            const firstProductSection =
+                document.querySelector(
+                    ".configurator-products-section"
+                );
+
+
+            if (firstProductSection) {
+
+                firstProductSection.scrollIntoView(
+                    {
+                        behavior: "smooth",
+                        block: "start"
+                    }
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* ========================================================================
+   63. VIEW CART BUTTON
+   ======================================================================== */
+
+const viewCartButton =
+    document.getElementById(
+        "viewCart"
+    );
+
+
+if (viewCartButton) {
+
+    viewCartButton.addEventListener(
+        "click",
+        () => {
+
+            window.location.href =
+                "cart.html";
+
+        }
+    );
+
+}
+
+
+/* ========================================================================
+   64. CONFIRM BEFORE LEAVING EMPTY SYSTEM
+   ======================================================================== */
+
+function hasConfiguratorProducts() {
+
+    return Object.keys(
+        state.selections || {}
+    ).length > 0;
+
+}
+
+
+/* ========================================================================
+   65. SYSTEM SUMMARY DATA ATTRIBUTE
+   ======================================================================== */
+
+function updateSystemSummaryAttributes() {
+
+    const summary =
+        document.getElementById(
+            "systemSummary"
         );
 
 
-        updateCartCount();
+    if (!summary) {
+        return;
     }
 
 
-    /* ---------------------------------------------------------------
-       39. START
-       --------------------------------------------------------------- */
+    summary.dataset.itemCount =
+        calculateSystemItemCount();
 
-    initialiseConfigurator();
 
-});
-           
+    summary.dataset.weight =
+        calculateSystemWeight()
+            .toFixed(2);
+
+
+    summary.dataset.subtotal =
+        Number(
+            state.totals.subtotal
+        ) || 0;
+
+
+    summary.dataset.vat =
+        Number(
+            state.totals.vat
+        ) || 0;
+
+
+    summary.dataset.grandTotal =
+        Number(
+            state.totals.grandTotal
+        ) || 0;
+
+}
+
+
+/* ========================================================================
+   66. FINAL SUMMARY REFRESH
+   ======================================================================== */
+
+function refreshSystemSummary() {
+
+    renderSelectedProducts();
+
+    renderSystemTotals();
+
+    renderSystemItemCount();
+
+    renderSystemWeight();
+
+    updateSummary();
+
+    updateSystemSummaryAttributes();
+
+    dispatchDeliveryUpdate();
+
+}
+
+
+/* ========================================================================
+   67. INITIALISE SAVED CONFIGURATOR DATA
+   ======================================================================== */
+
+const restoredConfiguratorState =
+    loadConfiguratorState();
+
+
+if (
+    restoredConfiguratorState
+) {
+
+    try {
+
+        updateTotals();
+
+    } catch (error) {
+
+        console.error(
+            "Nexpak Configurator: Could not recalculate restored totals.",
+            error
+        );
+
+    }
+
+}
+
+
+/* ========================================================================
+   68. INITIAL SYSTEM SUMMARY REFRESH
+   ======================================================================== */
+
+refreshSystemSummary();
+
+
+/* ========================================================================
+   69. CONFIGURATOR READY EVENT
+   ======================================================================== */
+
+document.dispatchEvent(
+    new CustomEvent(
+        "nexpak:configuratorReady",
+        {
+            detail:
+                getConfiguratorDeliveryData()
+        }
+    )
+);
+
+
+/* ========================================================================
+   END OF PART 6
+   ======================================================================== */
+
+/* ==========================================================================
+   NEXPAK SECURITY SOLUTIONS
+   BUILD YOUR SYSTEM — CONFIGURATOR V2
+   PART 7 — DELIVERY INTEGRATION + VALIDATION
+   ========================================================================== */
+
+
+/* ========================================================================
+   70. GET DELIVERY DATA
+   ======================================================================== */
+
+function getSystemDeliveryData() {
+
+    const data =
+        getConfiguratorDeliveryData();
+
+
+    return {
+
+        subtotal:
+            Number(data.subtotal) || 0,
+
+        vat:
+            Number(data.vat) || 0,
+
+        grandTotal:
+            Number(data.grandTotal) || 0,
+
+        itemCount:
+            Number(data.itemCount) || 0,
+
+        weight:
+            Number(data.weight) || 0,
+
+        category:
+            data.category || "",
+
+        categoryTitle:
+            data.categoryTitle || "",
+
+        products:
+            Array.isArray(data.products)
+                ? data.products
+                : []
+
+    };
+
+}
+
+
+/* ========================================================================
+   71. UPDATE DELIVERY CALCULATOR
+   ======================================================================== */
+
+function updateConfiguratorDelivery() {
+
+    const deliveryData =
+        getSystemDeliveryData();
+
+
+    /*
+       If delivery.js exposes a compatible update function,
+       pass the configurator data through to it.
+    */
+
+    if (
+        typeof window.updateDeliveryCalculator ===
+        "function"
+    ) {
+
+        try {
+
+            window.updateDeliveryCalculator(
+                deliveryData
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Nexpak Configurator: Delivery calculator update failed.",
+                error
+            );
+
+        }
+
+    }
+
+
+    /*
+       Also expose the data globally so delivery.js
+       can retrieve it whenever required.
+    */
+
+    window.nexpakConfiguratorDelivery =
+        deliveryData;
+
+
+    return deliveryData;
+
+}
+
+
+/* ========================================================================
+   72. DELIVERY UPDATE EVENT
+   ======================================================================== */
+
+document.addEventListener(
+    "nexpak:configuratorUpdated",
+    () => {
+
+        updateConfiguratorDelivery();
+
+    }
+);
+
+
+/* ========================================================================
+   73. CALCULATE DELIVERY ELIGIBILITY
+   ======================================================================== */
+
+function isSystemReadyForDelivery() {
+
+    const products =
+        getCurrentSystemProducts();
+
+
+    if (
+        products.length === 0
+    ) {
+
+        return false;
+
+    }
+
+
+    return products.some(
+        product =>
+            (
+                Number(
+                    product.quantity
+                ) || 0
+            ) > 0
+    );
+
+}
+
+
+/* ========================================================================
+   74. RENDER DELIVERY STATUS
+   ======================================================================== */
+
+function renderDeliveryStatus() {
+
+    const statusElement =
+        document.getElementById(
+            "deliveryStatus"
+        );
+
+
+    if (!statusElement) {
+        return;
+    }
+
+
+    const ready =
+        isSystemReadyForDelivery();
+
+
+    if (ready) {
+
+        statusElement.textContent =
+            "System ready for delivery calculation.";
+
+        statusElement.classList.add(
+            "active"
+        );
+
+        statusElement.classList.remove(
+            "empty"
+        );
+
+    } else {
+
+        statusElement.textContent =
+            "Add products to calculate delivery.";
+
+        statusElement.classList.add(
+            "empty"
+        );
+
+        statusElement.classList.remove(
+            "active"
+        );
+
+    }
+
+}
+
+
+/* ========================================================================
+   75. SYSTEM VALIDATION
+   ======================================================================== */
+
+function validateConfiguratorSystem() {
+
+    const products =
+        getCurrentSystemProducts();
+
+
+    const errors = [];
+
+
+    if (
+        products.length === 0
+    ) {
+
+        errors.push(
+            "Your system does not contain any products."
+        );
+
+    }
+
+
+    products.forEach(
+        product => {
+
+            if (
+                !product.id
+            ) {
+
+                errors.push(
+                    "A selected product is missing its product ID."
+                );
+
+            }
+
+
+            if (
+                !product.name
+            ) {
+
+                errors.push(
+                    "A selected product is missing its name."
+                );
+
+            }
+
+
+            const quantity =
+                Number(
+                    product.quantity
+                );
+
+
+            if (
+                !Number.isFinite(quantity) ||
+                quantity <= 0
+            ) {
+
+                errors.push(
+                    `${product.name || "A product"} has an invalid quantity.`
+                );
+
+            }
+
+
+            const price =
+                Number(
+                    product.price
+                );
+
+
+            if (
+                !Number.isFinite(price) ||
+                price < 0
+            ) {
+
+                errors.push(
+                    `${product.name || "A product"} has an invalid price.`
+                );
+
+            }
+
+        }
+    );
+
+
+    return {
+
+        valid:
+            errors.length === 0,
+
+        errors
+
+    };
+
+}
+
+
+/* ========================================================================
+   76. SHOW VALIDATION ERRORS
+   ======================================================================== */
+
+function showConfiguratorValidationErrors(
+    errors
+) {
+
+    if (
+        !Array.isArray(errors) ||
+        errors.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    const message =
+        errors.join(" ");
+
+
+    if (
+        typeof showToast ===
+        "function"
+    ) {
+
+        showToast(
+            message,
+            "error"
+        );
+
+    } else {
+
+        console.error(
+            "Nexpak Configurator Validation:",
+            message
+        );
+
+    }
+
+}
+
+
+/* ========================================================================
+   77. VALIDATE BEFORE ADDING SYSTEM TO CART
+   ======================================================================== */
+
+const originalAddSystemToCart =
+    addSystemToCart;
+
+
+function addSystemToCart() {
+
+    const validation =
+        validateConfiguratorSystem();
+
+
+    if (
+        !validation.valid
+    ) {
+
+        showConfiguratorValidationErrors(
+            validation.errors
+        );
+
+        return;
+
+    }
+
+
+    /*
+       Make sure the latest totals are calculated
+       before the system is placed into the cart.
+    */
+
+    try {
+
+        updateTotals();
+
+    } catch (error) {
+
+        console.error(
+            "Nexpak Configurator: Could not update totals before cart.",
+            error
+        );
+
+    }
+
+
+    updateConfiguratorDelivery();
+
+
+    originalAddSystemToCart();
+
+}
+
+
+/* ========================================================================
+   78. UPDATE SUMMARY AFTER DELIVERY CHANGE
+   ======================================================================== */
+
+function refreshDeliveryAndSummary() {
+
+    renderDeliveryStatus();
+
+    updateConfiguratorDelivery();
+
+    updateSystemSummaryAttributes();
+
+}
+
+
+/* ========================================================================
+   79. EXTENDED SYSTEM REFRESH
+   ======================================================================== */
+
+const originalRefreshSystemSummary =
+    refreshSystemSummary;
+
+
+function refreshSystemSummary() {
+
+    originalRefreshSystemSummary();
+
+    renderDeliveryStatus();
+
+    updateConfiguratorDelivery();
+
+}
+
+
+/* ========================================================================
+   80. DELIVERY CALCULATOR INITIALISATION
+   ======================================================================== */
+
+function initialiseConfiguratorDelivery() {
+
+    const deliveryData =
+        getSystemDeliveryData();
+
+
+    window.nexpakConfiguratorDelivery =
+        deliveryData;
+
+
+    renderDeliveryStatus();
+
+    updateConfiguratorDelivery();
+
+}
+
+
+/* ========================================================================
+   81. LISTEN FOR DELIVERY CALCULATOR READY
+   ======================================================================== */
+
+document.addEventListener(
+    "nexpak:deliveryReady",
+    () => {
+
+        initialiseConfiguratorDelivery();
+
+    }
+);
+
+
+/* ========================================================================
+   82. LISTEN FOR CART CHANGES
+   ======================================================================== */
+
+document.addEventListener(
+    "nexpak:cartUpdated",
+    () => {
+
+        updateCartBadge(
+            getCartFromStorage()
+        );
+
+    }
+);
+
+
+/* ========================================================================
+   83. READ CART SAFELY
+   ======================================================================== */
+
+function getCartFromStorage() {
+
+    try {
+
+        const storedCart =
+            localStorage.getItem(
+                "nexpak_cart"
+            );
+
+
+        if (!storedCart) {
+
+            return [];
+
+        }
+
+
+        const cart =
+            JSON.parse(
+                storedCart
+            );
+
+
+        return Array.isArray(cart)
+            ? cart
+            : [];
+
+    } catch (error) {
+
+        console.error(
+            "Nexpak Configurator: Could not read cart.",
+            error
+        );
+
+
+        return [];
+
+    }
+
+}
+
+
+/* ========================================================================
+   84. INITIAL CART BADGE
+   ======================================================================== */
+
+updateCartBadge(
+    getCartFromStorage()
+);
+
+
+/* ========================================================================
+   85. FINAL PART 7 INITIALISATION
+   ======================================================================== */
+
+try {
+
+    refreshSystemSummary();
+
+} catch (error) {
+
+    console.error(
+        "Nexpak Configurator: Final Part 7 refresh failed.",
+        error
+    );
+
+}
+
+
+try {
+
+    initialiseConfiguratorDelivery();
+
+} catch (error) {
+
+    console.error(
+        "Nexpak Configurator: Delivery initialisation failed.",
+        error
+    );
+
+}
+
+
+/* ========================================================================
+   END OF PART 7
+   ======================================================================== */
+
+
