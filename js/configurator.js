@@ -4080,3 +4080,568 @@ try {
    ======================================================================== */
 
 
+/* ==========================================================================
+   NEXPAK SECURITY SOLUTIONS
+   BUILD YOUR SYSTEM — CONFIGURATOR V3
+   PART 8 — SYSTEM SUMMARY + CART HANDOFF
+   ========================================================================== */
+
+
+/* ==========================================================================
+   48. GET SELECTED PRODUCTS
+   ========================================================================== */
+
+function getSelectedConfiguratorProducts() {
+
+    const selected = [];
+
+    Object.keys(state.selections || {}).forEach(
+        function (productId) {
+
+            const selection =
+                state.selections[productId];
+
+            if (!selection) {
+                return;
+            }
+
+            const quantity =
+                Number(selection.quantity) || 0;
+
+            if (quantity <= 0) {
+                return;
+            }
+
+            const product =
+                findConfiguratorProduct(productId);
+
+            if (!product) {
+                return;
+            }
+
+            selected.push({
+                id: product.id,
+                name: product.name,
+                price: Number(product.price) || 0,
+                quantity: quantity,
+                image: product.image || "",
+                category: product.category || state.category,
+                group: product.group || "general",
+                groupTitle:
+                    product.groupTitle ||
+                    product.group ||
+                    "Products",
+                description:
+                    product.description || "",
+                unit:
+                    product.unit || "each",
+                weightKg:
+                    Number(product.weightKg) || 0
+            });
+
+        }
+    );
+
+    return selected;
+}
+
+
+/* ==========================================================================
+   49. CALCULATE SYSTEM TOTALS
+   ========================================================================== */
+
+function calculateSystemTotals() {
+
+    const products =
+        getSelectedConfiguratorProducts();
+
+    let subtotal = 0;
+    let itemCount = 0;
+    let totalWeight = 0;
+
+    products.forEach(
+        function (product) {
+
+            const quantity =
+                Number(product.quantity) || 0;
+
+            const price =
+                Number(product.price) || 0;
+
+            subtotal +=
+                price * quantity;
+
+            itemCount +=
+                quantity;
+
+            totalWeight +=
+                (Number(product.weightKg) || 0) *
+                quantity;
+
+        }
+    );
+
+    const vat =
+        subtotal * VAT_RATE;
+
+    const grandTotal =
+        subtotal + vat;
+
+    return {
+        products: products,
+        itemCount: itemCount,
+        subtotal: subtotal,
+        vat: vat,
+        grandTotal: grandTotal,
+        totalWeight: totalWeight
+    };
+}
+
+
+/* ==========================================================================
+   50. UPDATE SYSTEM SUMMARY
+   ========================================================================== */
+
+function updateSystemSummary() {
+
+    const totals =
+        calculateSystemTotals();
+
+    state.itemCount =
+        totals.itemCount;
+
+    state.subtotal =
+        totals.subtotal;
+
+    state.vat =
+        totals.vat;
+
+    state.grandTotal =
+        totals.grandTotal;
+
+    /*
+       Keep the summary compatible with the
+       existing configurator summary element.
+    */
+
+    if (!elements.summary) {
+        return totals;
+    }
+
+    const productCount =
+        totals.products.length;
+
+    if (productCount === 0) {
+
+        elements.summary.innerHTML = `
+            <div class="system-summary-empty">
+
+                <i class="fa-solid fa-cart-shopping"></i>
+
+                <h3>
+                    Your System Is Empty
+                </h3>
+
+                <p>
+                    Select the products you need
+                    to build your security system.
+                </p>
+
+            </div>
+        `;
+
+        return totals;
+    }
+
+
+    elements.summary.innerHTML = `
+
+        <div class="system-summary-header">
+
+            <div>
+                <span class="summary-eyebrow">
+                    BUILD YOUR SYSTEM
+                </span>
+
+                <h3>
+                    System Summary
+                </h3>
+            </div>
+
+            <div class="summary-item-count">
+                ${totals.itemCount}
+                item${totals.itemCount === 1 ? "" : "s"}
+            </div>
+
+        </div>
+
+
+        <div class="system-summary-products">
+
+            ${totals.products.map(
+                function (product) {
+
+                    const lineTotal =
+                        product.price *
+                        product.quantity;
+
+                    return `
+
+                        <div
+                            class="system-summary-product"
+                            data-product-id="${escapeHtml(product.id)}"
+                        >
+
+                            <div class="summary-product-info">
+
+                                <strong>
+                                    ${escapeHtml(product.name)}
+                                </strong>
+
+                                <span>
+                                    ${product.quantity}
+                                    ×
+                                    ${formatMoney(product.price)}
+                                </span>
+
+                            </div>
+
+                            <strong class="summary-product-total">
+                                ${formatMoney(lineTotal)}
+                            </strong>
+
+                        </div>
+
+                    `;
+
+                }
+            ).join("")}
+
+        </div>
+
+
+        <div class="system-summary-totals">
+
+            <div class="summary-row">
+
+                <span>
+                    Subtotal
+                </span>
+
+                <strong>
+                    ${formatMoney(totals.subtotal)}
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    VAT (${VAT_RATE * 100}%)
+                </span>
+
+                <strong>
+                    ${formatMoney(totals.vat)}
+                </strong>
+
+            </div>
+
+
+            <div class="summary-row summary-grand-total">
+
+                <span>
+                    Total
+                </span>
+
+                <strong>
+                    ${formatMoney(totals.grandTotal)}
+                </strong>
+
+            </div>
+
+        </div>
+
+    `;
+
+    return totals;
+}
+
+
+/* ==========================================================================
+   51. BUILD CART ITEMS
+   ========================================================================== */
+
+function buildConfiguratorCartItems() {
+
+    const products =
+        getSelectedConfiguratorProducts();
+
+    return products.map(
+        function (product) {
+
+            return {
+
+                id: product.id,
+
+                productId: product.id,
+
+                name: product.name,
+
+                title: product.name,
+
+                price: product.price,
+
+                quantity: product.quantity,
+
+                image: product.image,
+
+                category: product.category,
+
+                description: product.description,
+
+                unit: product.unit,
+
+                weightKg: product.weightKg,
+
+                source:
+                    "build-your-system"
+
+            };
+
+        }
+    );
+}
+
+
+/* ==========================================================================
+   52. ADD CONFIGURED SYSTEM TO CART
+   ========================================================================== */
+
+function addConfiguredSystemToCart() {
+
+    const cartItems =
+        buildConfiguratorCartItems();
+
+    if (cartItems.length === 0) {
+
+        console.warn(
+            "Nexpak Configurator: " +
+            "Cannot add an empty system to cart."
+        );
+
+        return false;
+    }
+
+
+    /*
+       Prefer the existing cart engine.
+
+       No new cart system is created here.
+       The configurator simply hands the
+       selected individual products to it.
+    */
+
+    if (
+        window.NEXPAK_CART &&
+        typeof window.NEXPAK_CART.addItem === "function"
+    ) {
+
+        cartItems.forEach(
+            function (item) {
+
+                window.NEXPAK_CART.addItem(
+                    item
+                );
+
+            }
+        );
+
+        return true;
+    }
+
+
+    /*
+       Compatibility with cart.js implementations
+       that expose addToCart().
+    */
+
+    if (
+        typeof window.addToCart === "function"
+    ) {
+
+        cartItems.forEach(
+            function (item) {
+
+                window.addToCart(
+                    item
+                );
+
+            }
+        );
+
+        return true;
+    }
+
+
+    /*
+       Compatibility fallback.
+
+       Store the configured system temporarily
+       so the cart page can recover it without
+       creating pre-built kits.
+    */
+
+    try {
+
+        localStorage.setItem(
+            "nexpakConfiguredSystem",
+            JSON.stringify(cartItems)
+        );
+
+        return true;
+
+    }
+    catch (error) {
+
+        console.error(
+            "Nexpak Configurator: " +
+            "Unable to save configured system.",
+            error
+        );
+
+        return false;
+    }
+}
+
+
+/* ==========================================================================
+   53. CLEAR CONFIGURED SYSTEM
+   ========================================================================== */
+
+function clearConfiguredSystem() {
+
+    state.selections = {};
+
+    state.itemCount = 0;
+
+    state.subtotal = 0;
+
+    state.vat = 0;
+
+    state.grandTotal = 0;
+
+    try {
+
+        localStorage.removeItem(
+            "nexpakConfiguredSystem"
+        );
+
+    }
+    catch (error) {
+
+        console.warn(
+            "Nexpak Configurator: " +
+            "Unable to clear temporary system storage."
+        );
+
+    }
+
+
+    /*
+       Refresh the product cards if the renderer
+       is available.
+    */
+
+    if (
+        typeof renderConfigurator === "function"
+    ) {
+
+        renderConfigurator();
+
+    }
+
+    updateSystemSummary();
+
+}
+
+
+/* ==========================================================================
+   54. GET CONFIGURED SYSTEM
+   ========================================================================== */
+
+function getConfiguredSystem() {
+
+    return calculateSystemTotals();
+
+}
+
+
+/* ==========================================================================
+   55. PUBLIC SUMMARY API
+   ========================================================================== */
+
+if (
+    window.NEXPAK_CONFIGURATOR
+) {
+
+    window.NEXPAK_CONFIGURATOR
+        .getSelectedProducts =
+            getSelectedConfiguratorProducts;
+
+
+    window.NEXPAK_CONFIGURATOR
+        .calculateTotals =
+            calculateSystemTotals;
+
+
+    window.NEXPAK_CONFIGURATOR
+        .updateSummary =
+            updateSystemSummary;
+
+
+    window.NEXPAK_CONFIGURATOR
+        .getCartItems =
+            buildConfiguratorCartItems;
+
+
+    window.NEXPAK_CONFIGURATOR
+        .addToCart =
+            addConfiguredSystemToCart;
+
+
+    window.NEXPAK_CONFIGURATOR
+        .clearSystem =
+            clearConfiguredSystem;
+
+
+    window.NEXPAK_CONFIGURATOR
+        .getConfiguredSystem =
+            getConfiguredSystem;
+
+}
+
+
+/* ==========================================================================
+   56. FINAL SUMMARY REFRESH
+   ========================================================================== */
+
+if (
+    typeof updateSystemSummary === "function"
+) {
+
+    updateSystemSummary();
+
+}
+
+
+/* ==========================================================================
+   PART 8 COMPLETE
+   ========================================================================== */
+
+
+/* ==========================================================================
+   NEXPAK SECURITY SOLUTIONS
+   BUILD YOUR SYSTEM — CONFIGURATOR V3
+   CONFIGURATOR COMPLETE
+   ========================================================================== */
