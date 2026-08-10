@@ -1,66 +1,66 @@
-/**
- * ============================================================================
- * NEXPAK SECURITY SOLUTIONS
- * MASTER SYSTEM BUILDER DATABASE
- * ============================================================================
- *
- * File:
- *     js/shop-data.js
- *
- * Purpose:
- *     Master product database for:
- *       - Build Your System
- *       - Shop
- *       - Cart
- *       - Configurator
- *
- * IMPORTANT:
- *     There are NO PRE-BUILT KITS in this database.
- *
- *     Build Your System allows customers to select individual products,
- *     quantities and options themselves.
- *
- * Prices:
- *     All prices are in South African Rand (ZAR)
- *     and exclude 15% VAT.
- * ============================================================================
- */
+/* ==========================================================================
+   NEXPAK SECURITY SOLUTIONS
+   SHOP DATA — MASTER PRODUCT & SYSTEM DATABASE
+   shop-data.js
+   ==========================================================================
+
+   PURPOSE:
+   - Master database for the Nexpak Security Solutions website
+   - Used by:
+       shop.js / shop-v17.js
+       product.js
+       configurator.js
+       cart.js
+       delivery.js
+       checkout.js
+       payment.js
+
+   IMPORTANT:
+   - NO PRE-BUILT KITS ARE STORED HERE.
+   - The online SHOP already contains the pre-built kits.
+   - "Build Your System" uses INDIVIDUAL PRODUCTS ONLY.
+   - All prices are EXCLUDING 15% VAT.
+   - All prices are in South African Rand (ZAR).
+
+   SYSTEMS:
+   1. Electric Fencing
+   2. CCTV HD
+   3. IP CCTV
+   4. Roboguard
+   5. Gate Automation
+   6. IDS Alarm
+   7. Ajax Security
+   8. Stafix Agri Fencing
+
+   ========================================================================== */
+
 
 const SHOP_DATA = {
 
-    /* ========================================================================
-       01. COMPANY SETTINGS
-       ======================================================================== */
+    /* ======================================================================
+       1. COMPANY SETTINGS
+       ====================================================================== */
 
     company: {
 
         name:
             "Nexpak Security Solutions",
 
-        tradingName:
-            "Nexpak Security Solutions",
+        whatsapp:
+            "27836308249",
 
         currency:
             "ZAR",
 
-        currencySymbol:
-            "R",
-
         vatRate:
-            0.15,
-
-        whatsapp:
-            "27836308249",
-
-        country:
-            "South Africa"
+            0.15
 
     },
 
 
-    /* ========================================================================
-       02. SYSTEM BUILDER CATEGORIES
-       ======================================================================== */
+    /* ======================================================================
+       2. MASTER CATEGORY LIST
+       ====================================================================== */
 
     categories: [
 
@@ -71,20 +71,11 @@ const SHOP_DATA = {
             title:
                 "Electric Fencing",
 
-            shortTitle:
-                "Electric Fencing",
-
-            description:
-                "Build a complete electric fencing system by selecting every component individually.",
+            desc:
+                "Electric fence brackets, stays, wire, energizers, earthing, high-tension cable, accessories and installation products.",
 
             icon:
-                "fa-bolt",
-
-            colour:
-                "#f5b400",
-
-            active:
-                true
+                "fa-bolt"
         },
 
 
@@ -93,22 +84,13 @@ const SHOP_DATA = {
                 "cctv-hd",
 
             title:
-                "HD CCTV",
+                "CCTV HD Systems",
 
-            shortTitle:
-                "HD CCTV",
-
-            description:
-                "Build an HD CCTV surveillance system with cameras, DVR, storage, cabling and accessories.",
+            desc:
+                "HD analogue surveillance cameras, DVRs, hard drives, cabling, baluns, power supplies and CCTV accessories.",
 
             icon:
-                "fa-video",
-
-            colour:
-                "#2563eb",
-
-            active:
-                true
+                "fa-video"
         },
 
 
@@ -117,22 +99,13 @@ const SHOP_DATA = {
                 "cctv-ip",
 
             title:
-                "IP CCTV",
+                "IP CCTV Systems",
 
-            shortTitle:
-                "IP CCTV",
-
-            description:
-                "Build a network CCTV system using IP cameras, NVRs, PoE equipment and network accessories.",
+            desc:
+                "Network surveillance cameras, PoE NVRs, network switches, storage, Cat5e/Cat6 cabling and IP CCTV accessories.",
 
             icon:
-                "fa-network-wired",
-
-            colour:
-                "#7c3aed",
-
-            active:
-                true
+                "fa-network-wired"
         },
 
 
@@ -141,22 +114,13 @@ const SHOP_DATA = {
                 "roboguard",
 
             title:
-                "Roboguard",
+                "Roboguard Outdoor Beams",
 
-            shortTitle:
-                "Roboguard",
-
-            description:
-                "Build a wireless outdoor perimeter detection system using Roboguard beams, receivers and accessories.",
+            desc:
+                "Wireless outdoor beam detection systems, receivers, transmitters, batteries, brackets and Roboguard accessories.",
 
             icon:
-                "fa-shield-halved",
-
-            colour:
-                "#059669",
-
-            active:
-                true
+                "fa-shield-halved"
         },
 
 
@@ -167,20 +131,11 @@ const SHOP_DATA = {
             title:
                 "Gate Automation",
 
-            shortTitle:
-                "Gate Automation",
-
-            description:
-                "Build a gate automation system with motors, racks, remotes, batteries, brackets and accessories.",
+            desc:
+                "Centurion gate motors, rack, remotes, batteries, brackets, safety accessories and gate automation equipment.",
 
             icon:
-                "fa-door-open",
-
-            colour:
-                "#dc2626",
-
-            active:
-                true
+                "fa-door-open"
         },
 
 
@@ -191,20 +146,11 @@ const SHOP_DATA = {
             title:
                 "IDS Alarm Systems",
 
-            shortTitle:
-                "IDS Alarms",
-
-            description:
-                "Build an IDS wired or hybrid alarm system with panels, keypads, PIRs, sirens and communication devices.",
+            desc:
+                "IDS wired and hybrid alarm panels, PIRs, keypads, sirens, batteries, communication modules and accessories.",
 
             icon:
-                "fa-bell",
-
-            colour:
-                "#ea580c",
-
-            active:
-                true
+                "fa-bell"
         },
 
 
@@ -213,22 +159,13 @@ const SHOP_DATA = {
                 "ajax-security",
 
             title:
-                "Ajax Security",
+                "Ajax Wireless Security",
 
-            shortTitle:
-                "Ajax",
-
-            description:
-                "Build a professional Ajax wireless security system with hubs, detectors, keypads and accessories.",
+            desc:
+                "Ajax wireless security hubs, motion detectors, outdoor detectors, keypads, sirens and Jeweller accessories.",
 
             icon:
-                "fa-house-lock",
-
-            colour:
-                "#111827",
-
-            active:
-                true
+                "fa-house-lock"
         },
 
 
@@ -237,5977 +174,3972 @@ const SHOP_DATA = {
                 "stafix-agri",
 
             title:
-                "Stafix Agricultural",
+                "Stafix Agri Fencing",
 
-            shortTitle:
-                "Stafix Agri",
-
-            description:
-                "Build agricultural electric fencing systems for farms, livestock and perimeter protection.",
+            desc:
+                "Agricultural electric fencing equipment including energizers, solar equipment, wire, insulators, posts and accessories.",
 
             icon:
-                "fa-wheat-awn",
-
-            colour:
-                "#65a30d",
-
-            active:
-                true
+                "fa-wheat-awn"
         }
 
     ],
 
 
-    /* ========================================================================
-       03. PRODUCT DATABASE
-       ======================================================================== */
+    /* ======================================================================
+       3. INDIVIDUAL PRODUCT DATABASE
+       ======================================================================
+
+       IMPORTANT:
+
+       Every product below is an INDIVIDUAL PRODUCT.
+
+       There are NO:
+           prebuiltKits
+           baseKit
+           kit selections
+
+       The Build Your System configurator simply allows customers to select
+       these products and specify quantities.
+
+       ====================================================================== */
 
     products: {
 
-        /*
-         * Product categories will be added here.
-         *
-         * Structure:
-         *
-         * "category-id": [
-         *
-         *     {
-         *         id: "unique-product-id",
-         *         name: "Product Name",
-         *         description: "Product description",
-         *         brand: "Brand",
-         *         price: 0.00,
-         *         weight: 0.00,
-         *         unit: "each",
-         *         active: true
-         *     }
-         *
-         * ]
-         */
 
-    },
+        /* ==================================================================
+           A. ELECTRIC FENCING
+           ================================================================== */
 
+        "electric-fencing": [
 
-    /* ========================================================================
-       04. SYSTEM BUILDER CONFIGURATION
-       ======================================================================== */
+            {
+                id:
+                    "ef-walltop-bracket",
 
-    configurators: {
+                name:
+                    "Wall Top Electric Fence Bracket",
 
-        /*
-         * These sections will define how individual products are presented
-         * inside Build Your System.
-         *
-         * Example:
-         *
-         * {
-         *     id: "brackets",
-         *     label: "Electric Fence Brackets",
-         *     type: "quantity-selector",
-         *     productGroup: "electric-fencing"
-         * }
-         *
-         * Full configuration will be added in later parts.
-         */
+                group:
+                    "brackets",
 
-    },
+                brand:
+                    "Nexpak",
 
+                description:
+                    "Wall-top electric fence bracket for mounting multiple electric fence strands.",
 
-    /* ========================================================================
-       05. PRODUCT HELPERS
-       ======================================================================== */
+                price:
+                    85.00,
 
-    helpers: {
+                unit:
+                    "each",
 
-        /**
-         * Format a number as South African Rand.
-         */
-        formatCurrency:
-            function (
-                amount
-            ) {
+                weightKg:
+                    0.45,
 
-                return new Intl.NumberFormat(
-                    "en-ZA",
-                    {
-                        style:
-                            "currency",
-
-                        currency:
-                            "ZAR",
-
-                        minimumFractionDigits:
-                            2,
-
-                        maximumFractionDigits:
-                            2
-                    }
-                ).format(
-                    Number(amount) || 0
-                );
-
+                image:
+                    ""
             },
 
 
-        /**
-         * Return VAT amount.
-         */
-        calculateVat:
-            function (
-                amount
-            ) {
+            {
+                id:
+                    "ef-bracket-6line",
 
-                return (
-                    Number(amount) || 0
-                ) *
-                SHOP_DATA.company.vatRate;
+                name:
+                    "6-Line Electric Fence Bracket",
 
+                group:
+                    "brackets",
+
+                brand:
+                    "Nexpak",
+
+                description:
+                    "6-line electric fence bracket for standard residential and commercial installations.",
+
+                price:
+                    95.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    0.50,
+
+                image:
+                    ""
             },
 
 
-        /**
-         * Return price including VAT.
-         */
-        calculatePriceInclVat:
-            function (
-                amount
-            ) {
+            {
+                id:
+                    "ef-bracket-8line",
 
-                const price =
-                    Number(amount) || 0;
+                name:
+                    "8-Line Electric Fence Bracket",
 
-                return price +
-                    SHOP_DATA.helpers.calculateVat(
-                        price
-                    );
+                group:
+                    "brackets",
 
+                brand:
+                    "Nexpak",
+
+                description:
+                    "8-line electric fence bracket for increased perimeter protection.",
+
+                price:
+                    110.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    0.60,
+
+                image:
+                    ""
+            },
+
+
+            {
+                id:
+                    "ef-bracket-10line",
+
+                name:
+                    "10-Line Electric Fence Bracket",
+
+                group:
+                    "brackets",
+
+                brand:
+                    "Nexpak",
+
+                description:
+                    "10-line heavy-duty electric fence bracket.",
+
+                price:
+                    125.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    0.70,
+
+                image:
+                    ""
+            },
+
+
+            {
+                id:
+                    "ef-bracket-12line",
+
+                name:
+                    "12-Line Electric Fence Bracket",
+
+                group:
+                    "brackets",
+
+                brand:
+                    "Nexpak",
+
+                description:
+                    "12-line high-security electric fence bracket.",
+
+                price:
+                    145.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    0.80,
+
+                image:
+                    ""
+            },
+
+
+            {
+                id:
+                    "ef-stay-600-black",
+
+                name:
+                    "600mm Black Electric Fence Stay",
+
+                group:
+                    "stays",
+
+                brand:
+                    "Nexpak",
+
+                description:
+                    "600mm black stay for electric fence corners and end points.",
+
+                price:
+                    42.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    0.50,
+
+                image:
+                    ""
+            },
+
+
+            {
+                id:
+                    "ef-stay-600-white",
+
+                name:
+                    "600mm White Electric Fence Stay",
+
+                group:
+                    "stays",
+
+                brand:
+                    "Nexpak",
+
+                description:
+                    "600mm white stay for electric fence corners and end points.",
+
+                price:
+                    42.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    0.50,
+
+                image:
+                    ""
+            },
+
+
+            {
+                id:
+                    "ef-stay-600-galv",
+
+                name:
+                    "600mm Galvanised Electric Fence Stay",
+
+                group:
+                    "stays",
+
+                brand:
+                    "Nexpak",
+
+                description:
+                    "600mm galvanised stay for electric fence corners and end points.",
+
+                price:
+                    48.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    0.55,
+
+                image:
+                    ""
+            },
+
+
+            {
+                id:
+                    "ef-stay-750-black",
+
+                name:
+                    "750mm Black Electric Fence Stay",
+
+                group:
+                    "stays",
+
+                brand:
+                    "Nexpak",
+
+                description:
+                    "750mm heavy-duty black stay for larger electric fence structures.",
+
+                price:
+                    55.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    0.65,
+
+                image:
+                    ""
+            },
+
+
+            {
+                id:
+                    "ef-stay-750-white",
+
+                name:
+                    "750mm White Electric Fence Stay",
+
+                group:
+                    "stays",
+
+                brand:
+                    "Nexpak",
+
+                description:
+                    "750mm heavy-duty white stay for larger electric fence structures.",
+
+                price:
+                    55.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    0.65,
+
+                image:
+                    ""
+            },
+
+
+            {
+                id:
+                    "ef-stay-750-galv",
+
+                name:
+                    "750mm Galvanised Electric Fence Stay",
+
+                group:
+                    "stays",
+
+                brand:
+                    "Nexpak",
+
+                description:
+                    "750mm heavy-duty galvanised stay for larger electric fence structures.",
+
+                price:
+                    62.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    0.70,
+
+                image:
+                    ""
+            },
+
+
+            {
+                id:
+                    "ef-anchor-6x60",
+
+                name:
+                    "6 x 60mm Nail-In Anchors",
+
+                group:
+                    "anchors",
+
+                brand:
+                    "Nexpak",
+
+                description:
+                    "Nail-in masonry anchors for securing electric fence brackets.",
+
+                price:
+                    95.00,
+
+                unit:
+                    "100 pack",
+
+                weightKg:
+                    0.80,
+
+                image:
+                    ""
+            },
+
+
+            {
+                id:
+                    "ef-anchor-8x80",
+
+                name:
+                    "8 x 80mm Nail-In Anchors",
+
+                group:
+                    "anchors",
+
+                brand:
+                    "Nexpak",
+
+                description:
+                    "Heavy-duty nail-in anchors for electric fence mounting applications.",
+
+                price:
+                    145.00,
+
+                unit:
+                    "100 pack",
+
+                weightKg:
+                    1.20,
+
+                image:
+                    ""
+            },
+
+
+            {
+                id:
+                    "ef-lugs-6x35",
+
+                name:
+                    "6 x 35mm Electric Fence Wiring Lugs",
+
+                group:
+                    "lugs",
+
+                brand:
+                    "Nexpak",
+
+                description:
+                    "Electrical wiring lugs for electric fence connections.",
+
+                price:
+                    25.00,
+
+                unit:
+                    "10 pack",
+
+                weightKg:
+                    0.08,
+
+                image:
+                    ""
             }
+
+        ],
+
+
+        /* ==================================================================
+           B. CCTV HD
+           ================================================================== */
+
+        "cctv-hd": [
+
+            {
+                id:
+                    "hd-dvr-8ch",
+
+                name:
+                    "8 Channel HD DVR",
+
+                group:
+                    "recorders",
+
+                brand:
+                    "Dahua",
+
+                description:
+                    "8-channel HD DVR for analogue high-definition surveillance systems.",
+
+                price:
+                    1450.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    1.50,
+
+                image:
+                    ""
+            },
+
+
+            {
+                id:
+                    "hd-dvr-16ch",
+
+                name:
+                    "16 Channel HD DVR",
+
+                group:
+                    "recorders",
+
+                brand:
+                    "Dahua",
+
+                description:
+                    "16-channel HD DVR for medium-sized surveillance installations.",
+
+                price:
+                    2650.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    2.20,
+
+                image:
+                    ""
+            },
+
+
+            {
+                id:
+                    "hd-dvr-32ch",
+
+                name:
+                    "32 Channel HD DVR",
+
+                group:
+                    "recorders",
+
+                brand:
+                    "Dahua",
+
+                description:
+                    "32-channel HD DVR for larger commercial surveillance systems.",
+
+                price:
+                    5400.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    3.80,
+
+                image:
+                    ""
+            },
+
+
+            {
+                id:
+                    "hd-hdd-1tb",
+
+                name:
+                    "1TB Surveillance Hard Drive",
+
+                group:
+                    "storage",
+
+                brand:
+                    "Surveillance",
+
+                description:
+                    "1TB surveillance-rated hard drive for CCTV recording.",
+
+                price:
+                    780.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    0.60,
+
+                image:
+                    ""
+            },
+
+
+            {
+                id:
+                    "hd-hdd-2tb",
+
+                name:
+                    "2TB Surveillance Hard Drive",
+
+                group:
+                    "storage",
+
+                brand:
+                    "Surveillance",
+
+                description:
+                    "2TB surveillance-rated hard drive for extended CCTV recording.",
+
+                price:
+                    1150.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    0.60,
+
+                image:
+                    ""
+            },
+
+
+            {
+                id:
+                    "hd-bullet-30m",
+
+                name:
+                    "30m IR HD Bullet Camera",
+
+                group:
+                    "cameras",
+
+                brand:
+                    "Dahua",
+
+                description:
+                    "HD infrared bullet camera with approximately 30m night vision.",
+
+                price:
+                    380.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    0.40,
+
+                image:
+                    ""
+            },
+
+
+            {
+                id:
+                    "hd-dome-20m",
+
+                name:
+                    "20m IR HD Dome Camera",
+
+                group:
+                    "cameras",
+
+                brand:
+                    "Dahua",
+
+                description:
+                    "HD infrared dome camera with approximately 20m night vision.",
+
+                price:
+                    360.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    0.35,
+
+                image:
+                    ""
+            },
+
+
+            {
+                id:
+                    "hd-rg59-100m",
+
+                name:
+                    "RG59 + Power CCTV Cable 100m",
+
+                group:
+                    "cabling",
+
+                brand:
+                    "Nexpak",
+
+                description:
+                    "100m RG59 coaxial CCTV cable with power cable.",
+
+                price:
+                    420.00,
+
+                unit:
+                    "100m roll",
+
+                weightKg:
+                    4.50,
+
+                image:
+                    ""
+            }
+
+        ]
 
     }
 
 };
 
 
-/* ============================================================================
-   06. DATABASE READY CHECK
-   ============================================================================ */
-
-console.log(
-    "Nexpak Security Solutions — System Builder Database loaded."
-);
-
-console.log(
-    "Categories:",
-    SHOP_DATA.categories.length
-);
-
-console.log(
-    "Pre-built kits:",
-    "REMOVED — Build Your System uses individual products."
-);
-
-/* ====================================================================
-           A. ELECTRIC FENCING PRODUCTS
-           ==================================================================== */
-
-        "electric-fencing": [
-
-            /* ================================================================
-               BRACKETS
-               ================================================================ */
-
-            {
-                id: "ef-bracket-6line-black",
-                name: "6-Line Electric Fence Bracket - Black",
-                group: "brackets",
-                brand: "Nexpak",
-                description: "6-line powder-coated electric fence bracket.",
-                price: 145.00,
-                weight: 1.10,
-                unit: "each",
-                active: true
-            },
+/* ==========================================================================
+   END OF PART 1
+   ========================================================================== */
 
-            {
-                id: "ef-bracket-6line-white",
-                name: "6-Line Electric Fence Bracket - White",
-                group: "brackets",
-                brand: "Nexpak",
-                description: "6-line white powder-coated electric fence bracket.",
-                price: 145.00,
-                weight: 1.10,
-                unit: "each",
-                active: true
-            },
+        /* ==================================================================
+           C. IP CCTV SYSTEMS
+           ================================================================== */
 
-            {
-                id: "ef-bracket-6line-galv",
-                name: "6-Line Electric Fence Bracket - Galvanised",
-                group: "brackets",
-                brand: "Nexpak",
-                description: "6-line galvanised electric fence bracket.",
-                price: 155.00,
-                weight: 1.15,
-                unit: "each",
-                active: true
-            },
+        "cctv-ip": [
 
             {
-                id: "ef-bracket-8line-black",
-                name: "8-Line Electric Fence Bracket - Black",
-                group: "brackets",
-                brand: "Nexpak",
-                description: "8-line powder-coated electric fence bracket.",
-                price: 175.00,
-                weight: 1.35,
-                unit: "each",
-                active: true
-            },
+                id:
+                    "ip-nvr-4ch-poe",
 
-            {
-                id: "ef-bracket-8line-white",
-                name: "8-Line Electric Fence Bracket - White",
-                group: "brackets",
-                brand: "Nexpak",
-                description: "8-line white powder-coated electric fence bracket.",
-                price: 175.00,
-                weight: 1.35,
-                unit: "each",
-                active: true
-            },
+                name:
+                    "4 Channel PoE NVR",
 
-            {
-                id: "ef-bracket-8line-galv",
-                name: "8-Line Electric Fence Bracket - Galvanised",
-                group: "brackets",
-                brand: "Nexpak",
-                description: "8-line galvanised electric fence bracket.",
-                price: 190.00,
-                weight: 1.40,
-                unit: "each",
-                active: true
-            },
+                group:
+                    "recorders",
 
-            {
-                id: "ef-bracket-10line-black",
-                name: "10-Line Electric Fence Bracket - Black",
-                group: "brackets",
-                brand: "Nexpak",
-                description: "10-line powder-coated electric fence bracket.",
-                price: 210.00,
-                weight: 1.60,
-                unit: "each",
-                active: true
-            },
+                brand:
+                    "Dahua",
 
-            {
-                id: "ef-bracket-10line-white",
-                name: "10-Line Electric Fence Bracket - White",
-                group: "brackets",
-                brand: "Nexpak",
-                description: "10-line white powder-coated electric fence bracket.",
-                price: 210.00,
-                weight: 1.60,
-                unit: "each",
-                active: true
-            },
+                description:
+                    "4-channel network video recorder with built-in Power over Ethernet ports.",
 
-            {
-                id: "ef-bracket-10line-galv",
-                name: "10-Line Electric Fence Bracket - Galvanised",
-                group: "brackets",
-                brand: "Nexpak",
-                description: "10-line galvanised electric fence bracket.",
-                price: 225.00,
-                weight: 1.65,
-                unit: "each",
-                active: true
-            },
+                price:
+                    2100.00,
 
-            {
-                id: "ef-bracket-12line-black",
-                name: "12-Line Electric Fence Bracket - Black",
-                group: "brackets",
-                brand: "Nexpak",
-                description: "12-line powder-coated electric fence bracket.",
-                price: 245.00,
-                weight: 1.90,
-                unit: "each",
-                active: true
-            },
+                unit:
+                    "each",
 
-            {
-                id: "ef-bracket-12line-white",
-                name: "12-Line Electric Fence Bracket - White",
-                group: "brackets",
-                brand: "Nexpak",
-                description: "12-line white powder-coated electric fence bracket.",
-                price: 245.00,
-                weight: 1.90,
-                unit: "each",
-                active: true
+                weightKg:
+                    1.80,
+
+                image:
+                    ""
             },
+
 
             {
-                id: "ef-bracket-12line-galv",
-                name: "12-Line Electric Fence Bracket - Galvanised",
-                group: "brackets",
-                brand: "Nexpak",
-                description: "12-line galvanised electric fence bracket.",
-                price: 265.00,
-                weight: 1.95,
-                unit: "each",
-                active: true
-            },
+                id:
+                    "ip-nvr-8ch-poe",
 
+                name:
+                    "8 Channel PoE NVR",
 
-            /* ================================================================
-               BRACKET BARS / PROFILES
-               ================================================================ */
+                group:
+                    "recorders",
 
-            {
-                id: "ef-flat-bar-6line",
-                name: "Flat Bar - 6 Line",
-                group: "bracket-bars",
-                brand: "Nexpak",
-                description: "Flat steel bar for 6-line electric fence brackets.",
-                price: 65.00,
-                weight: 0.45,
-                unit: "each",
-                active: true
-            },
+                brand:
+                    "Dahua",
 
-            {
-                id: "ef-round-bar-6line",
-                name: "Round Bar - 6 Line",
-                group: "bracket-bars",
-                brand: "Nexpak",
-                description: "Round steel bar for 6-line electric fence brackets.",
-                price: 75.00,
-                weight: 0.50,
-                unit: "each",
-                active: true
-            },
+                description:
+                    "8-channel PoE network video recorder for IP CCTV installations.",
 
-            {
-                id: "ef-square-tube",
-                name: "Square Tube Bracket Bar",
-                group: "bracket-bars",
-                brand: "Nexpak",
-                description: "Heavy-duty square tube bracket profile.",
-                price: 95.00,
-                weight: 0.70,
-                unit: "each",
-                active: true
-            },
+                price:
+                    3400.00,
 
+                unit:
+                    "each",
 
-            /* ================================================================
-               NAIL-IN ANCHORS
-               ================================================================ */
+                weightKg:
+                    2.40,
 
-            {
-                id: "ef-anchor-6x60",
-                name: "6 x 60mm Nail-In Anchors - 100 Pack",
-                group: "anchors",
-                brand: "Nexpak",
-                description: "Nail-in anchors for electric fence installation.",
-                price: 95.00,
-                weight: 0.80,
-                unit: "pack",
-                active: true
+                image:
+                    ""
             },
 
+
             {
-                id: "ef-anchor-8x80",
-                name: "8 x 80mm Nail-In Anchors - 100 Pack",
-                group: "anchors",
-                brand: "Nexpak",
-                description: "Heavy-duty nail-in anchors for mounting fence components.",
-                price: 145.00,
-                weight: 1.20,
-                unit: "pack",
-                active: true
-            },
+                id:
+                    "ip-nvr-16ch-poe",
 
+                name:
+                    "16 Channel PoE NVR",
 
-            /* ================================================================
-               CORNER & END STAYS
-               ================================================================ */
+                group:
+                    "recorders",
 
-            {
-                id: "ef-stay-600-black",
-                name: "600mm Corner / End Stay - Black",
-                group: "stays",
-                brand: "Nexpak",
-                description: "600mm powder-coated corner and end stay.",
-                price: 42.00,
-                weight: 0.50,
-                unit: "each",
-                active: true
-            },
+                brand:
+                    "Dahua",
 
-            {
-                id: "ef-stay-600-white",
-                name: "600mm Corner / End Stay - White",
-                group: "stays",
-                brand: "Nexpak",
-                description: "600mm white powder-coated corner and end stay.",
-                price: 42.00,
-                weight: 0.50,
-                unit: "each",
-                active: true
-            },
+                description:
+                    "16-channel PoE network video recorder for medium and large IP CCTV systems.",
 
-            {
-                id: "ef-stay-600-galv",
-                name: "600mm Corner / End Stay - Galvanised",
-                group: "stays",
-                brand: "Nexpak",
-                description: "600mm galvanised corner and end stay.",
-                price: 48.00,
-                weight: 0.55,
-                unit: "each",
-                active: true
-            },
+                price:
+                    5800.00,
 
-            {
-                id: "ef-stay-750-black",
-                name: "750mm Corner / End Stay - Black",
-                group: "stays",
-                brand: "Nexpak",
-                description: "750mm powder-coated corner and end stay.",
-                price: 55.00,
-                weight: 0.65,
-                unit: "each",
-                active: true
-            },
+                unit:
+                    "each",
 
-            {
-                id: "ef-stay-750-white",
-                name: "750mm Corner / End Stay - White",
-                group: "stays",
-                brand: "Nexpak",
-                description: "750mm white powder-coated corner and end stay.",
-                price: 55.00,
-                weight: 0.65,
-                unit: "each",
-                active: true
+                weightKg:
+                    3.60,
+
+                image:
+                    ""
             },
+
 
             {
-                id: "ef-stay-750-galv",
-                name: "750mm Corner / End Stay - Galvanised",
-                group: "stays",
-                brand: "Nexpak",
-                description: "750mm galvanised corner and end stay.",
-                price: 62.00,
-                weight: 0.70,
-                unit: "each",
-                active: true
-            },
+                id:
+                    "ip-nvr-32ch",
 
+                name:
+                    "32 Channel NVR",
 
-            /* ================================================================
-               STAY SLEEVES
-               ================================================================ */
+                group:
+                    "recorders",
 
-            {
-                id: "ef-sleeve-600-black",
-                name: "600mm Stay Sleeve - Black",
-                group: "stay-sleeves",
-                brand: "Nexpak",
-                description: "Protective sleeve for 600mm stays.",
-                price: 18.00,
-                weight: 0.10,
-                unit: "each",
-                active: true
-            },
+                brand:
+                    "Dahua",
 
-            {
-                id: "ef-sleeve-600-white",
-                name: "600mm Stay Sleeve - White",
-                group: "stay-sleeves",
-                brand: "Nexpak",
-                description: "Protective sleeve for 600mm stays.",
-                price: 18.00,
-                weight: 0.10,
-                unit: "each",
-                active: true
-            },
+                description:
+                    "32-channel network video recorder for larger commercial IP surveillance systems.",
 
-            {
-                id: "ef-sleeve-750-black",
-                name: "750mm Stay Sleeve - Black",
-                group: "stay-sleeves",
-                brand: "Nexpak",
-                description: "Protective sleeve for 750mm stays.",
-                price: 22.00,
-                weight: 0.12,
-                unit: "each",
-                active: true
+                price:
+                    7900.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    4.20,
+
+                image:
+                    ""
             },
+
 
             {
-                id: "ef-sleeve-750-white",
-                name: "750mm Stay Sleeve - White",
-                group: "stay-sleeves",
-                brand: "Nexpak",
-                description: "Protective sleeve for 750mm stays.",
-                price: 22.00,
-                weight: 0.12,
-                unit: "each",
-                active: true
-            },
+                id:
+                    "ip-camera-4mp-turret",
 
+                name:
+                    "4MP PoE Turret Dome Camera 30m IR",
 
-            /* ================================================================
-               WIRING LUGS
-               ================================================================ */
+                group:
+                    "cameras",
 
-            {
-                id: "ef-lugs-6x35-10pk",
-                name: "6 x 35mm Wiring Lugs - 10 Pack",
-                group: "lugs",
-                brand: "Nexpak",
-                description: "Electric fence wiring lugs for connecting fence conductors.",
-                price: 25.00,
-                weight: 0.08,
-                unit: "pack",
-                active: true
-            },
+                brand:
+                    "Dahua",
 
-            {
-                id: "ef-lugs-heavy-duty",
-                name: "Heavy-Duty Fence Wiring Lugs - 10 Pack",
-                group: "lugs",
-                brand: "Nexpak",
-                description: "Heavy-duty electrical connection lugs.",
-                price: 38.00,
-                weight: 0.10,
-                unit: "pack",
-                active: true
-            },
+                description:
+                    "4MP network turret camera with PoE connectivity and approximately 30m infrared night vision.",
 
+                price:
+                    780.00,
 
-            /* ================================================================
-               FENCE WIRE
-               ================================================================ */
+                unit:
+                    "each",
 
-            {
-                id: "ef-wire-ss-1.2-545",
-                name: "1.2mm Solid Stainless Steel Wire - 545m",
-                group: "wire",
-                brand: "Nemtek",
-                description: "Solid stainless steel electric fence wire.",
-                price: 1250.00,
-                weight: 5.20,
-                unit: "roll",
-                active: true
-            },
+                weightKg:
+                    0.45,
 
-            {
-                id: "ef-wire-alu-1.6-1000",
-                name: "1.6mm Braided Aluminium Wire - 1000m",
-                group: "wire",
-                brand: "Nemtek",
-                description: "Braided aluminium electric fence wire.",
-                price: 1890.00,
-                weight: 6.80,
-                unit: "roll",
-                active: true
+                image:
+                    ""
             },
 
+
             {
-                id: "ef-wire-galv-1.2-680",
-                name: "1.2mm Braided Galvanised Wire - 680m",
-                group: "wire",
-                brand: "Nemtek",
-                description: "Braided galvanised electric fence wire.",
-                price: 890.00,
-                weight: 7.50,
-                unit: "roll",
-                active: true
-            },
+                id:
+                    "ip-camera-8mp-bullet",
 
+                name:
+                    "8MP 4K Ultra HD Bullet Camera 50m IR",
 
-            /* ================================================================
-               FERRULES
-               ================================================================ */
+                group:
+                    "cameras",
 
-            {
-                id: "ef-ferrule-6mm-alu",
-                name: "6mm Aluminium Ferrules - 100 Pack",
-                group: "ferrules",
-                brand: "Nexpak",
-                description: "Aluminium ferrules for electric fence wire connections.",
-                price: 75.00,
-                weight: 0.25,
-                unit: "pack",
-                active: true
-            },
+                brand:
+                    "Dahua",
 
-            {
-                id: "ef-ferrule-6mm-solid",
-                name: "6mm Solid Ferrules - 100 Pack",
-                group: "ferrules",
-                brand: "Nexpak",
-                description: "Solid ferrules for secure electric fence connections.",
-                price: 110.00,
-                weight: 0.40,
-                unit: "pack",
-                active: true
-            },
+                description:
+                    "8MP 4K IP bullet camera with PoE and approximately 50m infrared night vision.",
 
-            {
-                id: "ef-ferrule-10mm-alu",
-                name: "10mm Aluminium Ferrules - 100 Pack",
-                group: "ferrules",
-                brand: "Nexpak",
-                description: "10mm aluminium ferrules for fence connections.",
-                price: 98.00,
-                weight: 0.35,
-                unit: "pack",
-                active: true
+                price:
+                    1450.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    0.65,
+
+                image:
+                    ""
             },
+
 
             {
-                id: "ef-ferrule-10mm-solid",
-                name: "10mm Solid Ferrules - 100 Pack",
-                group: "ferrules",
-                brand: "Nexpak",
-                description: "10mm solid ferrules for heavy-duty connections.",
-                price: 135.00,
-                weight: 0.50,
-                unit: "pack",
-                active: true
-            },
+                id:
+                    "ip-camera-4mp-ptz",
 
+                name:
+                    "4MP Speed Dome PTZ 100m IR",
 
-            /* ================================================================
-               TENSIONERS & HOOKS
-               ================================================================ */
+                group:
+                    "cameras",
 
-            {
-                id: "ef-tweaker-combo",
-                name: "Tweaker Combo Tool + Springs",
-                group: "tensioners",
-                brand: "Nexpak",
-                description: "Fence wire tensioning tool and spring set.",
-                price: 165.00,
-                weight: 0.30,
-                unit: "set",
-                active: true
-            },
+                brand:
+                    "Dahua",
 
-            {
-                id: "ef-s-hooks-20pk",
-                name: "Stainless Steel S-Hooks - 20 Pack",
-                group: "hooks",
-                brand: "Nexpak",
-                description: "Stainless steel S-hooks for electric fence installation.",
-                price: 85.00,
-                weight: 0.20,
-                unit: "pack",
-                active: true
-            },
+                description:
+                    "4MP PTZ network camera with long-range infrared illumination.",
 
+                price:
+                    4800.00,
 
-            /* ================================================================
-               EARTHING
-               ================================================================ */
+                unit:
+                    "each",
 
-            {
-                id: "ef-earth-spike-galv-1.2",
-                name: "1.2m Galvanised Earth Spike",
-                group: "earth-spikes",
-                brand: "Nexpak",
-                description: "Galvanised earth spike for electric fence earthing.",
-                price: 85.00,
-                weight: 1.10,
-                unit: "each",
-                active: true
-            },
+                weightKg:
+                    2.80,
 
-            {
-                id: "ef-earth-spike-copper-1.2",
-                name: "1.2m Copper-Plated Earth Spike",
-                group: "earth-spikes",
-                brand: "Nexpak",
-                description: "Copper-plated earth spike for enhanced corrosion resistance.",
-                price: 135.00,
-                weight: 1.20,
-                unit: "each",
-                active: true
+                image:
+                    ""
             },
 
-            {
-                id: "ef-earth-loop-ss",
-                name: "Stainless Steel Earth Loop",
-                group: "earth-loops",
-                brand: "Nexpak",
-                description: "Stainless steel earth loop.",
-                price: 18.00,
-                weight: 0.04,
-                unit: "each",
-                active: true
-            },
 
             {
-                id: "ef-earth-loop-alu",
-                name: "Aluminium Earth Loop",
-                group: "earth-loops",
-                brand: "Nexpak",
-                description: "Aluminium earth loop.",
-                price: 14.00,
-                weight: 0.02,
-                unit: "each",
-                active: true
-            },
+                id:
+                    "ip-hdd-1tb",
 
-            {
-                id: "ef-earth-loop-galv",
-                name: "Galvanised Earth Loop",
-                group: "earth-loops",
-                brand: "Nexpak",
-                description: "Galvanised earth loop.",
-                price: 12.00,
-                weight: 0.05,
-                unit: "each",
-                active: true
-            },
+                name:
+                    "1TB Surveillance Hard Drive",
 
+                group:
+                    "storage",
 
-            /* ================================================================
-               HT CABLE
-               ================================================================ */
+                brand:
+                    "Surveillance",
 
-            {
-                id: "ef-ht-50-soft",
-                name: "50m HT Cable - Black Soft",
-                group: "ht-cable",
-                brand: "Nexpak",
-                description: "High-tension cable for electric fence connections.",
-                price: 290.00,
-                weight: 2.10,
-                unit: "roll",
-                active: true
-            },
+                description:
+                    "1TB surveillance-rated hard drive for IP CCTV recording.",
 
-            {
-                id: "ef-ht-50-hard",
-                name: "50m HT Cable - Black Hard",
-                group: "ht-cable",
-                brand: "Nexpak",
-                description: "Heavy-duty high-tension cable.",
-                price: 310.00,
-                unit: "roll",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-            },
+                price:
+                    780.00,
 
-            {
-                id: "ef-ht-100-soft",
-                name: "100m HT Cable - Black Soft",
-                group: "ht-cable",
-                brand: "Nexpak",
-                description: "Flexible high-tension cable for electric fence connections.",
-                price: 540.00,
-                unit: "roll",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-            },
+                unit:
+                    "each",
 
-            {
-                id: "ef-ht-100-hard",
-                name: "100m HT Cable - Black Hard",
-                group: "ht-cable",
-                brand: "Nexpak",
-                description: "Heavy-duty 100m high-tension cable.",
-                price: 580.00,
-                unit: "roll",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-            },
+                weightKg:
+                    0.60,
 
-            {
-                id: "ef-ht-200-soft",
-                name: "200m HT Cable - Black Soft",
-                group: "ht-cable",
-                brand: "Nexpak",
-                description: "200m flexible high-tension cable.",
-                price: 980.00,
-                unit: "roll",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
+                image:
+                    ""
             },
 
+
             {
-                id: "ef-ht-200-hard",
-                name: "200m HT Cable - Black Hard",
-                group: "ht-cable",
-                brand: "Nexpak",
-                description: "200m heavy-duty high-tension cable.",
-                price: 1050.00,
-                unit: "roll",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-            },
+                id:
+                    "ip-hdd-2tb",
 
-            /* ============================================================
-               EARTH SPIKES
-               ============================================================ */
-
-            {
-                id: "ef-earth-spike-galv",
-                name: "1.2m Galvanised Earth Spike",
-                group: "earth-spikes",
-                brand: "Nexpak",
-                description: "Galvanised earth spike for electric fence grounding.",
-                price: 85.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-            },
+                name:
+                    "2TB Surveillance Hard Drive",
 
-            {
-                id: "ef-earth-spike-copper",
-                name: "1.2m Copper Plated Earth Spike",
-                group: "earth-spikes",
-                brand: "Nexpak",
-                description: "Copper plated earth spike for improved grounding performance.",
-                price: 135.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-            },
+                group:
+                    "storage",
 
-            /* ============================================================
-               EARTH LOOPS
-               ============================================================ */
-
-            {
-                id: "ef-earth-loop-ss",
-                name: "Stainless Steel Earth Loop",
-                group: "earth-loops",
-                brand: "Nexpak",
-                description: "Stainless steel earth loop for electric fence installations.",
-                price: 18.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-            },
+                brand:
+                    "Surveillance",
 
-            {
-                id: "ef-earth-loop-alu",
-                name: "Aluminium Earth Loop",
-                group: "earth-loops",
-                brand: "Nexpak",
-                description: "Lightweight aluminium earth loop.",
-                price: 14.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-            },
+                description:
+                    "2TB surveillance-rated hard drive for extended IP CCTV recording.",
 
-            {
-                id: "ef-earth-loop-galv",
-                name: "Galvanised Earth Loop",
-                group: "earth-loops",
-                brand: "Nexpak",
-                description: "Galvanised earth loop for durable outdoor installations.",
-                price: 12.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-            },
+                price:
+                    1150.00,
 
-            /* ============================================================
-               ENERGIZERS
-               ============================================================ */
-
-            {
-                id: "ef-energizer-1j",
-                name: "1 Joule Electric Fence Energizer",
-                group: "energizers",
-                brand: "Nemtek",
-                description: "Compact 1 Joule electric fence energizer.",
-                price: 1850.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: true
-            },
+                unit:
+                    "each",
 
-            {
-                id: "ef-energizer-3j",
-                name: "3 Joule Electric Fence Energizer",
-                group: "energizers",
-                brand: "Nemtek",
-                description: "3 Joule energizer for residential and medium perimeter applications.",
-                price: 2650.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: true
-            },
+                weightKg:
+                    0.60,
 
-            {
-                id: "ef-energizer-4j",
-                name: "4 Joule Electric Fence Energizer",
-                group: "energizers",
-                brand: "Nemtek",
-                description: "4 Joule electric fence energizer.",
-                price: 3200.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: true
+                image:
+                    ""
             },
 
-            {
-                id: "ef-energizer-8j",
-                name: "8 Joule Electric Fence Energizer",
-                group: "energizers",
-                brand: "Nemtek",
-                description: "High-output 8 Joule energizer for larger installations.",
-                price: 4800.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: true
-            },
 
             {
-                id: "ef-energizer-14j",
-                name: "14 Joule Electric Fence Energizer",
-                group: "energizers",
-                brand: "Nemtek",
-                description: "High-power 14 Joule energizer for large perimeter systems.",
-                price: 7500.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: true
-            },
+                id:
+                    "ip-hdd-4tb",
 
-            {
-                id: "ef-energizer-2zone-8j",
-                name: "2-Zone 8 Joule Electric Fence Energizer",
-                group: "energizers",
-                brand: "Nemtek",
-                description: "Two-zone 8 Joule energizer for advanced perimeter protection.",
-                price: 6200.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: true
-            },
+                name:
+                    "4TB Surveillance Hard Drive",
 
-            /* ============================================================
-               BATTERY BACKUP
-               ============================================================ */
-
-            {
-                id: "ef-battery-7ah",
-                name: "7Ah Lead Acid Backup Battery",
-                group: "backup-batteries",
-                brand: "Nexpak",
-                description: "7Ah rechargeable backup battery.",
-                price: 280.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-            },
+                group:
+                    "storage",
 
-            {
-                id: "ef-battery-9ah",
-                name: "9Ah Deep Cycle Gel Battery",
-                group: "backup-batteries",
-                brand: "Nexpak",
-                description: "9Ah deep cycle gel backup battery.",
-                price: 420.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-            },
+                brand:
+                    "Surveillance",
 
-            /* ============================================================
-               PSU & KEYPAD
-               ============================================================ */
-
-            {
-                id: "ef-psu-16a",
-                name: "16 Amp Power Supply",
-                group: "psu-keypad",
-                brand: "Nexpak",
-                description: "16 Amp power supply for electric fence equipment.",
-                price: 350.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-            },
+                description:
+                    "4TB surveillance-rated hard drive for extended IP CCTV recording.",
 
-            {
-                id: "ef-keypad-lcd",
-                name: "LCD Keypad Programmer",
-                group: "psu-keypad",
-                brand: "Nemtek",
-                description: "LCD keypad programmer for compatible electric fence energizers.",
-                price: 850.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-            },
+                price:
+                    1890.00,
 
-            {
-                id: "ef-psu-keypad-combo",
-                name: "16A PSU + LCD Keypad",
-                group: "psu-keypad",
-                brand: "Nexpak",
-                description: "Combined 16A PSU and LCD keypad package.",
-                price: 1150.00,
-                unit: "set",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-            },
+                unit:
+                    "each",
 
-            /* ============================================================
-               ENCLOSURES
-               ============================================================ */
-
-            {
-                id: "ef-enclosure-dmc430",
-                name: "DMC 430 Weatherproof Enclosure",
-                group: "enclosures",
-                brand: "DMC",
-                description: "Weatherproof enclosure for electric fence equipment.",
-                price: 450.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-            },
+                weightKg:
+                    0.65,
 
-            {
-                id: "ef-enclosure-dmc530",
-                name: "DMC 530 High Weatherproof Enclosure",
-                group: "enclosures",
-                brand: "DMC",
-                description: "Large weatherproof enclosure for larger electric fence installations.",
-                price: 620.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
+                image:
+                    ""
             },
 
-            /* ============================================================
-               COMMUNICATION MODULES
-               ============================================================ */
-
-            {
-                id: "ef-wifi-module",
-                name: "WiFi Smartphone Communication Module",
-                group: "communication",
-                brand: "Nemtek",
-                description: "Smartphone connectivity module for compatible energizers.",
-                price: 890.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-            },
 
             {
-                id: "ef-gsm-module",
-                name: "GSM Cellular Communication Module",
-                group: "communication",
-                brand: "Nemtek",
-                description: "GSM communication module for remote monitoring.",
-                price: 1450.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-            },
+                id:
+                    "ip-cat5e-100m",
 
-            /* ============================================================
-               SIRENS & LIGHTS
-               ============================================================ */
-
-            {
-                id: "ef-siren-15w",
-                name: "15W Security Siren",
-                group: "alerts",
-                brand: "Nexpak",
-                description: "15W external security siren.",
-                price: 120.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-            },
+                name:
+                    "Cat5e Network Cable 100m",
 
-            {
-                id: "ef-strobe-light",
-                name: "Strobe Warning Light",
-                group: "alerts",
-                brand: "Nexpak",
-                description: "Visual warning strobe light for perimeter security.",
-                price: 145.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-            },
+                group:
+                    "cabling",
 
-            {
-                id: "ef-nite-light-red",
-                name: "Red Nite Light LED",
-                group: "alerts",
-                brand: "Nexpak",
-                description: "Red LED security warning light.",
-                price: 180.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-            },
+                brand:
+                    "Nexpak",
 
-            {
-                id: "ef-nite-light-blue",
-                name: "Blue Nite Light LED",
-                group: "alerts",
-                brand: "Nexpak",
-                description: "Blue LED security warning light.",
-                price: 180.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-            },
+                description:
+                    "100m Cat5e network cable for IP cameras and network infrastructure.",
 
-            {
-                id: "ef-nite-light-green",
-                name: "Green Nite Light LED",
-                group: "alerts",
-                brand: "Nexpak",
-                description: "Green LED security warning light.",
-                price: 180.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-            },
+                price:
+                    380.00,
 
-            /* ============================================================
-               SAFETY & ACCESSORIES
-               ============================================================ */
-
-            {
-                id: "ef-warning-sign",
-                name: "Electric Fence Warning Sign",
-                group: "safety-accessories",
-                brand: "Nexpak",
-                description: "Legal electric fence warning sign.",
-                price: 22.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-            },
+                unit:
+                    "100m roll",
 
-            {
-                id: "ef-gate-contact",
-                name: "Heavy Duty Gate Contact Switch",
-                group: "safety-accessories",
-                brand: "Nexpak",
-                description: "Heavy-duty gate contact switch for electric fence monitoring.",
-                price: 145.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-            },
+                weightKg:
+                    3.20,
 
-            /* ============================================================
-               INSTALLATION
-               ============================================================ */
-
-            {
-                id: "ef-installation",
-                name: "Nexpak Certified Electric Fence Installation",
-                group: "installation",
-                brand: "Nexpak",
-                description: "Professional electric fence installation service.",
-                price: 2500.00,
-                unit: "service",
-                quantityType: "quantity",
-                category: "electric-fencing",
-                image: "",
-                featured: false
-              }
-                      /* ============================================================
-               CCTV HD SYSTEMS
-               ============================================================ */
-
-            {
-                id: "hd-dahua-dvr-4ch",
-                name: "Dahua 4 Channel HD DVR",
-                group: "dvr",
-                brand: "Dahua",
-                description: "4 channel HD DVR for residential CCTV installations.",
-                price: 1250.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: true
+                image:
+                    ""
             },
 
-            {
-                id: "hd-dahua-dvr-8ch",
-                name: "Dahua 8 Channel HD DVR",
-                group: "dvr",
-                brand: "Dahua",
-                description: "8 channel HD DVR for residential and small commercial CCTV systems.",
-                price: 1450.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: true
-            },
 
             {
-                id: "hd-dahua-dvr-16ch",
-                name: "Dahua 16 Channel HD DVR",
-                group: "dvr",
-                brand: "Dahua",
-                description: "16 channel HD DVR for larger surveillance installations.",
-                price: 2650.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: true
-            },
+                id:
+                    "ip-cat6-100m",
 
-            {
-                id: "hd-dahua-dvr-32ch",
-                name: "Dahua 32 Channel HD DVR",
-                group: "dvr",
-                brand: "Dahua",
-                description: "32 channel HD DVR for commercial and larger CCTV systems.",
-                price: 5400.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
-            },
+                name:
+                    "Cat6 Network Cable 100m",
 
-            {
-                id: "hd-hikvision-dvr-4ch",
-                name: "Hikvision 4 Channel HD DVR",
-                group: "dvr",
-                brand: "Hikvision",
-                description: "4 channel Hikvision HD DVR for residential surveillance.",
-                price: 1370.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
-            },
+                group:
+                    "cabling",
 
-            {
-                id: "hd-hikvision-dvr-8ch",
-                name: "Hikvision 8 Channel HD DVR",
-                group: "dvr",
-                brand: "Hikvision",
-                description: "8 channel Hikvision HD DVR.",
-                price: 1570.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
-            },
+                brand:
+                    "Nexpak",
 
-            {
-                id: "hd-hikvision-dvr-16ch",
-                name: "Hikvision 16 Channel HD DVR",
-                group: "dvr",
-                brand: "Hikvision",
-                description: "16 channel Hikvision HD DVR for larger installations.",
-                price: 2770.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
-            },
+                description:
+                    "100m Cat6 network cable for IP CCTV and network installations.",
 
-            {
-                id: "hd-hikvision-dvr-32ch",
-                name: "Hikvision 32 Channel HD DVR",
-                group: "dvr",
-                brand: "Hikvision",
-                description: "32 channel Hikvision HD DVR for commercial surveillance.",
-                price: 5520.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
-            },
+                price:
+                    520.00,
 
-            /* ============================================================
-               SURVEILLANCE HARD DRIVES
-               ============================================================ */
-
-            {
-                id: "hd-hdd-1tb",
-                name: "1TB Surveillance Hard Drive",
-                group: "hard-drives",
-                brand: "Seagate",
-                description: "1TB surveillance-grade hard drive for DVR recording.",
-                price: 780.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
+                unit:
+                    "100m roll",
+
+                weightKg:
+                    3.50,
+
+                image:
+                    ""
             },
 
+
             {
-                id: "hd-hdd-2tb",
-                name: "2TB Surveillance Hard Drive",
-                group: "hard-drives",
-                brand: "Seagate",
-                description: "2TB surveillance-grade hard drive for CCTV recording.",
-                price: 1150.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: true
+                id:
+                    "ip-poe-switch-4",
+
+                name:
+                    "4-Port PoE Network Switch",
+
+                group:
+                    "networking",
+
+                brand:
+                    "Dahua",
+
+                description:
+                    "Compact PoE switch for powering network cameras.",
+
+                price:
+                    950.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    0.70,
+
+                image:
+                    ""
             },
 
+
             {
-                id: "hd-hdd-4tb",
-                name: "4TB Surveillance Hard Drive",
-                group: "hard-drives",
-                brand: "Seagate",
-                description: "4TB surveillance-grade hard drive for extended CCTV recording.",
-                price: 1890.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
+                id:
+                    "ip-poe-switch-8",
+
+                name:
+                    "8-Port PoE Network Switch",
+
+                group:
+                    "networking",
+
+                brand:
+                    "Dahua",
+
+                description:
+                    "8-port PoE network switch for IP camera installations.",
+
+                price:
+                    1450.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    1.00,
+
+                image:
+                    ""
             },
 
+
             {
-                id: "hd-hdd-6tb",
-                name: "6TB Surveillance Hard Drive",
-                group: "hard-drives",
-                brand: "Seagate",
-                description: "6TB surveillance-grade hard drive for high-capacity recording.",
-                price: 2950.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
-            },
+                id:
+                    "ip-poe-switch-16",
 
-            /* ============================================================
-               BULLET CAMERAS
-               ============================================================ */
-
-            {
-                id: "hd-dahua-bullet-30m",
-                name: "Dahua 2MP Bullet Camera 30m IR",
-                group: "bullet-cameras",
-                brand: "Dahua",
-                description: "HD infrared bullet camera with up to 30m night vision.",
-                price: 380.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: true
+                name:
+                    "16-Port PoE Network Switch",
+
+                group:
+                    "networking",
+
+                brand:
+                    "Dahua",
+
+                description:
+                    "16-port PoE network switch for larger IP surveillance systems.",
+
+                price:
+                    2650.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    1.80,
+
+                image:
+                    ""
             },
 
+
             {
-                id: "hd-hikvision-bullet-30m",
-                name: "Hikvision 2MP Bullet Camera 30m IR",
-                group: "bullet-cameras",
-                brand: "Hikvision",
-                description: "HD infrared bullet camera with up to 30m night vision.",
-                price: 420.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: true
-            },
+                id:
+                    "ip-rj45-connectors",
+
+                name:
+                    "RJ45 Network Connectors",
+
+                group:
+                    "connectors",
+
+                brand:
+                    "Nexpak",
+
+                description:
+                    "RJ45 connectors for terminating CCTV network cables.",
+
+                price:
+                    45.00,
+
+                unit:
+                    "100 pack",
+
+                weightKg:
+                    0.15,
+
+                image:
+                    ""
+            }
+
+        ],
+
+
+        /* ==================================================================
+           D. ROBOGUARD OUTDOOR BEAMS
+           ================================================================== */
+
+        "roboguard": [
 
             {
-                id: "hd-dahua-bullet-60m",
-                name: "Dahua 5MP Bullet Camera 60m IR",
-                group: "bullet-cameras",
-                brand: "Dahua",
-                description: "High-resolution bullet camera with extended 60m infrared night vision.",
-                price: 690.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
+                id:
+                    "rg-base-station",
+
+                name:
+                    "Roboguard Base Station",
+
+                group:
+                    "base-stations",
+
+                brand:
+                    "Roboguard",
+
+                description:
+                    "Wireless Roboguard base station for receiving outdoor beam alerts.",
+
+                price:
+                    2850.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    1.20,
+
+                image:
+                    ""
             },
 
+
             {
-                id: "hd-hikvision-bullet-60m",
-                name: "Hikvision 5MP Bullet Camera 60m IR",
-                group: "bullet-cameras",
-                brand: "Hikvision",
-                description: "High-resolution bullet camera with extended 60m infrared night vision.",
-                price: 750.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
-            },
+                id:
+                    "rg-wireless-beam",
 
-            /* ============================================================
-               DOME CAMERAS
-               ============================================================ */
-
-            {
-                id: "hd-dahua-dome-20m",
-                name: "Dahua 2MP Dome Camera 20m IR",
-                group: "dome-cameras",
-                brand: "Dahua",
-                description: "Compact HD dome camera with 20m infrared night vision.",
-                price: 360.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: true
+                name:
+                    "Roboguard Wireless Beam",
+
+                group:
+                    "beams",
+
+                brand:
+                    "Roboguard",
+
+                description:
+                    "Wireless outdoor perimeter beam detector for early warning protection.",
+
+                price:
+                    1850.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    0.85,
+
+                image:
+                    ""
             },
+
 
             {
-                id: "hd-hikvision-dome-20m",
-                name: "Hikvision 2MP Dome Camera 20m IR",
-                group: "dome-cameras",
-                brand: "Hikvision",
-                description: "Compact HD dome camera with 20m infrared night vision.",
-                price: 400.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: true
+                id:
+                    "rg-beam-bracket",
+
+                name:
+                    "Roboguard Beam Mounting Bracket",
+
+                group:
+                    "brackets",
+
+                brand:
+                    "Roboguard",
+
+                description:
+                    "Mounting bracket for positioning Roboguard outdoor beams.",
+
+                price:
+                    185.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    0.25,
+
+                image:
+                    ""
             },
 
+
             {
-                id: "hd-dahua-dome-40m",
-                name: "Dahua 5MP Dome Camera 40m IR",
-                group: "dome-cameras",
-                brand: "Dahua",
-                description: "High-resolution dome camera with 40m infrared night vision.",
-                price: 650.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
+                id:
+                    "rg-repeater",
+
+                name:
+                    "Roboguard Wireless Repeater",
+
+                group:
+                    "communication",
+
+                brand:
+                    "Roboguard",
+
+                description:
+                    "Wireless repeater for extending Roboguard communication range.",
+
+                price:
+                    1650.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    0.50,
+
+                image:
+                    ""
             },
+
 
             {
-                id: "hd-hikvision-dome-40m",
-                name: "Hikvision 5MP Dome Camera 40m IR",
-                group: "dome-cameras",
-                brand: "Hikvision",
-                description: "High-resolution dome camera with 40m infrared night vision.",
-                price: 710.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
-            },
+                id:
+                    "rg-solar-panel",
+
+                name:
+                    "Roboguard Solar Panel",
+
+                group:
+                    "power",
+
+                brand:
+                    "Roboguard",
+
+                description:
+                    "Solar charging panel for suitable Roboguard outdoor installations.",
+
+                price:
+                    950.00,
 
-            /* ============================================================
-               VARIFOCAL CAMERAS
-               ============================================================ */
-
-            {
-                id: "hd-dahua-varifocal-bullet",
-                name: "Dahua Varifocal Bullet Camera 60m IR",
-                group: "varifocal-cameras",
-                brand: "Dahua",
-                description: "Adjustable-lens varifocal bullet camera with 60m infrared.",
-                price: 890.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
+                unit:
+                    "each",
+
+                weightKg:
+                    1.50,
+
+                image:
+                    ""
             },
 
+
             {
-                id: "hd-hikvision-varifocal-bullet",
-                name: "Hikvision Varifocal Bullet Camera 60m IR",
-                group: "varifocal-cameras",
-                brand: "Hikvision",
-                description: "Adjustable-lens varifocal bullet camera with 60m infrared.",
-                price: 950.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
+                id:
+                    "rg-battery",
+
+                name:
+                    "Roboguard Rechargeable Battery",
+
+                group:
+                    "power",
+
+                brand:
+                    "Roboguard",
+
+                description:
+                    "Rechargeable battery for Roboguard wireless beam equipment.",
+
+                price:
+                    420.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    0.80,
+
+                image:
+                    ""
             },
 
+
             {
-                id: "hd-dahua-varifocal-dome",
-                name: "Dahua Varifocal Dome Camera 40m IR",
-                group: "varifocal-cameras",
-                brand: "Dahua",
-                description: "Adjustable-lens varifocal dome camera with 40m infrared.",
-                price: 820.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
+                id:
+                    "rg-siren",
+
+                name:
+                    "Roboguard External Siren",
+
+                group:
+                    "alerts",
+
+                brand:
+                    "Roboguard",
+
+                description:
+                    "External audible warning siren for Roboguard installations.",
+
+                price:
+                    450.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    0.70,
+
+                image:
+                    ""
             },
 
+
             {
-                id: "hd-hikvision-varifocal-dome",
-                name: "Hikvision Varifocal Dome Camera 40m IR",
-                group: "varifocal-cameras",
-                brand: "Hikvision",
-                description: "Adjustable-lens varifocal dome camera with 40m infrared.",
-                price: 880.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
-            },
+                id:
+                    "rg-strobe",
 
-            /* ============================================================
-               CCTV POWER SUPPLIES
-               ============================================================ */
-
-            {
-                id: "hd-power-adapter",
-                name: "12V CCTV Power Adapter",
-                group: "power-supplies",
-                brand: "Nexpak",
-                description: "12V plug-in power adapter for individual CCTV cameras.",
-                price: 120.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
-            },
+                name:
+                    "Roboguard Strobe Light",
+
+                group:
+                    "alerts",
+
+                brand:
+                    "Roboguard",
+
+                description:
+                    "Visual warning strobe for Roboguard alarm events.",
+
+                price:
+                    380.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    0.30,
+
+                image:
+                    ""
+            }
+
+        ],
+
 
+        /* ==================================================================
+           E. GATE AUTOMATION
+           ================================================================== */
+
+        "gate-motors": [
+
             {
-                id: "hd-9way-power-box",
-                name: "9-Way 10A CCTV Power Supply Box",
-                group: "power-supplies",
-                brand: "Nexpak",
-                description: "Multi-output CCTV power supply box for multiple cameras.",
-                price: 480.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: true
+                id:
+                    "gate-centurion-d5-evo",
+
+                name:
+                    "Centurion D5-Evo Gate Motor",
+
+                group:
+                    "gate-motors",
+
+                brand:
+                    "Centurion",
+
+                description:
+                    "Sliding gate motor for residential and light commercial applications.",
+
+                price:
+                    4650.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    9.50,
+
+                image:
+                    ""
             },
+
 
             {
-                id: "hd-18way-power-box",
-                name: "18-Way CCTV Power Supply Box",
-                group: "power-supplies",
-                brand: "Nexpak",
-                description: "High-capacity multi-output CCTV power supply box.",
-                price: 780.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
-            },
+                id:
+                    "gate-centurion-d5-smart",
+
+                name:
+                    "Centurion D5 Smart Gate Motor",
+
+                group:
+                    "gate-motors",
+
+                brand:
+                    "Centurion",
+
+                description:
+                    "Smart sliding gate motor with enhanced connectivity and automation features.",
 
-            /* ============================================================
-               CCTV CABLE
-               ============================================================ */
-
-            {
-                id: "hd-rg59-100m",
-                name: "RG59 Coax + Power Cable 100m",
-                group: "cables",
-                brand: "Nexpak",
-                description: "100m RG59 coaxial cable with integrated power cable.",
-                price: 420.00,
-                unit: "roll",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: true
+                price:
+                    5850.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    10.00,
+
+                image:
+                    ""
             },
 
+
             {
-                id: "hd-rg59-305m",
-                name: "RG59 Coax + Power Cable 305m",
-                group: "cables",
-                brand: "Nexpak",
-                description: "305m CCTV RG59 coaxial cable roll.",
-                price: 1180.00,
-                unit: "roll",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
+                id:
+                    "gate-centurion-d10-smart",
+
+                name:
+                    "Centurion D10 Turbo Smart",
+
+                group:
+                    "gate-motors",
+
+                brand:
+                    "Centurion",
+
+                description:
+                    "Heavy-duty sliding gate automation solution for larger gates.",
+
+                price:
+                    9200.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    12.50,
+
+                image:
+                    ""
             },
 
+
             {
-                id: "hd-cat5e-100m",
-                name: "Cat5e CCTV Cable 100m",
-                group: "cables",
-                brand: "Nexpak",
-                description: "100m Cat5e network cable suitable for CCTV installations.",
-                price: 380.00,
-                unit: "roll",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
-            },
+                id:
+                    "gate-steel-rack-2m",
+
+                name:
+                    "Steel Gate Rack 2m",
+
+                group:
+                    "rack",
+
+                brand:
+                    "Centurion",
 
-            /* ============================================================
-               CONNECTORS & BALUNS
-               ============================================================ */
-
-            {
-                id: "hd-bnc-crimp-set",
-                name: "BNC Crimp + DC Lead Set",
-                group: "connectors",
-                brand: "Nexpak",
-                description: "BNC connector and DC power lead set.",
-                price: 25.00,
-                unit: "set",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
+                description:
+                    "Steel rack section for sliding gate automation.",
+
+                price:
+                    280.00,
+
+                unit:
+                    "2m section",
+
+                weightKg:
+                    1.80,
+
+                image:
+                    ""
             },
+
 
             {
-                id: "hd-video-balun",
-                name: "HD Video Balun Pair",
-                group: "connectors",
-                brand: "Nexpak",
-                description: "HD video balun pair for transmitting CCTV video over twisted-pair cable.",
-                price: 65.00,
-                unit: "pair",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
-            },
+                id:
+                    "gate-nylon-rack-2m",
+
+                name:
+                    "Nylon Gate Rack 2m",
+
+                group:
+                    "rack",
+
+                brand:
+                    "Centurion",
+
+                description:
+                    "Nylon rack section for sliding gate automation.",
 
-            /* ============================================================
-               JOINT ENCLOSURES
-               ============================================================ */
-
-            {
-                id: "hd-joint-box-100",
-                name: "100x100mm CCTV Joint Enclosure",
-                group: "enclosures",
-                brand: "Nexpak",
-                description: "Compact enclosure for CCTV cable joints and connections.",
-                price: 28.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
+                price:
+                    250.00,
+
+                unit:
+                    "2m section",
+
+                weightKg:
+                    0.90,
+
+                image:
+                    ""
             },
 
+
             {
-                id: "hd-joint-box-150",
-                name: "150x150mm CCTV Joint Enclosure",
-                group: "enclosures",
-                brand: "Nexpak",
-                description: "Larger weather-resistant CCTV junction enclosure.",
-                price: 45.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
-            },
+                id:
+                    "gate-remote-4button",
+
+                name:
+                    "Centurion 4-Button Remote",
+
+                group:
+                    "remotes",
+
+                brand:
+                    "Centurion",
+
+                description:
+                    "Four-button remote control for compatible Centurion gate automation systems.",
+
+                price:
+                    220.00,
+
+                unit:
+                    "each",
 
-            /* ============================================================
-               CCTV MONITORS
-               ============================================================ */
-
-            {
-                id: "hd-monitor-19",
-                name: "19-Inch LED CCTV Monitor",
-                group: "monitors",
-                brand: "Nexpak",
-                description: "19-inch LED display for CCTV monitoring.",
-                price: 1450.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
+                weightKg:
+                    0.08,
+
+                image:
+                    ""
             },
+
 
             {
-                id: "hd-monitor-22",
-                name: "22-Inch FHD LED CCTV Monitor",
-                group: "monitors",
-                brand: "Nexpak",
-                description: "22-inch Full HD LED monitor for CCTV surveillance.",
-                price: 1890.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: true
+                id:
+                    "gate-battery-7ah",
+
+                name:
+                    "Gate Motor 7Ah Backup Battery",
+
+                group:
+                    "backup-power",
+
+                brand:
+                    "Nexpak",
+
+                description:
+                    "7Ah rechargeable backup battery for gate automation systems.",
+
+                price:
+                    280.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    2.20,
+
+                image:
+                    ""
             },
+
 
             {
-                id: "hd-monitor-27",
-                name: "27-Inch FHD LED CCTV Monitor",
-                group: "monitors",
-                brand: "Nexpak",
-                description: "27-inch Full HD LED monitor for larger surveillance control rooms.",
-                price: 2890.00,
-                unit: "each",
-                quantityType: "quantity",
-                category: "cctv-hd",
-                image: "",
-                featured: false
-            },
+                id:
+                    "gate-antitheft-bracket",
+
+                name:
+                    "Heavy-Duty Anti-Theft Gate Motor Bracket",
+
+                group:
+                    "security",
+
+                brand:
+                    "Centurion",
+
+                description:
+                    "Heavy-duty anti-theft mounting bracket for sliding gate motors.",
+
+                price:
+                    550.00,
+
+                unit:
+                    "each",
+
+                weightKg:
+                    2.50,
+
+                image:
+                    ""
+            }
+
+        ],
+
+                    /* ================================================================
+           CONTINUE PRODUCT DATABASE
+           ================================================================ */
 
-            /* ============================================================
-               CCTV TOOLS
-               ============================================================ */
-
-                    {
-            id: "hd-coax-strip-tool",
-            name: "CCTV Coax Cable Strip Tool",
-            group: "cctv-accessories",
+        {
+            id: "ef-ht-100-soft",
+            name: "100m HT Cable - Black Soft",
+            group: "ht-cable",
             brand: "Nexpak",
-            description: "Professional coaxial cable stripping tool for CCTV installations.",
-            price: 120.00,
-            unit: "each",
-            image: "",
-            featured: false
+            description: "100m high-tension cable for electric fencing.",
+            price: 540.00,
+            image: ""
         },
 
         {
-            id: "hd-bnc-crimp-tool",
-            name: "Heavy Duty BNC Crimp Tool",
-            group: "cctv-accessories",
+            id: "ef-ht-100-hard",
+            name: "100m HT Cable - Black Hard",
+            group: "ht-cable",
             brand: "Nexpak",
-            description: "Heavy-duty crimping tool for professional BNC CCTV connectors.",
-            price: 280.00,
-            unit: "each",
-            image: "",
-            featured: false
+            description: "Heavy-duty 100m high-tension cable.",
+            price: 580.00,
+            image: ""
         },
+
+        {
+            id: "ef-ht-200-soft",
+            name: "200m HT Cable - Black Soft",
+            group: "ht-cable",
+            brand: "Nexpak",
+            description: "200m high-tension cable for longer electric fencing installations.",
+            price: 980.00,
+            image: ""
+        },
+
+        {
+            id: "ef-ht-200-hard",
+            name: "200m HT Cable - Black Hard",
+            group: "ht-cable",
+            brand: "Nexpak",
+            description: "Heavy-duty 200m high-tension cable.",
+            price: 1050.00,
+            image: ""
+        },
+
+
+        /* ================================================================
+           ELECTRIC FENCING — EARTH LOOPS
+           ================================================================ */
+
+        {
+            id: "ef-earth-loop-ss",
+            name: "Stainless Steel Earth Loop",
+            group: "earth-loops",
+            brand: "Nexpak",
+            description: "Stainless steel earth loop for electric fence earthing connections.",
+            price: 18.00,
+            image: ""
+        },
+
+        {
+            id: "ef-earth-loop-alu",
+            name: "Aluminium Earth Loop",
+            group: "earth-loops",
+            brand: "Nexpak",
+            description: "Aluminium earth loop for electric fence installations.",
+            price: 14.00,
+            image: ""
+        },
+
+        {
+            id: "ef-earth-loop-galv",
+            name: "Galvanised Earth Loop",
+            group: "earth-loops",
+            brand: "Nexpak",
+            description: "Galvanised earth loop for durable fence earthing.",
+            price: 12.00,
+            image: ""
+        },
+
+
+        /* ================================================================
+           ELECTRIC FENCING — WARNING & GATE ACCESSORIES
+           ================================================================ */
+
+        {
+            id: "ef-warning-sign",
+            name: "Electric Fence Warning Sign",
+            group: "safety-accessories",
+            brand: "Nexpak",
+            description: "Legal electric fence warning sign.",
+            price: 22.00,
+            image: ""
+        },
+
+        {
+            id: "ef-gate-contact",
+            name: "Heavy Duty Gate Contact Switch",
+            group: "safety-accessories",
+            brand: "Nexpak",
+            description: "Heavy-duty gate contact switch for electric fence gate monitoring.",
+            price: 145.00,
+            image: ""
+        },
+
+
+        /* ================================================================
+           ELECTRIC FENCING — ENERGIZERS
+           ================================================================ */
+
+        {
+            id: "ef-energizer-1j",
+            name: "1 Joule Energizer",
+            group: "energizers",
+            brand: "Nemtek",
+            description: "1 Joule electric fence energizer.",
+            price: 1850.00,
+            image: ""
+        },
+
+        {
+            id: "ef-energizer-3j",
+            name: "3 Joule Energizer",
+            group: "energizers",
+            brand: "Nemtek",
+            description: "3 Joule electric fence energizer.",
+            price: 2650.00,
+            image: ""
+        },
+
+        {
+            id: "ef-energizer-4j",
+            name: "4 Joule Energizer",
+            group: "energizers",
+            brand: "Nemtek",
+            description: "4 Joule electric fence energizer.",
+            price: 3200.00,
+            image: ""
+        },
+
+        {
+            id: "ef-energizer-8j",
+            name: "8 Joule Energizer",
+            group: "energizers",
+            brand: "Nemtek",
+            description: "8 Joule electric fence energizer.",
+            price: 4800.00,
+            image: ""
+        },
+
+        {
+            id: "ef-energizer-14j",
+            name: "14 Joule Energizer",
+            group: "energizers",
+            brand: "Nemtek",
+            description: "14 Joule high-output electric fence energizer.",
+            price: 7500.00,
+            image: ""
+        },
+
+        {
+            id: "ef-energizer-2zone-8j",
+            name: "2-Zone 8 Joule Energizer",
+            group: "energizers",
+            brand: "Nemtek",
+            description: "Dual-zone 8 Joule electric fence energizer.",
+            price: 6200.00,
+            image: ""
+        },
+
+
+        /* ================================================================
+           ELECTRIC FENCING — BATTERY BACKUP
+           ================================================================ */
+
+        {
+            id: "ef-battery-7ah",
+            name: "7Ah Lead Acid Battery",
+            group: "backup-batteries",
+            brand: "Nexpak",
+            description: "7Ah rechargeable backup battery.",
+            price: 280.00,
+            image: ""
+        },
+
+        {
+            id: "ef-battery-9ah",
+            name: "9Ah Deep Cycle Gel Battery",
+            group: "backup-batteries",
+            brand: "Nexpak",
+            description: "9Ah deep-cycle gel backup battery.",
+            price: 420.00,
+            image: ""
+        },
+
+
+        /* ================================================================
+           ELECTRIC FENCING — POWER SUPPLY & KEYPAD
+           ================================================================ */
+
+        {
+            id: "ef-psu-16a",
+            name: "16 Amp Power Supply",
+            group: "power-supply",
+            brand: "Nexpak",
+            description: "16 Amp power supply unit.",
+            price: 350.00,
+            image: ""
+        },
+
+        {
+            id: "ef-keypad-lcd",
+            name: "LCD Keypad Programmer",
+            group: "power-supply",
+            brand: "Nemtek",
+            description: "LCD keypad programmer for electric fence energizer configuration.",
+            price: 850.00,
+            image: ""
+        },
+
+        {
+            id: "ef-psu-keypad-combo",
+            name: "16A PSU + LCD Keypad",
+            group: "power-supply",
+            brand: "Nemtek",
+            description: "Combined 16 Amp PSU and LCD keypad package.",
+            price: 1150.00,
+            image: ""
+        },
+
+
+        /* ================================================================
+           ELECTRIC FENCING — ENCLOSURES
+           ================================================================ */
+
+        {
+            id: "ef-enclosure-dmc430",
+            name: "DMC 430 Weatherproof Enclosure",
+            group: "enclosures",
+            brand: "Nexpak",
+            description: "Weatherproof enclosure for energizer and associated equipment.",
+            price: 450.00,
+            image: ""
+        },
+
+        {
+            id: "ef-enclosure-dmc530",
+            name: "DMC 530 High Enclosure",
+            group: "enclosures",
+            brand: "Nexpak",
+            description: "High weatherproof enclosure for larger electric fence installations.",
+            price: 620.00,
+            image: ""
+        },
+
+
+        /* ================================================================
+           ELECTRIC FENCING — COMMUNICATION MODULES
+           ================================================================ */
+
+        {
+            id: "ef-comms-none",
+            name: "No Remote Communication Module",
+            group: "communication",
+            brand: "Nexpak",
+            description: "No remote communication module.",
+            price: 0,
+            image: ""
+        },
+
+        {
+            id: "ef-comms-wifi",
+            name: "WiFi Smartphone Module",
+            group: "communication",
+            brand: "Nemtek",
+            description: "WiFi smartphone communication module.",
+            price: 890.00,
+            image: ""
+        },
+
+        {
+            id: "ef-comms-gsm",
+            name: "GSM Cellular Module",
+            group: "communication",
+            brand: "Nemtek",
+            description: "GSM cellular communication module.",
+            price: 1450.00,
+            image: ""
+        },
+
+
+        /* ================================================================
+           ELECTRIC FENCING — SIRENS & WARNING LIGHTS
+           ================================================================ */
+
+        {
+            id: "ef-siren-15w",
+            name: "15W Security Siren",
+            group: "alerts",
+            brand: "Nexpak",
+            description: "15W security siren for audible electric fence alerts.",
+            price: 120.00,
+            image: ""
+        },
+
+        {
+            id: "ef-strobe",
+            name: "Strobe Warning Light",
+            group: "alerts",
+            brand: "Nexpak",
+            description: "Visual strobe warning light.",
+            price: 145.00,
+            image: ""
+        },
+
+        {
+            id: "ef-nite-light-red",
+            name: "Red Nite Light LED",
+            group: "alerts",
+            brand: "Nexpak",
+            description: "Red LED night warning light.",
+            price: 180.00,
+            image: ""
+        },
+
+        {
+            id: "ef-nite-light-blue",
+            name: "Blue Nite Light LED",
+            group: "alerts",
+            brand: "Nexpak",
+            description: "Blue LED night warning light.",
+            price: 180.00,
+            image: ""
+        },
+
+        {
+            id: "ef-nite-light-green",
+            name: "Green Nite Light LED",
+            group: "alerts",
+            brand: "Nexpak",
+            description: "Green LED night warning light.",
+            price: 180.00,
+            image: ""
+        },
+
+
+        /* ================================================================
+           ELECTRIC FENCING — INSTALLATION
+           ================================================================ */
+
+        {
+            id: "ef-installation",
+            name: "Nexpak Certified Installation",
+            group: "installation",
+            brand: "Nexpak",
+            description: "Professional installation by Nexpak Security Solutions.",
+            price: 2500.00,
+            image: ""
+        },
+                    /* ================================================================
+           ELECTRIC FENCING — END OF CATEGORY
+           ================================================================ */
+
+        {
+            id: "ef-diy-installation",
+            name: "DIY Installation",
+            group: "installation",
+            brand: "Nexpak",
+            description: "Self-installation option for customers building their own system.",
+            price: 0,
+            image: ""
+        },
+
+
+        /* ================================================================
+           CCTV HD — DVR RECORDERS
+           ================================================================ */
+
+        {
+            id: "hd-dvr-8ch",
+            name: "8 Channel HD DVR",
+            group: "dvr-recorders",
+            brand: "Dahua",
+            description: "8-channel high-definition DVR recorder.",
+            price: 1450.00,
+            image: ""
+        },
+
+        {
+            id: "hd-dvr-16ch",
+            name: "16 Channel HD DVR",
+            group: "dvr-recorders",
+            brand: "Dahua",
+            description: "16-channel high-definition DVR recorder.",
+            price: 2650.00,
+            image: ""
+        },
+
+        {
+            id: "hd-dvr-32ch",
+            name: "32 Channel HD DVR",
+            group: "dvr-recorders",
+            brand: "Dahua",
+            description: "32-channel high-definition DVR recorder.",
+            price: 5400.00,
+            image: ""
+        },
+
+
+        /* ================================================================
+           CCTV HD — HARD DRIVES
+           ================================================================ */
+
+        {
+            id: "hd-hdd-1tb",
+            name: "1TB Surveillance Hard Drive",
+            group: "hard-drives",
+            brand: "Seagate",
+            description: "1TB surveillance-rated hard drive.",
+            price: 780.00,
+            image: ""
+        },
+
+        {
+            id: "hd-hdd-2tb",
+            name: "2TB Surveillance Hard Drive",
+            group: "hard-drives",
+            brand: "Seagate",
+            description: "2TB surveillance-rated hard drive.",
+            price: 1150.00,
+            image: ""
+        },
+
+        {
+            id: "hd-hdd-4tb",
+            name: "4TB Surveillance Hard Drive",
+            group: "hard-drives",
+            brand: "Seagate",
+            description: "4TB surveillance-rated hard drive.",
+            price: 1890.00,
+            image: ""
+        },
+
+        {
+            id: "hd-hdd-6tb",
+            name: "6TB Surveillance Hard Drive",
+            group: "hard-drives",
+            brand: "Seagate",
+            description: "6TB surveillance-rated hard drive.",
+            price: 2950.00,
+            image: ""
+        },
+
+
+        /* ================================================================
+           CCTV HD — CAMERAS
+           ================================================================ */
+
+        {
+            id: "hd-bullet-30m",
+            name: "Bullet 30m IR Camera",
+            group: "cameras",
+            brand: "Dahua",
+            description: "HD bullet camera with 30m infrared night vision.",
+            price: 380.00,
+            image: ""
+        },
+
+        {
+            id: "hd-dome-20m",
+            name: "Dome 20m IR Camera",
+            group: "cameras",
+            brand: "Dahua",
+            description: "HD dome camera with 20m infrared night vision.",
+            price: 360.00,
+            image: ""
+        },
+
+        {
+            id: "hd-varifocal-bullet-60m",
+            name: "60m Varifocal Bullet IR Camera",
+            group: "varifocal-cameras",
+            brand: "Dahua",
+            description: "HD varifocal bullet camera with 60m infrared range.",
+            price: 890.00,
+            image: ""
+        },
+
+        {
+            id: "hd-varifocal-dome-40m",
+            name: "40m Varifocal Dome IR Camera",
+            group: "varifocal-cameras",
+            brand: "Dahua",
+            description: "HD varifocal dome camera with 40m infrared range.",
+            price: 820.00,
+            image: ""
+        },
+
+
+        /* ================================================================
+           CCTV HD — POWER SUPPLIES
+           ================================================================ */
+
+        {
+            id: "hd-psu-1way",
+            name: "1-Way CCTV Power Adapter",
+            group: "power-supplies",
+            brand: "Nexpak",
+            description: "Single CCTV camera power adapter.",
+            price: 120.00,
+            image: ""
+        },
+
+        {
+            id: "hd-psu-9way",
+            name: "9-Way 10A CCTV Power Box",
+            group: "power-supplies",
+            brand: "Nexpak",
+            description: "9-way 10A CCTV power distribution box.",
+            price: 480.00,
+            image: ""
+        },
+
+
+        /* ================================================================
+           CCTV HD — CABLE
+           ================================================================ */
+
+        {
+            id: "hd-rg59-100m",
+            name: "RG59 + Power Cable 100m",
+            group: "cables",
+            brand: "Nexpak",
+            description: "100m RG59 coaxial cable with power cable.",
+            price: 420.00,
+            image: ""
+        },
+
+        {
+            id: "hd-cat5e-100m",
+            name: "Cat5e Cable 100m",
+            group: "cables",
+            brand: "Nexpak",
+            description: "100m Cat5e network cable for CCTV installations.",
+            price: 380.00,
+            image: ""
+        },
+
+
+        /* ================================================================
+           CCTV HD — CONNECTORS & BALUNS
+           ================================================================ */
+
+        {
+            id: "hd-bnc-dc-set",
+            name: "BNC Crimp + DC Lead Set",
+            group: "connectors",
+            brand: "Nexpak",
+            description: "BNC connector and DC power lead set.",
+            price: 25.00,
+            image: ""
+        },
+
+        {
+            id: "hd-video-balun",
+            name: "HD Video Balun Pair",
+            group: "connectors",
+            brand: "Nexpak",
+            description: "HD CCTV video balun pair.",
+            price: 65.00,
+            image: ""
+        },
+
+
+        /* ================================================================
+           CCTV HD — ACCESSORIES
+           ================================================================ */
 
         {
             id: "hd-junction-box",
-            name: "100x100mm CCTV Junction Box",
-            group: "cctv-accessories",
+            name: "100x100mm CCTV Joint Enclosure",
+            group: "accessories",
             brand: "Nexpak",
-            description: "Weather-resistant junction enclosure for CCTV cable connections.",
+            description: "Weather-resistant CCTV junction enclosure.",
             price: 28.00,
-            unit: "each",
-            image: "",
-            featured: false
+            image: ""
         },
 
         {
             id: "hd-monitor-19",
-            name: "19-Inch LED CCTV Monitor",
-            group: "cctv-monitors",
+            name: "19-Inch LED Monitor",
+            group: "monitors",
             brand: "Nexpak",
-            description: "19-inch LED monitor suitable for CCTV surveillance viewing.",
+            description: "19-inch LED surveillance monitor.",
             price: 1450.00,
-            unit: "each",
-            image: "",
-            featured: false
+            image: ""
         },
 
         {
             id: "hd-monitor-27",
-            name: "27-Inch FHD CCTV Monitor",
-            group: "cctv-monitors",
+            name: "27-Inch FHD LED Monitor",
+            group: "monitors",
             brand: "Nexpak",
-            description: "27-inch Full HD LED monitor for professional surveillance systems.",
+            description: "27-inch Full HD surveillance monitor.",
             price: 2890.00,
-            unit: "each",
-            image: "",
-            featured: false
-        },
-
-
-        /* ===============================================================
-           IP CCTV PRODUCTS
-           =============================================================== */
-
-        {
-            id: "ip-nvr-4ch-poe",
-            name: "4 Channel PoE NVR",
-            group: "ip-nvr",
-            brand: "Dahua",
-            description: "4-channel network video recorder with built-in PoE ports.",
-            price: 2100.00,
-            unit: "each",
-            image: "",
-            featured: false
+            image: ""
         },
 
         {
-            id: "ip-nvr-8ch-poe",
-            name: "8 Channel PoE NVR",
-            group: "ip-nvr",
-            brand: "Dahua",
-            description: "8-channel PoE NVR for network CCTV installations.",
-            price: 3400.00,
-            unit: "each",
-            image: "",
-            featured: false
-        },
-
-        {
-            id: "ip-nvr-16ch-poe",
-            name: "16 Channel PoE NVR",
-            group: "ip-nvr",
-            brand: "Dahua",
-            description: "16-channel professional PoE network video recorder.",
-            price: 5800.00,
-            unit: "each",
-            image: "",
-            featured: false
-        },
-
-        {
-            id: "ip-nvr-32ch",
-            name: "32 Channel NVR",
-            group: "ip-nvr",
-            brand: "Dahua",
-            description: "32-channel professional network video recorder without built-in PoE.",
-            price: 7900.00,
-            unit: "each",
-            image: "",
-            featured: false
-        },
-
-        {
-            id: "ip-4mp-turret",
-            name: "4MP PoE Turret Dome 30m IR",
-            group: "ip-cameras",
-            brand: "Dahua",
-            description: "4MP PoE turret camera with infrared night vision up to 30 metres.",
-            price: 780.00,
-            unit: "each",
-            image: "",
-            featured: false
-        },
-
-        {
-            id: "ip-8mp-bullet",
-            name: "8MP 4K Bullet Camera 50m IR",
-            group: "ip-cameras",
-            brand: "Dahua",
-            description: "8MP 4K network bullet camera with long-range infrared night vision.",
-            price: 1450.00,
-            unit: "each",
-            image: "",
-            featured: false
-        },
-
-        {
-            id: "ip-4mp-ptz",
-            name: "4MP Speed Dome PTZ 100m IR",
-            group: "ip-cameras",
-            brand: "Dahua",
-            description: "4MP network PTZ speed dome with powerful 100m infrared range.",
-            price: 4800.00,
-            unit: "each",
-            image: "",
-            featured: false
-        },
-
-        {
-            id: "ip-cat5e-100m",
-            name: "Cat5e Network Cable 100m",
-            group: "ip-cabling",
+            id: "hd-coax-strip-tool",
+            name: "CCTV Cable Coax Strip Tool",
+            group: "tools",
             brand: "Nexpak",
-            description: "100-metre Cat5e network cable roll for IP CCTV installations.",
+            description: "Coaxial cable stripping tool for CCTV installation.",
+            price: 120.00,
+            image: ""
+        },
+
+        {
+            id: "hd-bnc-crimp-tool",
+            name: "CCTV Heavy Duty BNC Crimp Tool",
+            group: "tools",
+            brand: "Nexpak",
+            description: "Heavy-duty BNC crimping tool for CCTV cable installation.",
+            price: 280.00,
+            image: ""
+        },
+
+
+        /* ================================================================
+           CCTV HD — BRANDS
+           ================================================================ */
+
+        {
+            id: "hd-dahua-option",
+            name: "Dahua Technology",
+            group: "brands",
+            brand: "Dahua",
+            description: "Dahua Technology HD CCTV equipment.",
+            price: 0,
+            image: ""
+        },
+
+        {
+            id: "hd-hikvision-option",
+            name: "Hikvision",
+            group: "brands",
+            brand: "Hikvision",
+            description: "Hikvision HD CCTV equipment.",
+            price: 120.00,
+            image: ""
+        },
+
+                    // ================================================================
+        // CCTV HD — CAMERAS
+        // ================================================================
+
+        {
+            id: "HD-BULLET-30M",
+            name: "HD 2MP Bullet Camera - 30m IR",
+            category: "cctv-hd",
+            group: "cameras",
+            brand: "Dahua",
+            description:
+                "2MP high-definition infrared bullet camera with up to 30m night vision.",
             price: 380.00,
-            unit: "roll",
-            image: "",
-            featured: false
+            weightKg: 0.40,
+            image: ""
         },
 
         {
-            id: "ip-cat6-305m",
-            name: "Cat6 Network Cable 305m",
-            group: "ip-cabling",
-            brand: "Nexpak",
-            description: "305-metre Cat6 network cable box for professional installations.",
-            price: 1450.00,
-            unit: "box",
-            image: "",
-            featured: false
-        },
-
-        {
-            id: "ip-poe-switch-4",
-            name: "4 Port PoE Switch",
-            group: "ip-network",
+            id: "HD-DOME-20M",
+            name: "HD 2MP Dome Camera - 20m IR",
+            category: "cctv-hd",
+            group: "cameras",
             brand: "Dahua",
-            description: "Compact PoE network switch for smaller IP CCTV systems.",
-            price: 950.00,
-            unit: "each",
-            image: "",
-            featured: false
+            description:
+                "2MP indoor/outdoor dome camera with infrared night vision.",
+            price: 360.00,
+            weightKg: 0.35,
+            image: ""
         },
 
         {
-            id: "ip-poe-switch-8",
-            name: "8 Port PoE Switch",
-            group: "ip-network",
+            id: "HD-VARIFOCAL-BULLET",
+            name: "HD Varifocal Bullet Camera - 60m IR",
+            category: "cctv-hd",
+            group: "cameras",
             brand: "Dahua",
-            description: "8-port PoE switch for IP camera installations.",
-            price: 1450.00,
-            unit: "each",
-            image: "",
-            featured: false
-        },
-
-        {
-            id: "ip-poe-switch-16",
-            name: "16 Port PoE Switch",
-            group: "ip-network",
-            brand: "Dahua",
-            description: "16-port professional PoE switch for larger IP CCTV systems.",
-            price: 2850.00,
-            unit: "each",
-            image: "",
-            featured: false
-        },
-
-
-        /* ===============================================================
-           ROBOGUARD PRODUCTS
-           =============================================================== */
-
-        {
-            id: "rg-base-station",
-            name: "Roboguard Base Station",
-            group: "roboguard-base",
-            brand: "Roboguard",
-            description: "Wireless Roboguard receiver and base station.",
-            price: 2450.00,
-            unit: "each",
-            image: "",
-            featured: false
-        },
-
-        {
-            id: "rg-beam",
-            name: "Roboguard Wireless Beam",
-            group: "roboguard-beams",
-            brand: "Roboguard",
-            description: "Wireless outdoor perimeter beam detector.",
-            price: 1650.00,
-            unit: "each",
-            image: "",
-            featured: false
-        },
-
-        {
-            id: "rg-beam-long-range",
-            name: "Roboguard Long Range Beam",
-            group: "roboguard-beams",
-            brand: "Roboguard",
-            description: "Long-range wireless outdoor beam for extended perimeter protection.",
-            price: 1950.00,
-            unit: "each",
-            image: "",
-            featured: false
-        },
-
-        {
-            id: "rg-solar-panel",
-            name: "Roboguard Solar Panel",
-            group: "roboguard-power",
-            brand: "Roboguard",
-            description: "Solar power option for Roboguard outdoor beam installations.",
+            description:
+                "Professional varifocal bullet camera with long-range infrared illumination.",
             price: 890.00,
-            unit: "each",
-            image: "",
-            featured: false
+            weightKg: 0.80,
+            image: ""
         },
 
         {
-            id: "rg-battery",
-            name: "Roboguard Replacement Battery",
-            group: "roboguard-power",
-            brand: "Roboguard",
-            description: "Replacement rechargeable battery for Roboguard equipment.",
+            id: "HD-VARIFOCAL-DOME",
+            name: "HD Varifocal Dome Camera - 40m IR",
+            category: "cctv-hd",
+            group: "cameras",
+            brand: "Dahua",
+            description:
+                "Professional varifocal dome camera for flexible surveillance coverage.",
+            price: 820.00,
+            weightKg: 0.70,
+            image: ""
+        },
+
+        // ================================================================
+        // CCTV HD — DVR RECORDERS
+        // ================================================================
+
+        {
+            id: "HD-DVR-8CH",
+            name: "8 Channel HD DVR",
+            category: "cctv-hd",
+            group: "recorders",
+            brand: "Dahua",
+            description:
+                "8-channel HD DVR for residential and small-business surveillance.",
+            price: 1450.00,
+            weightKg: 1.50,
+            image: ""
+        },
+
+        {
+            id: "HD-DVR-16CH",
+            name: "16 Channel HD DVR",
+            category: "cctv-hd",
+            group: "recorders",
+            brand: "Dahua",
+            description:
+                "16-channel HD DVR for medium-sized surveillance installations.",
+            price: 2650.00,
+            weightKg: 2.20,
+            image: ""
+        },
+
+        {
+            id: "HD-DVR-32CH",
+            name: "32 Channel HD DVR",
+            category: "cctv-hd",
+            group: "recorders",
+            brand: "Dahua",
+            description:
+                "32-channel professional HD DVR for larger surveillance systems.",
+            price: 5400.00,
+            weightKg: 3.80,
+            image: ""
+        },
+
+        // ================================================================
+        // CCTV HD — HARD DRIVES
+        // ================================================================
+
+        {
+            id: "HD-HDD-1TB",
+            name: "1TB Surveillance Hard Drive",
+            category: "cctv-hd",
+            group: "storage",
+            brand: "Surveillance",
+            description:
+                "1TB surveillance-rated hard drive for continuous CCTV recording.",
+            price: 780.00,
+            weightKg: 0.60,
+            image: ""
+        },
+
+        {
+            id: "HD-HDD-2TB",
+            name: "2TB Surveillance Hard Drive",
+            category: "cctv-hd",
+            group: "storage",
+            brand: "Surveillance",
+            description:
+                "2TB surveillance-rated hard drive for extended recording storage.",
+            price: 1150.00,
+            weightKg: 0.60,
+            image: ""
+        },
+
+        {
+            id: "HD-HDD-4TB",
+            name: "4TB Surveillance Hard Drive",
+            category: "cctv-hd",
+            group: "storage",
+            brand: "Surveillance",
+            description:
+                "4TB surveillance hard drive for larger CCTV installations.",
+            price: 1890.00,
+            weightKg: 0.65,
+            image: ""
+        },
+
+        {
+            id: "HD-HDD-6TB",
+            name: "6TB Surveillance Hard Drive",
+            category: "cctv-hd",
+            group: "storage",
+            brand: "Surveillance",
+            description:
+                "6TB surveillance-rated hard drive for high-capacity recording.",
+            price: 2950.00,
+            weightKg: 0.70,
+            image: ""
+        },
+
+        // ================================================================
+        // CCTV HD — POWER
+        // ================================================================
+
+        {
+            id: "HD-PSU-1WAY",
+            name: "1-Way CCTV Power Adapter",
+            category: "cctv-hd",
+            group: "power",
+            brand: "Nexpak",
+            description:
+                "12V CCTV power adapter for individual camera installations.",
+            price: 120.00,
+            weightKg: 0.20,
+            image: ""
+        },
+
+        {
+            id: "HD-PSU-9WAY",
+            name: "9-Way 10A CCTV Power Box",
+            category: "cctv-hd",
+            group: "power",
+            brand: "Nexpak",
+            description:
+                "9-way CCTV power distribution box for multi-camera systems.",
+            price: 480.00,
+            weightKg: 1.60,
+            image: ""
+        },
+
+        // ================================================================
+        // CCTV HD — CABLE
+        // ================================================================
+
+        {
+            id: "HD-RG59-100M",
+            name: "RG59 + Power CCTV Cable - 100m",
+            category: "cctv-hd",
+            group: "cables",
+            brand: "Nexpak",
+            description:
+                "100m RG59 coaxial CCTV cable with integrated power conductors.",
             price: 420.00,
-            unit: "each",
-            image: "",
-            featured: false
-        },
-
-
-        /* ===============================================================
-           GATE AUTOMATION PRODUCTS
-           =============================================================== */
-
-        {
-            id: "centurion-d5-evo",
-            name: "Centurion D5-Evo Gate Motor",
-            group: "gate-motors",
-            brand: "Centurion",
-            description: "Professional sliding gate motor for residential and light commercial gates.",
-            price: 4850.00,
-            unit: "each",
-            image: "",
-            featured: true
+            weightKg: 4.50,
+            image: ""
         },
 
         {
-            id: "centurion-d5-smart",
-            name: "Centurion D5 Smart Gate Motor",
-            group: "gate-motors",
-            brand: "Centurion",
-            description: "Smart sliding gate motor with advanced connectivity features.",
-            price: 6050.00,
-            unit: "each",
-            image: "",
-            featured: false
-        },
-
-        {
-            id: "centurion-d10-smart",
-            name: "Centurion D10 Turbo Smart",
-            group: "gate-motors",
-            brand: "Centurion",
-            description: "Heavy-duty high-speed sliding gate motor for larger gates.",
-            price: 9350.00,
-            unit: "each",
-            image: "",
-            featured: false
-        },
-
-        {
-            id: "gate-steel-rack",
-            name: "Steel Gate Rack 2m",
-            group: "gate-rack",
+            id: "HD-CAT5E-100M",
+            name: "Cat5e CCTV Cable - 100m",
+            category: "cctv-hd",
+            group: "cables",
             brand: "Nexpak",
-            description: "Heavy-duty galvanised steel rack section for sliding gates.",
-            price: 280.00,
-            unit: "2m section",
-            image: "",
-            featured: false
+            description:
+                "100m Cat5e network cable suitable for CCTV installations.",
+            price: 380.00,
+            weightKg: 3.20,
+            image: ""
         },
 
+        // ================================================================
+        // CCTV HD — CONNECTORS & BALUNS
+        // ================================================================
+
         {
-            id: "gate-nylon-rack",
-            name: "Nylon Gate Rack 2m",
-            group: "gate-rack",
+            id: "HD-BNC-DC-SET",
+            name: "BNC Crimp + DC Lead Set",
+            category: "cctv-hd",
+            group: "connectors",
             brand: "Nexpak",
-            description: "Nylon rack section for compatible sliding gate motors.",
-            price: 250.00,
-            unit: "2m section",
-            image: "",
-            featured: false
+            description:
+                "BNC video connector and DC power lead set for HD CCTV installations.",
+            price: 25.00,
+            weightKg: 0.05,
+            image: ""
         },
 
         {
-            id: "gate-remote-4button",
-            name: "4-Button Gate Remote",
-            group: "gate-remotes",
-            brand: "Centurion",
-            description: "4-button remote control for compatible Centurion gate automation systems.",
-            price: 220.00,
-            unit: "each",
-            image: "",
-            featured: false
-        },
-
-        {
-            id: "gate-anti-theft",
-            name: "Heavy Duty Anti-Theft Bracket",
-            group: "gate-accessories",
-            brand: "Centurion",
-            description: "Heavy-duty anti-theft bracket for additional gate motor protection.",
-            price: 550.00,
-            unit: "each",
-            image: "",
-            featured: false
-        },
-
-        {
-            id: "gate-battery-7ah",
-            name: "7Ah Gate Motor Backup Battery",
-            group: "gate-power",
+            id: "HD-VIDEO-BALUN",
+            name: "HD Video Balun Pair",
+            category: "cctv-hd",
+            group: "connectors",
             brand: "Nexpak",
-            description: "7Ah rechargeable backup battery for gate automation systems.",
-            price: 280.00,
-            unit: "each",
-            image: "",
-            featured: false
+            description:
+                "HD video balun pair for transmitting CCTV video over twisted-pair cable.",
+            price: 65.00,
+            weightKg: 0.08,
+            image: ""
         },
 
-
-        /* ===============================================================
-           IDS ALARM PRODUCTS
-           =============================================================== */
-
-        {
-            id: "ids-805",
-            name: "IDS 805 Alarm Panel",
-            group: "ids-panels",
-            brand: "IDS",
-            description: "IDS 805 intrusion alarm control panel.",
-            price: 850.00,
-            unit: "each",
-            image: "",
-            featured: false
-        },
+        // ================================================================
+        // CCTV HD — ACCESSORIES
+        // ================================================================
 
         {
-            id: "ids-x64",
-            name: "IDS X64 Alarm Panel",
-            group: "ids-panels",
-            brand: "IDS",
-            description: "IDS X64 hybrid alarm control panel for larger security installations.",
-            price: 1650.00,
-            unit: "each",
-            image: "",
-            featured: false
+            id: "HD-JUNCTION-BOX",
+            name: "100x100mm CCTV Junction Box",
+            category: "cctv-hd",
+            group: "accessories",
+            brand: "Nexpak",
+            description:
+                "Weather-resistant junction enclosure for CCTV camera connections.",
+            price: 28.00,
+            weightKg: 0.10,
+            image: ""
         },
 
         {
-            id: "ids-pir",
-            name: "IDS PIR Motion Detector",
-            group: "ids-detectors",
-            brand: "IDS",
-            description: "Indoor PIR motion detector for IDS alarm systems.",
-            price: 180.00,
-            unit: "each",
-            image: "",
-            featured: false
-        },
-
-        {
-            id: "ids-keypad",
-            name: "IDS LCD Keypad",
-            group: "ids-keypads",
-            brand: "IDS",
-            description: "LCD alarm keypad for IDS alarm panels.",
-            price: 520.00,
-            unit: "each",
-            image: "",
-            featured: false
-        },
-
-        {
-            id: "ids-siren",
-            name: "IDS Indoor/Outdoor Siren",
-            group: "ids-alerts",
-            brand: "IDS",
-            description: "High-output security siren for IDS alarm installations.",
-            price: 180.00,
-            unit: "each",
-            image: "",
-            featured: false
-        },
-
-        {
-            id: "ids-hyyp",
-            name: "IDS HYYP Module",
-            group: "ids-communication",
-            brand: "IDS",
-            description: "Smart communication module for remote alarm monitoring and control.",
+            id: "HD-MONITOR-19",
+            name: "19-Inch LED CCTV Monitor",
+            category: "cctv-hd",
+            group: "displays",
+            brand: "Nexpak",
+            description:
+                "19-inch LED monitor suitable for CCTV monitoring applications.",
             price: 1450.00,
-            unit: "each",
-            image: "",
-            featured: false
-        },
-
-
-        /* ===============================================================
-           AJAX SECURITY PRODUCTS
-           =============================================================== */
-
-        {
-            id: "ajax-hub-2",
-            name: "Ajax Hub 2",
-            group: "ajax-hubs",
-            brand: "Ajax",
-            description: "Wireless Ajax security hub supporting Jeweller devices.",
-            price: 3250.00,
-            unit: "each",
-            image: "",
-            featured: false
+            weightKg: 2.80,
+            image: ""
         },
 
         {
-            id: "ajax-motioncam",
-            name: "Ajax MotionCam",
-            group: "ajax-detectors",
-            brand: "Ajax",
-            description: "Wireless motion detector with photo verification.",
-            price: 1450.00,
-            unit: "each",
-            image: "",
-            featured: false
+            id: "HD-MONITOR-27",
+            name: "27-Inch FHD CCTV Monitor",
+            category: "cctv-hd",
+            group: "displays",
+            brand: "Nexpak",
+            description:
+                "27-inch Full HD LED monitor for professional CCTV viewing.",
+            price: 2890.00,
+            weightKg: 4.50,
+            image: ""
         },
 
         {
-            id: "ajax-keypad",
-            name: "Ajax KeyPad",
-            group: "ajax-keypads",
-            brand: "Ajax",
-            description: "Wireless touch keypad for Ajax security systems.",
-            price: 1250.00,
-            unit: "each",
-            image: "",
-            featured: false
+            id: "HD-COAX-STRIP-TOOL",
+            name: "CCTV Coax Cable Strip Tool",
+            category: "cctv-hd",
+            group: "tools",
+            brand: "Nexpak",
+            description:
+                "Dedicated coaxial cable stripping tool for CCTV installation.",
+            price: 120.00,
+            weightKg: 0.15,
+            image: ""
         },
 
         {
-            id: "ajax-doorprotect",
-            name: "Ajax DoorProtect",
-            group: "ajax-detectors",
-            brand: "Ajax",
-            description: "Wireless opening detector for doors and windows.",
-            price: 650.00,
-            unit: "each",
-            image: "",
-            featured: false
+            id: "HD-BNC-CRIMP-TOOL",
+            name: "Heavy Duty BNC Crimp Tool",
+            category: "cctv-hd",
+            group: "tools",
+            brand: "Nexpak",
+            description:
+                "Heavy-duty crimping tool for professional BNC CCTV connectors.",
+            price: 280.00,
+            weightKg: 0.45,
+            image: ""
+        },
+
+        // ================================================================
+        // IP CCTV SYSTEMS — NVR
+        // ================================================================
+
+        {
+            id: "IP-NVR-4CH-POE",
+            name: "4 Channel PoE NVR",
+            category: "cctv-ip",
+            group: "recorders",
+            brand: "Dahua",
+            description:
+                "4-channel network video recorder with integrated PoE ports.",
+            price: 2100.00,
+            weightKg: 1.80,
+            image: ""
         },
 
         {
-            id: "ajax-outdoor",
-            name: "Ajax MotionProtect Outdoor",
-            group: "ajax-outdoor",
-            brand: "Ajax",
-            description: "Wireless outdoor motion detector for perimeter protection.",
-            price: 1950.00,
-            unit: "each",
-            image: "",
-            featured: false
-        },
-
-
-        /* ===============================================================
-           STAFIX AGRICULTURAL FENCING
-           =============================================================== */
-
-        {
-            id: "stafix-energizer-2j",
-            name: "Stafix 2J Energizer",
-            group: "stafix-energizers",
-            brand: "Stafix",
-            description: "Agricultural electric fence energizer for farm and livestock applications.",
-            price: 2350.00,
-            unit: "each",
-            image: "",
-            featured: false
+            id: "IP-NVR-8CH-POE",
+            name: "8 Channel PoE NVR",
+            category: "cctv-ip",
+            group: "recorders",
+            brand: "Dahua",
+            description:
+                "8-channel PoE NVR for residential and small-business IP systems.",
+            price: 3400.00,
+            weightKg: 2.40,
+            image: ""
         },
 
         {
-            id: "stafix-solar-energizer",
-            name: "Stafix Solar Energizer",
-            group: "stafix-energizers",
-            brand: "Stafix",
-            description: "Solar-powered agricultural electric fence energizer.",
-            price: 3250.00,
-            unit: "each",
-            image: "",
-            featured: false
+            id: "IP-NVR-16CH-POE",
+            name: "16 Channel PoE NVR",
+            category: "cctv-ip",
+            group: "recorders",
+            brand: "Dahua",
+            description:
+                "16-channel PoE NVR for medium-sized IP CCTV installations.",
+            price: 5800.00,
+            weightKg: 3.60,
+            image: ""
         },
 
         {
-            id: "stafix-polywire",
-            name: "Stafix Polywire Roll",
-            group: "stafix-wire",
-            brand: "Stafix",
-            description: "High-visibility electric fence polywire for agricultural fencing.",
-            price: 580.00,
-            unit: "roll",
-            image: "",
-            featured: false
+            id: "IP-NVR-32CH",
+            name: "32 Channel NVR - No Built-in PoE",
+            category: "cctv-ip",
+            group: "recorders",
+            brand: "Dahua",
+            description:
+                "32-channel professional NVR designed for larger IP surveillance systems.",
+            price: 7900.00,
+            weightKg: 4.20,
+            image: ""
         },
 
-        {
-            id: "stafix-insulator",
-            name: "Stafix Electric Fence Insulators",
-            group: "stafix-accessories",
-            brand: "Stafix",
-            description: "Agricultural electric fence insulators for secure wire mounting.",
-            price: 95.00,
-            unit: "pack",
-            image: "",
-            featured: false
-        }
-
-    ]
-
-};
-
-
-/* ==========================================================================
-   CONFIGURATOR CATEGORY HELPERS
+            /* ==========================================================================
+   25. RENDER PRODUCT GROUPS
    ========================================================================== */
 
-const SYSTEM_CATEGORIES = [
-    {
-        id: "electric-fencing",
-        title: "Electric Fencing",
-        icon: "fa-bolt"
-    },
-    {
-        id: "cctv-hd",
-        title: "HD CCTV",
-        icon: "fa-video"
-    },
-    {
-        id: "cctv-ip",
-        title: "IP CCTV",
-        icon: "fa-network-wired"
-    },
-    {
-        id: "roboguard",
-        title: "Roboguard",
-        icon: "fa-shield-halved"
-    },
-    {
-        id: "gate-motors",
-        title: "Gate Automation",
-        icon: "fa-door-open"
-    },
-    {
-        id: "ids-alarm",
-        title: "IDS Alarm",
-        icon: "fa-bell"
-    },
-    {
-        id: "ajax-security",
-        title: "Ajax Security",
-        icon: "fa-house-lock"
-    },
-    {
-        id: "stafix-agri",
-        title: "Stafix Agri",
-        icon: "fa-wheat-awn"
-    }
-];
+function renderProductGroups() {
 
-
-/* ==========================================================================
-   PRODUCT HELPERS
-   ========================================================================== */
-
-function getSystemProducts(category) {
-
-    return SHOP_DATA.products.filter(
-        product => product.category === category ||
-                   product.group?.startsWith(category)
-    );
-
-}
-
-
-function getProductById(productId) {
-
-    return SHOP_DATA.products.find(
-        product => product.id === productId
-    );
-
-}
-
-
-function formatZAR(amount) {
-
-    return new Intl.NumberFormat(
-        "en-ZA",
-        {
-            style: "currency",
-            currency: "ZAR",
-            minimumFractionDigits: 2
-        }
-    ).format(
-        Number(amount) || 0
-    );
-
-}
-
-
-/* ==========================================================================
-   LEGACY COMPATIBILITY
-   ========================================================================== */
-
-const CONFIGURATOR_DATA = SHOP_DATA.products;
-
-
-/* ==========================================================================
-   GLOBAL EXPORT
-   ========================================================================== */
-
-window.SHOP_DATA = SHOP_DATA;
-window.SYSTEM_CATEGORIES = SYSTEM_CATEGORIES;
-window.CONFIGURATOR_DATA = CONFIGURATOR_DATA;
-window.getSystemProducts = getSystemProducts;
-window.getProductById = getProductById;
-window.formatZAR = formatZAR;
-
-console.log(
-    "Nexpak shop-data.js loaded:",
-    SHOP_DATA.products.length,
-    "individual products."
-);
-
-      /* ==========================================================================
-   BUILD YOUR SYSTEM — PRODUCT GROUP DEFINITIONS
-   ========================================================================== */
-
-const SYSTEM_PRODUCT_GROUPS = {
-
-    /* ======================================================================
-       ELECTRIC FENCING
-       ====================================================================== */
-
-    "electric-fencing": [
-
-        {
-            id: "ef-brackets",
-            title: "Fence Brackets",
-            description: "Select the bracket style, line configuration and finish required.",
-            icon: "fa-border-all",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "ef-stays",
-            title: "Corner & End Stays",
-            description: "Heavy-duty stays for corners, ends and tension points.",
-            icon: "fa-grip-lines",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "ef-sleeves",
-            title: "Stay Sleeves",
-            description: "Protective sleeves for electric fence stays.",
-            icon: "fa-circle",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "ef-lugs",
-            title: "Wiring Lugs",
-            description: "Electrical connection lugs for fence installation.",
-            icon: "fa-link",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "ef-anchors",
-            title: "Nail-In Anchors",
-            description: "Anchoring hardware for securing electric fence components.",
-            icon: "fa-anchor",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "ef-wire",
-            title: "Electric Fence Wire",
-            description: "Choose the wire type and roll length required.",
-            icon: "fa-arrows-left-right",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "ef-ferrules",
-            title: "Wire Ferrules",
-            description: "Ferrules for secure electric fence wire connections.",
-            icon: "fa-circle-nodes",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "ef-tensioners",
-            title: "Tensioners & Hooks",
-            description: "Fence tensioning hardware and connection hooks.",
-            icon: "fa-link",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "ef-earth",
-            title: "Earthing",
-            description: "Earth spikes, earth loops and related grounding components.",
-            icon: "fa-bolt",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "ef-ht",
-            title: "HT Cable",
-            description: "High-tension cable for energizer and fence connections.",
-            icon: "fa-cable-car",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "ef-warning",
-            title: "Warning & Safety",
-            description: "Legal warning signs and safety accessories.",
-            icon: "fa-triangle-exclamation",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "ef-energizers",
-            title: "Energizers",
-            description: "Choose the energizer output suitable for the installation.",
-            icon: "fa-bolt",
-            selectionType: "single"
-        },
-
-        {
-            id: "ef-battery",
-            title: "Backup Battery",
-            description: "Backup power for electric fence energizers.",
-            icon: "fa-car-battery",
-            selectionType: "single"
-        },
-
-        {
-            id: "ef-power",
-            title: "Power Supply & Keypad",
-            description: "Power supply and programming equipment.",
-            icon: "fa-plug",
-            selectionType: "single"
-        },
-
-        {
-            id: "ef-enclosure",
-            title: "Enclosures",
-            description: "Weatherproof equipment enclosures.",
-            icon: "fa-box",
-            selectionType: "single"
-        },
-
-        {
-            id: "ef-communication",
-            title: "Communication Modules",
-            description: "Remote monitoring and smartphone communication options.",
-            icon: "fa-tower-cell",
-            selectionType: "single"
-        },
-
-        {
-            id: "ef-alerts",
-            title: "Siren & Warning Lights",
-            description: "Audible and visual security alerts.",
-            icon: "fa-bell",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "ef-installation",
-            title: "Installation",
-            description: "Choose DIY or professional installation.",
-            icon: "fa-screwdriver-wrench",
-            selectionType: "single"
-        }
-
-    ],
-
-
-    /* ======================================================================
-       HD CCTV
-       ====================================================================== */
-
-    "cctv-hd": [
-
-        {
-            id: "hd-brand",
-            title: "CCTV Brand",
-            description: "Choose your preferred HD CCTV manufacturer.",
-            icon: "fa-building",
-            selectionType: "single"
-        },
-
-        {
-            id: "hd-dvr",
-            title: "DVR Recorders",
-            description: "Select the DVR channel capacity required.",
-            icon: "fa-server",
-            selectionType: "single"
-        },
-
-        {
-            id: "hd-hdd",
-            title: "Surveillance Hard Drives",
-            description: "Choose storage capacity for your CCTV recorder.",
-            icon: "fa-hard-drive",
-            selectionType: "single"
-        },
-
-        {
-            id: "hd-power",
-            title: "CCTV Power Supplies",
-            description: "Power distribution equipment for cameras.",
-            icon: "fa-plug",
-            selectionType: "single"
-        },
-
-        {
-            id: "hd-cameras",
-            title: "HD Cameras",
-            description: "Select as many bullet, dome or other cameras as required.",
-            icon: "fa-video",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "hd-varifocal",
-            title: "Varifocal Cameras",
-            description: "Professional adjustable-lens CCTV cameras.",
-            icon: "fa-camera",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "hd-cabling",
-            title: "CCTV Cable",
-            description: "Select the cable type and roll length required.",
-            icon: "fa-cable-car",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "hd-connectors",
-            title: "Connectors & Baluns",
-            description: "CCTV connection accessories.",
-            icon: "fa-plug-circle-bolt",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "hd-accessories",
-            title: "CCTV Accessories",
-            description: "Junction boxes, tools and other installation accessories.",
-            icon: "fa-toolbox",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "hd-monitors",
-            title: "CCTV Monitors",
-            description: "Displays for viewing your surveillance system.",
-            icon: "fa-desktop",
-            selectionType: "multiple"
-        }
-
-    ],
-
-
-    /* ======================================================================
-       IP CCTV
-       ====================================================================== */
-
-    "cctv-ip": [
-
-        {
-            id: "ip-brand",
-            title: "IP CCTV Brand",
-            description: "Choose your preferred IP CCTV manufacturer.",
-            icon: "fa-building",
-            selectionType: "single"
-        },
-
-        {
-            id: "ip-nvr",
-            title: "NVR Recorders",
-            description: "Select your required network video recorder.",
-            icon: "fa-server",
-            selectionType: "single"
-        },
-
-        {
-            id: "ip-cameras",
-            title: "IP Cameras",
-            description: "Add the exact number and type of IP cameras required.",
-            icon: "fa-video",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "ip-cabling",
-            title: "Network Cable",
-            description: "Cat5e and Cat6 network cabling.",
-            icon: "fa-ethernet",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "ip-network",
-            title: "PoE Switches & Network Equipment",
-            description: "PoE switches and network infrastructure.",
-            icon: "fa-network-wired",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "ip-storage",
-            title: "IP Surveillance Storage",
-            description: "Hard drives for NVR recording systems.",
-            icon: "fa-hard-drive",
-            selectionType: "single"
-        },
-
-        {
-            id: "ip-accessories",
-            title: "IP CCTV Accessories",
-            description: "Connectors, junction boxes and installation accessories.",
-            icon: "fa-toolbox",
-            selectionType: "multiple"
-        }
-
-    ],
-
-
-    /* ======================================================================
-       ROBOGUARD
-       ====================================================================== */
-
-    "roboguard": [
-
-        {
-            id: "rg-base",
-            title: "Base Stations",
-            description: "Roboguard receivers and base stations.",
-            icon: "fa-tower-broadcast",
-            selectionType: "single"
-        },
-
-        {
-            id: "rg-beams",
-            title: "Wireless Beams",
-            description: "Select the number and type of outdoor Roboguard beams.",
-            icon: "fa-arrows-left-right-to-line",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "rg-power",
-            title: "Power & Solar",
-            description: "Solar panels and replacement batteries.",
-            icon: "fa-solar-panel",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "rg-accessories",
-            title: "Roboguard Accessories",
-            description: "Additional equipment and installation accessories.",
-            icon: "fa-toolbox",
-            selectionType: "multiple"
-        }
-
-    ],
-
-
-    /* ======================================================================
-       GATE AUTOMATION
-       ====================================================================== */
-
-    "gate-motors": [
-
-        {
-            id: "gate-motors",
-            title: "Gate Motors",
-            description: "Choose the gate motor required for the installation.",
-            icon: "fa-gears",
-            selectionType: "single"
-        },
-
-        {
-            id: "gate-rack",
-            title: "Gate Rack",
-            description: "Add the required quantity of steel or nylon rack.",
-            icon: "fa-grip-lines",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "gate-remotes",
-            title: "Remote Controls",
-            description: "Add additional remotes to the system.",
-            icon: "fa-gamepad",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "gate-power",
-            title: "Backup Power",
-            description: "Backup batteries for gate automation.",
-            icon: "fa-car-battery",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "gate-accessories",
-            title: "Gate Accessories",
-            description: "Anti-theft brackets and additional gate hardware.",
-            icon: "fa-toolbox",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "gate-installation",
-            title: "Gate Motor Installation",
-            description: "Professional installation options.",
-            icon: "fa-screwdriver-wrench",
-            selectionType: "single"
-        }
-
-    ],
-
-
-    /* ======================================================================
-       IDS ALARM
-       ====================================================================== */
-
-    "ids-alarm": [
-
-        {
-            id: "ids-panels",
-            title: "Alarm Panels",
-            description: "Choose the IDS control panel required.",
-            icon: "fa-microchip",
-            selectionType: "single"
-        },
-
-        {
-            id: "ids-keypads",
-            title: "Keypads",
-            description: "Add the required alarm keypads.",
-            icon: "fa-keyboard",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "ids-detectors",
-            title: "Motion & Door Detectors",
-            description: "Add PIR and other intrusion detectors.",
-            icon: "fa-person-running",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "ids-alerts",
-            title: "Sirens & Alerts",
-            description: "Audible alarm warning equipment.",
-            icon: "fa-bell",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "ids-communication",
-            title: "Communication Modules",
-            description: "Remote alarm communication and monitoring.",
-            icon: "fa-tower-cell",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "ids-accessories",
-            title: "Alarm Accessories",
-            description: "Additional IDS installation equipment.",
-            icon: "fa-toolbox",
-            selectionType: "multiple"
-        }
-
-    ],
-
-
-    /* ======================================================================
-       AJAX
-       ====================================================================== */
-
-    "ajax-security": [
-
-        {
-            id: "ajax-hubs",
-            title: "Ajax Hubs",
-            description: "Choose the central Ajax security hub.",
-            icon: "fa-house-lock",
-            selectionType: "single"
-        },
-
-        {
-            id: "ajax-detectors",
-            title: "Indoor Detectors",
-            description: "Motion, opening and other indoor detectors.",
-            icon: "fa-person-running",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "ajax-outdoor",
-            title: "Outdoor Detectors",
-            description: "Wireless outdoor perimeter protection.",
-            icon: "fa-shield-halved",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "ajax-keypads",
-            title: "Keypads",
-            description: "Wireless Ajax keypads.",
-            icon: "fa-keyboard",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "ajax-accessories",
-            title: "Ajax Accessories",
-            description: "Additional Ajax security equipment.",
-            icon: "fa-toolbox",
-            selectionType: "multiple"
-        }
-
-    ],
-
-
-    /* ======================================================================
-       STAFIX AGRICULTURAL FENCING
-       ====================================================================== */
-
-    "stafix-agri": [
-
-        {
-            id: "stafix-energizers",
-            title: "Agricultural Energizers",
-            description: "Solar and mains-powered agricultural energizers.",
-            icon: "fa-bolt",
-            selectionType: "single"
-        },
-
-        {
-            id: "stafix-wire",
-            title: "Agricultural Fence Wire",
-            description: "Polywire and agricultural electric fence conductors.",
-            icon: "fa-arrows-left-right",
-            selectionType: "multiple"
-        },
-
-        {
-            id: "stafix-accessories",
-            title: "Agricultural Fence Accessories",
-            description: "Insulators and other agricultural fencing equipment.",
-            icon: "fa-toolbox",
-            selectionType: "multiple"
-        }
-
-    ]
-
-};
-
-
-/* ==========================================================================
-   PRODUCT → SYSTEM GROUP MAPPING
-   ========================================================================== */
-
-const PRODUCT_SYSTEM_MAP = {
-
-    /* Electric Fencing */
-
-    "ef-bracket": "ef-brackets",
-    "ef-brackets": "ef-brackets",
-
-    "ef-stay": "ef-stays",
-    "ef-stays": "ef-stays",
-
-    "ef-sleeve": "ef-sleeves",
-    "ef-sleeves": "ef-sleeves",
-
-    "ef-lug": "ef-lugs",
-    "ef-lugs": "ef-lugs",
-
-    "ef-anchor": "ef-anchors",
-    "ef-anchors": "ef-anchors",
-
-    "ef-wire": "ef-wire",
-    "ef-wire-roll": "ef-wire",
-
-    "ef-ferrule": "ef-ferrules",
-    "ef-ferrules": "ef-ferrules",
-
-    "ef-tensioner": "ef-tensioners",
-    "ef-hook": "ef-tensioners",
-
-    "ef-earth-spike": "ef-earth",
-    "ef-earth-loop": "ef-earth",
-
-    "ef-ht": "ef-ht",
-    "ef-ht-cable": "ef-ht",
-
-    "ef-warning": "ef-warning",
-    "ef-warning-sign": "ef-warning",
-
-    "ef-energizer": "ef-energizers",
-    "ef-battery": "ef-battery",
-    "ef-power": "ef-power",
-    "ef-keypad": "ef-power",
-    "ef-enclosure": "ef-enclosure",
-    "ef-wifi": "ef-communication",
-    "ef-gsm": "ef-communication",
-    "ef-siren": "ef-alerts",
-    "ef-strobe": "ef-alerts",
-    "ef-nite-light": "ef-alerts",
-
-
-    /* HD CCTV */
-
-    "hd-dvr": "hd-dvr",
-    "hd-hdd": "hd-hdd",
-    "hd-camera": "hd-cameras",
-    "hd-bullet": "hd-cameras",
-    "hd-dome": "hd-cameras",
-    "hd-varifocal": "hd-varifocal",
-    "hd-cable": "hd-cabling",
-    "hd-balun": "hd-connectors",
-    "hd-bnc": "hd-connectors",
-    "hd-junction": "hd-accessories",
-    "hd-coax-strip-tool": "hd-accessories",
-    "hd-bnc-crimp-tool": "hd-accessories",
-    "hd-monitor": "hd-monitors",
-
-
-    /* IP CCTV */
-
-    "ip-nvr": "ip-nvr",
-    "ip-camera": "ip-cameras",
-    "ip-cameras": "ip-cameras",
-    "ip-cat5e": "ip-cabling",
-    "ip-cat6": "ip-cabling",
-    "ip-poe-switch": "ip-network",
-    "ip-switch": "ip-network",
-    "ip-hdd": "ip-storage",
-    "ip-accessory": "ip-accessories",
-
-
-    /* Roboguard */
-
-    "rg-base": "rg-base",
-    "rg-base-station": "rg-base",
-    "rg-beam": "rg-beams",
-    "rg-beams": "rg-beams",
-    "rg-solar": "rg-power",
-    "rg-solar-panel": "rg-power",
-    "rg-battery": "rg-power",
-    "rg-accessory": "rg-accessories",
-
-
-    /* Gate Automation */
-
-    "gate-motor": "gate-motors",
-    "centurion-d5-evo": "gate-motors",
-    "centurion-d5-smart": "gate-motors",
-    "centurion-d10-smart": "gate-motors",
-
-    "gate-rack": "gate-rack",
-    "gate-steel-rack": "gate-rack",
-    "gate-nylon-rack": "gate-rack",
-
-    "gate-remote": "gate-remotes",
-    "gate-remote-4button": "gate-remotes",
-
-    "gate-battery": "gate-power",
-    "gate-battery-7ah": "gate-power",
-
-    "gate-anti-theft": "gate-accessories",
-
-    "gate-installation": "gate-installation",
-
-
-    /* IDS */
-
-    "ids-panel": "ids-panels",
-    "ids-805": "ids-panels",
-    "ids-x64": "ids-panels",
-
-    "ids-keypad": "ids-keypads",
-
-    "ids-pir": "ids-detectors",
-    "ids-detector": "ids-detectors",
-
-    "ids-siren": "ids-alerts",
-
-    "ids-hyyp": "ids-communication",
-
-    "ids-accessory": "ids-accessories",
-
-
-    /* Ajax */
-
-    "ajax-hub": "ajax-hubs",
-    "ajax-hub-2": "ajax-hubs",
-
-    "ajax-motioncam": "ajax-detectors",
-    "ajax-doorprotect": "ajax-detectors",
-
-    "ajax-outdoor": "ajax-outdoor",
-
-    "ajax-keypad": "ajax-keypads",
-
-    "ajax-accessory": "ajax-accessories",
-
-
-    /* Stafix */
-
-    "stafix-energizer": "stafix-energizers",
-    "stafix-energizer-2j": "stafix-energizers",
-    "stafix-solar-energizer": "stafix-energizers",
-
-    "stafix-polywire": "stafix-wire",
-
-    "stafix-insulator": "stafix-accessories"
-
-};
-
-
-/* ==========================================================================
-   NORMALISE PRODUCT CATEGORY
-   ========================================================================== */
-
-function getProductSystemGroup(product) {
-
-    if (!product) {
-        return null;
+    if (!elements.configurator) {
+        return;
     }
 
-    /*
-     * First check explicit mapping.
-     */
+    const products =
+        getCurrentProducts();
 
-    if (
-        PRODUCT_SYSTEM_MAP[
-            product.id
-        ]
-    ) {
+    elements.configurator.innerHTML = "";
 
-        return PRODUCT_SYSTEM_MAP[
-    product.id
-] || null;
-}
+    if (!products.length) {
 
+        elements.configurator.innerHTML = `
 
-/* ==========================================================================
-   SYSTEM PRODUCT HELPERS
-   ========================================================================== */
+            <div class="system-empty-state">
 
-/**
- * Get all products belonging to a specific system.
- */
-function getSystemProducts(
-    systemId
-) {
+                <i class="fa-solid fa-box-open"></i>
 
-    if (
-        !systemId ||
-        !Array.isArray(
-            SHOP_PRODUCTS
-        )
-    ) {
-        return [];
+                <h3>No products available</h3>
+
+                <p>
+                    Products for this system are currently
+                    being updated.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
     }
 
-    return SHOP_PRODUCTS.filter(
-        product => {
 
-            const mapping =
-                PRODUCT_SYSTEM_MAP[
-                    product.id
-                ];
+    const groups = {};
 
-            if (!mapping) {
-                return false;
-            }
 
-            return (
-                mapping.system ===
-                systemId
+    products.forEach(product => {
+
+        const groupId =
+            product.group ||
+            "general";
+
+        if (!groups[groupId]) {
+
+            groups[groupId] = {
+
+                id: groupId,
+
+                title:
+                    product.groupTitle ||
+                    "Products",
+
+                products: []
+
+            };
+
+        }
+
+        groups[groupId].products.push(product);
+
+    });
+
+
+    Object.values(groups).forEach(group => {
+
+        const section =
+            document.createElement("section");
+
+        section.className =
+            "system-product-group";
+
+        section.dataset.group =
+            group.id;
+
+
+        section.innerHTML = `
+
+            <div class="system-group-header">
+
+                <div>
+
+                    <h3>
+                        ${escapeHtml(group.title)}
+                    </h3>
+
+                    <p>
+                        Select the products and quantities
+                        required for your system.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="system-product-grid"></div>
+
+        `;
+
+
+        const grid =
+            section.querySelector(
+                ".system-product-grid"
             );
-        }
-    );
-}
 
 
-/**
- * Get products belonging to a
- * specific system group.
- */
-function getSystemGroupProducts(
-    systemId,
-    groupId
-) {
+        group.products.forEach(product => {
 
-    if (
-        !systemId ||
-        !groupId
-    ) {
-        return [];
-    }
-
-    return SHOP_PRODUCTS.filter(
-        product => {
-
-            const mapping =
-                PRODUCT_SYSTEM_MAP[
-                    product.id
-                ];
-
-            if (!mapping) {
-                return false;
-            }
-
-            return (
-                mapping.system ===
-                    systemId &&
-                mapping.group ===
-                    groupId
+            grid.appendChild(
+                createProductCard(product)
             );
-        }
-    );
-}
+
+        });
 
 
-/**
- * Find a product by its ID.
- */
-function getProductById(
-    productId
-) {
-
-    if (
-        !productId ||
-        !Array.isArray(
-            SHOP_PRODUCTS
-        )
-    ) {
-        return null;
-    }
-
-    return (
-        SHOP_PRODUCTS.find(
-            product =>
-                product.id ===
-                productId
-        ) || null
-    );
-}
-
-
-/**
- * Get the system configuration
- * definition.
- */
-function getSystemConfig(
-    systemId
-) {
-
-    if (
-        !systemId ||
-        !SYSTEM_CONFIGS
-    ) {
-        return null;
-    }
-
-    return (
-        SYSTEM_CONFIGS[
-            systemId
-        ] || null
-    );
-}
-
-
-/**
- * Get available product groups
- * for a system.
- */
-function getSystemGroups(
-    systemId
-) {
-
-    const config =
-        getSystemConfig(
-            systemId
+        elements.configurator.appendChild(
+            section
         );
 
-    if (
-        !config ||
-        !Array.isArray(
-            config.groups
-        )
-    ) {
-        return [];
-    }
+    });
 
-    return config.groups;
+
+    attachProductEvents();
+
 }
 
 
 /* ==========================================================================
-   PRODUCT PRICE HELPER
+   26. CREATE PRODUCT CARD
    ========================================================================== */
 
-function getProductPrice(
-    productId
-) {
+function createProductCard(product) {
 
-    const product =
-        getProductById(
-            productId
-        );
+    const card =
+        document.createElement("article");
 
-    if (
-        !product
-    ) {
-        return 0;
-    }
+    card.className =
+        "system-product-card";
+
+    const productId =
+        getProductId(product);
 
     const price =
-        Number(
-            product.price ??
-            product.priceExclVat ??
-            0
+        getProductPrice(product);
+
+    const name =
+        getProductName(product);
+
+    const selected =
+        state.selections[productId];
+
+    const quantity =
+        selected
+            ? selected.quantity
+            : 0;
+
+
+    const image =
+        product.image ||
+        product.img ||
+        "";
+
+
+    const imageHtml =
+        image
+
+            ? `
+
+                <div class="system-product-image">
+
+                    <img
+                        src="${escapeHtml(image)}"
+                        alt="${escapeHtml(name)}"
+                        loading="lazy"
+                    >
+
+                </div>
+
+            `
+
+            : `
+
+                <div class="system-product-image
+                            system-product-placeholder">
+
+                    <i class="fa-solid fa-box"></i>
+
+                </div>
+
+            `;
+
+
+    card.dataset.productId =
+        productId;
+
+
+    card.innerHTML = `
+
+        ${imageHtml}
+
+        <div class="system-product-content">
+
+            <h4>
+                ${escapeHtml(name)}
+            </h4>
+
+            ${
+                product.description
+
+                    ? `
+
+                        <p class="system-product-description">
+
+                            ${escapeHtml(
+                                product.description
+                            )}
+
+                        </p>
+
+                    `
+
+                    : ""
+            }
+
+            <div class="system-product-price">
+
+                ${formatMoney(price)}
+
+                <span>
+                    / ${escapeHtml(
+                        product.unit || "each"
+                    )}
+                </span>
+
+            </div>
+
+
+            <div class="system-product-actions">
+
+                <button
+                    type="button"
+                    class="system-qty-btn system-qty-minus"
+                    data-product-id="${escapeHtml(productId)}"
+                    aria-label="Decrease quantity"
+                >
+                    −
+                </button>
+
+
+                <input
+                    type="number"
+                    class="system-qty-input"
+                    min="0"
+                    step="1"
+                    value="${quantity}"
+                    data-product-id="${escapeHtml(productId)}"
+                    aria-label="${escapeHtml(name)} quantity"
+                >
+
+
+                <button
+                    type="button"
+                    class="system-qty-btn system-qty-plus"
+                    data-product-id="${escapeHtml(productId)}"
+                    aria-label="Increase quantity"
+                >
+                    +
+                </button>
+
+            </div>
+
+
+            <div class="system-product-line-total">
+
+                ${
+                    quantity > 0
+
+                        ? formatMoney(
+                            price * quantity
+                        )
+
+                        : formatMoney(0)
+                }
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    if (quantity > 0) {
+
+        card.classList.add(
+            "selected"
         );
 
-    return Number.isFinite(
-        price
-    )
-        ? price
-        : 0;
+    }
+
+
+    return card;
+
 }
 
 
 /* ==========================================================================
-   PRODUCT DISPLAY HELPER
+   27. ATTACH PRODUCT EVENTS
    ========================================================================== */
 
-function formatSystemPrice(
-    price
-) {
+function attachProductEvents() {
 
-    const amount =
-        Number(price) || 0;
-
-    return (
-        "R " +
-        amount.toLocaleString(
-            "en-ZA",
-            {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            }
+    document
+        .querySelectorAll(
+            ".system-qty-plus"
         )
-    );
-}
-
-
-/* ==========================================================================
-   CONFIGURATOR SYSTEM LIST
-   ========================================================================== */
-
-const SYSTEM_CATEGORIES = [
-
-    {
-        id: "electric-fencing",
-        name: "Electric Fencing",
-        icon: "fa-bolt",
-        description:
-            "Build your electric fence by selecting every component individually."
-    },
-
-    {
-        id: "cctv-hd",
-        name: "HD CCTV",
-        icon: "fa-video",
-        description:
-            "Build a complete HD CCTV system from individual components."
-    },
-
-    {
-        id: "cctv-ip",
-        name: "IP CCTV",
-        icon: "fa-network-wired",
-        description:
-            "Build a network CCTV system with NVRs, cameras, storage and accessories."
-    },
-
-    {
-        id: "roboguard",
-        name: "Roboguard",
-        icon: "fa-shield-cat",
-        description:
-            "Configure a wireless Roboguard outdoor beam detection system."
-    },
-
-    {
-        id: "gate-motors",
-        name: "Gate Automation",
-        icon: "fa-door-open",
-        description:
-            "Select your gate motor, rack, remotes, batteries and accessories."
-    },
-
-    {
-        id: "ids-alarm",
-        name: "IDS Alarm",
-        icon: "fa-bell",
-        description:
-            "Build an IDS alarm system component by component."
-    },
-
-    {
-        id: "ajax-security",
-        name: "Ajax Security",
-        icon: "fa-house-lock",
-        description:
-            "Build an Ajax wireless security system from individual products."
-    },
-
-    {
-        id: "stafix-agri",
-        name: "Stafix Agri",
-        icon: "fa-wheat-awn",
-        description:
-            "Configure an agricultural electric fencing system."
-    }
-
-];
-
-
-/* ==========================================================================
-   VAT / CURRENCY HELPERS
-   ========================================================================== */
-
-const NEXPAK_VAT_RATE =
-    (
-        SHOP_DATA &&
-        SHOP_DATA.company &&
-        Number(
-            SHOP_DATA.company.vatRate
-        )
-    ) || 0.15;
-
-
-function calculateVat(
-    amount
-) {
-
-    return (
-        Number(amount) || 0
-    ) * NEXPAK_VAT_RATE;
-}
-
-
-function calculateInclVat(
-    amount
-) {
-
-    const subtotal =
-        Number(amount) || 0;
-
-    return (
-        subtotal +
-        calculateVat(
-            subtotal
-        )
-    );
-}
-
-
-/* ==========================================================================
-   GLOBAL EXPORTS
-   ========================================================================== */
-
-window.NEXPAK_SHOP_DATA =
-    SHOP_DATA;
-
-window.SHOP_PRODUCTS =
-    SHOP_PRODUCTS;
-
-window.PRODUCT_SYSTEM_MAP =
-    PRODUCT_SYSTEM_MAP;
-
-window.SYSTEM_CONFIGS =
-    SYSTEM_CONFIGS;
-
-window.SYSTEM_CATEGORIES =
-    SYSTEM_CATEGORIES;
-
-window.getProductById =
-    getProductById;
-
-window.getSystemProducts =
-    getSystemProducts;
-
-window.getSystemGroupProducts =
-    getSystemGroupProducts;
-
-window.getSystemConfig =
-    getSystemConfig;
-
-window.getSystemGroups =
-    getSystemGroups;
-
-window.getProductPrice =
-    getProductPrice;
-
-window.formatSystemPrice =
-    formatSystemPrice;
-
-window.calculateVat =
-    calculateVat;
-
-window.calculateInclVat =
-    calculateInclVat;
-
-
-/* ==========================================================================
-   DEBUG
-   ========================================================================== */
-
-console.log(
-    "Nexpak Shop Data loaded."
-);
-
-console.log(
-    "Products:",
-    SHOP_PRODUCTS.length
-);
-
-console.log(
-    "System categories:",
-    SYSTEM_CATEGORIES.length
-);
-
-console.log(
-    "Pre-built kits:",
-    "REMOVED — Build Your System uses individual products."
-);
-    // ==========================================================================
-// NEXPAK SECURITY SOLUTIONS
-// SHOP DATA — PART 5
-// CONTINUATION: INDIVIDUAL SYSTEM PRODUCTS
-// ==========================================================================
-
-
-/* ==========================================================================
-   CCTV IP PRODUCTS
-   ========================================================================== */
-
-SHOP_PRODUCTS.push(
-
-    {
-        id: "ip-nvr-4ch-poe",
-        name: "4 Channel PoE NVR",
-        category: "cctv-ip",
-        group: "nvr",
-        brand: "Dahua",
-        description:
-            "4-channel network video recorder with built-in PoE ports.",
-        price: 2100.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ip-nvr-8ch-poe",
-        name: "8 Channel PoE NVR",
-        category: "cctv-ip",
-        group: "nvr",
-        brand: "Dahua",
-        description:
-            "8-channel PoE network video recorder.",
-        price: 3400.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ip-nvr-16ch-poe",
-        name: "16 Channel PoE NVR",
-        category: "cctv-ip",
-        group: "nvr",
-        brand: "Dahua",
-        description:
-            "16-channel professional PoE NVR.",
-        price: 5800.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ip-nvr-32ch",
-        name: "32 Channel NVR",
-        category: "cctv-ip",
-        group: "nvr",
-        brand: "Dahua",
-        description:
-            "32-channel network video recorder without built-in PoE.",
-        price: 7900.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-
-    {
-        id: "ip-camera-4mp-turret",
-        name: "4MP PoE Turret Dome 30m IR",
-        category: "cctv-ip",
-        group: "ip-cameras",
-        brand: "Dahua",
-        description:
-            "4MP PoE turret camera with infrared night vision.",
-        price: 780.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ip-camera-8mp-bullet",
-        name: "8MP 4K Bullet 50m IR",
-        category: "cctv-ip",
-        group: "ip-cameras",
-        brand: "Dahua",
-        description:
-            "8MP 4K Ultra HD PoE bullet camera with long-range IR.",
-        price: 1450.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ip-camera-4mp-ptz",
-        name: "4MP Speed Dome PTZ 100m IR",
-        category: "cctv-ip",
-        group: "ip-cameras",
-        brand: "Dahua",
-        description:
-            "Professional PTZ network camera with 100m infrared range.",
-        price: 4800.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-
-    {
-        id: "ip-cat5e-100m",
-        name: "Cat5e Network Cable 100m",
-        category: "cctv-ip",
-        group: "network-cable",
-        brand: "Nexpak",
-        description:
-            "100m Cat5e network cable for IP CCTV installations.",
-        price: 380.00,
-        unit: "roll",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ip-cat6-100m",
-        name: "Cat6 Network Cable 100m",
-        category: "cctv-ip",
-        group: "network-cable",
-        brand: "Nexpak",
-        description:
-            "100m Cat6 network cable for higher-performance installations.",
-        price: 520.00,
-        unit: "roll",
-        image: "",
-        active: true
-    },
-
-
-    {
-        id: "ip-poe-switch-4",
-        name: "4 Port PoE Switch",
-        category: "cctv-ip",
-        group: "poe-switches",
-        brand: "Dahua",
-        description:
-            "Compact PoE switch for IP camera installations.",
-        price: 850.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ip-poe-switch-8",
-        name: "8 Port PoE Switch",
-        category: "cctv-ip",
-        group: "poe-switches",
-        brand: "Dahua",
-        description:
-            "8-port PoE network switch for CCTV systems.",
-        price: 1450.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ip-poe-switch-16",
-        name: "16 Port PoE Switch",
-        category: "cctv-ip",
-        group: "poe-switches",
-        brand: "Dahua",
-        description:
-            "Professional 16-port PoE network switch.",
-        price: 2650.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-
-    {
-        id: "ip-hdd-1tb",
-        name: "1TB Surveillance HDD",
-        category: "cctv-ip",
-        group: "storage",
-        brand: "Seagate",
-        description:
-            "1TB surveillance-grade hard drive.",
-        price: 780.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ip-hdd-2tb",
-        name: "2TB Surveillance HDD",
-        category: "cctv-ip",
-        group: "storage",
-        brand: "Seagate",
-        description:
-            "2TB surveillance-grade hard drive.",
-        price: 1150.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ip-hdd-4tb",
-        name: "4TB Surveillance HDD",
-        category: "cctv-ip",
-        group: "storage",
-        brand: "Seagate",
-        description:
-            "4TB surveillance-grade hard drive.",
-        price: 1890.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ip-hdd-6tb",
-        name: "6TB Surveillance HDD",
-        category: "cctv-ip",
-        group: "storage",
-        brand: "Seagate",
-        description:
-            "6TB surveillance-grade hard drive.",
-        price: 2950.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-
-    {
-        id: "ip-rj45-connectors",
-        name: "RJ45 Network Connectors (100pk)",
-        category: "cctv-ip",
-        group: "connectors",
-        brand: "Nexpak",
-        description:
-            "RJ45 connectors for network CCTV installations.",
-        price: 95.00,
-        unit: "pack",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ip-junction-box",
-        name: "IP Camera Junction Box",
-        category: "cctv-ip",
-        group: "accessories",
-        brand: "Nexpak",
-        description:
-            "Weather-resistant junction box for IP cameras.",
-        price: 95.00,
-        unit: "each",
-        image: "",
-        active: true
-    }
-
-);
-
-
-/* ==========================================================================
-   ROBOGUARD PRODUCTS
-   ========================================================================== */
-
-SHOP_PRODUCTS.push(
-
-    {
-        id: "rg-base-station",
-        name: "Roboguard Base Station",
-        category: "roboguard",
-        group: "base-station",
-        brand: "Roboguard",
-        description:
-            "Wireless Roboguard receiver/base station for outdoor beam detection.",
-        price: 2850.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "rg-beam-standard",
-        name: "Roboguard Wireless Beam",
-        category: "roboguard",
-        group: "beams",
-        brand: "Roboguard",
-        description:
-            "Wireless outdoor perimeter detection beam.",
-        price: 1650.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "rg-beam-long-range",
-        name: "Roboguard Long Range Beam",
-        category: "roboguard",
-        group: "beams",
-        brand: "Roboguard",
-        description:
-            "Long-range wireless outdoor beam detector.",
-        price: 2250.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "rg-repeater",
-        name: "Roboguard Wireless Repeater",
-        category: "roboguard",
-        group: "repeaters",
-        brand: "Roboguard",
-        description:
-            "Wireless repeater for extending Roboguard system range.",
-        price: 1950.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "rg-remote",
-        name: "Roboguard Remote",
-        category: "roboguard",
-        group: "remotes",
-        brand: "Roboguard",
-        description:
-            "Remote control for Roboguard system operation.",
-        price: 450.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "rg-siren",
-        name: "Roboguard External Siren",
-        category: "roboguard",
-        group: "alerts",
-        brand: "Roboguard",
-        description:
-            "External audible warning siren.",
-        price: 650.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "rg-strobe",
-        name: "Roboguard Strobe Light",
-        category: "roboguard",
-        group: "alerts",
-        brand: "Nexpak",
-        description:
-            "Visual warning strobe for outdoor detection systems.",
-        price: 450.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "rg-battery",
-        name: "Roboguard Backup Battery",
-        category: "roboguard",
-        group: "power",
-        brand: "Nexpak",
-        description:
-            "Backup battery for Roboguard equipment.",
-        price: 280.00,
-        unit: "each",
-        image: "",
-        active: true
-    }
-
-);
-
-
-/* ==========================================================================
-   GATE AUTOMATION PRODUCTS
-   ========================================================================== */
-
-SHOP_PRODUCTS.push(
-
-    {
-        id: "gate-d5-evo",
-        name: "Centurion D5-Evo Gate Motor",
-        category: "gate-motors",
-        group: "gate-motors",
-        brand: "Centurion",
-        description:
-            "Sliding gate motor for residential and light commercial applications.",
-        price: 4850.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "gate-d5-smart",
-        name: "Centurion D5 Smart Gate Motor",
-        category: "gate-motors",
-        group: "gate-motors",
-        brand: "Centurion",
-        description:
-            "Smart sliding gate motor with advanced access features.",
-        price: 6050.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "gate-d10-smart",
-        name: "Centurion D10 Turbo Smart",
-        category: "gate-motors",
-        group: "gate-motors",
-        brand: "Centurion",
-        description:
-            "Heavy-duty sliding gate motor for larger gates.",
-        price: 9350.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-
-    {
-        id: "gate-rack-steel-2m",
-        name: "Steel Gate Rack 2m",
-        category: "gate-motors",
-        group: "rack",
-        brand: "Centurion",
-        description:
-            "2m steel rack section for sliding gate motors.",
-        price: 280.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "gate-rack-nylon-2m",
-        name: "Nylon Gate Rack 2m",
-        category: "gate-motors",
-        group: "rack",
-        brand: "Centurion",
-        description:
-            "2m nylon rack section for sliding gates.",
-        price: 250.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-
-    {
-        id: "gate-remote-4button",
-        name: "Centurion 4-Button Remote",
-        category: "gate-motors",
-        group: "remotes",
-        brand: "Centurion",
-        description:
-            "Four-button remote control transmitter.",
-        price: 220.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "gate-battery-7ah",
-        name: "7Ah Gate Motor Battery",
-        category: "gate-motors",
-        group: "battery",
-        brand: "Nexpak",
-        description:
-            "12V 7Ah backup battery for gate automation.",
-        price: 280.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "gate-anti-theft",
-        name: "Heavy Duty Anti-Theft Bracket",
-        category: "gate-motors",
-        group: "security",
-        brand: "Centurion",
-        description:
-            "Heavy-duty anti-theft protection bracket.",
-        price: 550.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "gate-solar-panel",
-        name: "Gate Motor Solar Panel",
-        category: "gate-motors",
-        group: "solar",
-        brand: "Nexpak",
-        description:
-            "Solar charging panel for suitable gate automation installations.",
-        price: 1450.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "gate-safety-beam",
-        name: "Gate Safety Infrared Beam",
-        category: "gate-motors",
-        group: "safety",
-        brand: "Centurion",
-        description:
-            "Safety beam for detecting vehicles and obstructions.",
-        price: 850.00,
-        unit: "pair",
-        image: "",
-        active: true
-    }
-
-);
-
-/* ==========================================================================
-   IDS ALARM PRODUCTS
-   ========================================================================== */
-
-SHOP_PRODUCTS.push(
-
-    {
-        id: "ids-805-panel",
-        name: "IDS 805 Alarm Panel",
-        category: "ids-alarm",
-        group: "panels",
-        brand: "IDS",
-        description:
-            "IDS 805 wired intrusion alarm control panel.",
-        price: 1250.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ids-x64-panel",
-        name: "IDS X64 Hybrid Alarm Panel",
-        category: "ids-alarm",
-        group: "panels",
-        brand: "IDS",
-        description:
-            "Hybrid IDS alarm control panel for larger residential and commercial systems.",
-        price: 2450.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ids-keypad",
-        name: "IDS LCD Keypad",
-        category: "ids-alarm",
-        group: "keypads",
-        brand: "IDS",
-        description:
-            "LCD alarm keypad for IDS control panels.",
-        price: 850.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ids-pir",
-        name: "IDS Wired PIR Detector",
-        category: "ids-alarm",
-        group: "detectors",
-        brand: "IDS",
-        description:
-            "Indoor passive infrared motion detector.",
-        price: 220.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ids-pet-pir",
-        name: "IDS Pet-Friendly PIR",
-        category: "ids-alarm",
-        group: "detectors",
-        brand: "IDS",
-        description:
-            "Pet-friendly indoor PIR motion detector.",
-        price: 280.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ids-door-contact",
-        name: "IDS Magnetic Door Contact",
-        category: "ids-alarm",
-        group: "contacts",
-        brand: "IDS",
-        description:
-            "Magnetic contact for doors and windows.",
-        price: 65.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ids-siren",
-        name: "IDS Indoor Siren",
-        category: "ids-alarm",
-        group: "sirens",
-        brand: "IDS",
-        description:
-            "Indoor alarm siren.",
-        price: 180.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ids-external-siren",
-        name: "IDS External Siren",
-        category: "ids-alarm",
-        group: "sirens",
-        brand: "IDS",
-        description:
-            "External high-output alarm siren.",
-        price: 320.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ids-strobe",
-        name: "IDS Strobe Light",
-        category: "ids-alarm",
-        group: "alerts",
-        brand: "IDS",
-        description:
-            "Visual alarm warning strobe.",
-        price: 240.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ids-hyyp-module",
-        name: "IDS HYYP Communication Module",
-        category: "ids-alarm",
-        group: "communication",
-        brand: "IDS",
-        description:
-            "Communication module for remote alarm monitoring and notifications.",
-        price: 1450.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ids-battery-7ah",
-        name: "7Ah Alarm Backup Battery",
-        category: "ids-alarm",
-        group: "battery",
-        brand: "Nexpak",
-        description:
-            "12V 7Ah rechargeable backup battery.",
-        price: 280.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ids-transformer",
-        name: "IDS Alarm Transformer",
-        category: "ids-alarm",
-        group: "power",
-        brand: "IDS",
-        description:
-            "Replacement power transformer for compatible IDS alarm systems.",
-        price: 450.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ids-enclosure",
-        name: "IDS Metal Alarm Enclosure",
-        category: "ids-alarm",
-        group: "enclosures",
-        brand: "IDS",
-        description:
-            "Metal enclosure for IDS alarm control equipment and backup battery.",
-        price: 650.00,
-        unit: "each",
-        image: "",
-        active: true
-    }
-
-);
-
-
-/* ==========================================================================
-   AJAX SECURITY PRODUCTS
-   ========================================================================== */
-
-SHOP_PRODUCTS.push(
-
-    {
-        id: "ajax-hub-2",
-        name: "Ajax Hub 2",
-        category: "ajax-security",
-        group: "hubs",
-        brand: "Ajax",
-        description:
-            "Wireless Jeweller security hub for Ajax intrusion protection.",
-        price: 3850.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ajax-hub-2-plus",
-        name: "Ajax Hub 2 Plus",
-        category: "ajax-security",
-        group: "hubs",
-        brand: "Ajax",
-        description:
-            "Advanced Ajax security hub supporting larger installations and multiple communication channels.",
-        price: 5200.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ajax-keypad",
-        name: "Ajax KeyPad",
-        category: "ajax-security",
-        group: "keypads",
-        brand: "Ajax",
-        description:
-            "Wireless touch keypad for Ajax security systems.",
-        price: 1450.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ajax-motionprotect",
-        name: "Ajax MotionProtect",
-        category: "ajax-security",
-        group: "motion-detectors",
-        brand: "Ajax",
-        description:
-            "Wireless indoor motion detector.",
-        price: 850.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ajax-motioncam",
-        name: "Ajax MotionCam",
-        category: "ajax-security",
-        group: "motion-detectors",
-        brand: "Ajax",
-        description:
-            "Wireless motion detector with photo verification.",
-        price: 1650.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ajax-motionprotect-curtain",
-        name: "Ajax MotionProtect Curtain",
-        category: "ajax-security",
-        group: "motion-detectors",
-        brand: "Ajax",
-        description:
-            "Wireless curtain-type motion detector for perimeter protection.",
-        price: 1350.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ajax-doorprotect",
-        name: "Ajax DoorProtect",
-        category: "ajax-security",
-        group: "contacts",
-        brand: "Ajax",
-        description:
-            "Wireless opening detector for doors and windows.",
-        price: 650.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ajax-glassprotect",
-        name: "Ajax GlassProtect",
-        category: "ajax-security",
-        group: "detectors",
-        brand: "Ajax",
-        description:
-            "Wireless glass-break detector.",
-        price: 850.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ajax-outdoorprotect",
-        name: "Ajax MotionProtect Outdoor",
-        category: "ajax-security",
-        group: "outdoor-detectors",
-        brand: "Ajax",
-        description:
-            "Wireless outdoor motion detector with advanced false-alarm protection.",
-        price: 1950.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ajax-street-siren",
-        name: "Ajax StreetSiren",
-        category: "ajax-security",
-        group: "sirens",
-        brand: "Ajax",
-        description:
-            "Wireless outdoor siren with visual indication.",
-        price: 1650.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ajax-home-siren",
-        name: "Ajax HomeSiren",
-        category: "ajax-security",
-        group: "sirens",
-        brand: "Ajax",
-        description:
-            "Wireless indoor siren.",
-        price: 1150.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ajax-spacecontrol",
-        name: "Ajax SpaceControl",
-        category: "ajax-security",
-        group: "remotes",
-        brand: "Ajax",
-        description:
-            "Wireless key fob for controlling Ajax security systems.",
-        price: 650.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ajax-button",
-        name: "Ajax Button",
-        category: "ajax-security",
-        group: "panic",
-        brand: "Ajax",
-        description:
-            "Wireless panic button for emergency activation.",
-        price: 650.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ajax-rex-2",
-        name: "Ajax ReX 2",
-        category: "ajax-security",
-        group: "repeaters",
-        brand: "Ajax",
-        description:
-            "Wireless range extender for Ajax Jeweller devices.",
-        price: 2450.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ajax-12vpsu",
-        name: "Ajax 12V PSU",
-        category: "ajax-security",
-        group: "power",
-        brand: "Ajax",
-        description:
-            "12V power supply for compatible Ajax hub installations.",
-        price: 850.00,
-        unit: "each",
-        image: "",
-        active: true
-    },
-
-    {
-        id: "ajax-battery",
-        name: "Ajax Backup Battery",
-        category: "ajax-security",
-        group: "battery",
-        brand: "Nexpak",
-        description:
-            "Backup battery for compatible security system installations.",
-        price: 280.00,
-        unit: "each",
-        image: "",
-        active: true
-    }
-
-);
-  /* ==========================================================================
-   NEXPAK SECURITY SOLUTIONS
-   SHOP DATA — PART 7
-   INDIVIDUAL PRODUCT CATALOG
-   ========================================================================== */
-
-
-/* ==========================================================================
-   7. GATE AUTOMATION PRODUCTS
-   ========================================================================== */
-
-PRODUCTS.push(
-
-    {
-        id: "gate-centurion-d5-evo",
-        name: "Centurion D5-Evo Sliding Gate Motor",
-        category: "gate-motors",
-        system: "gate-motors",
-        group: "gate-motor",
-        brand: "Centurion",
-        description:
-            "Professional sliding gate automation motor for residential and light commercial applications.",
-        price: 4950.00,
-        image: "",
-        featured: true,
-        stock: true
-    },
-
-    {
-        id: "gate-centurion-d5-smart",
-        name: "Centurion D5 Smart Sliding Gate Motor",
-        category: "gate-motors",
-        system: "gate-motors",
-        group: "gate-motor",
-        brand: "Centurion",
-        description:
-            "Smart sliding gate motor with advanced access and monitoring functionality.",
-        price: 6150.00,
-        image: "",
-        featured: true,
-        stock: true
-    },
-
-    {
-        id: "gate-centurion-d10-smart",
-        name: "Centurion D10 Smart Sliding Gate Motor",
-        category: "gate-motors",
-        system: "gate-motors",
-        group: "gate-motor",
-        brand: "Centurion",
-        description:
-            "Heavy-duty sliding gate automation solution for larger and heavier gates.",
-        price: 9450.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "gate-centurion-d10-turbo",
-        name: "Centurion D10 Turbo Sliding Gate Motor",
-        category: "gate-motors",
-        system: "gate-motors",
-        group: "gate-motor",
-        brand: "Centurion",
-        description:
-            "High-performance sliding gate motor designed for demanding installations.",
-        price: 10950.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "gate-centurion-vantage-400",
-        name: "Centurion Vantage 400 Swing Gate Motor",
-        category: "gate-motors",
-        system: "gate-motors",
-        group: "swing-motor",
-        brand: "Centurion",
-        description:
-            "Professional swing gate automation motor for residential and commercial gates.",
-        price: 6350.00,
-        image: "",
-        featured: true,
-        stock: true
-    },
-
-    {
-        id: "gate-centurion-vantage-500",
-        name: "Centurion Vantage 500 Swing Gate Motor",
-        category: "gate-motors",
-        system: "gate-motors",
-        group: "swing-motor",
-        brand: "Centurion",
-        description:
-            "Heavy-duty swing gate automation system for larger gate applications.",
-        price: 7850.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "gate-steel-rack-2m",
-        name: "Steel Gate Motor Rack - 2m",
-        category: "gate-motors",
-        system: "gate-motors",
-        group: "rack",
-        brand: "Centurion",
-        description:
-            "Heavy-duty steel rack for sliding gate automation.",
-        price: 280.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "gate-nylon-rack-2m",
-        name: "Nylon Gate Motor Rack - 2m",
-        category: "gate-motors",
-        system: "gate-motors",
-        group: "rack",
-        brand: "Centurion",
-        description:
-            "Nylon rack section for compatible sliding gate motors.",
-        price: 250.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "gate-remote-4button",
-        name: "4-Button Gate Remote",
-        category: "gate-motors",
-        system: "gate-motors",
-        group: "remote",
-        brand: "Centurion",
-        description:
-            "Four-button remote transmitter for compatible gate automation systems.",
-        price: 220.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "gate-remote-2button",
-        name: "2-Button Gate Remote",
-        category: "gate-motors",
-        system: "gate-motors",
-        group: "remote",
-        brand: "Centurion",
-        description:
-            "Two-button remote transmitter for compatible gate automation systems.",
-        price: 195.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "gate-battery-7ah",
-        name: "7Ah Gate Motor Backup Battery",
-        category: "gate-motors",
-        system: "gate-motors",
-        group: "battery",
-        brand: "Nexpak",
-        description:
-            "12V 7Ah rechargeable backup battery for gate automation systems.",
-        price: 280.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "gate-battery-9ah",
-        name: "9Ah Gate Motor Backup Battery",
-        category: "gate-motors",
-        system: "gate-motors",
-        group: "battery",
-        brand: "Nexpak",
-        description:
-            "12V 9Ah rechargeable backup battery for gate automation systems.",
-        price: 420.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "gate-anti-theft-bracket",
-        name: "Heavy-Duty Anti-Theft Gate Motor Bracket",
-        category: "gate-motors",
-        system: "gate-motors",
-        group: "security",
-        brand: "Nexpak",
-        description:
-            "Heavy-duty security bracket designed to help protect sliding gate motors.",
-        price: 550.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "gate-ground-stop",
-        name: "Gate Ground Stop",
-        category: "gate-motors",
-        system: "gate-motors",
-        group: "hardware",
-        brand: "Nexpak",
-        description:
-            "Heavy-duty gate stop for controlled sliding gate positioning.",
-        price: 165.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "gate-loop-detector",
-        name: "Vehicle Loop Detector",
-        category: "gate-motors",
-        system: "gate-motors",
-        group: "accessory",
-        brand: "Nexpak",
-        description:
-            "Vehicle detection loop controller for automated gate access applications.",
-        price: 890.00,
-        image: "",
-        featured: false,
-        stock: true
-    }
-
-);
-
-
-/* ==========================================================================
-   8. IDS ALARM PRODUCTS
-   ========================================================================== */
-
-PRODUCTS.push(
-
-    {
-        id: "ids-805",
-        name: "IDS 805 Alarm Panel",
-        category: "ids-alarm",
-        system: "ids-alarm",
-        group: "alarm-panel",
-        brand: "IDS",
-        description:
-            "Reliable wired intrusion alarm control panel for residential and small commercial installations.",
-        price: 950.00,
-        image: "",
-        featured: true,
-        stock: true
-    },
-
-    {
-        id: "ids-x64",
-        name: "IDS X64 Alarm Panel",
-        category: "ids-alarm",
-        system: "ids-alarm",
-        group: "alarm-panel",
-        brand: "IDS",
-        description:
-            "Expandable hybrid alarm panel for larger residential and commercial security systems.",
-        price: 1850.00,
-        image: "",
-        featured: true,
-        stock: true
-    },
-
-    {
-        id: "ids-keypad",
-        name: "IDS LCD Alarm Keypad",
-        category: "ids-alarm",
-        system: "ids-alarm",
-        group: "keypad",
-        brand: "IDS",
-        description:
-            "LCD keypad for programming and controlling compatible IDS alarm panels.",
-        price: 850.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "ids-pir",
-        name: "IDS PIR Motion Detector",
-        category: "ids-alarm",
-        system: "ids-alarm",
-        group: "detector",
-        brand: "IDS",
-        description:
-            "Indoor PIR motion detector for reliable intrusion detection.",
-        price: 280.00,
-        image: "",
-        featured: true,
-        stock: true
-    },
-
-    {
-        id: "ids-pet-pir",
-        name: "IDS Pet-Friendly PIR Detector",
-        category: "ids-alarm",
-        system: "ids-alarm",
-        group: "detector",
-        brand: "IDS",
-        description:
-            "Pet-tolerant PIR detector for indoor residential applications.",
-        price: 350.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "ids-door-contact",
-        name: "IDS Magnetic Door Contact",
-        category: "ids-alarm",
-        system: "ids-alarm",
-        group: "contact",
-        brand: "IDS",
-        description:
-            "Magnetic reed contact for doors, windows and other protected openings.",
-        price: 85.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "ids-outdoor-beam",
-        name: "IDS Outdoor Beam Detector",
-        category: "ids-alarm",
-        system: "ids-alarm",
-        group: "outdoor-detector",
-        brand: "IDS",
-        description:
-            "Outdoor perimeter beam detector for early intrusion detection.",
-        price: 950.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "ids-siren",
-        name: "IDS 15W Alarm Siren",
-        category: "ids-alarm",
-        system: "ids-alarm",
-        group: "siren",
-        brand: "IDS",
-        description:
-            "High-output indoor or outdoor security alarm siren.",
-        price: 120.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "ids-strobe",
-        name: "IDS Strobe Warning Light",
-        category: "ids-alarm",
-        system: "ids-alarm",
-        group: "strobe",
-        brand: "IDS",
-        description:
-            "Visual alarm indicator for indoor or outdoor security installations.",
-        price: 145.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "ids-hyyp-module",
-        name: "IDS HYYP GSM/IP Communication Module",
-        category: "ids-alarm",
-        system: "ids-alarm",
-        group: "communication",
-        brand: "IDS",
-        description:
-            "Remote alarm communication module for compatible IDS alarm systems.",
-        price: 1450.00,
-        image: "",
-        featured: true,
-        stock: true
-    },
-
-    {
-        id: "ids-psu-16a",
-        name: "IDS 16A Power Supply",
-        category: "ids-alarm",
-        system: "ids-alarm",
-        group: "power-supply",
-        brand: "IDS",
-        description:
-            "16 Amp power supply for alarm and security system installations.",
-        price: 350.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "ids-battery-7ah",
-        name: "7Ah Alarm Backup Battery",
-        category: "ids-alarm",
-        system: "ids-alarm",
-        group: "battery",
-        brand: "Nexpak",
-        description:
-            "12V 7Ah rechargeable standby battery for alarm systems.",
-        price: 280.00,
-        image: "",
-        featured: false,
-        stock: true
-    }
-
-);
-
-
-/* ==========================================================================
-   9. AJAX SECURITY PRODUCTS
-   ========================================================================== */
-
-PRODUCTS.push(
-
-    {
-        id: "ajax-hub-2",
-        name: "Ajax Hub 2",
-        category: "ajax-security",
-        system: "ajax-security",
-        group: "hub",
-        brand: "Ajax",
-        description:
-            "Wireless security hub for professional intrusion detection systems.",
-        price: 3950.00,
-        image: "",
-        featured: true,
-        stock: true
-    },
-
-    {
-        id: "ajax-hub-2-plus",
-        name: "Ajax Hub 2 Plus",
-        category: "ajax-security",
-        system: "ajax-security",
-        group: "hub",
-        brand: "Ajax",
-        description:
-            "Advanced wireless security hub with expanded communication capabilities.",
-        price: 5450.00,
-        image: "",
-        featured: true,
-        stock: true
-    },
-
-    {
-        id: "ajax-motionprotect",
-        name: "Ajax MotionProtect",
-        category: "ajax-security",
-        system: "ajax-security",
-        group: "motion-detector",
-        brand: "Ajax",
-        description:
-            "Wireless indoor motion detector with advanced false-alarm protection.",
-        price: 950.00,
-        image: "",
-        featured: true,
-        stock: true
-    },
-
-    {
-        id: "ajax-motionprotect-outdoor",
-        name: "Ajax MotionProtect Outdoor",
-        category: "ajax-security",
-        system: "ajax-security",
-        group: "outdoor-detector",
-        brand: "Ajax",
-        description:
-            "Wireless outdoor motion detector for perimeter protection.",
-        price: 2150.00,
-        image: "",
-        featured: true,
-        stock: true
-    },
-
-    {
-        id: "ajax-doorprotect",
-        name: "Ajax DoorProtect",
-        category: "ajax-security",
-        system: "ajax-security",
-        group: "door-contact",
-        brand: "Ajax",
-        description:
-            "Wireless magnetic opening detector for doors and windows.",
-        price: 650.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "ajax-fireprotect",
-        name: "Ajax FireProtect",
-        category: "ajax-security",
-        system: "ajax-security",
-        group: "fire-detector",
-        brand: "Ajax",
-        description:
-            "Wireless smoke and heat detector for residential and commercial protection.",
-        price: 1150.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "ajax-keypad",
-        name: "Ajax KeyPad",
-        category: "ajax-security",
-        system: "ajax-security",
-        group: "keypad",
-        brand: "Ajax",
-        description:
-            "Wireless keypad for arming and disarming Ajax security systems.",
-        price: 1450.00,
-        image: "",
-        featured: true,
-        stock: true
-    },
-
-    {
-        id: "ajax-spacecontrol",
-        name: "Ajax SpaceControl Remote",
-        category: "ajax-security",
-        system: "ajax-security",
-        group: "remote",
-        brand: "Ajax",
-        description:
-            "Compact wireless remote control for Ajax security systems.",
-        price: 850.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "ajax-street-siren",
-        name: "Ajax StreetSiren",
-        category: "ajax-security",
-        system: "ajax-security",
-        group: "siren",
-        brand: "Ajax",
-        description:
-            "Wireless outdoor siren with visual alarm indication.",
-        price: 1750.00,
-        image: "",
-        featured: true,
-        stock: true
-    },
-
-    {
-        id: "ajax-street-siren-doubledeck",
-        name: "Ajax StreetSiren DoubleDeck",
-        category: "ajax-security",
-        system: "ajax-security",
-        group: "siren",
-        brand: "Ajax",
-        description:
-            "Advanced wireless outdoor siren with enhanced visibility.",
-        price: 2250.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "ajax-transmitter",
-        name: "Ajax Transmitter",
-        category: "ajax-security",
-        system: "ajax-security",
-        group: "integration",
-        brand: "Ajax",
-        description:
-            "Wireless integration module for connecting third-party wired devices.",
-        price: 1250.00,
-        image: "",
-        featured: false,
-        stock: true
-    }
-
-);
-
-
-/* ==========================================================================
-   10. STAFIX AGRICULTURAL FENCING PRODUCTS
-   ========================================================================== */
-
-PRODUCTS.push(
-
-    {
-        id: "stafix-energizer-1j",
-        name: "Stafix 1 Joule Energizer",
-        category: "stafix-agri",
-        system: "stafix-agri",
-        group: "energizer",
-        brand: "Stafix",
-        description:
-            "Agricultural electric fence energizer for smaller livestock and perimeter applications.",
-        price: 1850.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "stafix-energizer-3j",
-        name: "Stafix 3 Joule Energizer",
-        category: "stafix-agri",
-        system: "stafix-agri",
-        group: "energizer",
-        brand: "Stafix",
-        description:
-            "Medium-duty agricultural electric fence energizer.",
-        price: 2950.00,
-        image: "",
-        featured: true,
-        stock: true
-    },
-
-    {
-        id: "stafix-energizer-6j",
-        name: "Stafix 6 Joule Energizer",
-        category: "stafix-agri",
-        system: "stafix-agri",
-        group: "energizer",
-        brand: "Stafix",
-        description:
-            "High-output agricultural energizer for larger perimeter fencing.",
-        price: 4650.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "stafix-solar-energizer",
-        name: "Stafix Solar Electric Fence Energizer",
-        category: "stafix-agri",
-        system: "stafix-agri",
-        group: "solar-energizer",
-        brand: "Stafix",
-        description:
-            "Solar-powered electric fence energizer for agricultural and remote installations.",
-        price: 4250.00,
-        image: "",
-        featured: true,
-        stock: true
-    },
-
-    {
-        id: "stafix-braid-wire",
-        name: "Stafix Electric Fence Polywire",
-        category: "stafix-agri",
-        system: "stafix-agri",
-        group: "wire",
-        brand: "Stafix",
-        description:
-            "High-visibility conductive polywire for agricultural electric fencing.",
-        price: 450.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "stafix-polyrope",
-        name: "Stafix Electric Fence Polyrope",
-        category: "stafix-agri",
-        system: "stafix-agri",
-        group: "wire",
-        brand: "Stafix",
-        description:
-            "Conductive electric fence polyrope for livestock fencing.",
-        price: 650.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "stafix-tensioner",
-        name: "Stafix Wire Tensioner",
-        category: "stafix-agri",
-        system: "stafix-agri",
-        group: "tensioner",
-        brand: "Stafix",
-        description:
-            "Heavy-duty tensioner for agricultural electric fence wire.",
-        price: 85.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "stafix-insulator",
-        name: "Stafix Electric Fence Insulator",
-        category: "stafix-agri",
-        system: "stafix-agri",
-        group: "insulator",
-        brand: "Stafix",
-        description:
-            "Electric fence insulator for agricultural fence posts.",
-        price: 18.00,
-        image: "",
-        featured: false,
-        stock: true
-    },
-
-    {
-        id: "stafix-earth-spike",
-        name: "Stafix Galvanised Earth Spike",
-        category: "stafix-agri",
-        system: "stafix-agri",
-        group: "earthing",
-        brand: "Stafix",
-        description:
-            "Galvanised earth spike for agricultural electric fence earthing systems.",
-        price: 85.00,
-        image: "",
-        featured: false,
-        stock: true
-    }
-
-);
-
-
-/* ==========================================================================
-   END OF PART 7
-   ========================================================================== */
-
-/* ==========================================================================
-   NEXPAK SECURITY SOLUTIONS
-   SHOP DATA — PART 8
-   SYSTEM MAP + CONFIGURATOR HELPERS + EXPORTS
-   ========================================================================== */
-
-
-/* ==========================================================================
-   8. SYSTEM PRODUCT MAP
-   ========================================================================== */
-
-const PRODUCT_SYSTEM_MAP = {
-
-    "electric-fencing": {
-        title: "Build Your Electric Fence System",
-        description:
-            "Select every component required for your electric fencing installation.",
-        groups: [
-            "energizer",
-            "bracket",
-            "bracket-lines",
-            "bracket-colour",
-            "bracket-profile",
-            "bracket-style",
-            "stay",
-            "stay-sleeve",
-            "lugs",
-            "anchors",
-            "wire",
-            "ferrules",
-            "tensioner",
-            "hooks",
-            "earth-spike",
-            "ht-cable",
-            "earth-loop",
-            "warning-sign",
-            "gate-contact",
-            "battery",
-            "power-supply",
-            "keypad",
-            "enclosure",
-            "communication",
-            "siren",
-            "strobe",
-            "nite-light",
-            "installation"
-        ]
-    },
-
-    "cctv-hd": {
-        title: "Build Your HD CCTV System",
-        description:
-            "Choose your cameras, DVR, storage, cabling, power and installation components.",
-        groups: [
-            "camera-brand",
-            "dvr",
-            "hdd",
-            "power-supply",
-            "camera",
-            "varifocal-camera",
-            "cable",
-            "connector",
-            "balun",
-            "joint-box",
-            "monitor",
-            "tool",
-            "installation"
-        ]
-    },
-
-    "cctv-ip": {
-        title: "Build Your IP CCTV System",
-        description:
-            "Configure your network surveillance system component by component.",
-        groups: [
-            "ip-brand",
-            "nvr",
-            "ip-camera",
-            "poe-switch",
-            "hdd",
-            "network-cable",
-            "connector",
-            "monitor",
-            "cabinet",
-            "ups",
-            "installation"
-        ]
-    },
-
-    "roboguard": {
-        title: "Build Your Roboguard System",
-        description:
-            "Configure your wireless outdoor early-warning beam security system.",
-        groups: [
-            "base-station",
-            "beam",
-            "receiver",
-            "transmitter",
-            "battery",
-            "solar",
-            "bracket",
-            "cable",
-            "siren",
-            "strobe",
-            "remote",
-            "installation"
-        ]
-    },
-
-    "gate-motors": {
-        title: "Build Your Gate Automation System",
-        description:
-            "Select your gate motor and all required automation accessories.",
-        groups: [
-            "gate-motor",
-            "swing-motor",
-            "rack",
-            "remote",
-            "battery",
-            "security",
-            "hardware",
-            "accessory",
-            "loop-detector",
-            "installation"
-        ]
-    },
-
-    "ids-alarm": {
-        title: "Build Your IDS Alarm System",
-        description:
-            "Build an IDS alarm system by selecting every required component.",
-        groups: [
-            "alarm-panel",
-            "keypad",
-            "detector",
-            "outdoor-detector",
-            "contact",
-            "siren",
-            "strobe",
-            "communication",
-            "power-supply",
-            "battery",
-            "enclosure",
-            "installation"
-        ]
-    },
-
-    "ajax-security": {
-        title: "Build Your Ajax Security System",
-        description:
-            "Configure your Ajax wireless security system from individual products.",
-        groups: [
-            "hub",
-            "motion-detector",
-            "outdoor-detector",
-            "door-contact",
-            "fire-detector",
-            "keypad",
-            "remote",
-            "siren",
-            "integration",
-            "battery",
-            "installation"
-        ]
-    },
-
-    "stafix-agri": {
-        title: "Build Your Stafix Agricultural Fence",
-        description:
-            "Configure an agricultural electric fencing system component by component.",
-        groups: [
-            "energizer",
-            "solar-energizer",
-            "wire",
-            "tensioner",
-            "insulator",
-            "earthing",
-            "battery",
-            "installation"
-        ]
-    }
-
-};
-
-
-/* ==========================================================================
-   9. PRODUCT LOOKUP
-   ========================================================================== */
-
-function getProductById(productId) {
-
-    return PRODUCTS.find(
-        product => product.id === productId
-    );
-
-}
-
-
-/* ==========================================================================
-   10. GET PRODUCTS FOR A SYSTEM
-   ========================================================================== */
-
-function getProductsForSystem(systemId) {
-
-    if (
-        !PRODUCT_SYSTEM_MAP[
-            systemId
-        ]
-    ) {
-
-        return [];
-
-    }
-
-    return PRODUCTS.filter(
-        product =>
-            product.system === systemId
-    );
-
-}
-
-
-/* ==========================================================================
-   11. GET PRODUCTS BY GROUP
-   ========================================================================== */
-
-function getProductsByGroup(
-    systemId,
-    group
-) {
-
-    return PRODUCTS.filter(
-        product =>
-            product.system === systemId &&
-            product.group === group
-    );
-
-}
-
-
-/* ==========================================================================
-   12. GET SYSTEM CONFIGURATION
-   ========================================================================== */
-
-function getSystemConfiguration(
-    systemId
-) {
-
-    return PRODUCT_SYSTEM_MAP[
-        systemId
-    ] || null;
-
-}
-
-
-/* ==========================================================================
-   13. SEARCH PRODUCTS
-   ========================================================================== */
-
-function searchProducts(
-    searchTerm
-) {
-
-    const term =
-        String(
-            searchTerm || ""
-        )
-            .trim()
-            .toLowerCase();
-
-    if (!term) {
-
-        return PRODUCTS;
-
-    }
-
-    return PRODUCTS.filter(
-        product => {
-
-            const searchableText =
-                [
-                    product.name,
-                    product.brand,
-                    product.category,
-                    product.system,
-                    product.group,
-                    product.description
-                ]
-                    .filter(Boolean)
-                    .join(" ")
-                    .toLowerCase();
-
-            return searchableText.includes(
-                term
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const product =
+                        findCurrentProduct(
+                            button.dataset.productId
+                        );
+
+                    if (!product) {
+                        return;
+                    }
+
+                    changeQuantity(
+                        product,
+                        1
+                    );
+
+                    refreshProductCard(
+                        product
+                    );
+
+                }
             );
 
-        }
-    );
-
-}
+        });
 
 
-/* ==========================================================================
-   14. GET PRODUCTS BY CATEGORY
-   ========================================================================== */
-
-function getProductsByCategory(
-    categoryId
-) {
-
-    return PRODUCTS.filter(
-        product =>
-            product.category === categoryId
-    );
-
-}
-
-
-/* ==========================================================================
-   15. GET PRODUCTS BY BRAND
-   ========================================================================== */
-
-function getProductsByBrand(
-    brand
-) {
-
-    const selectedBrand =
-        String(
-            brand || ""
+    document
+        .querySelectorAll(
+            ".system-qty-minus"
         )
-            .trim()
-            .toLowerCase();
+        .forEach(button => {
 
-    return PRODUCTS.filter(
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const product =
+                        findCurrentProduct(
+                            button.dataset.productId
+                        );
+
+                    if (!product) {
+                        return;
+                    }
+
+                    changeQuantity(
+                        product,
+                        -1
+                    );
+
+                    refreshProductCard(
+                        product
+                    );
+
+                }
+            );
+
+        });
+
+
+    /* ---------------------------------------------------------------
+       DIRECT NUMBER INPUT
+       --------------------------------------------------------------- */
+
+    document
+        .querySelectorAll(
+            ".system-qty-input"
+        )
+        .forEach(input => {
+
+            input.addEventListener(
+                "change",
+                () => {
+
+                    const product =
+                        findCurrentProduct(
+                            input.dataset.productId
+                        );
+
+                    if (!product) {
+                        return;
+                    }
+
+                    let quantity =
+                        parseInt(
+                            input.value,
+                            10
+                        );
+
+                    if (
+                        Number.isNaN(
+                            quantity
+                        ) ||
+                        quantity < 0
+                    ) {
+
+                        quantity = 0;
+
+                    }
+
+                    addProduct(
+                        product,
+                        quantity
+                    );
+
+                    refreshProductCard(
+                        product
+                    );
+
+                }
+            );
+
+
+            input.addEventListener(
+                "input",
+                () => {
+
+                    let quantity =
+                        parseInt(
+                            input.value,
+                            10
+                        );
+
+                    if (
+                        Number.isNaN(
+                            quantity
+                        ) ||
+                        quantity < 0
+                    ) {
+
+                        input.value = 0;
+
+                    }
+
+                }
+            );
+
+        });
+
+}
+
+
+/* ==========================================================================
+   28. FIND CURRENT PRODUCT
+   ========================================================================== */
+
+function findCurrentProduct(productId) {
+
+    const products =
+        getCurrentProducts();
+
+    return products.find(
         product =>
             String(
-                product.brand || ""
-            )
-                .toLowerCase() ===
-            selectedBrand
+                getProductId(product)
+            ) === String(productId)
     );
 
 }
 
 
 /* ==========================================================================
-   16. PRICE CALCULATION
+   29. REFRESH PRODUCT CARD
    ========================================================================== */
 
-function calculateProductTotal(
-    productId,
-    quantity
-) {
+function refreshProductCard(product) {
 
-    const product =
-        getProductById(
-            productId
+    const productId =
+        getProductId(product);
+
+    const card =
+        document.querySelector(
+            `.system-product-card[data-product-id="${CSS.escape(
+                String(productId)
+            )}"]`
         );
 
-    if (!product) {
+    if (!card) {
+        return;
+    }
 
-        return 0;
+
+    const selected =
+        state.selections[productId];
+
+    const quantity =
+        selected
+            ? selected.quantity
+            : 0;
+
+
+    const input =
+        card.querySelector(
+            ".system-qty-input"
+        );
+
+    if (input) {
+
+        input.value =
+            quantity;
 
     }
 
-    const qty =
-        Math.max(
-            0,
-            Number(quantity) || 0
+
+    const lineTotal =
+        card.querySelector(
+            ".system-product-line-total"
         );
 
-    return (
-        Number(product.price) *
-        qty
-    );
+
+    if (lineTotal) {
+
+        lineTotal.textContent =
+            formatMoney(
+                getProductPrice(product) *
+                quantity
+            );
+
+    }
+
+
+    if (quantity > 0) {
+
+        card.classList.add(
+            "selected"
+        );
+
+    } else {
+
+        card.classList.remove(
+            "selected"
+        );
+
+    }
 
 }
 
 
 /* ==========================================================================
-   17. SYSTEM SUBTOTAL
+   30. ESCAPE HTML
    ========================================================================== */
 
-function calculateSystemSubtotal(
-    selections
-) {
+function escapeHtml(value) {
+
+    return String(
+        value ?? ""
+    )
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* ==========================================================================
+   31. RENDER CURRENT CATEGORY
+   ========================================================================== */
+
+function renderCurrentCategory() {
+
+    if (elements.categoryTitle) {
+
+        elements.categoryTitle.textContent =
+            state.categoryTitle;
+
+    }
+
+
+    renderProductGroups();
+
+    updateTotals();
+
+}
+
+
+/* ==========================================================================
+   32. CATEGORY TAB EVENTS
+   ========================================================================== */
+
+function attachCategoryEvents() {
+
+    document
+        .querySelectorAll(
+            ".nav-tab"
+        )
+        .forEach(tab => {
+
+            tab.addEventListener(
+                "click",
+                () => {
+
+                    const category =
+                        tab.dataset.category;
+
+                    if (!category) {
+                        return;
+                    }
+
+
+                    document
+                        .querySelectorAll(
+                            ".nav-tab"
+                        )
+                        .forEach(item => {
+
+                            item.classList.remove(
+                                "active"
+                            );
+
+                        });
+
+
+                    tab.classList.add(
+                        "active"
+                    );
+
+
+                    setCategory(
+                        category
+                    );
+
+
+                    renderCurrentCategory();
+
+                }
+            );
+
+        });
+
+            }
+
+          /* ==========================================================================
+   33. SELECTED PRODUCTS SUMMARY
+   ========================================================================== */
+
+function renderSelectedProducts() {
+
+    const summaryContainer =
+        document.getElementById(
+            "selectedProductsSummary"
+        );
+
+
+    /*
+     * If the page does not contain a dedicated
+     * selected-products container, we simply
+     * skip this section.
+     */
+
+    if (!summaryContainer) {
+        return;
+    }
+
+
+    const products =
+        Object.values(
+            state.selections
+        );
+
+
+    if (!products.length) {
+
+        summaryContainer.innerHTML = `
+
+            <div class="selected-products-empty">
+
+                <i class="fa-solid fa-cart-plus"></i>
+
+                <h4>Your system is empty</h4>
+
+                <p>
+                    Select products above to build
+                    your security system.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    summaryContainer.innerHTML = `
+
+        <div class="selected-products-header">
+
+            <h3>
+                Selected Products
+            </h3>
+
+            <button
+                type="button"
+                id="btnClearSystem"
+                class="clear-system-btn"
+            >
+                <i class="fa-solid fa-trash"></i>
+                Clear System
+            </button>
+
+        </div>
+
+        <div class="selected-products-list"></div>
+
+    `;
+
+
+    const list =
+        summaryContainer.querySelector(
+            ".selected-products-list"
+        );
+
+
+    products.forEach(product => {
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "selected-system-product";
+
+
+        const lineTotal =
+            Number(product.price) *
+            Number(product.quantity);
+
+
+        item.innerHTML = `
+
+            <div class="selected-system-product-info">
+
+                <strong>
+                    ${escapeHtml(
+                        product.name
+                    )}
+                </strong>
+
+                <span>
+                    ${formatMoney(
+                        product.price
+                    )}
+                    ×
+                    ${product.quantity}
+                </span>
+
+            </div>
+
+
+            <div class="selected-system-product-total">
+
+                ${formatMoney(
+                    lineTotal
+                )}
+
+            </div>
+
+
+            <button
+                type="button"
+                class="selected-product-remove"
+                data-product-id="${escapeHtml(
+                    product.id
+                )}"
+                aria-label="Remove product"
+                title="Remove product"
+            >
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        `;
+
+
+        list.appendChild(item);
+
+    });
+
+
+    attachSelectedProductEvents();
+
+}
+
+
+/* ==========================================================================
+   34. SELECTED PRODUCT EVENTS
+   ========================================================================== */
+
+function attachSelectedProductEvents() {
+
+    document
+        .querySelectorAll(
+            ".selected-product-remove"
+        )
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const productId =
+                        button.dataset.productId;
+
+
+                    removeProduct(
+                        productId
+                    );
+
+
+                    const product =
+                        findCurrentProduct(
+                            productId
+                        );
+
+
+                    if (product) {
+
+                        refreshProductCard(
+                            product
+                        );
+
+                    }
+
+
+                    renderSelectedProducts();
+
+                }
+            );
+
+        });
+
+
+    const clearButton =
+        document.getElementById(
+            "btnClearSystem"
+        );
+
+
+    if (clearButton) {
+
+        clearButton.addEventListener(
+            "click",
+            () => {
+
+                clearSystem();
+
+                renderProductGroups();
+
+                renderSelectedProducts();
+
+                showToast(
+                    "System cleared."
+                );
+
+            }
+        );
+
+    }
+
+}
+
+
+/* ==========================================================================
+   35. UPDATE SELECTED PRODUCTS WHEN STATE CHANGES
+   ========================================================================== */
+
+function updateSelectedProducts() {
+
+    renderSelectedProducts();
+
+}
+
+
+/* ==========================================================================
+   36. UPDATE TOTALS EXTENSION
+   ========================================================================== */
+
+/*
+ * Keep the original updateTotals() calculation,
+ * but make sure the selected-products display
+ * is refreshed whenever quantities change.
+ */
+
+const originalUpdateTotals =
+    updateTotals;
+
+
+function updateTotals() {
 
     let subtotal = 0;
 
-    if (
-        !selections ||
-        typeof selections !== "object"
-    ) {
+    let itemCount = 0;
 
-        return subtotal;
+    let productCount = 0;
+
+
+    Object.values(
+        state.selections
+    ).forEach(product => {
+
+        const quantity =
+            Number(product.quantity) || 0;
+
+        const price =
+            Number(product.price) || 0;
+
+
+        subtotal +=
+            price * quantity;
+
+
+        itemCount +=
+            quantity;
+
+
+        productCount += 1;
+
+    });
+
+
+    const vat =
+        subtotal * VAT_RATE;
+
+
+    const grandTotal =
+        subtotal + vat;
+
+
+    state.totals = {
+
+        itemCount,
+
+        productCount,
+
+        subtotal,
+
+        vat,
+
+        grandTotal
+
+    };
+
+
+    updateSummary();
+
+    updateSelectedProducts();
+
+}
+
+
+/* ==========================================================================
+   37. UPDATED SUMMARY INFORMATION
+   ========================================================================== */
+
+function updateSummary() {
+
+    if (elements.summaryCategory) {
+
+        elements.summaryCategory.textContent =
+            state.categoryTitle;
 
     }
 
-    Object.keys(
-        selections
-    ).forEach(
-        productId => {
 
-            const quantity =
-                Number(
-                    selections[
-                        productId
-                    ]
-                ) || 0;
+    if (elements.summaryAddonCount) {
 
-            subtotal +=
-                calculateProductTotal(
-                    productId,
-                    quantity
-                );
+        elements.summaryAddonCount.textContent =
 
-        }
-    );
+            `${state.totals.itemCount} ` +
 
-    return subtotal;
+            (
+                state.totals.itemCount === 1
+                    ? "item"
+                    : "items"
+            ) +
 
-}
+            ` configured`;
+
+    }
 
 
-/* ==========================================================================
-   18. VAT CALCULATION
-   ========================================================================== */
+    if (elements.summarySubtotal) {
 
-function calculateVat(
-    subtotal
-) {
+        elements.summarySubtotal.textContent =
+            formatMoney(
+                state.totals.subtotal
+            );
 
-    const rate =
-        SHOP_DATA.company.vatRate;
-
-    return (
-        Number(subtotal || 0) *
-        rate
-    );
-
-}
+    }
 
 
-/* ==========================================================================
-   19. GRAND TOTAL
-   ========================================================================== */
+    if (elements.summaryVat) {
 
-function calculateGrandTotal(
-    subtotal
-) {
+        elements.summaryVat.textContent =
+            formatMoney(
+                state.totals.vat
+            );
 
-    return (
-        Number(subtotal || 0) +
-        calculateVat(
-            subtotal
-        )
-    );
+    }
+
+
+    if (elements.summaryGrandTotal) {
+
+        elements.summaryGrandTotal.textContent =
+            formatMoney(
+                state.totals.grandTotal
+            );
+
+    }
+
+
+    updateCartButtonState();
 
 }
 
 
 /* ==========================================================================
-   20. FORMAT CURRENCY
+   38. CART BADGE
    ========================================================================== */
 
-function formatZAR(
-    amount
-) {
+function updateCartBadge() {
 
-    return new Intl.NumberFormat(
-        "en-ZA",
-        {
-            style: "currency",
-            currency: "ZAR",
-            minimumFractionDigits: 2
-        }
-    ).format(
-        Number(amount) || 0
-    );
-
-}
+    if (!elements.cartBadge) {
+        return;
+    }
 
 
-/* ==========================================================================
-   21. GET SYSTEM PRODUCT COUNT
-   ========================================================================== */
-
-function getSystemProductCount(
-    systemId
-) {
-
-    return getProductsForSystem(
-        systemId
-    ).length;
-
-}
+    let cart = [];
 
 
-/* ==========================================================================
-   22. GET AVAILABLE SYSTEM GROUPS
-   ========================================================================== */
+    try {
 
-function getAvailableSystemGroups(
-    systemId
-) {
-
-    const products =
-        getProductsForSystem(
-            systemId
-        );
-
-    return [
-        ...new Set(
-            products
-                .map(
-                    product =>
-                        product.group
+        cart =
+            JSON.parse(
+                localStorage.getItem(
+                    "nexpak_cart"
                 )
-                .filter(Boolean)
-        )
-    ];
+            ) || [];
 
-}
+    } catch (error) {
 
-
-/* ==========================================================================
-   23. PRODUCT AVAILABILITY
-   ========================================================================== */
-
-function isProductAvailable(
-    productId
-) {
-
-    const product =
-        getProductById(
-            productId
+        console.warn(
+            "Nexpak Configurator: Could not read cart.",
+            error
         );
 
-    if (!product) {
-
-        return false;
+        cart = [];
 
     }
 
-    return product.stock !== false;
+
+    let count = 0;
+
+
+    cart.forEach(item => {
+
+        /*
+         * Standard shop products
+         */
+
+        if (
+            typeof item.quantity === "number"
+        ) {
+
+            count +=
+                item.quantity;
+
+            return;
+
+        }
+
+
+        /*
+         * Configured systems
+         */
+
+        if (
+            item.selections &&
+            typeof item.selections === "object"
+        ) {
+
+            Object.values(
+                item.selections
+            ).forEach(product => {
+
+                count +=
+                    Number(
+                        product.quantity
+                    ) || 0;
+
+            });
+
+        }
+
+    });
+
+
+    elements.cartBadge.textContent =
+        count;
 
 }
 
 
 /* ==========================================================================
-   24. GET AVAILABLE PRODUCTS ONLY
+   39. BUILD CART ITEM
    ========================================================================== */
 
-function getAvailableProducts(
-    systemId
-) {
+function buildConfiguratorCartItem() {
 
-    return getProductsForSystem(
-        systemId
-    ).filter(
-        product =>
-            product.stock !== false
-    );
-
-}
-
-
-/* ==========================================================================
-   25. SYSTEM SUMMARY
-   ========================================================================== */
-
-function getSystemSummary(
-    systemId
-) {
-
-    const config =
-        getSystemConfiguration(
-            systemId
+    const selectedProducts =
+        Object.values(
+            state.selections
         );
 
-    const products =
-        getProductsForSystem(
-            systemId
-        );
 
-    if (!config) {
+    if (!selectedProducts.length) {
 
         return null;
 
     }
 
+
     return {
 
-        id: systemId,
+        id:
+            `SYSTEM-${Date.now()}`,
 
-        title:
-            config.title,
+        type:
+            "configured-system",
 
-        description:
-            config.description,
+        category:
+            state.category,
+
+        categoryTitle:
+            state.categoryTitle,
+
+        name:
+            `${state.categoryTitle} - Custom System`,
+
+        selections:
+            selectedProducts.map(product => ({
+
+                id:
+                    product.id,
+
+                name:
+                    product.name,
+
+                price:
+                    Number(product.price) || 0,
+
+                quantity:
+                    Number(product.quantity) || 0,
+
+                image:
+                    product.image || "",
+
+                category:
+                    product.category ||
+                    state.category,
+
+                group:
+                    product.group || "",
+
+                unit:
+                    product.unit ||
+                    "each"
+
+            })),
+
+        itemCount:
+            state.totals.itemCount,
 
         productCount:
-            products.length,
+            state.totals.productCount,
 
-        groups:
-            getAvailableSystemGroups(
-                systemId
+        subtotal:
+            Number(
+                state.totals.subtotal
             ),
 
-        products:
-            products
+        vat:
+            Number(
+                state.totals.vat
+            ),
+
+        total:
+            Number(
+                state.totals.grandTotal
+            ),
+
+        vatRate:
+            VAT_RATE,
+
+        currency:
+            CURRENCY,
+
+        createdAt:
+            new Date().toISOString()
 
     };
 
@@ -6215,190 +4147,1092 @@ function getSystemSummary(
 
 
 /* ==========================================================================
-   26. SHOP DATA EXPORT OBJECT
+   40. ADD CONFIGURED SYSTEM TO CART
    ========================================================================== */
 
-const NEXPAK_SHOP_DATA = {
+function addConfiguredSystemToCart() {
 
-    company:
-        SHOP_DATA.company,
+    const cartItem =
+        buildConfiguratorCartItem();
 
-    categories:
-        SHOP_DATA.categories,
 
-    products:
-        PRODUCTS,
+    if (!cartItem) {
 
-    systemMap:
-        PRODUCT_SYSTEM_MAP,
+        showToast(
+            "Please select at least one product.",
+            "error"
+        );
 
-    getProductById:
-        getProductById,
+        return;
 
-    getProductsForSystem:
-        getProductsForSystem,
+    }
 
-    getProductsByGroup:
-        getProductsByGroup,
 
-    getProductsByCategory:
-        getProductsByCategory,
+    let cart = [];
 
-    getProductsByBrand:
-        getProductsByBrand,
 
-    searchProducts:
-        searchProducts,
+    try {
 
-    getSystemConfiguration:
-        getSystemConfiguration,
+        cart =
+            JSON.parse(
+                localStorage.getItem(
+                    "nexpak_cart"
+                )
+            ) || [];
 
-    getSystemSummary:
-        getSystemSummary,
 
-    calculateProductTotal:
-        calculateProductTotal,
+        if (
+            !Array.isArray(cart)
+        ) {
 
-    calculateSystemSubtotal:
-        calculateSystemSubtotal,
+            cart = [];
 
-    calculateVat:
-        calculateVat,
+        }
 
-    calculateGrandTotal:
-        calculateGrandTotal,
+    } catch (error) {
 
-    formatZAR:
-        formatZAR,
+        console.error(
+            "Nexpak Configurator: Cart data could not be read.",
+            error
+        );
 
-    isProductAvailable:
-        isProductAvailable,
+        cart = [];
 
-    getAvailableProducts:
-        getAvailableProducts
+    }
 
-};
+
+    cart.push(
+        cartItem
+    );
+
+
+    localStorage.setItem(
+        "nexpak_cart",
+        JSON.stringify(cart)
+    );
+
+
+    updateCartBadge();
+
+
+    showToast(
+        "Your custom system has been added to the cart."
+    );
+
+
+    /*
+     * Allow existing cart.js to react if it
+     * listens for storage/custom events.
+     */
+
+    window.dispatchEvent(
+        new CustomEvent(
+            "nexpak:cart-updated",
+            {
+                detail: {
+                    item: cartItem,
+                    cart: cart
+                }
+            }
+        )
+    );
+
+
+    /*
+     * Optional visual state.
+     */
+
+    if (elements.addToCart) {
+
+        const originalText =
+            elements.addToCart.innerHTML;
+
+
+        elements.addToCart.innerHTML = `
+
+            <i class="fa-solid fa-check"></i>
+
+            System Added
+
+        `;
+
+
+        window.setTimeout(
+            () => {
+
+                elements.addToCart.innerHTML =
+                    originalText;
+
+            },
+            2500
+        );
+
+    }
+
+}
 
 
 /* ==========================================================================
-   27. GLOBAL ACCESS
+   41. ADD TO CART BUTTON
    ========================================================================== */
 
-window.SHOP_DATA =
-    SHOP_DATA;
+if (elements.addToCart) {
 
-window.PRODUCTS =
-    PRODUCTS;
+    elements.addToCart.addEventListener(
+        "click",
+        addConfiguredSystemToCart
+    );
 
-window.PRODUCT_SYSTEM_MAP =
-    PRODUCT_SYSTEM_MAP;
-
-window.NEXPAK_SHOP_DATA =
-    NEXPAK_SHOP_DATA;
-
-window.getProductById =
-    getProductById;
-
-window.getProductsForSystem =
-    getProductsForSystem;
-
-window.getProductsByGroup =
-    getProductsByGroup;
-
-window.getProductsByCategory =
-    getProductsByCategory;
-
-window.getProductsByBrand =
-    getProductsByBrand;
-
-window.searchProducts =
-    searchProducts;
-
-window.getSystemConfiguration =
-    getSystemConfiguration;
-
-window.getSystemSummary =
-    getSystemSummary;
-
-window.calculateProductTotal =
-    calculateProductTotal;
-
-window.calculateSystemSubtotal =
-    calculateSystemSubtotal;
-
-window.calculateVat =
-    calculateVat;
-
-window.calculateGrandTotal =
-    calculateGrandTotal;
-
-window.formatZAR =
-    formatZAR;
-
-window.isProductAvailable =
-    isProductAvailable;
-
-window.getAvailableProducts =
-    getAvailableProducts;
+}
 
 
 /* ==========================================================================
-   28. DATABASE VALIDATION
+   42. INITIAL CART BADGE
    ========================================================================== */
 
-(function validateShopDatabase() {
+updateCartBadge();
 
-    console.log(
-        "=============================================="
+/* ==========================================================================
+   43. SYNCHRONISE CATEGORY TABS
+   ========================================================================== */
+
+function syncCategoryTabs() {
+
+    document
+        .querySelectorAll(".nav-tab")
+        .forEach(tab => {
+
+            const isActive =
+                tab.dataset.category ===
+                state.category;
+
+
+            tab.classList.toggle(
+                "active",
+                isActive
+            );
+
+        });
+
+}
+
+
+/* ==========================================================================
+   44. INITIALISE CATEGORY TABS
+   ========================================================================== */
+
+function initialiseCategoryTabs() {
+
+    const tabs =
+        document.querySelectorAll(
+            ".nav-tab"
+        );
+
+
+    if (!tabs.length) {
+
+        console.warn(
+            "Nexpak Configurator: No category tabs found."
+        );
+
+        return;
+
+    }
+
+
+    tabs.forEach(tab => {
+
+        tab.addEventListener(
+            "click",
+            () => {
+
+                const categoryId =
+                    tab.dataset.category;
+
+
+                if (!categoryId) {
+
+                    return;
+
+                }
+
+
+                const category =
+                    getCategory(
+                        categoryId
+                    );
+
+
+                if (!category) {
+
+                    console.warn(
+                        `Nexpak Configurator: ` +
+                        `Category "${categoryId}" not found.`
+                    );
+
+                    return;
+
+                }
+
+
+                setCategory(
+                    categoryId
+                );
+
+
+                syncCategoryTabs();
+
+                renderCurrentCategory();
+
+
+                /*
+                 * Move the user back to the
+                 * configurator area after changing
+                 * system type.
+                 */
+
+                if (
+                    elements.configurator
+                ) {
+
+                    elements.configurator.scrollIntoView({
+
+                        behavior: "smooth",
+
+                        block: "start"
+
+                    });
+
+                }
+
+            }
+        );
+
+    });
+
+}
+
+
+/* ==========================================================================
+   45. HANDLE EXTERNAL CATEGORY CHANGES
+   ========================================================================== */
+
+/*
+ * Other parts of the Nexpak website can change
+ * the active configurator category by dispatching:
+ *
+ * window.dispatchEvent(
+ *     new CustomEvent(
+ *         "nexpak:change-category",
+ *         {
+ *             detail: {
+ *                 category: "cctv-ip"
+ *             }
+ *         }
+ *     )
+ * );
+ */
+
+window.addEventListener(
+    "nexpak:change-category",
+    event => {
+
+        const categoryId =
+            event.detail &&
+            event.detail.category;
+
+
+        if (!categoryId) {
+
+            return;
+
+        }
+
+
+        if (!getCategory(categoryId)) {
+
+            console.warn(
+                `Nexpak Configurator: ` +
+                `Cannot switch to unknown category "${categoryId}".`
+            );
+
+            return;
+
+        }
+
+
+        setCategory(
+            categoryId
+        );
+
+
+        syncCategoryTabs();
+
+        renderCurrentCategory();
+
+    }
+);
+
+
+/* ==========================================================================
+   46. CATEGORY FROM URL
+   ========================================================================== */
+
+/*
+ * Supports links such as:
+ *
+ * build-system.html?category=cctv-ip
+ *
+ * or:
+ *
+ * build-system.html?category=roboguard
+ *
+ * If the category does not exist, the default
+ * Electric Fencing category remains active.
+ */
+
+function getCategoryFromUrl() {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const category =
+        params.get(
+            "category"
+        );
+
+
+    if (
+        category &&
+        getCategory(category)
+    ) {
+
+        return category;
+
+    }
+
+
+    return "electric-fencing";
+
+}
+
+
+/* ==========================================================================
+   47. UPDATE URL WITHOUT RELOADING PAGE
+   ========================================================================== */
+
+function updateCategoryUrl() {
+
+    try {
+
+        const url =
+            new URL(
+                window.location.href
+            );
+
+
+        url.searchParams.set(
+            "category",
+            state.category
+        );
+
+
+        window.history.replaceState(
+            {
+                category:
+                    state.category
+            },
+            "",
+            url
+        );
+
+    } catch (error) {
+
+        console.warn(
+            "Nexpak Configurator: Could not update URL.",
+            error
+        );
+
+    }
+
+}
+
+
+/* ==========================================================================
+   48. CATEGORY CHANGE EVENT PATCH
+   ========================================================================== */
+
+/*
+ * Keep the browser URL synchronized whenever
+ * the configurator changes category.
+ */
+
+window.addEventListener(
+    "nexpak:category-changed",
+    updateCategoryUrl
+);
+
+
+/* ==========================================================================
+   49. PATCH SET CATEGORY
+   ========================================================================== */
+
+/*
+ * We dispatch a custom event after setCategory()
+ * so other Nexpak modules can respond without
+ * directly modifying configurator state.
+ */
+
+const originalSetCategory =
+    setCategory;
+
+
+function setCategory(categoryId) {
+
+    const previousCategory =
+        state.category;
+
+
+    originalSetCategory(
+        categoryId
     );
 
-    console.log(
-        "NEXPAK SECURITY SOLUTIONS"
+
+    if (
+        state.category !==
+        previousCategory
+    ) {
+
+        window.dispatchEvent(
+            new CustomEvent(
+                "nexpak:category-changed",
+                {
+                    detail: {
+                        category:
+                            state.category,
+
+                        previousCategory:
+                            previousCategory
+                    }
+                }
+            )
+        );
+
+    }
+
+}
+
+
+/* ==========================================================================
+   50. RE-EXPOSE UPDATED CATEGORY FUNCTION
+   ========================================================================== */
+
+if (
+    window.NEXPAK_CONFIGURATOR
+) {
+
+    window.NEXPAK_CONFIGURATOR.setCategory =
+        setCategory;
+
+}
+
+
+/* ==========================================================================
+   51. RE-EXPOSE PRODUCT FUNCTIONS
+   ========================================================================== */
+
+if (
+    window.NEXPAK_CONFIGURATOR
+) {
+
+    window.NEXPAK_CONFIGURATOR.getProducts =
+        getCurrentProducts;
+
+
+    window.NEXPAK_CONFIGURATOR.findProduct =
+        findCurrentProduct;
+
+
+    window.NEXPAK_CONFIGURATOR.render =
+        renderCurrentCategory;
+
+
+    window.NEXPAK_CONFIGURATOR.addToCart =
+        addConfiguredSystemToCart;
+
+}
+
+
+/* ==========================================================================
+   52. INITIAL CATEGORY SETUP
+   ========================================================================== */
+
+const initialCategory =
+    getCategoryFromUrl();
+
+
+setCategory(
+    initialCategory
+);
+
+
+syncCategoryTabs();
+
+updateCategoryUrl();
+
+renderCurrentCategory();
+
+
+/* ==========================================================================
+   53. INITIALISE CATEGORY EVENTS
+   ========================================================================== */
+
+initialiseCategoryTabs();
+
+
+/* ==========================================================================
+   54. INITIALISE CART BADGE
+   ========================================================================== */
+
+updateCartBadge();
+
+
+/* ==========================================================================
+   55. CONFIGURATOR READY EVENT
+   ========================================================================== */
+
+window.dispatchEvent(
+    new CustomEvent(
+        "nexpak:configurator-ready",
+        {
+            detail: {
+
+                category:
+                    state.category,
+
+                categoryTitle:
+                    state.categoryTitle,
+
+                productCount:
+                    getCurrentProducts().length
+
+            }
+        }
+    )
+);
+
+
+/* ==========================================================================
+   56. FINAL DEBUG MESSAGE
+   ========================================================================== */
+
+console.log(
+    "Nexpak Security Solutions — Build Your System",
+    "Configurator V2 ready.",
+    {
+        category:
+            state.category,
+
+        products:
+            getCurrentProducts().length,
+
+        vatRate:
+            VAT_RATE,
+
+        currency:
+            CURRENCY,
+
+        prebuiltKits:
+            "REMOVED"
+    }
+);
+/* ==========================================================================
+   NEXPAK SECURITY SOLUTIONS
+   BUILD YOUR SYSTEM — CONFIGURATOR V2
+   PART 8 — FINAL INITIALISATION & SAFETY
+   ========================================================================== */
+
+
+/* ==========================================================================
+   57. FINAL DOM REFRESH
+   ========================================================================== */
+
+function finalConfiguratorRefresh() {
+
+    /*
+     * Make sure the category heading reflects
+     * the current system.
+     */
+
+    if (elements.categoryTitle) {
+
+        elements.categoryTitle.textContent =
+            state.categoryTitle;
+
+    }
+
+
+    /*
+     * Render all individual products.
+     */
+
+    renderProductGroups();
+
+
+    /*
+     * Render the selected-products summary.
+     */
+
+    renderSelectedProducts();
+
+
+    /*
+     * Recalculate all prices.
+     */
+
+    updateTotals();
+
+
+    /*
+     * Refresh cart badge.
+     */
+
+    updateCartBadge();
+
+}
+
+
+/* ==========================================================================
+   58. RESET SYSTEM FOR NEW CATEGORY
+   ========================================================================== */
+
+function resetForCategory(categoryId) {
+
+    if (!getCategory(categoryId)) {
+
+        console.warn(
+            `Nexpak Configurator: ` +
+            `Cannot reset unknown category "${categoryId}".`
+        );
+
+        return false;
+
+    }
+
+
+    setCategory(
+        categoryId
     );
 
-    console.log(
-        "Individual Product Database Loaded"
+
+    syncCategoryTabs();
+
+    updateCategoryUrl();
+
+    finalConfiguratorRefresh();
+
+
+    return true;
+
+}
+
+
+/* ==========================================================================
+   59. CLEAR SYSTEM CONFIRMATION
+   ========================================================================== */
+
+function confirmClearSystem() {
+
+    const productCount =
+        state.totals.productCount;
+
+
+    if (productCount === 0) {
+
+        return true;
+
+    }
+
+
+    /*
+     * Use a confirmation only when the customer
+     * actually has products selected.
+     */
+
+    return window.confirm(
+        "Are you sure you want to clear " +
+        "your current system configuration?"
     );
 
-    console.log(
-        "Total products:",
-        PRODUCTS.length
+}
+
+
+/* ==========================================================================
+   60. SAFE CLEAR SYSTEM
+   ========================================================================== */
+
+function safeClearSystem() {
+
+    if (
+        !confirmClearSystem()
+    ) {
+
+        return;
+
+    }
+
+
+    clearSystem();
+
+    renderProductGroups();
+
+    renderSelectedProducts();
+
+    updateCartBadge();
+
+    showToast(
+        "Your system configuration has been cleared."
     );
 
-    console.log(
-        "Total categories:",
-        SHOP_DATA.categories.length
-    );
+}
 
-    console.log(
-        "Pre-built kits:",
-        "REMOVED — Build Your System uses individual products."
-    );
 
-    Object.keys(
-        PRODUCT_SYSTEM_MAP
-    ).forEach(
-        systemId => {
+/* ==========================================================================
+   61. PUBLIC CLEAR FUNCTION
+   ========================================================================== */
 
-            console.log(
-                systemId +
-                ":",
-                getSystemProductCount(
-                    systemId
-                ),
-                "products"
+if (
+    window.NEXPAK_CONFIGURATOR
+) {
+
+    window.NEXPAK_CONFIGURATOR.clear =
+        safeClearSystem;
+
+
+    window.NEXPAK_CONFIGURATOR.reset =
+        resetForCategory;
+
+
+    window.NEXPAK_CONFIGURATOR.getState =
+        () => state;
+
+
+    window.NEXPAK_CONFIGURATOR.getTotals =
+        () => state.totals;
+
+}
+
+
+/* ==========================================================================
+   62. STORAGE EVENT
+   ========================================================================== */
+
+/*
+ * If another browser tab changes the cart,
+ * refresh the cart badge in this configurator.
+ */
+
+window.addEventListener(
+    "storage",
+    event => {
+
+        if (
+            event.key ===
+            "nexpak_cart"
+        ) {
+
+            updateCartBadge();
+
+        }
+
+    }
+);
+
+
+/* ==========================================================================
+   63. CART UPDATED EVENT
+   ========================================================================== */
+
+/*
+ * Listen for updates from cart.js or other
+ * Nexpak modules.
+ */
+
+window.addEventListener(
+    "nexpak:cart-updated",
+    () => {
+
+        updateCartBadge();
+
+    }
+);
+
+
+/* ==========================================================================
+   64. HANDLE BROWSER BACK / FORWARD
+   ========================================================================== */
+
+window.addEventListener(
+    "popstate",
+    () => {
+
+        const category =
+            getCategoryFromUrl();
+
+
+        if (
+            category !==
+            state.category
+        ) {
+
+            setCategory(
+                category
+            );
+
+            syncCategoryTabs();
+
+            renderCurrentCategory();
+
+        }
+
+    }
+);
+
+
+/* ==========================================================================
+   65. PREVENT ACCIDENTAL FORM SUBMISSION
+   ========================================================================== */
+
+if (
+    elements.configurator
+) {
+
+    const parentForm =
+        elements.configurator.closest(
+            "form"
+        );
+
+
+    if (parentForm) {
+
+        parentForm.addEventListener(
+            "submit",
+            event => {
+
+                /*
+                 * The configurator itself should
+                 * never submit the page accidentally.
+                 */
+
+                event.preventDefault();
+
+            }
+        );
+
+    }
+
+}
+
+
+/* ==========================================================================
+   66. FINAL PRODUCT VALIDATION
+   ========================================================================== */
+
+function validateCurrentProducts() {
+
+    const products =
+        getCurrentProducts();
+
+
+    if (
+        !Array.isArray(products)
+    ) {
+
+        console.error(
+            "Nexpak Configurator: Product source is invalid."
+        );
+
+        return false;
+
+    }
+
+
+    /*
+     * Warn about products without IDs.
+     */
+
+    products.forEach(product => {
+
+        if (
+            !getProductId(product)
+        ) {
+
+            console.warn(
+                "Nexpak Configurator: " +
+                "Product is missing an ID.",
+                product
             );
 
         }
-    );
 
-    console.log(
-        "=============================================="
-    );
+    });
 
-})();
+
+    return true;
+
+}
 
 
 /* ==========================================================================
-   END OF SHOP-DATA.JS
+   67. FINAL CONFIGURATOR VALIDATION
+   ========================================================================== */
+
+function validateConfigurator() {
+
+    if (
+        typeof SHOP_DATA ===
+        "undefined"
+    ) {
+
+        console.error(
+            "Nexpak Configurator: SHOP_DATA is unavailable."
+        );
+
+        return false;
+
+    }
+
+
+    if (
+        !Array.isArray(
+            SHOP_DATA.categories
+        )
+    ) {
+
+        console.error(
+            "Nexpak Configurator: " +
+            "SHOP_DATA.categories is missing."
+        );
+
+        return false;
+
+    }
+
+
+    if (
+        !SHOP_DATA.configurators
+    ) {
+
+        console.error(
+            "Nexpak Configurator: " +
+            "SHOP_DATA.configurators is missing."
+        );
+
+        return false;
+
+    }
+
+
+    return validateCurrentProducts();
+
+}
+
+
+/* ==========================================================================
+   68. FINAL STARTUP
+   ========================================================================== */
+
+if (
+    validateConfigurator()
+) {
+
+    finalConfiguratorRefresh();
+
+
+    console.log(
+        "Nexpak Security Solutions",
+        "Build Your System is fully initialised."
+    );
+
+
+} else {
+
+    console.error(
+        "Nexpak Security Solutions",
+        "Build Your System could not initialise correctly."
+    );
+
+}
+
+
+/* ==========================================================================
+   69. CONFIGURATOR VERSION
+   ========================================================================== */
+
+if (
+    window.NEXPAK_CONFIGURATOR
+) {
+
+    window.NEXPAK_CONFIGURATOR.version =
+        "V2";
+
+
+    window.NEXPAK_CONFIGURATOR.prebuiltKits =
+        false;
+
+}
+
+
+/* ==========================================================================
+   70. FINAL READY EVENT
+   ========================================================================== */
+
+window.dispatchEvent(
+    new CustomEvent(
+        "nexpak:build-system-ready",
+        {
+            detail: {
+
+                version:
+                    "V2",
+
+                category:
+                    state.category,
+
+                categoryTitle:
+                    state.categoryTitle,
+
+                productCount:
+                    getCurrentProducts().length,
+
+                selectedProducts:
+                    state.totals.productCount,
+
+                itemCount:
+                    state.totals.itemCount,
+
+                subtotal:
+                    state.totals.subtotal,
+
+                vat:
+                    state.totals.vat,
+
+                grandTotal:
+                    state.totals.grandTotal,
+
+                prebuiltKits:
+                    false
+
+            }
+
+        }
+    )
+);
+
+
+/* ==========================================================================
+   END OF CONFIGURATOR.JS
    ========================================================================== */
