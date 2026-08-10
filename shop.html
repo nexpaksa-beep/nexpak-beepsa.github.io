@@ -3,6 +3,13 @@
 
 <head>
 
+    <!-- ================================================================
+         NEXPAK SECURITY SOLUTIONS
+         BUILD YOUR SYSTEM
+         SHOP.HTML — NEW CONFIGURATOR V3
+         PART 1 — DOCUMENT HEAD + GLOBAL PAGE STRUCTURE
+         ================================================================ -->
+
     <meta charset="UTF-8">
 
     <meta
@@ -12,32 +19,22 @@
 
     <meta
         name="description"
-        content="Build your own custom security system with Nexpak Security Solutions. Select individual CCTV, electric fencing, gate automation, alarm, Roboguard, access control and intercom products."
+        content="Build your custom security system with Nexpak Security Solutions. Select individual CCTV, electric fencing, gate automation, Roboguard, alarm, access control and security products."
     >
 
     <meta
         name="keywords"
-        content="Build Your System, CCTV South Africa, electric fencing, gate automation, alarm systems, Roboguard, access control, intercoms, security equipment"
+        content="CCTV South Africa, electric fencing, gate automation, Roboguard, alarm systems, access control, intercoms, security equipment, Nexpak Security Solutions"
     >
 
     <meta
-        name="author"
-        content="Nexpak Security Solutions"
+        name="theme-color"
+        content="#07111f"
     >
 
     <title>
-        Build Your Security System | Nexpak Security Solutions
+        Build Your System | Nexpak Security Solutions
     </title>
-
-
-    <!-- ================================================================
-         FONT AWESOME
-         ================================================================ -->
-
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    >
 
 
     <!-- ================================================================
@@ -62,10 +59,17 @@
 
 
     <!-- ================================================================
+         FONT AWESOME
+         ================================================================ -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+    <!-- ================================================================
          SHOP / CONFIGURATOR STYLES
-         
-         NOTE:
-         We will completely rebuild shop-styles.css next.
          ================================================================ -->
 
     <link
@@ -73,516 +77,543 @@
         href="css/shop-styles.css"
     >
 
+
+    <!-- ================================================================
+         PAGE-SPECIFIC FALLBACK VARIABLES
+         
+         The main visual styling belongs in:
+             css/shop-styles.css
+         
+         These variables give the configurator a predictable design
+         language and can be expanded by the new stylesheet.
+         ================================================================ -->
+
+    <style>
+
+        :root {
+
+            --nexpak-navy:
+                #07111f;
+
+            --nexpak-navy-2:
+                #0b1d31;
+
+            --nexpak-blue:
+                #0b6cff;
+
+            --nexpak-blue-dark:
+                #0755cc;
+
+            --nexpak-cyan:
+                #16c7ff;
+
+            --nexpak-white:
+                #ffffff;
+
+            --nexpak-surface:
+                #ffffff;
+
+            --nexpak-background:
+                #f4f7fb;
+
+            --nexpak-text:
+                #152235;
+
+            --nexpak-muted:
+                #68778a;
+
+            --nexpak-border:
+                #dfe6ef;
+
+            --nexpak-success:
+                #13b981;
+
+            --nexpak-danger:
+                #ef4444;
+
+            --nexpak-warning:
+                #f59e0b;
+
+            --nexpak-radius-sm:
+                10px;
+
+            --nexpak-radius-md:
+                16px;
+
+            --nexpak-radius-lg:
+                22px;
+
+            --nexpak-radius-xl:
+                28px;
+
+            --nexpak-shadow-sm:
+                0 4px 18px rgba(
+                    7,
+                    17,
+                    31,
+                    0.06
+                );
+
+            --nexpak-shadow-md:
+                0 12px 35px rgba(
+                    7,
+                    17,
+                    31,
+                    0.10
+                );
+
+            --nexpak-shadow-lg:
+                0 24px 60px rgba(
+                    7,
+                    17,
+                    31,
+                    0.14
+                );
+
+        }
+
+
+        /*
+           Prevent horizontal overflow while the visual property
+           and responsive configurator are being rendered.
+        */
+
+        html,
+        body {
+
+            width: 100%;
+
+            min-height: 100%;
+
+            margin: 0;
+
+            padding: 0;
+
+        }
+
+
+        body {
+
+            background:
+                var(
+                    --nexpak-background
+                );
+
+            color:
+                var(
+                    --nexpak-text
+                );
+
+            font-family:
+                "Inter",
+                Arial,
+                sans-serif;
+
+            -webkit-font-smoothing:
+                antialiased;
+
+            text-rendering:
+                optimizeLegibility;
+
+        }
+
+
+        *,
+        *::before,
+        *::after {
+
+            box-sizing:
+                border-box;
+
+        }
+
+
+        button,
+        input,
+        select,
+        textarea {
+
+            font:
+                inherit;
+
+        }
+
+
+        button {
+
+            cursor:
+                pointer;
+
+        }
+
+
+        img {
+
+            max-width:
+                100%;
+
+            height:
+                auto;
+
+        }
+
+
+        a {
+
+            color:
+                inherit;
+
+        }
+
+
+        /*
+           Accessibility:
+           visible keyboard focus.
+        */
+
+        :focus-visible {
+
+            outline:
+                3px solid
+                rgba(
+                    22,
+                    199,
+                    255,
+                    0.65
+                );
+
+            outline-offset:
+                3px;
+
+        }
+
+    </style>
+
 </head>
 
 
 <body>
 
-
     <!-- ================================================================
-         PAGE LOADER
+         PAGE APPLICATION SHELL
+         
+         Everything belonging to the Build Your System experience
+         lives inside this application shell.
          ================================================================ -->
 
     <div
-        id="shopPageLoader"
-        class="shop-page-loader"
-        aria-hidden="true"
+        id="nexpakConfiguratorApp"
+        class="nexpak-configurator-app"
     >
 
-        <div class="loader-spinner"></div>
 
-        <span>
-            Loading Build Your System...
-        </span>
+        <!-- ============================================================
+             HEADER
+             ============================================================ -->
+
+        <header
+            id="siteHeader"
+            class="nexpak-site-header"
+        >
+
+            <div
+                class="nexpak-header-inner"
+            >
+
+                <!-- BRAND -->
+
+                <a
+                    href="index.html"
+                    class="nexpak-brand"
+                    aria-label="Nexpak Security Solutions home"
+                >
+
+                    <span
+                        class="nexpak-brand-mark"
+                        aria-hidden="true"
+                    >
+
+                        <i
+                            class="fa-solid fa-shield-halved"
+                        ></i>
+
+                    </span>
+
+
+                    <span
+                        class="nexpak-brand-copy"
+                    >
+
+                        <strong>
+                            NEXPAK
+                        </strong>
+
+                        <small>
+                            SECURITY SOLUTIONS
+                        </small>
+
+                    </span>
+
+                </a>
+
+
+                <!-- MAIN NAVIGATION -->
+
+                <nav
+                    class="nexpak-main-nav"
+                    aria-label="Main navigation"
+                >
+
+                    <a
+                        href="index.html"
+                        class="nexpak-nav-link"
+                    >
+
+                        <i
+                            class="fa-solid fa-house"
+                            aria-hidden="true"
+                        ></i>
+
+                        <span>
+                            Home
+                        </span>
+
+                    </a>
+
+
+                    <a
+                        href="shop.html"
+                        class="nexpak-nav-link active"
+                        aria-current="page"
+                    >
+
+                        <i
+                            class="fa-solid fa-screwdriver-wrench"
+                            aria-hidden="true"
+                        ></i>
+
+                        <span>
+                            Build Your System
+                        </span>
+
+                    </a>
+
+
+                    <a
+                        href="about.html"
+                        class="nexpak-nav-link"
+                    >
+
+                        <i
+                            class="fa-solid fa-circle-info"
+                            aria-hidden="true"
+                        ></i>
+
+                        <span>
+                            About Us
+                        </span>
+
+                    </a>
+
+
+                    <a
+                        href="contact.html"
+                        class="nexpak-nav-link"
+                    >
+
+                        <i
+                            class="fa-solid fa-envelope"
+                            aria-hidden="true"
+                        ></i>
+
+                        <span>
+                            Contact
+                        </span>
+
+                    </a>
+
+                </nav>
+
+
+                <!-- HEADER CART -->
+
+                <div
+                    class="nexpak-header-actions"
+                >
+
+                    <button
+                        type="button"
+                        id="headerCartButton"
+                        class="nexpak-cart-button"
+                        aria-label="Open shopping cart"
+                    >
+
+                        <span
+                            class="nexpak-cart-icon"
+                        >
+
+                            <i
+                                class="fa-solid fa-cart-shopping"
+                                aria-hidden="true"
+                            ></i>
+
+                        </span>
+
+
+                        <span
+                            class="nexpak-cart-label"
+                        >
+                            Cart
+                        </span>
+
+
+                        <span
+                            id="cartCountBadge"
+                            class="nexpak-cart-count"
+                        >
+                            0
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+                <!-- MOBILE MENU BUTTON -->
+
+                <button
+                    type="button"
+                    id="mobileMenuToggle"
+                    class="nexpak-mobile-menu-toggle"
+                    aria-label="Open navigation menu"
+                    aria-expanded="false"
+                >
+
+                    <i
+                        class="fa-solid fa-bars"
+                        aria-hidden="true"
+                    ></i>
+
+                </button>
+
+            </div>
+
+
+            <!-- MOBILE NAVIGATION -->
+
+            <div
+                id="mobileNavigation"
+                class="nexpak-mobile-navigation"
+                aria-hidden="true"
+            >
+
+                <a
+                    href="index.html"
+                    class="nexpak-mobile-nav-link"
+                >
+                    <i
+                        class="fa-solid fa-house"
+                        aria-hidden="true"
+                    ></i>
+                    Home
+                </a>
+
+
+                <a
+                    href="shop.html"
+                    class="nexpak-mobile-nav-link active"
+                >
+                    <i
+                        class="fa-solid fa-screwdriver-wrench"
+                        aria-hidden="true"
+                    ></i>
+                    Build Your System
+                </a>
+
+
+                <a
+                    href="about.html"
+                    class="nexpak-mobile-nav-link"
+                >
+                    <i
+                        class="fa-solid fa-circle-info"
+                        aria-hidden="true"
+                    ></i>
+                    About Us
+                </a>
+
+
+                <a
+                    href="contact.html"
+                    class="nexpak-mobile-nav-link"
+                >
+                    <i
+                        class="fa-solid fa-envelope"
+                        aria-hidden="true"
+                    ></i>
+                    Contact
+                </a>
+
+            </div>
+
+        </header>
+
+
+        <!-- ============================================================
+             MAIN CONFIGURATOR CONTENT
+             
+             Part 2 will continue inside this <main>.
+             ============================================================ -->
+
+        <main
+            id="buildYourSystem"
+            class="nexpak-build-system"
+        >
+
+            <!-- PART 2 CONTINUES HERE -->
+
+
+        </main>
+
 
     </div>
 
 
     <!-- ================================================================
-         MAIN SITE HEADER
+         GLOBAL TOAST CONTAINER
+         configurator.js / systemui.js can use this.
          ================================================================ -->
 
-    <header
-        class="shop-header"
-        id="shopHeader"
-    >
-
-        <div class="shop-header-inner">
-
-
-            <!-- BRAND -->
-
-            <a
-                href="index.html"
-                class="shop-brand"
-                aria-label="Nexpak Security Solutions Home"
-            >
-
-                <span class="shop-brand-icon">
-                    <i class="fa-solid fa-shield-halved"></i>
-                </span>
-
-                <span class="shop-brand-text">
-
-                    <strong>
-                        NEXPAK
-                    </strong>
-
-                    <small>
-                        SECURITY SOLUTIONS
-                    </small>
-
-                </span>
-
-            </a>
-
-
-            <!-- DESKTOP NAVIGATION -->
-
-            <nav
-                class="shop-main-nav"
-                aria-label="Main navigation"
-            >
-
-                <a
-                    href="index.html"
-                    class="shop-nav-link"
-                >
-                    <i class="fa-solid fa-house"></i>
-                    Home
-                </a>
-
-                <a
-                    href="shop.html"
-                    class="shop-nav-link active"
-                >
-                    <i class="fa-solid fa-screwdriver-wrench"></i>
-                    Build Your System
-                </a>
-
-                <a
-                    href="products.html"
-                    class="shop-nav-link"
-                >
-                    <i class="fa-solid fa-boxes-stacked"></i>
-                    Products
-                </a>
-
-                <a
-                    href="about.html"
-                    class="shop-nav-link"
-                >
-                    <i class="fa-solid fa-circle-info"></i>
-                    About
-                </a>
-
-                <a
-                    href="contact.html"
-                    class="shop-nav-link"
-                >
-                    <i class="fa-solid fa-envelope"></i>
-                    Contact
-                </a>
-
-            </nav>
-
-
-            <!-- HEADER ACTIONS -->
-
-            <div class="shop-header-actions">
-
-
-                <!-- CART -->
-
-                <button
-                    type="button"
-                    class="shop-cart-button"
-                    id="openCart"
-                    aria-label="Open shopping cart"
-                    aria-controls="cartDrawer"
-                    aria-expanded="false"
-                >
-
-                    <span class="shop-cart-icon">
-
-                        <i class="fa-solid fa-cart-shopping"></i>
-
-                        <span
-                            id="cartCountBadge"
-                            class="cart-count-badge"
-                        >
-                            0
-                        </span>
-
-                    </span>
-
-                    <span class="shop-cart-label">
-                        Cart
-                    </span>
-
-                </button>
-
-
-                <!-- MOBILE MENU -->
-
-                <button
-                    type="button"
-                    class="shop-mobile-menu"
-                    id="mobileMenuToggle"
-                    aria-label="Open navigation menu"
-                    aria-controls="mobileNavigation"
-                    aria-expanded="false"
-                >
-
-                    <i class="fa-solid fa-bars"></i>
-
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <!-- ============================================================
-             MOBILE NAVIGATION
-             ============================================================ -->
-
-        <nav
-            class="mobile-navigation"
-            id="mobileNavigation"
-            aria-label="Mobile navigation"
-        >
-
-            <a href="index.html">
-
-                <i class="fa-solid fa-house"></i>
-
-                <span>
-                    Home
-                </span>
-
-            </a>
-
-
-            <a
-                href="shop.html"
-                class="active"
-            >
-
-                <i class="fa-solid fa-screwdriver-wrench"></i>
-
-                <span>
-                    Build Your System
-                </span>
-
-            </a>
-
-
-            <a href="products.html">
-
-                <i class="fa-solid fa-boxes-stacked"></i>
-
-                <span>
-                    Products
-                </span>
-
-            </a>
-
-
-            <a href="about.html">
-
-                <i class="fa-solid fa-circle-info"></i>
-
-                <span>
-                    About Us
-                </span>
-
-            </a>
-
-
-            <a href="contact.html">
-
-                <i class="fa-solid fa-envelope"></i>
-
-                <span>
-                    Contact
-                </span>
-
-            </a>
-
-        </nav>
-
-    </header>
-
-
-    <!-- ================================================================
-         MAIN CONTENT
-         ================================================================ -->
-
-    <main
-        class="build-system-page"
-        id="buildSystemPage"
-    >
-
-
-        <!-- ============================================================
-             HERO SECTION
-             ============================================================ -->
-
-        <section
-            class="build-system-hero"
-            id="buildSystemHero"
-        >
-
-            <div class="build-system-hero-overlay"></div>
-
-
-            <div class="build-system-hero-content">
-
-
-                <div class="hero-badge">
-
-                    <i class="fa-solid fa-shield-halved"></i>
-
-                    <span>
-                        CUSTOM SECURITY CONFIGURATOR
-                    </span>
-
-                </div>
-
-
-                <h1>
-
-                    Build Your
-                    <span>
-                        Security System
-                    </span>
-
-                </h1>
-
-
-                <p class="hero-description">
-
-                    Choose exactly what you need.
-                    Select individual products, set your
-                    quantities and build a complete security
-                    system around your property.
-
-                </p>
-
-
-                <div class="hero-features">
-
-
-                    <div class="hero-feature">
-
-                        <i class="fa-solid fa-check"></i>
-
-                        <span>
-                            Individual Products
-                        </span>
-
-                    </div>
-
-
-                    <div class="hero-feature">
-
-                        <i class="fa-solid fa-check"></i>
-
-                        <span>
-                            Live Pricing
-                        </span>
-
-                    </div>
-
-
-                    <div class="hero-feature">
-
-                        <i class="fa-solid fa-check"></i>
-
-                        <span>
-                            15% VAT Calculated
-                        </span>
-
-                    </div>
-
-
-                    <div class="hero-feature">
-
-                        <i class="fa-solid fa-check"></i>
-
-                        <span>
-                            Add Directly to Cart
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- HERO VISUAL -->
-
-            <div
-                class="build-system-hero-visual"
-                aria-hidden="true"
-            >
-
-                <div class="hero-security-glow"></div>
-
-                <div class="hero-security-image">
-
-                    <i class="fa-solid fa-shield-halved"></i>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ============================================================
-             CONFIGURATOR INTRO
-             ============================================================ -->
-
-        <section
-            class="configurator-intro"
-            aria-labelledby="configuratorIntroTitle"
-        >
-
-            <div class="intro-content">
-
-                <span class="section-eyebrow">
-
-                    <i class="fa-solid fa-sliders"></i>
-
-                    BUILD IT YOUR WAY
-
-                </span>
-
-
-                <h2 id="configuratorIntroTitle">
-
-                    Configure Every Part
-                    of Your System
-
-                </h2>
-
-
-                <p>
-
-                    No forced packages. No unnecessary equipment.
-                    Select the products you actually need and control
-                    the quantity of every item in your system.
-
-                </p>
-
-            </div>
-
-
-            <div class="intro-trust-items">
-
-
-                <div class="intro-trust-item">
-
-                    <span class="intro-trust-icon">
-                        <i class="fa-solid fa-cubes"></i>
-                    </span>
-
-                    <div>
-
-                        <strong>
-                            Individual Products
-                        </strong>
-
-                        <small>
-                            Build from the ground up
-                        </small>
-
-                    </div>
-
-                </div>
-
-
-                <div class="intro-trust-item">
-
-                    <span class="intro-trust-icon">
-                        <i class="fa-solid fa-calculator"></i>
-                    </span>
-
-                    <div>
-
-                        <strong>
-                            Live Calculation
-                        </strong>
-
-                        <small>
-                            Prices update instantly
-                        </small>
-
-                    </div>
-
-                </div>
-
-
-                <div class="intro-trust-item">
-
-                    <span class="intro-trust-icon">
-                        <i class="fa-solid fa-truck-fast"></i>
-                    </span>
-
-                    <div>
-
-                        <strong>
-                            Delivery Ready
-                        </strong>
-
-                        <small>
-                            Delivery calculated separately
-                        </small>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ============================================================
-             PART 2 WILL START HERE
-             ============================================================ -->
-
-        <section
-            class="configurator-workspace"
-            id="configuratorWorkspace"
-        >
-
-            <!-- Part 2: category selector + product workspace -->
-
-        </section>
-
-
-    </main>
+    <div
+        id="toastContainer"
+        class="nexpak-toast-container"
+        aria-live="polite"
+        aria-atomic="true"
+    ></div>
 
 
     <!-- ================================================================
          CART DRAWER
+         
+         The actual cart contents are populated by cart.js/systemui.js.
          ================================================================ -->
 
     <aside
-        class="cart-drawer"
         id="cartDrawer"
+        class="nexpak-cart-drawer"
         aria-hidden="true"
+        aria-label="Shopping cart"
     >
 
-        <div class="cart-drawer-header">
+        <div
+            class="nexpak-cart-drawer-header"
+        >
 
             <div>
 
-                <span class="cart-drawer-eyebrow">
+                <span
+                    class="nexpak-cart-drawer-eyebrow"
+                >
                     YOUR ORDER
                 </span>
 
@@ -595,12 +626,15 @@
 
             <button
                 type="button"
-                class="cart-drawer-close"
-                id="closeCart"
+                id="closeCartDrawer"
+                class="nexpak-close-cart"
                 aria-label="Close shopping cart"
             >
 
-                <i class="fa-solid fa-xmark"></i>
+                <i
+                    class="fa-solid fa-xmark"
+                    aria-hidden="true"
+                ></i>
 
             </button>
 
@@ -608,15 +642,22 @@
 
 
         <div
-            class="cart-drawer-body"
             id="cartDrawerItems"
+            class="nexpak-cart-drawer-items"
         >
 
-            <div class="cart-empty-state">
+            <div
+                class="nexpak-cart-empty"
+            >
 
-                <div class="cart-empty-icon">
+                <div
+                    class="nexpak-cart-empty-icon"
+                >
 
-                    <i class="fa-solid fa-cart-shopping"></i>
+                    <i
+                        class="fa-solid fa-cart-shopping"
+                        aria-hidden="true"
+                    ></i>
 
                 </div>
 
@@ -627,8 +668,7 @@
 
 
                 <p>
-                    Add products to your security system
-                    and they will appear here.
+                    Add products to your custom security system and they will appear here.
                 </p>
 
             </div>
@@ -636,18 +676,38 @@
         </div>
 
 
-        <div class="cart-drawer-footer">
+        <div
+            class="nexpak-cart-drawer-footer"
+        >
 
-            <a
-                href="checkout.html"
-                class="cart-checkout-button"
+            <div
+                class="nexpak-cart-drawer-total"
             >
 
                 <span>
-                    Proceed to Checkout
+                    Cart Total
                 </span>
 
-                <i class="fa-solid fa-arrow-right"></i>
+                <strong
+                    id="cartDrawerTotal"
+                >
+                    R 0.00
+                </strong>
+
+            </div>
+
+
+            <a
+                href="checkout.html"
+                class="nexpak-checkout-button"
+            >
+
+                <i
+                    class="fa-solid fa-lock"
+                    aria-hidden="true"
+                ></i>
+
+                Proceed to Checkout
 
             </a>
 
@@ -656,35 +716,20 @@
     </aside>
 
 
-    <!-- ================================================================
-         CART OVERLAY
-         ================================================================ -->
+    <!-- CART OVERLAY -->
 
     <div
-        class="cart-overlay"
-        id="cartOverlay"
+        id="cartDrawerOverlay"
+        class="nexpak-cart-overlay"
         aria-hidden="true"
     ></div>
 
 
     <!-- ================================================================
-         TOAST NOTIFICATIONS
-         ================================================================ -->
-
-    <div
-        id="toastContainer"
-        class="toast-container"
-        aria-live="polite"
-        aria-atomic="true"
-    ></div>
-
-
-    <!-- ================================================================
          JAVASCRIPT
-         ================================================================
-
+         
          IMPORTANT:
-         shop-data.js MUST load before configurator.js.
+         shop-data.js must load BEFORE configurator.js.
          ================================================================ -->
 
     <script src="js/shop-data.js"></script>
@@ -693,1850 +738,2669 @@
 
     <script src="js/cart.js"></script>
 
-    <script src="js/configurator.js"></script>
-
     <script src="js/delivery.js"></script>
 
     <script src="js/payment.js"></script>
 
     <script src="js/checkout.js"></script>
 
+    <script src="js/configurator.js"></script>
 
-</body>
 
-                </html>
+    <!-- ================================================================
+         PART 1 COMPLETE
+         ================================================================ -->
 
-                        <!-- ============================================================
-             CONFIGURATOR WORKSPACE
-             PART 2 — CATEGORY SELECTOR + PRODUCT WORKSPACE
-             ============================================================ -->
-
-        <section
-            class="configurator-workspace"
-            id="configuratorWorkspace"
-        >
-
-            <!-- ========================================================
-                 WORKSPACE HEADER
-                 ======================================================== -->
-
-            <div class="workspace-header">
-
-                <div class="workspace-heading">
-
-                    <span class="section-eyebrow">
-
-                        <i class="fa-solid fa-shield-halved"></i>
-
-                        SELECT YOUR SECURITY SYSTEM
-
-                    </span>
-
-                    <h2>
-                        What are you building?
-                    </h2>
-
-                    <p>
-                        Choose a security system category below,
-                        then select the individual products you need.
-                    </p>
-
-                </div>
-
-
-                <div class="workspace-status">
-
-                    <span class="status-dot"></span>
-
-                    <span>
-                        Configurator Ready
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- ========================================================
-                 SECURITY CATEGORY SELECTOR
-                 ======================================================== -->
-
-            <div
-                class="system-category-section"
-                id="systemCategorySection"
-            >
-
-                <div class="category-section-heading">
-
-                    <div>
-
-                        <span class="category-eyebrow">
-                            SECURITY SOLUTIONS
-                        </span>
-
-                        <h3>
-                            Select a system type
-                        </h3>
-
-                    </div>
-
-
-                    <span class="category-count">
-
-                        <i class="fa-solid fa-layer-group"></i>
-
-                        Multiple solutions available
-
-                    </span>
-
-                </div>
-
-
-                <div
-                    class="system-category-grid"
-                    id="systemCategoryGrid"
-                >
-
-
-                    <!-- ==================================================
-                         ELECTRIC FENCING
-                         ================================================== -->
-
-                    <button
-                        type="button"
-                        class="system-category-card active"
-                        data-category="electric-fencing"
-                    >
-
-                        <span class="category-card-icon">
-
-                            <i class="fa-solid fa-bolt"></i>
-
-                        </span>
-
-
-                        <span class="category-card-content">
-
-                            <strong>
-                                Electric Fencing
-                            </strong>
-
-                            <small>
-                                Perimeter protection,
-                                energizers & accessories
-                            </small>
-
-                        </span>
-
-
-                        <span class="category-card-arrow">
-
-                            <i class="fa-solid fa-arrow-right"></i>
-
-                        </span>
-
-                    </button>
-
-
-                    <!-- ==================================================
-                         CCTV
-                         ================================================== -->
-
-                    <button
-                        type="button"
-                        class="system-category-card"
-                        data-category="cctv"
-                    >
-
-                        <span class="category-card-icon">
-
-                            <i class="fa-solid fa-video"></i>
-
-                        </span>
-
-
-                        <span class="category-card-content">
-
-                            <strong>
-                                CCTV Systems
-                            </strong>
-
-                            <small>
-                                Cameras, recorders,
-                                storage & accessories
-                            </small>
-
-                        </span>
-
-
-                        <span class="category-card-arrow">
-
-                            <i class="fa-solid fa-arrow-right"></i>
-
-                        </span>
-
-                    </button>
-
-
-                    <!-- ==================================================
-                         IP CCTV
-                         ================================================== -->
-
-                    <button
-                        type="button"
-                        class="system-category-card"
-                        data-category="ip-cctv"
-                    >
-
-                        <span class="category-card-icon">
-
-                            <i class="fa-solid fa-network-wired"></i>
-
-                        </span>
-
-
-                        <span class="category-card-content">
-
-                            <strong>
-                                IP CCTV
-                            </strong>
-
-                            <small>
-                                Network cameras, PoE,
-                                NVR & networking
-                            </small>
-
-                        </span>
-
-
-                        <span class="category-card-arrow">
-
-                            <i class="fa-solid fa-arrow-right"></i>
-
-                        </span>
-
-                    </button>
-
-
-                    <!-- ==================================================
-                         GATE AUTOMATION
-                         ================================================== -->
-
-                    <button
-                        type="button"
-                        class="system-category-card"
-                        data-category="gate-automation"
-                    >
-
-                        <span class="category-card-icon">
-
-                            <i class="fa-solid fa-warehouse"></i>
-
-                        </span>
-
-
-                        <span class="category-card-content">
-
-                            <strong>
-                                Gate Automation
-                            </strong>
-
-                            <small>
-                                Gate motors, remotes,
-                                batteries & accessories
-                            </small>
-
-                        </span>
-
-
-                        <span class="category-card-arrow">
-
-                            <i class="fa-solid fa-arrow-right"></i>
-
-                        </span>
-
-                    </button>
-
-
-                    <!-- ==================================================
-                         ALARM SYSTEMS
-                         ================================================== -->
-
-                    <button
-                        type="button"
-                        class="system-category-card"
-                        data-category="alarm-systems"
-                    >
-
-                        <span class="category-card-icon">
-
-                            <i class="fa-solid fa-bell"></i>
-
-                        </span>
-
-
-                        <span class="category-card-content">
-
-                            <strong>
-                                Alarm Systems
-                            </strong>
-
-                            <small>
-                                Panels, sensors,
-                                sirens & keypads
-                            </small>
-
-                        </span>
-
-
-                        <span class="category-card-arrow">
-
-                            <i class="fa-solid fa-arrow-right"></i>
-
-                        </span>
-
-                    </button>
-
-
-                    <!-- ==================================================
-                         ROBOGUARD
-                         ================================================== -->
-
-                    <button
-                        type="button"
-                        class="system-category-card"
-                        data-category="roboguard"
-                    >
-
-                        <span class="category-card-icon">
-
-                            <i class="fa-solid fa-tower-broadcast"></i>
-
-                        </span>
-
-
-                        <span class="category-card-content">
-
-                            <strong>
-                                Roboguard
-                            </strong>
-
-                            <small>
-                                Wireless beams,
-                                receivers & accessories
-                            </small>
-
-                        </span>
-
-
-                        <span class="category-card-arrow">
-
-                            <i class="fa-solid fa-arrow-right"></i>
-
-                        </span>
-
-                    </button>
-
-
-                    <!-- ==================================================
-                         ACCESS CONTROL
-                         ================================================== -->
-
-                    <button
-                        type="button"
-                        class="system-category-card"
-                        data-category="access-control"
-                    >
-
-                        <span class="category-card-icon">
-
-                            <i class="fa-solid fa-fingerprint"></i>
-
-                        </span>
-
-
-                        <span class="category-card-content">
-
-                            <strong>
-                                Access Control
-                            </strong>
-
-                            <small>
-                                Readers, controllers,
-                                locks & exit devices
-                            </small>
-
-                        </span>
-
-
-                        <span class="category-card-arrow">
-
-                            <i class="fa-solid fa-arrow-right"></i>
-
-                        </span>
-
-                    </button>
-
-
-                    <!-- ==================================================
-                         INTERCOM SYSTEMS
-                         ================================================== -->
-
-                    <button
-                        type="button"
-                        class="system-category-card"
-                        data-category="intercom-systems"
-                    >
-
-                        <span class="category-card-icon">
-
-                            <i class="fa-solid fa-door-open"></i>
-
-                        </span>
-
-
-                        <span class="category-card-content">
-
-                            <strong>
-                                Intercom Systems
-                            </strong>
-
-                            <small>
-                                Video intercoms,
-                                monitors & door stations
-                            </small>
-
-                        </span>
-
-
-                        <span class="category-card-arrow">
-
-                            <i class="fa-solid fa-arrow-right"></i>
-
-                        </span>
-
-                    </button>
-
-
-                    <!-- ==================================================
-                         SECURITY ACCESSORIES
-                         ================================================== -->
-
-                    <button
-                        type="button"
-                        class="system-category-card"
-                        data-category="security-accessories"
-                    >
-
-                        <span class="category-card-icon">
-
-                            <i class="fa-solid fa-toolbox"></i>
-
-                        </span>
-
-
-                        <span class="category-card-content">
-
-                            <strong>
-                                Security Accessories
-                            </strong>
-
-                            <small>
-                                Cables, connectors,
-                                power supplies & hardware
-                            </small>
-
-                        </span>
-
-
-                        <span class="category-card-arrow">
-
-                            <i class="fa-solid fa-arrow-right"></i>
-
-                        </span>
-
-                    </button>
-
-
-                </div>
-
-            </div>
-
-
-            <!-- ========================================================
-                 ACTIVE SYSTEM BUILDER
-                 ======================================================== -->
-
-            <div
-                class="active-system-builder"
-                id="activeSystemBuilder"
-            >
-
-
-                <!-- ====================================================
-                     BUILDER HEADER
-                     ==================================================== -->
-
-                <div class="builder-header">
-
-                    <div class="builder-title-area">
-
-                        <div class="builder-icon">
-
-                            <i class="fa-solid fa-bolt"></i>
-
-                        </div>
-
-
-                        <div>
-
-                            <span class="builder-label">
-                                CURRENT SYSTEM
-                            </span>
-
-
-                            <h2 id="currentCategoryTitle">
-                                Electric Fencing
-                            </h2>
-
-
-                            <p>
-                                Select the individual components
-                                required for your installation.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="builder-actions">
-
-                        <button
-                            type="button"
-                            class="builder-action-button secondary"
-                            id="clearSystem"
-                        >
-
-                            <i class="fa-solid fa-rotate-left"></i>
-
-                            Clear System
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <!-- ====================================================
-                     PRODUCT SEARCH / FILTER BAR
-                     ==================================================== -->
-
-                <div
-                    class="product-toolbar"
-                    id="productToolbar"
-                >
-
-                    <div class="product-search">
-
-                        <i class="fa-solid fa-magnifying-glass"></i>
-
-                        <input
-                            type="search"
-                            id="configuratorProductSearch"
-                            placeholder="Search products in this system..."
-                            autocomplete="off"
-                        >
-
-                    </div>
-
-
-                    <div class="product-toolbar-actions">
-
-
-                        <button
-                            type="button"
-                            class="product-view-button active"
-                            data-view="grid"
-                            aria-label="Grid view"
-                        >
-
-                            <i class="fa-solid fa-grip"></i>
-
-                        </button>
-
-
-                        <button
-                            type="button"
-                            class="product-view-button"
-                            data-view="list"
-                            aria-label="List view"
-                        >
-
-                            <i class="fa-solid fa-list"></i>
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <!-- ====================================================
-                     PRODUCT GROUPS
-                     
-                     configurator.js populates this container.
-                     ==================================================== -->
-
-                <div
-                    class="configurator-product-area"
-                    id="configuratorSelectors"
-                >
-
-                    <div class="configurator-loading">
-
-                        <div class="loading-spinner"></div>
-
-                        <h3>
-                            Loading products...
-                        </h3>
-
-                        <p>
-                            Preparing your security system components.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <!-- ====================================================
-                     NO PRODUCTS STATE
-                     ==================================================== -->
-
-                <div
-                    class="configurator-empty"
-                    id="configuratorEmpty"
-                    hidden
-                >
-
-                    <div class="configurator-empty-icon">
-
-                        <i class="fa-solid fa-box-open"></i>
-
-                    </div>
-
-
-                    <h3>
-                        No products found
-                    </h3>
-
-
-                    <p>
-                        There are currently no products available
-                        for this security category.
-                    </p>
-
-                </div>
-
-
-            </div>
-
-
-            </section>
-
-                    <!-- ============================================================
-             CONFIGURATOR WORKSPACE
-             PART 2 — SYSTEM SELECTOR + PROPERTY VISUALISATION
-             ============================================================ -->
-
-        <section
-            class="configurator-workspace"
-            id="configuratorWorkspace"
-        >
-
-
-            <!-- ========================================================
-                 WORKSPACE INTRO
-                 ======================================================== -->
-
-            <div class="workspace-header">
-
-                <div class="workspace-heading">
-
-                    <span class="section-eyebrow">
-
-                        <i class="fa-solid fa-shield-halved"></i>
-
-                        BUILD YOUR SYSTEM
-
-                    </span>
-
-                    <h2>
-                        What are you protecting?
-                    </h2>
-
-                    <p>
-                        Choose a security system and build it
-                        component by component.
-                    </p>
-
-                </div>
-
-
-                <div class="workspace-status">
-
-                    <span class="status-dot"></span>
-
-                    <span>
-                        Configurator Ready
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- ========================================================
-                 SECURITY CATEGORY SELECTOR
-                 ======================================================== -->
-
-            <div
-                class="system-category-section"
-                id="systemCategorySection"
-            >
-
-                <div class="category-section-heading">
-
-                    <div>
-
-                        <span class="category-eyebrow">
-                            SECURITY SOLUTIONS
-                        </span>
-
-                        <h3>
-                            Select a system type
-                        </h3>
-
-                    </div>
-
-                    <span class="category-count">
-
-                        <i class="fa-solid fa-layer-group"></i>
-
-                        Build from individual products
-
-                    </span>
-
-                </div>
-
-
-                <div
-                    class="system-category-grid"
-                    id="systemCategoryGrid"
-                >
-
-
-                    <!-- ==================================================
-                         ELECTRIC FENCING
-                         ================================================== -->
-
-                    <button
-                        type="button"
-                        class="system-category-card active"
-                        data-category="electric-fencing"
-                    >
-
-                        <span class="category-card-icon">
-
-                            <i class="fa-solid fa-bolt"></i>
-
-                        </span>
-
-                        <span class="category-card-content">
-
-                            <strong>
-                                Electric Fencing
-                            </strong>
-
-                            <small>
-                                Brackets, wire, energizers,
-                                warning signs & accessories
-                            </small>
-
-                        </span>
-
-                        <span class="category-card-arrow">
-
-                            <i class="fa-solid fa-arrow-right"></i>
-
-                        </span>
-
-                    </button>
-
-
-                    <!-- ==================================================
-                         CCTV
-                         ================================================== -->
-
-                    <button
-                        type="button"
-                        class="system-category-card"
-                        data-category="cctv"
-                    >
-
-                        <span class="category-card-icon">
-
-                            <i class="fa-solid fa-video"></i>
-
-                        </span>
-
-                        <span class="category-card-content">
-
-                            <strong>
-                                CCTV Systems
-                            </strong>
-
-                            <small>
-                                Cameras, DVRs, storage,
-                                cabling & accessories
-                            </small>
-
-                        </span>
-
-                        <span class="category-card-arrow">
-
-                            <i class="fa-solid fa-arrow-right"></i>
-
-                        </span>
-
-                    </button>
-
-
-                    <!-- ==================================================
-                         IP CCTV
-                         ================================================== -->
-
-                    <button
-                        type="button"
-                        class="system-category-card"
-                        data-category="ip-cctv"
-                    >
-
-                        <span class="category-card-icon">
-
-                            <i class="fa-solid fa-network-wired"></i>
-
-                        </span>
-
-                        <span class="category-card-content">
-
-                            <strong>
-                                IP CCTV
-                            </strong>
-
-                            <small>
-                                IP cameras, NVRs, PoE,
-                                switches & networking
-                            </small>
-
-                        </span>
-
-                        <span class="category-card-arrow">
-
-                            <i class="fa-solid fa-arrow-right"></i>
-
-                        </span>
-
-                    </button>
-
-
-                    <!-- ==================================================
-                         GATE AUTOMATION
-                         ================================================== -->
-
-                    <button
-                        type="button"
-                        class="system-category-card"
-                        data-category="gate-automation"
-                    >
-
-                        <span class="category-card-icon">
-
-                            <i class="fa-solid fa-warehouse"></i>
-
-                        </span>
-
-                        <span class="category-card-content">
-
-                            <strong>
-                                Gate Automation
-                            </strong>
-
-                            <small>
-                                Gate motors, remotes,
-                                batteries & accessories
-                            </small>
-
-                        </span>
-
-                        <span class="category-card-arrow">
-
-                            <i class="fa-solid fa-arrow-right"></i>
-
-                        </span>
-
-                    </button>
-
-
-                    <!-- ==================================================
-                         ALARM SYSTEMS
-                         ================================================== -->
-
-                    <button
-                        type="button"
-                        class="system-category-card"
-                        data-category="alarm-systems"
-                    >
-
-                        <span class="category-card-icon">
-
-                            <i class="fa-solid fa-bell"></i>
-
-                        </span>
-
-                        <span class="category-card-content">
-
-                            <strong>
-                                Alarm Systems
-                            </strong>
-
-                            <small>
-                                Panels, sensors, sirens,
-                                keypads & accessories
-                            </small>
-
-                        </span>
-
-                        <span class="category-card-arrow">
-
-                            <i class="fa-solid fa-arrow-right"></i>
-
-                        </span>
-
-                    </button>
-
-
-                    <!-- ==================================================
-                         ROBOGUARD
-                         ================================================== -->
-
-                    <button
-                        type="button"
-                        class="system-category-card"
-                        data-category="roboguard"
-                    >
-
-                        <span class="category-card-icon">
-
-                            <i class="fa-solid fa-tower-broadcast"></i>
-
-                        </span>
-
-                        <span class="category-card-content">
-
-                            <strong>
-                                Roboguard
-                            </strong>
-
-                            <small>
-                                Wireless beams, receivers
-                                & perimeter protection
-                            </small>
-
-                        </span>
-
-                        <span class="category-card-arrow">
-
-                            <i class="fa-solid fa-arrow-right"></i>
-
-                        </span>
-
-                    </button>
-
-
-                    <!-- ==================================================
-                         ACCESS CONTROL
-                         ================================================== -->
-
-                    <button
-                        type="button"
-                        class="system-category-card"
-                        data-category="access-control"
-                    >
-
-                        <span class="category-card-icon">
-
-                            <i class="fa-solid fa-fingerprint"></i>
-
-                        </span>
-
-                        <span class="category-card-content">
-
-                            <strong>
-                                Access Control
-                            </strong>
-
-                            <small>
-                                Readers, controllers,
-                                locks & exit devices
-                            </small>
-
-                        </span>
-
-                        <span class="category-card-arrow">
-
-                            <i class="fa-solid fa-arrow-right"></i>
-
-                        </span>
-
-                    </button>
-
-
-                    <!-- ==================================================
-                         INTERCOM SYSTEMS
-                         ================================================== -->
-
-                    <button
-                        type="button"
-                        class="system-category-card"
-                        data-category="intercom-systems"
-                    >
-
-                        <span class="category-card-icon">
-
-                            <i class="fa-solid fa-door-open"></i>
-
-                        </span>
-
-                        <span class="category-card-content">
-
-                            <strong>
-                                Intercom Systems
-                            </strong>
-
-                            <small>
-                                Video intercoms, monitors,
-                                door stations & accessories
-                            </small>
-
-                        </span>
-
-                        <span class="category-card-arrow">
-
-                            <i class="fa-solid fa-arrow-right"></i>
-
-                        </span>
-
-                    </button>
-
-
-                    <!-- ==================================================
-                         SECURITY ACCESSORIES
-                         ================================================== -->
-
-                    <button
-                        type="button"
-                        class="system-category-card"
-                        data-category="security-accessories"
-                    >
-
-                        <span class="category-card-icon">
-
-                            <i class="fa-solid fa-toolbox"></i>
-
-                        </span>
-
-                        <span class="category-card-content">
-
-                            <strong>
-                                Security Accessories
-                            </strong>
-
-                            <small>
-                                Cables, power supplies,
-                                connectors & hardware
-                            </small>
-
-                        </span>
-
-                        <span class="category-card-arrow">
-
-                            <i class="fa-solid fa-arrow-right"></i>
-
-                        </span>
-
-                    </button>
-
-
-                </div>
-
-            </div>
-
-
-            <!-- ========================================================
-                 PROPERTY VISUALISATION
-                 ======================================================== -->
-
-            <section
-                class="property-visualisation"
-                id="propertyVisualisation"
-            >
-
-                <div class="visualisation-header">
-
-                    <div>
-
-                        <span class="section-eyebrow">
-
-                            <i class="fa-solid fa-house"></i>
-
-                            SYSTEM VISUALISATION
-
-                        </span>
-
-                        <h2>
-                            See Your Security System
-                        </h2>
-
-                        <p>
-                            As you build your system, your selected
-                            equipment can be represented on the property.
-                        </p>
-
-                    </div>
-
-
-                    <div class="visualisation-controls">
-
-                        <button
-                            type="button"
-                            class="visual-control active"
-                            data-visual-view="property"
-                            aria-label="Property view"
-                        >
-
-                            <i class="fa-solid fa-house"></i>
-
-                            Property
-
-                        </button>
-
-
-                        <button
-                            type="button"
-                            class="visual-control"
-                            data-visual-view="inside"
-                            aria-label="Interior view"
-                        >
-
-                            <i class="fa-solid fa-house-chimney-window"></i>
-
-                            Interior
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                <!-- ====================================================
-                     PROPERTY CANVAS
-                     ==================================================== -->
-
-                <div
-                    class="property-canvas"
-                    id="propertyCanvas"
-                >
-
-                    <!-- Background / house visual will be supplied
-                         by CSS / future visualisation layer. -->
-
-                    <div
-                        class="property-scene"
-                        id="propertyScene"
-                    >
-
-
-                        <!-- ============================================
-                             PROPERTY HOUSE
-                             ============================================ -->
-
-                        <div
-                            class="property-house"
-                            id="propertyHouse"
-                        >
-
-                            <div class="house-roof"></div>
-
-
-                            <div class="house-body">
-
-                                <div class="house-window window-one"></div>
-
-                                <div class="house-window window-two"></div>
-
-                                <div class="house-door"></div>
-
-                                <div class="house-garage"></div>
-
-                            </div>
-
-
-                            <!-- ELECTRIC FENCE VISUAL LAYER -->
-
-                            <div
-                                class="security-layer electric-fence-layer"
-                                id="electricFenceVisual"
-                            ></div>
-
-
-                            <!-- CCTV VISUAL LAYER -->
-
-                            <div
-                                class="security-layer cctv-layer"
-                                id="cctvVisual"
-                            ></div>
-
-
-                            <!-- ALARM VISUAL LAYER -->
-
-                            <div
-                                class="security-layer alarm-layer"
-                                id="alarmVisual"
-                            ></div>
-
-
-                            <!-- ACCESS CONTROL VISUAL LAYER -->
-
-                            <div
-                                class="security-layer access-layer"
-                                id="accessVisual"
-                            ></div>
-
-
-                            <!-- GATE AUTOMATION VISUAL LAYER -->
-
-                            <div
-                                class="security-layer gate-layer"
-                                id="gateVisual"
-                            ></div>
-
-
-                            <!-- ROBOGUARD VISUAL LAYER -->
-
-                            <div
-                                class="security-layer roboguard-layer"
-                                id="roboguardVisual"
-                            ></div>
-
-
-                        </div>
-
-
-                        <!-- ============================================
-                             PROPERTY PERIMETER
-                             ============================================ -->
-
-                        <div
-                            class="property-perimeter"
-                            id="propertyPerimeter"
-                        ></div>
-
-
-                        <!-- ============================================
-                             PROPERTY GATE
-                             ============================================ -->
-
-                        <div
-                            class="property-gate"
-                            id="propertyGate"
-                        >
-
-                            <div class="gate-panel"></div>
-
-                            <div class="gate-post left"></div>
-
-                            <div class="gate-post right"></div>
-
-                        </div>
-
-
-                        <!-- ============================================
-                             VISUAL PRODUCT MARKERS
-                             ============================================ -->
-
-                        <div
-                            class="visual-product-markers"
-                            id="visualProductMarkers"
-                        ></div>
-
-
-                    </div>
-
-
-                    <!-- =================================================
-                         VISUALISATION EMPTY STATE
-                         ================================================= -->
-
-                    <div
-                        class="visualisation-empty"
-                        id="visualisationEmpty"
-                    >
-
-                        <div class="visualisation-empty-icon">
-
-                            <i class="fa-solid fa-shield-halved"></i>
-
-                        </div>
-
-                        <h3>
-                            Your security system will appear here
-                        </h3>
-
-                        <p>
-                            Select products below and we'll show
-                            where they belong on your property.
-                        </p>
-
-                    </div>
-
-
-                    <!-- =================================================
-                         VISUALISATION LEGEND
-                         ================================================= -->
-
-                           <div class="visualisation-legend">
-
-                        <div class="legend-item">
-
-                            <span class="legend-dot legend-selected"></span>
-
-                            <span>
-                                Selected products
-                            </span>
-
-                        </div>
-
-
-                        <div class="legend-item">
-
-                            <span class="legend-dot legend-available"></span>
-
-                            <span>
-                                Available installation areas
-                            </span>
-
-                        </div>
-
-
-                        <div class="legend-item">
-
-                            <span class="legend-dot legend-hidden"></span>
-
-                            <span>
-                                Product location
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- =================================================
-                     SYSTEM CONFIGURATION WORKSPACE
-                     ================================================= -->
-
-                <section
-                    class="configurator-workspace"
-                    aria-label="Security system configuration"
-                >
-
-                    <div class="workspace-header">
-
-                        <div>
-
-                            <span class="section-eyebrow">
-                                BUILD YOUR SYSTEM
-                            </span>
-
-                            <h2 id="currentCategoryTitle">
-                                Electric Fencing
-                            </h2>
-
-                            <p>
-                                Select the individual products
-                                you need and choose your quantities.
-                            </p>
-
-                        </div>
-
-
-                        <div class="workspace-status">
-
-                            <span class="status-indicator"></span>
-
-                            <span>
-                                Live configuration
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- =================================================
-                         PRODUCT SELECTORS
-                         ================================================= -->
-
-                    <div
-                        id="configuratorSelectors"
-                        class="configurator-selectors"
-                    >
-
-                        <!--
-                            configurator.js dynamically renders
-                            all individual products here.
-
-                            Example groups:
-
-                            Brackets
-                            Square Tube
-                            Stays
-                            Lugs
-                            Tensioners
-                            Hooks
-                            Wire
-                            Warning Signs
-                            Earth Spikes
-                            Earth Loops
-                            HT Cable
-                            Energizers
-                            Battery / PSU
-                            Sirens
-                            Strobes
-                            Fence Lights
-                            Keypads
-                            etc.
-                        -->
-
-                    </div>
-
-
-                    <!-- =================================================
-                         EMPTY CONFIGURATION STATE
-                         ================================================= -->
-
-                    <div
-                        id="configuratorEmpty"
-                        class="configurator-empty"
-                    >
-
-                        <div class="empty-icon">
-
-                            <i class="fa-solid fa-box-open"></i>
-
-                        </div>
-
-                        <h3>
-                            Start building your system
-                        </h3>
-
-                        <p>
-                            Select products from the available
-                            categories to begin configuring your
-                            security system.
-                        </p>
-
-                    </div>
-
-                </section>
-
-
-                <!-- =================================================
-                     SELECTED PRODUCTS
-                     ================================================= -->
-
-                <section
-                    class="selected-products-section"
-                    aria-label="Selected products"
-                >
-
-                    <div class="section-heading">
-
-                        <div>
-
-                            <span class="section-eyebrow">
-                                YOUR SELECTION
-                            </span>
-
-                            <h2>
-                                Selected Products
-                            </h2>
-
-                        </div>
-
-
-                        <span
-                            id="summaryAddonCount"
-                            class="selection-count"
-                        >
-                            0 items
-                        </span>
-
-                    </div>
-
-
-                    <div
-                        id="selectedProducts"
-                        class="selected-products"
-                    >
-
-                        <!--
-                            configurator.js renders
-                            selected products here.
-                        -->
-
-                    </div>
-
-                </section>
-
-            </div>
+                <!-- =========================================================
+                 PART 2
+                 BUILD YOUR SYSTEM HERO + PROPERTY VISUALISATION
+                 ========================================================= -->
 
 
             <!-- =========================================================
-                 RIGHT COLUMN — SYSTEM SUMMARY
+                 BUILD SYSTEM HERO
                  ========================================================= -->
 
-            <aside
-                class="system-summary-column"
-                aria-label="System summary"
+            <section
+                class="build-system-hero"
+                aria-labelledby="buildSystemTitle"
             >
 
-                <div class="system-summary-card">
+                <div
+                    class="build-system-hero-content"
+                >
 
-                    <div class="summary-card-header">
+                    <div
+                        class="build-system-hero-badge"
+                    >
 
-                        <div>
+                        <span
+                            class="build-system-hero-badge-icon"
+                        >
 
-                            <span class="section-eyebrow">
-                                YOUR SYSTEM
+                            <i
+                                class="fa-solid fa-shield-halved"
+                                aria-hidden="true"
+                            ></i>
+
+                        </span>
+
+                        <span>
+                            CUSTOM SECURITY CONFIGURATOR
+                        </span>
+
+                    </div>
+
+
+                    <h1
+                        id="buildSystemTitle"
+                    >
+                        Build Your
+                        <span>
+                            Security System
+                        </span>
+                    </h1>
+
+
+                    <p
+                        class="build-system-hero-description"
+                    >
+                        Design a complete security solution
+                        for your property by selecting the
+                        individual products you need.
+                    </p>
+
+
+                    <div
+                        class="build-system-hero-features"
+                    >
+
+                        <div
+                            class="hero-feature"
+                        >
+
+                            <i
+                                class="fa-solid fa-sliders"
+                                aria-hidden="true"
+                            ></i>
+
+                            <span>
+                                Choose every component
                             </span>
-
-                            <h2>
-                                Configuration Summary
-                            </h2>
 
                         </div>
 
-                        <div class="summary-icon">
 
-                            <i class="fa-solid fa-shield-halved"></i>
+                        <div
+                            class="hero-feature"
+                        >
+
+                            <i
+                                class="fa-solid fa-calculator"
+                                aria-hidden="true"
+                            ></i>
+
+                            <span>
+                                Live pricing
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="hero-feature"
+                        >
+
+                            <i
+                                class="fa-solid fa-truck-fast"
+                                aria-hidden="true"
+                            ></i>
+
+                            <span>
+                                Delivery calculation
+                            </span>
 
                         </div>
 
                     </div>
 
+                </div>
 
-                    <!-- =================================================
-                         CURRENT SYSTEM
-                         ================================================= -->
 
-                    <div class="summary-category">
+                <!-- HERO VISUAL -->
 
-                        <span>
-                            Security System
+                <div
+                    class="build-system-hero-visual"
+                    aria-hidden="true"
+                >
+
+                    <div
+                        class="hero-visual-glow"
+                    ></div>
+
+
+                    <div
+                        class="hero-shield"
+                    >
+
+                        <i
+                            class="fa-solid fa-shield-halved"
+                        ></i>
+
+                    </div>
+
+
+                    <div
+                        class="hero-security-orbit hero-security-orbit-one"
+                    ></div>
+
+                    <div
+                        class="hero-security-orbit hero-security-orbit-two"
+                    ></div>
+
+
+                    <div
+                        class="hero-floating-icon hero-floating-camera"
+                    >
+
+                        <i
+                            class="fa-solid fa-camera"
+                        ></i>
+
+                    </div>
+
+
+                    <div
+                        class="hero-floating-icon hero-floating-fence"
+                    >
+
+                        <i
+                            class="fa-solid fa-bolt"
+                        ></i>
+
+                    </div>
+
+
+                    <div
+                        class="hero-floating-icon hero-floating-gate"
+                    >
+
+                        <i
+                            class="fa-solid fa-door-open"
+                        ></i>
+
+                    </div>
+
+
+                    <div
+                        class="hero-floating-icon hero-floating-lock"
+                    >
+
+                        <i
+                            class="fa-solid fa-lock"
+                        ></i>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================================================
+                 CONFIGURATOR INTRODUCTION
+                 ========================================================= -->
+
+            <section
+                class="configurator-intro"
+                aria-labelledby="configuratorIntroTitle"
+            >
+
+                <div
+                    class="configurator-intro-copy"
+                >
+
+                    <span
+                        class="section-eyebrow"
+                    >
+                        STEP 1
+                    </span>
+
+
+                    <h2
+                        id="configuratorIntroTitle"
+                    >
+                        What are you protecting?
+                    </h2>
+
+
+                    <p>
+                        Start by selecting the type of
+                        security system you want to build.
+                        You can then choose every individual
+                        component required for your installation.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="configurator-intro-note"
+                >
+
+                    <i
+                        class="fa-solid fa-circle-info"
+                        aria-hidden="true"
+                    ></i>
+
+                    <span>
+                        You are building a custom system —
+                        no pre-built kits are required.
+                    </span>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =========================================================
+                 SECURITY SYSTEM CATEGORY SELECTOR
+                 ========================================================= -->
+
+            <section
+                class="security-category-section"
+                aria-labelledby="securityCategoryTitle"
+            >
+
+                <div
+                    class="section-heading-row"
+                >
+
+                    <div>
+
+                        <span
+                            class="section-eyebrow"
+                        >
+                            SECURITY SOLUTIONS
                         </span>
 
-                        <strong id="summaryCategory">
+
+                        <h2
+                            id="securityCategoryTitle"
+                        >
+                            Select a system
+                        </h2>
+
+                    </div>
+
+
+                    <div
+                        class="category-scroll-hint"
+                    >
+
+                        <i
+                            class="fa-solid fa-arrow-right"
+                            aria-hidden="true"
+                        ></i>
+
+                        <span>
+                            Choose one to begin
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="configuratorCategorySelector"
+                    class="security-category-grid"
+                >
+
+
+                    <!-- =================================================
+                         ELECTRIC FENCING
+                         ================================================= -->
+
+                    <button
+                        type="button"
+                        class="security-category-card active"
+                        data-category="electric-fencing"
+                    >
+
+                        <span
+                            class="category-card-icon"
+                        >
+
+                            <i
+                                class="fa-solid fa-bolt"
+                                aria-hidden="true"
+                            ></i>
+
+                        </span>
+
+
+                        <span
+                            class="category-card-content"
+                        >
+
+                            <strong>
+                                Electric Fencing
+                            </strong>
+
+                            <small>
+                                Perimeter protection
+                            </small>
+
+                        </span>
+
+
+                        <span
+                            class="category-card-arrow"
+                        >
+
+                            <i
+                                class="fa-solid fa-chevron-right"
+                                aria-hidden="true"
+                            ></i>
+
+                        </span>
+
+                    </button>
+
+
+
+                    <!-- =================================================
+                         CCTV
+                         ================================================= -->
+
+                    <button
+                        type="button"
+                        class="security-category-card"
+                        data-category="cctv"
+                    >
+
+                        <span
+                            class="category-card-icon"
+                        >
+
+                            <i
+                                class="fa-solid fa-camera"
+                                aria-hidden="true"
+                            ></i>
+
+                        </span>
+
+
+                        <span
+                            class="category-card-content"
+                        >
+
+                            <strong>
+                                CCTV Systems
+                            </strong>
+
+                            <small>
+                                HD surveillance
+                            </small>
+
+                        </span>
+
+
+                        <span
+                            class="category-card-arrow"
+                        >
+
+                            <i
+                                class="fa-solid fa-chevron-right"
+                                aria-hidden="true"
+                            ></i>
+
+                        </span>
+
+                    </button>
+
+
+
+                    <!-- =================================================
+                         IP CCTV
+                         ================================================= -->
+
+                    <button
+                        type="button"
+                        class="security-category-card"
+                        data-category="ip-cctv"
+                    >
+
+                        <span
+                            class="category-card-icon"
+                        >
+
+                            <i
+                                class="fa-solid fa-network-wired"
+                                aria-hidden="true"
+                            ></i>
+
+                        </span>
+
+
+                        <span
+                            class="category-card-content"
+                        >
+
+                            <strong>
+                                IP CCTV
+                            </strong>
+
+                            <small>
+                                Network surveillance
+                            </small>
+
+                        </span>
+
+
+                        <span
+                            class="category-card-arrow"
+                        >
+
+                            <i
+                                class="fa-solid fa-chevron-right"
+                                aria-hidden="true"
+                            ></i>
+
+                        </span>
+
+                    </button>
+
+
+
+                    <!-- =================================================
+                         ROB OGUARD
+                         ================================================= -->
+
+                    <button
+                        type="button"
+                        class="security-category-card"
+                        data-category="roboguard"
+                    >
+
+                        <span
+                            class="category-card-icon"
+                        >
+
+                            <i
+                                class="fa-solid fa-radar"
+                                aria-hidden="true"
+                            ></i>
+
+                        </span>
+
+
+                        <span
+                            class="category-card-content"
+                        >
+
+                            <strong>
+                                Roboguard
+                            </strong>
+
+                            <small>
+                                Wireless beam protection
+                            </small>
+
+                        </span>
+
+
+                        <span
+                            class="category-card-arrow"
+                        >
+
+                            <i
+                                class="fa-solid fa-chevron-right"
+                                aria-hidden="true"
+                            ></i>
+
+                        </span>
+
+                    </button>
+
+
+
+                    <!-- =================================================
+                         GATE AUTOMATION
+                         ================================================= -->
+
+                    <button
+                        type="button"
+                        class="security-category-card"
+                        data-category="gate-automation"
+                    >
+
+                        <span
+                            class="category-card-icon"
+                        >
+
+                            <i
+                                class="fa-solid fa-warehouse"
+                                aria-hidden="true"
+                            ></i>
+
+                        </span>
+
+
+                        <span
+                            class="category-card-content"
+                        >
+
+                            <strong>
+                                Gate Automation
+                            </strong>
+
+                            <small>
+                                Automated access
+                            </small>
+
+                        </span>
+
+
+                        <span
+                            class="category-card-arrow"
+                        >
+
+                            <i
+                                class="fa-solid fa-chevron-right"
+                                aria-hidden="true"
+                            ></i>
+
+                        </span>
+
+                    </button>
+
+
+
+                    <!-- =================================================
+                         ALARM SYSTEMS
+                         ================================================= -->
+
+                    <button
+                        type="button"
+                        class="security-category-card"
+                        data-category="alarm-systems"
+                    >
+
+                        <span
+                            class="category-card-icon"
+                        >
+
+                            <i
+                                class="fa-solid fa-bell"
+                                aria-hidden="true"
+                            ></i>
+
+                        </span>
+
+
+                        <span
+                            class="category-card-content"
+                        >
+
+                            <strong>
+                                Alarm Systems
+                            </strong>
+
+                            <small>
+                                Intrusion detection
+                            </small>
+
+                        </span>
+
+
+                        <span
+                            class="category-card-arrow"
+                        >
+
+                            <i
+                                class="fa-solid fa-chevron-right"
+                                aria-hidden="true"
+                            ></i>
+
+                        </span>
+
+                    </button>
+
+
+
+                    <!-- =================================================
+                         ACCESS CONTROL
+                         ================================================= -->
+
+                    <button
+                        type="button"
+                        class="security-category-card"
+                        data-category="access-control"
+                    >
+
+                        <span
+                            class="category-card-icon"
+                        >
+
+                            <i
+                                class="fa-solid fa-fingerprint"
+                                aria-hidden="true"
+                            ></i>
+
+                        </span>
+
+
+                        <span
+                            class="category-card-content"
+                        >
+
+                            <strong>
+                                Access Control
+                            </strong>
+
+                            <small>
+                                Secure entry
+                            </small>
+
+                        </span>
+
+
+                        <span
+                            class="category-card-arrow"
+                        >
+
+                            <i
+                                class="fa-solid fa-chevron-right"
+                                aria-hidden="true"
+                            ></i>
+
+                        </span>
+
+                    </button>
+
+
+
+                    <!-- =================================================
+                         INTERCOM
+                         ================================================= -->
+
+                    <button
+                        type="button"
+                        class="security-category-card"
+                        data-category="intercom"
+                    >
+
+                        <span
+                            class="category-card-icon"
+                        >
+
+                            <i
+                                class="fa-solid fa-video"
+                                aria-hidden="true"
+                            ></i>
+
+                        </span>
+
+
+                        <span
+                            class="category-card-content"
+                        >
+
+                            <strong>
+                                Intercom Systems
+                            </strong>
+
+                            <small>
+                                Visitor communication
+                            </small>
+
+                        </span>
+
+
+                        <span
+                            class="category-card-arrow"
+                        >
+
+                            <i
+                                class="fa-solid fa-chevron-right"
+                                aria-hidden="true"
+                            ></i>
+
+                        </span>
+
+                    </button>
+
+
+<!-- =================================================
+                         CATEGORY CARD — CCTV
+                         ================================================= -->                <button
+                    type="button"
+                    class="category-card"
+                    data-category="cctv-hd"
+                >
+
+                    <span
+                        class="category-card-icon"
+                        aria-hidden="true"
+                    >
+
+                        <i
+                            class="fa-solid fa-video"
+                        ></i>
+
+                    </span>
+
+
+                    <span
+                        class="category-card-content"
+                    >
+
+                        <strong>
+                            HD CCTV
+                        </strong>
+
+                        <small>
+                            Cameras, DVRs, cabling,
+                            storage and accessories
+                        </small>
+
+                    </span>
+
+
+                    <span
+                        class="category-card-arrow"
+                    >
+
+                        <i
+                            class="fa-solid fa-chevron-right"
+                            aria-hidden="true"
+                        ></i>
+
+                    </span>
+
+                </button>
+
+
+
+                <!-- =================================================
+                     CATEGORY CARD — IP CCTV
+                     ================================================= -->
+
+                <button
+                    type="button"
+                    class="category-card"
+                    data-category="ip-cctv"
+                >
+
+                    <span
+                        class="category-card-icon"
+                        aria-hidden="true"
+                    >
+
+                        <i
+                            class="fa-solid fa-network-wired"
+                        ></i>
+
+                    </span>
+
+
+                    <span
+                        class="category-card-content"
+                    >
+
+                        <strong>
+                            IP CCTV
+                        </strong>
+
+                        <small>
+                            Network cameras,
+                            NVRs, PoE and networking
+                        </small>
+
+                    </span>
+
+
+                    <span
+                        class="category-card-arrow"
+                    >
+
+                        <i
+                            class="fa-solid fa-chevron-right"
+                            aria-hidden="true"
+                        ></i>
+
+                    </span>
+
+                </button>
+
+
+
+                <!-- =================================================
+                     CATEGORY CARD — ELECTRIC FENCING
+                     ================================================= -->
+
+                <button
+                    type="button"
+                    class="category-card"
+                    data-category="electric-fencing"
+                >
+
+                    <span
+                        class="category-card-icon"
+                        aria-hidden="true"
+                    >
+
+                        <i
+                            class="fa-solid fa-bolt"
+                        ></i>
+
+                    </span>
+
+
+                    <span
+                        class="category-card-content"
+                    >
+
+                        <strong>
+                            Electric Fencing
+                        </strong>
+
+                        <small>
+                            Brackets, wire, energizers,
+                            earth systems and accessories
+                        </small>
+
+                    </span>
+
+
+                    <span
+                        class="category-card-arrow"
+                    >
+
+                        <i
+                            class="fa-solid fa-chevron-right"
+                            aria-hidden="true"
+                        ></i>
+
+                    </span>
+
+                </button>
+
+
+
+                <!-- =================================================
+                     CATEGORY CARD — GATE AUTOMATION
+                     ================================================= -->
+
+                <button
+                    type="button"
+                    class="category-card"
+                    data-category="gate-automation"
+                >
+
+                    <span
+                        class="category-card-icon"
+                        aria-hidden="true"
+                    >
+
+                        <i
+                            class="fa-solid fa-house-lock"
+                        ></i>
+
+                    </span>
+
+
+                    <span
+                        class="category-card-content"
+                    >
+
+                        <strong>
+                            Gate Automation
+                        </strong>
+
+                        <small>
+                            Gate motors, remotes,
+                            batteries and accessories
+                        </small>
+
+                    </span>
+
+
+                    <span
+                        class="category-card-arrow"
+                    >
+
+                        <i
+                            class="fa-solid fa-chevron-right"
+                            aria-hidden="true"
+                        ></i>
+
+                    </span>
+
+                </button>
+
+
+
+                <!-- =================================================
+                     CATEGORY CARD — ALARM SYSTEMS
+                     ================================================= -->
+
+                <button
+                    type="button"
+                    class="category-card"
+                    data-category="alarm-systems"
+                >
+
+                    <span
+                        class="category-card-icon"
+                        aria-hidden="true"
+                    >
+
+                        <i
+                            class="fa-solid fa-bell"
+                        ></i>
+
+                    </span>
+
+
+                    <span
+                        class="category-card-content"
+                    >
+
+                        <strong>
+                            Alarm Systems
+                        </strong>
+
+                        <small>
+                            Panels, PIRs, sirens,
+                            keypads and sensors
+                        </small>
+
+                    </span>
+
+
+                    <span
+                        class="category-card-arrow"
+                    >
+
+                        <i
+                            class="fa-solid fa-chevron-right"
+                            aria-hidden="true"
+                        ></i>
+
+                    </span>
+
+                </button>
+
+
+
+                <!-- =================================================
+                     CATEGORY CARD — ROBOGUARD
+                     ================================================= -->
+
+                <button
+                    type="button"
+                    class="category-card"
+                    data-category="roboguard"
+                >
+
+                    <span
+                        class="category-card-icon"
+                        aria-hidden="true"
+                    >
+
+                        <i
+                            class="fa-solid fa-shield-halved"
+                        ></i>
+
+                    </span>
+
+
+                    <span
+                        class="category-card-content"
+                    >
+
+                        <strong>
+                            Roboguard
+                        </strong>
+
+                        <small>
+                            Wireless beams, receivers,
+                            transmitters and accessories
+                        </small>
+
+                    </span>
+
+
+                    <span
+                        class="category-card-arrow"
+                    >
+
+                        <i
+                            class="fa-solid fa-chevron-right"
+                            aria-hidden="true"
+                        ></i>
+
+                    </span>
+
+                </button>
+
+
+
+                <!-- =================================================
+                     CATEGORY CARD — ACCESS CONTROL
+                     ================================================= -->
+
+                <button
+                    type="button"
+                    class="category-card"
+                    data-category="access-control"
+                >
+
+                    <span
+                        class="category-card-icon"
+                        aria-hidden="true"
+                    >
+
+                        <i
+                            class="fa-solid fa-fingerprint"
+                        ></i>
+
+                    </span>
+
+
+                    <span
+                        class="category-card-content"
+                    >
+
+                        <strong>
+                            Access Control
+                        </strong>
+
+                        <small>
+                            Keypads, readers,
+                            controllers and locks
+                        </small>
+
+                    </span>
+
+
+                    <span
+                        class="category-card-arrow"
+                    >
+
+                        <i
+                            class="fa-solid fa-chevron-right"
+                            aria-hidden="true"
+                        ></i>
+
+                    </span>
+
+                </button>
+
+
+
+                <!-- =================================================
+                     CATEGORY CARD — INTERCOM
+                     ================================================= -->
+
+                <button
+                    type="button"
+                    class="category-card"
+                    data-category="intercom"
+                >
+
+                    <span
+                        class="category-card-icon"
+                        aria-hidden="true"
+                    >
+
+                        <i
+                            class="fa-solid fa-phone-volume"
+                        ></i>
+
+                    </span>
+
+
+                    <span
+                        class="category-card-content"
+                    >
+
+                        <strong>
+                            Intercom Systems
+                        </strong>
+
+                        <small>
+                            Audio, video and
+                            gate communication
+                        </small>
+
+                    </span>
+
+
+                    <span
+                        class="category-card-arrow"
+                    >
+
+                        <i
+                            class="fa-solid fa-chevron-right"
+                            aria-hidden="true"
+                        ></i>
+
+                    </span>
+
+                </button>
+
+
+
+                <!-- =================================================
+                     CATEGORY CARD — SECURITY ACCESSORIES
+                     ================================================= -->
+
+                <button
+                    type="button"
+                    class="category-card"
+                    data-category="security-accessories"
+                >
+
+                    <span
+                        class="category-card-icon"
+                        aria-hidden="true"
+                    >
+
+                        <i
+                            class="fa-solid fa-toolbox"
+                        ></i>
+
+                    </span>
+
+
+                    <span
+                        class="category-card-content"
+                    >
+
+                        <strong>
+                            Security Accessories
+                        </strong>
+
+                        <small>
+                            Power supplies, cables,
+                            connectors and general accessories
+                        </small>
+
+                    </span>
+
+
+                    <span
+                        class="category-card-arrow"
+                    >
+
+                        <i
+                            class="fa-solid fa-chevron-right"
+                            aria-hidden="true"
+                        ></i>
+
+                    </span>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =============================================================
+         SYSTEM BUILDER WORKSPACE
+         ============================================================= -->
+
+    <section
+        id="systemBuilder"
+        class="system-builder"
+        aria-hidden="true"
+    >
+
+
+        <!-- =========================================================
+             BUILDER HEADER
+             ========================================================= -->
+
+        <div class="builder-header">
+
+            <div class="builder-header-main">
+
+                <button
+                    type="button"
+                    id="backToCategories"
+                    class="builder-back-button"
+                >
+
+                    <i
+                        class="fa-solid fa-arrow-left"
+                        aria-hidden="true"
+                    ></i>
+
+                    <span>
+                        Change System
+                    </span>
+
+                </button>
+
+
+                <div class="builder-title">
+
+                    <span
+                        class="builder-eyebrow"
+                    >
+                        BUILD YOUR SYSTEM
+                    </span>
+
+
+                    <h2
+                        id="currentCategoryTitle"
+                    >
+                        Select a security system
+                    </h2>
+
+
+                    <p
+                        id="currentCategoryDescription"
+                    >
+                        Choose individual products
+                        to create your own custom
+                        security solution.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="builder-status"
+                id="builderStatus"
+            >
+
+                <span
+                    class="builder-status-dot"
+                ></span>
+
+                <span>
+                    Custom system
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================================================
+             VISUAL PROPERTY PREVIEW
+             ========================================================= -->
+
+        <section
+            class="property-preview"
+            id="propertyPreview"
+        >
+
+            <div
+                class="property-preview-heading"
+            >
+
+                <div>
+
+                    <span
+                        class="section-eyebrow"
+                    >
+                        VISUAL SYSTEM PLANNER
+                    </span>
+
+                    <h3>
+                        See where your security
+                        products belong
+                    </h3>
+
+                    <p>
+                        As you select products,
+                        the planner will help
+                        visualise where they
+                        belong on your property.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="visualisation-legend"
+                >
+
+                    <span>
+                        <i
+                            class="fa-solid fa-circle"
+                        ></i>
+
+                        Selected
+                    </span>
+
+                    <span>
+                        <i
+                            class="fa-solid fa-location-dot"
+                        ></i>
+
+                        Placement
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- =====================================================
+                 PROPERTY SCENE
+                 ===================================================== -->
+
+            <div
+                class="property-scene"
+                id="propertyScene"
+            >
+
+                <!-- Background/property visual
+                     is controlled by CSS. -->
+
+                <div
+                    class="property-sky"
+                ></div>
+
+
+                <div
+                    class="property-ground"
+                ></div>
+
+
+                <div
+                    class="property-house"
+                >
+
+                    <div
+                        class="house-roof"
+                    ></div>
+
+
+                    <div
+                        class="house-body"
+                    >
+
+                        <div
+                            class="house-wall"
+                        ></div>
+
+
+                        <div
+                            class="house-window window-left"
+                        ></div>
+
+
+                        <div
+                            class="house-window window-right"
+                        ></div>
+
+
+                        <div
+                            class="house-door"
+                        >
+
+                            <span
+                                class="door-handle"
+                            ></span>
+
+                        </div>
+
+
+                        <div
+                            class="house-garage"
+                        >
+
+                            <span
+                                class="garage-door-line"
+                            ></span>
+
+                        </div>
+
+
+                        <!-- Electric fence
+                             placement zone -->
+
+                        <div
+                            class="security-zone fence-zone"
+                            data-zone="electric-fencing"
+                        >
+
+                            <span
+                                class="zone-label"
+                            >
+                                ELECTRIC FENCE
+                            </span>
+
+                        </div>
+
+
+                        <!-- CCTV placement zones -->
+
+                        <div
+                            class="security-zone camera-zone camera-zone-one"
+                            data-zone="cctv"
+                        >
+
+                            <i
+                                class="fa-solid fa-video"
+                            ></i>
+
+                        </div>
+
+
+                        <div
+                            class="security-zone camera-zone camera-zone-two"
+                            data-zone="cctv"
+                        >
+
+                            <i
+                                class="fa-solid fa-video"
+                            ></i>
+
+                        </div>
+
+
+                        <!-- Gate -->
+
+                        <div
+                            class="house-gate"
+                        >
+
+                            <div
+                                class="gate-panel"
+                            ></div>
+
+                            <div
+                                class="gate-panel"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     DYNAMIC PRODUCT MARKERS
+                     ================================================= -->
+
+                <div
+                    id="productPlacementLayer"
+                    class="product-placement-layer"
+                >
+
+                    <!-- configurator.js
+                         will place selected product
+                         markers here. -->
+
+                </div>
+
+
+       <div
+                        class="scene-caption"
+                    >                    <i
+                        class="fa-solid fa-wand-magic-sparkles"
+                        aria-hidden="true"
+                    ></i>
+
+                    Your selections appear
+                    on the property plan.
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================================
+             PRODUCT SELECTOR AREA
+             ========================================================= -->
+
+        <section
+            class="product-selector-section"
+        >
+
+            <div
+                class="selector-heading"
+            >
+
+                <div>
+
+                    <span
+                        class="section-eyebrow"
+                    >
+                        SELECT PRODUCTS
+                    </span>
+
+                    <h3>
+                        Build it your way
+                    </h3>
+
+                    <p>
+                        Select the products you need
+                        and set the quantity for each
+                        item.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="product-count"
+                    id="productCount"
+                >
+                    0 products available
+                </div>
+
+            </div>
+
+
+            <div
+                class="configurator-filter-bar"
+            >
+
+                <div
+                    class="configurator-search"
+                >
+
+                    <i
+                        class="fa-solid fa-magnifying-glass"
+                        aria-hidden="true"
+                    ></i>
+
+                    <input
+                        type="search"
+                        id="configuratorSearch"
+                        placeholder="Search products..."
+                        autocomplete="off"
+                        aria-label="Search products"
+                    >
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="configurator-filter-button active"
+                    data-filter="all"
+                >
+                    All Products
+                </button>
+
+
+                <button
+                    type="button"
+                    class="configurator-filter-button"
+                    data-filter="selected"
+                >
+                    Selected
+                </button>
+
+            </div>
+
+
+            <div
+                id="configuratorSelectors"
+                class="configurator-selectors"
+            >
+
+                <!-- configurator.js
+                     generates product groups
+                     and product cards here. -->
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================================
+             SELECTED PRODUCTS
+             ========================================================= -->
+
+        <section
+            class="selected-products-section"
+        >
+
+            <div
+                class="selected-products-header"
+            >
+
+                <div>
+
+                    <span
+                        class="section-eyebrow"
+                    >
+                        YOUR SYSTEM
+                    </span>
+
+                    <h3>
+                        Selected Products
+                    </h3>
+
+                    <p>
+                        Review everything you have
+                        added to your custom system.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="clearSystem"
+                    class="clear-system-button"
+                >
+
+                    <i
+                        class="fa-solid fa-trash-can"
+                        aria-hidden="true"
+                    ></i>
+
+                    Clear System
+
+                </button>
+
+            </div>
+
+
+            <div
+                id="selectedProducts"
+                class="selected-products-list"
+            >
+
+                <div
+                    class="empty-system"
+                >
+
+                    <div
+                        class="empty-system-icon"
+                    >
+
+                        <i
+                            class="fa-solid fa-box-open"
+                            aria-hidden="true"
+                        ></i>
+
+                    </div>
+
+
+                    <h4>
+                        Your system is empty
+                    </h4>
+
+
+                    <p>
+                        Select products above to
+                        start building your custom
+                        security system.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================================
+             DELIVERY SECTION
+             ========================================================= -->
+
+        <section
+            class="configurator-delivery-section"
+            id="configuratorDelivery"
+        >
+
+            <div
+                class="delivery-section-heading"
+            >
+
+                <div>
+
+                    <span
+                        class="section-eyebrow"
+                    >
+                        DELIVERY
+                    </span>
+
+                    <h3>
+                        Delivery estimate
+                    </h3>
+
+                    <p>
+                        Delivery is calculated from
+                        your configured system and
+                        destination.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="delivery-status"
+                    id="deliveryStatus"
+                >
+
+                    <i
+                        class="fa-solid fa-truck"
+                        aria-hidden="true"
+                    ></i>
+
+                    <span>
+                        Calculating...
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="delivery-content"
+            >
+
+                <div
+                    class="delivery-info-card"
+                >
+
+                    <div
+                        class="delivery-info-icon"
+                    >
+
+                        <i
+                            class="fa-solid fa-location-dot"
+                            aria-hidden="true"
+                        ></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Delivery location
+                        </strong>
+
+                        <p
+                            id="deliveryLocation"
+                        >
+                            Enter your delivery
+                            details at checkout.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="delivery-info-card"
+                >
+
+                    <div
+                        class="delivery-info-icon"
+                    >
+
+                        <i
+                            class="fa-solid fa-scale-balanced"
+                            aria-hidden="true"
+                        ></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            System weight
+                        </strong>
+
+                        <p>
+                            <span
+                                id="systemWeight"
+                            >
+                                0.00
+                            </span>
+                            kg
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="delivery-info-card"
+                >
+
+                    <div
+                        class="delivery-info-icon"
+                    >
+
+                        <i
+                            class="fa-solid fa-truck-fast"
+                            aria-hidden="true"
+                        ></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Estimated delivery
+                        </strong>
+
+                        <p
+                            id="deliveryEstimate"
+                        >
+                            Calculated at checkout
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================================
+             CONFIGURATION SUMMARY
+             ========================================================= -->
+
+        <section
+            class="configuration-summary-section"
+            id="configurationSummary"
+        >
+
+            <div
+                class="summary-section-header"
+            >
+
+                <div>
+
+                    <span
+                        class="section-eyebrow"
+                    >
+                        SYSTEM SUMMARY
+                    </span>
+
+                    <h3>
+                        Your custom security system
+                    </h3>
+
+                    <p>
+                        Review your configuration,
+                        pricing and VAT before adding
+                        the system to your cart.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="summary-grid"
+            >
+
+                <div
+                    class="summary-details-card"
+                >
+
+                    <div
+                        class="summary-detail-row"
+                    >
+
+                        <span>
+                            System type
+                        </span>
+
+                        <strong
+                            id="summaryCategory"
+                        >
                             Electric Fencing
                         </strong>
 
                     </div>
 
 
-                    <!-- =================================================
-                         SUMMARY PRODUCTS
-                         ================================================= -->
-
                     <div
-                        id="summaryProducts"
-                        class="summary-products"
+                        class="summary-detail-row"
                     >
-
-                        <div class="summary-empty">
-
-                            <i class="fa-solid fa-box-open"></i>
-
-                            <p>
-                                No products selected yet.
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- =================================================
-                         SUMMARY TOTALS
-                         ================================================= -->
-
-                    <div class="summary-totals">
-
-                        <div class="summary-total-row">
-
-                            <span>
-                                Subtotal
-                            </span>
-
-                            <strong id="summarySubtotal">
-                                R 0.00
-                            </strong>
-
-                        </div>
-
-
-                        <div class="summary-total-row">
-
-                            <span>
-                                VAT (15%)
-                            </span>
-
-                            <strong id="summaryVat">
-                                R 0.00
-                            </strong>
-
-                        </div>
-
-
-                        <div class="summary-total-row grand-total">
-
-                            <span>
-                                Total
-                            </span>
-
-                            <strong id="summaryGrandTotal">
-                                R 0.00
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- =================================================
-                         DELIVERY STATUS
-                         ================================================= -->
-
-                    <div
-                        id="configuratorDelivery"
-                        class="configurator-delivery"
-                    >
-
-                        <div class="delivery-icon">
-
-                            <i class="fa-solid fa-truck-fast"></i>
-
-                        </div>
-
-                        <div>
-
-                            <strong>
-                                Delivery
-                            </strong>
-
-                            <span id="deliveryStatus">
-                                Delivery calculated at checkout
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- =================================================
-                         ACTION BUTTONS
-                         ================================================= -->
-
-                    <div class="summary-actions">
-
-                        <button
-                            type="button"
-                            id="btnAddToCart"
-                            class="btn-add-system"
-                        >
-
-                            <i class="fa-solid fa-cart-plus"></i>
-
-                            <span>
-                                Add System to Cart
-                            </span>
-
-                        </button>
-
-
-                        <button
-                            type="button"
-                            id="clearSystem"
-                            class="btn-clear-system"
-                        >
-
-                            <i class="fa-solid fa-rotate-left"></i>
-
-                            Clear System
-
-                        </button>
-
-                    </div>
-
-
-                    <!-- =================================================
-                         TRUST MESSAGE
-                         ================================================= -->
-
-                    <div class="summary-trust">
-
-                        <i class="fa-solid fa-lock"></i>
 
                         <span>
-                            Your configuration is saved securely
-                            in your browser.
+                            Products configured
                         </span>
+
+                        <strong
+                            id="summaryAddonCount"
+                        >
+                            0 items
+                        </strong>
+
+                    </div>
+
+
+                    <div
+                        class="summary-detail-row"
+                    >
+
+                        <span>
+                            Subtotal
+                        </span>
+
+                        <strong
+                            id="summarySubtotal"
+                        >
+                            R 0.00
+                        </strong>
+
+                    </div>
+
+
+                    <div
+                        class="summary-detail-row"
+                    >
+
+                        <span>
+                            VAT
+                        </span>
+
+                        <strong
+                            id="summaryVat"
+                        >
+                            R 0.00
+                        </strong>
+
+                    </div>
+
+
+                    <div
+                        class="summary-detail-row summary-total-row"
+                    >
+
+                        <span>
+                            Grand Total
+                        </span>
+
+                        <strong
+                            id="summaryGrandTotal"
+                        >
+                            R 0.00
+                        </strong>
 
                     </div>
 
                 </div>
 
-            </aside>
 
-        </div>
+                <div
+                    class="summary-action-card"
+                >
 
-    </main>
+                    <div
+                        class="summary-action-icon"
+                    >
+
+                        <i
+                            class="fa-solid fa-shield-halved"
+                            aria-hidden="true"
+                        ></i>
+
+                    </div>
 
 
-    <!-- ================================================================
-         CART DRAWER
-         ================================================================ -->
+                    <h4>
+                        Ready to build your system?
+                    </h4>
+
+
+                    <p>
+                        Add your complete custom
+                        configuration to the shopping
+                        cart and continue to checkout.
+                    </p>
+
+
+                    <button
+                        type="button"
+                        id="btnAddToCart"
+                        class="btn-add-system"
+                    >
+
+                        <i
+                            class="fa-solid fa-cart-plus"
+                            aria-hidden="true"
+                        ></i>
+
+                        Add System to Cart
+
+                    </button>
+
+
+                    <small>
+                        Your selected products and
+                        quantities will be saved together
+                        as one custom system.
+                    </small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </section>
+
+</main>
+
+
+
+<!-- ================================================================
+     MOBILE STICKY SYSTEM BAR
+     ================================================================ -->
+
+<div
+    class="mobile-system-bar"
+    id="mobileSystemBar"
+>
 
     <div
-        id="cartDrawer"
-        class="cart-drawer"
-        aria-hidden="true"
+        class="mobile-system-total"
     >
 
-        <div class="cart-drawer-header">
+        <span>
+            System Total
+        </span>
 
-            <div>
+        <strong
+            id="mobileGrandTotal"
+        >
+            R 0.00
+        </strong>
 
-                <span class="section-eyebrow">
-                    NEXPAK
-                </span>
-
-                <h2>
-                    Your Cart
-                </h2>
-
-            </div>
+    </div>
 
 
-            <button
-                type="button"
-                id="closeCartDrawer"
-                class="cart-drawer-close"
-                aria-label="Close cart"
+    <button
+        type="button"
+        id="mobileAddToCart"
+        class="mobile-add-system"
+    >
+
+        <i
+            class="fa-solid fa-cart-plus"
+            aria-hidden="true"
+        ></i>
+
+        Add System
+
+    </button>
+
+</div>
+
+
+
+<!-- ================================================================
+     CART DRAWER
+     ================================================================ -->
+
+<aside
+    class="cart-drawer"
+    id="cartDrawer"
+    aria-hidden="true"
+>
+
+    <div
+        class="cart-drawer-header"
+    >
+
+        <div>
+
+            <span
+                class="cart-drawer-eyebrow"
             >
+                NEXPAK
+            </span>
 
-                <i class="fa-solid fa-xmark"></i>
-
-            </button>
+            <h3>
+                Your Cart
+            </h3>
 
         </div>
 
 
-        <div
-            id="cartDrawerItems"
-            class="cart-drawer-items"
+        <button
+            type="button"
+            id="closeCart"
+            class="close-cart-button"
+            aria-label="Close cart"
         >
 
-            <div class="cart-empty-state">
+            <i
+                class="fa-solid fa-xmark"
+                aria-hidden="true"
+            ></i>
 
-                <i class="fa-solid fa-cart-shopping"></i>
+        </button>
 
-                <h3>
-                    Your cart is empty
-                </h3>
+    </div>
 
-                <p>
-                    Add products to your system and they
-                    will appear here.
-                </p>
+
+    <div
+        class="cart-drawer-body"
+        id="cartDrawerItems"
+    >
+
+        <div
+            class="cart-empty-state"
+        >
+
+            <div
+                class="cart-empty-icon"
+            >
+
+                <i
+                    class="fa-solid fa-cart-shopping"
+                    aria-hidden="true"
+                ></i>
 
             </div>
 
-        </div>
+
+            <h3>
+                Your cart is empty
+            </h3>
 
 
-        <div class="cart-drawer-footer">
-
-            <a
-                href="checkout.html"
-                class="btn-cart-checkout"
-            >
-
-                <i class="fa-solid fa-lock"></i>
-
-                Proceed to Checkout
-
-            </a>
+            <p>
+                Add products to your custom
+                security system and they will
+                appear here.
+            </p>
 
         </div>
 
     </div>
 
 
+    <div
+        class="cart-drawer-footer"
+    >
+
+        <div
+            class="cart-drawer-total"
+        >
+
+            <span>
+                Cart Total
+            </span>
+
+            <strong
+                id="cartDrawerTotal"
+            >
+                R 0.00
+            </strong>
+
+        </div>
+
+
+        <a
+            href="checkout.html"
+            class="cart-checkout-button"
+        >
+
+            <i
+                class="fa-solid fa-lock"
+                aria-hidden="true"
+            ></i>
+
+            Proceed to Checkout
+
+        </a>
+
+    </div>
+
+</aside>
+
+
+<div
+    class="cart-overlay"
+    id="cartOverlay"
+></div>
+
+
+
+<!-- ================================================================
+     TOAST NOTIFICATIONS
+     ================================================================ -->
+
+<div
+    id="toastContainer"
+    class="toast-container"
+    aria-live="polite"
+    aria-atomic="true"
+></div>
+
+            </div>
+
+
+        <!-- =============================================================
+             SYSTEM PRODUCT CONTROLS
+             ============================================================= -->
+
+        <section
+            class="configurator-products-section"
+            aria-labelledby="productsHeading"
+        >
+
+            <div class="section-heading-row">
+
+                <div>
+
+                    <span class="section-eyebrow">
+                        BUILD YOUR SYSTEM
+                    </span>
+
+                    <h2 id="productsHeading">
+                        Select Your Security Products
+                    </h2>
+
+                    <p>
+                        Choose the individual products you need.
+                        Adjust quantities and build your system
+                        exactly the way you want it.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="product-count-display"
+                    aria-live="polite"
+                >
+
+                    <i
+                        class="fa-solid fa-boxes-stacked"
+                        aria-hidden="true"
+                    ></i>
+
+                    <span id="configuratorProductCount">
+                        0 products
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================================
+                 PRODUCT SEARCH / FILTER BAR
+                 ========================================================= -->
+
+            <div class="configurator-toolbar">
+
+                <div class="configurator-search">
+
+                    <label
+                        for="configuratorProductSearch"
+                        class="sr-only"
+                    >
+                        Search products
+                    </label>
+
+                    <i
+                        class="fa-solid fa-magnifying-glass"
+                        aria-hidden="true"
+                    ></i>
+
+                    <input
+                        type="search"
+                        id="configuratorProductSearch"
+                        placeholder="Search products..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <div class="configurator-filter">
+
+                    <label
+                        for="configuratorGroupFilter"
+                        class="sr-only"
+                    >
+                        Filter products
+                    </label>
+
+                    <i
+                        class="fa-solid fa-filter"
+                        aria-hidden="true"
+                    ></i>
+
+                    <select
+                        id="configuratorGroupFilter"
+                    >
+
+                        <option value="all">
+                            All Products
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================================================
+                 DYNAMIC PRODUCT AREA
+                 configurator.js renders product groups/cards here.
+                 ========================================================= -->
+
+            <div
+                id="configuratorSelectors"
+                class="configurator-selectors"
+            >
+
+                <div
+                    class="configurator-loading"
+                    aria-live="polite"
+                >
+
+                    <div class="loading-spinner">
+                        <i
+                            class="fa-solid fa-spinner fa-spin"
+                            aria-hidden="true"
+                        ></i>
+                    </div>
+
+                    <h3>
+                        Loading security products...
+                    </h3>
+
+                    <p>
+                        Preparing your custom system builder.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =============================================================
+             SELECTED SYSTEM SUMMARY
+             ============================================================= -->
+
+        <section
+            class="selected-system-section"
+            aria-labelledby="selectedSystemHeading"
+        >
+
+            <div class="section-heading-row">
+
+                <div>
+
+                    <span class="section-eyebrow">
+                        YOUR CONFIGURATION
+                    </span>
+
+                    <h2 id="selectedSystemHeading">
+                        Selected Products
+                    </h2>
+
+                    <p>
+                        Review the products and quantities
+                        currently included in your system.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="selectedProducts"
+                class="selected-products-list"
+            >
+
+                <div class="empty-system">
+
+                    <div class="empty-system-icon">
+
+                        <i
+                            class="fa-solid fa-box-open"
+                            aria-hidden="true"
+                        ></i>
+
+                    </div>
+
+                    <h3>
+                        Your system is empty
+                    </h3>
+
+                    <p>
+                        Select products above to start
+                        building your security system.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =============================================================
+             DESKTOP SYSTEM SUMMARY
+             ============================================================= -->
+
+        <aside
+            class="system-summary-card"
+            aria-labelledby="systemSummaryHeading"
+        >
+
+            <div class="summary-card-header">
+
+                <div class="summary-card-icon">
+
+                    <i
+                        class="fa-solid fa-clipboard-check"
+                        aria-hidden="true"
+                    ></i>
+
+                </div>
+
+                <div>
+
+                    <span class="section-eyebrow">
+                        LIVE SUMMARY
+                    </span>
+
+                    <h2 id="systemSummaryHeading">
+                        Your System
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-category">
+
+                <span>
+                    System Type
+                </span>
+
+                <strong id="summaryCategory">
+                    Electric Fencing
+                </strong>
+
+            </div>
+
+
+            <div class="summary-products">
+
+                <div class="summary-products-heading">
+
+                    <span>
+                        Products
+                    </span>
+
+                    <strong id="summaryAddonCount">
+                        0 items
+                    </strong>
+
+                </div>
+
+
+                <div
+                    id="summarySelectedProducts"
+                    class="summary-selected-products"
+                >
+
+                    <p class="summary-empty">
+                        No products selected yet.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-totals">
+
+                <div class="summary-total-line">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong id="summarySubtotal">
+                        R 0.00
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-total-line">
+
+                    <span>
+                        VAT (15%)
+                    </span>
+
+                    <strong id="summaryVat">
+                        R 0.00
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-total-line summary-grand-total">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong id="summaryGrandTotal">
+                        R 0.00
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="btnAddToCart"
+                class="btn-add-system"
+            >
+
+                <i
+                    class="fa-solid fa-cart-plus"
+                    aria-hidden="true"
+                ></i>
+
+                <span>
+                    Add System to Cart
+                </span>
+
+            </button>
+
+
+            <button
+                type="button"
+                id="clearSystem"
+                class="btn-clear-system"
+            >
+
+                <i
+                    class="fa-solid fa-rotate-left"
+                    aria-hidden="true"
+                ></i>
+
+                Clear System
+
+            </button>
+
+
+            <div class="summary-security-note">
+
+                <i
+                    class="fa-solid fa-shield-halved"
+                    aria-hidden="true"
+                ></i>
+
+                <span>
+                    Build your system from genuine
+                    individual security products.
+                </span>
+
+            </div>
+
+        </aside>
+
+
+    </main>
+
+
     <!-- ================================================================
-         CART DRAWER OVERLAY
+         MOBILE STICKY SYSTEM BAR
          ================================================================ -->
 
     <div
-        id="cartDrawerOverlay"
-        class="cart-drawer-overlay"
-        aria-hidden="true"
-    ></div>
-
-
-    <!-- ================================================================
-         TOAST NOTIFICATIONS
-         ================================================================ -->
-
-    <div
-        id="toastContainer"
-        class="toast-container"
-        aria-live="polite"
-        aria-atomic="true"
-    ></div>
-
-                    <!-- ================================================================
-         MOBILE SYSTEM BAR
-         ================================================================ -->
-
-    <div
-        id="mobileSystemBar"
         class="mobile-system-bar"
+        id="mobileSystemBar"
     >
 
         <div class="mobile-system-total">
@@ -2558,276 +3422,175 @@
             class="mobile-add-system"
         >
 
-            <i class="fa-solid fa-cart-plus"></i>
+            <i
+                class="fa-solid fa-cart-plus"
+                aria-hidden="true"
+            ></i>
 
             Add System
 
         </button>
 
-    </div>
-
-
-
-    <!-- ================================================================
-         FOOTER
+            </div>
+        <!-- ================================================================
+         CART DRAWER
          ================================================================ -->
 
-    <footer class="shop-footer">
+    <aside
+        class="cart-drawer"
+        id="cartDrawer"
+        aria-hidden="true"
+        aria-labelledby="cartDrawerTitle"
+    >
 
-        <div class="shop-footer-container">
+        <div class="cart-drawer-overlay" id="cartDrawerOverlay"></div>
 
+
+        <div class="cart-drawer-panel">
 
             <!-- =========================================================
-                 FOOTER BRAND
+                 CART HEADER
                  ========================================================= -->
 
-            <div class="footer-brand">
+            <div class="cart-drawer-header">
 
-                <a
-                    href="index.html"
-                    class="footer-logo"
+                <div class="cart-drawer-heading">
+
+                    <div class="cart-drawer-icon">
+
+                        <i
+                            class="fa-solid fa-cart-shopping"
+                            aria-hidden="true"
+                        ></i>
+
+                    </div>
+
+                    <div>
+
+                        <span class="section-eyebrow">
+                            NEXPAK SECURITY
+                        </span>
+
+                        <h2 id="cartDrawerTitle">
+                            Your Cart
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="cart-drawer-close"
+                    id="closeCartDrawer"
+                    aria-label="Close shopping cart"
                 >
 
-                    Nexpak Security Solutions
+                    <i
+                        class="fa-solid fa-xmark"
+                        aria-hidden="true"
+                    ></i>
 
-                </a>
+                </button>
 
-
-                <p>
-                    Professional security equipment and
-                    solutions for homes, businesses and
-                    properties across South Africa.
-                </p>
+            </div>
 
 
-                <div class="footer-socials">
+            <!-- =========================================================
+                 CART CONTENT
+                 ========================================================= -->
 
-                    <a
-                        href="#"
-                        aria-label="Facebook"
-                    >
+            <div
+                class="cart-drawer-content"
+                id="cartDrawerItems"
+            >
 
-                        <i class="fa-brands fa-facebook-f"></i>
+                <div class="cart-empty-state">
 
-                    </a>
+                    <div class="cart-empty-icon">
 
+                        <i
+                            class="fa-solid fa-cart-shopping"
+                            aria-hidden="true"
+                        ></i>
 
-                    <a
-                        href="#"
-                        aria-label="Instagram"
-                    >
+                    </div>
 
-                        <i class="fa-brands fa-instagram"></i>
+                    <h3>
+                        Your cart is empty
+                    </h3>
 
-                    </a>
-
-
-                    <a
-                        href="#"
-                        aria-label="WhatsApp"
-                    >
-
-                        <i class="fa-brands fa-whatsapp"></i>
-
-                    </a>
-
-
-                    <a
-                        href="#"
-                        aria-label="LinkedIn"
-                    >
-
-                        <i class="fa-brands fa-linkedin-in"></i>
-
-                    </a>
+                    <p>
+                        Add products or a configured
+                        security system to your cart.
+                    </p>
 
                 </div>
 
             </div>
 
 
-
             <!-- =========================================================
-                 SECURITY SOLUTIONS
+                 CART FOOTER
                  ========================================================= -->
 
-            <div class="footer-column">
+            <div class="cart-drawer-footer">
 
-                <h3>
-                    Security Solutions
-                </h3>
-
-
-                <a href="products.html">
-                    CCTV Systems
-                </a>
-
-
-                <a href="products.html">
-                    IP CCTV
-                </a>
-
-
-                <a href="products.html">
-                    Electric Fencing
-                </a>
-
-
-                <a href="products.html">
-                    Gate Automation
-                </a>
-
-
-                <a href="products.html">
-                    Alarm Systems
-                </a>
-
-
-                <a href="products.html">
-                    Roboguard
-                </a>
-
-            </div>
-
-
-
-            <!-- =========================================================
-                 COMPANY
-                 ========================================================= -->
-
-            <div class="footer-column">
-
-                <h3>
-                    Company
-                </h3>
-
-
-                <a href="index.html">
-                    Home
-                </a>
-
-
-                <a href="about.html">
-                    About Us
-                </a>
-
-
-                <a href="shop.html">
-                    Build Your System
-                </a>
-
-
-                <a href="contact.html">
-                    Contact
-                </a>
-
-
-                <a href="checkout.html">
-                    Checkout
-                </a>
-
-            </div>
-
-
-
-            <!-- =========================================================
-                 CONTACT
-                 ========================================================= -->
-
-            <div class="footer-column footer-contact">
-
-                <h3>
-                    Contact Nexpak
-                </h3>
-
-
-                <div class="footer-contact-item">
-
-                    <i class="fa-solid fa-location-dot"></i>
+                <div class="cart-drawer-total">
 
                     <span>
-                        South Africa
+                        Cart Total
                     </span>
+
+                    <strong id="cartDrawerTotal">
+                        R 0.00
+                    </strong>
 
                 </div>
 
 
-                <div class="footer-contact-item">
+                <a
+                    href="checkout.html"
+                    class="cart-checkout-button"
+                    id="cartCheckoutButton"
+                >
 
-                    <i class="fa-solid fa-phone"></i>
+                    <i
+                        class="fa-solid fa-lock"
+                        aria-hidden="true"
+                    ></i>
 
-                    <span>
-                        Contact us for assistance
-                    </span>
+                    Proceed to Checkout
 
-                </div>
-
-
-                <div class="footer-contact-item">
-
-                    <i class="fa-solid fa-envelope"></i>
-
-                    <span>
-                        Sales & Support
-                    </span>
-
-                </div>
+                </a>
 
 
-                <div class="footer-contact-item">
+                <button
+                    type="button"
+                    class="cart-continue-button"
+                    id="continueShopping"
+                >
 
-                    <i class="fa-solid fa-shield-halved"></i>
+                    <i
+                        class="fa-solid fa-arrow-left"
+                        aria-hidden="true"
+                    ></i>
 
-                    <span>
-                        Professional Security Solutions
-                    </span>
+                    Continue Building
 
-                </div>
+                </button>
 
             </div>
 
         </div>
 
-
-
-        <!-- =============================================================
-             FOOTER BOTTOM
-             ============================================================= -->
-
-        <div class="shop-footer-bottom">
-
-            <div>
-
-                © 2026 Nexpak Security Solutions.
-                All rights reserved.
-
-            </div>
-
-
-            <div class="footer-bottom-links">
-
-                <a href="index.html">
-                    Home
-                </a>
-
-                <a href="contact.html">
-                    Contact
-                </a>
-
-                <a href="checkout.html">
-                    Checkout
-                </a>
-
-            </div>
-
-        </div>
-
-    </footer>
+    </aside>
 
 
 
     <!-- ================================================================
-         TOAST CONTAINER FALLBACK
+         TOAST NOTIFICATION SYSTEM
          ================================================================ -->
 
     <div
@@ -2840,25 +3603,54 @@
 
 
     <!-- ================================================================
-         JAVASCRIPT
-         ================================================================
-
-         IMPORTANT:
-         Load shop-data.js BEFORE configurator.js.
-
-         configurator.js V3 depends on SHOP_DATA.
-
-         systemui.js handles the visual system interface.
-
-         cart.js handles the shopping cart.
-
-         delivery.js handles delivery calculations.
-
-         checkout/payment remain part of the existing checkout flow.
+         LOADING OVERLAY
          ================================================================ -->
 
+    <div
+        class="configurator-loading-overlay"
+        id="configuratorLoadingOverlay"
+        aria-hidden="true"
+    >
 
-    <script src="shop-data.js"></script>
+        <div class="loading-overlay-card">
+
+            <div class="loading-overlay-icon">
+
+                <i
+                    class="fa-solid fa-shield-halved"
+                    aria-hidden="true"
+                ></i>
+
+            </div>
+
+            <div class="loading-overlay-spinner">
+
+                <i
+                    class="fa-solid fa-spinner fa-spin"
+                    aria-hidden="true"
+                ></i>
+
+            </div>
+
+            <h3>
+                Preparing Your System Builder
+            </h3>
+
+            <p>
+                Loading Nexpak security products...
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================================================================
+         JAVASCRIPT
+         ================================================================ -->
+
+    <script src="js/shop-data.js"></script>
 
     <script src="js/systemui.js"></script>
 
@@ -2885,8 +3677,181 @@
             function () {
 
                 /*
-                   Keep the mobile total synchronised
-                   with the configurator summary.
+                   -------------------------------------------------------
+                   CART DRAWER
+                   -------------------------------------------------------
+                */
+
+                const cartDrawer =
+                    document.getElementById(
+                        "cartDrawer"
+                    );
+
+
+                const cartOverlay =
+                    document.getElementById(
+                        "cartDrawerOverlay"
+                    );
+
+
+                const closeCart =
+                    document.getElementById(
+                        "closeCartDrawer"
+                    );
+
+
+                const continueShopping =
+                    document.getElementById(
+                        "continueShopping"
+                    );
+
+
+                function openCartDrawer() {
+
+                    if (!cartDrawer) {
+                        return;
+                    }
+
+                    cartDrawer.classList.add(
+                        "open"
+                    );
+
+                    cartDrawer.setAttribute(
+                        "aria-hidden",
+                        "false"
+                    );
+
+                    document.body.classList.add(
+                        "cart-drawer-open"
+                    );
+
+                }
+
+
+                function closeCartDrawer() {
+
+                    if (!cartDrawer) {
+                        return;
+                    }
+
+                    cartDrawer.classList.remove(
+                        "open"
+                    );
+
+                    cartDrawer.setAttribute(
+                        "aria-hidden",
+                        "true"
+                    );
+
+                    document.body.classList.remove(
+                        "cart-drawer-open"
+                    );
+
+                }
+
+
+                if (cartOverlay) {
+
+                    cartOverlay.addEventListener(
+                        "click",
+                        closeCartDrawer
+                    );
+
+                }
+
+
+                if (closeCart) {
+
+                    closeCart.addEventListener(
+                        "click",
+                        closeCartDrawer
+                    );
+
+                }
+
+
+                if (continueShopping) {
+
+                    continueShopping.addEventListener(
+                        "click",
+                        closeCartDrawer
+                    );
+
+                }
+
+
+                /*
+                   -------------------------------------------------------
+                   CART BUTTON
+                   -------------------------------------------------------
+                */
+
+                const cartButtons =
+                    document.querySelectorAll(
+                        "[data-open-cart], .cart-toggle-button"
+                    );
+
+
+                cartButtons.forEach(
+                    function (button) {
+
+                        button.addEventListener(
+                            "click",
+                            openCartDrawer
+                        );
+
+                    }
+                );
+
+
+                /*
+                   Also support the main cart button
+                   if systemui.js/configurator.js
+                   uses the existing cart ID.
+                */
+
+                const cartButton =
+                    document.getElementById(
+                        "cartToggle"
+                    );
+
+
+                if (cartButton) {
+
+                    cartButton.addEventListener(
+                        "click",
+                        openCartDrawer
+                    );
+
+                }
+
+
+                /*
+                   -------------------------------------------------------
+                   ESC KEY
+                   -------------------------------------------------------
+                */
+
+                document.addEventListener(
+                    "keydown",
+                    function (event) {
+
+                        if (
+                            event.key === "Escape"
+                        ) {
+
+                            closeCartDrawer();
+
+                        }
+
+                    }
+                );
+
+
+                /*
+                   -------------------------------------------------------
+                   MOBILE TOTAL
+                   -------------------------------------------------------
                 */
 
                 const mobileTotal =
@@ -2933,10 +3898,10 @@
                 }
 
 
-
                 /*
-                   Mobile Add System button
-                   uses the same configurator action.
+                   -------------------------------------------------------
+                   MOBILE ADD TO CART
+                   -------------------------------------------------------
                 */
 
                 const mobileAdd =
@@ -2975,6 +3940,6 @@
 
 </body>
 
-            </html>
+    </html>
 
-                
+                    
