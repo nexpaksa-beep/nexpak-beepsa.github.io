@@ -1,6 +1,10 @@
 body {
     background: red !important;
 }
+body * {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
 /* ============================================================
    NEXPAK SECURITY SOLUTIONS
    BUILD YOUR SYSTEM — SHOP STYLES
