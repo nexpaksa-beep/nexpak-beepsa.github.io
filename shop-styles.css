@@ -8002,228 +8002,317 @@ body {
 /* ============================================================
    212. END OF NEXPAK BUILD YOUR SYSTEM V3
    ============================================================ */
+
 /* ============================================================
    NEXPAK SECURITY SOLUTIONS
    BUILD YOUR SYSTEM V3
    PROPERTY VISUALISATION ENGINE
-   PART 21 — 3D ISOMETRIC PROPERTY FOUNDATION
+   ------------------------------------------------------------
+   PART 21 — HIGH DETAIL 3D PROPERTY FOUNDATION
+   ------------------------------------------------------------
+   PURPOSE:
+   • Photorealistic / high-detail 3D property foundation
+   • Existing HTML remains unchanged
+   • Existing configurator.js remains unchanged
+   • Dynamic security products remain above the property
+   • Security zones remain overlay elements
+   • Responsive desktop / tablet / mobile
    ============================================================ */
 
 
 /* ============================================================
-   3D PROPERTY VIEWPORT
+   PROPERTY PREVIEW — MASTER FRAME
    ============================================================ */
 
 #propertyPreview {
+
     position: relative;
+
     width: 100%;
-    min-height: 560px;
+
+    min-height: 620px;
 
     overflow: hidden;
 
-    border-radius: 18px;
+    isolation: isolate;
 
     background:
-        linear-gradient(
-            180deg,
-            #8fc7e5 0%,
-            #c9e5ef 46%,
-            #dbe6df 47%,
-            #b4c995 100%
-        );
+        #0c1115;
 
-    isolation: isolate;
+    border-radius: 20px;
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+        0 24px 60px rgba(0,0,0,0.18);
+
+}
+
+
+/* ============================================================
+   PROPERTY PREVIEW HEADER
+   ------------------------------------------------------------
+   Header stays above the 3D property.
+   ============================================================ */
+
+#propertyPreview .property-preview-header {
+
+    position: relative;
+
+    z-index: 300;
+
+}
+
+
+/* ============================================================
+   PROPERTY TOOLBAR
+   ============================================================ */
+
+#propertyPreview .property-toolbar {
+
+    position: relative;
+
+    z-index: 300;
+
 }
 
 
 /* ============================================================
    PROPERTY CANVAS
+   ------------------------------------------------------------
+   The canvas becomes the actual 3D viewing window.
    ============================================================ */
 
 #propertyCanvas {
+
     position: relative;
 
     width: 100%;
-    height: 500px;
-    min-height: 500px;
+
+    height: 560px;
+
+    min-height: 560px;
 
     overflow: hidden;
 
-    perspective: 1400px;
-    perspective-origin: 50% 42%;
+    isolation: isolate;
 
     background:
+
+        radial-gradient(
+            ellipse at 50% 40%,
+            rgba(45,58,68,0.35),
+            transparent 60%
+        ),
+
         linear-gradient(
-            180deg,
-            #7fc1e3 0%,
-            #c4e3ef 45%,
-            #d4dfd5 46%,
-            #9ab77c 100%
+            135deg,
+            #11181d 0%,
+            #090d10 100%
         );
 
-    isolation: isolate;
 }
 
 
 /* ============================================================
-   MAIN 3D SCENE
+   3D PROPERTY SCENE
    ============================================================ */
 
 #propertyScene {
+
     position: absolute;
 
-    left: 50%;
-    top: 50%;
+    inset: 0;
 
-    width: 900px;
-    height: 560px;
+    width: 100%;
 
-    transform:
-        translate(-50%, -47%)
-        rotateX(58deg)
-        rotateZ(0deg)
-        scale(0.92);
+    height: 100%;
 
-    transform-style: preserve-3d;
-
-    transform-origin: center center;
+    overflow: hidden;
 
     z-index: 10;
+
+    background:
+        transparent;
+
+    transform-origin:
+        center center;
+
+    will-change:
+        transform;
+
+}
+
+
+/* ============================================================
+   HIGH DETAIL 3D PROPERTY FOUNDATION
+   ------------------------------------------------------------
+   IMPORTANT:
+   This is the local image foundation.
+
+   REQUIRED LOCAL FILE:
+
+   /images/property-3d-render.jpg
+
+   The image should contain ONLY the property scene:
+   • modern house
+   • roof
+   • landscaped yard
+   • driveway
+   • perimeter wall
+   • electric fence
+   • vehicle gate
+   • pedestrian gate
+   • garden
+   • no UI
+   • no labels
+   • no buttons
+   • no text
+   • no security zones
+
+   The UI and dynamic security layer remain HTML/CSS.
+   ============================================================ */
+
+#propertyScene {
+
+    background-image:
+        url("../images/property-3d-render.jpg");
+
+    background-repeat:
+        no-repeat;
+
+    background-position:
+        center center;
+
+    background-size:
+        cover;
+
+}
+
+
+/* ============================================================
+   PROPERTY IMAGE QUALITY
+   ============================================================ */
+
+#propertyScene::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 1;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,0.025),
+            transparent 28%,
+            rgba(0,0,0,0.10) 100%
+        );
+
+}
+
+
+/* ============================================================
+   PROPERTY IMAGE DEPTH VIGNETTE
+   ============================================================ */
+
+#propertyScene::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 2;
+
+    background:
+
+        radial-gradient(
+            ellipse at center,
+            transparent 48%,
+            rgba(0,0,0,0.18) 100%
+        );
+
 }
 
 
 /* ============================================================
    SKY
+   ------------------------------------------------------------
+   Hidden because the 3D render supplies the actual sky.
    ============================================================ */
 
 #propertySky {
+
     position: absolute;
 
     inset: 0;
 
-    z-index: 0;
-
-    background:
-        linear-gradient(
-            180deg,
-            #69b4dc 0%,
-            #a9d8eb 48%,
-            #d8e9ec 100%
-        );
-
-    transform:
-        translateZ(-80px);
+    z-index: 3;
 
     pointer-events: none;
+
+    background:
+        transparent;
+
 }
 
 
 /* ============================================================
    HORIZON
+   ------------------------------------------------------------
+   Rendered property already contains the horizon.
    ============================================================ */
 
-.property-horizon {
+#propertyPreview .property-horizon {
+
     position: absolute;
 
-    left: -20%;
-    right: -20%;
+    inset: 0;
 
-    top: 37%;
-
-    height: 26%;
-
-    z-index: 2;
-
-    background:
-        linear-gradient(
-            180deg,
-            rgba(89,128,91,0.2),
-            rgba(63,101,65,0.48)
-        );
-
-    transform:
-        translateZ(-30px);
-
-    clip-path:
-        polygon(
-            0 55%,
-            10% 43%,
-            19% 51%,
-            29% 34%,
-            39% 50%,
-            48% 39%,
-            58% 52%,
-            68% 36%,
-            78% 49%,
-            88% 38%,
-            100% 48%,
-            100% 100%,
-            0 100%
-        );
+    z-index: 4;
 
     pointer-events: none;
+
+    background:
+        transparent;
+
+    opacity: 0;
+
 }
 
 
 /* ============================================================
-   GROUND PLANE
+   GROUND
+   ------------------------------------------------------------
+   Rendered property already contains the ground.
    ============================================================ */
 
 #propertyGround {
+
     position: absolute;
 
-    left: 50%;
-    top: 50%;
-
-    width: 860px;
-    height: 500px;
-
-    transform:
-        translate(-50%, -48%)
-        translateZ(0);
-
-    transform-style: preserve-3d;
+    inset: 0;
 
     z-index: 5;
 
-    background:
-        linear-gradient(
-            135deg,
-            #9cbd78 0%,
-            #7fa85f 45%,
-            #668e4e 100%
-        );
-
-    border:
-        1px solid rgba(50,75,44,0.25);
-
-    box-shadow:
-        0 35px 50px rgba(24,45,30,0.22);
-}
-
-
-/* ============================================================
-   GROUND INNER PROPERTY
-   ============================================================ */
-
-#propertyGround::before {
-    content: "";
-
-    position: absolute;
-
-    inset: 22px;
-
-    border:
-        1px solid rgba(255,255,255,0.15);
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,0.035),
-            transparent 50%
-        );
-
     pointer-events: none;
+
+    background:
+        transparent;
+
+    opacity: 0;
+
 }
 
 
@@ -8231,188 +8320,94 @@ body {
    YARD
    ============================================================ */
 
-.property-yard {
+#propertyPreview .property-yard {
+
     position: absolute;
 
-    left: 7%;
-    right: 7%;
-    bottom: 8%;
+    inset: 0;
 
-    height: 52%;
+    z-index: 6;
 
-    z-index: 8;
+    pointer-events: none;
 
     background:
-        linear-gradient(
-            135deg,
-            #91b96c,
-            #78a85a
-        );
+        transparent;
+
+    opacity: 0;
+
+}
+
+
+/* ============================================================
+   DRIVEWAY
+   ------------------------------------------------------------
+   Do not paint a second driveway over the rendered driveway.
+   ============================================================ */
+
+#propertyPreview .property-driveway {
+
+    position: absolute;
+
+    z-index: 7;
+
+    background:
+        transparent;
 
     border:
-        1px solid rgba(48,80,42,0.18);
+        0;
 
     box-shadow:
-        inset 0 0 25px rgba(41,71,38,0.08);
+        none;
+
+    pointer-events: none;
+
 }
 
 
 /* ============================================================
-   DRIVEWAY — 3D PLANE
-   ============================================================ */
-
-.property-driveway {
-    position: absolute;
-
-    right: 13%;
-    bottom: 0;
-
-    width: 24%;
-    height: 58%;
-
-    z-index: 12;
-
-    background:
-        linear-gradient(
-            90deg,
-            #777f83,
-            #a5abad 48%,
-            #777f83
-        );
-
-    clip-path:
-        polygon(
-            34% 0,
-            66% 0,
-            100% 100%,
-            0 100%
-        );
-
-    box-shadow:
-        inset 5px 0 rgba(255,255,255,0.08),
-        inset -5px 0 rgba(0,0,0,0.08);
-}
-
-
-/* ============================================================
-   DRIVEWAY EDGE
-   ============================================================ */
-
-.property-driveway::before {
-    content: "";
-
-    position: absolute;
-
-    left: 7%;
-    top: 0;
-
-    width: 4px;
-    height: 100%;
-
-    background:
-        rgba(235,238,236,0.28);
-
-    transform:
-        skewX(-8deg);
-}
-
-
-/* ============================================================
-   HOUSE — MASTER 3D OBJECT
+   HOUSE
+   ------------------------------------------------------------
+   The photorealistic house is supplied by the 3D render.
    ============================================================ */
 
 #propertyHouse {
+
     position: absolute;
-
-    left: 47%;
-    top: 25%;
-
-    width: 420px;
-    height: 250px;
-
-    z-index: 30;
-
-    transform:
-        translateZ(18px);
-
-    transform-style: preserve-3d;
-
-    filter:
-        drop-shadow(
-            20px 22px 18px rgba(0,0,0,0.22)
-        );
-}
-
-
-/* ============================================================
-   HOUSE BODY — FRONT FACE
-   ============================================================ */
-
-.property-house-body {
-    position: absolute;
-
-    left: 8%;
-    bottom: 0;
-
-    width: 72%;
-    height: 65%;
 
     z-index: 10;
 
     background:
-        linear-gradient(
-            90deg,
-            #cdd1d0 0%,
-            #f0f0ed 48%,
-            #d8dcda 100%
-        );
+        transparent;
 
     border:
-        2px solid rgba(48,58,62,0.22);
+        0;
 
     box-shadow:
-        inset 0 0 25px rgba(0,0,0,0.05);
+        none;
 
-    transform:
-        translateZ(30px);
+    filter:
+        none;
 
-    transform-style: preserve-3d;
+    pointer-events: none;
+
 }
 
 
 /* ============================================================
-   HOUSE RIGHT SIDE — 3D EXTRUSION
+   HOUSE BODY
    ============================================================ */
 
-.property-house-body::after {
-    content: "";
-
-    position: absolute;
-
-    top: -2px;
-    right: -68px;
-
-    width: 68px;
-    height: calc(100% + 2px);
+#propertyHouse .property-house-body {
 
     background:
-        linear-gradient(
-            90deg,
-            #aeb5b5,
-            #8e9798
-        );
+        transparent;
 
     border:
-        2px solid rgba(48,58,62,0.2);
-
-    transform:
-        skewY(-38deg);
-
-    transform-origin:
-        left top;
+        0;
 
     box-shadow:
-        inset -10px 0 15px rgba(0,0,0,0.1);
+        none;
+
 }
 
 
@@ -8420,552 +8415,479 @@ body {
    HOUSE ROOF
    ============================================================ */
 
-.property-house-roof {
-    position: absolute;
-
-    left: 0;
-    top: 0;
-
-    width: 82%;
-    height: 43%;
-
-    z-index: 25;
+#propertyHouse .property-house-roof {
 
     background:
-        linear-gradient(
-            135deg,
-            #3f4b52 0%,
-            #202a30 48%,
-            #556168 100%
-        );
+        transparent;
 
-    clip-path:
-        polygon(
-            50% 0,
-            100% 72%,
-            95% 100%,
-            5% 100%,
-            0 72%
-        );
-
-    transform:
-        translateZ(65px);
+    border:
+        0;
 
     box-shadow:
-        0 10px 15px rgba(0,0,0,0.25);
+        none;
+
 }
 
 
 /* ============================================================
-   ROOF SIDE PLANE
-   ============================================================ */
-
-.property-house-roof::after {
-    content: "";
-
-    position: absolute;
-
-    top: 12%;
-    right: -20%;
-
-    width: 38%;
-    height: 70%;
-
-    background:
-        linear-gradient(
-            135deg,
-            #2d373d,
-            #182126
-        );
-
-    transform:
-        skewY(-38deg);
-
-    transform-origin:
-        left top;
-
-    opacity: 0.95;
-}
-
-
-/* ============================================================
-   ROOF RIDGE
-   ============================================================ */
-
-.property-house-roof::before {
-    content: "";
-
-    position: absolute;
-
-    left: 49%;
-    top: 5%;
-
-    width: 4px;
-    height: 92%;
-
-    background:
-        rgba(255,255,255,0.15);
-
-    transform:
-        rotate(38deg);
-
-    transform-origin:
-        center;
-}
-
-
-/* ============================================================
-   WINDOWS — 3D RECESSED LOOK
+   EXISTING WINDOWS
+   ------------------------------------------------------------
+   Do not draw CSS windows over the photorealistic house.
    ============================================================ */
 
 #propertyHouse .window,
 #propertyHouse .property-window,
 #propertyHouse [class*="window"] {
-    position: absolute;
-
-    z-index: 35;
-
-    width: 16%;
-    height: 28%;
 
     background:
-        linear-gradient(
-            135deg,
-            #c9e7f1,
-            #4e829a 70%,
-            #315b6c
-        );
+        transparent;
 
     border:
-        5px solid #eceee9;
+        0;
 
     box-shadow:
-        inset 0 0 0 2px rgba(28,47,56,0.5),
-        inset -7px -7px 12px rgba(0,0,0,0.12),
-        0 4px 7px rgba(0,0,0,0.2);
+        none;
 
-    transform:
-        translateZ(38px);
 }
 
 
 /* ============================================================
-   WINDOW REFLECTION
-   ============================================================ */
-
-#propertyHouse .window::after,
-#propertyHouse .property-window::after,
-#propertyHouse [class*="window"]::after {
-    content: "";
-
-    position: absolute;
-
-    left: 12%;
-    top: 8%;
-
-    width: 28%;
-    height: 70%;
-
-    background:
-        linear-gradient(
-            120deg,
-            rgba(255,255,255,0.65),
-            transparent
-        );
-
-    transform:
-        skewX(-12deg);
-}
-
-
-/* ============================================================
-   DOOR
+   EXISTING DOOR
    ============================================================ */
 
 #propertyHouse .door,
 #propertyHouse .property-door,
 #propertyHouse [class*="door"] {
-    position: absolute;
-
-    left: 48%;
-    bottom: 0;
-
-    width: 15%;
-    height: 42%;
-
-    z-index: 40;
-
-    transform:
-        translateZ(42px);
 
     background:
-        linear-gradient(
-            90deg,
-            #3b2922,
-            #76503a,
-            #39261e
-        );
+        transparent;
 
     border:
-        4px solid #e6e5dd;
+        0;
 
     box-shadow:
-        4px 5px 8px rgba(0,0,0,0.3);
+        none;
+
 }
 
 
 /* ============================================================
-   DOOR HANDLE
-   ============================================================ */
-
-#propertyHouse .door::after,
-#propertyHouse .property-door::after,
-#propertyHouse [class*="door"]::after {
-    content: "";
-
-    position: absolute;
-
-    right: 12%;
-    top: 53%;
-
-    width: 6px;
-    height: 6px;
-
-    border-radius: 50%;
-
-    background:
-        #d9b65c;
-
-    box-shadow:
-        0 0 5px rgba(217,182,92,0.55);
-}
-
-
-/* ============================================================
-   PROPERTY FENCE — 3D PERIMETER
+   PERIMETER
    ============================================================ */
 
 #propertyFenceZone {
+
     position: absolute;
 
-    left: 3%;
-    right: 3%;
-    bottom: 9%;
+    inset: 0;
 
-    height: 52%;
-
-    z-index: 50;
+    z-index: 30;
 
     pointer-events: none;
 
-    transform:
-        translateZ(32px);
+    background:
+        transparent;
 
-    filter:
-        drop-shadow(
-            0 4px 4px rgba(0,0,0,0.2)
-        );
 }
 
 
 /* ============================================================
-   FENCE RAILS
+   ELECTRIC FENCE OVERLAY
+   ------------------------------------------------------------
+   Existing / dynamically generated electric-fence elements
+   can remain visible above the 3D property.
    ============================================================ */
 
-#propertyFenceZone::before {
-    content: "";
+#propertyFenceZone .electric-line,
+#propertyFenceZone .electric-wire,
+#propertyFenceZone [class*="electric-line"],
+#propertyFenceZone [class*="electric"] {
 
-    position: absolute;
+    z-index: 32;
 
-    left: 0;
-    right: 0;
-    bottom: 18%;
-
-    height: 5px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #202b30,
-            #657177 50%,
-            #202b30
-        );
-
-    box-shadow:
-        0 -12px 0 -1px #39464b,
-        0 12px 0 -1px #39464b;
-}
-
-
-/* ============================================================
-   FENCE POSTS
-   ============================================================ */
-
-#propertyFenceZone::after {
-    content: "";
-
-    position: absolute;
-
-    left: 0;
-    right: 0;
-    bottom: 8%;
-
-    height: 44px;
-
-    background:
-        repeating-linear-gradient(
-            90deg,
-            #273238 0 5px,
-            transparent 5px 43px
-        );
-
-    filter:
-        drop-shadow(
-            1px 3px 3px rgba(0,0,0,0.28)
-        );
 }
 
 
 /* ============================================================
    GATE
+   ------------------------------------------------------------
+   Gate is already visible in the 3D property render.
+   The existing HTML gate becomes an invisible interaction
+   anchor rather than another flat CSS gate.
    ============================================================ */
 
 #propertyGate {
+
     position: absolute;
 
-    right: 8%;
-    bottom: 13%;
-
-    width: 14%;
-    height: 22%;
-
-    z-index: 60;
+    z-index: 35;
 
     background:
-        repeating-linear-gradient(
-            90deg,
-            #6d797e 0 5px,
-            #303b40 5px 8px
-        );
+        transparent;
 
     border:
-        4px solid #29343a;
-
-    transform:
-        translateZ(45px);
+        0;
 
     box-shadow:
-        0 7px 10px rgba(0,0,0,0.3);
-}
-
-
-/* ============================================================
-   GATE MOTOR HOUSING
-   ============================================================ */
-
-#propertyGate::after {
-    content: "";
-
-    position: absolute;
-
-    right: -10px;
-    bottom: -3px;
-
-    width: 12px;
-    height: 18px;
-
-    border-radius: 2px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #1e272b,
-            #4e5a5f
-        );
-
-    box-shadow:
-        0 3px 5px rgba(0,0,0,0.3);
-}
-
-
-/* ============================================================
-   SECURITY ZONES — 3D SURFACE
-   ============================================================ */
-
-#propertyPreview .cctv-zone,
-#propertyPreview [class*="cctv-zone"],
-#propertyPreview .entrance-security-zone,
-#propertyPreview .driveway-security-zone,
-#propertyPreview .house-security-zone {
-    position: absolute;
-
-    border-radius: 50%;
-
-    z-index: 45;
+        none;
 
     pointer-events: none;
 
-    background:
-        radial-gradient(
-            ellipse,
-            rgba(30,136,229,0.14),
-            rgba(30,136,229,0.055) 48%,
-            transparent 72%
-        );
-
-    border:
-        1px dashed rgba(30,136,229,0.4);
-
-    transform:
-        translateZ(35px);
 }
 
 
 /* ============================================================
-   DYNAMIC PRODUCT LAYER
+   SECURITY ZONE MASTER LAYER
    ============================================================ */
 
-#productPlacementLayer {
-    position: absolute;
-
-    inset: 0;
-
-    width: 100%;
-    height: 100%;
+#propertyPreview .entrance-security-zone,
+#propertyPreview .driveway-security-zone,
+#propertyPreview .house-security-zone,
+#propertyPreview .cctv-zone,
+#propertyPreview [class*="security-zone"],
+#propertyPreview [class*="cctv-zone"] {
 
     z-index: 100;
 
     pointer-events: none;
 
-    transform-style: preserve-3d;
 }
 
 
 /* ============================================================
-   DYNAMIC PRODUCT OBJECTS
+   SECURITY ZONE VISUAL DEPTH
+   ============================================================ */
+
+#propertyPreview .entrance-security-zone {
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(90,220,80,0.20),
+            rgba(90,220,80,0.07) 45%,
+            transparent 72%
+        );
+
+    border:
+        2px dashed rgba(105,230,85,0.80);
+
+}
+
+
+#propertyPreview .driveway-security-zone {
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(0,190,255,0.18),
+            rgba(0,190,255,0.06) 45%,
+            transparent 75%
+        );
+
+    border:
+        2px dashed rgba(0,205,255,0.80);
+
+}
+
+
+#propertyPreview .house-security-zone {
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(160,80,255,0.16),
+            rgba(160,80,255,0.05) 48%,
+            transparent 76%
+        );
+
+    border:
+        2px dashed rgba(165,90,255,0.78);
+
+}
+
+
+/* ============================================================
+   CCTV COVERAGE
+   ============================================================ */
+
+#propertyPreview .cctv-zone,
+#propertyPreview [class*="cctv-zone"] {
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(20,145,255,0.20),
+            rgba(20,145,255,0.08) 42%,
+            transparent 75%
+        );
+
+    border:
+        1px dashed rgba(35,160,255,0.75);
+
+    box-shadow:
+        0 0 25px rgba(20,145,255,0.12);
+
+}
+
+
+/* ============================================================
+   PRODUCT PLACEMENT LAYER
+   ------------------------------------------------------------
+   CRITICAL:
+   configurator.js continues using this layer.
+   ============================================================ */
+
+#productPlacementLayer {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    z-index: 200;
+
+    pointer-events: none;
+
+    overflow: visible;
+
+    isolation: isolate;
+
+}
+
+
+/* ============================================================
+   DYNAMIC PRODUCT MARKERS
    ============================================================ */
 
 #productPlacementLayer > *,
 #productPlacementLayer .product-placement,
 #productPlacementLayer [class*="placement"] {
+
     position: absolute;
 
-    z-index: 101;
-
-    transform-style: preserve-3d;
-
-    transform-origin:
-        center center;
+    z-index: 210;
 
     pointer-events: auto;
 
-    filter:
-        drop-shadow(
-            0 4px 5px rgba(0,0,0,0.32)
-        );
 }
 
 
 /* ============================================================
-   PROPERTY VISUAL OVERLAY
+   DYNAMIC SECURITY PRODUCT SHADOW
+   ============================================================ */
+
+#productPlacementLayer img,
+#productPlacementLayer svg,
+#productPlacementLayer .product-marker,
+#productPlacementLayer .security-product {
+
+    filter:
+        drop-shadow(
+            0 4px 7px rgba(0,0,0,0.55)
+        );
+
+}
+
+
+/* ============================================================
+   SECURITY CAMERA COVERAGE
+   ============================================================ */
+
+#productPlacementLayer .camera-coverage,
+#productPlacementLayer [class*="camera-coverage"] {
+
+    position: absolute;
+
+    z-index: 205;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(20,150,255,0.02),
+            rgba(20,150,255,0.15),
+            rgba(20,150,255,0.02)
+        );
+
+    filter:
+        blur(1px);
+
+}
+
+
+/* ============================================================
+   PROPERTY OVERLAY GLASS
+   ------------------------------------------------------------
+   Gives the visualisation the premium configurator finish.
    ============================================================ */
 
 #propertyCanvas::after {
+
     content: "";
 
     position: absolute;
 
     inset: 0;
 
-    z-index: 120;
+    z-index: 250;
 
     pointer-events: none;
 
     background:
+
         linear-gradient(
             180deg,
-            rgba(255,255,255,0.05),
-            transparent 42%,
-            rgba(0,0,0,0.1)
+            rgba(255,255,255,0.025),
+            transparent 25%,
+            rgba(0,0,0,0.08) 100%
         );
 
-    box-shadow:
-        inset 0 0 70px rgba(0,0,0,0.08);
 }
 
 
 /* ============================================================
-   3D SCENE RESPONSIVE SCALE
+   PROPERTY EDGE
    ============================================================ */
 
-@media (max-width: 1100px) {
+#propertyCanvas {
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.12),
+        inset 0 -35px 80px rgba(0,0,0,0.16);
+
+}
+
+
+/* ============================================================
+   DESKTOP — LARGE 3D PROPERTY
+   ============================================================ */
+
+@media (min-width: 1200px) {
+
+    #propertyCanvas {
+
+        height: 620px;
+
+        min-height: 620px;
+
+    }
 
     #propertyScene {
-        transform:
-            translate(-50%, -47%)
-            rotateX(58deg)
-            scale(0.82);
+
+        background-size:
+            cover;
+
+        background-position:
+            center center;
+
     }
 
 }
 
+
+/* ============================================================
+   TABLET
+   ============================================================ */
 
 @media (max-width: 900px) {
 
-    #propertyCanvas {
-        height: 460px;
-        min-height: 460px;
-    }
-
-    #propertyScene {
-        transform:
-            translate(-50%, -47%)
-            rotateX(58deg)
-            scale(0.70);
-    }
-
-}
-
-
-@media (max-width: 700px) {
-
     #propertyPreview {
-        min-height: 430px;
+
+        min-height: 540px;
+
+        border-radius: 16px;
+
     }
 
     #propertyCanvas {
-        height: 420px;
-        min-height: 420px;
+
+        height: 500px;
+
+        min-height: 500px;
+
     }
 
     #propertyScene {
-        transform:
-            translate(-50%, -47%)
-            rotateX(58deg)
-            scale(0.58);
-    }
 
-}
+        background-position:
+            center center;
 
+        background-size:
+            cover;
 
-@media (max-width: 500px) {
-
-    #propertyCanvas {
-        height: 370px;
-        min-height: 370px;
-    }
-
-    #propertyScene {
-        transform:
-            translate(-50%, -45%)
-            rotateX(58deg)
-            scale(0.49);
     }
 
 }
 
 
 /* ============================================================
-   END — PROPERTY VISUALISATION PART 21
+   MOBILE
    ============================================================ */
 
+@media (max-width: 600px) {
+
+    #propertyPreview {
+
+        min-height: 420px;
+
+        border-radius: 14px;
+
+    }
+
+    #propertyCanvas {
+
+        height: 390px;
+
+        min-height: 390px;
+
+    }
+
+    #propertyScene {
+
+        background-position:
+            center center;
+
+        background-size:
+            cover;
+
+    }
+
+}
+
+
+/* ============================================================
+   SMALL MOBILE
+   ============================================================ */
+
+@media (max-width: 420px) {
+
+    #propertyCanvas {
+
+        height: 350px;
+
+        min-height: 350px;
+
+    }
+
+    #propertyScene {
+
+        background-size:
+            cover;
+
+        background-position:
+            center center;
+
+    }
+
+}
+
+
+/* ============================================================
+   END
+   PROPERTY VISUALISATION PART 21
+   HIGH DETAIL 3D FOUNDATION
+   ============================================================ */
