@@ -11413,221 +11413,148 @@ if (
 /* ==========================================================================
    PART 16 COMPLETE
    ========================================================================== */
-/* ==========================================================================
+
+   /* ==========================================================================
    NEXPAK SECURITY SOLUTIONS
    BUILD YOUR SYSTEM — CONFIGURATOR V3
-   PART 17 — PROPERTY PRODUCT PLACEMENT ENGINE
+   PART 17 — PROPERTY VISUALISATION ENGINE
    ========================================================================== */
 
 
 /* ==========================================================================
-   17.1 PROPERTY VISUAL CONFIGURATION
+   17. PROPERTY VISUALISATION STATE
    ========================================================================== */
 
-const PROPERTY_PRODUCT_PLACEMENTS = {
+const propertyVisualState = {
 
-    cctv: {
+    view:
+        "overview",
 
-        icon:
-            "fa-video",
+    zoom:
+        1,
 
-        zone:
-            "house",
+    minZoom:
+        0.85,
 
-        positions: [
+    maxZoom:
+        1.35,
 
-            {
-                left: 23,
-                top: 30
-            },
+    products:
+        [],
 
-            {
-                left: 76,
-                top: 30
-            },
-
-            {
-                left: 27,
-                top: 58
-            },
-
-            {
-                left: 73,
-                top: 58
-            }
-
-        ]
-
-    },
-
-
-    fence: {
-
-        icon:
-            "fa-bolt",
-
-        zone:
-            "perimeter",
-
-        positions: [
-
-            {
-                left: 12,
-                top: 76
-            },
-
-            {
-                left: 34,
-                top: 82
-            },
-
-            {
-                left: 66,
-                top: 82
-            },
-
-            {
-                left: 88,
-                top: 76
-            }
-
-        ]
-
-    },
-
-
-    alarm: {
-
-        icon:
-            "fa-bell",
-
-        zone:
-            "house",
-
-        positions: [
-
-            {
-                left: 50,
-                top: 42
-            }
-
-        ]
-
-    },
-
-
-    gate: {
-
-        icon:
-            "fa-door-open",
-
-        zone:
-            "gate",
-
-        positions: [
-
-            {
-                left: 17,
-                top: 72
-            }
-
-        ]
-
-    },
-
-
-    access: {
-
-        icon:
-            "fa-fingerprint",
-
-        zone:
-            "entrance",
-
-        positions: [
-
-            {
-                left: 48,
-                top: 57
-            }
-
-        ]
-
-    },
-
-
-    intercom: {
-
-        icon:
-            "fa-phone",
-
-        zone:
-            "entrance",
-
-        positions: [
-
-            {
-                left: 53,
-                top: 56
-            }
-
-        ]
-
-    },
-
-
-    roboguard: {
-
-        icon:
-            "fa-shield-halved",
-
-        zone:
-            "perimeter",
-
-        positions: [
-
-            {
-                left: 20,
-                top: 78
-            },
-
-            {
-                left: 80,
-                top: 78
-            }
-
-        ]
-
-    },
-
-
-    other: {
-
-        icon:
-            "fa-shield-halved",
-
-        zone:
-            "house",
-
-        positions: [
-
-            {
-                left: 50,
-                top: 50
-            }
-
-        ]
-
-    }
+    renderedProducts:
+        0
 
 };
 
 
 /* ==========================================================================
-   17.2 DETERMINE PRODUCT TYPE
+   17.1 GET CURRENT CONFIGURED PRODUCTS
    ========================================================================== */
 
-function getPropertyProductType(
+function getPropertyProducts() {
+
+    if (
+        !state ||
+        !state.selections
+    ) {
+
+        return [];
+
+    }
+
+
+    const products = [];
+
+
+    Object.keys(
+        state.selections
+    ).forEach(
+        function (productId) {
+
+            const selection =
+                state.selections[
+                    productId
+                ];
+
+
+            if (!selection) {
+
+                return;
+
+            }
+
+
+            const quantity =
+                Number(
+                    selection.quantity
+                ) || 0;
+
+
+            if (
+                quantity <= 0
+            ) {
+
+                return;
+
+            }
+
+
+            /*
+               Use the configured product stored
+               by the existing configurator whenever
+               available.
+            */
+
+            const product =
+                selection.product ||
+                selection;
+
+
+            if (!product) {
+
+                return;
+
+            }
+
+
+            const normalised =
+                normaliseProduct(
+                    product
+                );
+
+
+            if (!normalised) {
+
+                return;
+
+            }
+
+
+            products.push({
+
+                product:
+                    normalised,
+
+                quantity:
+                    quantity
+
+            });
+
+        }
+    );
+
+
+    return products;
+
+}
+
+
+/* ==========================================================================
+   17.2 IDENTIFY PROPERTY SECURITY TYPE
+   ========================================================================== */
+
+function getPropertySecurityType(
     product
 ) {
 
@@ -11652,7 +11579,7 @@ function getPropertyProductType(
 
         product.name,
 
-        product.title
+        product.description
 
     ]
 
@@ -11675,9 +11602,10 @@ function getPropertyProductType(
 
 
     if (
-        text.includes("fence") ||
+        text.includes("electric fencing") ||
+        text.includes("electric fence") ||
         text.includes("energizer") ||
-        text.includes("electric fencing")
+        text.includes("fence")
     ) {
 
         return "fence";
@@ -11697,9 +11625,9 @@ function getPropertyProductType(
 
 
     if (
-        text.includes("gate") ||
+        text.includes("gate automation") ||
         text.includes("gate motor") ||
-        text.includes("automation")
+        text.includes("gate")
     ) {
 
         return "gate";
@@ -11708,10 +11636,10 @@ function getPropertyProductType(
 
 
     if (
+        text.includes("access control") ||
         text.includes("access") ||
         text.includes("fingerprint") ||
-        text.includes("biometric") ||
-        text.includes("reader")
+        text.includes("biometric")
     ) {
 
         return "access";
@@ -11745,55 +11673,85 @@ function getPropertyProductType(
 
 
 /* ==========================================================================
-   17.3 GET PRODUCT DISPLAY NAME
+   17.3 GET PROPERTY PLACEMENT LAYER
    ========================================================================== */
 
-function getPropertyProductName(
-    product
-) {
+function getPropertyPlacementLayer() {
 
-    if (!product) {
-
-        return "Security Product";
-
-    }
-
-
-    return (
-
-        product.name ||
-
-        product.title ||
-
-        product.label ||
-
-        "Security Product"
-
+    return document.getElementById(
+        "productPlacementLayer"
     );
 
 }
 
 
 /* ==========================================================================
-   17.4 CREATE PRODUCT MARKER
+   17.4 GET PROPERTY SCENE
+   ========================================================================== */
+
+function getPropertyScene() {
+
+    return document.getElementById(
+        "propertyScene"
+    );
+
+}
+
+
+/* ==========================================================================
+   17.5 GET PROPERTY PREVIEW
+   ========================================================================== */
+
+function getPropertyPreview() {
+
+    return document.getElementById(
+        "propertyPreview"
+    );
+
+}
+
+
+/* ==========================================================================
+   17.6 CLEAR PROPERTY PRODUCTS
+   ========================================================================== */
+
+function clearPropertyProducts() {
+
+    const layer =
+        getPropertyPlacementLayer();
+
+
+    if (!layer) {
+
+        return;
+
+    }
+
+
+    layer.innerHTML = "";
+
+
+    propertyVisualState
+        .renderedProducts = 0;
+
+}
+
+
+/* ==========================================================================
+   17.7 CREATE PROPERTY PRODUCT MARKER
    ========================================================================== */
 
 function createPropertyProductMarker(
     product,
     type,
-    position,
-    index
+    index,
+    quantityIndex
 ) {
 
     const marker =
         document.createElement(
             "div"
         );
-
-
-    const configuration =
-        PROPERTY_PRODUCT_PLACEMENTS[type] ||
-        PROPERTY_PRODUCT_PLACEMENTS.other;
 
 
     marker.className =
@@ -11811,18 +11769,59 @@ function createPropertyProductMarker(
         type;
 
 
-    marker.dataset.positionIndex =
-        String(index);
+    marker.dataset.quantityIndex =
+        String(
+            quantityIndex
+        );
 
 
-    marker.style.left =
-        position.left +
-        "%";
+    marker.setAttribute(
+        "role",
+        "img"
+    );
 
 
-    marker.style.top =
-        position.top +
-        "%";
+    marker.setAttribute(
+        "aria-label",
+        (
+            product.name ||
+            "Security product"
+        ) +
+        " mounted on property"
+    );
+
+
+    /*
+       Icon selection.
+    */
+
+    const icons = {
+
+        cctv:
+            "fa-video",
+
+        fence:
+            "fa-bolt",
+
+        alarm:
+            "fa-bell",
+
+        gate:
+            "fa-door-open",
+
+        access:
+            "fa-fingerprint",
+
+        intercom:
+            "fa-phone",
+
+        roboguard:
+            "fa-shield-halved",
+
+        other:
+            "fa-shield-halved"
+
+    };
 
 
     const icon =
@@ -11843,13 +11842,25 @@ function createPropertyProductMarker(
 
     iconElement.className =
         "fa-solid " +
-        configuration.icon;
+        (
+            icons[type] ||
+            icons.other
+        );
 
 
     icon.appendChild(
         iconElement
     );
 
+
+    marker.appendChild(
+        icon
+    );
+
+
+    /*
+       Product label.
+    */
 
     const label =
         document.createElement(
@@ -11862,14 +11873,8 @@ function createPropertyProductMarker(
 
 
     label.textContent =
-        getPropertyProductName(
-            product
-        );
-
-
-    marker.appendChild(
-        icon
-    );
+        product.name ||
+        "Security Product";
 
 
     marker.appendChild(
@@ -11883,106 +11888,156 @@ function createPropertyProductMarker(
 
 
 /* ==========================================================================
-   17.5 BUILD PRODUCT PLACEMENT POSITIONS
+   17.8 GET PROPERTY MOUNT POSITION
    ========================================================================== */
 
-function getProductPlacementPosition(
+function getPropertyMountPosition(
     type,
     index
 ) {
 
-    const configuration =
-        PROPERTY_PRODUCT_PLACEMENTS[type] ||
-        PROPERTY_PRODUCT_PLACEMENTS.other;
+    const positions = {
+
+        cctv: [
+
+            {
+                left: 22,
+                top: 29
+            },
+
+            {
+                left: 78,
+                top: 29
+            },
+
+            {
+                left: 27,
+                top: 51
+            },
+
+            {
+                left: 73,
+                top: 51
+            }
+
+        ],
 
 
-    const positions =
-        configuration.positions;
+        fence: [
+
+            {
+                left: 13,
+                top: 77
+            },
+
+            {
+                left: 32,
+                top: 83
+            },
+
+            {
+                left: 68,
+                top: 83
+            },
+
+            {
+                left: 87,
+                top: 77
+            }
+
+        ],
 
 
-    if (
-        !positions ||
-        !positions.length
-    ) {
+        alarm: [
 
-        return {
-            left: 50,
-            top: 50
-        };
+            {
+                left: 50,
+                top: 40
+            }
 
-    }
+        ],
 
 
-    /*
-       Once the predefined positions are used,
-       continue placing additional products around
-       the property rather than stacking everything
-       directly on top of one another.
-    */
+        gate: [
 
-    if (
-        index <
-        positions.length
-    ) {
+            {
+                left: 16,
+                top: 71
+            }
 
-        return positions[index];
-
-    }
+        ],
 
 
-    const base =
-        positions[
-            index %
-            positions.length
-        ];
+        access: [
+
+            {
+                left: 48,
+                top: 57
+            }
+
+        ],
 
 
-    const cycle =
-        Math.floor(
-            index /
-            positions.length
-        );
+        intercom: [
+
+            {
+                left: 53,
+                top: 57
+            }
+
+        ],
 
 
-    return {
+        roboguard: [
 
-        left:
-            Math.max(
-                5,
-                Math.min(
-                    95,
-                    base.left +
-                    (cycle * 3)
-                )
-            ),
+            {
+                left: 20,
+                top: 78
+            },
 
-        top:
-            Math.max(
-                8,
-                Math.min(
-                    92,
-                    base.top +
-                    (cycle * 2)
-                )
-            )
+            {
+                left: 80,
+                top: 78
+            }
+
+        ],
+
+
+        other: [
+
+            {
+                left: 50,
+                top: 50
+            }
+
+        ]
 
     };
+
+
+    const typePositions =
+        positions[type] ||
+        positions.other;
+
+
+    return (
+        typePositions[
+            index %
+            typePositions.length
+        ]
+    );
 
 }
 
 
 /* ==========================================================================
-   17.6 RENDER PRODUCTS ON PROPERTY
+   17.9 RENDER PROPERTY PRODUCTS
    ========================================================================== */
 
-function renderProductsOnProperty(
-    products
-) {
+function renderPropertyProducts() {
 
     const layer =
-        document.getElementById(
-            "productPlacementLayer"
-        );
+        getPropertyPlacementLayer();
 
 
     if (!layer) {
@@ -11992,92 +12047,212 @@ function renderProductsOnProperty(
     }
 
 
-    layer.innerHTML = "";
+    clearPropertyProducts();
+
+
+    const configuredProducts =
+        getPropertyProducts();
+
+
+    propertyVisualState.products =
+        configuredProducts;
 
 
     if (
-        !Array.isArray(products) ||
-        !products.length
+        !configuredProducts.length
     ) {
+
+        updatePropertyVisualStatus();
 
         return;
 
     }
 
 
-    const typeIndexes = {
-
-        cctv: 0,
-
-        fence: 0,
-
-        alarm: 0,
-
-        gate: 0,
-
-        access: 0,
-
-        intercom: 0,
-
-        roboguard: 0,
-
-        other: 0
-
-    };
+    const typeIndexes = {};
 
 
-    products.forEach(
-        function (product) {
+    configuredProducts.forEach(
+        function (item) {
 
-            if (!product) {
+            const product =
+                item.product;
 
-                return;
 
-            }
+            const quantity =
+                item.quantity;
 
 
             const type =
-                getPropertyProductType(
+                getPropertySecurityType(
                     product
                 );
 
 
-            const index =
-                typeIndexes[type] || 0;
+            if (
+                !typeIndexes[type]
+            ) {
+
+                typeIndexes[type] = 0;
+
+            }
 
 
-            const position =
-                getProductPlacementPosition(
-                    type,
-                    index
+            /*
+               Render one physical marker
+               for every configured unit.
+
+               Example:
+
+               CCTV quantity = 3
+
+               → three CCTV markers
+               → three physical positions
+            */
+
+            for (
+                let quantityIndex = 0;
+                quantityIndex < quantity;
+                quantityIndex++
+            ) {
+
+                const position =
+                    getPropertyMountPosition(
+                        type,
+                        typeIndexes[type]
+                    );
+
+
+                const marker =
+                    createPropertyProductMarker(
+                        product,
+                        type,
+                        typeIndexes[type],
+                        quantityIndex
+                    );
+
+
+                marker.style.left =
+                    position.left +
+                    "%";
+
+
+                marker.style.top =
+                    position.top +
+                    "%";
+
+
+                layer.appendChild(
+                    marker
                 );
 
 
-            const marker =
-                createPropertyProductMarker(
-                    product,
-                    type,
-                    position,
-                    index
-                );
+                typeIndexes[type]++;
 
 
-            layer.appendChild(
-                marker
-            );
+                propertyVisualState
+                    .renderedProducts++;
 
-
-            typeIndexes[type] =
-                index + 1;
+            }
 
         }
     );
+
+
+    updatePropertyVisualStatus();
 
 }
 
 
 /* ==========================================================================
-   17.7 PROPERTY VISUAL API
+   17.10 UPDATE PROPERTY STATUS
+   ========================================================================== */
+
+function updatePropertyVisualStatus() {
+
+    const status =
+        document.getElementById(
+            "propertyPreviewStatus"
+        );
+
+
+    const count =
+        document.getElementById(
+            "propertyProductCount"
+        );
+
+
+    const securityStatus =
+        document.getElementById(
+            "propertySecurityStatus"
+        );
+
+
+    const total =
+        propertyVisualState
+            .renderedProducts;
+
+
+    if (count) {
+
+        count.textContent =
+            String(total);
+
+    }
+
+
+    if (status) {
+
+        if (total === 0) {
+
+            status.textContent =
+                "Select products to place them on your property";
+
+        }
+
+        else if (
+            total === 1
+        ) {
+
+            status.textContent =
+                "1 security product placed on your property";
+
+        }
+
+        else {
+
+            status.textContent =
+                total +
+                " security products placed on your property";
+
+        }
+
+    }
+
+
+    if (securityStatus) {
+
+        if (total === 0) {
+
+            securityStatus.textContent =
+                "No products configured";
+
+        }
+
+        else {
+
+            securityStatus.textContent =
+                "Security layout configured";
+
+        }
+
+    }
+
+}
+
+
+/* ==========================================================================
+   17.11 PROPERTY VISUAL PUBLIC API
    ========================================================================== */
 
 window.NEXPAK_PROPERTY_VISUAL =
@@ -12086,13 +12261,30 @@ window.NEXPAK_PROPERTY_VISUAL =
 
 
 window.NEXPAK_PROPERTY_VISUAL
+    .state =
+        propertyVisualState;
+
+
+window.NEXPAK_PROPERTY_VISUAL
     .render =
-        renderProductsOnProperty;
+        renderPropertyProducts;
+
+
+window.NEXPAK_PROPERTY_VISUAL
+    .refresh =
+        renderPropertyProducts;
 
 
 /* ==========================================================================
-   17.8 INITIAL PROPERTY RENDER
+   17.12 INITIAL PROPERTY RENDER
    ========================================================================== */
+
+function initialisePropertyVisualisation() {
+
+    renderPropertyProducts();
+
+}
+
 
 if (
     document.readyState ===
@@ -12103,21 +12295,9 @@ if (
         "DOMContentLoaded",
         function () {
 
-            const products =
-                getSafePropertyProductList();
-
-
-            renderProductsOnProperty(
-                products
-            );
+            initialisePropertyVisualisation();
 
         }
-    );
-
-} else {
-
-    renderProductsOnProperty(
-        getSafePropertyProductList()
     );
 
 }
@@ -12126,93 +12306,110 @@ if (
 /* ==========================================================================
    PART 17 COMPLETE
    ========================================================================== */
+
 /* ==========================================================================
    NEXPAK SECURITY SOLUTIONS
    BUILD YOUR SYSTEM — CONFIGURATOR V3
-   PART 18 — PROPERTY MOUNTING & SECURITY ZONE ENGINE
+   PART 18 — PROPERTY MOUNTING & SECURITY ZONES
    ========================================================================== */
 
 
 /* ==========================================================================
-   18.1 GET PROPERTY SCENE
+   18.1 PROPERTY ZONE ELEMENTS
    ========================================================================== */
 
-function getPropertyScene() {
+function getPropertyZoneElements() {
 
-    return document.getElementById(
-        "propertyScene"
+    return {
+
+        house:
+            document.querySelector(
+                ".zone-house"
+            ),
+
+        entrance:
+            document.querySelector(
+                ".zone-entrance"
+            ),
+
+        driveway:
+            document.querySelector(
+                ".zone-driveway"
+            ),
+
+        fence:
+            document.getElementById(
+                "propertyFenceZone"
+            ),
+
+        gate:
+            document.getElementById(
+                "propertyGate"
+            )
+
+    };
+
+}
+
+
+/* ==========================================================================
+   18.2 RESET PROPERTY SECURITY ZONES
+   ========================================================================== */
+
+function resetPropertySecurityZones() {
+
+    const zones =
+        getPropertyZoneElements();
+
+
+    Object.keys(zones).forEach(
+        function (key) {
+
+            const zone =
+                zones[key];
+
+
+            if (!zone) {
+
+                return;
+
+            }
+
+
+            zone.classList.remove(
+                "is-active"
+            );
+
+
+            zone.classList.remove(
+                "security-active"
+            );
+
+        }
     );
 
 }
 
 
 /* ==========================================================================
-   18.2 ACTIVATE SECURITY ZONES
+   18.3 ACTIVATE PROPERTY SECURITY ZONES
    ========================================================================== */
 
-function activatePropertySecurityZones(
-    products
-) {
+function updatePropertySecurityZones() {
 
-    const scene =
-        getPropertyScene();
+    resetPropertySecurityZones();
 
 
-    if (!scene) {
-
-        return;
-
-    }
+    const zones =
+        getPropertyZoneElements();
 
 
-    const zones = {
-
-        entrance:
-            scene.querySelector(
-                ".entrance-zone"
-            ),
-
-        driveway:
-            scene.querySelector(
-                ".driveway-zone"
-            ),
-
-        house:
-            scene.querySelector(
-                ".house-zone"
-            ),
-
-        gate:
-            scene.querySelector(
-                "#propertyGate"
-            ),
-
-        fence:
-            scene.querySelector(
-                "#propertyFenceZone"
-            )
-
-    };
-
-
-    Object.values(zones)
-        .forEach(
-            function (zone) {
-
-                if (zone) {
-
-                    zone.classList.remove(
-                        "is-active"
-                    );
-
-                }
-
-            }
-        );
+    const products =
+        getPropertyProducts();
 
 
     if (
-        !Array.isArray(products)
+        !products.length
     ) {
 
         return;
@@ -12221,93 +12418,124 @@ function activatePropertySecurityZones(
 
 
     products.forEach(
-        function (product) {
+        function (item) {
 
-            const type =
-                getPropertyProductType(
-                    product
-                );
+            if (!item || !item.product) {
 
-
-            if (
-                type === "cctv" ||
-                type === "alarm"
-            ) {
-
-                if (zones.house) {
-
-                    zones.house.classList.add(
-                        "is-active"
-                    );
-
-                }
+                return;
 
             }
 
+
+            const type =
+                getPropertySecurityType(
+                    item.product
+                );
+
+
+            /*
+               CCTV protects the house
+               and exterior areas.
+            */
+
+            if (
+                type === "cctv"
+            ) {
+
+                activatePropertyZone(
+                    zones.house
+                );
+
+            }
+
+
+            /*
+               Alarm systems protect the
+               building/interior.
+            */
+
+            if (
+                type === "alarm"
+            ) {
+
+                activatePropertyZone(
+                    zones.house
+                );
+
+            }
+
+
+            /*
+               Access control and intercom
+               belong at the entrance.
+            */
 
             if (
                 type === "access" ||
                 type === "intercom"
             ) {
 
-                if (zones.entrance) {
-
-                    zones.entrance.classList.add(
-                        "is-active"
-                    );
-
-                }
-
-            }
-
-
-            if (
-                type === "gate"
-            ) {
-
-                if (zones.gate) {
-
-                    zones.gate.classList.add(
-                        "is-active"
-                    );
-
-                }
-
-            }
-
-
-            if (
-                type === "fence" ||
-                type === "roboguard"
-            ) {
-
-                if (zones.fence) {
-
-                    zones.fence.classList.add(
-                        "is-active"
-                    );
-
-                }
+                activatePropertyZone(
+                    zones.entrance
+                );
 
             }
 
 
             /*
-               Roboguard also protects the wider
-               driveway/perimeter area.
+               Gate automation activates
+               the property gate and driveway.
+            */
+
+            if (
+                type === "gate"
+            ) {
+
+                activatePropertyZone(
+                    zones.gate
+                );
+
+
+                activatePropertyZone(
+                    zones.driveway
+                );
+
+            }
+
+
+            /*
+               Electric fencing protects
+               the property perimeter.
+            */
+
+            if (
+                type === "fence"
+            ) {
+
+                activatePropertyZone(
+                    zones.fence
+                );
+
+            }
+
+
+            /*
+               Roboguard protects the
+               perimeter and open yard.
             */
 
             if (
                 type === "roboguard"
             ) {
 
-                if (zones.driveway) {
+                activatePropertyZone(
+                    zones.fence
+                );
 
-                    zones.driveway.classList.add(
-                        "is-active"
-                    );
 
-                }
+                activatePropertyZone(
+                    zones.driveway
+                );
 
             }
 
@@ -12318,10 +12546,82 @@ function activatePropertySecurityZones(
 
 
 /* ==========================================================================
-   18.3 ADD MOUNTING POINT CLASS
+   18.4 ACTIVATE INDIVIDUAL ZONE
    ========================================================================== */
 
-function applyPropertyMountingClass(
+function activatePropertyZone(
+    zone
+) {
+
+    if (!zone) {
+
+        return;
+
+    }
+
+
+    zone.classList.add(
+        "is-active"
+    );
+
+
+    zone.classList.add(
+        "security-active"
+    );
+
+}
+
+
+/* ==========================================================================
+   18.5 GET MOUNTING LOCATION
+   ========================================================================== */
+
+function getPropertyMountingLocation(
+    type
+) {
+
+    const locations = {
+
+        cctv:
+            "house-wall",
+
+        fence:
+            "perimeter",
+
+        alarm:
+            "house-interior",
+
+        gate:
+            "gate",
+
+        access:
+            "entrance",
+
+        intercom:
+            "entrance",
+
+        roboguard:
+            "perimeter",
+
+        other:
+            "property"
+
+    };
+
+
+    return (
+        locations[type] ||
+        locations.other
+    );
+
+}
+
+
+/* ==========================================================================
+   18.6 APPLY MOUNTING INFORMATION
+   ========================================================================== */
+
+function applyPropertyMountingInformation(
     marker,
     type
 ) {
@@ -12333,24 +12633,68 @@ function applyPropertyMountingClass(
     }
 
 
+    const location =
+        getPropertyMountingLocation(
+            type
+        );
+
+
+    marker.dataset.mountLocation =
+        location;
+
+
     marker.classList.add(
-        "mount-point"
+        "is-mounted"
     );
 
 
     marker.classList.add(
         "mount-" +
-        type
+        location
+    );
+
+
+    /*
+       Product-specific mounting labels.
+    */
+
+    const mountingLabels = {
+
+        "house-wall":
+            "Mounted on house",
+
+        "house-interior":
+            "Installed inside house",
+
+        "perimeter":
+            "Installed on perimeter",
+
+        "gate":
+            "Installed at gate",
+
+        "entrance":
+            "Installed at entrance",
+
+        "property":
+            "Installed on property"
+
+    };
+
+
+    marker.setAttribute(
+        "title",
+        mountingLabels[location] ||
+        "Security equipment"
     );
 
 }
 
 
 /* ==========================================================================
-   18.4 CREATE MOUNTING CONNECTOR
+   18.7 CREATE MOUNTING INDICATOR
    ========================================================================== */
 
-function createPropertyMountingConnector(
+function createPropertyMountingIndicator(
     marker,
     type
 ) {
@@ -12363,26 +12707,13 @@ function createPropertyMountingConnector(
 
 
     /*
-       Only equipment that is normally mounted
-       to a fixed structure receives a connector.
+       Prevent duplicate indicators when
+       the property is refreshed.
     */
 
-    const mountedTypes = [
-
-        "cctv",
-
-        "alarm",
-
-        "access",
-
-        "intercom"
-
-    ];
-
-
     if (
-        !mountedTypes.includes(
-            type
+        marker.querySelector(
+            ".property-mount-indicator"
         )
     ) {
 
@@ -12391,39 +12722,46 @@ function createPropertyMountingConnector(
     }
 
 
-    const connector =
+    const indicator =
         document.createElement(
             "span"
         );
 
 
-    connector.className =
-        "property-mounting-connector";
+    indicator.className =
+        "property-mount-indicator";
 
 
-    connector.setAttribute(
+    indicator.setAttribute(
         "aria-hidden",
         "true"
     );
 
 
+    /*
+       Different equipment uses different
+       visual mounting behaviour.
+    */
+
+    indicator.dataset.mountType =
+        type;
+
+
     marker.appendChild(
-        connector
+        indicator
     );
 
 }
 
 
 /* ==========================================================================
-   18.5 ENHANCE PROPERTY MARKERS
+   18.8 ENHANCE ALL PROPERTY MARKERS
    ========================================================================== */
 
-function enhancePropertyMarkers() {
+function enhancePropertyMounting() {
 
     const layer =
-        document.getElementById(
-            "productPlacementLayer"
-        );
+        getPropertyPlacementLayer();
 
 
     if (!layer) {
@@ -12447,13 +12785,13 @@ function enhancePropertyMarkers() {
                 "other";
 
 
-            applyPropertyMountingClass(
+            applyPropertyMountingInformation(
                 marker,
                 type
             );
 
 
-            createPropertyMountingConnector(
+            createPropertyMountingIndicator(
                 marker,
                 type
             );
@@ -12465,11 +12803,1017 @@ function enhancePropertyMarkers() {
 
 
 /* ==========================================================================
-   18.6 PROPERTY FENCE VISUAL STATE
+   18.9 PROPERTY VISUAL REFRESH
    ========================================================================== */
 
-function updatePropertyFenceState(
-    products
+function refreshPropertyVisualisation() {
+
+    renderPropertyProducts();
+
+
+    updatePropertySecurityZones();
+
+
+    enhancePropertyMounting();
+
+}
+
+
+/* ==========================================================================
+   18.10 PUBLIC API
+   ========================================================================== */
+
+window.NEXPAK_PROPERTY_VISUAL =
+    window.NEXPAK_PROPERTY_VISUAL ||
+    {};
+
+
+window.NEXPAK_PROPERTY_VISUAL
+    .updateZones =
+        updatePropertySecurityZones;
+
+
+window.NEXPAK_PROPERTY_VISUAL
+    .refresh =
+        refreshPropertyVisualisation;
+
+
+/* ==========================================================================
+   18.11 INITIAL PROPERTY ZONE UPDATE
+   ========================================================================== */
+
+function initialisePropertySecurityZones() {
+
+    updatePropertySecurityZones();
+
+
+    enhancePropertyMounting();
+
+}
+
+
+if (
+    document.readyState ===
+    "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            initialisePropertySecurityZones();
+
+        }
+    );
+
+} else {
+
+    initialisePropertySecurityZones();
+
+}
+
+
+/* ==========================================================================
+   PART 18 COMPLETE
+   ========================================================================== */
+
+/* ==========================================================================
+   NEXPAK SECURITY SOLUTIONS
+   BUILD YOUR SYSTEM — CONFIGURATOR V3
+   PART 19 — LIVE PROPERTY UPDATE ENGINE
+   ========================================================================== */
+
+
+/* ==========================================================================
+   19.1 PROPERTY UPDATE DEBOUNCE
+   ========================================================================== */
+
+let propertyRefreshTimer = null;
+
+
+/* ==========================================================================
+   19.2 SCHEDULE PROPERTY REFRESH
+   ========================================================================== */
+
+function schedulePropertyVisualRefresh() {
+
+    if (
+        propertyRefreshTimer
+    ) {
+
+        clearTimeout(
+            propertyRefreshTimer
+        );
+
+    }
+
+
+    propertyRefreshTimer =
+        setTimeout(
+            function () {
+
+                refreshPropertyVisualisation();
+
+            },
+            80
+        );
+
+}
+
+
+/* ==========================================================================
+   19.3 REFRESH AFTER PRODUCT SELECTION
+   ========================================================================== */
+
+function refreshPropertyAfterSelection() {
+
+    schedulePropertyVisualRefresh();
+
+}
+
+
+/* ==========================================================================
+   19.4 WATCH CONFIGURATOR EVENTS
+   ========================================================================== */
+
+function attachPropertySelectionListeners() {
+
+    /*
+       Listen for changes to quantity controls.
+    */
+
+    document.addEventListener(
+        "change",
+        function (event) {
+
+            const target =
+                event.target;
+
+
+            if (!target) {
+
+                return;
+
+            }
+
+
+            /*
+               Quantity inputs.
+            */
+
+            if (
+                target.matches(
+                    "input[type='number']"
+                )
+            ) {
+
+                schedulePropertyVisualRefresh();
+
+                return;
+
+            }
+
+
+            /*
+               Product/category selectors.
+            */
+
+            if (
+                target.matches(
+                    "select"
+                )
+            ) {
+
+                schedulePropertyVisualRefresh();
+
+            }
+
+        }
+    );
+
+
+    /*
+       Listen for product buttons and
+       configurator controls.
+    */
+
+    document.addEventListener(
+        "click",
+        function (event) {
+
+            const target =
+                event.target;
+
+
+            if (!target) {
+
+                return;
+
+            }
+
+
+            const button =
+                target.closest(
+                    "button"
+                );
+
+
+            if (!button) {
+
+                return;
+
+            }
+
+
+            /*
+               Buttons that can alter the
+               configurator state.
+            */
+
+            const isConfiguratorButton =
+                button.matches(
+                    ".product-add-button, " +
+                    ".product-remove-button, " +
+                    ".quantity-plus, " +
+                    ".quantity-minus, " +
+                    ".product-quantity-plus, " +
+                    ".product-quantity-minus, " +
+                    "[data-product-id], " +
+                    "[data-action='add'], " +
+                    "[data-action='remove'], " +
+                    "[data-action='increase'], " +
+                    "[data-action='decrease']"
+                );
+
+
+            if (
+                isConfiguratorButton
+            ) {
+
+                schedulePropertyVisualRefresh();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* ==========================================================================
+   19.5 WATCH STATE CHANGES
+   ========================================================================== */
+
+function createPropertyStateSnapshot() {
+
+    if (
+        !state ||
+        !state.selections
+    ) {
+
+        return "";
+
+    }
+
+
+    const snapshot = [];
+
+
+    Object.keys(
+        state.selections
+    )
+        .sort()
+        .forEach(
+            function (productId) {
+
+                const selection =
+                    state.selections[
+                        productId
+                    ];
+
+
+                if (!selection) {
+
+                    return;
+
+                }
+
+
+                snapshot.push({
+
+                    id:
+                        productId,
+
+                    quantity:
+                        Number(
+                            selection.quantity
+                        ) || 0
+
+                });
+
+            }
+        );
+
+
+    return JSON.stringify(
+        snapshot
+    );
+
+}
+
+
+/* ==========================================================================
+   19.6 STATE POLLING FALLBACK
+   ========================================================================== */
+
+let propertyLastStateSnapshot =
+    "";
+
+
+function monitorPropertyState() {
+
+    const currentSnapshot =
+        createPropertyStateSnapshot();
+
+
+    if (
+        currentSnapshot !==
+        propertyLastStateSnapshot
+    ) {
+
+        propertyLastStateSnapshot =
+            currentSnapshot;
+
+
+        schedulePropertyVisualRefresh();
+
+    }
+
+}
+
+
+/* ==========================================================================
+   19.7 START STATE MONITOR
+   ========================================================================== */
+
+let propertyStateMonitorStarted =
+    false;
+
+
+function startPropertyStateMonitor() {
+
+    if (
+        propertyStateMonitorStarted
+    ) {
+
+        return;
+
+    }
+
+
+    propertyStateMonitorStarted =
+        true;
+
+
+    propertyLastStateSnapshot =
+        createPropertyStateSnapshot();
+
+
+    /*
+       Lightweight polling is used as a
+       fallback because the existing
+       configurator does not require us
+       to modify its state architecture.
+    */
+
+    setInterval(
+        monitorPropertyState,
+        250
+    );
+
+}
+
+
+/* ==========================================================================
+   19.8 REFRESH PROPERTY AFTER CART ACTIONS
+   ========================================================================== */
+
+function attachPropertyCartListeners() {
+
+    document.addEventListener(
+        "click",
+        function (event) {
+
+            const target =
+                event.target;
+
+
+            if (!target) {
+
+                return;
+
+            }
+
+
+            const button =
+                target.closest(
+                    "button, a"
+                );
+
+
+            if (!button) {
+
+                return;
+
+            }
+
+
+            const action =
+                (
+                    button.dataset.action ||
+                    ""
+                ).toLowerCase();
+
+
+            const text =
+                (
+                    button.textContent ||
+                    ""
+                ).toLowerCase();
+
+
+            const cartAction =
+                action.includes("cart") ||
+                text.includes("add to cart") ||
+                text.includes("remove") ||
+                text.includes("increase") ||
+                text.includes("decrease");
+
+
+            if (
+                cartAction
+            ) {
+
+                schedulePropertyVisualRefresh();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* ==========================================================================
+   19.9 REFRESH PROPERTY AFTER CATEGORY CHANGE
+   ========================================================================== */
+
+function attachPropertyCategoryListeners() {
+
+    document.addEventListener(
+        "click",
+        function (event) {
+
+            const categoryButton =
+                event.target.closest(
+                    ".category-card"
+                );
+
+
+            if (!categoryButton) {
+
+                return;
+
+            }
+
+
+            /*
+               Category changes don't necessarily
+               change selections, but refreshing here
+               guarantees the property remains in sync.
+            */
+
+            schedulePropertyVisualRefresh();
+
+        }
+    );
+
+}
+
+
+/* ==========================================================================
+   19.10 SAFE REFRESH
+   ========================================================================== */
+
+function performSafePropertyRefresh() {
+
+    try {
+
+        refreshPropertyVisualisation();
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            "Nexpak property visualisation refresh failed:",
+            error
+        );
+
+    }
+
+}
+
+
+/* ==========================================================================
+   19.11 REPLACE REFRESH SCHEDULER
+   ========================================================================== */
+
+function scheduleSafePropertyRefresh() {
+
+    if (
+        propertyRefreshTimer
+    ) {
+
+        clearTimeout(
+            propertyRefreshTimer
+        );
+
+    }
+
+
+    propertyRefreshTimer =
+        setTimeout(
+            function () {
+
+                performSafePropertyRefresh();
+
+            },
+            80
+        );
+
+}
+
+
+/* ==========================================================================
+   19.12 INITIALISE LIVE PROPERTY ENGINE
+   ========================================================================== */
+
+function initialisePropertyLiveEngine() {
+
+    attachPropertySelectionListeners();
+
+
+    attachPropertyCartListeners();
+
+
+    attachPropertyCategoryListeners();
+
+
+    startPropertyStateMonitor();
+
+
+    propertyLastStateSnapshot =
+        createPropertyStateSnapshot();
+
+
+    scheduleSafePropertyRefresh();
+
+}
+
+
+/* ==========================================================================
+   19.13 START LIVE PROPERTY ENGINE
+   ========================================================================== */
+
+if (
+    document.readyState ===
+    "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            initialisePropertyLiveEngine();
+
+        }
+    );
+
+} else {
+
+    initialisePropertyLiveEngine();
+
+}
+
+
+/* ==========================================================================
+   19.14 PUBLIC API
+   ========================================================================== */
+
+window.NEXPAK_PROPERTY_VISUAL =
+    window.NEXPAK_PROPERTY_VISUAL ||
+    {};
+
+
+window.NEXPAK_PROPERTY_VISUAL
+    .scheduleRefresh =
+        scheduleSafePropertyRefresh;
+
+
+window.NEXPAK_PROPERTY_VISUAL
+    .refreshNow =
+        performSafePropertyRefresh;
+
+
+/* ==========================================================================
+   PART 19 COMPLETE
+   ========================================================================== */
+
+/* ==========================================================================
+   NEXPAK SECURITY SOLUTIONS
+   BUILD YOUR SYSTEM — CONFIGURATOR V3
+   PART 20 — PROPERTY COVERAGE & LIVE SECURITY STATUS
+   ========================================================================== */
+
+
+/* ==========================================================================
+   20.1 GET PROPERTY SECURITY SUMMARY
+   ========================================================================== */
+
+function getPropertySecuritySummary() {
+
+    const configuredProducts =
+        getPropertyProducts();
+
+
+    const summary = {
+
+        totalProducts: 0,
+
+        cctv: 0,
+
+        fence: 0,
+
+        alarm: 0,
+
+        gate: 0,
+
+        access: 0,
+
+        intercom: 0,
+
+        roboguard: 0,
+
+        other: 0
+
+    };
+
+
+    configuredProducts.forEach(
+        function (item) {
+
+            if (
+                !item ||
+                !item.product
+            ) {
+
+                return;
+
+            }
+
+
+            const type =
+                getPropertySecurityType(
+                    item.product
+                );
+
+
+            const quantity =
+                Number(
+                    item.quantity
+                ) || 0;
+
+
+            summary.totalProducts +=
+                quantity;
+
+
+            if (
+                Object.prototype.hasOwnProperty.call(
+                    summary,
+                    type
+                )
+            ) {
+
+                summary[type] +=
+                    quantity;
+
+            }
+
+            else {
+
+                summary.other +=
+                    quantity;
+
+            }
+
+        }
+    );
+
+
+    return summary;
+
+}
+
+
+/* ==========================================================================
+   20.2 UPDATE PROPERTY PRODUCT COUNT
+   ========================================================================== */
+
+function updatePropertyProductCount(
+    summary
+) {
+
+    const count =
+        document.getElementById(
+            "propertyProductCount"
+        );
+
+
+    if (!count) {
+
+        return;
+
+    }
+
+
+    count.textContent =
+        String(
+            summary.totalProducts
+        );
+
+}
+
+
+/* ==========================================================================
+   20.3 UPDATE PROPERTY SECURITY STATUS
+   ========================================================================== */
+
+function updatePropertySecurityStatus(
+    summary
+) {
+
+    const status =
+        document.getElementById(
+            "propertySecurityStatus"
+        );
+
+
+    if (!status) {
+
+        return;
+
+    }
+
+
+    if (
+        summary.totalProducts === 0
+    ) {
+
+        status.textContent =
+            "No products configured";
+
+        return;
+
+    }
+
+
+    const activeSystems = [];
+
+
+    if (
+        summary.cctv > 0
+    ) {
+
+        activeSystems.push(
+            "CCTV"
+        );
+
+    }
+
+
+    if (
+        summary.fence > 0
+    ) {
+
+        activeSystems.push(
+            "Electric Fence"
+        );
+
+    }
+
+
+    if (
+        summary.alarm > 0
+    ) {
+
+        activeSystems.push(
+            "Alarm"
+        );
+
+    }
+
+
+    if (
+        summary.gate > 0
+    ) {
+
+        activeSystems.push(
+            "Gate"
+        );
+
+    }
+
+
+    if (
+        summary.access > 0
+    ) {
+
+        activeSystems.push(
+            "Access Control"
+        );
+
+    }
+
+
+    if (
+        summary.intercom > 0
+    ) {
+
+        activeSystems.push(
+            "Intercom"
+        );
+
+    }
+
+
+    if (
+        summary.roboguard > 0
+    ) {
+
+        activeSystems.push(
+            "Roboguard"
+        );
+
+    }
+
+
+    if (
+        activeSystems.length
+    ) {
+
+        status.textContent =
+            activeSystems.join(
+                " • "
+            );
+
+    }
+
+    else {
+
+        status.textContent =
+            "Security equipment configured";
+
+    }
+
+}
+
+
+/* ==========================================================================
+   20.4 UPDATE PROPERTY PREVIEW STATUS
+   ========================================================================== */
+
+function updatePropertyPreviewStatus(
+    summary
+) {
+
+    const status =
+        document.getElementById(
+            "propertyPreviewStatus"
+        );
+
+
+    if (!status) {
+
+        return;
+
+    }
+
+
+    if (
+        summary.totalProducts === 0
+    ) {
+
+        status.textContent =
+            "Select products to place them on your property";
+
+        return;
+
+    }
+
+
+    if (
+        summary.totalProducts === 1
+    ) {
+
+        status.textContent =
+            "1 security product placed on your property";
+
+        return;
+
+    }
+
+
+    status.textContent =
+        summary.totalProducts +
+        " security products placed on your property";
+
+}
+
+
+/* ==========================================================================
+   20.5 UPDATE PROPERTY INFO BAR
+   ========================================================================== */
+
+function updatePropertyInformationBar() {
+
+    const summary =
+        getPropertySecuritySummary();
+
+
+    updatePropertyProductCount(
+        summary
+    );
+
+
+    updatePropertySecurityStatus(
+        summary
+    );
+
+
+    updatePropertyPreviewStatus(
+        summary
+    );
+
+
+    return summary;
+
+}
+
+
+/* ==========================================================================
+   20.6 ACTIVATE CCTV VISUAL ZONES
+   ========================================================================== */
+
+function updatePropertyCCTVZones(
+    summary
+) {
+
+    const zones =
+        document.querySelectorAll(
+            ".property-cctv-zone"
+        );
+
+
+    if (!zones.length) {
+
+        return;
+
+    }
+
+
+    zones.forEach(
+        function (zone, index) {
+
+            zone.classList.toggle(
+                "is-active",
+                index <
+                summary.cctv
+            );
+
+        }
+    );
+
+}
+
+
+/* ==========================================================================
+   20.7 ACTIVATE FENCE VISUAL
+   ========================================================================== */
+
+function updatePropertyFenceVisual(
+    summary
 ) {
 
     const fence =
@@ -12485,92 +13829,33 @@ function updatePropertyFenceState(
     }
 
 
-    const hasFence =
-        Array.isArray(products) &&
-        products.some(
-            function (product) {
-
-                const type =
-                    getPropertyProductType(
-                        product
-                    );
-
-
-                return (
-                    type === "fence" ||
-                    type === "roboguard"
-                );
-
-            }
+    const active =
+        (
+            summary.fence > 0 ||
+            summary.roboguard > 0
         );
 
 
     fence.classList.toggle(
         "is-active",
-        hasFence
+        active
+    );
+
+
+    fence.classList.toggle(
+        "security-active",
+        active
     );
 
 }
 
 
 /* ==========================================================================
-   18.7 PROPERTY CCTV STATE
+   20.8 ACTIVATE GATE VISUAL
    ========================================================================== */
 
-function updatePropertyCCTVState(
-    products
-) {
-
-    const cctvZones =
-        document.querySelectorAll(
-            ".property-cctv-zone"
-        );
-
-
-    if (!cctvZones.length) {
-
-        return;
-
-    }
-
-
-    const cameras =
-        Array.isArray(products)
-            ? products.filter(
-                function (product) {
-
-                    return (
-                        getPropertyProductType(
-                            product
-                        ) === "cctv"
-                    );
-
-                }
-            )
-            : [];
-
-
-    cctvZones.forEach(
-        function (zone, index) {
-
-            zone.classList.toggle(
-                "is-active",
-                index <
-                cameras.length
-            );
-
-        }
-    );
-
-}
-
-
-/* ==========================================================================
-   18.8 PROPERTY GATE STATE
-   ========================================================================== */
-
-function updatePropertyGateState(
-    products
+function updatePropertyGateVisual(
+    summary
 ) {
 
     const gate =
@@ -12586,113 +13871,323 @@ function updatePropertyGateState(
     }
 
 
-    const hasGate =
-        Array.isArray(products) &&
-        products.some(
-            function (product) {
-
-                return (
-                    getPropertyProductType(
-                        product
-                    ) === "gate"
-                );
-
-            }
-        );
+    const active =
+        summary.gate > 0;
 
 
     gate.classList.toggle(
         "is-active",
-        hasGate
+        active
+    );
+
+
+    gate.classList.toggle(
+        "security-active",
+        active
     );
 
 }
 
 
 /* ==========================================================================
-   18.9 UPDATE ALL PROPERTY SECURITY STATES
+   20.9 ACTIVATE HOUSE SECURITY VISUAL
    ========================================================================== */
 
-function updatePropertySecurityStates(
-    products
+function updatePropertyHouseSecurityVisual(
+    summary
 ) {
 
-    activatePropertySecurityZones(
-        products
+    const houseZone =
+        document.querySelector(
+            ".zone-house"
+        );
+
+
+    if (!houseZone) {
+
+        return;
+
+    }
+
+
+    const active =
+        (
+            summary.cctv > 0 ||
+            summary.alarm > 0
+        );
+
+
+    houseZone.classList.toggle(
+        "is-active",
+        active
     );
 
 
-    updatePropertyFenceState(
-        products
+    houseZone.classList.toggle(
+        "security-active",
+        active
     );
-
-
-    updatePropertyCCTVState(
-        products
-    );
-
-
-    updatePropertyGateState(
-        products
-    );
-
-
-    enhancePropertyMarkers();
 
 }
 
 
 /* ==========================================================================
-   18.10 EXTEND PROPERTY RENDERER
+   20.10 ACTIVATE ENTRANCE SECURITY VISUAL
    ========================================================================== */
 
-const originalPropertyRenderer =
-    window.NEXPAK_PROPERTY_VISUAL &&
-    window.NEXPAK_PROPERTY_VISUAL.render;
-
-
-if (
-    typeof originalPropertyRenderer ===
-    "function"
+function updatePropertyEntranceSecurityVisual(
+    summary
 ) {
 
-    window.NEXPAK_PROPERTY_VISUAL
-        .render =
-            function (products) {
-
-                originalPropertyRenderer(
-                    products
-                );
+    const entranceZone =
+        document.querySelector(
+            ".zone-entrance"
+        );
 
 
-                updatePropertySecurityStates(
-                    products
-                );
+    if (!entranceZone) {
 
-            };
+        return;
 
-}
+    }
 
 
-/* ==========================================================================
-   18.11 INITIAL PROPERTY SECURITY STATE
-   ========================================================================== */
-
-function initialisePropertySecurityEngine() {
-
-    const products =
-        getSafePropertyProductList();
+    const active =
+        (
+            summary.access > 0 ||
+            summary.intercom > 0
+        );
 
 
-    updatePropertySecurityStates(
-        products
+    entranceZone.classList.toggle(
+        "is-active",
+        active
+    );
+
+
+    entranceZone.classList.toggle(
+        "security-active",
+        active
     );
 
 }
 
 
 /* ==========================================================================
-   18.12 START PROPERTY SECURITY ENGINE
+   20.11 ACTIVATE DRIVEWAY SECURITY VISUAL
+   ========================================================================== */
+
+function updatePropertyDrivewaySecurityVisual(
+    summary
+) {
+
+    const drivewayZone =
+        document.querySelector(
+            ".zone-driveway"
+        );
+
+
+    if (!drivewayZone) {
+
+        return;
+
+    }
+
+
+    const active =
+        (
+            summary.gate > 0 ||
+            summary.roboguard > 0
+        );
+
+
+    drivewayZone.classList.toggle(
+        "is-active",
+        active
+    );
+
+
+    drivewayZone.classList.toggle(
+        "security-active",
+        active
+    );
+
+}
+
+
+/* ==========================================================================
+   20.12 UPDATE ALL SECURITY VISUALS
+   ========================================================================== */
+
+function updateAllPropertySecurityVisuals(
+    summary
+) {
+
+    updatePropertyCCTVZones(
+        summary
+    );
+
+
+    updatePropertyFenceVisual(
+        summary
+    );
+
+
+    updatePropertyGateVisual(
+        summary
+    );
+
+
+    updatePropertyHouseSecurityVisual(
+        summary
+    );
+
+
+    updatePropertyEntranceSecurityVisual(
+        summary
+    );
+
+
+    updatePropertyDrivewaySecurityVisual(
+        summary
+    );
+
+}
+
+
+/* ==========================================================================
+   20.13 PROPERTY COVERAGE STATE
+   ========================================================================== */
+
+function updatePropertyCoverageState(
+    summary
+) {
+
+    const preview =
+        getPropertyPreview();
+
+
+    if (!preview) {
+
+        return;
+
+    }
+
+
+    preview.classList.toggle(
+        "has-cctv",
+        summary.cctv > 0
+    );
+
+
+    preview.classList.toggle(
+        "has-fence",
+        summary.fence > 0
+    );
+
+
+    preview.classList.toggle(
+        "has-alarm",
+        summary.alarm > 0
+    );
+
+
+    preview.classList.toggle(
+        "has-gate",
+        summary.gate > 0
+    );
+
+
+    preview.classList.toggle(
+        "has-access",
+        summary.access > 0
+    );
+
+
+    preview.classList.toggle(
+        "has-intercom",
+        summary.intercom > 0
+    );
+
+
+    preview.classList.toggle(
+        "has-roboguard",
+        summary.roboguard > 0
+    );
+
+
+    preview.classList.toggle(
+        "has-security",
+        summary.totalProducts > 0
+    );
+
+}
+
+
+/* ==========================================================================
+   20.14 COMPLETE PROPERTY SECURITY UPDATE
+   ========================================================================== */
+
+function updateCompletePropertySecurityState() {
+
+    const summary =
+        updatePropertyInformationBar();
+
+
+    updateAllPropertySecurityVisuals(
+        summary
+    );
+
+
+    updatePropertyCoverageState(
+        summary
+    );
+
+
+    propertyVisualState.products =
+        getPropertyProducts();
+
+
+    return summary;
+
+}
+
+
+/* ==========================================================================
+   20.15 EXTEND PROPERTY REFRESH
+   ========================================================================== */
+
+const originalPropertyRefreshPart20 =
+    refreshPropertyVisualisation;
+
+
+refreshPropertyVisualisation =
+    function () {
+
+        originalPropertyRefreshPart20();
+
+
+        updateCompletePropertySecurityState();
+
+
+        enhancePropertyMounting();
+
+    };
+
+
+/* ==========================================================================
+   20.16 INITIALISE PROPERTY SECURITY STATUS
+   ========================================================================== */
+
+function initialisePropertySecurityStatus() {
+
+    updateCompletePropertySecurityState();
+
+}
+
+
+/* ==========================================================================
+   20.17 START PROPERTY SECURITY STATUS
    ========================================================================== */
 
 if (
@@ -12704,20 +14199,20 @@ if (
         "DOMContentLoaded",
         function () {
 
-            initialisePropertySecurityEngine();
+            initialisePropertySecurityStatus();
 
         }
     );
 
 } else {
 
-    initialisePropertySecurityEngine();
+    initialisePropertySecurityStatus();
 
 }
 
 
 /* ==========================================================================
-   18.13 PUBLIC API
+   20.18 PUBLIC API
    ========================================================================== */
 
 window.NEXPAK_PROPERTY_VISUAL =
@@ -12726,511 +14221,293 @@ window.NEXPAK_PROPERTY_VISUAL =
 
 
 window.NEXPAK_PROPERTY_VISUAL
-    .updateSecurityStates =
-        updatePropertySecurityStates;
+    .getSecuritySummary =
+        getPropertySecuritySummary;
+
+
+window.NEXPAK_PROPERTY_VISUAL
+    .updateSecurityStatus =
+        updateCompletePropertySecurityState;
 
 
 /* ==========================================================================
-   PART 18 COMPLETE
+   PART 20 COMPLETE
    ========================================================================== */
 
 /* ==========================================================================
    NEXPAK SECURITY SOLUTIONS
    BUILD YOUR SYSTEM — CONFIGURATOR V3
-   PART 19 — PROPERTY COVERAGE & MOUNTING VISUALS
+   PART 21 — PROPERTY VIEW & ZOOM CONTROLS
    ========================================================================== */
 
 
 /* ==========================================================================
-   19.1 CREATE COVERAGE INDICATOR
+   21.1 GET PROPERTY CANVAS
    ========================================================================== */
 
-function createPropertyCoverageIndicator(
-    marker,
-    type
-) {
+function getPropertyCanvas() {
 
-    if (!marker) {
-
-        return;
-
-    }
-
-
-    /*
-       Coverage indicators are useful for equipment
-       that protects an area rather than a single point.
-    */
-
-    const coverageTypes = [
-
-        "cctv",
-
-        "roboguard"
-
-    ];
-
-
-    if (
-        !coverageTypes.includes(
-            type
-        )
-    ) {
-
-        return;
-
-    }
-
-
-    const coverage =
-        document.createElement(
-            "span"
-        );
-
-
-    coverage.className =
-        "property-product-coverage";
-
-
-    coverage.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-
-    marker.appendChild(
-        coverage
+    return document.getElementById(
+        "propertyCanvas"
     );
 
 }
 
 
 /* ==========================================================================
-   19.2 CREATE MOUNTING BASE
+   21.2 GET PROPERTY SCENE
    ========================================================================== */
 
-function createPropertyMountingBase(
-    marker,
-    type
-) {
+function getPropertySceneElement() {
 
-    if (!marker) {
-
-        return;
-
-    }
-
-
-    const mountedTypes = [
-
-        "cctv",
-
-        "alarm",
-
-        "access",
-
-        "intercom",
-
-        "gate"
-
-    ];
-
-
-    if (
-        !mountedTypes.includes(
-            type
-        )
-    ) {
-
-        return;
-
-    }
-
-
-    const base =
-        document.createElement(
-            "span"
-        );
-
-
-    base.className =
-        "property-product-mount-base";
-
-
-    base.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-
-    marker.appendChild(
-        base
+    return document.getElementById(
+        "propertyScene"
     );
 
 }
 
 
 /* ==========================================================================
-   19.3 ENHANCE COVERAGE MARKERS
+   21.3 APPLY PROPERTY ZOOM
    ========================================================================== */
 
-function enhancePropertyCoverageMarkers() {
-
-    const layer =
-        document.getElementById(
-            "productPlacementLayer"
-        );
-
-
-    if (!layer) {
-
-        return;
-
-    }
-
-
-    const markers =
-        layer.querySelectorAll(
-            ".property-product-marker"
-        );
-
-
-    markers.forEach(
-        function (marker) {
-
-            /*
-               Prevent duplicate visual elements
-               if the renderer is refreshed.
-            */
-
-            if (
-                !marker.querySelector(
-                    ".property-product-coverage"
-                )
-            ) {
-
-                createPropertyCoverageIndicator(
-                    marker,
-                    marker.dataset.productType ||
-                    "other"
-                );
-
-            }
-
-
-            if (
-                !marker.querySelector(
-                    ".property-product-mount-base"
-                )
-            ) {
-
-                createPropertyMountingBase(
-                    marker,
-                    marker.dataset.productType ||
-                    "other"
-                );
-
-            }
-
-        }
-    );
-
-}
-
-
-/* ==========================================================================
-   19.4 CREATE SECURITY COVERAGE LAYER
-   ========================================================================== */
-
-function createPropertyCoverageLayer() {
+function applyPropertyZoom() {
 
     const scene =
-        document.getElementById(
-            "propertyScene"
-        );
+        getPropertySceneElement();
 
 
     if (!scene) {
 
-        return null;
-
-    }
-
-
-    let layer =
-        document.getElementById(
-            "propertyCoverageLayer"
-        );
-
-
-    if (layer) {
-
-        return layer;
-
-    }
-
-
-    layer =
-        document.createElement(
-            "div"
-        );
-
-
-    layer.id =
-        "propertyCoverageLayer";
-
-
-    layer.className =
-        "property-coverage-layer";
-
-
-    layer.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-
-    /*
-       Coverage layer sits behind product markers
-       but above the property illustration.
-    */
-
-    scene.insertBefore(
-        layer,
-        document.getElementById(
-            "productPlacementLayer"
-        )
-    );
-
-
-    return layer;
-
-}
-
-
-/* ==========================================================================
-   19.5 CLEAR COVERAGE LAYER
-   ========================================================================== */
-
-function clearPropertyCoverageLayer() {
-
-    const layer =
-        document.getElementById(
-            "propertyCoverageLayer"
-        );
-
-
-    if (!layer) {
-
         return;
 
     }
 
 
-    layer.innerHTML = "";
-
-}
-
-
-/* ==========================================================================
-   19.6 CREATE CCTV COVERAGE
-   ========================================================================== */
-
-function createCCTVCoverage(
-    product,
-    position,
-    index
-) {
-
-    const layer =
-        createPropertyCoverageLayer();
+    const zoom =
+        Number(
+            propertyVisualState.zoom
+        ) || 1;
 
 
-    if (!layer) {
-
-        return;
-
-    }
-
-
-    const coverage =
-        document.createElement(
-            "span"
-        );
+    scene.style.transform =
+        "scale(" +
+        zoom +
+        ")";
 
 
-    coverage.className =
-        "property-coverage-cctv";
+    scene.style.transformOrigin =
+        "center center";
 
 
-    coverage.style.left =
-        position.left +
-        "%";
+    const canvas =
+        getPropertyCanvas();
 
 
-    coverage.style.top =
-        position.top +
-        "%";
+    if (canvas) {
 
-
-    coverage.dataset.index =
-        String(index);
-
-
-    layer.appendChild(
-        coverage
-    );
-
-}
-
-
-/* ==========================================================================
-   19.7 CREATE ROBOGUARD COVERAGE
-   ========================================================================== */
-
-function createRoboguardCoverage(
-    product,
-    position,
-    index
-) {
-
-    const layer =
-        createPropertyCoverageLayer();
-
-
-    if (!layer) {
-
-        return;
+        canvas.dataset.zoom =
+            String(zoom);
 
     }
 
-
-    const coverage =
-        document.createElement(
-            "span"
-        );
-
-
-    coverage.className =
-        "property-coverage-roboguard";
-
-
-    coverage.style.left =
-        position.left +
-        "%";
-
-
-    coverage.style.top =
-        position.top +
-        "%";
-
-
-    coverage.dataset.index =
-        String(index);
-
-
-    layer.appendChild(
-        coverage
-    );
-
 }
 
 
 /* ==========================================================================
-   19.8 RENDER SECURITY COVERAGE
+   21.4 SET PROPERTY ZOOM
    ========================================================================== */
 
-function renderPropertyCoverage(
-    products
+function setPropertyZoom(
+    value
 ) {
 
-    clearPropertyCoverageLayer();
+    let zoom =
+        Number(value);
 
 
     if (
-        !Array.isArray(products) ||
-        !products.length
+        !Number.isFinite(zoom)
     ) {
+
+        zoom = 1;
+
+    }
+
+
+    zoom =
+        Math.max(
+            propertyVisualState.minZoom,
+            Math.min(
+                propertyVisualState.maxZoom,
+                zoom
+            )
+        );
+
+
+    propertyVisualState.zoom =
+        Number(
+            zoom.toFixed(2)
+        );
+
+
+    applyPropertyZoom();
+
+}
+
+
+/* ==========================================================================
+   21.5 ZOOM IN
+   ========================================================================== */
+
+function propertyZoomIn() {
+
+    setPropertyZoom(
+        propertyVisualState.zoom +
+        0.1
+    );
+
+}
+
+
+/* ==========================================================================
+   21.6 ZOOM OUT
+   ========================================================================== */
+
+function propertyZoomOut() {
+
+    setPropertyZoom(
+        propertyVisualState.zoom -
+        0.1
+    );
+
+}
+
+
+/* ==========================================================================
+   21.7 RESET PROPERTY ZOOM
+   ========================================================================== */
+
+function resetPropertyZoom() {
+
+    setPropertyZoom(
+        1
+    );
+
+}
+
+
+/* ==========================================================================
+   21.8 SET PROPERTY VIEW
+   ========================================================================== */
+
+function setPropertyView(
+    view
+) {
+
+    const canvas =
+        getPropertyCanvas();
+
+
+    if (!canvas) {
 
         return;
 
     }
 
 
-    const typeIndexes = {
-
-        cctv: 0,
-
-        roboguard: 0
-
-    };
+    const requestedView =
+        String(
+            view ||
+            "overview"
+        ).toLowerCase();
 
 
-    products.forEach(
-        function (product) {
+    const validViews = [
 
-            if (!product) {
+        "overview",
 
-                return;
+        "security"
 
-            }
-
-
-            const type =
-                getPropertyProductType(
-                    product
-                );
+    ];
 
 
-            if (
-                type !== "cctv" &&
-                type !== "roboguard"
-            ) {
-
-                return;
-
-            }
+    const selectedView =
+        validViews.includes(
+            requestedView
+        )
+            ? requestedView
+            : "overview";
 
 
-            const index =
-                typeIndexes[type] || 0;
+    propertyVisualState.view =
+        selectedView;
 
 
-            const position =
-                getProductPlacementPosition(
-                    type,
-                    index
-                );
+    canvas.dataset.propertyView =
+        selectedView;
 
 
-            if (
-                type === "cctv"
-            ) {
-
-                createCCTVCoverage(
-                    product,
-                    position,
-                    index
-                );
-
-            }
+    canvas.classList.remove(
+        "property-view-overview"
+    );
 
 
-            if (
-                type === "roboguard"
-            ) {
-
-                createRoboguardCoverage(
-                    product,
-                    position,
-                    index
-                );
-
-            }
+    canvas.classList.remove(
+        "property-view-security"
+    );
 
 
-            typeIndexes[type] =
-                index + 1;
+    canvas.classList.add(
+        "property-view-" +
+        selectedView
+    );
+
+
+    updatePropertyViewButtons();
+
+}
+
+
+/* ==========================================================================
+   21.9 UPDATE VIEW BUTTONS
+   ========================================================================== */
+
+function updatePropertyViewButtons() {
+
+    const buttons =
+        document.querySelectorAll(
+            "[data-property-view]"
+        );
+
+
+    buttons.forEach(
+        function (button) {
+
+            const buttonView =
+                String(
+                    button.dataset.propertyView ||
+                    ""
+                ).toLowerCase();
+
+
+            const active =
+                buttonView ===
+                propertyVisualState.view;
+
+
+            button.classList.toggle(
+                "active",
+                active
+            );
+
+
+            button.setAttribute(
+                "aria-pressed",
+                active
+                    ? "true"
+                    : "false"
+            );
 
         }
     );
@@ -13239,62 +14516,273 @@ function renderPropertyCoverage(
 
 
 /* ==========================================================================
-   19.9 EXTEND PROPERTY RENDERER
+   21.10 HANDLE PROPERTY VIEW CONTROL
    ========================================================================== */
 
-const propertyRendererPart19 =
-    window.NEXPAK_PROPERTY_VISUAL &&
-    window.NEXPAK_PROPERTY_VISUAL.render;
-
-
-if (
-    typeof propertyRendererPart19 ===
-    "function"
+function handlePropertyViewControl(
+    event
 ) {
 
-    window.NEXPAK_PROPERTY_VISUAL
-        .render =
-            function (products) {
-
-                propertyRendererPart19(
-                    products
-                );
+    const button =
+        event.target.closest(
+            "[data-property-view]"
+        );
 
 
-                renderPropertyCoverage(
-                    products
-                );
+    if (!button) {
+
+        return;
+
+    }
 
 
-                enhancePropertyCoverageMarkers();
+    const view =
+        button.dataset.propertyView;
 
-            };
+
+    setPropertyView(
+        view
+    );
 
 }
 
 
 /* ==========================================================================
-   19.10 INITIALISE COVERAGE ENGINE
+   21.11 HANDLE PROPERTY ZOOM CONTROL
    ========================================================================== */
 
-function initialisePropertyCoverageEngine() {
+function handlePropertyZoomControl(
+    event
+) {
 
-    const products =
-        getSafePropertyProductList();
+    const button =
+        event.target.closest(
+            "[data-property-zoom]"
+        );
 
 
-    renderPropertyCoverage(
-        products
+    if (!button) {
+
+        return;
+
+    }
+
+
+    const action =
+        String(
+            button.dataset.propertyZoom ||
+            ""
+        ).toLowerCase();
+
+
+    if (
+        action === "in"
+    ) {
+
+        propertyZoomIn();
+
+    }
+
+
+    else if (
+        action === "out"
+    ) {
+
+        propertyZoomOut();
+
+    }
+
+
+    else if (
+        action === "reset"
+    ) {
+
+        resetPropertyZoom();
+
+    }
+
+}
+
+
+/* ==========================================================================
+   21.12 PROPERTY CONTROL LISTENERS
+   ========================================================================== */
+
+function attachPropertyViewControls() {
+
+    document.addEventListener(
+        "click",
+        handlePropertyViewControl
     );
 
 
-    enhancePropertyCoverageMarkers();
+    document.addEventListener(
+        "click",
+        handlePropertyZoomControl
+    );
 
 }
 
 
 /* ==========================================================================
-   19.11 START COVERAGE ENGINE
+   21.13 PROPERTY KEYBOARD CONTROLS
+   ========================================================================== */
+
+function attachPropertyKeyboardControls() {
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            const canvas =
+                getPropertyCanvas();
+
+
+            if (!canvas) {
+
+                return;
+
+            }
+
+
+            /*
+               Only respond to zoom shortcuts when
+               the property preview is visible/focused.
+            */
+
+            const preview =
+                getPropertyPreview();
+
+
+            if (
+                !preview
+            ) {
+
+                return;
+
+            }
+
+
+            const activeElement =
+                document.activeElement;
+
+
+            const typing =
+                activeElement &&
+                (
+                    activeElement.tagName ===
+                    "INPUT" ||
+
+                    activeElement.tagName ===
+                    "TEXTAREA" ||
+
+                    activeElement.tagName ===
+                    "SELECT"
+                );
+
+
+            if (
+                typing
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                event.key === "+" ||
+                event.key === "="
+            ) {
+
+                propertyZoomIn();
+
+            }
+
+
+            else if (
+                event.key === "-"
+            ) {
+
+                propertyZoomOut();
+
+            }
+
+
+            else if (
+                event.key === "0"
+            ) {
+
+                resetPropertyZoom();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* ==========================================================================
+   21.14 PROPERTY VIEW STATE
+   ========================================================================== */
+
+function getPropertyViewState() {
+
+    return {
+
+        view:
+            propertyVisualState.view,
+
+        zoom:
+            propertyVisualState.zoom,
+
+        minZoom:
+            propertyVisualState.minZoom,
+
+        maxZoom:
+            propertyVisualState.maxZoom
+
+    };
+
+}
+
+
+/* ==========================================================================
+   21.15 INITIALISE PROPERTY VIEW
+   ========================================================================== */
+
+function initialisePropertyViewControls() {
+
+    setPropertyView(
+        "overview"
+    );
+
+
+    resetPropertyZoom();
+
+}
+
+
+/* ==========================================================================
+   21.16 INITIALISE PROPERTY CONTROLS
+   ========================================================================== */
+
+function initialisePropertyControls() {
+
+    attachPropertyViewControls();
+
+
+    attachPropertyKeyboardControls();
+
+
+    initialisePropertyViewControls();
+
+}
+
+
+/* ==========================================================================
+   21.17 START PROPERTY CONTROLS
    ========================================================================== */
 
 if (
@@ -13306,20 +14794,20 @@ if (
         "DOMContentLoaded",
         function () {
 
-            initialisePropertyCoverageEngine();
+            initialisePropertyControls();
 
         }
     );
 
 } else {
 
-    initialisePropertyCoverageEngine();
+    initialisePropertyControls();
 
 }
 
 
 /* ==========================================================================
-   19.12 PUBLIC API
+   21.18 PUBLIC PROPERTY VIEW API
    ========================================================================== */
 
 window.NEXPAK_PROPERTY_VISUAL =
@@ -13328,562 +14816,669 @@ window.NEXPAK_PROPERTY_VISUAL =
 
 
 window.NEXPAK_PROPERTY_VISUAL
-    .renderCoverage =
-        renderPropertyCoverage;
+    .setView =
+        setPropertyView;
+
+
+window.NEXPAK_PROPERTY_VISUAL
+    .getViewState =
+        getPropertyViewState;
+
+
+window.NEXPAK_PROPERTY_VISUAL
+    .zoomIn =
+        propertyZoomIn;
+
+
+window.NEXPAK_PROPERTY_VISUAL
+    .zoomOut =
+        propertyZoomOut;
+
+
+window.NEXPAK_PROPERTY_VISUAL
+    .resetZoom =
+        resetPropertyZoom;
 
 
 /* ==========================================================================
-   PART 19 COMPLETE
+   PART 21 COMPLETE
    ========================================================================== */
 
-/* ============================================================================
+/* ==========================================================================
    NEXPAK SECURITY SOLUTIONS
-   BUILD YOUR SYSTEM — SHOP STYLES
-   PART 20 — PROPERTY COVERAGE & MOUNTING EFFECTS
-   ============================================================================ */
+   BUILD YOUR SYSTEM — CONFIGURATOR V3
+   PART 22 — PROPERTY ENGINE FINAL INTEGRATION
+   ========================================================================== */
 
 
-/* ============================================================================
-   20.1 COVERAGE LAYER
-   ============================================================================ */
+/* ==========================================================================
+   22.1 PROPERTY ENGINE READY STATE
+   ========================================================================== */
 
-.property-coverage-layer {
+let propertyEngineReady = false;
 
-    position: absolute;
 
-    inset: 0;
+/* ==========================================================================
+   22.2 CHECK PROPERTY ENGINE DEPENDENCIES
+   ========================================================================== */
 
-    z-index: 55;
+function propertyEngineDependenciesReady() {
 
-    pointer-events: none;
+    const preview =
+        getPropertyPreview();
+
+
+    const canvas =
+        getPropertyCanvas();
+
+
+    const scene =
+        getPropertySceneElement();
+
+
+    const layer =
+        getPropertyPlacementLayer();
+
+
+    return Boolean(
+        preview &&
+        canvas &&
+        scene &&
+        layer
+    );
 
 }
 
 
-/* ============================================================================
-   20.2 CCTV COVERAGE
-   ============================================================================ */
+/* ==========================================================================
+   22.3 FINAL PROPERTY ENGINE REFRESH
+   ========================================================================== */
 
-.property-coverage-cctv {
+function runFinalPropertyEngineRefresh() {
 
-    position: absolute;
+    if (
+        !propertyEngineDependenciesReady()
+    ) {
 
-    width: 120px;
+        return false;
 
-    height: 120px;
+    }
 
-    transform:
-        translate(-50%, -50%);
 
-    border:
-        1px solid rgba(56,189,248,0.18);
+    try {
 
-    border-radius: 50%;
+        /*
+           1. Render selected products.
+        */
 
-    background:
-        radial-gradient(
-            circle,
-            rgba(56,189,248,0.13) 0%,
-            rgba(56,189,248,0.055) 38%,
-            rgba(56,189,248,0.018) 62%,
-            transparent 76%
+        renderPropertyProducts();
+
+
+        /*
+           2. Update security zones.
+        */
+
+        updatePropertySecurityZones();
+
+
+        /*
+           3. Update product mounting.
+        */
+
+        enhancePropertyMounting();
+
+
+        /*
+           4. Update product/status information.
+        */
+
+        updateCompletePropertySecurityState();
+
+
+        /*
+           5. Re-apply the current zoom.
+        */
+
+        applyPropertyZoom();
+
+
+        /*
+           6. Re-apply the selected view.
+        */
+
+        setPropertyView(
+            propertyVisualState.view ||
+            "overview"
         );
 
-    box-shadow:
-        0 0 28px rgba(56,189,248,0.08);
 
-    opacity: 0.75;
-
-    animation:
-        cctvCoveragePulse 3.5s ease-in-out infinite;
-
-}
+        propertyEngineReady =
+            true;
 
 
-/* ============================================================================
-   20.3 CCTV COVERAGE INNER RING
-   ============================================================================ */
+        return true;
 
-.property-coverage-cctv::before {
+    }
 
-    content: "";
+    catch (error) {
 
-    position: absolute;
-
-    inset: 20%;
-
-    border:
-        1px dashed rgba(56,189,248,0.22);
-
-    border-radius: 50%;
-
-}
-
-
-/* ============================================================================
-   20.4 CCTV COVERAGE DIRECTION
-   ============================================================================ */
-
-.property-coverage-cctv::after {
-
-    content: "";
-
-    position: absolute;
-
-    left: 50%;
-
-    top: 50%;
-
-    width: 48%;
-
-    height: 1px;
-
-    transform-origin:
-        left center;
-
-    transform:
-        rotate(42deg);
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(56,189,248,0.30),
-            transparent
+        console.warn(
+            "Nexpak property engine refresh error:",
+            error
         );
 
+
+        return false;
+
+    }
+
 }
 
 
-/* ============================================================================
-   20.5 ROBOGUARD COVERAGE
-   ============================================================================ */
+/* ==========================================================================
+   22.4 SAFE INITIALISATION
+   ========================================================================== */
 
-.property-coverage-roboguard {
+function initialiseFinalPropertyEngine() {
 
-    position: absolute;
+    if (
+        !propertyEngineDependenciesReady()
+    ) {
 
-    width: 150px;
+        /*
+           The HTML may still be rendering.
+           Try again shortly instead of failing.
+        */
 
-    height: 55px;
-
-    transform:
-        translate(-50%, -50%);
-
-    border:
-        1px solid rgba(251,146,60,0.18);
-
-    border-radius:
-        50%;
-
-    background:
-        radial-gradient(
-            ellipse,
-            rgba(251,146,60,0.10),
-            rgba(251,146,60,0.025) 55%,
-            transparent 75%
+        setTimeout(
+            initialiseFinalPropertyEngine,
+            150
         );
 
-    opacity: 0.72;
 
-}
-
-
-/* ============================================================================
-   20.6 MOUNTING CONNECTOR
-   ============================================================================ */
-
-.property-mounting-connector {
-
-    position: absolute;
-
-    left: 50%;
-
-    bottom: -10px;
-
-    width: 2px;
-
-    height: 12px;
-
-    transform:
-        translateX(-50%);
-
-    background:
-        rgba(255,255,255,0.40);
-
-    border-radius: 2px;
-
-    pointer-events: none;
-
-}
-
-
-/* ============================================================================
-   20.7 MOUNTING BASE
-   ============================================================================ */
-
-.property-product-mount-base {
-
-    position: absolute;
-
-    left: 50%;
-
-    bottom: -4px;
-
-    width: 18px;
-
-    height: 5px;
-
-    transform:
-        translateX(-50%);
-
-    border-radius:
-        50%;
-
-    background:
-        rgba(255,255,255,0.35);
-
-    box-shadow:
-        0 2px 5px rgba(0,0,0,0.35);
-
-    pointer-events: none;
-
-}
-
-
-/* ============================================================================
-   20.8 CCTV MOUNTING
-   ============================================================================ */
-
-.mount-cctv {
-
-    z-index: 95;
-
-}
-
-
-.mount-cctv
-.property-product-marker-icon {
-
-    border-radius:
-        7px 7px 50% 50%;
-
-}
-
-
-/* ============================================================================
-   20.9 ACCESS / INTERCOM WALL MOUNT
-   ============================================================================ */
-
-.mount-access
-.property-product-marker-icon,
-
-.mount-intercom
-.property-product-marker-icon {
-
-    border-radius:
-        7px;
-
-}
-
-
-/* ============================================================================
-   20.10 GATE MOUNTING
-   ============================================================================ */
-
-.mount-gate
-.property-product-marker-icon {
-
-    border-radius:
-        5px;
-
-}
-
-
-/* ============================================================================
-   20.11 FENCE MARKER
-   ============================================================================ */
-
-.mount-fence {
-
-    z-index: 85;
-
-}
-
-
-.mount-fence
-.property-product-marker-icon {
-
-    width: 27px;
-
-    height: 27px;
-
-    flex-basis: 27px;
-
-    border-radius:
-        5px;
-
-}
-
-
-/* ============================================================================
-   20.12 ROBOGUARD MARKER
-   ============================================================================ */
-
-.mount-roboguard
-.property-product-marker-icon {
-
-    border-radius:
-        7px;
-
-}
-
-
-/* ============================================================================
-   20.13 MOUNTED PRODUCT SHADOW
-   ============================================================================ */
-
-.property-product-marker-icon {
-
-    position: relative;
-
-}
-
-
-.property-product-marker.is-mounted
-.property-product-marker-icon {
-
-    box-shadow:
-        0 5px 14px rgba(0,0,0,0.42),
-        0 0 12px rgba(255,255,255,0.06);
-
-}
-
-
-/* ============================================================================
-   20.14 ACTIVE CCTV MARKER
-   ============================================================================ */
-
-.property-product-cctv.is-mounted
-.property-product-marker-icon {
-
-    border-color:
-        rgba(56,189,248,0.90);
-
-    color:
-        #38bdf8;
-
-}
-
-
-/* ============================================================================
-   20.15 ACTIVE FENCE MARKER
-   ============================================================================ */
-
-.property-product-fence.is-mounted
-.property-product-marker-icon {
-
-    border-color:
-        rgba(74,222,128,0.90);
-
-    color:
-        #4ade80;
-
-}
-
-
-/* ============================================================================
-   20.16 ACTIVE ALARM MARKER
-   ============================================================================ */
-
-.property-product-alarm.is-mounted
-.property-product-marker-icon {
-
-    border-color:
-        rgba(251,191,36,0.90);
-
-    color:
-        #fbbf24;
-
-}
-
-
-/* ============================================================================
-   20.17 ACTIVE GATE MARKER
-   ============================================================================ */
-
-.property-product-gate.is-mounted
-.property-product-marker-icon {
-
-    border-color:
-        rgba(244,114,182,0.90);
-
-    color:
-        #f472b6;
-
-}
-
-
-/* ============================================================================
-   20.18 ACTIVE ACCESS MARKER
-   ============================================================================ */
-
-.property-product-access.is-mounted
-.property-product-marker-icon {
-
-    border-color:
-        rgba(167,139,250,0.90);
-
-    color:
-        #a78bfa;
-
-}
-
-
-/* ============================================================================
-   20.19 ACTIVE INTERCOM MARKER
-   ============================================================================ */
-
-.property-product-intercom.is-mounted
-.property-product-marker-icon {
-
-    border-color:
-        rgba(45,212,191,0.90);
-
-    color:
-        #2dd4bf;
-
-}
-
-
-/* ============================================================================
-   20.20 ACTIVE ROBOGUARD MARKER
-   ============================================================================ */
-
-.property-product-roboguard.is-mounted
-.property-product-marker-icon {
-
-    border-color:
-        rgba(251,146,60,0.90);
-
-    color:
-        #fb923c;
-
-}
-
-
-/* ============================================================================
-   20.21 COVERAGE ANIMATION
-   ============================================================================ */
-
-@keyframes cctvCoveragePulse {
-
-    0%,
-    100% {
-
-        opacity: 0.48;
-
-        transform:
-            translate(-50%, -50%)
-            scale(0.94);
+        return;
 
     }
 
-    50% {
 
-        opacity: 0.78;
+    runFinalPropertyEngineRefresh();
 
-        transform:
-            translate(-50%, -50%)
-            scale(1.02);
+}
+
+
+/* ==========================================================================
+   22.5 PROPERTY ENGINE REFRESH AFTER STATE CHANGE
+   ========================================================================== */
+
+function refreshPropertyEngineFromState() {
+
+    if (
+        !propertyEngineReady
+    ) {
+
+        return;
+
+    }
+
+
+    scheduleSafePropertyRefresh();
+
+}
+
+
+/* ==========================================================================
+   22.6 PROPERTY ENGINE STATE EVENT
+   ========================================================================== */
+
+function dispatchPropertyEngineEvent(
+    eventName
+) {
+
+    try {
+
+        document.dispatchEvent(
+            new CustomEvent(
+                eventName,
+                {
+                    detail: {
+
+                        propertyReady:
+                            propertyEngineReady,
+
+                        state:
+                            getPropertyViewState(),
+
+                        products:
+                            getPropertyProducts()
+
+                    }
+                }
+            )
+        );
+
+    }
+
+    catch (error) {
+
+        /*
+           Older browsers/environments may not
+           support CustomEvent construction.
+           The visual engine itself should still
+           continue working.
+        */
+
+        console.warn(
+            "Nexpak property event could not be dispatched:",
+            error
+        );
 
     }
 
 }
 
 
-/* ============================================================================
-   20.22 SECURITY MODE COVERAGE
-   ============================================================================ */
+/* ==========================================================================
+   22.7 PROPERTY ENGINE READY EVENT
+   ========================================================================== */
 
-.property-preview.security-mode
-.property-coverage-layer {
+function announcePropertyEngineReady() {
 
-    opacity: 1;
-
-}
-
-
-.property-preview:not(.security-mode)
-.property-coverage-layer {
-
-    opacity: 0.42;
+    dispatchPropertyEngineEvent(
+        "nexpak:property-ready"
+    );
 
 }
 
 
-/* ============================================================================
-   20.23 MOBILE COVERAGE
-   ============================================================================ */
+/* ==========================================================================
+   22.8 PROPERTY ENGINE UPDATED EVENT
+   ========================================================================== */
 
-@media (max-width: 480px) {
+function announcePropertyEngineUpdated() {
 
-    .property-coverage-cctv {
+    dispatchPropertyEngineEvent(
+        "nexpak:property-updated"
+    );
 
-        width: 82px;
+}
 
-        height: 82px;
+
+/* ==========================================================================
+   22.9 FINAL REFRESH WRAPPER
+   ========================================================================== */
+
+const previousSafePropertyRefreshPart22 =
+    performSafePropertyRefresh;
+
+
+performSafePropertyRefresh =
+    function () {
+
+        const result =
+            previousSafePropertyRefreshPart22();
+
+
+        if (result !== false) {
+
+            updateCompletePropertySecurityState();
+
+
+            enhancePropertyMounting();
+
+
+            applyPropertyZoom();
+
+
+            announcePropertyEngineUpdated();
+
+        }
+
+
+        return result;
+
+    };
+
+
+/* ==========================================================================
+   22.10 PRODUCT SELECTION OBSERVER
+   ========================================================================== */
+
+function attachPropertyMutationObserver() {
+
+    const layer =
+        getPropertyPlacementLayer();
+
+
+    if (!layer) {
+
+        return;
 
     }
 
 
-    .property-coverage-roboguard {
+    /*
+       Watch the dynamic placement layer.
 
-        width: 105px;
+       This means if another part of the configurator
+       adds/removes a visual product marker, the
+       property engine automatically synchronises.
+    */
 
-        height: 40px;
+    if (
+        typeof MutationObserver ===
+        "undefined"
+    ) {
+
+        return;
 
     }
 
 
-    .property-mounting-connector {
+    const observer =
+        new MutationObserver(
+            function () {
 
-        height: 9px;
+                if (
+                    propertyEngineReady
+                ) {
 
-        bottom: -8px;
+                    scheduleSafePropertyRefresh();
+
+                }
+
+            }
+        );
+
+
+    observer.observe(
+        layer,
+        {
+
+            childList:
+                true,
+
+            subtree:
+                true,
+
+            attributes:
+                true,
+
+            attributeFilter: [
+
+                "class",
+
+                "data-product-id",
+
+                "data-product-type",
+
+                "data-quantity"
+
+            ]
+
+        }
+    );
+
+}
+
+
+/* ==========================================================================
+   22.11 PROPERTY PREVIEW RESIZE HANDLER
+   ========================================================================== */
+
+function attachPropertyResizeHandler() {
+
+    let resizeTimer =
+        null;
+
+
+    window.addEventListener(
+        "resize",
+        function () {
+
+            if (
+                resizeTimer
+            ) {
+
+                clearTimeout(
+                    resizeTimer
+                );
+
+            }
+
+
+            resizeTimer =
+                setTimeout(
+                    function () {
+
+                        if (
+                            propertyEngineReady
+                        ) {
+
+                            applyPropertyZoom();
+
+                        }
+
+                    },
+                    120
+                );
+
+        }
+    );
+
+}
+
+
+/* ==========================================================================
+   22.12 PROPERTY VISIBILITY CHECK
+   ========================================================================== */
+
+function propertyPreviewVisible() {
+
+    const preview =
+        getPropertyPreview();
+
+
+    if (!preview) {
+
+        return false;
 
     }
 
 
-    .property-product-mount-base {
+    const styles =
+        window.getComputedStyle(
+            preview
+        );
 
-        width: 14px;
 
-        height: 4px;
+    return (
+        styles.display !== "none" &&
+        styles.visibility !== "hidden"
+    );
+
+}
+
+
+/* ==========================================================================
+   22.13 PROPERTY VISIBILITY RECOVERY
+   ========================================================================== */
+
+function attachPropertyVisibilityRecovery() {
+
+    if (
+        typeof IntersectionObserver ===
+        "undefined"
+    ) {
+
+        return;
+
+    }
+
+
+    const preview =
+        getPropertyPreview();
+
+
+    if (!preview) {
+
+        return;
+
+    }
+
+
+    const observer =
+        new IntersectionObserver(
+            function (entries) {
+
+                entries.forEach(
+                    function (entry) {
+
+                        if (
+                            entry.isIntersecting
+                        ) {
+
+                            if (
+                                !propertyEngineReady
+                            ) {
+
+                                runFinalPropertyEngineRefresh();
+
+                            }
+
+                            else {
+
+                                applyPropertyZoom();
+
+                            }
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+    observer.observe(
+        preview
+    );
+
+}
+
+
+/* ==========================================================================
+   22.14 FINAL PROPERTY ENGINE BOOT
+   ========================================================================== */
+
+function bootFinalPropertyEngine() {
+
+    initialiseFinalPropertyEngine();
+
+
+    attachPropertyMutationObserver();
+
+
+    attachPropertyResizeHandler();
+
+
+    attachPropertyVisibilityRecovery();
+
+
+    /*
+       Give the browser one additional frame to
+       complete layout calculations before the
+       first final visual refresh.
+    */
+
+    if (
+        typeof requestAnimationFrame ===
+        "function"
+    ) {
+
+        requestAnimationFrame(
+            function () {
+
+                setTimeout(
+                    function () {
+
+                        if (
+                            runFinalPropertyEngineRefresh()
+                        ) {
+
+                            announcePropertyEngineReady();
+
+                        }
+
+                    },
+                    50
+                );
+
+            }
+        );
 
     }
 
 }
 
 
-/* ============================================================================
-   20.24 REDUCED MOTION
-   ============================================================================ */
+/* ==========================================================================
+   22.15 START FINAL PROPERTY ENGINE
+   ========================================================================== */
 
-@media (prefers-reduced-motion: reduce) {
+if (
+    document.readyState ===
+    "loading"
+) {
 
-    .property-coverage-cctv {
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
 
-        animation:
-            none;
+            bootFinalPropertyEngine();
 
-    }
+        }
+    );
+
+} else {
+
+    bootFinalPropertyEngine();
 
 }
 
 
-/* ============================================================================
-   PART 20 COMPLETE
-   ============================================================================ */
+/* ==========================================================================
+   22.16 PUBLIC FINAL PROPERTY API
+   ========================================================================== */
+
+window.NEXPAK_PROPERTY_VISUAL =
+    window.NEXPAK_PROPERTY_VISUAL ||
+    {};
+
+
+window.NEXPAK_PROPERTY_VISUAL
+    .isReady =
+        function () {
+
+            return propertyEngineReady;
+
+        };
+
+
+window.NEXPAK_PROPERTY_VISUAL
+    .refreshFinal =
+        runFinalPropertyEngineRefresh;
+
+
+window.NEXPAK_PROPERTY_VISUAL
+    .refreshFromState =
+        refreshPropertyEngineFromState;
+
+
+/* ==========================================================================
+   PART 22 COMPLETE
+   ========================================================================== */
+
 
 /* ==========================================================================
    NEXPAK SECURITY SOLUTIONS
