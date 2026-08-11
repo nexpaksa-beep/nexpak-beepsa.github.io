@@ -8186,7 +8186,7 @@ body {
         center center;
 
     background-size:
-        cover;
+        contain;
 
 }
 
@@ -8779,7 +8779,7 @@ body {
     #propertyScene {
 
         background-size:
-            cover;
+            contain;
 
         background-position:
             center center;
@@ -8817,7 +8817,7 @@ body {
             center center;
 
         background-size:
-            cover;
+            contain;
 
     }
 
@@ -8828,7 +8828,7 @@ body {
    MOBILE
    ============================================================ */
 
-@media (max-width: 600px) {
+@media (max-width: 420px) {
 
     #propertyPreview {
 
@@ -8852,7 +8852,7 @@ body {
             center center;
 
         background-size:
-            cover;
+            contain;
 
     }
 
@@ -8875,9 +8875,8 @@ body {
 
     #propertyScene {
 
-        background-size:
-            cover;
-
+        background-size: contain;
+       
         background-position:
             center center;
 
@@ -8890,4 +8889,657 @@ body {
    END
    PROPERTY VISUALISATION PART 21
    HIGH DETAIL 3D FOUNDATION
+   ============================================================ */
+
+/* ============================================================
+   NEXPAK SECURITY SOLUTIONS
+   BUILD YOUR SYSTEM V3
+   PROPERTY VISUALISATION ENGINE
+   ------------------------------------------------------------
+   PART 21B — 3D PROPERTY IMAGE FIT & COMPOSITION
+   ------------------------------------------------------------
+   PURPOSE:
+   • Display the complete 3D property
+   • Preserve original image proportions
+   • Prevent image cropping
+   • Create a premium presentation stage
+   • Keep dynamic security layers above the image
+   • No baked security overlays
+   • No CSS-drawn replacement house
+   ============================================================ */
+
+
+/* ============================================================
+   PROPERTY CANVAS — 3D PRESENTATION STAGE
+   ============================================================ */
+
+#propertyCanvas {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 620px;
+
+    min-height: 620px;
+
+    overflow: hidden;
+
+    isolation: isolate;
+
+    background:
+
+        radial-gradient(
+            ellipse at center,
+            #1a2329 0%,
+            #0d1317 58%,
+            #080c0f 100%
+        );
+
+    border-radius: 0 0 18px 18px;
+
+}
+
+
+/* ============================================================
+   3D SCENE — RESET OLD DRAWING
+   ============================================================ */
+
+#propertyScene {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    overflow: hidden;
+
+    z-index: 10;
+
+    background-color:
+        #0b1014;
+
+    background-repeat:
+        no-repeat;
+
+    /*
+       IMPORTANT:
+
+       DO NOT USE:
+
+       background-size: cover;
+
+       Cover was causing the property to be cropped.
+    */
+
+    background-size:
+        contain;
+
+    background-position:
+        center center;
+
+    background-repeat:
+        no-repeat;
+
+    transform:
+        none;
+
+    transform-origin:
+        center center;
+
+}
+
+
+/* ============================================================
+   PROPERTY IMAGE — PREMIUM STAGE
+   ============================================================ */
+
+#propertyScene::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 1;
+
+    pointer-events: none;
+
+    background:
+
+        radial-gradient(
+            ellipse at center,
+            rgba(255,255,255,0.035),
+            transparent 55%
+        );
+
+}
+
+
+/* ============================================================
+   PROPERTY IMAGE — EDGE DEPTH
+   ============================================================ */
+
+#propertyScene::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 2;
+
+    pointer-events: none;
+
+    background:
+
+        radial-gradient(
+            ellipse at center,
+            transparent 52%,
+            rgba(0,0,0,0.16) 100%
+        );
+
+}
+
+
+/* ============================================================
+   REMOVE OLD CSS PROPERTY DRAWING
+   ------------------------------------------------------------
+   The generated 3D image is now the visual foundation.
+   ============================================================ */
+
+#propertySky,
+#propertyGround,
+#propertyPreview .property-horizon,
+#propertyPreview .property-yard {
+
+    background:
+        transparent !important;
+
+}
+
+
+/* ============================================================
+   HOUSE — IMAGE SUPPLIED
+   ============================================================ */
+
+#propertyHouse {
+
+    background:
+        transparent !important;
+
+    border:
+        0 !important;
+
+    box-shadow:
+        none !important;
+
+    filter:
+        none !important;
+
+}
+
+
+/* ============================================================
+   HOUSE BODY — DISABLE OLD CSS ART
+   ============================================================ */
+
+#propertyHouse .property-house-body {
+
+    background:
+        transparent !important;
+
+    border:
+        0 !important;
+
+    box-shadow:
+        none !important;
+
+}
+
+
+/* ============================================================
+   ROOF — DISABLE OLD CSS ART
+   ============================================================ */
+
+#propertyHouse .property-house-roof {
+
+    background:
+        transparent !important;
+
+    border:
+        0 !important;
+
+    box-shadow:
+        none !important;
+
+}
+
+
+/* ============================================================
+   WINDOWS — IMAGE SUPPLIED
+   ============================================================ */
+
+#propertyHouse .window,
+#propertyHouse .property-window,
+#propertyHouse [class*="window"] {
+
+    background:
+        transparent !important;
+
+    border:
+        0 !important;
+
+    box-shadow:
+        none !important;
+
+}
+
+
+/* ============================================================
+   DOOR — IMAGE SUPPLIED
+   ============================================================ */
+
+#propertyHouse .door,
+#propertyHouse .property-door,
+#propertyHouse [class*="door"] {
+
+    background:
+        transparent !important;
+
+    border:
+        0 !important;
+
+    box-shadow:
+        none !important;
+
+}
+
+
+/* ============================================================
+   DRIVEWAY — IMAGE SUPPLIED
+   ============================================================ */
+
+#propertyPreview .property-driveway {
+
+    background:
+        transparent !important;
+
+    border:
+        0 !important;
+
+    box-shadow:
+        none !important;
+
+}
+
+
+/* ============================================================
+   GATE — IMAGE SUPPLIED
+   ============================================================ */
+
+#propertyGate {
+
+    background:
+        transparent !important;
+
+    border:
+        0 !important;
+
+    box-shadow:
+        none !important;
+
+    filter:
+        none !important;
+
+}
+
+
+/* ============================================================
+   PERIMETER BASE — KEEP INVISIBLE
+   ------------------------------------------------------------
+   IMPORTANT:
+   The base property must NOT show electric fencing.
+   ============================================================ */
+
+#propertyFenceZone {
+
+    background:
+        transparent !important;
+
+    border:
+        0 !important;
+
+    box-shadow:
+        none !important;
+
+    filter:
+        none !important;
+
+}
+
+
+/* ============================================================
+   REMOVE STATIC FENCE DECORATION
+   ------------------------------------------------------------
+   These pseudo-elements must not create an electric fence
+   before a customer selects an electric-fence product.
+   ============================================================ */
+
+#propertyFenceZone::before,
+#propertyFenceZone::after {
+
+    content:
+        none !important;
+
+}
+
+
+/* ============================================================
+   REMOVE STATIC ELECTRIC-FENCE LINES
+   ============================================================ */
+
+#propertyFenceZone .electric-line,
+#propertyFenceZone .electric-wire {
+
+    display:
+        none;
+
+}
+
+
+/* ============================================================
+   DYNAMIC ELECTRIC-FENCE ELEMENTS
+   ------------------------------------------------------------
+   JavaScript-created security elements are NOT disabled.
+
+   Any dynamically inserted product/fence visual can use:
+
+   .active
+   .selected
+   .enabled
+   .configured
+
+   ============================================================ */
+
+#propertyFenceZone .active,
+#propertyFenceZone .selected,
+#propertyFenceZone .enabled,
+#propertyFenceZone .configured {
+
+    display:
+        block;
+
+}
+
+
+/* ============================================================
+   SECURITY ZONES — ABOVE 3D IMAGE
+   ============================================================ */
+
+#propertyPreview .entrance-security-zone,
+#propertyPreview .driveway-security-zone,
+#propertyPreview .house-security-zone,
+#propertyPreview .cctv-zone,
+#propertyPreview [class*="security-zone"],
+#propertyPreview [class*="cctv-zone"] {
+
+    z-index:
+        100;
+
+}
+
+
+/* ============================================================
+   DYNAMIC PRODUCT PLACEMENT
+   ============================================================ */
+
+#productPlacementLayer {
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+    z-index:
+        200;
+
+    pointer-events:
+        none;
+
+    overflow:
+        visible;
+
+}
+
+
+/* ============================================================
+   DYNAMIC PRODUCTS
+   ============================================================ */
+
+#productPlacementLayer > *,
+#productPlacementLayer .product-marker,
+#productPlacementLayer .security-product,
+#productPlacementLayer [class*="placement"] {
+
+    pointer-events:
+        auto;
+
+    z-index:
+        210;
+
+}
+
+
+/* ============================================================
+   PRODUCT DEPTH
+   ============================================================ */
+
+#productPlacementLayer img,
+#productPlacementLayer svg,
+#productPlacementLayer .product-marker,
+#productPlacementLayer .security-product {
+
+    filter:
+        drop-shadow(
+            0 4px 7px rgba(0,0,0,0.55)
+        );
+
+}
+
+
+/* ============================================================
+   LIVE SECURITY OVERLAY
+   ============================================================ */
+
+#propertyCanvas::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+    z-index:
+        250;
+
+    pointer-events:
+        none;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,0.018),
+            transparent 30%,
+            rgba(0,0,0,0.08)
+        );
+
+}
+
+
+/* ============================================================
+   PROPERTY TOOLBAR — ABOVE SCENE
+   ============================================================ */
+
+#propertyPreview .property-toolbar {
+
+    position:
+        relative;
+
+    z-index:
+        300;
+
+}
+
+
+/* ============================================================
+   PROPERTY HEADER — ABOVE SCENE
+   ============================================================ */
+
+#propertyPreview .property-preview-header {
+
+    position:
+        relative;
+
+    z-index:
+        300;
+
+}
+
+
+/* ============================================================
+   DESKTOP
+   ============================================================ */
+
+@media (min-width: 1200px) {
+
+    #propertyCanvas {
+
+        height:
+            650px;
+
+        min-height:
+            650px;
+
+    }
+
+    #propertyScene {
+
+        background-size:
+            contain;
+
+        background-position:
+            center center;
+
+    }
+
+}
+
+
+/* ============================================================
+   TABLET
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+    #propertyCanvas {
+
+        height:
+            520px;
+
+        min-height:
+            520px;
+
+    }
+
+    #propertyScene {
+
+        background-size:
+            contain;
+
+        background-position:
+            center center;
+
+    }
+
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+    #propertyCanvas {
+
+        height:
+            390px;
+
+        min-height:
+            390px;
+
+    }
+
+    #propertyScene {
+
+        background-size:
+            contain;
+
+        background-position:
+            center center;
+
+    }
+
+}
+
+
+/* ============================================================
+   SMALL MOBILE
+   ============================================================ */
+
+@media (max-width: 420px) {
+
+    #propertyCanvas {
+
+        height:
+            350px;
+
+        min-height:
+            350px;
+
+    }
+
+    #propertyScene {
+
+        background-size:
+            contain;
+
+        background-position:
+            center center;
+
+    }
+
+}
+
+
+/* ============================================================
+   END — PART 21B
+   3D PROPERTY IMAGE FIT & COMPOSITION
    ============================================================ */
