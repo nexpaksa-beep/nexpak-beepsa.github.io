@@ -4,584 +4,895 @@
    configurator.js
 
    PART 1 — CORE CONFIGURATION, STATE & DATABASE CONNECTION
-   ==========================================================================
+   FIXED V3 FOUNDATION
 
-   PURPOSE:
-   - Build completely custom security systems
-   - NO pre-built kits
-   - Uses individual products from SHOP_DATA
-   - Every product has its own quantity
-   - Live pricing
-   - 15% VAT from SHOP_DATA
-   - Compatible with cart.js
-   - Compatible with delivery.js
-   - Compatible with checkout.js
-   - Compatible with payment.js
+   IMPORTANT:
+   All shared configurator variables and functions are deliberately
+   available to Parts 2–22.
 
-   ARCHITECTURE:
-
-        shop-data.js
-              ↓
-        Individual Products
-              ↓
-        configurator.js
-              ↓
-        Custom System
-              ↓
-           cart.js
-              ↓
-        delivery.js
-              ↓
-        checkout.js
-              ↓
-        payment.js
-
+   DO NOT create another state object later in the file.
    ========================================================================== */
 
 
 /* ==========================================================================
-   1. WAIT FOR SHOP DATA
+   1. SHARED CONFIGURATOR VARIABLES
    ========================================================================== */
 
-document.addEventListener("DOMContentLoaded", function () {
+/*
+   These variables MUST live outside DOMContentLoaded.
 
-    "use strict";
+   Parts 2–22 use them later in this file.
+*/
 
+let state = null;
 
-    /* ======================================================================
-       2. BASIC SHOP DATA CHECK
-       ====================================================================== */
+let VAT_RATE = 0.15;
 
-    if (typeof SHOP_DATA === "undefined") {
+let CURRENCY = "ZAR";
 
-        console.error(
-            "Nexpak Configurator V3: SHOP_DATA is not available."
-        );
+let elements = {};
 
-        return;
-    }
 
+/* ==========================================================================
+   2. WAIT FOR SHOP DATA + DOM
+   ========================================================================== */
 
-    /* ======================================================================
-       3. COMPANY SETTINGS
-       ====================================================================== */
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-    const VAT_RATE =
-        SHOP_DATA.company &&
-        typeof SHOP_DATA.company.vatRate === "number"
+        "use strict";
 
-            ? SHOP_DATA.company.vatRate
 
-            : 0.15;
-
-
-    const CURRENCY =
-        SHOP_DATA.company &&
-        SHOP_DATA.company.currency
-
-            ? SHOP_DATA.company.currency
-
-            : "ZAR";
-
-
-    /* ======================================================================
-       4. CONFIGURATOR STATE
-       ======================================================================
-
-       IMPORTANT:
-
-       There is ONLY ONE state object in V3.
-
-       We do NOT use:
-           systemState
-           selectedState
-           configuratorState
-           multiple competing objects
-
-       Everything belongs here.
-       ====================================================================== */
-
-    const state = {
-
-        /* ---------------------------------------------------------------
-           CURRENT SECURITY SYSTEM
-           --------------------------------------------------------------- */
-
-        category: "electric-fencing",
-
-        categoryTitle: "Electric Fencing",
-
-
-        /* ---------------------------------------------------------------
-           SELECTED PRODUCTS
-           ---------------------------------------------------------------
-
-           Example:
-
-           selections: {
-               "ef-walltop-001": {
-                   id: "ef-walltop-001",
-                   name: "Wall Top Bracket",
-                   price: 85,
-                   quantity: 4,
-                   image: "",
-                   group: "brackets"
-               }
-           }
-
-           Every product is independent.
-           --------------------------------------------------------------- */
-
-        selections: {},
-
-
-        /* ---------------------------------------------------------------
-           CALCULATED TOTALS
-           --------------------------------------------------------------- */
-
-        totals: {
-
-            productCount: 0,
-
-            itemCount: 0,
-
-            subtotal: 0,
-
-            vat: 0,
-
-            grandTotal: 0
-
-        }
-
-    };
-
-
-    /* ======================================================================
-       5. DOM ELEMENT REFERENCES
-       ====================================================================== */
-
-    const elements = {
-
-        /* Main configurator product area */
-
-        configurator:
-            document.getElementById(
-                "configuratorSelectors"
-            ),
-
-
-        /* Current category heading */
-
-        categoryTitle:
-            document.getElementById(
-                "currentCategoryTitle"
-            ),
-
-
-        /* Summary */
-
-        summaryCategory:
-            document.getElementById(
-                "summaryCategory"
-            ),
-
-        summaryAddonCount:
-            document.getElementById(
-                "summaryAddonCount"
-            ),
-
-        summarySubtotal:
-            document.getElementById(
-                "summarySubtotal"
-            ),
-
-        summaryVat:
-            document.getElementById(
-                "summaryVat"
-            ),
-
-        summaryGrandTotal:
-            document.getElementById(
-                "summaryGrandTotal"
-            ),
-
-
-        /* Add to cart */
-
-        addToCart:
-            document.getElementById(
-                "btnAddToCart"
-            ),
-
-
-        /* Cart badge */
-
-        cartBadge:
-            document.getElementById(
-                "cartCountBadge"
-            ),
-
-
-        /* Toast */
-
-        toast:
-            document.getElementById(
-                "toastContainer"
-            )
-
-    };
-
-
-    /* ======================================================================
-       6. CATEGORY HELPERS
-       ====================================================================== */
-
-    function getCategories() {
+        /* ==================================================================
+           BASIC SHOP DATA CHECK
+           ================================================================== */
 
         if (
-            !Array.isArray(
-                SHOP_DATA.categories
-            )
+            typeof SHOP_DATA === "undefined"
         ) {
 
-            return [];
-
-        }
-
-        return SHOP_DATA.categories;
-
-    }
-
-
-    function getCategory(categoryId) {
-
-        return getCategories().find(
-            function (category) {
-
-                return category.id === categoryId;
-
-            }
-        );
-
-    }
-
-
-    /* ======================================================================
-       7. SET CURRENT CATEGORY
-       ====================================================================== */
-
-    function setCategory(categoryId) {
-
-        const category =
-            getCategory(categoryId);
-
-
-        if (!category) {
-
-            console.warn(
-                "Nexpak Configurator V3: " +
-                "Unknown category:",
-                categoryId
+            console.error(
+                "Nexpak Configurator V3: SHOP_DATA is not available."
             );
 
-            return false;
+            return;
 
         }
 
 
-        state.category =
-            category.id;
+        /* ==================================================================
+           3. COMPANY SETTINGS
+           ================================================================== */
+
+        VAT_RATE =
+            SHOP_DATA.company &&
+            typeof SHOP_DATA.company.vatRate === "number"
+
+                ? SHOP_DATA.company.vatRate
+
+                : 0.15;
 
 
-        /* Remove wording such as "Kits" or "Systems"
-           from the display heading where appropriate. */
+        CURRENCY =
+            SHOP_DATA.company &&
+            SHOP_DATA.company.currency
 
-        state.categoryTitle =
-            String(
-                category.title || category.id
-            )
-                .replace(
-                    /\s+Kits$/i,
-                    ""
+                ? SHOP_DATA.company.currency
+
+                : "ZAR";
+
+
+        /* ==================================================================
+           4. CONFIGURATOR STATE
+           ==================================================================
+
+           IMPORTANT:
+
+           There is ONLY ONE state object in V3.
+
+           We do NOT use:
+
+               systemState
+               selectedState
+               configuratorState
+
+           Everything belongs here.
+           ================================================================== */
+
+        state = {
+
+            /* --------------------------------------------------------------
+               CURRENT SECURITY SYSTEM
+               -------------------------------------------------------------- */
+
+            category:
+                "electric-fencing",
+
+            categoryTitle:
+                "Electric Fencing",
+
+
+            /* --------------------------------------------------------------
+               SELECTED PRODUCTS
+               -------------------------------------------------------------- */
+
+            selections: {},
+
+
+            /* --------------------------------------------------------------
+               CALCULATED TOTALS
+               -------------------------------------------------------------- */
+
+            totals: {
+
+                productCount:
+                    0,
+
+                itemCount:
+                    0,
+
+                subtotal:
+                    0,
+
+                vat:
+                    0,
+
+                grandTotal:
+                    0
+
+            }
+
+        };
+
+
+        /* ==================================================================
+           5. DOM ELEMENT REFERENCES
+           ================================================================== */
+
+        elements = {
+
+            /* Main configurator product area */
+
+            configurator:
+                document.getElementById(
+                    "configuratorSelectors"
+                ),
+
+
+            /* Current category heading */
+
+            categoryTitle:
+                document.getElementById(
+                    "currentCategoryTitle"
+                ),
+
+
+            /* Summary */
+
+            summaryCategory:
+                document.getElementById(
+                    "summaryCategory"
+                ),
+
+            summaryAddonCount:
+                document.getElementById(
+                    "summaryAddonCount"
+                ),
+
+            summarySubtotal:
+                document.getElementById(
+                    "summarySubtotal"
+                ),
+
+            summaryVat:
+                document.getElementById(
+                    "summaryVat"
+                ),
+
+            summaryGrandTotal:
+                document.getElementById(
+                    "summaryGrandTotal"
+                ),
+
+
+            /* Add to cart */
+
+            addToCart:
+                document.getElementById(
+                    "btnAddToCart"
+                ),
+
+
+            /* Cart badge */
+
+            cartBadge:
+                document.getElementById(
+                    "cartCountBadge"
+                ),
+
+
+            /* Toast */
+
+            toast:
+                document.getElementById(
+                    "toastContainer"
                 )
-                .replace(
-                    /\s+Systems$/i,
-                    ""
-                );
+
+        };
 
 
-        /* Changing system type starts a fresh configuration. */
-
-        state.selections = {};
-
+        /* ==================================================================
+           6. INITIAL CONFIGURATOR STATE
+           ================================================================== */
 
         resetTotals();
 
 
-        return true;
+        /* ==================================================================
+           7. INITIAL CATEGORY
+           ================================================================== */
 
-    }
-
-
-    /* ======================================================================
-       8. RESET TOTALS
-       ====================================================================== */
-
-    function resetTotals() {
-
-        state.totals = {
-
-            productCount: 0,
-
-            itemCount: 0,
-
-            subtotal: 0,
-
-            vat: 0,
-
-            grandTotal: 0
-
-        };
-
-    }
+        const initialCategory =
+            getCategory(
+                "electric-fencing"
+            );
 
 
-    /* ======================================================================
-       9. MONEY FORMATTER
-       ====================================================================== */
+        if (
+            initialCategory
+        ) {
 
-    function formatMoney(amount) {
-
-        const value =
-            Number(amount) || 0;
+            state.category =
+                initialCategory.id;
 
 
-        try {
-
-            return new Intl.NumberFormat(
-                "en-ZA",
-                {
-                    style: "currency",
-                    currency: CURRENCY,
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                }
-            ).format(value);
+            state.categoryTitle =
+                String(
+                    initialCategory.title ||
+                    initialCategory.id
+                )
+                    .replace(
+                        /\s+Kits$/i,
+                        ""
+                    )
+                    .replace(
+                        /\s+Systems$/i,
+                        ""
+                    );
 
         }
 
-        catch (error) {
+
+        /* ==================================================================
+           8. PUBLIC CONFIGURATOR OBJECT
+           ================================================================== */
+
+        window.NEXPAK_CONFIGURATOR = {
+
+            state:
+                state,
+
+            VAT_RATE:
+                VAT_RATE,
+
+            CURRENCY:
+                CURRENCY,
+
+            getCategories:
+                getCategories,
+
+            getCategory:
+                getCategory,
+
+            setCategory:
+                setCategory,
+
+            formatMoney:
+                formatMoney,
+
+            normaliseProduct:
+                normaliseProduct
+
+        };
+
+
+        /* ==================================================================
+           9. INITIALISE
+           ================================================================== */
+
+        console.log(
+            "Nexpak Configurator V3 core loaded successfully."
+        );
+
+
+    }
+);
+
+
+/* ==========================================================================
+   10. CATEGORY HELPERS
+   ========================================================================== */
+
+function getCategories() {
+
+    if (
+        !SHOP_DATA ||
+        !Array.isArray(
+            SHOP_DATA.categories
+        )
+    ) {
+
+        return [];
+
+    }
+
+
+    return SHOP_DATA.categories;
+
+}
+
+
+/* ==========================================================================
+   11. GET CATEGORY
+   ========================================================================== */
+
+function getCategory(
+    categoryId
+) {
+
+    if (
+        !categoryId
+    ) {
+
+        return null;
+
+    }
+
+
+    return getCategories().find(
+        function (category) {
 
             return (
-                "R " +
-                value.toFixed(2)
+                category &&
+                category.id === categoryId
             );
 
         }
+    ) || null;
 
-    }
-
-
-    /* ======================================================================
-       10. PRODUCT NORMALISATION
-       ====================================================================== */
-
-    function getProductId(product) {
-
-        if (!product) {
-
-            return null;
-
-        }
+}
 
 
-        return (
-            product.id ||
-            product.value ||
-            product.productId ||
-            null
+/* ==========================================================================
+   12. SET CURRENT CATEGORY
+   ========================================================================== */
+
+function setCategory(
+    categoryId
+) {
+
+    const category =
+        getCategory(
+            categoryId
         );
 
-    }
 
+    if (
+        !category
+    ) {
 
-    function getProductName(product) {
-
-        if (!product) {
-
-            return "Unnamed Product";
-
-        }
-
-
-        return (
-            product.name ||
-            product.title ||
-            product.label ||
-            "Unnamed Product"
+        console.warn(
+            "Nexpak Configurator V3: " +
+            "Unknown category:",
+            categoryId
         );
 
-    }
-
-
-    function getProductPrice(product) {
-
-        if (!product) {
-
-            return 0;
-
-        }
-
-
-        if (
-            typeof product.priceExclVat ===
-            "number"
-        ) {
-
-            return product.priceExclVat;
-
-        }
-
-
-        if (
-            typeof product.price ===
-            "number"
-        ) {
-
-            return product.price;
-
-        }
-
-
-        return (
-            Number(
-                product.priceExclVat
-            ) ||
-
-            Number(
-                product.price
-            ) ||
-
-            0
-        );
+        return false;
 
     }
 
 
-    /* ======================================================================
-       11. NORMALISE PRODUCT FOR CONFIGURATOR
-       ====================================================================== */
+    /*
+       Make sure state exists.
 
-    function normaliseProduct(product) {
+       This protects against category calls made before
+       DOMContentLoaded initialisation.
+    */
 
-        if (!product) {
+    if (
+        !state
+    ) {
 
-            return null;
-
-        }
-
-
-        const id =
-            getProductId(product);
-
-
-        if (!id) {
-
-            return null;
-
-        }
-
-
-        return {
-
-            id: id,
-
-            name:
-                getProductName(product),
-
-            price:
-                getProductPrice(product),
-
-            image:
-                product.image ||
-                product.img ||
-                "",
+        state = {
 
             category:
-                product.category ||
-                product.systemCategory ||
-                state.category,
+                categoryId,
 
-            group:
-                product.group ||
-                product.productGroup ||
-                "general",
+            categoryTitle:
+                category.title ||
+                categoryId,
 
-            groupTitle:
-                product.groupTitle ||
-                product.groupName ||
-                "",
+            selections: {},
 
-            description:
-                product.description ||
-                "",
+            totals: {
 
-            unit:
-                product.unit ||
-                "each",
+                productCount:
+                    0,
 
-            weightKg:
-                Number(
-                    product.weightKg ||
-                    product.weight ||
+                itemCount:
+                    0,
+
+                subtotal:
+                    0,
+
+                vat:
+                    0,
+
+                grandTotal:
                     0
-                ) || 0
+
+            }
 
         };
 
     }
 
 
-    /* ======================================================================
-       12. PUBLIC CONFIGURATOR OBJECT
-       ====================================================================== */
+    state.category =
+        category.id;
 
-    window.NEXPAK_CONFIGURATOR = {
 
-        state: state,
+    state.categoryTitle =
+        String(
+            category.title ||
+            category.id
+        )
+            .replace(
+                /\s+Kits$/i,
+                ""
+            )
+            .replace(
+                /\s+Systems$/i,
+                ""
+            );
 
-        VAT_RATE: VAT_RATE,
 
-        CURRENCY: CURRENCY,
+    /*
+       Changing security category starts
+       a fresh configuration.
+    */
 
-        getCategories: getCategories,
+    state.selections =
+        {};
 
-        getCategory: getCategory,
 
-        setCategory: setCategory,
+    resetTotals();
 
-        formatMoney: formatMoney,
 
-        normaliseProduct: normaliseProduct
+    /*
+       Keep public API state reference current.
+    */
+
+    if (
+        window.NEXPAK_CONFIGURATOR
+    ) {
+
+        window.NEXPAK_CONFIGURATOR.state =
+            state;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* ==========================================================================
+   13. RESET TOTALS
+   ========================================================================== */
+
+function resetTotals() {
+
+    if (
+        !state
+    ) {
+
+        return;
+
+    }
+
+
+    state.totals = {
+
+        productCount:
+            0,
+
+        itemCount:
+            0,
+
+        subtotal:
+            0,
+
+        vat:
+            0,
+
+        grandTotal:
+            0
 
     };
 
+}
 
-    /* ======================================================================
-       13. INITIAL CATEGORY
-       ====================================================================== */
 
-    setCategory(
-        "electric-fencing"
+/* ==========================================================================
+   14. MONEY FORMATTER
+   ========================================================================== */
+
+function formatMoney(
+    amount
+) {
+
+    const value =
+        Number(
+            amount
+        ) || 0;
+
+
+    try {
+
+        return new Intl.NumberFormat(
+
+            "en-ZA",
+
+            {
+
+                style:
+                    "currency",
+
+                currency:
+                    CURRENCY,
+
+                minimumFractionDigits:
+                    2,
+
+                maximumFractionDigits:
+                    2
+
+            }
+
+        ).format(
+            value
+        );
+
+    }
+
+    catch (
+        error
+    ) {
+
+        return (
+            "R " +
+            value.toFixed(2)
+        );
+
+    }
+
+}
+
+
+/* ==========================================================================
+   15. PRODUCT ID
+   ========================================================================== */
+
+function getProductId(
+    product
+) {
+
+    if (
+        !product
+    ) {
+
+        return null;
+
+    }
+
+
+    return (
+
+        product.id ||
+
+        product.value ||
+
+        product.productId ||
+
+        null
+
     );
 
+}
 
-    console.log(
-        "Nexpak Configurator V3 loaded successfully."
+
+/* ==========================================================================
+   16. PRODUCT NAME
+   ========================================================================== */
+
+function getProductName(
+    product
+) {
+
+    if (
+        !product
+    ) {
+
+        return "Unnamed Product";
+
+    }
+
+
+    return (
+
+        product.name ||
+
+        product.title ||
+
+        product.label ||
+
+        "Unnamed Product"
+
     );
 
+}
 
-});
+
+/* ==========================================================================
+   17. PRODUCT PRICE
+   ========================================================================== */
+
+function getProductPrice(
+    product
+) {
+
+    if (
+        !product
+    ) {
+
+        return 0;
+
+    }
+
+
+    if (
+        typeof product.priceExclVat ===
+        "number"
+    ) {
+
+        return product.priceExclVat;
+
+    }
+
+
+    if (
+        typeof product.price ===
+        "number"
+    ) {
+
+        return product.price;
+
+    }
+
+
+    return (
+
+        Number(
+            product.priceExclVat
+        ) ||
+
+        Number(
+            product.price
+        ) ||
+
+        0
+
+    );
+
+}
+
+
+/* ==========================================================================
+   18. NORMALISE PRODUCT FOR CONFIGURATOR
+   ========================================================================== */
+
+function normaliseProduct(
+    product
+) {
+
+    if (
+        !product
+    ) {
+
+        return null;
+
+    }
+
+
+    const id =
+        getProductId(
+            product
+        );
+
+
+    if (
+        !id
+    ) {
+
+        return null;
+
+    }
+
+
+    return {
+
+        id:
+            id,
+
+
+        name:
+            getProductName(
+                product
+            ),
+
+
+        price:
+            getProductPrice(
+                product
+            ),
+
+
+        image:
+            product.image ||
+            product.img ||
+            "",
+
+
+        category:
+            product.category ||
+            product.systemCategory ||
+            (
+                state
+                    ? state.category
+                    : ""
+            ),
+
+
+        systemCategory:
+            product.systemCategory ||
+            product.category ||
+            (
+                state
+                    ? state.category
+                    : ""
+            ),
+
+
+        system:
+            product.system ||
+            product.systemCategory ||
+            product.category ||
+            (
+                state
+                    ? state.category
+                    : ""
+            ),
+
+
+        group:
+            product.group ||
+            product.productGroup ||
+            "general",
+
+
+        groupTitle:
+            product.groupTitle ||
+            product.groupName ||
+            "",
+
+
+        description:
+            product.description ||
+            "",
+
+
+        unit:
+            product.unit ||
+            "each",
+
+
+        weightKg:
+            Number(
+                product.weightKg ||
+                product.weight ||
+                0
+            ) || 0
+
+    };
+
+}
+
+
+/* ==========================================================================
+   19. CORE READY CHECK
+   ========================================================================== */
+
+function configuratorCoreReady() {
+
+    return (
+
+        typeof SHOP_DATA !==
+        "undefined"
+
+        &&
+
+        !!state
+
+        &&
+
+        typeof normaliseProduct ===
+        "function"
+
+    );
+
+}
+
+
+/* ==========================================================================
+   20. GLOBAL CORE API
+   ========================================================================== */
+
+window.NEXPAK_CONFIGURATOR_CORE = {
+
+    getState:
+        function () {
+
+            return state;
+
+        },
+
+
+    getElements:
+        function () {
+
+            return elements;
+
+        },
+
+
+    getVatRate:
+        function () {
+
+            return VAT_RATE;
+
+        },
+
+
+    getCurrency:
+        function () {
+
+            return CURRENCY;
+
+        },
+
+
+    ready:
+        configuratorCoreReady
+
+};
+
+
+/* ==========================================================================
+   PART 1 COMPLETE
+   ========================================================================== */
 
 /* ==========================================================================
    NEXPAK SECURITY SOLUTIONS
