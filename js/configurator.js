@@ -5834,9 +5834,3671 @@ function renderPropertyProducts() {
         roboguard: 0,
 
         other: 0
+};
 
-  
 
+    /*
+       Determine the visual type of a product.
+
+       The configurator database can use different
+       category names, so we deliberately check
+       several common identifiers.
+    */
+
+    function getPropertyProductType(product) {
+
+        if (!product) {
+
+            return "other";
+
+        }
+
+
+        const values = [
+
+            product.category,
+
+            product.systemCategory,
+
+            product.system,
+
+            product.type,
+
+            product.productType,
+
+            product.group,
+
+            product.subcategory,
+
+            product.name
+
+        ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+
+
+        if (
+            values.includes("cctv") ||
+            values.includes("camera") ||
+            values.includes("ip-cam")
+        ) {
+
+            return "cctv";
+
+        }
+
+
+        if (
+            values.includes("electric-fencing") ||
+            values.includes("electric fence") ||
+            values.includes("fence")
+        ) {
+
+            return "fence";
+
+        }
+
+
+        if (
+            values.includes("alarm") ||
+            values.includes("pir") ||
+            values.includes("motion detector")
+        ) {
+
+            return "alarm";
+
+        }
+
+
+        if (
+            values.includes("gate") ||
+            values.includes("gate automation") ||
+            values.includes("gate motor")
+        ) {
+
+            return "gate";
+
+        }
+
+
+        if (
+            values.includes("access") ||
+            values.includes("access control") ||
+            values.includes("fingerprint") ||
+            values.includes("card reader")
+        ) {
+
+            return "access";
+
+        }
+
+
+        if (
+            values.includes("intercom") ||
+            values.includes("video intercom")
+        ) {
+
+            return "intercom";
+
+        }
+
+
+        if (
+            values.includes("roboguard") ||
+            values.includes("robo guard")
+        ) {
+
+            return "roboguard";
+
+        }
+
+
+        return "other";
+
+    }
+
+
+    /*
+       Return a suitable Font Awesome icon
+       for the property marker.
+    */
+
+    function getPropertyProductIcon(type) {
+
+        const icons = {
+
+            cctv:
+                "fa-video",
+
+            fence:
+                "fa-bolt",
+
+            alarm:
+                "fa-bell",
+
+            gate:
+                "fa-door-open",
+
+            access:
+                "fa-fingerprint",
+
+            intercom:
+                "fa-phone",
+
+            roboguard:
+                "fa-person-running",
+
+            other:
+                "fa-shield-halved"
+
+        };
+
+
+        return icons[type] || icons.other;
+
+    }
+
+
+    /*
+       Determine where the product should appear
+       on the illustrated property.
+
+       Multiple products of the same type are
+       automatically distributed around the property.
+    */
+
+    function getPropertyProductPosition(
+        type,
+        index
+    ) {
+
+        const positions = {
+
+            cctv: [
+
+                {
+                    left: 18,
+                    top: 37
+                },
+
+                {
+                    left: 82,
+                    top: 37
+                },
+
+                {
+                    left: 25,
+                    top: 57
+                },
+
+                {
+                    left: 75,
+                    top: 57
+                }
+
+            ],
+
+            fence: [
+
+                {
+                    left: 8,
+                    top: 18
+                },
+
+                {
+                    left: 92,
+                    top: 18
+                },
+
+                {
+                    left: 8,
+                    top: 78
+                },
+
+                {
+                    left: 92,
+                    top: 78
+                }
+
+            ],
+
+            alarm: [
+
+                {
+                    left: 50,
+                    top: 42
+                },
+
+                {
+                    left: 58,
+                    top: 50
+                }
+
+            ],
+
+            gate: [
+
+                {
+                    left: 88,
+                    top: 78
+                },
+
+                {
+                    left: 82,
+                    top: 78
+                }
+
+            ],
+
+            access: [
+
+                {
+                    left: 49,
+                    top: 58
+                },
+
+                {
+                    left: 56,
+                    top: 58
+                }
+
+            ],
+
+            intercom: [
+
+                {
+                    left: 44,
+                    top: 57
+                },
+
+                {
+                    left: 55,
+                    top: 57
+                }
+
+            ],
+
+            roboguard: [
+
+                {
+                    left: 12,
+                    top: 62
+                },
+
+                {
+                    left: 88,
+                    top: 62
+                },
+
+                {
+                    left: 20,
+                    top: 72
+                },
+
+                {
+                    left: 80,
+                    top: 72
+                }
+
+            ],
+
+            other: [
+
+                {
+                    left: 50,
+                    top: 72
+                }
+
+            ]
+
+        };
+
+
+        const typePositions =
+            positions[type] ||
+            positions.other;
+
+
+        return typePositions[
+            index %
+            typePositions.length
+        ];
+
+    }
+
+
+    /*
+       Create a visual product marker.
+    */
+
+    function createPropertyProductMarker(
+        product,
+        type,
+        index
+    ) {
+
+        const position =
+            getPropertyProductPosition(
+                type,
+                index
+            );
+
+
+        const marker =
+            document.createElement("div");
+
+
+        marker.className =
+            "property-product-marker " +
+            "property-product-" +
+            type;
+
+
+        marker.dataset.productId =
+            product.id || "";
+
+
+        marker.dataset.productType =
+            type;
+
+
+        marker.style.left =
+            position.left + "%";
+
+
+        marker.style.top =
+            position.top + "%";
+
+
+        const icon =
+            document.createElement("span");
+
+
+        icon.className =
+            "property-product-marker-icon";
+
+
+        icon.innerHTML =
+            `<i class="fa-solid ${
+                getPropertyProductIcon(type)
+            }"></i>`;
+
+
+        const label =
+            document.createElement("span");
+
+
+        label.className =
+            "property-product-marker-label";
+
+
+        label.textContent =
+            product.name ||
+            "Security Product";
+
+
+        marker.appendChild(
+            icon
+        );
+
+
+        marker.appendChild(
+            label
+        );
+
+
+        return marker;
+
+    }
+
+
+    /*
+       Render all currently selected products
+       onto the property.
+    */
+
+    function renderPropertyProducts(
+        selectedProducts
+    ) {
+
+        const layer =
+            document.getElementById(
+                "productPlacementLayer"
+            );
+
+
+        if (!layer) {
+
+            return;
+
+        }
+
+
+        layer.innerHTML = "";
+
+
+        if (
+            !Array.isArray(
+                selectedProducts
+            ) ||
+            selectedProducts.length === 0
+        ) {
+
+            updatePropertyStatus(
+                0
+            );
+
+            return;
+
+        }
+
+
+        typeIndexes = {
+
+            cctv: 0,
+
+            fence: 0,
+
+            alarm: 0,
+
+            gate: 0,
+
+            access: 0,
+
+            intercom: 0,
+
+            roboguard: 0,
+
+            other: 0
+
+        };
+
+
+        selectedProducts.forEach(
+            function (product) {
+
+                if (!product) {
+
+                    return;
+
+                }
+
+
+                const type =
+                    getPropertyProductType(
+                        product
+                    );
+
+
+                const index =
+                    typeIndexes[type] || 0;
+
+
+                const marker =
+                    createPropertyProductMarker(
+                        product,
+                        type,
+                        index
+                    );
+
+
+                layer.appendChild(
+                    marker
+                );
+
+
+                typeIndexes[type] =
+                    index + 1;
+
+            }
+        );
+
+
+        updatePropertyStatus(
+            selectedProducts.length
+        );
+
+    }
+
+
+    /*
+       Update the information displayed below
+       the property visualisation.
+    */
+
+    function updatePropertyStatus(
+        productCount
+    ) {
+
+        const countElement =
+            document.getElementById(
+                "propertyProductCount"
+            );
+
+
+        const statusElement =
+            document.getElementById(
+                "propertySecurityStatus"
+            );
+
+
+        const previewStatus =
+            document.getElementById(
+                "propertyPreviewStatus"
+            );
+
+
+        if (countElement) {
+
+            countElement.textContent =
+                String(
+                    productCount || 0
+                );
+
+        }
+
+
+        if (statusElement) {
+
+            statusElement.textContent =
+                productCount > 0
+                    ? `${productCount} product${
+                        productCount === 1
+                            ? ""
+                            : "s"
+                    } configured`
+                    : "No products configured";
+
+        }
+
+
+        if (previewStatus) {
+
+            previewStatus.textContent =
+                productCount > 0
+                    ? "Security products positioned on your property"
+                    : "Select products to place them on your property";
+
+        }
+
+    }
+
+
+    /*
+       Public property visualisation API.
+    */
+
+    window.NEXPAK_PROPERTY_VISUAL =
+        {
+
+            render:
+                renderPropertyProducts,
+
+            updateStatus:
+                updatePropertyStatus,
+
+            getProductType:
+                getPropertyProductType
+
+        };
+
+   
+  /* ============================================================================
+   NEXPAK SECURITY SOLUTIONS
+   BUILD YOUR SYSTEM — SHOP STYLES
+   PART 10 — PROPERTY VISUALISATION
+   ============================================================================ */
+
+
+/* ============================================================================
+   10.1 PROPERTY PREVIEW
+   ============================================================================ */
+
+.property-preview {
+
+    position: relative;
+
+    width: 100%;
+
+    margin-top: 32px;
+
+    overflow: hidden;
+
+    border-radius: 24px;
+
+    border: 1px solid rgba(255,255,255,0.10);
+
+    background:
+        linear-gradient(
+            145deg,
+            #101923 0%,
+            #17232d 45%,
+            #0b1219 100%
+        );
+
+    box-shadow:
+        0 24px 70px rgba(0,0,0,0.28);
+
+}
+
+
+/* ============================================================================
+   10.2 PROPERTY HEADER
+   ============================================================================ */
+
+.property-preview-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 24px;
+
+    padding: 22px 26px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.08);
+
+}
+
+
+.property-preview-eyebrow {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 6px;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.14em;
+
+    text-transform: uppercase;
+
+    color: #7dd3fc;
+
+}
+
+
+.property-preview-eyebrow i {
+
+    font-size: 13px;
+
+}
+
+
+.property-preview-header h3 {
+
+    margin: 0;
+
+    font-size: 22px;
+
+    line-height: 1.2;
+
+    color: #ffffff;
+
+}
+
+
+.property-preview-status {
+
+    max-width: 330px;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    text-align: right;
+
+    color: rgba(255,255,255,0.58);
+
+}
+
+
+/* ============================================================================
+   10.3 PROPERTY TOOLBAR
+   ============================================================================ */
+
+.property-toolbar {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 16px;
+
+    padding: 12px 18px;
+
+    background:
+        rgba(4,10,16,0.72);
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.07);
+
+}
+
+
+.property-toolbar-left {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+}
+
+
+.property-toolbar-right {
+
+    display: flex;
+
+    align-items: center;
+
+}
+
+
+.property-tool {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    min-height: 38px;
+
+    padding: 0 13px;
+
+    border: 1px solid rgba(255,255,255,0.10);
+
+    border-radius: 9px;
+
+    background:
+        rgba(255,255,255,0.035);
+
+    color: rgba(255,255,255,0.65);
+
+    font: inherit;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 180ms ease,
+        color 180ms ease,
+        border-color 180ms ease,
+        transform 180ms ease;
+
+}
+
+
+.property-tool:hover {
+
+    transform: translateY(-1px);
+
+    color: #ffffff;
+
+    border-color:
+        rgba(255,255,255,0.20);
+
+}
+
+
+.property-tool.active {
+
+    color: #ffffff;
+
+    border-color:
+        rgba(56,189,248,0.45);
+
+    background:
+        rgba(14,165,233,0.14);
+
+}
+
+
+.property-toolbar-status {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.04em;
+
+    color: rgba(255,255,255,0.48);
+
+}
+
+
+.property-toolbar-status i {
+
+    font-size: 7px;
+
+    color: #4ade80;
+
+}
+
+
+/* ============================================================================
+   10.4 PROPERTY CANVAS
+   ============================================================================ */
+
+.property-canvas {
+
+    position: relative;
+
+    width: 100%;
+
+    min-height: 560px;
+
+    overflow: hidden;
+
+    background:
+        #18252d;
+
+    isolation: isolate;
+
+}
+
+
+.property-scene {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    overflow: hidden;
+
+    transform-origin: center center;
+
+    transition:
+        transform 220ms ease;
+
+}
+
+
+/* ============================================================================
+   10.5 SKY
+   ============================================================================ */
+
+.property-sky {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 1;
+
+    background:
+        linear-gradient(
+            180deg,
+            #071522 0%,
+            #12324a 36%,
+            #47718a 68%,
+            #8ca8ad 100%
+        );
+
+}
+
+
+.property-sky::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+
+    height: 180px;
+
+    top: 55px;
+
+    right: 12%;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,230,160,0.85) 0%,
+            rgba(255,210,130,0.25) 38%,
+            rgba(255,210,130,0) 72%
+        );
+
+}
+
+
+.property-sky::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            120deg,
+            rgba(255,255,255,0.08),
+            transparent 30%,
+            transparent 70%,
+            rgba(0,0,0,0.16)
+        );
+
+}
+
+
+/* ============================================================================
+   10.6 HORIZON
+   ============================================================================ */
+
+.property-horizon {
+
+    position: absolute;
+
+    left: 0;
+
+    right: 0;
+
+    bottom: 43%;
+
+    height: 20%;
+
+    z-index: 2;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(38,67,72,0.35),
+            rgba(24,45,47,0.75)
+        );
+
+}
+
+
+.property-horizon::before,
+.property-horizon::after {
+
+    content: "";
+
+    position: absolute;
+
+    bottom: 0;
+
+    width: 35%;
+
+    height: 75%;
+
+    background:
+        linear-gradient(
+            135deg,
+            transparent 50%,
+            rgba(18,38,42,0.72) 51%
+        );
+
+}
+
+
+.property-horizon::before {
+
+    left: -4%;
+
+}
+
+
+.property-horizon::after {
+
+    right: -4%;
+
+    transform:
+        scaleX(-1);
+
+}
+
+
+/* ============================================================================
+   10.7 GROUND
+   ============================================================================ */
+
+.property-ground {
+
+    position: absolute;
+
+    left: 0;
+
+    right: 0;
+
+    bottom: 0;
+
+    height: 56%;
+
+    z-index: 3;
+
+    background:
+        linear-gradient(
+            180deg,
+            #50665b 0%,
+            #3b5046 36%,
+            #26372f 100%
+        );
+
+}
+
+
+.property-ground::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    opacity: 0.25;
+
+    background-image:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,0.16) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        18px 18px;
+
+}
+
+
+/* ============================================================================
+   10.8 YARDS
+   ============================================================================ */
+
+.property-yard {
+
+    position: absolute;
+
+    z-index: 4;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(90,119,87,0.9),
+            rgba(43,65,51,0.95)
+        );
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+
+}
+
+
+.yard-left {
+
+    left: 4%;
+
+    bottom: 12%;
+
+    width: 30%;
+
+    height: 33%;
+
+    clip-path:
+        polygon(
+            0 18%,
+            78% 0,
+            100% 100%,
+            0 100%
+        );
+
+}
+
+
+.yard-right {
+
+    right: 4%;
+
+    bottom: 12%;
+
+    width: 30%;
+
+    height: 33%;
+
+    clip-path:
+        polygon(
+            22% 0,
+            100% 18%,
+            100% 100%,
+            0 100%
+        );
+
+}
+
+
+/* ============================================================================
+   10.9 DRIVEWAY
+   ============================================================================ */
+
+.property-driveway {
+
+    position: absolute;
+
+    z-index: 5;
+
+    left: 39%;
+
+    bottom: 0;
+
+    width: 23%;
+
+    height: 58%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #5c6462,
+            #858b87 48%,
+            #5b6361
+        );
+
+    clip-path:
+        polygon(
+            26% 0,
+            74% 0,
+            100% 100%,
+            0 100%
+        );
+
+    opacity: 0.88;
+
+}
+
+
+.property-driveway::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent 0 24px,
+            rgba(255,255,255,0.08) 25px 26px
+        );
+
+}
+
+
+/* ============================================================================
+   10.10 HOUSE
+   ============================================================================ */
+
+.property-house {
+
+    position: absolute;
+
+    z-index: 10;
+
+    left: 26%;
+
+    bottom: 30%;
+
+    width: 48%;
+
+    height: 40%;
+
+}
+
+
+.property-house-body {
+
+    position: absolute;
+
+    left: 0;
+
+    right: 0;
+
+    bottom: 0;
+
+    height: 74%;
+
+    border:
+        1px solid rgba(0,0,0,0.32);
+
+    background:
+        linear-gradient(
+            135deg,
+            #e7e1d5,
+            #c8c0b1
+        );
+
+    box-shadow:
+        0 20px 40px rgba(0,0,0,0.30);
+
+}
+
+
+.property-house-roof {
+
+    position: absolute;
+
+    z-index: 2;
+
+    left: -6%;
+
+    top: 0;
+
+    width: 112%;
+
+    height: 34%;
+
+    background:
+        linear-gradient(
+            180deg,
+            #343b42,
+            #1b2228
+        );
+
+    clip-path:
+        polygon(
+            50% 0,
+            100% 100%,
+            0 100%
+        );
+
+    filter:
+        drop-shadow(
+            0 8px 7px rgba(0,0,0,0.35)
+        );
+
+}
+
+
+.property-house-body::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+
+    right: 0;
+
+    top: 0;
+
+    height: 8px;
+
+    background:
+        rgba(255,255,255,0.18);
+
+}
+
+
+/* ============================================================================
+   10.11 HOUSE WINDOWS
+   ============================================================================ */
+
+.property-house-window {
+
+    position: absolute;
+
+    top: 26%;
+
+    width: 17%;
+
+    height: 29%;
+
+    border:
+        4px solid #d4cbbd;
+
+    background:
+        linear-gradient(
+            135deg,
+            #173b50,
+            #78a9b9
+        );
+
+    box-shadow:
+        inset 0 0 0 2px rgba(0,0,0,0.22),
+        0 4px 8px rgba(0,0,0,0.18);
+
+}
+
+
+.property-window-one {
+
+    left: 12%;
+
+}
+
+
+.property-window-two {
+
+    right: 12%;
+
+}
+
+
+.property-house-window span {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 0;
+
+    width: 2px;
+
+    height: 100%;
+
+    background:
+        rgba(255,255,255,0.45);
+
+}
+
+
+.property-house-window span::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: -20px;
+
+    top: 50%;
+
+    width: 40px;
+
+    height: 2px;
+
+    background:
+        rgba(255,255,255,0.45);
+
+}
+
+
+/* ============================================================================
+   10.12 HOUSE DOOR
+   ============================================================================ */
+
+.property-house-door {
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 0;
+
+    width: 16%;
+
+    height: 42%;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        linear-gradient(
+            90deg,
+            #35261f,
+            #5b4031,
+            #2c211c
+        );
+
+    border:
+        2px solid #9c826d;
+
+    box-shadow:
+        0 7px 14px rgba(0,0,0,0.28);
+
+}
+
+
+.property-door-handle {
+
+    position: absolute;
+
+    right: 15%;
+
+    top: 53%;
+
+    width: 5px;
+
+    height: 5px;
+
+    border-radius: 50%;
+
+    background:
+        #d8b66e;
+
+    box-shadow:
+        0 0 6px rgba(216,182,110,0.6);
+
+}
+
+
+/* ============================================================================
+   10.13 PROPERTY FENCE
+   ============================================================================ */
+
+.property-fence-zone {
+
+    position: absolute;
+
+    z-index: 15;
+
+    inset: 7% 5% 8% 5%;
+
+    border:
+        2px solid rgba(220,235,230,0.28);
+
+    border-radius:
+        8px;
+
+    opacity: 0.58;
+
+    transition:
+        opacity 200ms ease,
+        filter 200ms ease;
+
+}
+
+
+.property-fence-zone.is-active {
+
+    opacity: 1;
+
+    filter:
+        drop-shadow(
+            0 0 7px rgba(96,211,148,0.42)
+        );
+
+}
+
+
+.fence-post {
+
+    position: absolute;
+
+    width: 5px;
+
+    height: 44px;
+
+    bottom: -1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #30383b,
+            #9aa3a2,
+            #30383b
+        );
+
+}
+
+
+.fence-post-one {
+
+    left: 0;
+
+}
+
+
+.fence-post-two {
+
+    left: 32%;
+
+}
+
+
+.fence-post-three {
+
+    left: 67%;
+
+}
+
+
+.fence-post-four {
+
+    right: 0;
+
+}
+
+
+.fence-wire {
+
+    position: absolute;
+
+    left: 0;
+
+    right: 0;
+
+    height: 1px;
+
+    background:
+        rgba(211,240,232,0.82);
+
+    box-shadow:
+        0 0 4px rgba(180,255,225,0.28);
+
+}
+
+
+.fence-wire-one {
+
+    bottom: 20px;
+
+}
+
+
+.fence-wire-two {
+
+    bottom: 30px;
+
+}
+
+
+.fence-wire-three {
+
+    bottom: 40px;
+
+}
+
+
+/* ============================================================================
+   10.14 GATE
+   ============================================================================ */
+
+.property-gate {
+
+    position: absolute;
+
+    z-index: 18;
+
+    right: 5%;
+
+    bottom: 8%;
+
+    width: 16%;
+
+    height: 18%;
+
+    border:
+        5px solid #31393b;
+
+    border-bottom:
+        0;
+
+    opacity: 0.48;
+
+    transition:
+        opacity 200ms ease,
+        filter 200ms ease;
+
+}
+
+
+.property-gate.is-active {
+
+    opacity: 1;
+
+    filter:
+        drop-shadow(
+            0 0 8px rgba(96,165,250,0.48)
+        );
+
+}
+
+
+.property-gate::before,
+.property-gate::after {
+
+    content: "";
+
+    position: absolute;
+
+    bottom: 0;
+
+    width: 45%;
+
+    height: 78%;
+
+    border:
+        3px solid #596367;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #323b3e 0 4px,
+            transparent 4px 11px
+        );
+
+}
+
+
+.property-gate::before {
+
+    left: 0;
+
+}
+
+
+.property-gate::after {
+
+    right: 0;
+
+}
+
+
+/* ============================================================================
+   10.15 CCTV ZONES
+   ============================================================================ */
+
+.property-cctv-zone {
+
+    position: absolute;
+
+    z-index: 25;
+
+    width: 42px;
+
+    height: 42px;
+
+    opacity: 0.38;
+
+    transition:
+        opacity 200ms ease,
+        transform 200ms ease;
+
+}
+
+
+.property-cctv-zone-one {
+
+    left: 20%;
+
+    top: 37%;
+
+}
+
+
+.property-cctv-zone-two {
+
+    right: 20%;
+
+    top: 37%;
+
+}
+
+
+.property-cctv-zone:has(.cctv-zone-marker) {
+
+    pointer-events: none;
+
+}
+
+
+.cctv-zone-marker {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 34px;
+
+    height: 34px;
+
+    transform:
+        translate(-50%, -50%);
+
+    border:
+        1px solid rgba(255,255,255,0.22);
+
+    border-radius: 50%;
+
+    background:
+        rgba(8,17,24,0.90);
+
+    color: #7dd3fc;
+
+    box-shadow:
+        0 6px 18px rgba(0,0,0,0.30);
+
+}
+
+
+.cctv-zone-beam {
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 50%;
+
+    width: 130px;
+
+    height: 90px;
+
+    transform:
+        translate(-5%, -10%)
+        rotate(20deg);
+
+    transform-origin:
+        left top;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(56,189,248,0.22),
+            rgba(56,189,248,0)
+        );
+
+    clip-path:
+        polygon(
+            0 0,
+            100% 32%,
+            100% 68%,
+            0 100%
+        );
+
+}
+
+
+.property-cctv-zone.is-active {
+
+    opacity: 1;
+
+}
+
+
+/* ============================================================================
+   10.16 SECURITY ZONES
+   ============================================================================ */
+
+.security-zone {
+
+    position: absolute;
+
+    z-index: 20;
+
+    border:
+        1px dashed rgba(125,211,252,0.18);
+
+    background:
+        rgba(56,189,248,0.025);
+
+    opacity: 0;
+
+    transition:
+        opacity 220ms ease,
+        background 220ms ease;
+
+    pointer-events: none;
+
+}
+
+
+.security-zone.is-active {
+
+    opacity: 1;
+
+    background:
+        rgba(56,189,248,0.055);
+
+}
+
+
+.entrance-zone {
+
+    left: 40%;
+
+    bottom: 25%;
+
+    width: 20%;
+
+    height: 27%;
+
+}
+
+
+.driveway-zone {
+
+    left: 35%;
+
+    bottom: 0;
+
+    width: 30%;
+
+    height: 48%;
+
+}
+
+
+.house-zone {
+
+    left: 28%;
+
+    bottom: 29%;
+
+    width: 44%;
+
+    height: 40%;
+
+}
+
+
+/* ============================================================================
+   10.17 PRODUCT PLACEMENT LAYER
+   ============================================================================ */
+
+.product-placement-layer {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 60;
+
+    pointer-events: none;
+
+}
+
+
+.property-product-marker {
+
+    position: absolute;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    min-width: 34px;
+
+    transform:
+        translate(-50%, -50%);
+
+    pointer-events: auto;
+
+    animation:
+        propertyMarkerIn 280ms ease both;
+
+}
+
+
+.property-product-marker-icon {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 34px;
+
+    height: 34px;
+
+    flex: 0 0 34px;
+
+    border:
+        1px solid rgba(255,255,255,0.22);
+
+    border-radius: 50%;
+
+    background:
+        rgba(7,15,22,0.94);
+
+    box-shadow:
+        0 7px 20px rgba(0,0,0,0.36);
+
+    color: #ffffff;
+
+}
+
+
+.property-product-marker-label {
+
+    padding:
+        5px 8px;
+
+    border:
+        1px solid rgba(255,255,255,0.10);
+
+    border-radius: 6px;
+
+    background:
+        rgba(5,11,17,0.86);
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.04em;
+
+    white-space: nowrap;
+
+    color: rgba(255,255,255,0.86);
+
+    backdrop-filter:
+        blur(8px);
+
+}
+
+
+/* ============================================================================
+   10.18 PRODUCT MARKER TYPES
+   ============================================================================ */
+
+.property-product-cctv
+.property-product-marker-icon {
+
+    color: #7dd3fc;
+
+}
+
+
+.property-product-cctv
+.property-product-marker-icon {
+
+    border-color:
+        rgba(125,211,252,0.40);
+
+}
+
+
+.property-product-fence
+.property-product-marker-icon {
+
+    color: #86efac;
+
+    border-color:
+        rgba(134,239,172,0.40);
+
+}
+
+
+.property-product-alarm
+.property-product-marker-icon {
+
+    color: #fbbf24;
+
+    border-color:
+        rgba(251,191,36,0.40);
+
+}
+
+
+.property-product-gate
+.property-product-marker-icon {
+
+    color: #93c5fd;
+
+    border-color:
+        rgba(147,197,253,0.40);
+
+}
+
+
+.property-product-access
+.property-product-marker-icon {
+
+    color: #c4b5fd;
+
+    border-color:
+        rgba(196,181,253,0.40);
+
+}
+
+
+.property-product-intercom
+.property-product-marker-icon {
+
+    color: #67e8f9;
+
+    border-color:
+        rgba(103,232,249,0.40);
+
+}
+
+
+.property-product-roboguard
+.property-product-marker-icon {
+
+    color: #fca5a5;
+
+    border-color:
+        rgba(252,165,165,0.40);
+
+}
+
+
+/* ============================================================================
+   10.19 PROPERTY LEGEND
+   ============================================================================ */
+
+.property-legend {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 14px 20px;
+
+    background:
+        rgba(3,9,14,0.62);
+
+    border-top:
+        1px solid rgba(255,255,255,0.07);
+
+}
+
+
+.property-legend-item {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    color:
+        rgba(255,255,255,0.58);
+
+}
+
+
+.legend-dot {
+
+    display: inline-block;
+
+    width: 8px;
+
+    height: 8px;
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 7px currentColor;
+
+}
+
+
+.legend-dot.camera {
+
+    color: #7dd3fc;
+
+    background:
+        currentColor;
+
+}
+
+
+.legend-dot.fence {
+
+    color: #86efac;
+
+    background:
+        currentColor;
+
+}
+
+
+.legend-dot.gate {
+
+    color: #93c5fd;
+
+    background:
+        currentColor;
+
+}
+
+
+.legend-dot.alarm {
+
+    color: #fbbf24;
+
+    background:
+        currentCol
+
+   or;
+
+
+/* ============================================================================
+   10.20 PROPERTY INFORMATION BAR
+   ============================================================================ */
+
+.property-info-bar {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px 24px;
+
+    padding: 14px 20px;
+
+    background:
+        rgba(255,255,255,0.025);
+
+    border-top:
+        1px solid rgba(255,255,255,0.06);
+
+    font-size: 11px;
+
+    color:
+        rgba(255,255,255,0.48);
+
+}
+
+
+.property-info-bar strong {
+
+    color:
+        rgba(255,255,255,0.82);
+
+}
+
+
+/* ============================================================================
+   10.21 ZOOM CONTROLS
+   ============================================================================ */
+
+.property-zoom-controls {
+
+    position: absolute;
+
+    z-index: 80;
+
+    right: 18px;
+
+    bottom: 18px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+
+}
+
+
+.property-zoom-controls .property-tool {
+
+    width: 38px;
+
+    min-width: 38px;
+
+    padding: 0;
+
+    background:
+        rgba(5,12,18,0.84);
+
+    backdrop-filter:
+        blur(10px);
+
+}
+
+
+/* ============================================================================
+   10.22 PROPERTY MARKER ANIMATION
+   ============================================================================ */
+
+@keyframes propertyMarkerIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translate(-50%, -50%)
+            scale(0.65);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translate(-50%, -50%)
+            scale(1);
+
+    }
+
+}
+
+
+/* ============================================================================
+   10.23 SECURITY VIEW
+   ============================================================================ */
+
+.property-scene[data-property-view="security"]
+.security-zone.is-active {
+
+    opacity: 1;
+
+    background:
+        rgba(56,189,248,0.09);
+
+    border-color:
+        rgba(125,211,252,0.28);
+
+}
+
+
+.property-scene[data-property-view="security"]
+.property-cctv-zone {
+
+    opacity: 1;
+
+}
+
+
+.property-scene[data-property-view="security"]
+.property-fence-zone {
+
+    opacity: 1;
+
+    filter:
+        drop-shadow(
+            0 0 7px rgba(96,211,148,0.35)
+        );
+
+}
+
+
+/* ============================================================================
+   10.24 PROPERTY EMPTY STATE
+   ============================================================================ */
+
+.product-placement-layer:empty::after {
+
+    content:
+        "Select security products to build your property layout";
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 82%;
+
+    transform:
+        translate(-50%, -50%);
+
+    padding:
+        8px 13px;
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    border-radius: 8px;
+
+    background:
+        rgba(4,10,16,0.62);
+
+    color:
+        rgba(255,255,255,0.48);
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    pointer-events: none;
+
+}
+
+
+/* ============================================================================
+   10.25 BUILDER STATUS
+   ============================================================================ */
+
+.builder-status.is-active
+.builder-status-indicator {
+
+    background:
+        #4ade80;
+
+    box-shadow:
+        0 0 8px rgba(74,222,128,0.55);
+
+}
+
+
+/* ============================================================================
+   PART 10 COMPLETE
+   ============================================================================ */
+
+   /* ============================================================================
+   NEXPAK SECURITY SOLUTIONS
+   BUILD YOUR SYSTEM — SHOP STYLES
+   PART 11 — RESPONSIVE PROPERTY VISUALISATION
+   ============================================================================ */
+
+
+/* ============================================================================
+   11.1 TABLET / SMALL LAPTOP
+   ============================================================================ */
+
+@media (max-width: 900px) {
+
+    .property-preview-header {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 10px;
+
+    }
+
+
+    .property-preview-status {
+
+        max-width: none;
+
+        text-align: left;
+
+    }
+
+
+    .property-canvas {
+
+        min-height: 500px;
+
+    }
+
+
+    .property-house {
+
+        left: 22%;
+
+        width: 56%;
+
+    }
+
+
+    .property-driveway {
+
+        left: 36%;
+
+        width: 28%;
+
+    }
+
+
+    .property-product-marker-label {
+
+        font-size: 8px;
+
+    }
+
+}
+
+
+/* ============================================================================
+   11.2 MOBILE PROPERTY TOOLBAR
+   ============================================================================ */
+
+@media (max-width: 680px) {
+
+    .property-preview {
+
+        margin-top: 22px;
+
+        border-radius: 18px;
+
+    }
+
+
+    .property-preview-header {
+
+        padding: 17px 16px;
+
+    }
+
+
+    .property-preview-header h3 {
+
+        font-size: 19px;
+
+    }
+
+
+    .property-toolbar {
+
+        align-items: stretch;
+
+        flex-direction: column;
+
+        padding: 10px 12px;
+
+    }
+
+
+    .property-toolbar-left {
+
+        width: 100%;
+
+    }
+
+
+    .property-toolbar-left .property-tool {
+
+        flex: 1;
+
+    }
+
+
+    .property-toolbar-right {
+
+        justify-content: flex-start;
+
+    }
+
+
+    .property-toolbar-status {
+
+        font-size: 10px;
+
+    }
+
+
+    .property-canvas {
+
+        min-height: 430px;
+
+    }
+
+
+    .property-legend {
+
+        gap: 9px 12px;
+
+        padding: 12px 14px;
+
+    }
+
+
+    .property-info-bar {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 7px;
+
+        padding: 12px 14px;
+
+    }
+
+
+    .property-zoom-controls {
+
+        right: 10px;
+
+        bottom: 10px;
+
+    }
+
+}
+
+
+/* ============================================================================
+   11.3 REDMI / SMALL MOBILE FOUNDATION
+   ============================================================================ */
+
+@media (max-width: 480px) {
+
+    .property-preview {
+
+        width: 100%;
+
+        margin-top: 18px;
+
+        border-radius: 15px;
+
+    }
+
+
+    .property-preview-header {
+
+        padding: 15px 13px;
+
+    }
+
+
+    .property-preview-eyebrow {
+
+        font-size: 9px;
+
+        letter-spacing: 0.11em;
+
+    }
+
+
+    .property-preview-header h3 {
+
+        font-size: 17px;
+
+    }
+
+
+    .property-preview-status {
+
+        font-size: 11px;
+
+        line-height: 1.4;
+
+    }
+
+
+    .property-toolbar {
+
+        padding: 8px;
+
+    }
+
+
+    .property-toolbar-left {
+
+        gap: 5px;
+
+    }
+
+
+    .property-toolbar-left .property-tool {
+
+        min-height: 36px;
+
+        padding: 0 8px;
+
+        font-size: 10px;
+
+    }
+
+
+    .property-toolbar-left .property-tool i {
+
+        font-size: 11px;
+
+    }
+
+
+    .property-canvas {
+
+        min-height: 360px;
+
+    }
+
+
+    /*
+       Keep the illustrated property large enough
+       to remain visually useful on a narrow screen.
+    */
+
+    .property-house {
+
+        left: 18%;
+
+        bottom: 30%;
+
+        width: 64%;
+
+        height: 39%;
+
+    }
+
+
+    .property-house-roof {
+
+        left: -7%;
+
+        width: 114%;
+
+    }
+
+
+    .property-house-window {
+
+        border-width: 3px;
+
+    }
+
+
+    .property-yard {
+
+        bottom: 10%;
+
+        height: 32%;
+
+    }
+
+
+    .yard-left {
+
+        left: 2%;
+
+        width: 31%;
+
+    }
+
+
+    .yard-right {
+
+        right: 2%;
+
+        width: 31%;
+
+    }
+
+
+    .property-driveway {
+
+        left: 34%;
+
+        width: 32%;
+
+    }
+
+
+    .property-fence-zone {
+
+        inset: 7% 3% 7% 3%;
+
+    }
+
+
+    .property-gate {
+
+        right: 3%;
+
+        bottom: 7%;
+
+        width: 19%;
+
+        height: 18%;
+
+    }
+
+
+    .property-cctv-zone-one {
+
+        left: 15%;
+
+        top: 35%;
+
+    }
+
+
+    .property-cctv-zone-two {
+
+        right: 15%;
+
+        top: 35%;
+
+    }
+
+
+    /*
+       Product markers become compact on mobile.
+    */
+
+    .property-product-marker {
+
+        gap: 4px;
+
+    }
+
+
+    .property-product-marker-icon {
+
+        width: 29px;
+
+        height: 29px;
+
+        flex-basis: 29px;
+
+        font-size: 11px;
+
+    }
+
+
+    .property-product-marker-label {
+
+        max-width: 105px;
+
+        overflow: hidden;
+
+        padding: 4px 6px;
+
+        font-size: 8px;
+
+        text-overflow: ellipsis;
+
+    }
+
+
+    /*
+       Prevent the empty-state message from
+       overflowing the Redmi screen.
+    */
+
+    .product-placement-layer:empty::after {
+
+        max-width: 82%;
+
+        padding: 7px 9px;
+
+        font-size: 9px;
+
+        line-height: 1.4;
+
+        text-align: center;
+
+        white-space: normal;
+
+    }
+
+
+    .property-legend {
+
+        padding: 11px 12px;
+
+    }
+
+
+    .property-legend-item {
+
+        font-size: 9px;
+
+    }
+
+
+    .legend-dot {
+
+        width: 7px;
+
+        height: 7px;
+
+    }
+
+
+    .property-info-bar {
+
+        padding: 11px 12px;
+
+        font-size: 9px;
+
+    }
+
+
+    .property-zoom-controls {
+
+        right: 8px;
+
+        bottom: 8px;
+
+        gap: 4px;
+
+    }
+
+
+    .property-zoom-controls .property-tool {
+
+        width: 34px;
+
+        min-width: 34px;
+
+        height: 34px;
+
+        min-height: 34px;
+
+    }
+
+}
+
+
+/* ============================================================================
+   11.4 VERY SMALL DEVICES
+   ============================================================================ */
+
+@media (max-width: 360px) {
+
+    .property-canvas {
+
+        min-height: 320px;
+
+    }
+
+
+    .property-house {
+
+        left: 15%;
+
+        width: 70%;
+
+    }
+
+
+    .property-product-marker-label {
+
+        display: none;
+
+    }
+
+
+    .property-product-marker-icon {
+
+        width: 27px;
+
+        height: 27px;
+
+        flex-basis: 27px;
+
+    }
+
+
+    .property-preview-header h3 {
+
+        font-size: 16px;
+
+    }
+
+
+    .property-toolbar-left .property-tool span {
+
+        display: none;
+
+    }
+
+
+    .property-toolbar-left .property-tool {
+
+        min-width: 38px;
+
+    }
+
+
+    .property-legend {
+
+        gap: 7px 10px;
+
+    }
+
+}
+
+
+/* ============================================================================
+   11.5 TOUCH DEVICE INTERACTION
+   ============================================================================ */
+
+@media (hover: none) and (pointer: coarse) {
+
+    .property-tool {
+
+        min-height: 42px;
+
+    }
+
+
+    .property-zoom-controls .property-tool {
+
+        min-height: 40px;
+
+        height: 40px;
+
+    }
+
+
+    .property-product-marker {
+
+        pointer-events: none;
+
+    }
+
+}
+
+
+/* ============================================================================
+   11.6 PROPERTY SCENE SAFETY
+   ============================================================================ */
+
+/*
+   Prevent the property illustration from causing
+   horizontal page overflow on mobile.
+*/
+
+.property-preview,
+.property-canvas,
+.property-scene {
+
+    max-width: 100%;
+
+}
+
+
+.property-scene {
+
+    overflow: hidden;
+
+}
+
+
+/* ============================================================================
+   11.7 MOBILE PROPERTY SHADOW
+   ============================================================================ */
+
+@media (max-width: 480px) {
+
+    .property-house-body {
+
+        box-shadow:
+            0 12px 24px rgba(0,0,0,0.28);
+
+    }
+
+
+    .property-house-roof {
+
+        filter:
+            drop-shadow(
+                0 5px 5px rgba(0,0,0,0.30)
+            );
+
+    }
+
+}
+
+
+/* ============================================================================
+   PART 11 COMPLETE
+   ============================================================================ */
+
+/* ============================================================================
+   NEXPAK SECURITY SOLUTIONS
+   BUILD YOUR SYSTEM — SHOP STYLES
+   PART 12 — LIVE PRODUCT PLACEMENT VISUALS
+   ============================================================================ */
+
+
+/* ============================================================================
+   12.1 PRODUCT PLACEMENT LAYER
+   ============================================================================ */
+
+.product-placement-layer {
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 70;
+
+    pointer-events: none;
+
+}
+
+
+/* ============================================================================
+   12.2 MOUNTED PRODUCT MARKER
+   ============================================================================ */
+
+.property-product-marker {
+
+    position: absolute;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    transform:
+        translate(-50%, -50%);
+
+    animation:
+        propertyMarkerIn 0.35s ease-out both;
+
+    pointer-events: auto;
+
+    cursor: default;
+
+    z-index: 90;
+
+}
+
+
+/* ============================================================================
+   12.3 PRODUCT ICON
+   ============================================================================ */
+
+.property-product-marker-icon {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 34px;
+
+    height: 34px;
+
+    flex: 0 0 34px;
+
+    border:
+        2px solid rgba(255,255,255,0.72);
+
+    border-radius: 50%;
+
+    background:
+        rgba(7,15,23,0.94);
+
+    box-shadow:
+        0 5px 15px rgba(0,0,0,0.45);
+
+    color:
+        #ffffff;
+
+    font-size: 13px;
+
+}
+
+
+/* ============================================================================
+   12.4 PRODUCT LABEL
+   ============================================================================ */
+
+.property-product-marker-label {
+
+    max-width: 150px;
+
+    padding:
+        5px 8px;
+
+    border:
+        1px solid rgba(255,255,255,0.12);
+
+    border-radius: 6px;
+
+    background:
+        rgba(4,10,16,0.90);
+
+    backdrop-filter:
+        blur(8px);
+
+    color:
+        rgba(255,255,255,0.88);
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    line-height: 1.25;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    box-shadow:
+        0 5px 14px rgba(0,0,0,0.32);
+
+}
+
+
+/* ============================================================================
+   12.5 CCTV
+   ============================================================================ */
+
+.property-product-cctv
+.property-product-marker-icon {
+
+    border-color:
+        rgba(56,189,248,0.75);
+
+    color:
+        #38bdf8;
+
+    box-shadow:
+        0 0 14px rgba(56,189,248,0.28);
+
+}
+
+
+.property-product-cctv
+.property-product-marker-label {
+
+    border-color:
+        rgba(56,189,248,0.22);
+
+}
+
+
+/* ============================================================================
+   12.6 ELECTRIC FENCE
+   ============================================================================ */
+
+.property-product-fence
+.property-product-marker-icon {
+
+    border-color:
+        rgba(74,222,128,0.78);
+
+    color:
+        #4ade80;
+
+    box-shadow:
+        0 0 14px rgba(74,222,128,0.25);
+
+}
+
+
+.property-product-fence
+.property-product-marker-label {
+
+    border-color:
+        rgba(74,222,128,0.22);
+
+}
+
+
+/* ============================================================================
+   12.7 ALARM
+   ============================================================================ */
+
+.property-product-alarm
+.property-product-marker-icon {
+
+    border-color:
+        rgba(251,191,36,0.82);
+
+    color:
+        #fbbf24;
+
+    box-shadow:
+        0 0 14px rgba(251,191,36,0.25);
+
+}
+
+
+.property-product-alarm
+.property-product-marker-label {
+
+    border-color:
+        rgba(251,191,36,0.22);
+
+}
+
+
+/* ============================================================================
+   12.8 GATE AUTOMATION
+   ============================================================================ */
+
+.property-product-gate
+.property-product-marker-icon {
+
+    border-color:
+        rgba(244,114,182,0.78);
+
+    color:
+        #f472b6;
+
+    box-shadow:
+        0 0 14px rgba(244,114,182,0.25);
+
+}
+
+
+.property-product-gate
+.property-product-marker-label {
+
+    border-color:
+        rgba(244,114,182,0.22);
+
+}
+
+
+/* ============================================================================
+   12.9 ACCESS CONTROL
+   ============================================================================ */
+
+.property-product-access
+.property-product-marker-icon {
+
+    border-color:
+        rgba(167,139,250,0.82);
+
+    color:
+        #a78bfa;
+
+    box-shadow:
+        0 0 14px rgba(167,139,250,0.25);
+
+}
+
+
+.property-product-access
+.property-product-marker-label {
+
+    border-color:
+        rgba(167,139,250,0.22);
+
+}
+
+
+/* ============================================================================
+   12.10 INTERCOM
+   ============================================================================ */
+
+.property-product-intercom
+.property-product-marker-icon {
+
+    border-color:
+        rgba(45,212,191,0.82);
+
+    color:
+        #2dd4bf;
+
+    box-shadow:
+        0 0 14px rgba(45,212,191,0.25);
+
+}
+
+
+.property-product-intercom
+.property-product-marker-label {
+
+    border-color:
+        rgba(45,212,191,0.22);
+
+}
+
+
+/* ============================================================================
+   12.11 ROBOGUARD
+   ============================================================================ */
+
+.property-product-roboguard
+.property-product-marker-icon {
+
+    border-color:
+        rgba(251,146,60,0.82);
+
+    color:
+        #fb923c;
+
+    box-shadow:
+        0 0 14px rgba(251,146,60,0.25);
+
+}
+
+
+.property-product-roboguard
+.property-product-marker-label {
+
+    border-color:
+        rgba(251,146,60,0.22);
+
+}
+
+
+/* ============================================================================
+   12.12 OTHER SECURITY PRODUCTS
+   ============================================================================ */
+
+.property-product-other
+.property-product-marker-icon {
+
+    border-color:
+        rgba(148,163,184,0.72);
+
+    color:
+        #cbd5e1;
+
+}
+
+
+.property-product-other
+.property-product-marker-label {
+
+    border-color:
+        rgba(148,163,184,0.18);
+
+}
+
+
+/* ============================================================================
+   12.13 CCTV COVERAGE INDICATOR
+   ============================================================================ */
+
+.property-product-cctv::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 50%;
+
+    width: 70px;
+
+    height: 70px;
+
+    transform:
+        translate(-50%, -50%);
+
+    border:
+        1px solid rgba(56,189,248,0.16);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(56,189,248,0.08) 0%,
+            rgba(56,189,248,0.025) 45%,
+            transparent 72%
+        );
+
+    z-index: -1;
+
+    pointer-events: none;
+
+}
+
+
+/* ============================================================================
+   12.14 ELECTRIC FENCE ACTIVE EFFECT
+   ============================================================================ */
+
+.property-product-fence::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 50%;
+
+    width: 55px;
+
+    height: 55px;
+
+    transform:
+        translate(-50%, -50%);
+
+    border:
+        1px solid rgba(74,222,128,0.20);
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 16px rgba(74,222,128,0.12);
+
+    z-index: -1;
+
+    pointer-events: none;
+
+}
+
+
+/* ============================================================================
+   12.15 ALARM PULSE
+   ============================================================================ */
+
+.property-product-alarm
+.property-product-marker-icon {
+
+    animation:
+        alarmMarkerPulse 2.4s ease-in-out infinite;
+
+}
+
+
+@keyframes alarmMarkerPulse {
+
+    0%,
+    100% {
+
+        box-shadow:
+            0 0 8px rgba(251,191,36,0.18);
+
+    }
+
+    50% {
+
+        box-shadow:
+            0 0 18px rgba(251,191,36,0.42);
+
+    }
+
+}
+
+
+/* ============================================================================
+   12.16 PRODUCT MARKER HOVER
+   ============================================================================ */
+
+@media (hover: hover) {
+
+    .property-product-marker:hover
+    .property-product-marker-icon {
+
+        transform:
+            scale(1.08);
+
+    }
+
+
+    .property-product-marker:hover
+    .property-product-marker-label {
+
+        color:
+            #ffffff;
+
+        border-color:
+            rgba(255,255,255,0.28);
+
+    }
+
+}
+
+
+/* ============================================================================
+   12.17 MOUNTING POSITION VISUAL
+   ============================================================================ */
+
+.property-product-cctv {
+
+    transform:
+        translate(-50%, -50%);
+
+}
+
+
+.property-product-access {
+
+    transform:
+        translate(-50%, -50%);
+
+}
+
+
+.property-product-intercom {
+
+    transform:
+        translate(-50%, -50%);
+
+}
+
+
+/* ============================================================================
+   12.18 MOBILE PRODUCT MARKERS
+   ============================================================================ */
+
+@media (max-width: 480px) {
+
+    .property-product-marker {
+
+        gap: 4px;
+
+    }
+
+
+    .property-product-marker-icon {
+
+        width: 29px;
+
+        height: 29px;
+
+        flex-basis: 29px;
+
+        font-size: 11px;
+
+    }
+
+
+    .property-product-marker-label {
+
+        max-width: 110px;
+
+        padding:
+            4px 6px;
+
+        font-size: 8px;
+
+    }
+
+
+    .property-product-cctv::after {
+
+        width: 55px;
+
+        height: 55px;
+
+    }
+
+
+    .property-product-fence::after {
+
+        width: 45px;
+
+        height: 45px;
+
+    }
+
+}
+
+
+/* ============================================================================
+   12.19 VERY SMALL MOBILE
+   ============================================================================ */
+
+@media (max-width: 360px) {
+
+    .property-product-marker-label {
+
+        display: none;
+
+    }
+
+
+    .property-product-marker-icon {
+
+        width: 27px;
+
+        height: 27px;
+
+        flex-basis: 27px;
+
+        font-size: 10px;
+
+    }
+
+}
+
+
+/* ============================================================================
+   12.20 ACCESSIBILITY
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .property-product-marker {
+
+        animation:
+            none;
+
+    }
+
+
+    .property-product-alarm
+    .property-product-marker-icon {
+
+        animation:
+            none;
+
+    }
+
+}
+
+
+/* ============================================================================
+   PART 12 COMPLETE
+   ============================================================================ */
+   
 /* ==========================================================================
    NEXPAK SECURITY SOLUTIONS
    BUILD YOUR SYSTEM — CONFIGURATOR V3
