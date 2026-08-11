@@ -597,24 +597,35 @@ document.addEventListener("DOMContentLoaded", function () {
 function getProductDatabase() {
 
     /*
-       Preferred structure:
+       SHOP_DATA.products is structured by category:
 
-           SHOP_DATA.products
-
-       This is the cleanest structure because each
-       product exists independently.
-
-       Example:
-
-           {
-               id: "EF-BRACKET-001",
-               name: "Wall Top Bracket",
-               category: "electric-fencing",
-               priceExclVat: 85
+           products: {
+               "electric-fencing": [ ... ],
+               "cctv-hd": [ ... ],
+               "cctv-ip": [ ... ],
+               ...
            }
 
-       No pre-built kits are read here.
+       The configurator works with a flat product array,
+       so we flatten the category containers here.
+
+       IMPORTANT:
+       - Individual products only
+       - No pre-built kits
+       - No products are automatically selected
     */
+
+    if (
+        !SHOP_DATA ||
+        !SHOP_DATA.products
+    ) {
+        return [];
+    }
+
+
+    /* ---------------------------------------------------------------
+       ALREADY AN ARRAY
+       --------------------------------------------------------------- */
 
     if (
         Array.isArray(
@@ -623,6 +634,88 @@ function getProductDatabase() {
     ) {
 
         return SHOP_DATA.products;
+
+    }
+
+
+    /* ---------------------------------------------------------------
+       CATEGORY-BASED PRODUCT OBJECT
+       --------------------------------------------------------------- */
+
+    if (
+        typeof SHOP_DATA.products === "object"
+    ) {
+
+        const products = [];
+
+
+        Object.keys(
+            SHOP_DATA.products
+        ).forEach(
+            function (categoryId) {
+
+                const categoryProducts =
+                    SHOP_DATA.products[
+                        categoryId
+                    ];
+
+
+                if (
+                    !Array.isArray(
+                        categoryProducts
+                    )
+                ) {
+
+                    return;
+
+                }
+
+
+                categoryProducts.forEach(
+                    function (product) {
+
+                        if (
+                            !product ||
+                            typeof product !== "object"
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        /*
+                           Preserve the category from the
+                           database container when the product
+                           itself does not define one.
+                        */
+
+                        products.push({
+
+                            ...product,
+
+                            category:
+                                product.category ||
+                                categoryId,
+
+                            systemCategory:
+                                product.systemCategory ||
+                                categoryId,
+
+                            system:
+                                product.system ||
+                                categoryId
+
+                        });
+
+                    }
+                );
+
+            }
+        );
+
+
+        return products;
 
     }
 
