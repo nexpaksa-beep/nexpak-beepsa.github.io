@@ -4638,7 +4638,1204 @@ if (
 /* ==========================================================================
    PART 8 COMPLETE
    ========================================================================== */
+/* ==========================================================================
+   NEXPAK SECURITY SOLUTIONS
+   BUILD YOUR SYSTEM — CONFIGURATOR V3
+   PART 9 — PROPERTY VISUALISATION ENGINE
+   ==========================================================================
 
+   PURPOSE:
+
+   - Uses the existing property visualisation HTML in shop.html.
+   - Does NOT create a second property system.
+   - Uses #propertyScene and #productPlacementLayer.
+   - Converts selected products into visual security placements.
+   - Updates when quantities change.
+   - Removes placements when products are removed.
+   - Activates the appropriate property security zones.
+   - Keeps the existing cart/product engine untouched.
+
+   PROPERTY ARCHITECTURE:
+
+       SHOP DATA
+           ↓
+       PRODUCT SELECTION
+           ↓
+       state.selections
+           ↓
+       PROPERTY VISUALISATION
+           ↓
+       productPlacementLayer
+           ↓
+       LIVE PROPERTY VIEW
+
+   ========================================================================== */
+
+
+/* ==========================================================================
+   78. PROPERTY VISUALISATION REFERENCES
+   ========================================================================== */
+
+const propertyElements = {
+
+    preview:
+        document.getElementById(
+            "propertyPreview"
+        ),
+
+    canvas:
+        document.getElementById(
+            "propertyCanvas"
+        ),
+
+    scene:
+        document.getElementById(
+            "propertyScene"
+        ),
+
+    placementLayer:
+        document.getElementById(
+            "productPlacementLayer"
+        ),
+
+    perimeter:
+        document.getElementById(
+            "propertyPerimeter"
+        ),
+
+    fence:
+        document.getElementById(
+            "propertyFenceZone"
+        ),
+
+    gate:
+        document.getElementById(
+            "propertyGate"
+        ),
+
+    status:
+        document.getElementById(
+            "propertyPreviewStatus"
+        ),
+
+    productCount:
+        document.getElementById(
+            "propertyProductCount"
+        ),
+
+    securityStatus:
+        document.getElementById(
+            "propertySecurityStatus"
+        ),
+
+    builderStatus:
+        document.getElementById(
+            "builderStatus"
+        ),
+
+    builderStatusText:
+        document.querySelector(
+            ".builder-status-text"
+        )
+
+};
+
+
+/* ==========================================================================
+   79. PROPERTY VISUALISATION STATE
+   ========================================================================== */
+
+const propertyState = {
+
+    zoom:
+        1,
+
+    view:
+        "overview",
+
+    placements:
+        {},
+
+    productTypes: {
+
+        cctv: 0,
+
+        fence: 0,
+
+        alarm: 0,
+
+        gate: 0,
+
+        access: 0,
+
+        intercom: 0,
+
+        roboguard: 0
+
+    }
+
+};
+
+
+/* ==========================================================================
+   80. NORMALISE PRODUCT CATEGORY
+   ========================================================================== */
+
+function getPropertyProductType(
+    product
+) {
+
+    if (!product) {
+
+        return "other";
+
+    }
+
+
+    const category = String(
+
+        product.category ||
+
+        product.systemCategory ||
+
+        product.system ||
+
+        ""
+
+    ).toLowerCase();
+
+
+    const name = String(
+
+        product.name ||
+
+        ""
+
+    ).toLowerCase();
+
+
+    const group = String(
+
+        product.group ||
+
+        ""
+
+    ).toLowerCase();
+
+
+    const searchText =
+
+        category +
+        " " +
+        name +
+        " " +
+        group;
+
+
+    /* ----------------------------------------------------------------------
+       CCTV / IP CCTV
+       ---------------------------------------------------------------------- */
+
+    if (
+
+        searchText.includes("cctv") ||
+
+        searchText.includes("ip-cctv") ||
+
+        searchText.includes("camera") ||
+
+        searchText.includes("hikvision") ||
+
+        searchText.includes("dahua")
+
+    ) {
+
+        return "cctv";
+
+    }
+
+
+    /* ----------------------------------------------------------------------
+       ELECTRIC FENCING
+       ---------------------------------------------------------------------- */
+
+    if (
+
+        searchText.includes("electric-fencing") ||
+
+        searchText.includes("electric fencing") ||
+
+        searchText.includes("energizer") ||
+
+        searchText.includes("fence") ||
+
+        searchText.includes("walltop") ||
+
+        searchText.includes("wall top")
+
+    ) {
+
+        return "fence";
+
+    }
+
+
+    /* ----------------------------------------------------------------------
+       ALARM
+       ---------------------------------------------------------------------- */
+
+    if (
+
+        searchText.includes("alarm") ||
+
+        searchText.includes("pir") ||
+
+        searchText.includes("motion detector") ||
+
+        searchText.includes("magnetic contact") ||
+
+        searchText.includes("siren")
+
+    ) {
+
+        return "alarm";
+
+    }
+
+
+    /* ----------------------------------------------------------------------
+       GATE AUTOMATION
+       ---------------------------------------------------------------------- */
+
+    if (
+
+        searchText.includes("gate automation") ||
+
+        searchText.includes("gate motor") ||
+
+        searchText.includes("sliding gate") ||
+
+        searchText.includes("swing gate") ||
+
+        searchText.includes("gate")
+
+    ) {
+
+        return "gate";
+
+    }
+
+
+    /* ----------------------------------------------------------------------
+       ACCESS CONTROL
+       ---------------------------------------------------------------------- */
+
+    if (
+
+        searchText.includes("access control") ||
+
+        searchText.includes("access-control") ||
+
+        searchText.includes("fingerprint") ||
+
+        searchText.includes("keypad") ||
+
+        searchText.includes("reader")
+
+    ) {
+
+        return "access";
+
+    }
+
+
+    /* ----------------------------------------------------------------------
+       INTERCOM
+       ---------------------------------------------------------------------- */
+
+    if (
+
+        searchText.includes("intercom") ||
+
+        searchText.includes("video intercom") ||
+
+        searchText.includes("door station")
+
+    ) {
+
+        return "intercom";
+
+    }
+
+
+    /* ----------------------------------------------------------------------
+       ROBOGUARD
+       ---------------------------------------------------------------------- */
+
+    if (
+
+        searchText.includes("roboguard") ||
+
+        searchText.includes("robo guard")
+
+    ) {
+
+        return "roboguard";
+
+    }
+
+
+    return "other";
+
+}
+
+
+/* ==========================================================================
+   81. PROPERTY ICONS
+   ========================================================================== */
+
+function getPropertyIcon(
+    type
+) {
+
+    const icons = {
+
+        cctv:
+            "fa-video",
+
+        fence:
+            "fa-bolt",
+
+        alarm:
+            "fa-bell",
+
+        gate:
+            "fa-door-open",
+
+        access:
+            "fa-fingerprint",
+
+        intercom:
+            "fa-phone",
+
+        roboguard:
+            "fa-tower-broadcast",
+
+        other:
+            "fa-shield-halved"
+
+    };
+
+
+    return (
+
+        icons[type] ||
+
+        icons.other
+
+    );
+
+}
+
+
+/* ==========================================================================
+   82. PROPERTY LABELS
+   ========================================================================== */
+
+function getPropertyLabel(
+    type
+) {
+
+    const labels = {
+
+        cctv:
+            "CCTV",
+
+        fence:
+            "Electric Fence",
+
+        alarm:
+            "Alarm",
+
+        gate:
+            "Gate Automation",
+
+        access:
+            "Access Control",
+
+        intercom:
+            "Intercom",
+
+        roboguard:
+            "Roboguard",
+
+        other:
+            "Security"
+
+    };
+
+
+    return (
+
+        labels[type] ||
+
+        labels.other
+
+    );
+
+}
+
+
+/* ==========================================================================
+   83. CLEAR PROPERTY PLACEMENTS
+   ========================================================================== */
+
+function clearPropertyPlacements() {
+
+    if (
+        !propertyElements.placementLayer
+    ) {
+
+        return;
+
+    }
+
+
+    propertyElements
+        .placementLayer
+        .innerHTML = "";
+
+
+    propertyState.placements = {};
+
+
+    propertyState.productTypes = {
+
+        cctv: 0,
+
+        fence: 0,
+
+        alarm: 0,
+
+        gate: 0,
+
+        access: 0,
+
+        intercom: 0,
+
+        roboguard: 0
+
+    };
+
+}
+
+
+/* ==========================================================================
+   84. CREATE PROPERTY PRODUCT MARKER
+   ========================================================================== */
+
+function createPropertyMarker(
+    product,
+    type,
+    index
+) {
+
+    if (
+        !propertyElements.placementLayer
+    ) {
+
+        return null;
+
+    }
+
+
+    const marker =
+        document.createElement(
+            "div"
+        );
+
+
+    marker.className =
+        "property-product-marker";
+
+
+    marker.classList.add(
+        `property-product-${type}`
+    );
+
+
+    marker.dataset.productId =
+        product.id;
+
+
+    marker.dataset.productType =
+        type;
+
+
+    marker.dataset.index =
+        String(index);
+
+
+    marker.setAttribute(
+        "aria-label",
+        `${product.name || getPropertyLabel(type)} placed on property`
+    );
+
+
+    marker.innerHTML = `
+
+        <span class="property-product-marker-icon">
+
+            <i
+                class="fa-solid ${getPropertyIcon(type)}"
+            ></i>
+
+        </span>
+
+        <span class="property-product-marker-label">
+
+            ${escapeHtml(
+                getPropertyLabel(type)
+            )}
+
+        </span>
+
+    `;
+
+
+    return marker;
+
+}
+
+
+/* ==========================================================================
+   85. POSITION CCTV PRODUCTS
+   ========================================================================== */
+
+function positionCCTVMarker(
+    marker,
+    index
+) {
+
+    const positions = [
+
+        {
+            left: "17%",
+            top: "35%"
+        },
+
+        {
+            left: "79%",
+            top: "35%"
+        },
+
+        {
+            left: "28%",
+            top: "53%"
+        },
+
+        {
+            left: "68%",
+            top: "53%"
+        },
+
+        {
+            left: "47%",
+            top: "27%"
+        },
+
+        {
+            left: "50%",
+            top: "62%"
+        }
+
+    ];
+
+
+    const position =
+
+        positions[
+            index %
+            positions.length
+        ];
+
+
+    marker.style.left =
+        position.left;
+
+
+    marker.style.top =
+        position.top;
+
+}
+
+
+/* ==========================================================================
+   86. POSITION ALARM PRODUCTS
+   ========================================================================== */
+
+function positionAlarmMarker(
+    marker,
+    index
+) {
+
+    const positions = [
+
+        {
+            left: "43%",
+            top: "48%"
+        },
+
+        {
+            left: "54%",
+            top: "48%"
+        },
+
+        {
+            left: "48%",
+            top: "42%"
+        }
+
+    ];
+
+
+    const position =
+
+        positions[
+            index %
+            positions.length
+        ];
+
+
+    marker.style.left =
+        position.left;
+
+
+    marker.style.top =
+        position.top;
+
+}
+
+
+/* ==========================================================================
+   87. POSITION ACCESS CONTROL
+   ========================================================================== */
+
+function positionAccessMarker(
+    marker
+) {
+
+    marker.style.left =
+        "74%";
+
+
+    marker.style.top =
+        "66%";
+
+}
+
+
+/* ==========================================================================
+   88. POSITION INTERCOM
+   ========================================================================== */
+
+function positionIntercomMarker(
+    marker
+) {
+
+    marker.style.left =
+        "78%";
+
+
+    marker.style.top =
+        "69%";
+
+}
+
+
+/* ==========================================================================
+   89. POSITION GATE PRODUCTS
+   ========================================================================== */
+
+function positionGateMarker(
+    marker
+) {
+
+    marker.style.left =
+        "86%";
+
+
+    marker.style.top =
+        "73%";
+
+}
+
+
+/* ==========================================================================
+   90. POSITION ROBOGUARD PRODUCTS
+   ========================================================================== */
+
+function positionRoboguardMarker(
+    marker,
+    index
+) {
+
+    const positions = [
+
+        {
+            left: "10%",
+            top: "70%"
+        },
+
+        {
+            left: "25%",
+            top: "78%"
+        },
+
+        {
+            left: "72%",
+            top: "79%"
+        },
+
+        {
+            left: "91%",
+            top: "65%"
+        }
+
+    ];
+
+
+    const position =
+
+        positions[
+            index %
+            positions.length
+        ];
+
+
+    marker.style.left =
+        position.left;
+
+
+    marker.style.top =
+        position.top;
+
+}
+
+
+/* ==========================================================================
+   91. POSITION ELECTRIC FENCE PRODUCTS
+   ========================================================================== */
+
+function positionFenceMarker(
+    marker,
+    index
+) {
+
+    const positions = [
+
+        {
+            left: "20%",
+            top: "20%"
+        },
+
+        {
+            left: "38%",
+            top: "17%"
+        },
+
+        {
+            left: "58%",
+            top: "17%"
+        },
+
+        {
+            left: "77%",
+            top: "20%"
+        }
+
+    ];
+
+
+    const position =
+
+        positions[
+            index %
+            positions.length
+        ];
+
+
+    marker.style.left =
+        position.left;
+
+
+    marker.style.top =
+        position.top;
+
+}
+
+
+/* ==========================================================================
+   92. POSITION OTHER PRODUCTS
+   ========================================================================== */
+
+function positionOtherMarker(
+    marker,
+    index
+) {
+
+    const positions = [
+
+        {
+            left: "50%",
+            top: "50%"
+        },
+
+        {
+            left: "35%",
+            top: "60%"
+        },
+
+        {
+            left: "65%",
+            top: "60%"
+        }
+
+    ];
+
+
+    const position =
+
+        positions[
+            index %
+            positions.length
+        ];
+
+
+    marker.style.left =
+        position.left;
+
+
+    marker.style.top =
+        position.top;
+
+}
+
+
+/* ==========================================================================
+   93. POSITION PROPERTY MARKER
+   ========================================================================== */
+
+function positionPropertyMarker(
+    marker,
+    type,
+    index
+) {
+
+    switch (type) {
+
+        case "cctv":
+
+            positionCCTVMarker(
+                marker,
+                index
+            );
+
+            break;
+
+
+        case "fence":
+
+            positionFenceMarker(
+                marker,
+                index
+            );
+
+            break;
+
+
+        case "alarm":
+
+            positionAlarmMarker(
+                marker,
+                index
+            );
+
+            break;
+
+
+        case "access":
+
+            positionAccessMarker(
+                marker
+            );
+
+            break;
+
+
+        case "intercom":
+
+            positionIntercomMarker(
+                marker
+            );
+
+            break;
+
+
+        case "gate":
+
+            positionGateMarker(
+                marker
+            );
+
+            break;
+
+
+        case "roboguard":
+
+            positionRoboguardMarker(
+                marker,
+                index
+            );
+
+            break;
+
+
+        default:
+
+            positionOtherMarker(
+                marker,
+                index
+            );
+
+            break;
+
+    }
+
+}
+
+
+/* ==========================================================================
+   94. ACTIVATE PROPERTY SECURITY ZONES
+   ========================================================================== */
+
+function updatePropertySecurityZones() {
+
+    const fenceCount =
+        propertyState.productTypes.fence;
+
+
+    const cctvCount =
+        propertyState.productTypes.cctv;
+
+
+    const alarmCount =
+        propertyState.productTypes.alarm;
+
+
+    const gateCount =
+        propertyState.productTypes.gate;
+
+
+    const accessCount =
+        propertyState.productTypes.access;
+
+
+    const intercomCount =
+        propertyState.productTypes.intercom;
+
+
+    const roboguardCount =
+        propertyState.productTypes.roboguard;
+
+
+    /* ----------------------------------------------------------------------
+       ELECTRIC FENCE
+       ---------------------------------------------------------------------- */
+
+    if (
+        propertyElements.fence
+    ) {
+
+        propertyElements.fence
+            .classList.toggle(
+                "is-active",
+                fenceCount > 0
+            );
+
+    }
+
+
+    if (
+        propertyElements.perimeter
+    ) {
+
+        propertyElements.perimeter
+            .classList.toggle(
+                "is-active",
+                fenceCount > 0 ||
+                roboguardCount > 0
+            );
+
+    }
+
+
+    /* ----------------------------------------------------------------------
+       GATE
+       ---------------------------------------------------------------------- */
+
+    if (
+        propertyElements.gate
+    ) {
+
+        propertyElements.gate
+            .classList.toggle(
+                "is-active",
+                gateCount > 0 ||
+                accessCount > 0 ||
+                intercomCount > 0
+            );
+
+    }
+
+
+    /* ----------------------------------------------------------------------
+       SECURITY ZONES
+       ---------------------------------------------------------------------- */
+
+    document
+        .querySelectorAll(
+            ".security-zone"
+        )
+        .forEach(
+            function (zone) {
+
+                zone.classList.remove(
+                    "is-active"
+                );
+
+            }
+        );
+
+
+    if (
+        cctvCount > 0 ||
+        accessCount > 0 ||
+        intercomCount > 0
+    ) {
+
+        document
+            .querySelectorAll(
+                ".entrance-zone"
+            )
+            .forEach(
+                zone =>
+                    zone.classList.add(
+                        "is-active"
+                    )
+            );
+
+    }
+
+
+    if (
+        cctvCount > 0 ||
+        gateCount > 0 ||
+        roboguardCount > 0
+    ) {
+
+        document
+            .querySelectorAll(
+                ".driveway-zone"
+            )
+            .forEach(
+                zone =>
+                    zone.classList.add(
+                        "is-active"
+                    )
+            );
+
+    }
+
+
+    if (
+        alarmCount > 0 ||
+        cctvCount > 0
+    ) {
+
+        document
+            .querySelectorAll(
+                ".house-zone"
+            )
+            .forEach(
+                zone =>
+                    zone.classList.add(
+                        "is-active"
+                    )
+            );
+
+    }
+
+}
+
+
+/* ==========================================================================
+   95. RENDER PROPERTY PRODUCTS
+   ========================================================================== */
+
+function renderPropertyProducts() {
+
+    if (
+        !propertyElements.placementLayer
+    ) {
+
+        return;
+
+    }
+
+
+    clearPropertyPlacements();
+
+
+    const selectedProducts =
+        getCurrentSystemProducts();
+
+
+    if (
+        !Array.isArray(
+            selectedProducts
+        ) ||
+        selectedProducts.length === 0
+    ) {
+
+        updatePropertySecurityZones();
+
+        updatePropertyInformation();
+
+        return;
+
+    }
+
+
+    const typeIndexes = {
+
+        cctv: 0,
+
+        fence: 0,
+
+        alarm: 0,
+
+        gate: 0,
+
+        access: 0,
+
+        intercom: 0,
+
+        roboguard: 0,
+
+        other: 0
+
+  
 
 /* ==========================================================================
    NEXPAK SECURITY SOLUTIONS
