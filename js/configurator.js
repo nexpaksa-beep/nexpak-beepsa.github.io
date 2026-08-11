@@ -908,35 +908,65 @@ window.NEXPAK_CONFIGURATOR_CORE = {
 function getProductDatabase() {
 
     /*
-       SHOP_DATA.products is structured by category:
+       NEXPAK V3 PRODUCT DATABASE
 
-           products: {
-               "electric-fencing": [ ... ],
-               "cctv-hd": [ ... ],
-               "cctv-ip": [ ... ],
-               ...
-           }
+       SHOP_DATA.products is organised by category:
 
-       The configurator works with a flat product array,
-       so we flatten the category containers here.
+           SHOP_DATA.products = {
+
+               "electric-fencing": [
+                   product,
+                   product,
+                   product
+               ],
+
+               "cctv-hd": [
+                   product,
+                   product
+               ],
+
+               "cctv-ip": [
+                   product,
+                   product
+               ]
+
+           };
+
+       The configurator needs one flat product array.
+
+       This function therefore converts the category-based
+       database into a single product collection.
 
        IMPORTANT:
-       - Individual products only
-       - No pre-built kits
-       - No products are automatically selected
+       - Products remain individual products.
+       - No kits are created.
+       - No products are automatically selected.
+       - The category is inherited from the database section.
     */
 
+
+    /* ----------------------------------------------------------------------
+       SAFETY CHECK
+       ---------------------------------------------------------------------- */
+
     if (
+        typeof SHOP_DATA === "undefined" ||
         !SHOP_DATA ||
         !SHOP_DATA.products
     ) {
+
+        console.error(
+            "Nexpak Configurator V3: SHOP_DATA.products not found."
+        );
+
         return [];
+
     }
 
 
-    /* ---------------------------------------------------------------
-       ALREADY AN ARRAY
-       --------------------------------------------------------------- */
+    /* ----------------------------------------------------------------------
+       CASE 1 — PRODUCTS ARE ALREADY A FLAT ARRAY
+       ---------------------------------------------------------------------- */
 
     if (
         Array.isArray(
@@ -944,17 +974,24 @@ function getProductDatabase() {
         )
     ) {
 
-        return SHOP_DATA.products;
+        return SHOP_DATA.products.map(
+            function (product) {
+
+                return product;
+
+            }
+        );
 
     }
 
 
-    /* ---------------------------------------------------------------
-       CATEGORY-BASED PRODUCT OBJECT
-       --------------------------------------------------------------- */
+    /* ----------------------------------------------------------------------
+       CASE 2 — PRODUCTS ARE STORED BY CATEGORY
+       ---------------------------------------------------------------------- */
 
     if (
-        typeof SHOP_DATA.products === "object"
+        typeof SHOP_DATA.products ===
+        "object"
     ) {
 
         const products = [];
@@ -971,6 +1008,10 @@ function getProductDatabase() {
                     ];
 
 
+                /* ----------------------------------------------------------
+                   Ignore anything that isn't a product array
+                   ---------------------------------------------------------- */
+
                 if (
                     !Array.isArray(
                         categoryProducts
@@ -981,6 +1022,14 @@ function getProductDatabase() {
 
                 }
 
+
+                /* ----------------------------------------------------------
+                   Convert each category product into a normalised database
+                   record.
+
+                   The category is inherited from the parent object because
+                   your product records themselves do not need to repeat it.
+                   ---------------------------------------------------------- */
 
                 categoryProducts.forEach(
                     function (product) {
@@ -995,26 +1044,41 @@ function getProductDatabase() {
                         }
 
 
-                        /*
-                           Preserve the category from the
-                           database container when the product
-                           itself does not define one.
-                        */
-
                         products.push({
 
                             ...product,
 
+
+                            /* ------------------------------------------------
+                               CATEGORY
+                               ------------------------------------------------ */
+
                             category:
                                 product.category ||
+                                product.systemCategory ||
+                                product.system ||
                                 categoryId,
+
+
+                            /* ------------------------------------------------
+                               SYSTEM CATEGORY
+                               ------------------------------------------------ */
 
                             systemCategory:
                                 product.systemCategory ||
+                                product.category ||
+                                product.system ||
                                 categoryId,
+
+
+                            /* ------------------------------------------------
+                               SYSTEM
+                               ------------------------------------------------ */
 
                             system:
                                 product.system ||
+                                product.systemCategory ||
+                                product.category ||
                                 categoryId
 
                         });
@@ -1026,14 +1090,30 @@ function getProductDatabase() {
         );
 
 
+        console.log(
+            "Nexpak Configurator V3: Product database loaded.",
+            products.length,
+            "individual products."
+        );
+
+
         return products;
 
     }
 
 
+    /* ----------------------------------------------------------------------
+       UNKNOWN DATABASE STRUCTURE
+       ---------------------------------------------------------------------- */
+
+    console.error(
+        "Nexpak Configurator V3: Unsupported SHOP_DATA.products structure."
+    );
+
+
     return [];
 
-}
+                           }
 
 
 /* ==========================================================================
