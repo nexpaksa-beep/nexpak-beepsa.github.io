@@ -9543,3 +9543,31 @@ body {
    END — PART 21B
    3D PROPERTY IMAGE FIT & COMPOSITION
    ============================================================ */
+/* ============================================================
+   CONFIGURATOR V3 — PRODUCT LOADING STATE
+   ------------------------------------------------------------
+   The loading element exists in shop.html as an accessibility
+   element, but V3 product rendering is synchronous.
+   Therefore it must remain hidden unless explicitly activated.
+   ============================================================ */
+
+#configuratorProductLoading {
+    display: none !important;
+}
+
+
+/* If a future V3 loading process explicitly activates it */
+
+#configuratorProductLoading.is-loading,
+#configuratorProductLoading.active,
+#configuratorProductLoading[data-loading="true"] {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+
+/* ============================================================
+   END — CONFIGURATOR LOADING STATE FIX
+   ============================================================ */
