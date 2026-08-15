@@ -2775,7 +2775,394 @@ if (
 /* ==========================================================================
    PART 3 COMPLETE
    ========================================================================== */
+/* ==========================================================================
+   NEXPAK SECURITY SOLUTIONS
+   BUILD YOUR SYSTEM — CONFIGURATOR V3
 
+   PART 3A — CATEGORY CARD CONNECTION
+   CLEAN V3 CATEGORY NAVIGATION
+   ========================================================================== */
+
+
+/* ==========================================================================
+   3A.1 CATEGORY CARD NAVIGATION
+   ========================================================================== */
+
+function initialiseCategoryCardNavigation() {
+
+    const categoryGrid =
+        document.getElementById(
+            "configuratorCategoryGrid"
+        );
+
+
+    if (
+        !categoryGrid
+    ) {
+
+        console.warn(
+            "Nexpak V3: #configuratorCategoryGrid not found."
+        );
+
+        return;
+
+    }
+
+
+    /*
+       Prevent this function from installing
+       duplicate listeners if it is ever called
+       more than once.
+    */
+
+    if (
+        categoryGrid.dataset.nexpakNavigationReady ===
+        "true"
+    ) {
+
+        return;
+
+    }
+
+
+    categoryGrid.dataset.nexpakNavigationReady =
+        "true";
+
+
+    /* ==========================================================================
+       CATEGORY CLICK
+       ========================================================================== */
+
+    categoryGrid.addEventListener(
+        "click",
+        function (
+            event
+        ) {
+
+            const categoryCard =
+                event.target.closest(
+                    ".category-card"
+                );
+
+
+            /*
+               Click was not on a category card.
+            */
+
+            if (
+                !categoryCard ||
+                !categoryGrid.contains(
+                    categoryCard
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            const categoryId =
+                categoryCard.dataset.category;
+
+
+            if (
+                !categoryId
+            ) {
+
+                console.warn(
+                    "Nexpak V3: Category card has no data-category value."
+                );
+
+                return;
+
+            }
+
+
+            console.log(
+                "Nexpak V3: Category clicked:",
+                categoryId
+            );
+
+
+            /* ==================================================================
+               USE THE PUBLIC V3 API
+               ================================================================== */
+
+            const configuratorAPI =
+                window.NEXPAK_CONFIGURATOR;
+
+
+            if (
+                !configuratorAPI
+            ) {
+
+                console.error(
+                    "Nexpak V3: window.NEXPAK_CONFIGURATOR is unavailable."
+                );
+
+                return;
+
+            }
+
+
+            if (
+                typeof configuratorAPI.setCategory !==
+                "function"
+            ) {
+
+                console.error(
+                    "Nexpak V3: setCategory() is unavailable."
+                );
+
+                return;
+
+            }
+
+
+            /*
+               Change the selected category.
+            */
+
+            const changed =
+                configuratorAPI.setCategory(
+                    categoryId
+                );
+
+
+            if (
+                changed === false
+            ) {
+
+                console.warn(
+                    "Nexpak V3: Category could not be selected:",
+                    categoryId
+                );
+
+                return;
+
+            }
+
+
+            /* ==================================================================
+               ACTIVE CATEGORY CARD
+               ================================================================== */
+
+            const allCategoryCards =
+                categoryGrid.querySelectorAll(
+                    ".category-card"
+                );
+
+
+            allCategoryCards.forEach(
+                function (
+                    card
+                ) {
+
+                    const isActive =
+                        card ===
+                        categoryCard;
+
+
+                    card.classList.toggle(
+                        "active",
+                        isActive
+                    );
+
+
+                    card.classList.toggle(
+                        "selected",
+                        isActive
+                    );
+
+
+                    card.setAttribute(
+                        "aria-selected",
+                        isActive
+                            ? "true"
+                            : "false"
+                    );
+
+                }
+            );
+
+
+            /* ==================================================================
+               RENDER PRODUCTS
+               ================================================================== */
+
+            if (
+                typeof renderConfigurator ===
+                "function"
+            ) {
+
+                console.log(
+                    "Nexpak V3: Rendering products for:",
+                    categoryId
+                );
+
+
+                renderConfigurator();
+
+            }
+
+            else {
+
+                console.error(
+                    "Nexpak V3: renderConfigurator() is unavailable."
+                );
+
+                return;
+
+            }
+
+
+            /* ==================================================================
+               PROPERTY REFRESH
+               ================================================================== */
+
+            /*
+               Only refresh the property engine if
+               it exists.
+
+               This does NOT place an electric fence
+               on the property by itself.
+            */
+
+            if (
+                window.NEXPAK_PROPERTY_VISUAL &&
+                typeof
+                window
+                    .NEXPAK_PROPERTY_VISUAL
+                    .scheduleRefresh ===
+                "function"
+            ) {
+
+                window
+                    .NEXPAK_PROPERTY_VISUAL
+                    .scheduleRefresh();
+
+            }
+
+
+            /* ==================================================================
+               CATEGORY CHANGE EVENT
+               ================================================================== */
+
+            document.dispatchEvent(
+                new CustomEvent(
+                    "nexpak:categoryChanged",
+                    {
+
+                        detail: {
+
+                            categoryId:
+                                categoryId,
+
+                            categoryTitle:
+
+                                configuratorAPI.state &&
+                                configuratorAPI.state.categoryTitle
+
+                                    ? configuratorAPI.state.categoryTitle
+
+                                    : categoryId
+
+                        }
+
+                    }
+                )
+            );
+
+
+            console.log(
+                "Nexpak V3: Category change complete:",
+                categoryId
+            );
+
+        }
+    );
+
+
+    /* ==========================================================================
+       INITIAL ACTIVE CATEGORY
+       ========================================================================== */
+
+    const configuratorAPI =
+        window.NEXPAK_CONFIGURATOR;
+
+
+    const initialCategory =
+
+        configuratorAPI &&
+        configuratorAPI.state
+
+            ? configuratorAPI.state.category
+
+            : "electric-fencing";
+
+
+    const initialCard =
+        categoryGrid.querySelector(
+            '.category-card[data-category="' +
+            initialCategory +
+            '"]'
+        );
+
+
+    if (
+        initialCard
+    ) {
+
+        initialCard.classList.add(
+            "active",
+            "selected"
+        );
+
+
+        initialCard.setAttribute(
+            "aria-selected",
+            "true"
+        );
+
+    }
+
+
+    console.log(
+        "Nexpak V3: Category navigation ready."
+    );
+
+}
+
+
+/* ==========================================================================
+   3A.2 INITIALISE CATEGORY NAVIGATION
+   ========================================================================== */
+
+if (
+    document.readyState ===
+    "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initialiseCategoryCardNavigation
+    );
+
+}
+
+else {
+
+    initialiseCategoryCardNavigation();
+
+}
+
+
+/* ==========================================================================
+   PART 3A COMPLETE
+   ========================================================================== */
+
+
+   
 /* ==========================================================================
    NEXPAK SECURITY SOLUTIONS
    BUILD YOUR SYSTEM — CONFIGURATOR V3
