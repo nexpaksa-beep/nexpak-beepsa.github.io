@@ -1721,11 +1721,22 @@ function debugConfiguratorProducts() {
 /* ==========================================================================
    PART 2 COMPLETE
    ========================================================================== */
-                     
 /* ==========================================================================
    NEXPAK SECURITY SOLUTIONS
    BUILD YOUR SYSTEM — CONFIGURATOR V3
-   PART 3 — PRODUCT CARD RENDERING
+
+   PART 3 — PRODUCT RENDERING
+   FIXED V3 MASTER
+
+   PURPOSE
+   --------------------------------------------------------------------------
+   • Render individual products for the selected category
+   • Never directly depend on private Part 1 functions
+   • Use window.NEXPAK_CONFIGURATOR for shared APIs
+   • Handle empty product categories safely
+   • Render product images safely
+   • Render quantities safely
+   • Connect product controls to the existing V3 quantity engine
    ========================================================================== */
 
 
@@ -1733,7 +1744,9 @@ function debugConfiguratorProducts() {
    24. ESCAPE HTML
    ========================================================================== */
 
-function escapeHtml(value) {
+function escapeHtml(
+    value
+) {
 
     return String(
         value ?? ""
@@ -1771,33 +1784,105 @@ function escapeHtml(value) {
    25. FORMAT PRODUCT IMAGE
    ========================================================================== */
 
-function getProductImage(product) {
+function getProductImage(
+    product
+) {
 
     if (
-        product &&
-        product.image
+        !product
     ) {
 
-        return product.image;
+        return "";
 
     }
 
 
-    /*
-       No fake image is generated here.
-       CSS can provide the visual fallback.
-    */
+    return (
 
-    return "";
+        product.image ||
+
+        product.imageUrl ||
+
+        product.img ||
+
+        product.thumbnail ||
+
+        ""
+
+    );
 
 }
 
 
 /* ==========================================================================
-   26. CREATE PRODUCT CARD
+   26. FORMAT PRODUCT PRICE
    ========================================================================== */
 
-function createProductCard(product) {
+function getRenderedProductPrice(
+    product
+) {
+
+    const amount =
+        Number(
+            product &&
+            (
+                product.priceExclVat ??
+                product.price ??
+                product.unitPrice ??
+                0
+            )
+        ) || 0;
+
+
+    /*
+       IMPORTANT:
+
+       Do not call formatMoney() directly.
+
+       Part 1 exposes it through
+       window.NEXPAK_CONFIGURATOR.
+    */
+
+    if (
+        window.NEXPAK_CONFIGURATOR &&
+        typeof
+        window.NEXPAK_CONFIGURATOR.formatMoney ===
+        "function"
+    ) {
+
+        return window
+            .NEXPAK_CONFIGURATOR
+            .formatMoney(
+                amount
+            );
+
+    }
+
+
+    return (
+        "R " +
+        amount.toFixed(2)
+    );
+
+}
+
+
+/* ==========================================================================
+   27. CREATE PRODUCT CARD
+   ========================================================================== */
+
+function createProductCard(
+    product
+) {
+
+    if (
+        !product
+    ) {
+
+        return "";
+
+    }
+
 
     const productId =
         escapeHtml(
@@ -1807,13 +1892,18 @@ function createProductCard(product) {
 
     const productName =
         escapeHtml(
-            product.name
+            product.name ||
+            product.title ||
+            product.label ||
+            "Unnamed Product"
         );
 
 
     const description =
         escapeHtml(
-            product.description
+            product.description ||
+            product.shortDescription ||
+            ""
         );
 
 
@@ -1824,48 +1914,150 @@ function createProductCard(product) {
 
 
     const price =
-        formatMoney(
-            product.price
+        getRenderedProductPrice(
+            product
         );
 
 
-    const existing =
-        state.selections[
-            product.id
-        ];
+    /*
+       Read existing selection safely.
+    */
+
+    let existing =
+        null;
+
+
+    if (
+        typeof state !==
+        "undefined" &&
+        state &&
+        state.selections
+    ) {
+
+        existing =
+            state.selections[
+                product.id
+            ];
+
+    }
 
 
     const quantity =
         existing
-            ? Number(
-                existing.quantity
-            ) || 0
+
+            ? Math.max(
+                0,
+                Number(
+                    existing.quantity
+                ) || 0
+            )
+
             : 0;
 
 
     const selectedClass =
         quantity > 0
+
             ? " selected"
+
             : "";
 
 
-    const imageHtml = image
+    const unit =
+        escapeHtml(
+            product.unit ||
+            "each"
+        );
 
-        ? `
-            <div class="system-product-image">
-                <img
-                    src="${escapeHtml(image)}"
-                    alt="${productName}"
-                    loading="lazy"
+
+    /* ----------------------------------------------------------------------
+       PRODUCT IMAGE
+       ---------------------------------------------------------------------- */
+
+    const imageHtml =
+
+        image
+
+            ? `
+
+                <div
+                    class="system-product-image"
                 >
-            </div>
-          `
 
-        : `
-            <div class="system-product-image no-image">
-                <i class="fa-solid fa-shield-halved"></i>
-            </div>
-          `;
+                    <img
+                        src="${escapeHtml(image)}"
+                        alt="${productName}"
+                        loading="lazy"
+                        onerror="
+                            this.style.display='none';
+                            this.parentElement.classList.add('image-error');
+                        "
+                    >
+
+                </div>
+
+              `
+
+            : `
+
+                <div
+                    class="system-product-image no-image"
+                    aria-hidden="true"
+                >
+
+                    <i
+                        class="fa-solid fa-shield-halved"
+                    ></i>
+
+                </div>
+
+              `;
+
+
+    /* ----------------------------------------------------------------------
+       DESCRIPTION
+       ---------------------------------------------------------------------- */
+
+    const descriptionHtml =
+
+        description
+
+            ? `
+
+                <p
+                    class="system-product-description"
+                >
+                    ${description}
+                </p>
+
+              `
+
+            : "";
+
+
+    /* ----------------------------------------------------------------------
+       SELECTED STATE
+       ---------------------------------------------------------------------- */
+
+    const selectedText =
+
+        quantity > 0
+
+            ? `
+
+                <i
+                    class="fa-solid fa-check"
+                ></i>
+
+                Added to system
+
+              `
+
+            : `
+
+                Select quantity
+
+              `;
 
 
     return `
@@ -1878,42 +2070,43 @@ function createProductCard(product) {
             ${imageHtml}
 
 
-            <div class="system-product-content">
+            <div
+                class="system-product-content"
+            >
 
-                <div class="system-product-info">
+                <div
+                    class="system-product-info"
+                >
 
-                    <h4 class="system-product-name">
+                    <h4
+                        class="system-product-name"
+                    >
                         ${productName}
                     </h4>
 
-
-                    ${
-                        description
-
-                            ? `
-                                <p class="system-product-description">
-                                    ${description}
-                                </p>
-                              `
-
-                            : ""
-                    }
+                    ${descriptionHtml}
 
                 </div>
 
 
-                <div class="system-product-price">
+                <div
+                    class="system-product-price"
+                >
 
                     ${price}
 
-                    <span class="system-product-unit">
-                        / ${escapeHtml(product.unit)}
+                    <span
+                        class="system-product-unit"
+                    >
+                        / ${unit}
                     </span>
 
                 </div>
 
 
-                <div class="system-product-actions">
+                <div
+                    class="system-product-actions"
+                >
 
                     <button
                         type="button"
@@ -1921,7 +2114,11 @@ function createProductCard(product) {
                         data-product-id="${productId}"
                         aria-label="Decrease ${productName} quantity"
                     >
-                        <i class="fa-solid fa-minus"></i>
+
+                        <i
+                            class="fa-solid fa-minus"
+                        ></i>
+
                     </button>
 
 
@@ -1943,26 +2140,21 @@ function createProductCard(product) {
                         data-product-id="${productId}"
                         aria-label="Increase ${productName} quantity"
                     >
-                        <i class="fa-solid fa-plus"></i>
+
+                        <i
+                            class="fa-solid fa-plus"
+                        ></i>
+
                     </button>
 
                 </div>
 
 
-                <div class="system-product-selected">
+                <div
+                    class="system-product-selected"
+                >
 
-                    ${
-                        quantity > 0
-
-                            ? `
-                                <i class="fa-solid fa-check"></i>
-                                Added to system
-                              `
-
-                            : `
-                                Select quantity
-                              `
-                    }
+                    ${selectedText}
 
                 </div>
 
@@ -1976,10 +2168,12 @@ function createProductCard(product) {
 
 
 /* ==========================================================================
-   27. CREATE PRODUCT GROUP
+   28. CREATE PRODUCT GROUP
    ========================================================================== */
 
-function createProductGroup(group) {
+function createProductGroup(
+    group
+) {
 
     if (
         !group ||
@@ -1993,11 +2187,27 @@ function createProductGroup(group) {
     }
 
 
+    const products =
+        group.products;
+
+
+    if (
+        products.length ===
+        0
+    ) {
+
+        return "";
+
+    }
+
+
     const productCards =
-        group.products
+        products
 
             .map(
-                function (product) {
+                function (
+                    product
+                ) {
 
                     return createProductCard(
                         product
@@ -2006,29 +2216,49 @@ function createProductGroup(group) {
                 }
             )
 
-            .join("");
+            .join(
+                ""
+            );
 
 
-    if (!productCards) {
+    if (
+        !productCards
+    ) {
 
         return "";
 
     }
 
 
+    const groupId =
+        escapeHtml(
+            group.id ||
+            "general"
+        );
+
+
+    const groupTitle =
+        escapeHtml(
+            group.title ||
+            "Products"
+        );
+
+
     return `
 
         <section
             class="system-product-group"
-            data-group-id="${escapeHtml(group.id)}"
+            data-group-id="${groupId}"
         >
 
-            <div class="system-group-header">
+            <div
+                class="system-group-header"
+            >
 
                 <div>
 
                     <h3>
-                        ${escapeHtml(group.title)}
+                        ${groupTitle}
                     </h3>
 
                 </div>
@@ -2036,7 +2266,9 @@ function createProductGroup(group) {
             </div>
 
 
-            <div class="system-product-grid">
+            <div
+                class="system-product-grid"
+            >
 
                 ${productCards}
 
@@ -2050,13 +2282,80 @@ function createProductGroup(group) {
 
 
 /* ==========================================================================
-   28. RENDER CURRENT CATEGORY
+   29. UPDATE SUMMARY SAFELY
+   ========================================================================== */
+
+function renderConfiguratorSummary() {
+
+    /*
+       The real summary engine is defined later
+       in configurator.js.
+
+       It is exposed through:
+
+       window.NEXPAK_CONFIGURATOR.updateSummary
+    */
+
+    if (
+        window.NEXPAK_CONFIGURATOR &&
+        typeof
+        window.NEXPAK_CONFIGURATOR.updateSummary ===
+        "function"
+    ) {
+
+        try {
+
+            window
+                .NEXPAK_CONFIGURATOR
+                .updateSummary();
+
+        }
+
+        catch (
+            error
+        ) {
+
+            console.error(
+                "Nexpak V3: Summary update failed.",
+                error
+            );
+
+        }
+
+    }
+
+}
+
+
+/* ==========================================================================
+   30. RENDER CURRENT CATEGORY
    ========================================================================== */
 
 function renderConfigurator() {
 
+    /*
+       Always retrieve the element directly if
+       the shared reference isn't ready.
+    */
+
+    const configuratorElement =
+
+        (
+            typeof elements !==
+            "undefined" &&
+            elements &&
+            elements.configurator
+        )
+
+            ? elements.configurator
+
+            : document.getElementById(
+                "configuratorSelectors"
+            );
+
+
     if (
-        !elements.configurator
+        !configuratorElement
     ) {
 
         console.warn(
@@ -2069,23 +2368,108 @@ function renderConfigurator() {
     }
 
 
-    const products =
-        getCurrentProducts();
+    /*
+       Get the products for the currently
+       selected category.
+    */
+
+    let products = [];
+
+
+    try {
+
+        products =
+            getCurrentProducts();
+
+    }
+
+    catch (
+        error
+    ) {
+
+        console.error(
+            "Nexpak Configurator V3: " +
+            "Unable to retrieve current products.",
+            error
+        );
+
+        configuratorElement.innerHTML = `
+
+            <div
+                class="system-empty-state"
+            >
+
+                <i
+                    class="fa-solid fa-triangle-exclamation"
+                ></i>
+
+                <h3>
+                    Unable to load products
+                </h3>
+
+                <p>
+                    There was a problem loading
+                    the products for this category.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
 
 
     /*
-       No products available.
+       Make absolutely sure we have an array.
     */
 
     if (
-        products.length === 0
+        !Array.isArray(
+            products
+        )
     ) {
 
-        elements.configurator.innerHTML = `
+        products = [];
 
-            <div class="system-empty-state">
+    }
 
-                <i class="fa-solid fa-box-open"></i>
+
+    console.log(
+        "Nexpak V3: Rendering category:",
+        typeof state !== "undefined"
+            ? state.category
+            : "unknown"
+    );
+
+
+    console.log(
+        "Nexpak V3: Products found:",
+        products.length
+    );
+
+
+    /*
+       ---------------------------------------------------------------
+       NO PRODUCTS
+       ---------------------------------------------------------------
+    */
+
+    if (
+        products.length ===
+        0
+    ) {
+
+        configuratorElement.innerHTML = `
+
+            <div
+                class="system-empty-state"
+            >
+
+                <i
+                    class="fa-solid fa-box-open"
+                ></i>
 
                 <h3>
                     Products Coming Soon
@@ -2100,25 +2484,88 @@ function renderConfigurator() {
 
         `;
 
-        updateSummary();
+
+        renderConfiguratorSummary();
 
         return;
 
     }
 
 
-    const groups =
-        groupProducts(
-            products
+    /*
+       ---------------------------------------------------------------
+       GROUP PRODUCTS
+       ---------------------------------------------------------------
+    */
+
+    let groups =
+        {};
+
+
+    try {
+
+        groups =
+            groupProducts(
+                products
+            );
+
+    }
+
+    catch (
+        error
+    ) {
+
+        console.error(
+            "Nexpak V3: Product grouping failed.",
+            error
+        );
+
+        /*
+           Fallback:
+
+           If grouping fails, render all
+           products in one group.
+        */
+
+        groups = {
+
+            general: {
+
+                id:
+                    "general",
+
+                title:
+                    "Products",
+
+                products:
+                    products
+
+            }
+
+        };
+
+    }
+
+
+    const groupList =
+        Object.values(
+            groups
         );
 
 
-    elements.configurator.innerHTML =
+    /*
+       ---------------------------------------------------------------
+       RENDER GROUPS
+       ---------------------------------------------------------------
+    */
 
-        groups
+    const renderedGroups =
+        groupList
 
             .map(
-                function (group) {
+                function (
+                    group
+                ) {
 
                     return createProductGroup(
                         group
@@ -2127,18 +2574,111 @@ function renderConfigurator() {
                 }
             )
 
-            .join("");
+            .filter(
+                function (
+                    html
+                ) {
+
+                    return Boolean(
+                        html
+                    );
+
+                }
+            )
+
+            .join(
+                ""
+            );
 
 
-    attachProductEvents();
+    /*
+       ---------------------------------------------------------------
+       FINAL SAFETY FALLBACK
+       ---------------------------------------------------------------
+    */
 
-    updateSummary();
+    if (
+        !renderedGroups
+    ) {
+
+        configuratorElement.innerHTML = `
+
+            <div
+                class="system-empty-state"
+            >
+
+                <i
+                    class="fa-solid fa-box-open"
+                ></i>
+
+                <h3>
+                    Products Coming Soon
+                </h3>
+
+                <p>
+                    No products are available
+                    for this category yet.
+                </p>
+
+            </div>
+
+        `;
+
+        renderConfiguratorSummary();
+
+        return;
+
+    }
+
+
+    /*
+       ---------------------------------------------------------------
+       WRITE PRODUCTS TO PAGE
+       ---------------------------------------------------------------
+    */
+
+    configuratorElement.innerHTML =
+        renderedGroups;
+
+
+    /*
+       ---------------------------------------------------------------
+       ATTACH QUANTITY CONTROLS
+       ---------------------------------------------------------------
+
+       attachProductEvents() is defined later
+       in the same configurator.js file.
+
+       JavaScript function declarations are
+       available throughout the script.
+    */
+
+    if (
+        typeof attachProductEvents ===
+        "function"
+    ) {
+
+        attachProductEvents();
+
+    }
+
+
+    /*
+       Update totals/summary safely.
+    */
+
+    renderConfiguratorSummary();
+
+
+    console.log(
+        "Nexpak V3: Product rendering complete."
+    );
 
 }
 
 
 /* ==========================================================================
-   29. REFRESH CURRENT PRODUCT DISPLAY
+   31. REFRESH CURRENT PRODUCT DISPLAY
    ========================================================================== */
 
 function refreshConfiguratorProducts() {
@@ -2146,6 +2686,11 @@ function refreshConfiguratorProducts() {
     renderConfigurator();
 
 }
+
+
+/* ==========================================================================
+   PART 3 COMPLETE
+   ========================================================================== */
 
 /* ==========================================================================
    NEXPAK SECURITY SOLUTIONS
