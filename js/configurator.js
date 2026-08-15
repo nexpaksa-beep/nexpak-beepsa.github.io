@@ -2239,9 +2239,12 @@ function initialiseCategoryCardNavigation() {
             */
 
             const changed =
-                setCategory(
-                    categoryId
-                );
+    window.NEXPAK_CONFIGURATOR &&
+    typeof window.NEXPAK_CONFIGURATOR.setCategory === "function"
+        ? window.NEXPAK_CONFIGURATOR.setCategory(
+            categoryId
+        )
+        : false;
 
 
             if (
