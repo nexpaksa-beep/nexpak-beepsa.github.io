@@ -2147,6 +2147,343 @@ function refreshConfiguratorProducts() {
 
 }
 
+/* ==========================================================================
+   NEXPAK SECURITY SOLUTIONS
+   BUILD YOUR SYSTEM — CONFIGURATOR V3
+
+   PART 3A — CATEGORY CARD CONNECTION
+   FIXED CATEGORY SELECTION ENGINE
+   ========================================================================== */
+
+
+/* ==========================================================================
+   3A.1 CATEGORY CARD CLICK HANDLER
+   ========================================================================== */
+
+function initialiseCategoryCardNavigation() {
+
+    const categoryGrid =
+        document.getElementById(
+            "configuratorCategoryGrid"
+        );
+
+
+    if (
+        !categoryGrid
+    ) {
+
+        console.warn(
+            "Nexpak V3: #configuratorCategoryGrid was not found."
+        );
+
+        return;
+
+    }
+
+
+    /*
+       Event delegation is intentional.
+
+       The category buttons already exist in shop.html:
+
+           .category-card
+           data-category="..."
+
+       We don't modify the HTML.
+    */
+
+    categoryGrid.addEventListener(
+        "click",
+        function (event) {
+
+            const categoryButton =
+                event.target.closest(
+                    ".category-card"
+                );
+
+
+            if (
+                !categoryButton
+            ) {
+
+                return;
+
+            }
+
+
+            const categoryId =
+                categoryButton.dataset.category;
+
+
+            if (
+                !categoryId
+            ) {
+
+                console.warn(
+                    "Nexpak V3: Category button has no data-category."
+                );
+
+                return;
+
+            }
+
+
+            console.log(
+                "Nexpak V3: Category selected:",
+                categoryId
+            );
+
+
+            /*
+               Change the active category.
+            */
+
+            const changed =
+                setCategory(
+                    categoryId
+                );
+
+
+            if (
+                !changed
+            ) {
+
+                console.warn(
+                    "Nexpak V3: Unable to select category:",
+                    categoryId
+                );
+
+                return;
+
+            }
+
+
+            /*
+               Mark the selected category card.
+            */
+
+            categoryGrid
+                .querySelectorAll(
+                    ".category-card"
+                )
+                .forEach(
+                    function (button) {
+
+                        button.classList.remove(
+                            "active",
+                            "selected"
+                        );
+
+
+                        button.setAttribute(
+                            "aria-selected",
+                            "false"
+                        );
+
+                    }
+                );
+
+
+            categoryButton.classList.add(
+                "active",
+                "selected"
+            );
+
+
+            categoryButton.setAttribute(
+                "aria-selected",
+                "true"
+            );
+
+
+            /*
+               Update the category heading.
+            */
+
+            if (
+                elements &&
+                elements.categoryTitle
+            ) {
+
+                elements.categoryTitle.textContent =
+                    state.categoryTitle;
+
+            }
+
+
+            /*
+               Update the summary heading.
+            */
+
+            if (
+                elements &&
+                elements.summaryCategory
+            ) {
+
+                elements.summaryCategory.textContent =
+                    state.categoryTitle;
+
+            }
+
+
+            /*
+               THIS IS THE IMPORTANT PART.
+
+               Re-render the actual product list.
+            */
+
+            if (
+                typeof renderConfigurator ===
+                "function"
+            ) {
+
+                renderConfigurator();
+
+            }
+
+
+            /*
+               Tell the rest of the V3 system
+               that the category changed.
+            */
+
+            document.dispatchEvent(
+                new CustomEvent(
+                    "nexpak:categoryChanged",
+                    {
+
+                        detail: {
+
+                            categoryId:
+                                categoryId,
+
+                            categoryTitle:
+                                state.categoryTitle
+
+                        }
+
+                    }
+                )
+            );
+
+
+            /*
+               Refresh property visualisation
+               if the property engine exists.
+            */
+
+            if (
+                window.NEXPAK_PROPERTY_VISUAL &&
+                typeof
+                window
+                    .NEXPAK_PROPERTY_VISUAL
+                    .scheduleRefresh ===
+                "function"
+            ) {
+
+                window
+                    .NEXPAK_PROPERTY_VISUAL
+                    .scheduleRefresh();
+
+            }
+
+
+            /*
+               Scroll the product selector
+               into view on smaller screens.
+            */
+
+            const productSelector =
+                document.getElementById(
+                    "productSelector"
+                );
+
+
+            if (
+                productSelector &&
+                window.innerWidth <= 900
+            ) {
+
+                productSelector.scrollIntoView(
+                    {
+
+                        behavior:
+                            "smooth",
+
+                        block:
+                            "start"
+
+                    }
+                );
+
+            }
+
+        }
+    );
+
+
+    /*
+       Set the initial active category.
+    */
+
+    const initialButton =
+        categoryGrid.querySelector(
+            '.category-card[data-category="' +
+            state.category +
+            '"]'
+        );
+
+
+    if (
+        initialButton
+    ) {
+
+        initialButton.classList.add(
+            "active",
+            "selected"
+        );
+
+
+        initialButton.setAttribute(
+            "aria-selected",
+            "true"
+        );
+
+    }
+
+
+    console.log(
+        "Nexpak V3: Category navigation initialised."
+    );
+
+}
+
+
+/* ==========================================================================
+   3A.2 START CATEGORY NAVIGATION
+   ========================================================================== */
+
+if (
+    document.readyState ===
+    "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initialiseCategoryCardNavigation
+    );
+
+}
+else {
+
+    initialiseCategoryCardNavigation();
+
+}
+
+
+/* ==========================================================================
+   PART 3A COMPLETE
+   ========================================================================== */
 
 /* ==========================================================================
    30. UPDATE PRODUCT CARD VISUAL STATE
