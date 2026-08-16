@@ -3,915 +3,647 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<meta
-    name="theme-color"
-    content="#0057ff"
->
+    <title>
+        NEXPAK Security Store
+    </title>
 
-<meta
-    name="description"
-    content="Nexpak Security Solutions Online Store - Professional security equipment and complete security kits."
->
+    <meta
+        name="description"
+        content="NEXPAK Security Store - Professional security kits delivered to your door."
+    >
 
-<title>
-Nexpak Security Solutions | Online Store
-</title>
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
 
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
 
-<!-- =====================================================
-     GOOGLE FONT
-===================================================== -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
-<link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
 
-<link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-    crossorigin
->
-
-<link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
->
-
-
-<!-- =====================================================
-     FONT AWESOME
-===================================================== -->
-
-<link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
->
-
-
-<!-- =====================================================
-     ONLINE STORE CSS
-===================================================== -->
-
-<link
-    rel="stylesheet"
-    href="online.css"
->
-
+    <link
+        rel="stylesheet"
+        href="online.css"
+    >
 
 </head>
 
 
 <body>
 
+    <!-- ==================================================
+         NEXPAK ONLINE STORE
+         PART 1 — HEADER
+    =================================================== -->
 
-<!-- =====================================================
-     STORE HEADER
-===================================================== -->
-
-<header
-    class="online-header"
->
-
-    <div
-        class="online-container"
+    <header
+        id="onlineHeader"
+        class="online-header"
     >
 
-
-        <!-- =================================================
-             LOGO
-        ================================================== -->
-
-        <a
-            href="../index.html"
-            class="online-logo"
-            aria-label="Nexpak Security Solutions Home"
-        >
-
-            <img
-                src="../images/logo.png"
-                alt="Nexpak Security Solutions"
-            >
-
-        </a>
-
-
-        <!-- =================================================
-             SEARCH
-        ================================================== -->
-
         <div
-            class="online-search"
+            class="online-header-inner"
         >
 
-            <input
-                type="search"
-                id="onlineSearch"
-                placeholder="Search security kits..."
-                autocomplete="off"
-                aria-label="Search security kits"
+            <!-- LOGO -->
+
+            <a
+                href="index.html"
+                class="online-logo"
+                aria-label="NEXPAK Security Solutions Home"
             >
 
+                <span
+                    class="online-logo-mark"
+                >
+                    N
+                </span>
 
-            <button
-                type="button"
-                id="onlineSearchButton"
-                aria-label="Search"
+                <span
+                    class="online-logo-text"
+                >
+                    NEXPAK
+                </span>
+
+            </a>
+
+
+            <!-- MENU -->
+
+            <div
+                class="online-header-actions"
             >
 
-                <i
-                    class="fas fa-search"
-                    aria-hidden="true"
-                ></i>
+                <button
+                    type="button"
+                    id="onlineMenuButton"
+                    class="online-menu-button"
+                    aria-label="Open menu"
+                    aria-expanded="false"
+                    aria-controls="onlineMainMenu"
+                >
 
-            </button>
+                    <i
+                        class="fas fa-bars"
+                    ></i>
+
+                </button>
+
+
+                <!-- CART -->
+
+                <button
+                    type="button"
+                    id="onlineCartButton"
+                    class="online-cart-button"
+                    aria-label="Open shopping cart"
+                >
+
+                    <i
+                        class="fas fa-shopping-cart"
+                    ></i>
+
+                    <span
+                        id="onlineCartCount"
+                        class="online-cart-count"
+                    >
+                        0
+                    </span>
+
+                </button>
+
+            </div>
 
         </div>
 
 
-        <!-- =================================================
-             HEADER ACTIONS
-        ================================================== -->
+        <!-- DROPDOWN MENU -->
 
-        <div
-            class="online-actions"
+        <nav
+            id="onlineMainMenu"
+            class="online-main-menu"
+            aria-label="Main navigation"
+            hidden
         >
 
-
-            <!-- ACCOUNT -->
-
-            <button
-                type="button"
-                id="onlineAccountButton"
-                class="online-action"
-                aria-label="My Account"
+            <a
+                href="index.html"
             >
+                Home
+            </a>
 
-                <i
-                    class="far fa-user"
-                    aria-hidden="true"
-                ></i>
-
-                <span>
-                    Account
-                </span>
-
-            </button>
-
-
-            <!-- WISHLIST -->
-
-            <button
-                type="button"
-                id="onlineWishlistButton"
-                class="online-action"
-                aria-label="Wishlist"
+            <a
+                href="about.html"
             >
+                About Us
+            </a>
 
-                <i
-                    class="far fa-heart"
-                    aria-hidden="true"
-                ></i>
-
-                <span>
-                    Wishlist
-                </span>
-
-                <b
-                    id="onlineWishlistCount"
-                >
-                    0
-                </b>
-
-            </button>
-
-
-            <!-- CART -->
-
-            <button
-                type="button"
-                id="onlineCartButton"
-                class="online-action"
-                data-online-action="open-cart"
-                aria-label="Shopping Cart"
+            <a
+                href="contact.html"
             >
+                Contact Us
+            </a>
 
-                <i
-                    class="fas fa-shopping-cart"
-                    aria-hidden="true"
-                ></i>
+        </nav>
 
-                <span>
-                    Cart
-                </span>
-
-                <b
-                    id="onlineCartCount"
-                >
-                    0
-                </b>
-
-            </button>
-
-
-        </div>
-
-    </div>
-
-</header>
+    </header>
 
 
 
-<!-- =====================================================
-     CATEGORY NAVIGATION
-===================================================== -->
+    <!-- ==================================================
+         BLUE SECURITY BANNER
+    =================================================== -->
 
-<nav
-    class="online-navigation"
-    aria-label="Store Categories"
->
-
-    <div
-        class="online-container"
-        id="onlineCategoryNavigation"
-    >
-
-        <!--
-            Categories will be populated
-            by online.js.
-        -->
-
-    </div>
-
-</nav>
-
-
-
-<!-- =====================================================
-     MAIN STORE
-===================================================== -->
-
-<main>
-
-
-<!-- =====================================================
-     BLUE STORE HERO
-===================================================== -->
-
-<section
-    class="online-hero"
->
-
-    <div
-        class="online-container"
+    <section
+        id="onlineHero"
+        class="online-hero"
     >
 
         <div
             class="online-hero-content"
         >
 
-
-            <!-- HERO LABEL -->
-
-            <span
+            <div
                 class="online-hero-label"
             >
-
-                <i
-                    class="fas fa-shield-halved"
-                    aria-hidden="true"
-                ></i>
-
                 NEXPAK SECURITY STORE
+            </div>
 
-            </span>
-
-
-
-            <!-- HERO HEADING -->
 
             <h1>
-
                 Professional Security.
-
-                <br>
-
-                <strong>
+                <span>
                     Delivered To Your Door.
-                </strong>
-
+                </span>
             </h1>
 
 
-
-            <!-- HERO DESCRIPTION -->
-
-            <p>
-
-                Complete security kits for homes,
-                businesses, estates, farms and
-                other properties.
-
-            </p>
-
-
-
-            <!-- HERO ACTION -->
-
-            <div
-                class="online-hero-actions"
-            >
-
-                <a
-                    href="#kit-shop"
-                    class="hero-shop-btn"
-                >
-
-                    <i
-                        class="fas fa-cart-shopping"
-                        aria-hidden="true"
-                    ></i>
-
-                    Shop Security Kits
-
-                </a>
-
-            </div>
-
-
         </div>
 
-    </div>
-
-</section>
+    </section>
 
 
 
-<!-- =====================================================
-     KIT SHOP START
-===================================================== -->
+    <!-- ==================================================
+         STORE CONTENT STARTS IN PART 2
+    =================================================== -->
 
-<section
-    id="kit-shop"
-    class="online-kit-shop"
->
-
-    <div
-        class="online-container"
+    <main
+        id="onlineStore"
+        class="online-store"
     >
 
-
-        <!-- =================================================
-             PART 2 CONTINUES HERE
-        ================================================== -->
-               <!-- =================================================
-             STORE TOP BAR
-        ================================================== -->
-
-        <div
-            class="store-topbar"
-        >
-
-            <div>
-
-                <small>
-                    NEXPAK ONLINE STORE
-                </small>
-
-                <h2>
-                    Security Kits
-                </h2>
-
-            </div>
-
-
-            <!-- =================================================
-                 SORTING
-            ================================================== -->
-
-            <div
-                class="store-controls"
-            >
-
-                <label
-                    for="onlineSort"
-                >
-                    Sort
-                </label>
-
-                <select
-                    id="onlineSort"
-                    aria-label="Sort security kits"
-                >
-
-                    <option value="default">
-                        Featured
-                    </option>
-
-                    <option value="price-low">
-                        Price: Low to High
-                    </option>
-
-                    <option value="price-high">
-                        Price: High to Low
-                    </option>
-
-                    <option value="name">
-                        Name: A-Z
-                    </option>
-
-                </select>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- =================================================
-             STORE STATUS
-        ================================================== -->
-
-        <div
-            id="onlineStoreStatus"
-            class="online-store-status"
-            aria-live="polite"
-        >
-
-            <span>
-                Security kits
-            </span>
-
-        </div>
-
-
-
-        <!-- =================================================
-             KIT STORE
-        ================================================== -->
-
-        <div
-            id="onlineKitStore"
-            class="online-kit-store"
-        >
-
-
-            <!-- =================================================
-                 LOADING STATE
-            ================================================== -->
-
-            <div
-                id="onlineKitLoading"
-                class="online-kit-loading"
-            >
-
-                <div
-                    class="online-loading-spinner"
-                    aria-hidden="true"
-                ></div>
-
-                <p>
-                    Loading security kits...
-                </p>
-
-            </div>
-
-
-
-            <!-- =================================================
-                 EMPTY STATE
-            ================================================== -->
-
-            <div
-                id="onlineKitEmpty"
-                class="online-kit-empty"
-                hidden
-            >
-
-                <div
-                    class="online-empty-icon"
-                    aria-hidden="true"
-                >
-
-                    <i
-                        class="fas fa-box-open"
-                    ></i>
-
-                </div>
-
-                <h3>
-                    No Security Kits Found
-                </h3>
-
-                <p>
-                    We couldn't find any kits
-                    matching your selection.
-                </p>
-
-                <button
-                    type="button"
-                    class="online-empty-reset"
-                    data-online-action="reset-filters"
-                >
-
-                    View All Kits
-
-                </button>
-
-            </div>
-
-
-
-            <!-- =================================================
-                 DYNAMIC KIT GRID
-            ================================================== -->
-
-            <div
-                id="onlineKitGrid"
-                class="kit-grid"
-                aria-live="polite"
-            >
-
-                <!--
-                    online.js renders the
-                    pre-built kits here.
-
-                    DO NOT add individual
-                    product cards manually.
-                -->
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- =================================================
-             STORE PAGINATION / RESULT AREA
-        ================================================== -->
-
-        <div
-            id="onlineStoreFooter"
-            class="online-store-footer"
-        >
-
-            <div
-                id="onlineResultCount"
-                class="online-result-count"
-            ></div>
-
-                   </div>
-                               <!-- =================================================
-                 END OF STORE FOOTER
-            ================================================== -->
-
-        </div>
-
-
-        <!-- =================================================
-             END OF KIT SHOP CONTAINER
-        ================================================== -->
-
-    </div>
-
-
-    <!-- =====================================================
-         PART 3 CONTINUES HERE
-    ===================================================== -->
-
-       <!-- =====================================================
-         KIT DETAILS MODAL
-    ===================================================== -->
-
-    <div
-        id="onlineKitModal"
-        class="online-modal"
-        hidden
-        aria-hidden="true"
+            <!-- ==================================================
+         NEXPAK ONLINE STORE
+         PART 2 — KIT GRID
+    =================================================== -->
+
+    <section
+        id="onlineKits"
+        class="online-kits-section"
     >
 
         <div
-            class="online-modal-backdrop"
-            data-online-action="close-modal"
-        ></div>
-
-
-        <div
-            class="online-modal-dialog"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="onlineKitModalTitle"
-        >
-
-
-            <!-- =================================================
-                 MODAL HEADER
-            ================================================== -->
-
-            <div
-                class="online-modal-header"
-            >
-
-                <div>
-
-                    <small>
-                        NEXPAK SECURITY KIT
-                    </small>
-
-                    <h2
-                        id="onlineKitModalTitle"
-                    >
-                        Security Kit
-                    </h2>
-
-                </div>
-
-
-                <button
-                    type="button"
-                    class="online-modal-close"
-                    data-online-action="close-modal"
-                    aria-label="Close kit details"
-                >
-
-                    <i
-                        class="fas fa-xmark"
-                        aria-hidden="true"
-                    ></i>
-
-                </button>
-
-            </div>
-
-
-
-            <!-- =================================================
-                 MODAL CONTENT
-            ================================================== -->
-
-            <div
-                id="onlineKitModalContent"
-                class="online-modal-content"
-            >
-
-                <!--
-                    onlineui.js will populate
-                    the selected kit details here.
-                -->
-
-            </div>
-
-
-
-            <!-- =================================================
-                 MODAL FOOTER
-            ================================================== -->
-
-            <div
-                class="online-modal-footer"
-            >
-
-                <button
-                    type="button"
-                    class="online-modal-secondary"
-                    data-online-action="close-modal"
-                >
-
-                    Close
-
-                </button>
-
-
-                <button
-                    type="button"
-                    id="onlineModalAddButton"
-                    class="online-modal-primary"
-                    data-online-action="add-kit"
-                >
-
-                    <i
-                        class="fas fa-cart-plus"
-                        aria-hidden="true"
-                    ></i>
-
-                    Add Kit To Cart
-
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- =====================================================
-         CART DRAWER
-    ===================================================== -->
-
-    <aside
-        id="onlineCartDrawer"
-        class="online-cart-drawer"
-        aria-hidden="true"
-    >
-
-
-        <!-- =================================================
-             CART HEADER
-        ================================================== -->
-
-        <div
-            class="online-cart-header"
-        >
-
-            <div>
-
-                <small>
-                    NEXPAK ONLINE STORE
-                </small>
-
-                <h2>
-                    Your Cart
-                </h2>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="online-cart-close"
-                data-online-action="close-cart"
-                aria-label="Close cart"
-            >
-
-                <i
-                    class="fas fa-xmark"
-                    aria-hidden="true"
-                ></i>
-
-            </button>
-
-        </div>
-
-
-
-        <!-- =================================================
-             CART CONTENT
-        ================================================== -->
-
-        <div
-            id="onlineCartContent"
-            class="online-cart-content"
+            class="online-kits-grid"
+            id="onlineProductGrid"
         >
 
             <!--
-                onlineui.js will render
-                cart items here.
+                KIT CARDS ARE GENERATED BY online.js
+                DO NOT ADD PRODUCTS MANUALLY HERE.
             -->
 
         </div>
 
 
-
-        <!-- =================================================
-             CART SUMMARY
-        ================================================== -->
+        <!-- NO PRODUCTS -->
 
         <div
-            class="online-cart-summary"
+            id="onlineNoProducts"
+            class="online-no-products"
+            hidden
         >
 
-            <div
-                class="online-cart-summary-row"
-            >
+            <i
+                class="fas fa-box-open"
+            ></i>
 
-                <span>
-                    Subtotal EX VAT
-                </span>
-
-                <strong
-                    id="onlineCartSubtotal"
-                >
-                    R0.00
-                </strong>
-
-            </div>
-
-
-            <div
-                class="online-cart-summary-row"
-            >
-
-                <span>
-                    VAT @ 15%
-                </span>
-
-                <strong
-                    id="onlineCartVat"
-                >
-                    R0.00
-                </strong>
-
-            </div>
-
-
-            <div
-                class="online-cart-summary-row"
-            >
-
-                <span>
-                    Delivery
-                </span>
-
-                <strong
-                    id="onlineCartDelivery"
-                >
-                    R0.00
-                </strong>
-
-            </div>
-
-
-            <div
-                class="online-cart-summary-row online-cart-total"
-            >
-
-                <span>
-                    Total Incl VAT
-                </span>
-
-                <strong
-                    id="onlineCartTotal"
-                >
-                    R0.00
-                </strong>
-
-            </div>
-
-
-            <!-- =================================================
-                 CHECKOUT BUTTON
-            ================================================== -->
-
-            <button
-                type="button"
-                id="onlineCheckoutButton"
-                class="online-checkout-button"
-                data-online-action="checkout"
-            >
-
-                <i
-                    class="fas fa-lock"
-                    aria-hidden="true"
-                ></i>
-
-                Proceed To Checkout
-
-            </button>
-
-
-            <p
-                class="online-secure-note"
-            >
-
-                <i
-                    class="fas fa-shield-halved"
-                    aria-hidden="true"
-                ></i>
-
-                Secure NEXPAK checkout
-
+            <p>
+                No security kits available.
             </p>
 
         </div>
 
-    </aside>
+    </section>
 
+            <!-- ==================================================
+         NEXPAK ONLINE STORE
+         PART 3 — KIT OPTIONS & SUMMARY
+    =================================================== -->
 
-
-    <!-- =====================================================
-         CART BACKDROP
-    ===================================================== -->
-
-    <div
-        id="onlineCartBackdrop"
-        class="online-cart-backdrop"
-        data-online-action="close-cart"
+    <section
+        id="onlineKitOptions"
+        class="online-kit-options"
         hidden
-    ></div>
+    >
 
-       <!-- =====================================================
-         DELIVERY + CHECKOUT AREA
-    ===================================================== -->
+        <div
+            class="online-kit-options-inner"
+        >
+
+            <!-- KIT TITLE -->
+
+            <div
+                class="online-kit-options-header"
+            >
+
+                <h2
+                    id="onlineKitOptionsTitle"
+                >
+                    Kit Options
+                </h2>
+
+                <button
+                    type="button"
+                    id="onlineKitOptionsClose"
+                    class="online-kit-options-close"
+                    aria-label="Close kit options"
+                >
+
+                    <i
+                        class="fas fa-times"
+                    ></i>
+
+                </button>
+
+            </div>
+
+
+            <!-- KIT OPTIONS -->
+
+            <div
+                id="onlineKitOptionFields"
+                class="online-kit-option-fields"
+            >
+
+                <!--
+                    online.js inserts only the options
+                    applicable to the selected kit.
+
+                    Examples:
+
+                    Roboguard:
+                    Colour — Black / Green / White
+
+                    Electric Fence:
+                    Bracket Type — Angled / Straight
+
+                    CCTV:
+                    Camera — Dome / Bullet
+                -->
+
+            </div>
+
+
+            <!-- QUANTITY -->
+
+            <div
+                class="online-kit-quantity"
+            >
+
+                <label
+                    for="onlineKitQuantity"
+                >
+                    Quantity
+                </label>
+
+
+                <div
+                    class="online-quantity-control"
+                >
+
+                    <button
+                        type="button"
+                        id="onlineKitQuantityMinus"
+                        aria-label="Decrease quantity"
+                    >
+                        −
+                    </button>
+
+
+                    <input
+                        type="number"
+                        id="onlineKitQuantity"
+                        value="1"
+                        min="1"
+                        step="1"
+                        inputmode="numeric"
+                    >
+
+
+                    <button
+                        type="button"
+                        id="onlineKitQuantityPlus"
+                        aria-label="Increase quantity"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- SUMMARY -->
+
+            <div
+                class="online-kit-summary"
+            >
+
+                <div
+                    class="online-kit-summary-row"
+                >
+
+                    <span>
+                        Kit
+                    </span>
+
+                    <strong
+                        id="onlineKitSummaryName"
+                    >
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div
+                    class="online-kit-summary-row"
+                >
+
+                    <span>
+                        Quantity
+                    </span>
+
+                    <strong
+                        id="onlineKitSummaryQuantity"
+                    >
+                        1
+                    </strong>
+
+                </div>
+
+
+                <div
+                    class="online-kit-summary-row"
+                >
+
+                    <span>
+                        Price EX VAT
+                    </span>
+
+                    <strong
+                        id="onlineKitSummaryExVat"
+                    >
+                        R0.00
+                    </strong>
+
+                </div>
+
+
+                <div
+                    class="online-kit-summary-row"
+                >
+
+                    <span>
+                        VAT
+                    </span>
+
+                    <strong
+                        id="onlineKitSummaryVat"
+                    >
+                        R0.00
+                    </strong>
+
+                </div>
+
+
+                <div
+                    class="online-kit-summary-total"
+                >
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong
+                        id="onlineKitSummaryTotal"
+                    >
+                        R0.00
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div
+                class="online-kit-options-actions"
+            >
+
+                <button
+                    type="button"
+                    id="onlineKitOptionsCancel"
+                    class="online-button online-button-secondary"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="button"
+                    id="onlineKitOptionsAddToCart"
+                    class="online-button online-button-primary"
+                >
+
+                    <i
+                        class="fas fa-cart-plus"
+                    ></i>
+
+                    Add To Cart
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+            <!-- ==================================================
+         NEXPAK ONLINE STORE
+         PART 4 — CART / DELIVERY / CHECKOUT
+    ================================================== -->
+
+    <!-- CART -->
+
+    <section
+        id="onlineCart"
+        class="online-cart-section"
+        hidden
+    >
+
+        <div
+            class="online-cart-inner"
+        >
+
+            <div
+                class="online-cart-header"
+            >
+
+                <h2>
+                    Your Cart
+                </h2>
+
+                <button
+                    type="button"
+                    id="onlineCartClose"
+                    class="online-cart-close"
+                    aria-label="Close cart"
+                >
+                    <i class="fas fa-times"></i>
+                </button>
+
+            </div>
+
+
+            <div
+                id="onlineCartItems"
+                class="online-cart-items"
+            >
+                <!-- Cart kits generated by online.js -->
+            </div>
+
+
+            <div
+                id="onlineCartEmpty"
+                class="online-cart-empty"
+                hidden
+            >
+
+                <i class="fas fa-shopping-cart"></i>
+
+                <p>
+                    Your cart is empty.
+                </p>
+
+            </div>
+
+
+            <div
+                class="online-cart-summary"
+            >
+
+                <div
+                    class="online-summary-row"
+                >
+                    <span>
+                        Subtotal EX VAT
+                    </span>
+
+                    <strong
+                        id="onlineCartSubtotal"
+                    >
+                        R0.00
+                    </strong>
+                </div>
+
+
+                <div
+                    class="online-summary-row"
+                >
+                    <span>
+                        VAT
+                    </span>
+
+                    <strong
+                        id="onlineCartVat"
+                    >
+                        R0.00
+                    </strong>
+                </div>
+
+
+                <div
+                    class="online-summary-row"
+                >
+                    <span>
+                        Delivery
+                    </span>
+
+                    <strong
+                        id="onlineCartDelivery"
+                    >
+                        R0.00
+                    </strong>
+                </div>
+
+
+                <div
+                    class="online-summary-total"
+                >
+                    <span>
+                        Total
+                    </span>
+
+                    <strong
+                        id="onlineCartTotal"
+                    >
+                        R0.00
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                id="onlineProceedCheckout"
+                class="online-button online-button-primary"
+            >
+                Proceed To Checkout
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==================================================
+         CHECKOUT
+    ================================================== -->
 
     <section
         id="onlineCheckout"
@@ -920,716 +652,193 @@ Nexpak Security Solutions | Online Store
     >
 
         <div
-            class="online-container"
+            class="online-checkout-inner"
         >
 
-
-            <!-- =================================================
-                 CHECKOUT HEADER
-            ================================================== -->
-
             <div
-                class="online-checkout-heading"
+                class="online-checkout-header"
             >
-
-                <small>
-                    NEXPAK ONLINE STORE
-                </small>
 
                 <h2>
-                    Secure Checkout
+                    Checkout
                 </h2>
 
-                <p>
-                    Complete your details and select
-                    your preferred payment method.
-                </p>
+            </div>
+
+
+            <!-- CUSTOMER DETAILS -->
+
+            <div
+                class="online-checkout-block"
+            >
+
+                <h3>
+                    Customer Details
+                </h3>
+
+
+                <label
+                    for="onlineCustomerName"
+                >
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="onlineCustomerName"
+                    autocomplete="name"
+                >
+
+
+                <label
+                    for="onlineCustomerEmail"
+                >
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="onlineCustomerEmail"
+                    autocomplete="email"
+                >
+
+
+                <label
+                    for="onlineCustomerPhone"
+                >
+                    Phone
+                </label>
+
+                <input
+                    type="tel"
+                    id="onlineCustomerPhone"
+                    autocomplete="tel"
+                >
 
             </div>
 
 
 
-            <!-- =================================================
-                 CHECKOUT LAYOUT
-            ================================================== -->
+            <!-- DELIVERY -->
 
             <div
-                class="online-checkout-layout"
+                class="online-checkout-block"
             >
 
+                <h3>
+                    Delivery
+                </h3>
 
-                <!-- =================================================
-                     CUSTOMER DETAILS
-                ================================================== -->
 
-                <div
-                    class="online-checkout-card"
+                <label
+                    for="onlineDeliveryAddress"
+                >
+                    Delivery Address
+                </label>
+
+                <textarea
+                    id="onlineDeliveryAddress"
+                    rows="4"
+                ></textarea>
+
+
+                <label
+                    for="onlineDeliveryDistance"
+                >
+                    Distance From NEXPAK
+                </label>
+
+                <input
+                    type="number"
+                    id="onlineDeliveryDistance"
+                    min="0"
+                    step="1"
+                    inputmode="numeric"
                 >
 
-                    <div
-                        class="online-checkout-card-header"
-                    >
-
-                        <span
-                            class="online-checkout-step"
-                        >
-                            1
-                        </span>
-
-                        <div>
-
-                            <small>
-                                CUSTOMER
-                            </small>
-
-                            <h3>
-                                Customer Details
-                            </h3>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div
-                        class="online-form-grid"
-                    >
-
-
-                        <div
-                            class="online-form-field"
-                        >
-
-                            <label
-                                for="onlineCustomerName"
-                            >
-                                Full Name
-                            </label>
-
-                            <input
-                                type="text"
-                                id="onlineCustomerName"
-                                name="customerName"
-                                autocomplete="name"
-                                placeholder="Your full name"
-                            >
-
-                        </div>
-
-
-
-                        <div
-                            class="online-form-field"
-                        >
-
-                            <label
-                                for="onlineCustomerCompany"
-                            >
-                                Company
-                                <span>(Optional)</span>
-                            </label>
-
-                            <input
-                                type="text"
-                                id="onlineCustomerCompany"
-                                name="company"
-                                autocomplete="organization"
-                                placeholder="Company name"
-                            >
-
-                        </div>
-
-
-
-                        <div
-                            class="online-form-field"
-                        >
-
-                            <label
-                                for="onlineCustomerEmail"
-                            >
-                                Email Address
-                            </label>
-
-                            <input
-                                type="email"
-                                id="onlineCustomerEmail"
-                                name="email"
-                                autocomplete="email"
-                                placeholder="you@example.com"
-                            >
-
-                        </div>
-
-
-
-                        <div
-                            class="online-form-field"
-                        >
-
-                            <label
-                                for="onlineCustomerPhone"
-                            >
-                                Phone Number
-                            </label>
-
-                            <input
-                                type="tel"
-                                id="onlineCustomerPhone"
-                                name="phone"
-                                autocomplete="tel"
-                                placeholder="082 000 0000"
-                            >
-
-                        </div>
-
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     DELIVERY DETAILS
-                ================================================== -->
 
                 <div
-                    class="online-checkout-card"
+                    id="onlineDeliverySummary"
+                    class="online-delivery-summary"
                 >
-
-                    <div
-                        class="online-checkout-card-header"
-                    >
-
-                        <span
-                            class="online-checkout-step"
-                        >
-                            2
-                        </span>
-
-                        <div>
-
-                            <small>
-                                DELIVERY
-                            </small>
-
-                            <h3>
-                                Delivery Details
-                            </h3>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div
-                        class="online-form-grid"
-                    >
-
-
-                        <div
-                            class="online-form-field online-form-full"
-                        >
-
-                            <label
-                                for="onlineDeliveryAddress"
-                            >
-                                Delivery Address
-                            </label>
-
-                            <textarea
-                                id="onlineDeliveryAddress"
-                                name="deliveryAddress"
-                                rows="3"
-                                autocomplete="street-address"
-                                placeholder="Street address, suburb and city"
-                            ></textarea>
-
-                        </div>
-
-
-
-                        <div
-                            class="online-form-field"
-                        >
-
-                            <label
-                                for="onlineDeliveryPostalCode"
-                            >
-                                Postal Code
-                            </label>
-
-                            <input
-                                type="text"
-                                id="onlineDeliveryPostalCode"
-                                name="postalCode"
-                                autocomplete="postal-code"
-                                placeholder="0000"
-                            >
-
-                        </div>
-
-
-
-                        <div
-                            class="online-form-field"
-                        >
-
-                            <label
-                                for="onlineDeliveryDistance"
-                            >
-                                Estimated Distance
-                            </label>
-
-                            <div
-                                class="online-input-with-unit"
-                            >
-
-                                <input
-                                    type="number"
-                                    id="onlineDeliveryDistance"
-                                    name="distance"
-                                    min="0"
-                                    step="0.1"
-                                    placeholder="0"
-                                >
-
-                                <span>
-                                    km
-                                </span>
-
-                            </div>
-
-                        </div>
-
-
-                    </div>
-
-
-
-                    <!-- =================================================
-                         DELIVERY SUMMARY
-                    ================================================== -->
-
-                    <div
-                        id="onlineDeliverySummary"
-                        class="online-delivery-summary"
-                    >
-
-                        <div
-                            class="online-delivery-summary-row"
-                        >
-
-                            <span>
-                                Cart Weight
-                            </span>
-
-                            <strong
-                                id="onlineDeliveryWeight"
-                            >
-                                0 kg
-                            </strong>
-
-                        </div>
-
-
-                        <div
-                            class="online-delivery-summary-row"
-                        >
-
-                            <span>
-                                Distance
-                            </span>
-
-                            <strong
-                                id="onlineDeliveryDistanceDisplay"
-                            >
-                                0 km
-                            </strong>
-
-                        </div>
-
-
-                        <div
-                            class="online-delivery-summary-row"
-                        >
-
-                            <span>
-                                Delivery Fee
-                            </span>
-
-                            <strong
-                                id="onlineDeliveryFee"
-                            >
-                                R0.00
-                            </strong>
-
-                        </div>
-
-                    </div>
-
+                    Delivery: R0.00
                 </div>
-
-
-
-                <!-- =================================================
-                     PAYMENT METHOD
-                ================================================== -->
-
-                <div
-                    class="online-checkout-card"
-                >
-
-                    <div
-                        class="online-checkout-card-header"
-                    >
-
-                        <span
-                            class="online-checkout-step"
-                        >
-                            3
-                        </span>
-
-                        <div>
-
-                            <small>
-                                PAYMENT
-                            </small>
-
-                            <h3>
-                                Payment Method
-                            </h3>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div
-                        class="online-payment-options"
-                    >
-
-
-                        <!-- INSTANT EFT -->
-
-                        <label
-                            class="online-payment-option"
-                        >
-
-                            <input
-                                type="radio"
-                                name="paymentMethod"
-                                value="eft"
-                                id="onlinePaymentEft"
-                                checked
-                            >
-
-                            <span
-                                class="online-payment-option-content"
-                            >
-
-                                <strong>
-                                    Instant EFT
-                                </strong>
-
-                                <small>
-                                    Pay directly using
-                                    NEXPAK bank details.
-                                </small>
-
-                            </span>
-
-                        </label>
-
-
-
-                        <!-- PAYFAST PLACEHOLDER -->
-
-                        <label
-                            class="online-payment-option online-payment-disabled"
-                        >
-
-                            <input
-                                type="radio"
-                                name="paymentMethod"
-                                value="payfast"
-                                id="onlinePaymentPayfast"
-                                disabled
-                            >
-
-                            <span
-                                class="online-payment-option-content"
-                            >
-
-                                <strong>
-                                    PayFast
-                                </strong>
-
-                                <small>
-                                    Coming soon
-                                </small>
-
-                            </span>
-
-                        </label>
-
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     ORDER SUMMARY
-                ================================================== -->
-
-                <div
-                    class="online-checkout-card online-order-summary-card"
-                >
-
-                    <div
-                        class="online-checkout-card-header"
-                    >
-
-                        <span
-                            class="online-checkout-step"
-                        >
-                            4
-                        </span>
-
-                        <div>
-
-                            <small>
-                                ORDER
-                            </small>
-
-                            <h3>
-                                Order Summary
-                            </h3>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div
-                        id="onlineCheckoutOrderItems"
-                        class="online-checkout-order-items"
-                    >
-
-                        <!--
-                            onlinecheckout.js renders
-                            the order items here.
-                        -->
-
-                    </div>
-
-
-
-                    <div
-                        class="online-checkout-totals"
-                    >
-
-                        <div>
-
-                            <span>
-                                Subtotal EX VAT
-                            </span>
-
-                            <strong
-                                id="onlineCheckoutSubtotal"
-                            >
-                                R0.00
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>
-                                VAT @ 15%
-                            </span>
-
-                            <strong
-                                id="onlineCheckoutVat"
-                            >
-                                R0.00
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>
-                                Delivery
-                            </span>
-
-                            <strong
-                                id="onlineCheckoutDelivery"
-                            >
-                                R0.00
-                            </strong>
-
-                        </div>
-
-
-                        <div
-                            class="online-checkout-grand-total"
-                        >
-
-                            <span>
-                                Total Incl VAT
-                            </span>
-
-                            <strong
-                                id="onlineCheckoutTotal"
-                            >
-                                R0.00
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-                </div>
-
 
             </div>
 
-        </div>
-
-                       </section>
-
-       <!-- =====================================================
-         PAYMENT AREA
-    ===================================================== -->
-
-    <section
-        id="onlinePaymentArea"
-        class="online-payment-area"
-        hidden
-    >
-
-        <div
-            class="online-container"
-        >
 
 
-            <!-- =================================================
-                 PAYMENT HEADER
-            ================================================== -->
+            <!-- PAYMENT -->
 
             <div
-                class="online-payment-heading"
+                class="online-checkout-block"
             >
 
-                <small>
-                    NEXPAK PAYMENT
-                </small>
+                <h3>
+                    Payment
+                </h3>
 
-                <h2>
-                    Complete Your Payment
-                </h2>
+
+                <label
+                    class="online-payment-option"
+                >
+
+                    <input
+                        type="radio"
+                        name="onlinePaymentMethod"
+                        value="eft"
+                        checked
+                    >
+
+                    <span>
+                        Instant EFT
+                    </span>
+
+                </label>
+
+
+                <label
+                    class="online-payment-option"
+                >
+
+                    <input
+                        type="radio"
+                        name="onlinePaymentMethod"
+                        value="payfast"
+                    >
+
+                    <span>
+                        PayFast
+                    </span>
+
+                </label>
+
+            </div>
+
+
+
+            <!-- EFT DETAILS -->
+
+            <div
+                id="onlineEftDetails"
+                class="online-eft-details"
+            >
+
+                <h3>
+                    Instant EFT
+                </h3>
+
 
                 <p>
-                    Your order has been created.
-                    Use the details below to complete
-                    your Instant EFT payment.
+                    Use your order number as the EFT payment reference.
                 </p>
-
-            </div>
-
-
-
-            <!-- =================================================
-                 ORDER NUMBER
-            ================================================== -->
-
-            <div
-                class="online-payment-order"
-            >
-
-                <span>
-                    Order Number
-                </span>
-
-                <strong
-                    id="onlinePaymentOrderNumber"
-                >
-                    NEX-00000000-0000
-                </strong>
-
-                <small>
-                    Use this order number as your
-                    EFT payment reference.
-                </small>
-
-            </div>
-
-
-
-            <!-- =================================================
-                 INSTANT EFT CARD
-            ================================================== -->
-
-            <div
-                class="online-eft-card"
-            >
 
 
                 <div
-                    class="online-eft-header"
+                    class="online-eft-bank-details"
                 >
-
-                    <div
-                        class="online-eft-icon"
-                    >
-
-                        <i
-                            class="fas fa-building-columns"
-                            aria-hidden="true"
-                        ></i>
-
-                    </div>
 
                     <div>
-
-                        <small>
-                            PAYMENT METHOD
-                        </small>
-
-                        <h3>
-                            Instant EFT
-                        </h3>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     BANK DETAILS
-                ================================================== -->
-
-                <div
-                    class="online-bank-details"
-                >
-
-
-                    <div
-                        class="online-bank-row"
-                    >
-
                         <span>
                             Account Name
                         </span>
@@ -1639,14 +848,10 @@ Nexpak Security Solutions | Online Store
                         >
                             TO BE CONFIGURED
                         </strong>
-
                     </div>
 
 
-                    <div
-                        class="online-bank-row"
-                    >
-
+                    <div>
                         <span>
                             Bank
                         </span>
@@ -1656,14 +861,10 @@ Nexpak Security Solutions | Online Store
                         >
                             TO BE CONFIGURED
                         </strong>
-
                     </div>
 
 
-                    <div
-                        class="online-bank-row"
-                    >
-
+                    <div>
                         <span>
                             Account Number
                         </span>
@@ -1673,14 +874,10 @@ Nexpak Security Solutions | Online Store
                         >
                             TO BE CONFIGURED
                         </strong>
-
                     </div>
 
 
-                    <div
-                        class="online-bank-row"
-                    >
-
+                    <div>
                         <span>
                             Branch Code
                         </span>
@@ -1690,118 +887,44 @@ Nexpak Security Solutions | Online Store
                         >
                             TO BE CONFIGURED
                         </strong>
-
                     </div>
 
-
-                    <div
-                        class="online-bank-row"
-                    >
-
-                        <span>
-                            Account Type
-                        </span>
-
-                        <strong
-                            id="onlineEftAccountType"
-                        >
-                            TO BE CONFIGURED
-                        </strong>
-
-                    </div>
-
-
                 </div>
-
-
-
-                <!-- =================================================
-                     PAYMENT AMOUNT
-                ================================================== -->
-
-                <div
-                    class="online-eft-amount"
-                >
-
-                    <span>
-                        Amount To Pay
-                    </span>
-
-                    <strong
-                        id="onlineEftAmount"
-                    >
-                        R0.00
-                    </strong>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     PAYMENT INSTRUCTION
-                ================================================== -->
-
-                <div
-                    class="online-eft-instruction"
-                >
-
-                    <i
-                        class="fas fa-circle-info"
-                        aria-hidden="true"
-                    ></i>
-
-                    <p>
-
-                        Please use your order number
-                        as the EFT payment reference.
-                        Your payment will be manually
-                        verified before your order is
-                        processed.
-
-                    </p>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     PAYMENT CONFIRMATION BUTTON
-                ================================================== -->
-
-                <button
-                    type="button"
-                    id="onlinePaymentMadeButton"
-                    class="online-payment-made-button"
-                    data-online-action="payment-made"
-                >
-
-                    <i
-                        class="fas fa-check"
-                        aria-hidden="true"
-                    ></i>
-
-                    I've Made Payment
-
-                </button>
-
-
-                <p
-                    class="online-payment-warning"
-                >
-
-                    <i
-                        class="fas fa-shield-halved"
-                        aria-hidden="true"
-                    ></i>
-
-                    NEXPAK will verify your payment
-                    manually. Your order will not be
-                    marked as paid automatically.
-
-                </p>
-
 
             </div>
+
+
+
+            <!-- ORDER TOTAL -->
+
+            <div
+                class="online-checkout-total"
+            >
+
+                <span>
+                    Order Total
+                </span>
+
+                <strong
+                    id="onlineCheckoutTotal"
+                >
+                    R0.00
+                </strong>
+
+            </div>
+
+
+            <!-- PLACE ORDER -->
+
+            <button
+                type="button"
+                id="onlinePlaceOrder"
+                class="online-button online-button-primary"
+            >
+
+                Place Order
+
+            </button>
 
         </div>
 
@@ -1809,9 +932,9 @@ Nexpak Security Solutions | Online Store
 
 
 
-    <!-- =====================================================
-         PAYMENT PENDING AREA
-    ===================================================== -->
+    <!-- ==================================================
+         PAYMENT PENDING
+    ================================================== -->
 
     <section
         id="onlinePaymentPending"
@@ -1820,109 +943,45 @@ Nexpak Security Solutions | Online Store
     >
 
         <div
-            class="online-container"
+            class="online-payment-pending-inner"
         >
 
+            <i class="fas fa-clock"></i>
+
+            <h2>
+                Payment Pending
+            </h2>
+
+            <p>
+                Your order has been received and is awaiting
+                payment verification.
+            </p>
+
+
             <div
-                class="online-pending-card"
+                class="online-order-reference"
             >
 
+                <span>
+                    Order Number
+                </span>
 
-                <div
-                    class="online-pending-icon"
+                <strong
+                    id="onlineOrderNumber"
                 >
-
-                    <i
-                        class="fas fa-clock"
-                        aria-hidden="true"
-                    ></i>
-
-                </div>
-
-
-                <small>
-                    PAYMENT STATUS
-                </small>
-
-
-                <h2>
-                    Payment Pending Verification
-                </h2>
-
-
-                <p>
-
-                    Thank you. We've received your
-                    payment notification.
-
-                    <br>
-
-                    Your order will remain pending
-                    until the EFT payment has been
-                    manually verified by NEXPAK.
-
-                </p>
-
-
-                <div
-                    class="online-pending-order"
-                >
-
-                    <span>
-                        Order Number
-                    </span>
-
-                    <strong
-                        id="onlinePendingOrderNumber"
-                    >
-                        NEX-00000000-0000
-                    </strong>
-
-                </div>
-
-
-                <div
-                    class="online-pending-status"
-                >
-
-                    <span>
-                        Current Status
-                    </span>
-
-                    <strong>
-                        PAYMENT PENDING
-                    </strong>
-
-                </div>
-
-
-                <p
-                    class="online-pending-note"
-                >
-
-                    Please keep your order number
-                    for future reference.
-
-                </p>
-
-
-                <button
-                    type="button"
-                    class="online-return-store-button"
-                    data-online-action="return-store"
-                >
-
-                    <i
-                        class="fas fa-store"
-                        aria-hidden="true"
-                    ></i>
-
-                    Return To Store
-
-                </button>
-
+                    —
+                </strong>
 
             </div>
+
+
+            <button
+                type="button"
+                id="onlinePaymentMade"
+                class="online-button online-button-primary"
+            >
+                I've Made Payment
+            </button>
 
         </div>
 
@@ -1930,9 +989,9 @@ Nexpak Security Solutions | Online Store
 
 
 
-    <!-- =====================================================
-         ORDER CONFIRMATION AREA
-    ===================================================== -->
+    <!-- ==================================================
+         ORDER CONFIRMATION
+    ================================================== -->
 
     <section
         id="onlineOrderConfirmation"
@@ -1941,266 +1000,42 @@ Nexpak Security Solutions | Online Store
     >
 
         <div
-            class="online-container"
+            class="online-order-confirmation-inner"
         >
 
+            <i class="fas fa-check-circle"></i>
+
+            <h2>
+                Order Received
+            </h2>
+
+            <p>
+                Thank you for your order.
+            </p>
+
+
             <div
-                class="online-confirmation-card"
+                class="online-order-reference"
             >
 
-                <div
-                    class="online-confirmation-icon"
+                <span>
+                    Order Number
+                </span>
+
+                <strong
+                    id="onlineConfirmationOrderNumber"
                 >
-
-                    <i
-                        class="fas fa-check"
-                        aria-hidden="true"
-                    ></i>
-
-                </div>
-
-
-                <small>
-                    NEXPAK SECURITY SOLUTIONS
-                </small>
-
-
-                <h2>
-                    Order Received
-                </h2>
-
-
-                <p>
-                    Your order has been successfully
-                    created and is awaiting payment
-                    verification.
-                </p>
-
-
-                <div
-                    class="online-confirmation-order"
-                >
-
-                    <span>
-                        Order Number
-                    </span>
-
-                    <strong
-                        id="onlineConfirmationOrderNumber"
-                    >
-                        NEX-00000000-0000
-                    </strong>
-
-                </div>
-
-
-                <div
-                    class="online-confirmation-status"
-                >
-
-                    <span>
-                        Status
-                    </span>
-
-                    <strong>
-                        PAYMENT PENDING
-                    </strong>
-
-                </div>
-
-
-                <button
-                    type="button"
-                    class="online-return-store-button"
-                    data-online-action="return-store"
-                >
-
-                    <i
-                        class="fas fa-store"
-                        aria-hidden="true"
-                    ></i>
-
-                    Continue Shopping
-
-                </button>
-
+                    —
+                </strong>
 
             </div>
 
-        </div>
-
-                   </section>
-
-       <!-- =====================================================
-         STORE INFORMATION
-    ===================================================== -->
-
-    <section
-        class="online-store-information"
-        id="onlineStoreInformation"
-    >
-
-        <div
-            class="online-container"
-        >
 
             <div
-                class="online-info-grid"
+                id="onlineConfirmationSummary"
+                class="online-confirmation-summary"
             >
-
-
-                <!-- =================================================
-                     PRE-BUILT KITS
-                ================================================== -->
-
-                <div
-                    class="online-info-card"
-                >
-
-                    <div
-                        class="online-info-icon"
-                    >
-
-                        <i
-                            class="fas fa-box-open"
-                            aria-hidden="true"
-                        ></i>
-
-                    </div>
-
-                    <div>
-
-                        <h3>
-                            Complete Security Kits
-                        </h3>
-
-                        <p>
-                            Professionally selected
-                            pre-built kits designed for
-                            residential, commercial,
-                            agricultural and estate
-                            security applications.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     DELIVERY
-                ================================================== -->
-
-                <div
-                    class="online-info-card"
-                >
-
-                    <div
-                        class="online-info-icon"
-                    >
-
-                        <i
-                            class="fas fa-truck-fast"
-                            aria-hidden="true"
-                        ></i>
-
-                    </div>
-
-                    <div>
-
-                        <h3>
-                            Delivery Available
-                        </h3>
-
-                        <p>
-                            Delivery is calculated from
-                            distance and total kit weight,
-                            with the applicable minimum
-                            and maximum delivery limits.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     EFT
-                ================================================== -->
-
-                <div
-                    class="online-info-card"
-                >
-
-                    <div
-                        class="online-info-icon"
-                    >
-
-                        <i
-                            class="fas fa-building-columns"
-                            aria-hidden="true"
-                        ></i>
-
-                    </div>
-
-                    <div>
-
-                        <h3>
-                            Instant EFT
-                        </h3>
-
-                        <p>
-                            Pay directly by EFT using the
-                            NEXPAK banking details supplied
-                            during checkout. Payments are
-                            manually verified.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     SUPPORT
-                ================================================== -->
-
-                <div
-                    class="online-info-card"
-                >
-
-                    <div
-                        class="online-info-icon"
-                    >
-
-                        <i
-                            class="fas fa-headset"
-                            aria-hidden="true"
-                        ></i>
-
-                    </div>
-
-                    <div>
-
-                        <h3>
-                            Security Support
-                        </h3>
-
-                        <p>
-                            Need help selecting the right
-                            kit? Contact NEXPAK Security
-                            Solutions before placing your
-                            order.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
+                <!-- Confirmation generated by onlinecheckout.js -->
             </div>
 
         </div>
@@ -2209,667 +1044,85 @@ Nexpak Security Solutions | Online Store
 
 
 
-    <!-- =====================================================
-         DELIVERY NOTICE
-    ===================================================== -->
-
-    <section
-        class="online-delivery-notice"
-    >
-
-        <div
-            class="online-container"
-        >
-
-            <div
-                class="online-delivery-notice-content"
-            >
-
-                <div
-                    class="online-delivery-notice-icon"
-                >
-
-                    <i
-                        class="fas fa-truck"
-                        aria-hidden="true"
-                    ></i>
-
-                </div>
-
-
-                <div>
-
-                    <small>
-                        DELIVERY INFORMATION
-                    </small>
-
-                    <h2>
-                        Delivery Calculated At Checkout
-                    </h2>
-
-                    <p>
-                        Delivery is calculated according
-                        to distance and the combined weight
-                        of the kits in your cart.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         ONLINE STORE FOOTER
-    ===================================================== -->
+    <!-- ==================================================
+         FOOTER
+    ================================================== -->
 
     <footer
+        id="onlineFooter"
         class="online-footer"
     >
 
         <div
-            class="online-container"
+            class="online-footer-inner"
         >
 
             <div
-                class="online-footer-grid"
+                class="online-footer-brand"
             >
 
-
-                <!-- =================================================
-                     COMPANY
-                ================================================== -->
-
-                <div
-                    class="online-footer-brand"
-                >
-
-                    <a
-                        href="../index.html"
-                        class="online-footer-logo"
-                    >
-
-                        <img
-                            src="../images/logo.png"
-                            alt="Nexpak Security Solutions"
-                        >
-
-                    </a>
-
-
-                    <p>
-                        Professional security solutions
-                        for homes, businesses, estates,
-                        farms and properties across
-                        South Africa.
-                    </p>
-
-
-                    <div
-                        class="online-footer-social"
-                    >
-
-                        <a
-                            href="#"
-                            aria-label="Facebook"
-                        >
-
-                            <i
-                                class="fab fa-facebook-f"
-                                aria-hidden="true"
-                            ></i>
-
-                        </a>
-
-
-                        <a
-                            href="#"
-                            aria-label="WhatsApp"
-                        >
-
-                            <i
-                                class="fab fa-whatsapp"
-                                aria-hidden="true"
-                            ></i>
-
-                        </a>
-
-
-                        <a
-                            href="#"
-                            aria-label="Instagram"
-                        >
-
-                            <i
-                                class="fab fa-instagram"
-                                aria-hidden="true"
-                            ></i>
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     ONLINE STORE
-                ================================================== -->
-
-                <div
-                    class="online-footer-column"
-                >
-
-                    <h3>
-                        Online Store
-                    </h3>
-
-                    <a
-                        href="#kit-shop"
-                    >
-                        Security Kits
-                    </a>
-
-                    <a
-                        href="#onlineCheckout"
-                    >
-                        Checkout
-                    </a>
-
-                    <a
-                        href="#onlinePaymentArea"
-                    >
-                        Payment
-                    </a>
-
-                    <a
-                        href="#onlineStoreInformation"
-                    >
-                        Delivery Information
-                    </a>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     SECURITY SYSTEMS
-                ================================================== -->
-
-                <div
-                    class="online-footer-column"
-                >
-
-                    <h3>
-                        Security Systems
-                    </h3>
-
-                    <a
-                        href="../products.html"
-                    >
-                        CCTV
-                    </a>
-
-                    <a
-                        href="../products.html"
-                    >
-                        Electric Fencing
-                    </a>
-
-                    <a
-                        href="../products.html"
-                    >
-                        Alarm Systems
-                    </a>
-
-                    <a
-                        href="../products.html"
-                    >
-                        Gate Automation
-                    </a>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     CONTACT
-                ================================================== -->
-
-                <div
-                    class="online-footer-column"
-                >
-
-                    <h3>
-                        NEXPAK Security
-                    </h3>
-
-                    <a
-                        href="../contact.html"
-                    >
-                        Contact Us
-                    </a>
-
-                    <a
-                        href="../shop.html"
-                    >
-                        Build Your System
-                    </a>
-
-                    <a
-                        href="../about.html"
-                    >
-                        About NEXPAK
-                    </a>
-
-                    <span>
-                        South Africa
-                    </span>
-
-                </div>
-
-
-            </div>
-
-
-
-            <!-- =================================================
-                 FOOTER BOTTOM
-            ================================================== -->
-
-            <div
-                class="online-footer-bottom"
-            >
-
-                <span>
-                    © 2026 Nexpak Security Solutions.
-                    All rights reserved.
-                </span>
-
-
-                <span>
-                    Online Store
-                </span>
-
-            </div>
-
-        </div>
-
-               </footer>
-
-       <!-- =====================================================
-         GLOBAL ONLINE STORE UI
-    ===================================================== -->
-
-
-    <!-- =====================================================
-         NOTIFICATION / TOAST
-    ===================================================== -->
-
-    <div
-        id="onlineToast"
-        class="online-toast"
-        role="status"
-        aria-live="polite"
-        aria-atomic="true"
-        hidden
-    >
-
-        <div
-            class="online-toast-icon"
-            aria-hidden="true"
-        >
-
-            <i
-                class="fas fa-circle-check"
-            ></i>
-
-        </div>
-
-
-        <div
-            class="online-toast-content"
-        >
-
-            <strong
-                id="onlineToastTitle"
-            >
-                NEXPAK Online Store
-            </strong>
-
-            <span
-                id="onlineToastMessage"
-            >
-                Action completed.
-            </span>
-
-        </div>
-
-
-        <button
-            type="button"
-            class="online-toast-close"
-            data-online-action="close-toast"
-            aria-label="Close notification"
-        >
-
-            <i
-                class="fas fa-xmark"
-                aria-hidden="true"
-            ></i>
-
-        </button>
-
-    </div>
-
-
-
-    <!-- =====================================================
-         GLOBAL LOADING OVERLAY
-    ===================================================== -->
-
-    <div
-        id="onlineLoadingOverlay"
-        class="online-loading-overlay"
-        hidden
-        aria-hidden="true"
-    >
-
-        <div
-            class="online-loading-card"
-        >
-
-            <div
-                class="online-loading-spinner"
-                aria-hidden="true"
-            ></div>
-
-
-            <strong
-                id="onlineLoadingTitle"
-            >
-                Please wait
-            </strong>
-
-
-            <p
-                id="onlineLoadingMessage"
-            >
-                Processing your request...
-            </p>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- =====================================================
-         CONFIRMATION DIALOG
-    ===================================================== -->
-
-    <div
-        id="onlineConfirmDialog"
-        class="online-confirm-dialog"
-        hidden
-        aria-hidden="true"
-    >
-
-        <div
-            class="online-confirm-backdrop"
-            data-online-action="close-confirm"
-        ></div>
-
-
-        <div
-            class="online-confirm-card"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="onlineConfirmTitle"
-        >
-
-            <div
-                class="online-confirm-icon"
-            >
-
-                <i
-                    class="fas fa-circle-question"
-                    aria-hidden="true"
-                ></i>
-
-            </div>
-
-
-            <h2
-                id="onlineConfirmTitle"
-            >
-                Confirm Action
-            </h2>
-
-
-            <p
-                id="onlineConfirmMessage"
-            >
-                Are you sure you want to continue?
-            </p>
-
-
-            <div
-                class="online-confirm-actions"
-            >
-
-                <button
-                    type="button"
-                    class="online-confirm-cancel"
-                    data-online-action="close-confirm"
-                >
-                    Cancel
-                </button>
-
-
-                <button
-                    type="button"
-                    id="onlineConfirmButton"
-                    class="online-confirm-primary"
-                    data-online-action="confirm"
-                >
-                    Confirm
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- =====================================================
-         WHATSAPP FLOATING BUTTON
-    ===================================================== -->
-
-    <a
-        href="https://wa.me/"
-        class="nexpak-whatsapp"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Contact Nexpak Security Solutions on WhatsApp"
-    >
-
-        <i
-            class="fab fa-whatsapp"
-            aria-hidden="true"
-        ></i>
-
-
-        <span
-            class="nexpak-whatsapp-label"
-        >
-            Chat With NEXPAK
-        </span>
-
-    </a>
-
-
-
-    <!-- =====================================================
-         BACK TO TOP
-    ===================================================== -->
-
-    <button
-        type="button"
-        id="onlineBackToTop"
-        class="online-back-to-top"
-        aria-label="Back to top"
-        data-online-action="back-to-top"
-    >
-
-        <i
-            class="fas fa-arrow-up"
-            aria-hidden="true"
-        ></i>
-
-    </button>
-
-
-
-    <!-- =====================================================
-         MOBILE CART BAR
-    ===================================================== -->
-
-    <div
-        id="onlineMobileCartBar"
-        class="online-mobile-cart-bar"
-    >
-
-        <div
-            class="online-mobile-cart-info"
-        >
-
-            <i
-                class="fas fa-cart-shopping"
-                aria-hidden="true"
-            ></i>
-
-
-            <span>
-
-                Cart
-
-                <strong
-                    id="onlineMobileCartCount"
-                >
-                    0
+                <strong>
+                    NEXPAK
                 </strong>
 
-            </span>
+                <span>
+                    Security Solutions
+                </span>
+
+            </div>
+
+
+            <div
+                class="online-footer-links"
+            >
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="about.html">
+                    About Us
+                </a>
+
+                <a href="contact.html">
+                    Contact Us
+                </a>
+
+            </div>
+
+
+            <p>
+                © 2026 NEXPAK Security Solutions.
+            </p>
 
         </div>
 
-
-        <button
-            type="button"
-            data-online-action="open-cart"
-        >
-
-            View Cart
-
-        </button>
-
-           </div>
-
-       <!-- =====================================================
-         ONLINE STORE JAVASCRIPT
-    ===================================================== -->
-
-
-    <!-- =====================================================
-         STORE DATA
-         Must load first.
-    ===================================================== -->
-
-    <script
-        src="online-data.js"
-    ></script>
-
-
-    <!-- =====================================================
-         ONLINE STORE ENGINE
-    ===================================================== -->
-
-    <script
-        src="online.js"
-    ></script>
-
-
-    <!-- =====================================================
-         ONLINE CONFIGURATOR
-         Existing architecture file.
-         Do not confuse with Build Your System
-         configurator.js.
-    ===================================================== -->
-
-    <script
-        src="onlineconfigurator.js"
-    ></script>
-
-
-    <!-- =====================================================
-         DELIVERY ENGINE
-    ===================================================== -->
-
-    <script
-        src="onlinedelivery.js"
-    ></script>
-
-
-    <!-- =====================================================
-         CHECKOUT ENGINE
-    ===================================================== -->
-
-    <script
-        src="onlinecheckout.js"
-    ></script>
-
-
-    <!-- =====================================================
-         INTEGRATION BRIDGE
-    ===================================================== -->
-
-    <script
-        src="onlineintegration.js"
-    ></script>
-
-
-    <!-- =====================================================
-         USER INTERFACE
-         Loads last so the complete UI can connect
-         to the existing store engines.
-    ===================================================== -->
-
-    <script
-        src="onlineui.js"
-    ></script>
-
+    </footer>
 
 
 </main>
 
 
-<!-- =====================================================
-     END BODY
-===================================================== -->
+
+<!-- ==================================================
+     ONLINE STORE JAVASCRIPT
+================================================== -->
+
+<script src="online-data.js"></script>
+
+<script src="online.js"></script>
+
+<script src="onlineconfigurator.js"></script>
+
+<script src="onlinedelivery.js"></script>
+
+<script src="onlinecheckout.js"></script>
+
+<script src="onlineintegration.js"></script>
+
+<script src="onlineui.js"></script>
+
 
 </body>
 
-
-<!-- =====================================================
-     END HTML
-===================================================== -->
-
-</html>
+    </html>
