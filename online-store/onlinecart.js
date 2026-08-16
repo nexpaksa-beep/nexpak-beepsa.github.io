@@ -1,362 +1,154 @@
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE — CART ENGINE
- ---------------------------------------------------------
- File: onlinecart.js
- Part: 1/8
- Purpose:
- Core cart foundation, storage, state management,
- product lookup, validation and cart API.
-=========================================================*/
+/* =========================================================
+   NEXPAK ONLINE STORE — CART ENGINE
+   onlinecart.js
+   PART 1 — CART CORE + STORAGE
+   ========================================================= */
 
 (function () {
 
     "use strict";
 
-    /*=====================================================
-      CART ENGINE CONFIGURATION
-    =====================================================*/
 
-    const NEXPAK_ONLINE_CART = {
+    /* =====================================================
+       1. CART CONFIGURATION
+       ===================================================== */
 
-        VERSION: "1.0.0",
-
-        STORAGE_KEY: "nexpak_online_cart_v1",
-
-        CURRENCY: "ZAR",
-
-        DEFAULT_QUANTITY: 1,
-
-        MIN_QUANTITY: 1,
-
-        MAX_QUANTITY: 999,
-
-        DEBUG: false
-
-    };
+    const CART_STORAGE_KEY =
+        "NEXPAK_ONLINE_CART";
 
 
-    /*=====================================================
-      INTERNAL CART STATE
-    =====================================================*/
-
-    let cart = [];
+    const CART_VERSION =
+        1;
 
 
-    /*=====================================================
-      DEBUG LOGGER
-    =====================================================*/
+    /* =====================================================
+       2. CART STATE
+       ===================================================== */
 
-    function log() {
+    let nexpakOnlineCart = [];
 
-        if (!NEXPAK_ONLINE_CART.DEBUG) {
-            return;
-        }
 
-        console.log(
-            "[NEXPAK ONLINE CART]",
-            ...arguments
-        );
+    /* =====================================================
+       3. SAFE NUMBER
+       ===================================================== */
 
+    function safeCartNumber(value, fallback = 0) {
+
+        const number =
+            Number(value);
+
+        return Number.isFinite(number)
+            ? number
+            : fallback;
     }
 
 
-    /*=====================================================
-      SAFE NUMBER
-    =====================================================*/
+    /* =====================================================
+       4. SAFE INTEGER
+       ===================================================== */
 
-    function safeNumber(value, fallback) {
+    function safeCartInteger(value, fallback = 1) {
 
-        const number = Number(value);
+        const number =
+            parseInt(value, 10);
 
-        if (!Number.isFinite(number)) {
-            return fallback || 0;
-        }
-
-        return number;
-
+        return Number.isFinite(number)
+            ? number
+            : fallback;
     }
 
 
-    /*=====================================================
-      NORMALISE QUANTITY
-    =====================================================*/
+    /* =====================================================
+       5. NORMALISE QUANTITY
+       ===================================================== */
 
-    function normalizeQuantity(quantity) {
+    function normaliseCartQuantity(quantity) {
 
-        quantity = Math.floor(
-            safeNumber(
-                quantity,
-                NEXPAK_ONLINE_CART.DEFAULT_QUANTITY
-            )
-        );
+        quantity =
+            safeCartInteger(quantity, 1);
 
-        if (
-            quantity <
-            NEXPAK_ONLINE_CART.MIN_QUANTITY
-        ) {
-            quantity =
-                NEXPAK_ONLINE_CART.MIN_QUANTITY;
+
+        if (quantity < 1) {
+
+            quantity = 1;
+
         }
 
-        if (
-            quantity >
-            NEXPAK_ONLINE_CART.MAX_QUANTITY
-        ) {
-            quantity =
-                NEXPAK_ONLINE_CART.MAX_QUANTITY;
-        }
 
         return quantity;
 
     }
 
 
-    /*=====================================================
-      NORMALISE PRODUCT ID
-    =====================================================*/
+    /* =====================================================
+       6. NORMALISE KIT ID
+       ===================================================== */
 
-    function normalizeProductId(productId) {
+    function normaliseCartKitId(kit) {
 
-        if (
-            productId === null ||
-            productId === undefined
-        ) {
+        if (!kit) {
+
             return "";
-        }
-
-        return String(productId).trim();
-
-    }
-
-
-    /*=====================================================
-      FIND PRODUCT IN ONLINE DATABASE
-    =====================================================*/
-
-    function findProduct(productId) {
-
-        productId = normalizeProductId(productId);
-
-        if (!productId) {
-            return null;
-        }
-
-
-        /*
-         * The completed online-data.js may expose the
-         * product database under different public names.
-         * We check the common NEXPAK data structures first.
-         */
-
-        const possibleSources = [
-
-            window.NEXPAK_ONLINE_PRODUCTS,
-
-            window.onlineProducts,
-
-            window.ONLINE_PRODUCTS,
-
-            window.nexpakProducts,
-
-            window.products,
-
-            window.PRODUCTS
-
-        ];
-
-
-        for (let i = 0; i < possibleSources.length; i++) {
-
-            const source = possibleSources[i];
-
-            if (!source) {
-                continue;
-            }
-
-
-            /*---------------------------------------------
-              ARRAY DATABASE
-            ---------------------------------------------*/
-
-            if (Array.isArray(source)) {
-
-                const product = source.find(function (item) {
-
-                    if (!item) {
-                        return false;
-                    }
-
-                    const id =
-                        item.id ??
-                        item.productId ??
-                        item.productID ??
-                        item.sku ??
-                        item.code;
-
-                    return (
-                        normalizeProductId(id) ===
-                        productId
-                    );
-
-                });
-
-                if (product) {
-                    return product;
-                }
-
-            }
-
-
-            /*---------------------------------------------
-              OBJECT DATABASE
-            ---------------------------------------------*/
-
-            if (
-                typeof source === "object" &&
-                !Array.isArray(source)
-            ) {
-
-                if (source[productId]) {
-                    return source[productId];
-                }
-
-
-                const values =
-                    Object.values(source);
-
-                const product =
-                    values.find(function (item) {
-
-                        if (!item) {
-                            return false;
-                        }
-
-                        const id =
-                            item.id ??
-                            item.productId ??
-                            item.productID ??
-                            item.sku ??
-                            item.code;
-
-                        return (
-                            normalizeProductId(id) ===
-                            productId
-                        );
-
-                    });
-
-                if (product) {
-                    return product;
-                }
-
-            }
 
         }
 
-
-        /*---------------------------------------------
-          OPTIONAL DATABASE FUNCTION
-        ---------------------------------------------*/
-
-        if (
-            typeof window.getOnlineProduct ===
-            "function"
-        ) {
-
-            try {
-
-                const product =
-                    window.getOnlineProduct(productId);
-
-                if (product) {
-                    return product;
-                }
-
-            } catch (error) {
-
-                log(
-                    "getOnlineProduct() error:",
-                    error
-                );
-
-            }
-
-        }
-
-
-        return null;
-
-    }
-
-
-    /*=====================================================
-      PRODUCT ID EXTRACTION
-    =====================================================*/
-
-    function getProductId(product) {
-
-        if (!product) {
-            return "";
-        }
-
-        return normalizeProductId(
-
-            product.id ??
-            product.productId ??
-            product.productID ??
-            product.sku ??
-            product.code
-
-        );
-
-    }
-
-
-    /*=====================================================
-      PRODUCT NAME EXTRACTION
-    =====================================================*/
-
-    function getProductName(product) {
-
-        if (!product) {
-            return "NEXPAK Product";
-        }
 
         return String(
-
-            product.name ??
-            product.title ??
-            product.productName ??
-            "NEXPAK Product"
-
+            kit.id ||
+            kit.kitId ||
+            kit.slug ||
+            kit.code ||
+            ""
         ).trim();
 
     }
 
 
-    /*=====================================================
-      PRODUCT PRICE EXTRACTION
-    =====================================================*/
+    /* =====================================================
+       7. NORMALISE KIT NAME
+       ===================================================== */
 
-    function getProductPrice(product) {
+    function normaliseCartKitName(kit) {
 
-        if (!product) {
+        if (!kit) {
+
+            return "NEXPAK Security Kit";
+
+        }
+
+
+        return String(
+            kit.name ||
+            kit.kitName ||
+            kit.title ||
+            kit.label ||
+            "NEXPAK Security Kit"
+        ).trim();
+
+    }
+
+
+    /* =====================================================
+       8. NORMALISE KIT PRICE
+       ===================================================== */
+
+    function normaliseCartKitPrice(kit) {
+
+        if (!kit) {
+
             return 0;
+
         }
 
 
         const possiblePrices = [
 
-            product.price,
-
-            product.salePrice,
-
-            product.sellingPrice,
-
-            product.unitPrice,
-
-            product.amount
+            kit.priceExVat,
+            kit.priceExVAT,
+            kit.exVatPrice,
+            kit.exVATPrice,
+            kit.price,
+            kit.kitPrice
 
         ];
 
@@ -368,13 +160,16 @@
         ) {
 
             const price =
-                Number(possiblePrices[i]);
+                safeCartNumber(
+                    possiblePrices[i],
+                    NaN
+                );
 
-            if (
-                Number.isFinite(price) &&
-                price >= 0
-            ) {
-                return price;
+
+            if (Number.isFinite(price)) {
+
+                return Math.max(0, price);
+
             }
 
         }
@@ -385,23 +180,75 @@
     }
 
 
-    /*=====================================================
-      PRODUCT IMAGE EXTRACTION
-    =====================================================*/
+    /* =====================================================
+       9. NORMALISE KIT WEIGHT
+       ===================================================== */
 
-    function getProductImage(product) {
+    function normaliseCartKitWeight(kit) {
 
-        if (!product) {
-            return "";
+        if (!kit) {
+
+            return 0;
+
         }
+
+
+        const possibleWeights = [
+
+            kit.weight,
+            kit.weightKg,
+            kit.kitWeight,
+            kit.totalWeight
+
+        ];
+
+
+        for (
+            let i = 0;
+            i < possibleWeights.length;
+            i++
+        ) {
+
+            const weight =
+                safeCartNumber(
+                    possibleWeights[i],
+                    NaN
+                );
+
+
+            if (Number.isFinite(weight)) {
+
+                return Math.max(0, weight);
+
+            }
+
+        }
+
+
+        return 0;
+
+    }
+
+
+    /* =====================================================
+       10. NORMALISE KIT IMAGE
+       ===================================================== */
+
+    function normaliseCartKitImage(kit) {
+
+        if (!kit) {
+
+            return "";
+
+        }
+
 
         return String(
 
-            product.image ??
-            product.imageUrl ??
-            product.imageURL ??
-            product.thumbnail ??
-            product.photo ??
+            kit.image ||
+            kit.imageUrl ||
+            kit.thumbnail ||
+            kit.photo ||
             ""
 
         ).trim();
@@ -409,88 +256,2359 @@
     }
 
 
-    /*=====================================================
-      CREATE CART ITEM
-    =====================================================*/
+    /* =====================================================
+       11. NORMALISE KIT OPTIONS
+       ===================================================== */
 
-    function createCartItem(product, quantity) {
+    function normaliseCartKitOptions(options) {
 
-        if (!product) {
-            return null;
+        if (!options) {
+
+            return {};
+
         }
 
 
-        const productId =
-            getProductId(product);
+        if (
+            typeof options !== "object" ||
+            Array.isArray(options)
+        ) {
+
+            return {};
+
+        }
 
 
-        if (!productId) {
+        try {
+
+            return JSON.parse(
+                JSON.stringify(options)
+            );
+
+        } catch (error) {
+
+            console.warn(
+                "NEXPAK Online Cart: Could not clone kit options.",
+                error
+            );
+
+            return {};
+
+        }
+
+    }
+
+
+    /* =====================================================
+       12. NORMALISE KIT
+       ===================================================== */
+
+    function normaliseOnlineCartKit(
+        kit,
+        quantity = 1,
+        options = {}
+    ) {
+
+        if (!kit) {
+
             return null;
+
+        }
+
+
+        const kitId =
+            normaliseCartKitId(kit);
+
+
+        if (!kitId) {
+
+            console.warn(
+                "NEXPAK Online Cart: Kit has no valid ID.",
+                kit
+            );
+
+            return null;
+
         }
 
 
         return {
 
-            id: productId,
+            id:
+                kitId,
 
-            name: getProductName(product),
+            name:
+                normaliseCartKitName(kit),
 
-            price: getProductPrice(product),
+            priceExVat:
+                normaliseCartKitPrice(kit),
 
-            image: getProductImage(product),
+            weight:
+                normaliseCartKitWeight(kit),
+
+            image:
+                normaliseCartKitImage(kit),
 
             quantity:
-                normalizeQuantity(quantity),
+                normaliseCartQuantity(quantity),
 
-            addedAt:
-                Date.now()
+            options:
+                normaliseCartKitOptions(options),
+
+            version:
+                CART_VERSION
 
         };
 
     }
 
 
-    /*=====================================================
-      VALIDATE CART ITEM
-    =====================================================*/
+    /* =====================================================
+       13. LOAD CART FROM LOCAL STORAGE
+       ===================================================== */
 
-    function isValidCartItem(item) {
+    function loadNexpakOnlineCart() {
 
-        if (!item) {
-            return false;
+        try {
+
+            const storedCart =
+                localStorage.getItem(
+                    CART_STORAGE_KEY
+                );
+
+
+            if (!storedCart) {
+
+                nexpakOnlineCart = [];
+
+                return nexpakOnlineCart;
+
+            }
+
+
+            const parsedCart =
+                JSON.parse(storedCart);
+
+
+            if (!Array.isArray(parsedCart)) {
+
+                nexpakOnlineCart = [];
+
+                return nexpakOnlineCart;
+
+            }
+
+
+            nexpakOnlineCart =
+                parsedCart
+                    .filter(item => item && item.id)
+                    .map(item => ({
+
+                        id:
+                            String(item.id),
+
+                        name:
+                            String(
+                                item.name ||
+                                "NEXPAK Security Kit"
+                            ),
+
+                        priceExVat:
+                            Math.max(
+                                0,
+                                safeCartNumber(
+                                    item.priceExVat,
+                                    0
+                                )
+                            ),
+
+                        weight:
+                            Math.max(
+                                0,
+                                safeCartNumber(
+                                    item.weight,
+                                    0
+                                )
+                            ),
+
+                        image:
+                            String(
+                                item.image || ""
+                            ),
+
+                        quantity:
+                            normaliseCartQuantity(
+                                item.quantity
+                            ),
+
+                        options:
+                            normaliseCartKitOptions(
+                                item.options
+                            ),
+
+                        version:
+                            CART_VERSION
+
+                    }));
+
+
+            return nexpakOnlineCart;
+
+        } catch (error) {
+
+            console.error(
+                "NEXPAK Online Cart: Failed to load cart.",
+                error
+            );
+
+
+            nexpakOnlineCart = [];
+
+
+            return nexpakOnlineCart;
+
         }
 
+    }
 
-        if (
-            !normalizeProductId(item.id)
-        ) {
+
+    /* =====================================================
+       14. SAVE CART TO LOCAL STORAGE
+       ===================================================== */
+
+    function saveNexpakOnlineCart() {
+
+        try {
+
+            localStorage.setItem(
+
+                CART_STORAGE_KEY,
+
+                JSON.stringify(
+                    nexpakOnlineCart
+                )
+
+            );
+
+
+            return true;
+
+        } catch (error) {
+
+            console.error(
+                "NEXPAK Online Cart: Failed to save cart.",
+                error
+            );
+
+
             return false;
+
         }
 
+    }
+
+
+    /* =====================================================
+       15. GET CART
+       ===================================================== */
+
+    function getNexpakOnlineCart() {
+
+        return nexpakOnlineCart;
+
+    }
+
+
+    /* =====================================================
+       16. GET CART ITEM COUNT
+       ===================================================== */
+
+    function getNexpakOnlineCartCount() {
+
+        return nexpakOnlineCart.reduce(
+
+            (total, item) => {
+
+                return total +
+                    normaliseCartQuantity(
+                        item.quantity
+                    );
+
+            },
+
+            0
+
+        );
+
+    }
+
+
+    /* =====================================================
+       17. GET CART KIT COUNT
+       ===================================================== */
+
+    function getNexpakOnlineCartKitCount() {
+
+        return nexpakOnlineCart.length;
+
+    }
+
+
+    /* =====================================================
+       18. EXPOSE CART CORE
+       ===================================================== */
+
+    window.NEXPAK_ONLINE_CART = {
+
+        version:
+            CART_VERSION,
+
+        load:
+            loadNexpakOnlineCart,
+
+        save:
+            saveNexpakOnlineCart,
+
+        get:
+            getNexpakOnlineCart,
+
+        getCount:
+            getNexpakOnlineCartCount,
+
+        getKitCount:
+            getNexpakOnlineCartKitCount,
+
+        normaliseKit:
+            normaliseOnlineCartKit
+
+    };
+
+
+    /* =====================================================
+       PART 1 END
+       ===================================================== */
+/* =========================================================
+   NEXPAK ONLINE STORE — CART ENGINE
+   PART 2 — ADD KIT + OPTION HANDLING
+   ========================================================= */
+
+
+/* =====================================================
+   19. CREATE OPTION KEY
+   ===================================================== */
+
+function createNexpakOnlineCartOptionKey(options) {
+
+    if (!options || typeof options !== "object") {
+
+        return "";
+
+    }
+
+
+    try {
+
+        return JSON.stringify(
+            options,
+            Object.keys(options).sort()
+        );
+
+    } catch (error) {
+
+        console.warn(
+            "NEXPAK Online Cart: Could not create option key.",
+            error
+        );
+
+        return "";
+
+    }
+
+}
+
+
+/* =====================================================
+   20. CHECK IF CART ITEMS MATCH
+   ===================================================== */
+
+function doNexpakOnlineCartItemsMatch(
+    existingItem,
+    newItem
+) {
+
+    if (!existingItem || !newItem) {
+
+        return false;
+
+    }
+
+
+    if (
+        String(existingItem.id) !==
+        String(newItem.id)
+    ) {
+
+        return false;
+
+    }
+
+
+    const existingOptionsKey =
+        createNexpakOnlineCartOptionKey(
+            existingItem.options
+        );
+
+
+    const newOptionsKey =
+        createNexpakOnlineCartOptionKey(
+            newItem.options
+        );
+
+
+    return (
+        existingOptionsKey ===
+        newOptionsKey
+    );
+
+}
+
+
+/* =====================================================
+   21. ADD KIT TO CART
+   ===================================================== */
+
+function addNexpakOnlineKitToCart(
+    kit,
+    quantity = 1,
+    options = {}
+) {
+
+    /* -------------------------------------------------
+       Validate kit
+       ------------------------------------------------- */
+
+    if (!kit) {
+
+        console.error(
+            "NEXPAK Online Cart: Cannot add empty kit."
+        );
+
+        return {
+
+            success: false,
+
+            message:
+                "Unable to add this kit to the cart."
+
+        };
+
+    }
+
+
+    /* -------------------------------------------------
+       Normalise quantity
+       ------------------------------------------------- */
+
+    quantity =
+        normaliseCartQuantity(
+            quantity
+        );
+
+
+    /* -------------------------------------------------
+       Build cart item
+       ------------------------------------------------- */
+
+    const cartItem =
+        normaliseOnlineCartKit(
+            kit,
+            quantity,
+            options
+        );
+
+
+    if (!cartItem) {
+
+        return {
+
+            success: false,
+
+            message:
+                "This kit could not be added to the cart."
+
+        };
+
+    }
+
+
+    /* -------------------------------------------------
+       Find matching kit + options
+       ------------------------------------------------- */
+
+    const existingIndex =
+        nexpakOnlineCart.findIndex(
+
+            item =>
+                doNexpakOnlineCartItemsMatch(
+                    item,
+                    cartItem
+                )
+
+        );
+
+
+    /* -------------------------------------------------
+       Existing kit
+       ------------------------------------------------- */
+
+    if (existingIndex !== -1) {
+
+        const existingItem =
+            nexpakOnlineCart[
+                existingIndex
+            ];
+
+
+        existingItem.quantity =
+            normaliseCartQuantity(
+                existingItem.quantity
+            ) +
+            quantity;
+
+
+        /* ---------------------------------------------
+           Keep latest safe product information
+           --------------------------------------------- */
+
+        existingItem.name =
+            cartItem.name;
+
+
+        existingItem.priceExVat =
+            cartItem.priceExVat;
+
+
+        existingItem.weight =
+            cartItem.weight;
+
+
+        existingItem.image =
+            cartItem.image;
+
+
+        existingItem.options =
+            cartItem.options;
+
+
+    }
+
+
+    /* -------------------------------------------------
+       New kit
+       ------------------------------------------------- */
+
+    else {
+
+        nexpakOnlineCart.push(
+            cartItem
+        );
+
+    }
+
+
+    /* -------------------------------------------------
+       Save immediately
+       ------------------------------------------------- */
+
+    const saved =
+        saveNexpakOnlineCart();
+
+
+    /* -------------------------------------------------
+       Notify the rest of the Online Store
+       ------------------------------------------------- */
+
+    dispatchNexpakOnlineCartEvent(
+        "nexpak:cart-updated"
+    );
+
+
+    /* -------------------------------------------------
+       Return result
+       ------------------------------------------------- */
+
+    return {
+
+        success:
+            saved,
+
+        item:
+            cartItem,
+
+        cart:
+            nexpakOnlineCart,
+
+        cartCount:
+            getNexpakOnlineCartCount(),
+
+        message:
+            saved
+                ? "Kit added to cart."
+                : "Kit added, but the cart could not be saved."
+
+    };
+
+}
+
+
+/* =====================================================
+   22. ADD KIT USING KIT ID
+   ===================================================== */
+
+function addNexpakOnlineKitById(
+    kitId,
+    quantity = 1,
+    options = {}
+) {
+
+    if (!kitId) {
+
+        return {
+
+            success: false,
+
+            message:
+                "No kit was selected."
+
+        };
+
+    }
+
+
+    /* -------------------------------------------------
+       Try Online Store database
+       ------------------------------------------------- */
+
+    let kit = null;
+
+
+    if (
+        typeof NEXPAK_ONLINE_KITS !==
+        "undefined"
+    ) {
 
         if (
-            typeof item.name !== "string"
-        ) {
-            return false;
-        }
-
-
-        if (
-            !Number.isFinite(
-                Number(item.price)
+            Array.isArray(
+                NEXPAK_ONLINE_KITS
             )
         ) {
-            return false;
+
+            kit =
+                NEXPAK_ONLINE_KITS.find(
+
+                    item =>
+                        String(
+                            item.id ||
+                            item.kitId ||
+                            item.slug ||
+                            item.code
+                        ) ===
+                        String(kitId)
+
+                );
+
         }
+
+    }
+
+
+    /* -------------------------------------------------
+       Try store object if database is nested
+       ------------------------------------------------- */
+
+    if (
+        !kit &&
+        typeof NEXPAK_ONLINE_STORE !==
+        "undefined"
+    ) {
+
+        const store =
+            NEXPAK_ONLINE_STORE;
 
 
         if (
-            !Number.isFinite(
-                Number(item.quantity)
+            Array.isArray(
+                store.kits
             )
         ) {
-            return false;
+
+            kit =
+                store.kits.find(
+
+                    item =>
+                        String(
+                            item.id ||
+                            item.kitId ||
+                            item.slug ||
+                            item.code
+                        ) ===
+                        String(kitId)
+
+                );
+
         }
+
+    }
+
+
+    /* -------------------------------------------------
+       Kit not found
+       ------------------------------------------------- */
+
+    if (!kit) {
+
+        console.error(
+            "NEXPAK Online Cart: Kit not found:",
+            kitId
+        );
+
+
+        return {
+
+            success: false,
+
+            message:
+                "The selected kit could not be found."
+
+        };
+
+    }
+
+
+    return addNexpakOnlineKitToCart(
+        kit,
+        quantity,
+        options
+    );
+
+}
+
+
+/* =====================================================
+   23. CART EVENT DISPATCHER
+   ===================================================== */
+
+function dispatchNexpakOnlineCartEvent(
+    eventName
+) {
+
+    try {
+
+        document.dispatchEvent(
+
+            new CustomEvent(
+                eventName,
+                {
+
+                    detail: {
+
+                        cart:
+                            nexpakOnlineCart,
+
+                        count:
+                            getNexpakOnlineCartCount(),
+
+                        kitCount:
+                            getNexpakOnlineCartKitCount()
+
+                    }
+
+                }
+            )
+
+        );
+
+    } catch (error) {
+
+        console.warn(
+            "NEXPAK Online Cart: Event dispatch failed.",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   24. UPDATE CART BADGE
+   ===================================================== */
+
+function updateNexpakOnlineCartCountDisplay() {
+
+    const count =
+        getNexpakOnlineCartCount();
+
+
+    const selectors = [
+
+        "[data-online-cart-count]",
+
+        ".online-cart-count",
+
+        "#onlineCartCount",
+
+        "#cartCount"
+
+    ];
+
+
+    selectors.forEach(
+        selector => {
+
+            const elements =
+                document.querySelectorAll(
+                    selector
+                );
+
+
+            elements.forEach(
+                element => {
+
+                    element.textContent =
+                        String(count);
+
+                    element.setAttribute(
+                        "data-count",
+                        String(count)
+                    );
+
+                }
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   25. CART UPDATE LISTENER
+   ===================================================== */
+
+document.addEventListener(
+
+    "nexpak:cart-updated",
+
+    function () {
+
+        updateNexpakOnlineCartCountDisplay();
+
+    }
+
+);
+
+
+/* =====================================================
+   26. EXTEND PUBLIC CART API
+   ===================================================== */
+
+if (
+    window.NEXPAK_ONLINE_CART
+) {
+
+    window.NEXPAK_ONLINE_CART.add =
+        addNexpakOnlineKitToCart;
+
+
+    window.NEXPAK_ONLINE_CART.addById =
+        addNexpakOnlineKitById;
+
+
+    window.NEXPAK_ONLINE_CART.dispatch =
+        dispatchNexpakOnlineCartEvent;
+
+}
+
+
+/* =====================================================
+   PART 2 END
+   ===================================================== */
+ /* =========================================================
+   NEXPAK ONLINE STORE — CART ENGINE
+   PART 3 — QUANTITY + REMOVE + CLEAR + WEIGHT
+   ========================================================= */
+
+
+/* =====================================================
+   27. FIND CART ITEM INDEX
+   ===================================================== */
+
+function findNexpakOnlineCartItemIndex(
+    itemId,
+    options = null
+) {
+
+    if (!itemId) {
+
+        return -1;
+
+    }
+
+
+    const id =
+        String(itemId);
+
+
+    return nexpakOnlineCart.findIndex(
+
+        item => {
+
+            if (
+                String(item.id) !== id
+            ) {
+
+                return false;
+
+            }
+
+
+            /*
+             * If no options were supplied,
+             * match by kit ID only.
+             */
+
+            if (options === null) {
+
+                return true;
+
+            }
+
+
+            return (
+                createNexpakOnlineCartOptionKey(
+                    item.options
+                ) ===
+                createNexpakOnlineCartOptionKey(
+                    options
+                )
+            );
+
+        }
+
+    );
+
+}
+
+
+/* =====================================================
+   28. SET KIT QUANTITY
+   ===================================================== */
+
+function setNexpakOnlineKitQuantity(
+    itemId,
+    quantity,
+    options = null
+) {
+
+    const index =
+        findNexpakOnlineCartItemIndex(
+            itemId,
+            options
+        );
+
+
+    if (index === -1) {
+
+        return {
+
+            success: false,
+
+            message:
+                "Cart item not found."
+
+        };
+
+    }
+
+
+    quantity =
+        safeCartInteger(
+            quantity,
+            1
+        );
+
+
+    /*
+     * Quantity below 1 removes the kit.
+     */
+
+    if (quantity <= 0) {
+
+        return removeNexpakOnlineKitFromCart(
+            itemId,
+            options
+        );
+
+    }
+
+
+    nexpakOnlineCart[index].quantity =
+        normaliseCartQuantity(
+            quantity
+        );
+
+
+    const saved =
+        saveNexpakOnlineCart();
+
+
+    dispatchNexpakOnlineCartEvent(
+        "nexpak:cart-updated"
+    );
+
+
+    return {
+
+        success:
+            saved,
+
+        item:
+            nexpakOnlineCart[index],
+
+        quantity:
+            nexpakOnlineCart[index].quantity,
+
+        cart:
+            nexpakOnlineCart
+
+    };
+
+}
+
+
+/* =====================================================
+   29. INCREASE KIT QUANTITY
+   ===================================================== */
+
+function increaseNexpakOnlineKitQuantity(
+    itemId,
+    amount = 1,
+    options = null
+) {
+
+    const index =
+        findNexpakOnlineCartItemIndex(
+            itemId,
+            options
+        );
+
+
+    if (index === -1) {
+
+        return {
+
+            success: false,
+
+            message:
+                "Cart item not found."
+
+        };
+
+    }
+
+
+    amount =
+        safeCartInteger(
+            amount,
+            1
+        );
+
+
+    if (amount < 1) {
+
+        amount = 1;
+
+    }
+
+
+    nexpakOnlineCart[index].quantity +=
+        amount;
+
+
+    nexpakOnlineCart[index].quantity =
+        normaliseCartQuantity(
+            nexpakOnlineCart[index].quantity
+        );
+
+
+    const saved =
+        saveNexpakOnlineCart();
+
+
+    dispatchNexpakOnlineCartEvent(
+        "nexpak:cart-updated"
+    );
+
+
+    return {
+
+        success:
+            saved,
+
+        item:
+            nexpakOnlineCart[index],
+
+        quantity:
+            nexpakOnlineCart[index].quantity
+
+    };
+
+}
+
+
+/* =====================================================
+   30. DECREASE KIT QUANTITY
+   ===================================================== */
+
+function decreaseNexpakOnlineKitQuantity(
+    itemId,
+    amount = 1,
+    options = null
+) {
+
+    const index =
+        findNexpakOnlineCartItemIndex(
+            itemId,
+            options
+        );
+
+
+    if (index === -1) {
+
+        return {
+
+            success: false,
+
+            message:
+                "Cart item not found."
+
+        };
+
+    }
+
+
+    amount =
+        safeCartInteger(
+            amount,
+            1
+        );
+
+
+    if (amount < 1) {
+
+        amount = 1;
+
+    }
+
+
+    const newQuantity =
+        nexpakOnlineCart[index].quantity -
+        amount;
+
+
+    /*
+     * Quantity reaching zero removes
+     * the kit from the cart.
+     */
+
+    if (newQuantity <= 0) {
+
+        return removeNexpakOnlineKitFromCart(
+            itemId,
+            options
+        );
+
+    }
+
+
+    nexpakOnlineCart[index].quantity =
+        normaliseCartQuantity(
+            newQuantity
+        );
+
+
+    const saved =
+        saveNexpakOnlineCart();
+
+
+    dispatchNexpakOnlineCartEvent(
+        "nexpak:cart-updated"
+    );
+
+
+    return {
+
+        success:
+            saved,
+
+        item:
+            nexpakOnlineCart[index],
+
+        quantity:
+            nexpakOnlineCart[index].quantity
+
+    };
+
+}
+
+
+/* =====================================================
+   31. REMOVE KIT FROM CART
+   ===================================================== */
+
+function removeNexpakOnlineKitFromCart(
+    itemId,
+    options = null
+) {
+
+    const index =
+        findNexpakOnlineCartItemIndex(
+            itemId,
+            options
+        );
+
+
+    if (index === -1) {
+
+        return {
+
+            success: false,
+
+            message:
+                "Cart item not found."
+
+        };
+
+    }
+
+
+    const removedItem =
+        nexpakOnlineCart.splice(
+            index,
+            1
+        )[0];
+
+
+    const saved =
+        saveNexpakOnlineCart();
+
+
+    dispatchNexpakOnlineCartEvent(
+        "nexpak:cart-updated"
+    );
+
+
+    return {
+
+        success:
+            saved,
+
+        removed:
+            removedItem,
+
+        cart:
+            nexpakOnlineCart
+
+    };
+
+}
+
+
+/* =====================================================
+   32. CLEAR CART
+   ===================================================== */
+
+function clearNexpakOnlineCart() {
+
+    nexpakOnlineCart = [];
+
+
+    const saved =
+        saveNexpakOnlineCart();
+
+
+    dispatchNexpakOnlineCartEvent(
+        "nexpak:cart-cleared"
+    );
+
+
+    dispatchNexpakOnlineCartEvent(
+        "nexpak:cart-updated"
+    );
+
+
+    return {
+
+        success:
+            saved,
+
+        cart:
+            nexpakOnlineCart
+
+    };
+
+}
+
+
+/* =====================================================
+   33. CALCULATE TOTAL KIT QUANTITY
+   ===================================================== */
+
+function calculateNexpakOnlineTotalKitQuantity() {
+
+    return nexpakOnlineCart.reduce(
+
+        (total, item) => {
+
+            return total +
+                normaliseCartQuantity(
+                    item.quantity
+                );
+
+        },
+
+        0
+
+    );
+
+}
+
+
+/* =====================================================
+   34. CALCULATE TOTAL CART WEIGHT
+   ===================================================== */
+
+function calculateNexpakOnlineCartWeight() {
+
+    return nexpakOnlineCart.reduce(
+
+        (total, item) => {
+
+            const weight =
+                Math.max(
+                    0,
+                    safeCartNumber(
+                        item.weight,
+                        0
+                    )
+                );
+
+
+            const quantity =
+                normaliseCartQuantity(
+                    item.quantity
+                );
+
+
+            return total +
+                (
+                    weight *
+                    quantity
+                );
+
+        },
+
+        0
+
+    );
+
+}
+
+
+/* =====================================================
+   35. GET CART WEIGHT
+   ===================================================== */
+
+function getNexpakOnlineCartWeight() {
+
+    return calculateNexpakOnlineCartWeight();
+
+}
+
+
+/* =====================================================
+   36. UPDATE PUBLIC CART API
+   ===================================================== */
+
+if (
+    window.NEXPAK_ONLINE_CART
+) {
+
+    window.NEXPAK_ONLINE_CART.setQuantity =
+        setNexpakOnlineKitQuantity;
+
+
+    window.NEXPAK_ONLINE_CART.increase =
+        increaseNexpakOnlineKitQuantity;
+
+
+    window.NEXPAK_ONLINE_CART.decrease =
+        decreaseNexpakOnlineKitQuantity;
+
+
+    window.NEXPAK_ONLINE_CART.remove =
+        removeNexpakOnlineKitFromCart;
+
+
+    window.NEXPAK_ONLINE_CART.clear =
+        clearNexpakOnlineCart;
+
+
+    window.NEXPAK_ONLINE_CART.getTotalKitQuantity =
+        calculateNexpakOnlineTotalKitQuantity;
+
+
+    window.NEXPAK_ONLINE_CART.getWeight =
+        getNexpakOnlineCartWeight;
+
+}
+
+
+/* =====================================================
+   PART 3 END
+   ===================================================== */
+
+ /* =========================================================
+   NEXPAK ONLINE STORE — CART ENGINE
+   PART 4 — CART TOTALS + VAT
+   ========================================================= */
+
+
+/* =====================================================
+   37. GET VAT RATE
+   ===================================================== */
+
+function getNexpakOnlineCartVatRate() {
+
+    let vatRate = 0.15;
+
+
+    /*
+     * Use the Online Store VAT value when available.
+     */
+
+    if (
+        typeof NEXPAK_VAT !==
+        "undefined"
+    ) {
+
+        const configuredVat =
+            safeCartNumber(
+                NEXPAK_VAT,
+                NaN
+            );
+
+
+        if (
+            Number.isFinite(
+                configuredVat
+            )
+        ) {
+
+            vatRate =
+                configuredVat > 1
+                    ? configuredVat / 100
+                    : configuredVat;
+
+        }
+
+    }
+
+
+    /*
+     * Protect against invalid VAT values.
+     */
+
+    if (
+        !Number.isFinite(vatRate) ||
+        vatRate < 0
+    ) {
+
+        vatRate = 0.15;
+
+    }
+
+
+    return vatRate;
+
+}
+
+
+/* =====================================================
+   38. CALCULATE KIT LINE TOTAL
+   ===================================================== */
+
+function calculateNexpakOnlineKitLineTotal(
+    item
+) {
+
+    if (!item) {
+
+        return 0;
+
+    }
+
+
+    const priceExVat =
+        Math.max(
+            0,
+            safeCartNumber(
+                item.priceExVat,
+                0
+            )
+        );
+
+
+    const quantity =
+        normaliseCartQuantity(
+            item.quantity
+        );
+
+
+    return (
+        priceExVat *
+        quantity
+    );
+
+}
+
+
+/* =====================================================
+   39. CALCULATE CART SUBTOTAL EX VAT
+   ===================================================== */
+
+function calculateNexpakOnlineCartSubtotal() {
+
+    return nexpakOnlineCart.reduce(
+
+        (total, item) => {
+
+            return total +
+                calculateNexpakOnlineKitLineTotal(
+                    item
+                );
+
+        },
+
+        0
+
+    );
+
+}
+
+
+/* =====================================================
+   40. CALCULATE VAT
+   ===================================================== */
+
+function calculateNexpakOnlineCartVat() {
+
+    const subtotal =
+        calculateNexpakOnlineCartSubtotal();
+
+
+    const vatRate =
+        getNexpakOnlineCartVatRate();
+
+
+    return subtotal * vatRate;
+
+}
+
+
+/* =====================================================
+   41. CALCULATE TOTAL INCLUDING VAT
+   ===================================================== */
+
+function calculateNexpakOnlineCartTotalInclVat() {
+
+    const subtotal =
+        calculateNexpakOnlineCartSubtotal();
+
+
+    const vat =
+        calculateNexpakOnlineCartVat();
+
+
+    return subtotal + vat;
+
+}
+
+
+/* =====================================================
+   42. CALCULATE TOTAL INCLUDING DELIVERY
+   ===================================================== */
+
+function calculateNexpakOnlineCartGrandTotal(
+    deliveryFee = 0
+) {
+
+    const totalInclVat =
+        calculateNexpakOnlineCartTotalInclVat();
+
+
+    deliveryFee =
+        Math.max(
+            0,
+            safeCartNumber(
+                deliveryFee,
+                0
+            )
+        );
+
+
+    return totalInclVat +
+        deliveryFee;
+
+}
+
+
+/* =====================================================
+   43. BUILD CART TOTALS OBJECT
+   ===================================================== */
+
+function getNexpakOnlineCartTotals(
+    deliveryFee = 0
+) {
+
+    const vatRate =
+        getNexpakOnlineCartVatRate();
+
+
+    const subtotalExVat =
+        calculateNexpakOnlineCartSubtotal();
+
+
+    const vatAmount =
+        subtotalExVat *
+        vatRate;
+
+
+    const totalInclVat =
+        subtotalExVat +
+        vatAmount;
+
+
+    deliveryFee =
+        Math.max(
+            0,
+            safeCartNumber(
+                deliveryFee,
+                0
+            )
+        );
+
+
+    const grandTotal =
+        totalInclVat +
+        deliveryFee;
+
+
+    return {
+
+        subtotalExVat:
+            subtotalExVat,
+
+        vatRate:
+            vatRate,
+
+        vatPercent:
+            vatRate * 100,
+
+        vatAmount:
+            vatAmount,
+
+        totalInclVat:
+            totalInclVat,
+
+        deliveryFee:
+            deliveryFee,
+
+        grandTotal:
+            grandTotal,
+
+        currency:
+            "ZAR"
+
+    };
+
+}
+
+
+/* =====================================================
+   44. FORMAT RAND AMOUNT
+   ===================================================== */
+
+function formatNexpakOnlineCartMoney(
+    amount
+) {
+
+    amount =
+        safeCartNumber(
+            amount,
+            0
+        );
+
+
+    if (amount < 0) {
+
+        amount = 0;
+
+    }
+
+
+    return (
+
+        "R " +
+
+        amount.toLocaleString(
+            "en-ZA",
+            {
+
+                minimumFractionDigits: 2,
+
+                maximumFractionDigits: 2
+
+            }
+
+        )
+
+    );
+
+}
+
+
+/* =====================================================
+   45. GET FORMATTED CART TOTALS
+   ===================================================== */
+
+function getNexpakOnlineFormattedCartTotals(
+    deliveryFee = 0
+) {
+
+    const totals =
+        getNexpakOnlineCartTotals(
+            deliveryFee
+        );
+
+
+    return {
+
+        subtotalExVat:
+            formatNexpakOnlineCartMoney(
+                totals.subtotalExVat
+            ),
+
+        vatAmount:
+            formatNexpakOnlineCartMoney(
+                totals.vatAmount
+            ),
+
+        totalInclVat:
+            formatNexpakOnlineCartMoney(
+                totals.totalInclVat
+            ),
+
+        deliveryFee:
+            formatNexpakOnlineCartMoney(
+                totals.deliveryFee
+            ),
+
+        grandTotal:
+            formatNexpakOnlineCartMoney(
+                totals.grandTotal
+            ),
+
+        vatPercent:
+            totals.vatPercent
+
+    };
+
+}
+
+
+/* =====================================================
+   46. UPDATE PUBLIC CART API
+   ===================================================== */
+
+if (
+    window.NEXPAK_ONLINE_CART
+) {
+
+    window.NEXPAK_ONLINE_CART.getVatRate =
+        getNexpakOnlineCartVatRate;
+
+
+    window.NEXPAK_ONLINE_CART.getSubtotal =
+        calculateNexpakOnlineCartSubtotal;
+
+
+    window.NEXPAK_ONLINE_CART.getVat =
+        calculateNexpakOnlineCartVat;
+
+
+    window.NEXPAK_ONLINE_CART.getTotalInclVat =
+        calculateNexpakOnlineCartTotalInclVat;
+
+
+    window.NEXPAK_ONLINE_CART.getGrandTotal =
+        calculateNexpakOnlineCartGrandTotal;
+
+
+    window.NEXPAK_ONLINE_CART.getTotals =
+        getNexpakOnlineCartTotals;
+
+
+    window.NEXPAK_ONLINE_CART.formatMoney =
+        formatNexpakOnlineCartMoney;
+
+
+    window.NEXPAK_ONLINE_CART.getFormattedTotals =
+        getNexpakOnlineFormattedCartTotals;
+
+}
+
+
+/* =====================================================
+   PART 4 END
+   ========================================================= */
+
+ /* =========================================================
+   NEXPAK ONLINE STORE — CART ENGINE
+   PART 5 — CART RENDERING
+   ========================================================= */
+
+
+/* =====================================================
+   47. ESCAPE HTML
+   ===================================================== */
+
+function escapeNexpakOnlineCartHtml(value) {
+
+    if (value === null || value === undefined) {
+
+        return "";
+
+    }
+
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =====================================================
+   48. FORMAT OPTION VALUE
+   ===================================================== */
+
+function formatNexpakOnlineCartOptionValue(
+    value
+) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
+        return "";
+
+    }
+
+
+    if (
+        typeof value === "object"
+    ) {
+
+        try {
+
+            return JSON.stringify(
+                value
+            );
+
+        } catch (error) {
+
+            return "";
+
+        }
+
+    }
+
+
+    return String(value);
+
+}
+
+
+/* =====================================================
+   49. RENDER KIT OPTIONS
+   ===================================================== */
+
+function renderNexpakOnlineCartOptions(
+    options
+) {
+
+    if (
+        !options ||
+        typeof options !== "object"
+    ) {
+
+        return "";
+
+    }
+
+
+    const keys =
+        Object.keys(options);
+
+
+    if (!keys.length) {
+
+        return "";
+
+    }
+
+
+    let html =
+        '<div class="online-cart-item-options">';
+
+
+    keys.forEach(
+        key => {
+
+            const value =
+                formatNexpakOnlineCartOptionValue(
+                    options[key]
+                );
+
+
+            if (!value) {
+
+                return;
+
+            }
+
+
+            html +=
+
+                '<div class="online-cart-option">' +
+
+                    '<span class="online-cart-option-label">' +
+
+                        escapeNexpakOnlineCartHtml(
+                            key
+                        ) +
+
+                    '</span>' +
+
+                    '<span class="online-cart-option-value">' +
+
+                        escapeNexpakOnlineCartHtml(
+                            value
+                        ) +
+
+                    '</span>' +
+
+                '</div>';
+
+        }
+    );
+
+
+    html +=
+        "</div>";
+
+
+    return html;
+
+}
+
+
+/* =====================================================
+   50. GET CART ITEM TOTAL
+   ===================================================== */
+
+function getNexpakOnlineCartItemDisplayTotal(
+    item
+) {
+
+    return calculateNexpakOnlineKitLineTotal(
+        item
+    );
+
+}
+
+
+/* =====================================================
+   51. RENDER SINGLE CART ITEM
+   ===================================================== */
+
+function renderNexpakOnlineCartItem(
+    item,
+    index
+) {
+
+    if (!item) {
+
+        return "";
+
+    }
+
+
+    const quantity =
+        normaliseCartQuantity(
+            item.quantity
+        );
+
+
+    const price =
+        Math.max(
+            0,
+            safeCartNumber(
+                item.priceExVat,
+                0
+            )
+        );
+
+
+    const lineTotal =
+        getNexpakOnlineCartItemDisplayTotal(
+            item
+        );
+
+
+    const image =
+        escapeNexpakOnlineCartHtml(
+            item.image || ""
+        );
+
+
+    const name =
+        escapeNexpakOnlineCartHtml(
+            item.name ||
+            "NEXPAK Security Kit"
+        );
+
+
+    const id =
+        escapeNexpakOnlineCartHtml(
+            item.id
+        );
+
+
+    const optionsHtml =
+        renderNexpakOnlineCartOptions(
+            item.options
+        );
+
+
+    return (
+
+        '<article ' +
+
+            'class="online-cart-item" ' +
+
+            'data-cart-index="' +
+                index +
+            '" ' +
+
+            'data-cart-item-id="' +
+                id +
+            '"' +
+
+        '>' +
+
+
+            '<div class="online-cart-item-image">' +
+
+                (
+                    image
+
+                        ?
+
+                    '<img ' +
+
+                        'src="' +
+                            image +
+                        '" ' +
+
+                        'alt="' +
+                            name +
+                        '" ' +
+
+                        'loading="lazy"' +
+
+                    '>'
+
+                        :
+
+                    '<div class="online-cart-item-image-placeholder">' +
+
+                        'NEXPAK'
+
+                    '</div>'
+                ) +
+
+            '</div>' +
+
+
+            '<div class="online-cart-item-details">' +
+
+                '<h3 class="online-cart-item-name">' +
+
+                    name +
+
+                '</h3>' +
+
+
+                optionsHtml +
+
+
+                '<div class="online-cart-item-unit-price">' +
+
+                    'Price EX VAT: ' +
+
+                    '<strong>' +
+
+                        formatNexpakOnlineCartMoney(
+                            price
+                        ) +
+
+                    '</strong>' +
+
+                '</div>' +
+
+            '</div>' +
+
+
+            '<div class="online-cart-item-controls">' +
+
+                '<button ' +
+
+                    'type="button" ' +
+
+                    'class="online-cart-quantity-button online-cart-decrease" ' +
+
+                    'data-cart-action="decrease" ' +
+
+                    'data-cart-item-id="' +
+                        id +
+                    '"' +
+
+                    'aria-label="Decrease quantity"' +
+
+                '>−</button>' +
+
+
+                '<input ' +
+
+                    'type="number" ' +
+
+                    'class="online-cart-quantity-input" ' +
+
+                    'data-cart-action="quantity" ' +
+
+                    'data-cart-item-id="' +
+                        id +
+                    '"' +
+
+                    'value="' +
+                        quantity +
+                    '" ' +
+
+                    'min="1" ' +
+
+                    'step="1" ' +
+
+                    'inputmode="numeric"' +
+
+                '>' +
+
+
+                '<button ' +
+
+                    'type="button" ' +
+
+                    'class="online-cart-quantity-button online-cart-increase" ' +
+
+                    'data-cart-action="increase" ' +
+
+                    'data-cart-item-id="' +
+                        id +
+                    '"' +
+
+                    'aria-label="Increase quantity"' +
+
+                '>+</button>' +
+
+            '</div>' +
+
+
+            '<div class="online-cart-item-total">' +
+
+                '<span>Kit Total</span>' +
+
+                '<strong>' +
+
+                    formatNexpakOnlineCartMoney(
+                        lineTotal
+                    ) +
+
+                '</strong>' +
+
+            '</div>' +
+
+
+            '<button ' +
+
+                'type="button" ' +
+
+                'class="online-cart-remove-button" ' +
+
+                'data-cart-action="remove" ' +
+
+                'data-cart-item-id="' +
+                    id +
+                '"' +
+
+            '>' +
+
+                'Remove' +
+
+            '</button>' +
+
+
+        '</article>'
+
+    );
+
+}
+
+
+/* =====================================================
+   52. FIND CART CONTAINER
+   ===================================================== */
+
+function findNexpakOnlineCartContainer() {
+
+    const selectors = [
+
+        "#onlineCart",
+
+        "#online-cart",
+
+        "#cartContainer",
+
+        ".online-cart-container",
+
+        ".online-cart-items",
+
+        "[data-online-cart]"
+
+    ];
+
+
+    for (
+        let i = 0;
+        i < selectors.length;
+        i++
+    ) {
+
+        const element =
+            document.querySelector(
+                selectors[i]
+            );
+
+
+        if (element) {
+
+            return element;
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =====================================================
+   53. RENDER CART ITEMS
+   ===================================================== */
+
+function renderNexpakOnlineCartItems(
+    container = null
+) {
+
+    if (!container) {
+
+        container =
+            findNexpakOnlineCartContainer();
+
+    }
+
+
+    if (!container) {
+
+        return false;
+
+    }
+
+
+    if (
+        !nexpakOnlineCart.length
+    ) {
+
+        container.innerHTML =
+
+            '<div class="online-cart-empty">' +
+
+                '<h3>Your cart is empty</h3>' +
+
+                '<p>' +
+
+                    'Select a NEXPAK security kit to get started.' +
+
+                '</p>' +
+
+            '</div>';
 
 
         return true;
@@ -498,4507 +2616,55 @@
     }
 
 
-    /*=====================================================
-      CLEAN CART
-    =====================================================*/
-
-    function sanitizeCart(items) {
-
-        if (!Array.isArray(items)) {
-            return [];
-        }
+    let html = "";
 
 
-        const cleaned = [];
+    nexpakOnlineCart.forEach(
 
+        (item, index) => {
 
-        items.forEach(function (item) {
-
-            if (!isValidCartItem(item)) {
-                return;
-            }
-
-
-            const cleanItem = {
-
-                id:
-                    normalizeProductId(item.id),
-
-                name:
-                    String(item.name).trim(),
-
-                price:
-                    Math.max(
-                        0,
-                        safeNumber(item.price, 0)
-                    ),
-
-                image:
-                    typeof item.image === "string"
-                        ? item.image
-                        : "",
-
-                quantity:
-                    normalizeQuantity(item.quantity),
-
-                addedAt:
-                    safeNumber(
-                        item.addedAt,
-                        Date.now()
-                    )
-
-            };
-
-
-            cleaned.push(cleanItem);
-
-        });
-
-
-        return cleaned;
-
-    }
-
-
-    /*=====================================================
-      SAVE CART TO LOCAL STORAGE
-    =====================================================*/
-
-    function saveCart() {
-
-        try {
-
-            localStorage.setItem(
-
-                NEXPAK_ONLINE_CART.STORAGE_KEY,
-
-                JSON.stringify(cart)
-
-            );
-
-            log("Cart saved:", cart);
-
-            return true;
-
-        } catch (error) {
-
-            console.error(
-                "[NEXPAK ONLINE CART] Unable to save cart:",
-                error
-            );
-
-            return false;
-
-        }
-
-    }
-
-
-    /*=====================================================
-      LOAD CART FROM LOCAL STORAGE
-    =====================================================*/
-
-    function loadCart() {
-
-        try {
-
-            const stored =
-                localStorage.getItem(
-                    NEXPAK_ONLINE_CART.STORAGE_KEY
+            html +=
+                renderNexpakOnlineCartItem(
+                    item,
+                    index
                 );
-
-
-            if (!stored) {
-
-                cart = [];
-
-                return cart;
-
-            }
-
-
-            const parsed =
-                JSON.parse(stored);
-
-
-            cart =
-                sanitizeCart(parsed);
-
-
-            log(
-                "Cart loaded:",
-                cart
-            );
-
-
-            return cart;
-
-        } catch (error) {
-
-            console.error(
-                "[NEXPAK ONLINE CART] Unable to load cart:",
-                error
-            );
-
-
-            cart = [];
-
-
-            return cart;
-
-        }
-
-    }
-
-
-    /*=====================================================
-      GET CART
-    =====================================================*/
-
-    function getCart() {
-
-        return cart.map(function (item) {
-
-            return {
-                ...item
-            };
-
-        });
-
-    }
-
-
-    /*=====================================================
-      GET CART ITEM
-    =====================================================*/
-
-    function getCartItem(productId) {
-
-        productId =
-            normalizeProductId(productId);
-
-
-        return cart.find(function (item) {
-
-            return (
-                item.id === productId
-            );
-
-        }) || null;
-
-    }
-
-
-    /*=====================================================
-      CART ITEM COUNT
-    =====================================================*/
-
-    function getItemCount() {
-
-        return cart.reduce(
-
-            function (total, item) {
-
-                return (
-                    total +
-                    normalizeQuantity(
-                        item.quantity
-                    )
-                );
-
-            },
-
-            0
-
-        );
-
-    }
-
-
-    /*=====================================================
-      CART SUBTOTAL
-    =====================================================*/
-
-    function getSubtotal() {
-
-        return cart.reduce(
-
-            function (total, item) {
-
-                const price =
-                    Math.max(
-                        0,
-                        safeNumber(
-                            item.price,
-                            0
-                        )
-                    );
-
-                const quantity =
-                    normalizeQuantity(
-                        item.quantity
-                    );
-
-
-                return (
-                    total +
-                    (price * quantity)
-                );
-
-            },
-
-            0
-
-        );
-
-    }
-
-
-    /*=====================================================
-      INITIALISE CART ENGINE
-    =====================================================*/
-
-    function init() {
-
-        loadCart();
-
-        log(
-            "Cart engine initialized.",
-            NEXPAK_ONLINE_CART.VERSION
-        );
-
-    }
-
-
-    /*=====================================================
-      PUBLIC CART API
-    =====================================================*/
-
-    window.NEXPAKOnlineCart = {
-
-        version:
-            NEXPAK_ONLINE_CART.VERSION,
-
-        init:
-
-            init,
-
-        load:
-
-            loadCart,
-
-        save:
-
-            saveCart,
-
-        get:
-
-            getCart,
-
-        getItem:
-
-            getCartItem,
-
-        findProduct:
-
-            findProduct,
-
-        getProductId:
-
-            getProductId,
-
-        getProductName:
-
-            getProductName,
-
-        getProductPrice:
-
-            getProductPrice,
-
-        getProductImage:
-
-            getProductImage,
-
-        getItemCount:
-
-            getItemCount,
-
-        getSubtotal:
-
-            getSubtotal,
-
-        normalizeQuantity:
-
-            normalizeQuantity
-
-    };
-
-
-    /*=====================================================
-      AUTO INITIALISE
-    =====================================================*/
-
-    if (
-        document.readyState ===
-        "loading"
-    ) {
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            init
-        );
-
-    } else {
-
-        init();
-
-    }
-
-
-})();
-
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE — CART ENGINE
- ---------------------------------------------------------
- File: onlinecart.js
- Part: 2/8
- Purpose:
- Cart operations — add, remove, update, increment,
- decrement and clear.
-=========================================================*/
-
-
-/*=========================================================
- CART OPERATION HELPERS
-=========================================================*/
-
-(function () {
-
-    "use strict";
-
-
-    /*-----------------------------------------------------
-      MAKE SURE CART API EXISTS
-    -----------------------------------------------------*/
-
-    if (!window.NEXPAKOnlineCart) {
-
-        console.error(
-            "[NEXPAK ONLINE CART] Part 1 must load first."
-        );
-
-        return;
-
-    }
-
-
-    /*-----------------------------------------------------
-      INTERNAL REFERENCES
-    -----------------------------------------------------*/
-
-    const Cart =
-        window.NEXPAKOnlineCart;
-
-
-    const STORAGE_KEY =
-        "nexpak_online_cart_v1";
-
-
-    const MIN_QUANTITY =
-        1;
-
-
-    const MAX_QUANTITY =
-        999;
-
-
-    /*=====================================================
-      NORMALISE PRODUCT ID
-    =====================================================*/
-
-    function normalizeId(productId) {
-
-        if (
-            productId === null ||
-            productId === undefined
-        ) {
-
-            return "";
-
-        }
-
-
-        return String(productId).trim();
-
-    }
-
-
-    /*=====================================================
-      NORMALISE QUANTITY
-    =====================================================*/
-
-    function normalizeQuantity(quantity) {
-
-        quantity =
-            Math.floor(
-                Number(quantity)
-            );
-
-
-        if (!Number.isFinite(quantity)) {
-
-            quantity = MIN_QUANTITY;
-
-        }
-
-
-        if (quantity < MIN_QUANTITY) {
-
-            quantity = MIN_QUANTITY;
-
-        }
-
-
-        if (quantity > MAX_QUANTITY) {
-
-            quantity = MAX_QUANTITY;
-
-        }
-
-
-        return quantity;
-
-    }
-
-
-    /*=====================================================
-      GET INTERNAL CART
-    =====================================================*/
-
-    function getInternalCart() {
-
-        return Cart.get();
-
-    }
-
-
-    /*=====================================================
-      WRITE CART
-    =====================================================*/
-
-    function writeCart(items) {
-
-        try {
-
-            localStorage.setItem(
-
-                STORAGE_KEY,
-
-                JSON.stringify(items)
-
-            );
-
-        } catch (error) {
-
-            console.error(
-
-                "[NEXPAK ONLINE CART] Cart save failed:",
-
-                error
-
-            );
-
-        }
-
-    }
-
-
-    /*=====================================================
-      READ CART
-    =====================================================*/
-
-    function readCart() {
-
-        try {
-
-            const stored =
-                localStorage.getItem(
-                    STORAGE_KEY
-                );
-
-
-            if (!stored) {
-
-                return [];
-
-            }
-
-
-            const parsed =
-                JSON.parse(stored);
-
-
-            if (!Array.isArray(parsed)) {
-
-                return [];
-
-            }
-
-
-            return parsed;
-
-        } catch (error) {
-
-            console.error(
-
-                "[NEXPAK ONLINE CART] Cart read failed:",
-
-                error
-
-            );
-
-
-            return [];
-
-        }
-
-    }
-
-
-    /*=====================================================
-      REFRESH CART
-    =====================================================*/
-
-    function refreshCart() {
-
-        /*
-         * Reloading through Part 1 ensures the public
-         * cart state stays synchronized with storage.
-         */
-
-        if (
-            typeof Cart.load ===
-            "function"
-        ) {
-
-            return Cart.load();
-
-        }
-
-
-        return readCart();
-
-    }
-
-
-    /*=====================================================
-      DISPATCH CART EVENT
-    =====================================================*/
-
-    function dispatchCartEvent(
-        action,
-        item,
-        extraData
-    ) {
-
-        const detail = {
-
-            action:
-                action || "",
-
-            item:
-                item || null,
-
-            cart:
-                Cart.get(),
-
-            itemCount:
-                Cart.getItemCount(),
-
-            subtotal:
-                Cart.getSubtotal(),
-
-            timestamp:
-                Date.now()
-
-        };
-
-
-        if (
-            extraData &&
-            typeof extraData === "object"
-        ) {
-
-            Object.assign(
-                detail,
-                extraData
-            );
-
-        }
-
-
-        try {
-
-            window.dispatchEvent(
-
-                new CustomEvent(
-                    "nexpak:cart:update",
-                    {
-                        detail: detail
-                    }
-                )
-
-            );
-
-        } catch (error) {
-
-            /*
-             * Older browsers may not support CustomEvent.
-             * The cart itself will still function normally.
-             */
-
-            console.warn(
-                "[NEXPAK ONLINE CART] Event dispatch failed:",
-                error
-            );
-
-        }
-
-
-        /*
-         * Also notify any legacy/custom listeners that
-         * may be attached to the document.
-         */
-
-        try {
-
-            document.dispatchEvent(
-
-                new CustomEvent(
-                    "nexpakCartUpdated",
-                    {
-                        detail: detail
-                    }
-                )
-
-            );
-
-        } catch (error) {
-
-            console.warn(
-                "[NEXPAK ONLINE CART] Legacy event failed:",
-                error
-            );
-
-        }
-
-    }
-
-
-    /*=====================================================
-      ADD PRODUCT TO CART
-    =====================================================*/
-
-    function addProduct(
-        productId,
-        quantity
-    ) {
-
-        productId =
-            normalizeId(productId);
-
-
-        if (!productId) {
-
-            console.warn(
-                "[NEXPAK ONLINE CART] Missing product ID."
-            );
-
-            return {
-
-                success: false,
-
-                message:
-                    "Product ID is required.",
-
-                cart:
-                    Cart.get()
-
-            };
-
-        }
-
-
-        /*
-         * Find the product in online-data.js.
-         */
-
-        const product =
-            Cart.findProduct(productId);
-
-
-        if (!product) {
-
-            console.warn(
-
-                "[NEXPAK ONLINE CART] Product not found:",
-
-                productId
-
-            );
-
-
-            return {
-
-                success: false,
-
-                message:
-                    "Product could not be found.",
-
-                productId:
-                    productId,
-
-                cart:
-                    Cart.get()
-
-            };
-
-        }
-
-
-        quantity =
-            normalizeQuantity(
-                quantity || 1
-            );
-
-
-        /*
-         * Work with the latest cart stored in memory.
-         */
-
-        const currentCart =
-            getInternalCart();
-
-
-        /*
-         * Check whether product is already in cart.
-         */
-
-        const existingIndex =
-            currentCart.findIndex(
-                function (item) {
-
-                    return (
-                        normalizeId(item.id) ===
-                        productId
-                    );
-
-                }
-            );
-
-
-        let cartItem;
-
-
-        /*-------------------------------------------------
-          EXISTING PRODUCT
-        -------------------------------------------------*/
-
-        if (existingIndex !== -1) {
-
-            cartItem =
-                currentCart[
-                    existingIndex
-                ];
-
-
-            const oldQuantity =
-                normalizeQuantity(
-                    cartItem.quantity
-                );
-
-
-            cartItem.quantity =
-                normalizeQuantity(
-                    oldQuantity +
-                    quantity
-                );
-
-
-            /*
-             * Refresh product information in case the
-             * database has been updated.
-             */
-
-            cartItem.name =
-                Cart.getProductName(
-                    product
-                );
-
-
-            cartItem.price =
-                Cart.getProductPrice(
-                    product
-                );
-
-
-            cartItem.image =
-                Cart.getProductImage(
-                    product
-                );
-
-
-            currentCart[
-                existingIndex
-            ] = cartItem;
-
-
-        }
-
-        /*-------------------------------------------------
-          NEW PRODUCT
-        -------------------------------------------------*/
-
-        else {
-
-            cartItem = {
-
-                id:
-                    Cart.getProductId(
-                        product
-                    ),
-
-                name:
-                    Cart.getProductName(
-                        product
-                    ),
-
-                price:
-                    Cart.getProductPrice(
-                        product
-                    ),
-
-                image:
-                    Cart.getProductImage(
-                        product
-                    ),
-
-                quantity:
-                    quantity,
-
-                addedAt:
-                    Date.now()
-
-            };
-
-
-            currentCart.push(
-                cartItem
-            );
-
-        }
-
-
-        /*
-         * Save the updated cart.
-         */
-
-        writeCart(
-            currentCart
-        );
-
-
-        /*
-         * Reload Part 1 state.
-         */
-
-        refreshCart();
-
-
-        /*
-         * Notify the rest of the store.
-         */
-
-        dispatchCartEvent(
-
-            "add",
-
-            cartItem,
-
-            {
-
-                productId:
-                    productId,
-
-                quantityAdded:
-                    quantity
-
-            }
-
-        );
-
-
-        return {
-
-            success: true,
-
-            message:
-                "Product added to cart.",
-
-            item:
-                Cart.getItem(productId),
-
-            cart:
-                Cart.get(),
-
-            itemCount:
-                Cart.getItemCount(),
-
-            subtotal:
-                Cart.getSubtotal()
-
-        };
-
-    }
-
-
-    /*=====================================================
-      REMOVE PRODUCT
-    =====================================================*/
-
-    function removeProduct(
-        productId
-    ) {
-
-        productId =
-            normalizeId(productId);
-
-
-        if (!productId) {
-
-            return {
-
-                success: false,
-
-                message:
-                    "Product ID is required.",
-
-                cart:
-                    Cart.get()
-
-            };
-
-        }
-
-
-        const currentCart =
-            getInternalCart();
-
-
-        const index =
-            currentCart.findIndex(
-                function (item) {
-
-                    return (
-                        normalizeId(item.id) ===
-                        productId
-                    );
-
-                }
-            );
-
-
-        if (index === -1) {
-
-            return {
-
-                success: false,
-
-                message:
-                    "Product is not in the cart.",
-
-                productId:
-                    productId,
-
-                cart:
-                    Cart.get()
-
-            };
-
-        }
-
-
-        const removedItem =
-            currentCart[index];
-
-
-        currentCart.splice(
-            index,
-            1
-        );
-
-
-        writeCart(
-            currentCart
-        );
-
-
-        refreshCart();
-
-
-        dispatchCartEvent(
-
-            "remove",
-
-            removedItem,
-
-            {
-
-                productId:
-                    productId
-
-            }
-
-        );
-
-
-        return {
-
-            success: true,
-
-            message:
-                "Product removed from cart.",
-
-            item:
-                removedItem,
-
-            cart:
-                Cart.get(),
-
-            itemCount:
-                Cart.getItemCount(),
-
-            subtotal:
-                Cart.getSubtotal()
-
-        };
-
-    }
-
-
-    /*=====================================================
-      UPDATE PRODUCT QUANTITY
-    =====================================================*/
-
-    function updateQuantity(
-        productId,
-        quantity
-    ) {
-
-        productId =
-            normalizeId(productId);
-
-
-        if (!productId) {
-
-            return {
-
-                success: false,
-
-                message:
-                    "Product ID is required."
-
-            };
-
-        }
-
-
-        quantity =
-            normalizeQuantity(
-                quantity
-            );
-
-
-        const currentCart =
-            getInternalCart();
-
-
-        const index =
-            currentCart.findIndex(
-                function (item) {
-
-                    return (
-                        normalizeId(item.id) ===
-                        productId
-                    );
-
-                }
-            );
-
-
-        if (index === -1) {
-
-            return {
-
-                success: false,
-
-                message:
-                    "Product is not in the cart.",
-
-                productId:
-                    productId
-
-            };
-
-        }
-
-
-        const item =
-            currentCart[index];
-
-
-        const oldQuantity =
-            normalizeQuantity(
-                item.quantity
-            );
-
-
-        item.quantity =
-            quantity;
-
-
-        currentCart[index] =
-            item;
-
-
-        writeCart(
-            currentCart
-        );
-
-
-        refreshCart();
-
-
-        dispatchCartEvent(
-
-            "quantity",
-
-            item,
-
-            {
-
-                productId:
-                    productId,
-
-                oldQuantity:
-                    oldQuantity,
-
-                newQuantity:
-                    quantity
-
-            }
-
-        );
-
-
-        return {
-
-            success: true,
-
-            message:
-                "Cart quantity updated.",
-
-            item:
-                Cart.getItem(productId),
-
-            oldQuantity:
-                oldQuantity,
-
-            newQuantity:
-                quantity,
-
-            cart:
-                Cart.get(),
-
-            itemCount:
-                Cart.getItemCount(),
-
-            subtotal:
-                Cart.getSubtotal()
-
-        };
-
-    }
-
-
-    /*=====================================================
-      INCREASE QUANTITY
-    =====================================================*/
-
-    function increaseQuantity(
-        productId,
-        amount
-    ) {
-
-        productId =
-            normalizeId(productId);
-
-
-        amount =
-            Math.floor(
-                Number(amount)
-            );
-
-
-        if (
-            !Number.isFinite(amount) ||
-            amount < 1
-        ) {
-
-            amount = 1;
-
-        }
-
-
-        const item =
-            Cart.getItem(
-                productId
-            );
-
-
-        if (!item) {
-
-            return {
-
-                success: false,
-
-                message:
-                    "Product is not in the cart.",
-
-                productId:
-                    productId
-
-            };
-
-        }
-
-
-        const newQuantity =
-            normalizeQuantity(
-
-                Number(item.quantity) +
-                amount
-
-            );
-
-
-        return updateQuantity(
-
-            productId,
-
-            newQuantity
-
-        );
-
-    }
-
-
-    /*=====================================================
-      DECREASE QUANTITY
-    =====================================================*/
-
-    function decreaseQuantity(
-        productId,
-        amount
-    ) {
-
-        productId =
-            normalizeId(productId);
-
-
-        amount =
-            Math.floor(
-                Number(amount)
-            );
-
-
-        if (
-            !Number.isFinite(amount) ||
-            amount < 1
-        ) {
-
-            amount = 1;
-
-        }
-
-
-        const item =
-            Cart.getItem(
-                productId
-            );
-
-
-        if (!item) {
-
-            return {
-
-                success: false,
-
-                message:
-                    "Product is not in the cart.",
-
-                productId:
-                    productId
-
-            };
-
-        }
-
-
-        const currentQuantity =
-            normalizeQuantity(
-                item.quantity
-            );
-
-
-        /*
-         * If quantity is 1 and the user decreases it,
-         * remove the item instead of allowing quantity 0.
-         */
-
-        if (
-            currentQuantity -
-            amount <
-            MIN_QUANTITY
-        ) {
-
-            return removeProduct(
-                productId
-            );
-
-        }
-
-
-        const newQuantity =
-            normalizeQuantity(
-
-                currentQuantity -
-                amount
-
-            );
-
-
-        return updateQuantity(
-
-            productId,
-
-            newQuantity
-
-        );
-
-    }
-
-
-    /*=====================================================
-      CLEAR CART
-    =====================================================*/
-
-    function clearCart() {
-
-        const previousCart =
-            Cart.get();
-
-
-        cart = [];
-
-
-        /*
-         * Clear storage.
-         */
-
-        try {
-
-            localStorage.removeItem(
-                STORAGE_KEY
-            );
-
-        } catch (error) {
-
-            console.error(
-
-                "[NEXPAK ONLINE CART] Unable to clear storage:",
-
-                error
-
-            );
-
-        }
-
-
-        /*
-         * Reload empty state.
-         */
-
-        refreshCart();
-
-
-        dispatchCartEvent(
-
-            "clear",
-
-            null,
-
-            {
-
-                previousCart:
-                    previousCart
-
-            }
-
-        );
-
-
-        return {
-
-            success: true,
-
-            message:
-                "Cart cleared.",
-
-            cart:
-                Cart.get(),
-
-            itemCount:
-                Cart.getItemCount(),
-
-            subtotal:
-                Cart.getSubtotal()
-
-        };
-
-    }
-
-
-    /*=====================================================
-      CHECK IF PRODUCT IS IN CART
-    =====================================================*/
-
-    function hasProduct(
-        productId
-    ) {
-
-        productId =
-            normalizeId(productId);
-
-
-        if (!productId) {
-
-            return false;
-
-        }
-
-
-        return !!Cart.getItem(
-            productId
-        );
-
-    }
-
-
-    /*=====================================================
-      GET PRODUCT QUANTITY
-    =====================================================*/
-
-    function getQuantity(
-        productId
-    ) {
-
-        const item =
-            Cart.getItem(
-                normalizeId(productId)
-            );
-
-
-        if (!item) {
-
-            return 0;
-
-        }
-
-
-        return normalizeQuantity(
-            item.quantity
-        );
-
-    }
-
-
-    /*=====================================================
-      EXTEND PUBLIC CART API
-    =====================================================*/
-
-    Cart.add =
-        addProduct;
-
-
-    Cart.remove =
-        removeProduct;
-
-
-    Cart.updateQuantity =
-        updateQuantity;
-
-
-    Cart.increase =
-        increaseQuantity;
-
-
-    Cart.decrease =
-        decreaseQuantity;
-
-
-    Cart.clear =
-        clearCart;
-
-
-    Cart.has =
-        hasProduct;
-
-
-    Cart.getQuantity =
-        getQuantity;
-
-
-    /*=====================================================
-      GLOBAL CONVENIENCE FUNCTIONS
-    =====================================================*/
-
-    /*
-     * These make it easier for online.js and the HTML
-     * buttons to interact with the cart.
-     */
-
-    window.addToOnlineCart =
-        addProduct;
-
-
-    window.removeFromOnlineCart =
-        removeProduct;
-
-
-    window.updateOnlineCartQuantity =
-        updateQuantity;
-
-
-    window.increaseOnlineCartQuantity =
-        increaseQuantity;
-
-
-    window.decreaseOnlineCartQuantity =
-        decreaseQuantity;
-
-
-    window.clearOnlineCart =
-        clearCart;
-
-
-    /*=====================================================
-      CART STORAGE SYNCHRONISATION
-    =====================================================*/
-
-    window.addEventListener(
-        "storage",
-        function (event) {
-
-            if (
-                event.key !==
-                STORAGE_KEY
-            ) {
-
-                return;
-
-            }
-
-
-            refreshCart();
-
-
-            dispatchCartEvent(
-
-                "sync",
-
-                null,
-
-                {
-
-                    source:
-                        "storage"
-
-                }
-
-            );
-
-        }
-    );
-
-
-    /*=====================================================
-      READY LOG
-    =====================================================*/
-
-    console.log(
-        "[NEXPAK ONLINE CART] Part 2 loaded."
-    );
-
-
-})();
-
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE — CART ENGINE
- ---------------------------------------------------------
- File: onlinecart.js
- Part: 3/8
- Purpose:
- Cart calculations, line totals, discounts, tax,
- delivery charges, savings and order totals.
-=========================================================*/
-
-
-(function () {
-
-    "use strict";
-
-
-    /*=====================================================
-      CART ENGINE CHECK
-    =====================================================*/
-
-    if (!window.NEXPAKOnlineCart) {
-
-        console.error(
-            "[NEXPAK ONLINE CART] Parts 1-2 must load first."
-        );
-
-        return;
-
-    }
-
-
-    const Cart =
-        window.NEXPAKOnlineCart;
-
-
-    /*=====================================================
-      CONFIGURATION
-    =====================================================*/
-
-    const CALCULATION_CONFIG = {
-
-        CURRENCY:
-            "ZAR",
-
-        TAX_RATE:
-            0,
-
-        DISCOUNT_RATE:
-            0,
-
-        FIXED_DISCOUNT:
-            0,
-
-        DELIVERY_FEE:
-            0,
-
-        FREE_DELIVERY_THRESHOLD:
-            0,
-
-        DECIMAL_PLACES:
-            2
-
-    };
-
-
-    /*=====================================================
-      INTERNAL STATE
-    =====================================================*/
-
-    let calculationSettings = {
-
-        taxRate:
-            CALCULATION_CONFIG.TAX_RATE,
-
-        discountRate:
-            CALCULATION_CONFIG.DISCOUNT_RATE,
-
-        fixedDiscount:
-            CALCULATION_CONFIG.FIXED_DISCOUNT,
-
-        deliveryFee:
-            CALCULATION_CONFIG.DELIVERY_FEE,
-
-        freeDeliveryThreshold:
-            CALCULATION_CONFIG.FREE_DELIVERY_THRESHOLD
-
-    };
-
-
-    /*=====================================================
-      SAFE NUMBER
-    =====================================================*/
-
-    function safeNumber(
-        value,
-        fallback
-    ) {
-
-        const number =
-            Number(value);
-
-
-        if (
-            !Number.isFinite(number)
-        ) {
-
-            return (
-                fallback || 0
-            );
-
-        }
-
-
-        return number;
-
-    }
-
-
-    /*=====================================================
-      ROUND MONEY
-    =====================================================*/
-
-    function roundMoney(
-        amount
-    ) {
-
-        const factor =
-            Math.pow(
-                10,
-                CALCULATION_CONFIG.DECIMAL_PLACES
-            );
-
-
-        return (
-            Math.round(
-                (
-                    safeNumber(
-                        amount,
-                        0
-                    ) +
-                    Number.EPSILON
-                ) *
-                factor
-            ) /
-            factor
-        );
-
-    }
-
-
-    /*=====================================================
-      FORMAT MONEY
-    =====================================================*/
-
-    function formatMoney(
-        amount
-    ) {
-
-        amount =
-            roundMoney(
-                amount
-            );
-
-
-        try {
-
-            return new Intl.NumberFormat(
-                "en-ZA",
-                {
-
-                    style:
-                        "currency",
-
-                    currency:
-                        CALCULATION_CONFIG.CURRENCY,
-
-                    minimumFractionDigits:
-                        2,
-
-                    maximumFractionDigits:
-                        2
-
-                }
-            ).format(amount);
-
-        } catch (error) {
-
-            return (
-                "R " +
-                amount.toFixed(2)
-            );
-
-        }
-
-    }
-
-
-    /*=====================================================
-      GET CURRENT CART
-    =====================================================*/
-
-    function getCurrentCart() {
-
-        if (
-            typeof Cart.get ===
-            "function"
-        ) {
-
-            return Cart.get();
-
-        }
-
-
-        return [];
-
-    }
-
-
-    /*=====================================================
-      CALCULATE LINE TOTAL
-    =====================================================*/
-
-    function calculateLineTotal(
-        item
-    ) {
-
-        if (!item) {
-
-            return 0;
-
-        }
-
-
-        const price =
-            Math.max(
-                0,
-                safeNumber(
-                    item.price,
-                    0
-                )
-            );
-
-
-        const quantity =
-            Math.max(
-                0,
-                Math.floor(
-                    safeNumber(
-                        item.quantity,
-                        0
-                    )
-                )
-            );
-
-
-        return roundMoney(
-            price * quantity
-        );
-
-    }
-
-
-    /*=====================================================
-      GET CART LINE ITEMS
-    =====================================================*/
-
-    function getLineItems() {
-
-        const cart =
-            getCurrentCart();
-
-
-        return cart.map(
-            function (item) {
-
-                const price =
-                    Math.max(
-                        0,
-                        safeNumber(
-                            item.price,
-                            0
-                        )
-                    );
-
-
-                const quantity =
-                    Math.max(
-                        0,
-                        Math.floor(
-                            safeNumber(
-                                item.quantity,
-                                0
-                            )
-                        )
-                    );
-
-
-                const lineTotal =
-                    calculateLineTotal(
-                        item
-                    );
-
-
-                return {
-
-                    id:
-                        item.id || "",
-
-                    name:
-                        item.name || "",
-
-                    image:
-                        item.image || "",
-
-                    price:
-                        roundMoney(
-                            price
-                        ),
-
-                    quantity:
-                        quantity,
-
-                    lineTotal:
-                        lineTotal,
-
-                    formattedPrice:
-                        formatMoney(
-                            price
-                        ),
-
-                    formattedLineTotal:
-                        formatMoney(
-                            lineTotal
-                        )
-
-                };
-
-            }
-        );
-
-    }
-
-
-    /*=====================================================
-      CALCULATE ITEM COUNT
-    =====================================================*/
-
-    function calculateItemCount() {
-
-        const cart =
-            getCurrentCart();
-
-
-        return cart.reduce(
-
-            function (
-                total,
-                item
-            ) {
-
-                const quantity =
-                    Math.max(
-                        0,
-                        Math.floor(
-                            safeNumber(
-                                item.quantity,
-                                0
-                            )
-                        )
-                    );
-
-
-                return (
-                    total +
-                    quantity
-                );
-
-            },
-
-            0
-
-        );
-
-    }
-
-
-    /*=====================================================
-      CALCULATE SUBTOTAL
-    =====================================================*/
-
-    function calculateSubtotal() {
-
-        const lines =
-            getLineItems();
-
-
-        const subtotal =
-            lines.reduce(
-
-                function (
-                    total,
-                    item
-                ) {
-
-                    return (
-                        total +
-                        item.lineTotal
-                    );
-
-                },
-
-                0
-
-            );
-
-
-        return roundMoney(
-            subtotal
-        );
-
-    }
-
-
-    /*=====================================================
-      CALCULATE ORIGINAL TOTAL
-    =====================================================*/
-
-    function calculateOriginalTotal() {
-
-        const cart =
-            getCurrentCart();
-
-
-        return roundMoney(
-
-            cart.reduce(
-
-                function (
-                    total,
-                    item
-                ) {
-
-                    const originalPrice =
-                        safeNumber(
-                            item.originalPrice,
-                            item.price
-                        );
-
-
-                    const quantity =
-                        Math.max(
-                            0,
-                            Math.floor(
-                                safeNumber(
-                                    item.quantity,
-                                    0
-                                )
-                            )
-                        );
-
-
-                    return (
-                        total +
-                        (
-                            Math.max(
-                                0,
-                                originalPrice
-                            ) *
-                            quantity
-                        )
-                    );
-
-                },
-
-                0
-
-            )
-
-        );
-
-    }
-
-
-    /*=====================================================
-      CALCULATE PERCENTAGE DISCOUNT
-    =====================================================*/
-
-    function calculatePercentageDiscount(
-        subtotal
-    ) {
-
-        const rate =
-            Math.max(
-                0,
-                safeNumber(
-                    calculationSettings.discountRate,
-                    0
-                )
-            );
-
-
-        if (
-            rate <= 0
-        ) {
-
-            return 0;
-
-        }
-
-
-        return roundMoney(
-
-            subtotal *
-            (
-                rate /
-                100
-            )
-
-        );
-
-    }
-
-
-    /*=====================================================
-      CALCULATE FIXED DISCOUNT
-    =====================================================*/
-
-    function calculateFixedDiscount(
-        subtotal
-    ) {
-
-        const fixed =
-            Math.max(
-                0,
-                safeNumber(
-                    calculationSettings.fixedDiscount,
-                    0
-                )
-            );
-
-
-        return roundMoney(
-
-            Math.min(
-                fixed,
-                subtotal
-            )
-
-        );
-
-    }
-
-
-    /*=====================================================
-      CALCULATE TOTAL DISCOUNT
-    =====================================================*/
-
-    function calculateDiscount(
-        subtotal
-    ) {
-
-        const percentageDiscount =
-            calculatePercentageDiscount(
-                subtotal
-            );
-
-
-        const fixedDiscount =
-            calculateFixedDiscount(
-                subtotal
-            );
-
-
-        return {
-
-            percentage:
-                percentageDiscount,
-
-            fixed:
-                fixedDiscount,
-
-            total:
-                roundMoney(
-                    Math.min(
-                        subtotal,
-                        percentageDiscount +
-                        fixedDiscount
-                    )
-                )
-
-        };
-
-    }
-
-
-    /*=====================================================
-      CALCULATE TAXABLE AMOUNT
-    =====================================================*/
-
-    function calculateTaxableAmount(
-        subtotal,
-        discount
-    ) {
-
-        return roundMoney(
-
-            Math.max(
-                0,
-                subtotal -
-                discount
-            )
-
-        );
-
-    }
-
-
-    /*=====================================================
-      CALCULATE TAX
-    =====================================================*/
-
-    function calculateTax(
-        taxableAmount
-    ) {
-
-        const taxRate =
-            Math.max(
-                0,
-                safeNumber(
-                    calculationSettings.taxRate,
-                    0
-                )
-            );
-
-
-        if (
-            taxRate <= 0
-        ) {
-
-            return 0;
-
-        }
-
-
-        return roundMoney(
-
-            taxableAmount *
-            (
-                taxRate /
-                100
-            )
-
-        );
-
-    }
-
-
-    /*=====================================================
-      CALCULATE DELIVERY
-    =====================================================*/
-
-    function calculateDelivery(
-        subtotal
-    ) {
-
-        const configuredFee =
-            Math.max(
-                0,
-                safeNumber(
-                    calculationSettings.deliveryFee,
-                    0
-                )
-            );
-
-
-        const threshold =
-            Math.max(
-                0,
-                safeNumber(
-                    calculationSettings
-                        .freeDeliveryThreshold,
-                    0
-                )
-            );
-
-
-        /*
-         * No delivery charge configured.
-         */
-
-        if (
-            configuredFee <= 0
-        ) {
-
-            return {
-
-                fee:
-                    0,
-
-                free:
-                    true,
-
-                reason:
-                    "No delivery fee configured."
-
-            };
-
-        }
-
-
-        /*
-         * Free delivery threshold reached.
-         */
-
-        if (
-            threshold > 0 &&
-            subtotal >= threshold
-        ) {
-
-            return {
-
-                fee:
-                    0,
-
-                free:
-                    true,
-
-                reason:
-                    "Free delivery threshold reached."
-
-            };
-
-        }
-
-
-        return {
-
-            fee:
-                roundMoney(
-                    configuredFee
-                ),
-
-            free:
-                false,
-
-            reason:
-                "Standard delivery fee."
-
-        };
-
-    }
-
-
-    /*=====================================================
-      CALCULATE SAVINGS
-    =====================================================*/
-
-    function calculateSavings(
-        originalTotal,
-        subtotal,
-        discount
-    ) {
-
-        const productSavings =
-            Math.max(
-                0,
-                originalTotal -
-                subtotal
-            );
-
-
-        const discountSavings =
-            Math.max(
-                0,
-                discount
-            );
-
-
-        return roundMoney(
-
-            productSavings +
-            discountSavings
-
-        );
-
-    }
-
-
-    /*=====================================================
-      CALCULATE GRAND TOTAL
-    =====================================================*/
-
-    function calculateGrandTotal(
-        taxableAmount,
-        tax,
-        delivery
-    ) {
-
-        return roundMoney(
-
-            Math.max(
-                0,
-                taxableAmount +
-                tax +
-                delivery
-            )
-
-        );
-
-    }
-
-
-    /*=====================================================
-      COMPLETE CART CALCULATION
-    =====================================================*/
-
-    function calculateCart() {
-
-        const subtotal =
-            calculateSubtotal();
-
-
-        const originalTotal =
-            calculateOriginalTotal();
-
-
-        const discount =
-            calculateDiscount(
-                subtotal
-            );
-
-
-        const taxableAmount =
-            calculateTaxableAmount(
-
-                subtotal,
-
-                discount.total
-
-            );
-
-
-        const tax =
-            calculateTax(
-                taxableAmount
-            );
-
-
-        const delivery =
-            calculateDelivery(
-                subtotal
-            );
-
-
-        const grandTotal =
-            calculateGrandTotal(
-
-                taxableAmount,
-
-                tax,
-
-                delivery.fee
-
-            );
-
-
-        const savings =
-            calculateSavings(
-
-                originalTotal,
-
-                subtotal,
-
-                discount.total
-
-            );
-
-
-        const itemCount =
-            calculateItemCount();
-
-
-        return {
-
-            currency:
-                CALCULATION_CONFIG.CURRENCY,
-
-            itemCount:
-                itemCount,
-
-            lines:
-                getLineItems(),
-
-            subtotal:
-                subtotal,
-
-            discount:
-                discount.total,
-
-            discountPercentage:
-                discount.percentage,
-
-            discountFixed:
-                discount.fixed,
-
-            taxableAmount:
-                taxableAmount,
-
-            taxRate:
-                calculationSettings.taxRate,
-
-            tax:
-                tax,
-
-            delivery:
-                delivery.fee,
-
-            deliveryFree:
-                delivery.free,
-
-            deliveryReason:
-                delivery.reason,
-
-            originalTotal:
-                originalTotal,
-
-            savings:
-                savings,
-
-            grandTotal:
-                grandTotal,
-
-            formattedSubtotal:
-                formatMoney(
-                    subtotal
-                ),
-
-            formattedDiscount:
-                formatMoney(
-                    discount.total
-                ),
-
-            formattedTax:
-                formatMoney(
-                    tax
-                ),
-
-            formattedDelivery:
-                formatMoney(
-                    delivery.fee
-                ),
-
-            formattedSavings:
-                formatMoney(
-                    savings
-                ),
-
-            formattedGrandTotal:
-                formatMoney(
-                    grandTotal
-                )
-
-        };
-
-    }
-
-
-    /*=====================================================
-      SET TAX RATE
-    =====================================================*/
-
-    function setTaxRate(
-        rate
-    ) {
-
-        rate =
-            Math.max(
-                0,
-                safeNumber(
-                    rate,
-                    0
-                )
-            );
-
-
-        calculationSettings.taxRate =
-            rate;
-
-
-        return calculateCart();
-
-    }
-
-
-    /*=====================================================
-      SET DISCOUNT RATE
-    =====================================================*/
-
-    function setDiscountRate(
-        rate
-    ) {
-
-        rate =
-            Math.max(
-                0,
-                safeNumber(
-                    rate,
-                    0
-                )
-            );
-
-
-        calculationSettings.discountRate =
-            rate;
-
-
-        return calculateCart();
-
-    }
-
-
-    /*=====================================================
-      SET FIXED DISCOUNT
-    =====================================================*/
-
-    function setFixedDiscount(
-        amount
-    ) {
-
-        amount =
-            Math.max(
-                0,
-                safeNumber(
-                    amount,
-                    0
-                )
-            );
-
-
-        calculationSettings.fixedDiscount =
-            amount;
-
-
-        return calculateCart();
-
-    }
-
-
-    /*=====================================================
-      SET DELIVERY FEE
-    =====================================================*/
-
-    function setDeliveryFee(
-        amount
-    ) {
-
-        amount =
-            Math.max(
-                0,
-                safeNumber(
-                    amount,
-                    0
-                )
-            );
-
-
-        calculationSettings.deliveryFee =
-            amount;
-
-
-        return calculateCart();
-
-    }
-
-
-    /*=====================================================
-      SET FREE DELIVERY THRESHOLD
-    =====================================================*/
-
-    function setFreeDeliveryThreshold(
-        amount
-    ) {
-
-        amount =
-            Math.max(
-                0,
-                safeNumber(
-                    amount,
-                    0
-                )
-            );
-
-
-        calculationSettings
-            .freeDeliveryThreshold =
-            amount;
-
-
-        return calculateCart();
-
-    }
-
-
-    /*=====================================================
-      RESET CALCULATION SETTINGS
-    =====================================================*/
-
-    function resetCalculationSettings() {
-
-        calculationSettings = {
-
-            taxRate:
-                CALCULATION_CONFIG.TAX_RATE,
-
-            discountRate:
-                CALCULATION_CONFIG.DISCOUNT_RATE,
-
-            fixedDiscount:
-                CALCULATION_CONFIG.FIXED_DISCOUNT,
-
-            deliveryFee:
-                CALCULATION_CONFIG.DELIVERY_FEE,
-
-            freeDeliveryThreshold:
-                CALCULATION_CONFIG
-                    .FREE_DELIVERY_THRESHOLD
-
-        };
-
-
-        return calculateCart();
-
-    }
-
-
-    /*=====================================================
-      GET CALCULATION SETTINGS
-    =====================================================*/
-
-    function getCalculationSettings() {
-
-        return {
-
-            ...calculationSettings
-
-        };
-
-    }
-
-
-    /*=====================================================
-      CART SUMMARY
-    =====================================================*/
-
-    function getCartSummary() {
-
-        const totals =
-            calculateCart();
-
-
-        return {
-
-            itemCount:
-                totals.itemCount,
-
-            subtotal:
-                totals.subtotal,
-
-            discount:
-                totals.discount,
-
-            tax:
-                totals.tax,
-
-            delivery:
-                totals.delivery,
-
-            savings:
-                totals.savings,
-
-            grandTotal:
-                totals.grandTotal,
-
-            formattedSubtotal:
-                totals.formattedSubtotal,
-
-            formattedDiscount:
-                totals.formattedDiscount,
-
-            formattedTax:
-                totals.formattedTax,
-
-            formattedDelivery:
-                totals.formattedDelivery,
-
-            formattedSavings:
-                totals.formattedSavings,
-
-            formattedGrandTotal:
-                totals.formattedGrandTotal
-
-        };
-
-    }
-
-
-    /*=====================================================
-      EXTEND PUBLIC CART API
-    =====================================================*/
-
-    Cart.calculateLineTotal =
-        calculateLineTotal;
-
-
-    Cart.getLineItems =
-        getLineItems;
-
-
-    Cart.calculateSubtotal =
-        calculateSubtotal;
-
-
-    Cart.calculateDiscount =
-        calculateDiscount;
-
-
-    Cart.calculateTax =
-        function () {
-
-            const subtotal =
-                calculateSubtotal();
-
-
-            const discount =
-                calculateDiscount(
-                    subtotal
-                );
-
-
-            const taxable =
-                calculateTaxableAmount(
-
-                    subtotal,
-
-                    discount.total
-
-                );
-
-
-            return calculateTax(
-                taxable
-            );
-
-        };
-
-
-    Cart.calculateDelivery =
-        function () {
-
-            return calculateDelivery(
-                calculateSubtotal()
-            );
-
-        };
-
-
-    Cart.calculate =
-        calculateCart;
-
-
-    Cart.getSummary =
-        getCartSummary;
-
-
-    Cart.formatMoney =
-        formatMoney;
-
-
-    Cart.roundMoney =
-        roundMoney;
-
-
-    Cart.setTaxRate =
-        setTaxRate;
-
-
-    Cart.setDiscountRate =
-        setDiscountRate;
-
-
-    Cart.setFixedDiscount =
-        setFixedDiscount;
-
-
-    Cart.setDeliveryFee =
-        setDeliveryFee;
-
-
-    Cart.setFreeDeliveryThreshold =
-        setFreeDeliveryThreshold;
-
-
-    Cart.getCalculationSettings =
-        getCalculationSettings;
-
-
-    Cart.resetCalculationSettings =
-        resetCalculationSettings;
-
-
-    /*=====================================================
-      GLOBAL CALCULATION HELPERS
-    =====================================================*/
-
-    window.calculateOnlineCart =
-        calculateCart;
-
-
-    window.getOnlineCartSummary =
-        getCartSummary;
-
-
-    window.formatOnlineCartMoney =
-        formatMoney;
-
-
-    /*=====================================================
-      CART UPDATE LISTENER
-    =====================================================*/
-
-    window.addEventListener(
-
-        "nexpak:cart:update",
-
-        function () {
-
-            /*
-             * Recalculate automatically whenever the cart
-             * changes.
-             */
-
-            calculateCart();
 
         }
 
     );
 
 
-    /*=====================================================
-      READY MESSAGE
-    =====================================================*/
+    container.innerHTML =
+        html;
 
-    console.log(
-        "[NEXPAK ONLINE CART] Part 3 loaded."
-    );
 
+    return true;
 
-})();
+}
 
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE — CART ENGINE
- ---------------------------------------------------------
- File: onlinecart.js
- Part: 4/8
- Purpose:
- Cart UI synchronization, cart badges, totals,
- quantity controls, empty states and product states.
-=========================================================*/
 
+/* =====================================================
+   54. RENDER CART TOTALS
+   ===================================================== */
 
-(function () {
+function renderNexpakOnlineCartTotals(
+    container = null,
+    deliveryFee = 0
+) {
 
-    "use strict";
+    if (!container) {
 
+        const selectors = [
 
-    /*=====================================================
-      CART ENGINE CHECK
-    =====================================================*/
+            "#onlineCartTotals",
 
-    if (!window.NEXPAKOnlineCart) {
+            "#cartTotals",
 
-        console.error(
-            "[NEXPAK ONLINE CART] Parts 1-3 must load first."
-        );
+            ".online-cart-totals",
 
-        return;
+            "[data-online-cart-totals]"
 
-    }
-
-
-    const Cart =
-        window.NEXPAKOnlineCart;
-
-
-    /*=====================================================
-      UI SELECTORS
-    =====================================================*/
-
-    const SELECTORS = {
-
-        cartCount: [
-
-            ".cart-count",
-
-            ".online-cart-count",
-
-            "[data-cart-count]",
-
-            "[data-online-cart-count]"
-
-        ],
-
-        cartTotal: [
-
-            ".cart-total",
-
-            ".online-cart-total",
-
-            "[data-cart-total]",
-
-            "[data-online-cart-total]"
-
-        ],
-
-        cartSubtotal: [
-
-            ".cart-subtotal",
-
-            ".online-cart-subtotal",
-
-            "[data-cart-subtotal]",
-
-            "[data-online-cart-subtotal]"
-
-        ],
-
-        cartDiscount: [
-
-            ".cart-discount",
-
-            ".online-cart-discount",
-
-            "[data-cart-discount]"
-
-        ],
-
-        cartTax: [
-
-            ".cart-tax",
-
-            ".online-cart-tax",
-
-            "[data-cart-tax]"
-
-        ],
-
-        cartDelivery: [
-
-            ".cart-delivery",
-
-            ".online-cart-delivery",
-
-            "[data-cart-delivery]"
-
-        ],
-
-        cartSavings: [
-
-            ".cart-savings",
-
-            ".online-cart-savings",
-
-            "[data-cart-savings]"
-
-        ],
-
-        cartItems: [
-
-            ".cart-items",
-
-            ".online-cart-items",
-
-            "[data-cart-items]",
-
-            "[data-online-cart-items]"
-
-        ],
-
-        emptyCart: [
-
-            ".empty-cart",
-
-            ".cart-empty",
-
-            ".online-cart-empty",
-
-            "[data-cart-empty]"
-
-        ],
-
-        cartContent: [
-
-            ".cart-content",
-
-            ".online-cart-content",
-
-            "[data-cart-content]"
-
-        ],
-
-        checkoutButton: [
-
-            ".checkout-btn",
-
-            ".online-checkout-btn",
-
-            "[data-checkout]",
-
-            "[data-online-checkout]"
-
-        ]
-
-    };
-
-
-    /*=====================================================
-      FIND ELEMENTS
-    =====================================================*/
-
-    function findElements(
-        selectors
-    ) {
-
-        const elements = [];
-
-
-        if (
-            !Array.isArray(
-                selectors
-            )
-        ) {
-
-            return elements;
-
-        }
-
-
-        selectors.forEach(
-            function (selector) {
-
-                document
-                    .querySelectorAll(
-                        selector
-                    )
-                    .forEach(
-                        function (element) {
-
-                            if (
-                                elements.indexOf(
-                                    element
-                                ) === -1
-                            ) {
-
-                                elements.push(
-                                    element
-                                );
-
-                            }
-
-                        }
-                    );
-
-            }
-        );
-
-
-        return elements;
-
-    }
-
-
-    /*=====================================================
-      SET TEXT
-    =====================================================*/
-
-    function setText(
-        selectors,
-        value
-    ) {
-
-        const elements =
-            findElements(
-                selectors
-            );
-
-
-        elements.forEach(
-            function (element) {
-
-                element.textContent =
-                    value;
-
-            }
-        );
-
-
-        return elements.length;
-
-    }
-
-
-    /*=====================================================
-      SHOW / HIDE ELEMENT
-    =====================================================*/
-
-    function setVisible(
-        selectors,
-        visible
-    ) {
-
-        const elements =
-            findElements(
-                selectors
-            );
-
-
-        elements.forEach(
-            function (element) {
-
-                if (visible) {
-
-                    element.style.display =
-                        "";
-
-                    element.removeAttribute(
-                        "aria-hidden"
-                    );
-
-                } else {
-
-                    element.style.display =
-                        "none";
-
-                    element.setAttribute(
-                        "aria-hidden",
-                        "true"
-                    );
-
-                }
-
-            }
-        );
-
-
-        return elements.length;
-
-    }
-
-
-    /*=====================================================
-      UPDATE CART BADGES
-    =====================================================*/
-
-    function updateCartCount(
-        totals
-    ) {
-
-        const count =
-            Number(
-                totals.itemCount
-            ) || 0;
-
-
-        const elements =
-            findElements(
-                SELECTORS.cartCount
-            );
-
-
-        elements.forEach(
-            function (element) {
-
-                element.textContent =
-                    count;
-
-
-                element.setAttribute(
-                    "data-count",
-                    count
-                );
-
-
-                /*
-                 * Keep accessibility information useful.
-                 */
-
-                element.setAttribute(
-                    "aria-label",
-                    count === 1
-                        ? "1 item in cart"
-                        : count +
-                          " items in cart"
-                );
-
-            }
-        );
-
-    }
-
-
-    /*=====================================================
-      UPDATE TOTALS
-    =====================================================*/
-
-    function updateTotals(
-        totals
-    ) {
-
-        if (!totals) {
-
-            return;
-
-        }
-
-
-        setText(
-
-            SELECTORS.cartTotal,
-
-            totals.formattedGrandTotal
-
-        );
-
-
-        setText(
-
-            SELECTORS.cartSubtotal,
-
-            totals.formattedSubtotal
-
-        );
-
-
-        setText(
-
-            SELECTORS.cartDiscount,
-
-            totals.formattedDiscount
-
-        );
-
-
-        setText(
-
-            SELECTORS.cartTax,
-
-            totals.formattedTax
-
-        );
-
-
-        setText(
-
-            SELECTORS.cartDelivery,
-
-            totals.formattedDelivery
-
-        );
-
-
-        setText(
-
-            SELECTORS.cartSavings,
-
-            totals.formattedSavings
-
-        );
-
-    }
-
-
-    /*=====================================================
-      UPDATE EMPTY CART STATE
-    =====================================================*/
-
-    function updateEmptyState(
-        totals
-    ) {
-
-        const isEmpty =
-            !totals ||
-            Number(
-                totals.itemCount
-            ) <= 0;
-
-
-        setVisible(
-
-            SELECTORS.emptyCart,
-
-            isEmpty
-
-        );
-
-
-        setVisible(
-
-            SELECTORS.cartContent,
-
-            !isEmpty
-
-        );
-
-
-        const checkoutButtons =
-            findElements(
-                SELECTORS.checkoutButton
-            );
-
-
-        checkoutButtons.forEach(
-            function (button) {
-
-                button.disabled =
-                    isEmpty;
-
-
-                button.setAttribute(
-                    "aria-disabled",
-                    isEmpty
-                        ? "true"
-                        : "false"
-                );
-
-            }
-        );
-
-    }
-
-
-    /*=====================================================
-      UPDATE CART UI
-    =====================================================*/
-
-    function updateCartUI() {
-
-        let totals;
-
-
-        try {
-
-            totals =
-                Cart.calculate();
-
-        } catch (error) {
-
-            console.error(
-
-                "[NEXPAK ONLINE CART] UI calculation error:",
-
-                error
-
-            );
-
-            return;
-
-        }
-
-
-        updateCartCount(
-            totals
-        );
-
-
-        updateTotals(
-            totals
-        );
-
-
-        updateEmptyState(
-            totals
-        );
-
-
-        updateCartLineItems(
-            totals
-        );
-
-
-        updateProductCartStates();
-
-    }
-
-
-    /*=====================================================
-      UPDATE CART LINE ITEMS
-    =====================================================*/
-
-    function updateCartLineItems(
-        totals
-    ) {
-
-        if (!totals) {
-
-            return;
-
-        }
-
-
-        const cart =
-            Cart.get();
-
-
-        /*
-         * Find quantity inputs belonging to cart items.
-         */
-
-        document
-            .querySelectorAll(
-                "[data-cart-product-id]"
-            )
-            .forEach(
-                function (element) {
-
-                    const productId =
-                        String(
-                            element.getAttribute(
-                                "data-cart-product-id"
-                            ) || ""
-                        ).trim();
-
-
-                    if (!productId) {
-
-                        return;
-
-                    }
-
-
-                    const item =
-                        cart.find(
-                            function (cartItem) {
-
-                                return (
-                                    String(
-                                        cartItem.id
-                                    ) ===
-                                    productId
-                                );
-
-                            }
-                        );
-
-
-                    if (!item) {
-
-                        return;
-
-                    }
-
-
-                    /*
-                     * Quantity input.
-                     */
-
-                    if (
-                        element.matches(
-                            "input, select"
-                        )
-                    ) {
-
-                        element.value =
-                            item.quantity;
-
-                    }
-
-
-                    /*
-                     * Quantity text.
-                     */
-
-                    element
-                        .querySelectorAll(
-                            "[data-cart-quantity]"
-                        )
-                        .forEach(
-                            function (quantityElement) {
-
-                                quantityElement
-                                    .textContent =
-                                    item.quantity;
-
-                            }
-                        );
-
-                }
-            );
-
-
-        /*
-         * Update individual line totals.
-         */
-
-        totals.lines.forEach(
-            function (line) {
-
-                const productId =
-                    String(
-                        line.id
-                    );
-
-
-                document
-                    .querySelectorAll(
-
-                        '[data-cart-line-total="' +
-                        CSS.escape(
-                            productId
-                        ) +
-                        '"]'
-
-                    )
-                    .forEach(
-                        function (element) {
-
-                            element.textContent =
-                                line.formattedLineTotal;
-
-                        }
-                    );
-
-            }
-        );
-
-    }
-
-
-    /*=====================================================
-      UPDATE PRODUCT CART STATES
-    =====================================================*/
-
-    function updateProductCartStates() {
-
-        const cart =
-            Cart.get();
-
-
-        /*
-         * Product cards may use:
-         *
-         * data-product-id
-         * data-product
-         * data-id
-         */
-
-        document
-            .querySelectorAll(
-                "[data-product-id]"
-            )
-            .forEach(
-                function (card) {
-
-                    const productId =
-                        String(
-                            card.getAttribute(
-                                "data-product-id"
-                            ) || ""
-                        ).trim();
-
-
-                    if (!productId) {
-
-                        return;
-
-                    }
-
-
-                    const inCart =
-                        cart.some(
-                            function (item) {
-
-                                return (
-                                    String(
-                                        item.id
-                                    ) ===
-                                    productId
-                                );
-
-                            }
-                        );
-
-
-                    card.classList.toggle(
-                        "in-cart",
-                        inCart
-                    );
-
-
-                    card.setAttribute(
-                        "data-in-cart",
-                        inCart
-                            ? "true"
-                            : "false"
-                    );
-
-
-                    /*
-                     * Update add-to-cart buttons.
-                     */
-
-                    card
-                        .querySelectorAll(
-                            "[data-add-to-cart]"
-                        )
-                        .forEach(
-                            function (button) {
-
-                                button.classList.toggle(
-                                    "in-cart",
-                                    inCart
-                                );
-
-
-                                button.setAttribute(
-                                    "aria-pressed",
-                                    inCart
-                                        ? "true"
-                                        : "false"
-                                );
-
-                            }
-                        );
-
-                }
-            );
-
-    }
-
-
-    /*=====================================================
-      UPDATE SPECIFIC PRODUCT QUANTITY DISPLAY
-    =====================================================*/
-
-    function updateProductQuantityDisplay(
-        productId
-    ) {
-
-        productId =
-            String(
-                productId || ""
-            ).trim();
-
-
-        if (!productId) {
-
-            return;
-
-        }
-
-
-        const quantity =
-            typeof Cart.getQuantity ===
-            "function"
-
-                ? Cart.getQuantity(
-                    productId
-                )
-
-                : 0;
-
-
-        document
-            .querySelectorAll(
-                '[data-product-quantity="' +
-                CSS.escape(
-                    productId
-                ) +
-                '"]'
-            )
-            .forEach(
-                function (element) {
-
-                    element.textContent =
-                        quantity;
-
-                }
-            );
-
-    }
-
-
-    /*=====================================================
-      CART ITEM REMOVAL FROM UI
-    =====================================================*/
-
-    function removeCartItemFromUI(
-        productId
-    ) {
-
-        productId =
-            String(
-                productId || ""
-            ).trim();
-
-
-        if (!productId) {
-
-            return;
-
-        }
-
-
-        document
-            .querySelectorAll(
-                '[data-cart-item="' +
-                CSS.escape(
-                    productId
-                ) +
-                '"]'
-            )
-            .forEach(
-                function (element) {
-
-                    element.remove();
-
-                }
-            );
-
-    }
-
-
-    /*=====================================================
-      CART QUANTITY INPUT HANDLER
-    =====================================================*/
-
-    function handleQuantityInput(
-        input
-    ) {
-
-        if (!input) {
-
-            return;
-
-        }
-
-
-        const productId =
-            input.getAttribute(
-                "data-cart-product-id"
-            );
-
-
-        if (!productId) {
-
-            return;
-
-        }
-
-
-        let quantity =
-            Number(
-                input.value
-            );
-
-
-        if (
-            !Number.isFinite(
-                quantity
-            )
-        ) {
-
-            quantity = 1;
-
-        }
-
-
-        quantity =
-            Math.floor(
-                quantity
-            );
-
-
-        if (
-            quantity < 1
-        ) {
-
-            quantity = 1;
-
-        }
-
-
-        if (
-            quantity > 999
-        ) {
-
-            quantity = 999;
-
-        }
-
-
-        input.value =
-            quantity;
-
-
-        if (
-            typeof Cart.updateQuantity ===
-            "function"
-        ) {
-
-            Cart.updateQuantity(
-
-                productId,
-
-                quantity
-
-            );
-
-        }
-
-    }
-
-
-    /*=====================================================
-      QUANTITY BUTTON HANDLER
-    =====================================================*/
-
-    function handleQuantityButton(
-        button
-    ) {
-
-        if (!button) {
-
-            return;
-
-        }
-
-
-        const productId =
-            button.getAttribute(
-                "data-cart-product-id"
-            );
-
-
-        if (!productId) {
-
-            return;
-
-        }
-
-
-        const action =
-            (
-                button.getAttribute(
-                    "data-cart-action"
-                ) || ""
-            ).toLowerCase();
-
-
-        if (
-            action === "increase" ||
-            action === "plus"
-        ) {
-
-            Cart.increase(
-                productId
-            );
-
-            return;
-
-        }
-
-
-        if (
-            action === "decrease" ||
-            action === "minus"
-        ) {
-
-            Cart.decrease(
-                productId
-            );
-
-        }
-
-    }
-
-
-    /*=====================================================
-      REMOVE BUTTON HANDLER
-    =====================================================*/
-
-    function handleRemoveButton(
-        button
-    ) {
-
-        if (!button) {
-
-            return;
-
-        }
-
-
-        const productId =
-            button.getAttribute(
-                "data-cart-product-id"
-            );
-
-
-        if (!productId) {
-
-            return;
-
-        }
-
-
-        Cart.remove(
-            productId
-        );
-
-    }
-
-
-    /*=====================================================
-      EVENT DELEGATION
-    =====================================================*/
-
-    function bindUIEvents() {
-
-        /*
-         * Quantity inputs.
-         */
-
-        document.addEventListener(
-            "change",
-            function (event) {
-
-                const input =
-                    event.target.closest(
-                        "[data-cart-quantity-input]"
-                    );
-
-
-                if (!input) {
-
-                    return;
-
-                }
-
-
-                handleQuantityInput(
-                    input
-                );
-
-            }
-        );
-
-
-        /*
-         * Quantity buttons.
-         */
-
-        document.addEventListener(
-            "click",
-            function (event) {
-
-                const quantityButton =
-                    event.target.closest(
-                        "[data-cart-action]"
-                    );
-
-
-                if (
-                    quantityButton
-                ) {
-
-                    handleQuantityButton(
-                        quantityButton
-                    );
-
-                    return;
-
-                }
-
-
-                /*
-                 * Remove buttons.
-                 */
-
-                const removeButton =
-                    event.target.closest(
-                        "[data-remove-cart-item]"
-                    );
-
-
-                if (
-                    removeButton
-                ) {
-
-                    event.preventDefault();
-
-                    handleRemoveButton(
-                        removeButton
-                    );
-
-                }
-
-            }
-        );
-
-    }
-
-
-    /*=====================================================
-      CART EVENT LISTENER
-    =====================================================*/
-
-    function bindCartEvents() {
-
-        window.addEventListener(
-
-            "nexpak:cart:update",
-
-            function (event) {
-
-                updateCartUI();
-
-
-                /*
-                 * Update the affected product quantity
-                 * when available.
-                 */
-
-                if (
-                    event.detail &&
-                    event.detail.productId
-                ) {
-
-                    updateProductQuantityDisplay(
-
-                        event.detail.productId
-
-                    );
-
-                }
-
-
-                /*
-                 * If an item was removed, remove its
-                 * corresponding DOM element.
-                 */
-
-                if (
-                    event.detail &&
-                    event.detail.action ===
-                    "remove"
-                ) {
-
-                    if (
-                        event.detail.productId
-                    ) {
-
-                        removeCartItemFromUI(
-
-                            event.detail.productId
-
-                        );
-
-                    }
-
-                }
-
-            }
-
-        );
-
-    }
-
-
-    /*=====================================================
-      INITIAL UI UPDATE
-    =====================================================*/
-
-    function initializeCartUI() {
-
-        updateCartUI();
-
-    }
-
-
-    /*=====================================================
-      PUBLIC UI API
-    =====================================================*/
-
-    Cart.updateUI =
-        updateCartUI;
-
-
-    Cart.updateCartCount =
-        updateCartCount;
-
-
-    Cart.updateTotals =
-        updateTotals;
-
-
-    Cart.updateEmptyState =
-        updateEmptyState;
-
-
-    Cart.updateProductCartStates =
-        updateProductCartStates;
-
-
-    Cart.updateProductQuantityDisplay =
-        updateProductQuantityDisplay;
-
-
-    /*=====================================================
-      GLOBAL UI FUNCTIONS
-    =====================================================*/
-
-    window.updateOnlineCartUI =
-        updateCartUI;
-
-
-    window.updateOnlineCartCount =
-        function () {
-
-            const totals =
-                Cart.calculate();
-
-            updateCartCount(
-                totals
-            );
-
-        };
-
-
-    /*=====================================================
-      INITIALISE
-    =====================================================*/
-
-    function initPart4() {
-
-        bindUIEvents();
-
-        bindCartEvents();
-
-        initializeCartUI();
-
-    }
-
-
-    if (
-        document.readyState ===
-        "loading"
-    ) {
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            initPart4
-        );
-
-    } else {
-
-        initPart4();
-
-    }
-
-
-    /*=====================================================
-      READY MESSAGE
-    =====================================================*/
-
-    console.log(
-        "[NEXPAK ONLINE CART] Part 4 loaded."
-    );
-
-
-})();
-
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE — CART ENGINE
- ---------------------------------------------------------
- File: onlinecart.js
- Part: 5/8
- Purpose:
- Cart rendering engine, cart item templates,
- cart summary rendering and empty-cart rendering.
-=========================================================*/
-
-
-(function () {
-
-    "use strict";
-
-
-    /*=====================================================
-      CART ENGINE CHECK
-    =====================================================*/
-
-    if (!window.NEXPAKOnlineCart) {
-
-        console.error(
-            "[NEXPAK ONLINE CART] Parts 1-4 must load first."
-        );
-
-        return;
-
-    }
-
-
-    const Cart =
-        window.NEXPAKOnlineCart;
-
-
-    /*=====================================================
-      RENDER CONFIGURATION
-    =====================================================*/
-
-    const RENDER_CONFIG = {
-
-        cartContainerSelectors: [
-
-            "[data-online-cart-list]",
-
-            "[data-cart-list]",
-
-            ".online-cart-list",
-
-            ".cart-list",
-
-            ".cart-items"
-
-        ],
-
-        summarySelectors: [
-
-            "[data-online-cart-summary]",
-
-            "[data-cart-summary]",
-
-            ".online-cart-summary",
-
-            ".cart-summary"
-
-        ],
-
-        emptySelectors: [
-
-            "[data-online-cart-empty]",
-
-            "[data-cart-empty]",
-
-            ".online-cart-empty",
-
-            ".cart-empty"
-
-        ]
-
-    };
-
-
-    /*=====================================================
-      HTML ESCAPE
-    =====================================================*/
-
-    function escapeHTML(
-        value
-    ) {
-
-        if (
-            value === null ||
-            value === undefined
-        ) {
-
-            return "";
-
-        }
-
-
-        return String(value)
-
-            .replace(
-                /&/g,
-                "&amp;"
-            )
-
-            .replace(
-                /</g,
-                "&lt;"
-            )
-
-            .replace(
-                />/g,
-                "&gt;"
-            )
-
-            .replace(
-                /"/g,
-                "&quot;"
-            )
-
-            .replace(
-                /'/g,
-                "&#039;"
-            );
-
-    }
-
-
-    /*=====================================================
-      ESCAPE ATTRIBUTE
-    =====================================================*/
-
-    function escapeAttribute(
-        value
-    ) {
-
-        return escapeHTML(
-            value
-        );
-
-    }
-
-
-    /*=====================================================
-      FIND FIRST AVAILABLE ELEMENT
-    =====================================================*/
-
-    function findFirstElement(
-        selectors
-    ) {
-
-        if (
-            !Array.isArray(
-                selectors
-            )
-        ) {
-
-            return null;
-
-        }
+        ];
 
 
         for (
@@ -5007,6091 +2673,1923 @@
             i++
         ) {
 
-            const element =
+            container =
                 document.querySelector(
                     selectors[i]
                 );
 
 
-            if (element) {
+            if (container) {
 
-                return element;
+                break;
 
             }
 
         }
 
+    }
+
+
+    if (!container) {
+
+        return false;
+
+    }
+
+
+    const totals =
+        getNexpakOnlineCartTotals(
+            deliveryFee
+        );
+
+
+    container.innerHTML =
+
+        '<div class="online-cart-summary-row">' +
+
+            '<span>Subtotal EX VAT</span>' +
+
+            '<strong>' +
+
+                formatNexpakOnlineCartMoney(
+                    totals.subtotalExVat
+                ) +
+
+            '</strong>' +
+
+        '</div>' +
+
+
+        '<div class="online-cart-summary-row">' +
+
+            '<span>VAT (' +
+
+                totals.vatPercent +
+
+                '%)' +
+
+            '</span>' +
+
+            '<strong>' +
+
+                formatNexpakOnlineCartMoney(
+                    totals.vatAmount
+                ) +
+
+            '</strong>' +
+
+        '</div>' +
+
+
+        '<div class="online-cart-summary-row">' +
+
+            '<span>Total INCL VAT</span>' +
+
+            '<strong>' +
+
+                formatNexpakOnlineCartMoney(
+                    totals.totalInclVat
+                ) +
+
+            '</strong>' +
+
+        '</div>' +
+
+
+        '<div class="online-cart-summary-row online-cart-delivery-row">' +
+
+            '<span>Delivery</span>' +
+
+            '<strong>' +
+
+                formatNexpakOnlineCartMoney(
+                    totals.deliveryFee
+                ) +
+
+            '</strong>' +
+
+        '</div>' +
+
+
+        '<div class="online-cart-summary-row online-cart-grand-total">' +
+
+            '<span>Order Total</span>' +
+
+            '<strong>' +
+
+                formatNexpakOnlineCartMoney(
+                    totals.grandTotal
+                ) +
+
+            '</strong>' +
+
+        '</div>';
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   55. RENDER COMPLETE CART
+   ===================================================== */
+
+function renderNexpakOnlineCart(
+    options = {}
+) {
+
+    const itemContainer =
+        options.itemsContainer ||
+        null;
+
+
+    const totalsContainer =
+        options.totalsContainer ||
+        null;
+
+
+    const deliveryFee =
+        Math.max(
+            0,
+            safeCartNumber(
+                options.deliveryFee,
+                0
+            )
+        );
+
+
+    renderNexpakOnlineCartItems(
+        itemContainer
+    );
+
+
+    renderNexpakOnlineCartTotals(
+        totalsContainer,
+        deliveryFee
+    );
+
+
+    updateNexpakOnlineCartCountDisplay();
+
+
+    return {
+
+        success: true,
+
+        itemCount:
+            getNexpakOnlineCartCount(),
+
+        kitCount:
+            getNexpakOnlineCartKitCount(),
+
+        weight:
+            getNexpakOnlineCartWeight(),
+
+        totals:
+            getNexpakOnlineCartTotals(
+                deliveryFee
+            )
+
+    };
+
+}
+
+
+/* =====================================================
+   56. UPDATE PUBLIC CART API
+   ===================================================== */
+
+if (
+    window.NEXPAK_ONLINE_CART
+) {
+
+    window.NEXPAK_ONLINE_CART.renderItem =
+        renderNexpakOnlineCartItem;
+
+
+    window.NEXPAK_ONLINE_CART.renderItems =
+        renderNexpakOnlineCartItems;
+
+
+    window.NEXPAK_ONLINE_CART.renderTotals =
+        renderNexpakOnlineCartTotals;
+
+
+    window.NEXPAK_ONLINE_CART.render =
+        renderNexpakOnlineCart;
+
+}
+
+
+/* =====================================================
+   PART 5 END
+   ========================================================= */
+
+ /* =========================================================
+   NEXPAK ONLINE STORE — CART ENGINE
+   PART 6 — CART UI EVENTS + BUTTON BINDING
+   ========================================================= */
+
+
+/* =====================================================
+   57. GET CART ITEM FROM EVENT TARGET
+   ===================================================== */
+
+function getNexpakOnlineCartItemFromElement(
+    element
+) {
+
+    if (!element) {
 
         return null;
 
     }
 
 
-    /*=====================================================
-      FIND ALL AVAILABLE ELEMENTS
-    =====================================================*/
-
-    function findAllElements(
-        selectors
-    ) {
-
-        const elements = [];
-
-
-        if (
-            !Array.isArray(
-                selectors
-            )
-        ) {
-
-            return elements;
-
-        }
-
-
-        selectors.forEach(
-            function (selector) {
-
-                document
-                    .querySelectorAll(
-                        selector
-                    )
-                    .forEach(
-                        function (element) {
-
-                            if (
-                                elements.indexOf(
-                                    element
-                                ) === -1
-                            ) {
-
-                                elements.push(
-                                    element
-                                );
-
-                            }
-
-                        }
-                    );
-
-            }
+    const itemId =
+        element.getAttribute(
+            "data-cart-item-id"
         );
 
 
-        return elements;
+    if (!itemId) {
+
+        return null;
 
     }
 
 
-    /*=====================================================
-      GET CART CONTAINERS
-    =====================================================*/
-
-    function getCartContainers() {
-
-        return findAllElements(
-
-            RENDER_CONFIG
-                .cartContainerSelectors
-
-        );
-
-    }
-
-
-    /*=====================================================
-      GET SUMMARY CONTAINERS
-    =====================================================*/
-
-    function getSummaryContainers() {
-
-        return findAllElements(
-
-            RENDER_CONFIG
-                .summarySelectors
-
-        );
-
-    }
-
-
-    /*=====================================================
-      GET EMPTY CONTAINERS
-    =====================================================*/
-
-    function getEmptyContainers() {
-
-        return findAllElements(
-
-            RENDER_CONFIG
-                .emptySelectors
-
-        );
-
-    }
-
-
-    /*=====================================================
-      DEFAULT IMAGE
-    =====================================================*/
-
-    function getDefaultImage() {
-
-        return (
-
-            "data:image/svg+xml," +
-
-            encodeURIComponent(
-
-                '<svg xmlns="http://www.w3.org/2000/svg" ' +
-                'width="300" height="300">' +
-
-                '<rect width="100%" height="100%" ' +
-                'fill="#f1f1f1"/>' +
-
-                '<text x="50%" y="50%" ' +
-                'dominant-baseline="middle" ' +
-                'text-anchor="middle" ' +
-                'font-family="Arial" ' +
-                'font-size="18" ' +
-                'fill="#777">' +
-
-                'NEXPAK'
-
-                + '</text>' +
-
-                '</svg>'
-
-            )
-
-        );
-
-    }
-
-
-    /*=====================================================
-      CART ITEM TEMPLATE
-    =====================================================*/
-
-    function createCartItemHTML(
-        item
-    ) {
-
-        if (!item) {
-
-            return "";
-
-        }
-
-
-        const id =
-            escapeAttribute(
-                item.id
-            );
-
-
-        const name =
-            escapeHTML(
-                item.name ||
-                "NEXPAK Product"
-            );
-
-
-        const image =
-            item.image
-                ? escapeAttribute(
-                    item.image
-                )
-                : getDefaultImage();
-
-
-        const price =
-            Cart.formatMoney(
-                item.price
-            );
-
-
-        const lineTotal =
-            Cart.formatMoney(
-
-                Number(
-                    item.price
-                ) *
-                Number(
-                    item.quantity
-                )
-
-            );
-
-
-        const quantity =
-            Number(
-                item.quantity
-            ) || 1;
-
-
-        return `
-
-            <article
-                class="online-cart-item"
-                data-cart-item="${id}"
-                data-cart-product-id="${id}"
-            >
-
-                <div class="online-cart-item-image">
-
-                    <img
-                        src="${image}"
-                        alt="${name}"
-                        loading="lazy"
-                        onerror="this.src='${getDefaultImage()}';"
-                    >
-
-                </div>
-
-
-                <div class="online-cart-item-details">
-
-                    <h3 class="online-cart-item-name">
-                        ${name}
-                    </h3>
-
-
-                    <div class="online-cart-item-price">
-
-                        <span
-                            class="online-cart-unit-price"
-                        >
-                            ${price}
-                        </span>
-
-                    </div>
-
-
-                    <div class="online-cart-item-controls">
-
-                        <button
-                            type="button"
-                            class="online-cart-quantity-btn"
-                            data-cart-action="decrease"
-                            data-cart-product-id="${id}"
-                            aria-label="Decrease quantity"
-                        >
-                            −
-                        </button>
-
-
-                        <input
-                            type="number"
-                            class="online-cart-quantity-input"
-                            data-cart-quantity-input
-                            data-cart-product-id="${id}"
-                            value="${quantity}"
-                            min="1"
-                            max="999"
-                            inputmode="numeric"
-                            aria-label="Quantity for ${name}"
-                        >
-
-
-                        <button
-                            type="button"
-                            class="online-cart-quantity-btn"
-                            data-cart-action="increase"
-                            data-cart-product-id="${id}"
-                            aria-label="Increase quantity"
-                        >
-                            +
-                        </button>
-
-                    </div>
-
-
-                    <button
-                        type="button"
-                        class="online-cart-remove"
-                        data-remove-cart-item
-                        data-cart-product-id="${id}"
-                    >
-                        Remove
-                    </button>
-
-                </div>
-
-
-                <div
-                    class="online-cart-item-total"
-                    data-cart-line-total="${id}"
-                >
-                    ${lineTotal}
-                </div>
-
-            </article>
-
-        `;
-
-    }
-
-
-    /*=====================================================
-      EMPTY CART HTML
-    =====================================================*/
-
-    function createEmptyCartHTML() {
-
-        return `
-
-            <div class="online-cart-empty-state">
-
-                <div class="online-cart-empty-icon">
-                    🛒
-                </div>
-
-
-                <h2>
-                    Your cart is empty
-                </h2>
-
-
-                <p>
-                    You haven't added any security products yet.
-                </p>
-
-
-                <button
-                    type="button"
-                    class="online-cart-continue-shopping"
-                    data-continue-shopping
-                >
-                    Continue Shopping
-                </button>
-
-            </div>
-
-        `;
-
-    }
-
-
-    /*=====================================================
-      CART SUMMARY HTML
-    =====================================================*/
-
-    function createCartSummaryHTML(
-        totals
-    ) {
-
-        if (!totals) {
-
-            return "";
-
-        }
-
-
-        return `
-
-            <div class="online-cart-summary-inner">
-
-                <div
-                    class="online-cart-summary-row"
-                    data-summary-row="subtotal"
-                >
-
-                    <span>
-                        Subtotal
-                    </span>
-
-                    <strong>
-                        ${escapeHTML(
-                            totals.formattedSubtotal
-                        )}
-                    </strong>
-
-                </div>
-
-
-                ${
-                    Number(
-                        totals.discount
-                    ) > 0
-
-                    ? `
-
-                        <div
-                            class="online-cart-summary-row discount"
-                            data-summary-row="discount"
-                        >
-
-                            <span>
-                                Discount
-                            </span>
-
-                            <strong>
-                                -${escapeHTML(
-                                    totals.formattedDiscount
-                                )}
-                            </strong>
-
-                        </div>
-
-                    `
-
-                    : ""
-                }
-
-
-                <div
-                    class="online-cart-summary-row"
-                    data-summary-row="delivery"
-                >
-
-                    <span>
-                        Delivery
-                    </span>
-
-                    <strong>
-                        ${
-                            Number(
-                                totals.delivery
-                            ) > 0
-
-                            ? escapeHTML(
-                                totals.formattedDelivery
-                            )
-
-                            : "FREE"
-                        }
-                    </strong>
-
-                </div>
-
-
-                ${
-                    Number(
-                        totals.tax
-                    ) > 0
-
-                    ? `
-
-                        <div
-                            class="online-cart-summary-row"
-                            data-summary-row="tax"
-                        >
-
-                            <span>
-                                Tax
-                            </span>
-
-                            <strong>
-                                ${escapeHTML(
-                                    totals.formattedTax
-                                )}
-                            </strong>
-
-                        </div>
-
-                    `
-
-                    : ""
-                }
-
-
-                ${
-                    Number(
-                        totals.savings
-                    ) > 0
-
-                    ? `
-
-                        <div
-                            class="online-cart-summary-row savings"
-                            data-summary-row="savings"
-                        >
-
-                            <span>
-                                You Save
-                            </span>
-
-                            <strong>
-                                ${escapeHTML(
-                                    totals.formattedSavings
-                                )}
-                            </strong>
-
-                        </div>
-
-                    `
-
-                    : ""
-                }
-
-
-                <div
-                    class="online-cart-summary-row grand-total"
-                    data-summary-row="grand-total"
-                >
-
-                    <span>
-                        Total
-                    </span>
-
-                    <strong>
-                        ${escapeHTML(
-                            totals.formattedGrandTotal
-                        )}
-                    </strong>
-
-                </div>
-
-
-                <button
-                    type="button"
-                    class="online-cart-checkout-btn"
-                    data-checkout
-                    ${
-                        Number(
-                            totals.itemCount
-                        ) <= 0
-                            ? "disabled"
-                            : ""
-                    }
-                >
-                    Proceed to Checkout
-                </button>
-
-            </div>
-
-        `;
-
-    }
-
-
-    /*=====================================================
-      RENDER CART ITEMS
-    =====================================================*/
-
-    function renderCartItems() {
-
-        const containers =
-            getCartContainers();
-
-
-        if (
-            containers.length === 0
-        ) {
-
-            return false;
-
-        }
-
-
-        const cart =
-            Cart.get();
-
-
-        const html =
-            cart.length > 0
-
-                ? cart.map(
-                    createCartItemHTML
-                ).join("")
-
-                : createEmptyCartHTML();
-
-
-        containers.forEach(
-            function (container) {
-
-                container.innerHTML =
-                    html;
-
-                container.setAttribute(
-                    "data-rendered",
-                    "true"
-                );
-
-            }
+    const index =
+        findNexpakOnlineCartItemIndex(
+            itemId
         );
 
 
-        return true;
+    if (index === -1) {
+
+        return null;
 
     }
 
 
-    /*=====================================================
-      RENDER CART SUMMARY
-    =====================================================*/
+    return {
 
-    function renderCartSummary() {
+        item:
+            nexpakOnlineCart[index],
 
-        const containers =
-            getSummaryContainers();
-
-
-        if (
-            containers.length === 0
-        ) {
-
-            return false;
-
-        }
-
-
-        const totals =
-            Cart.calculate();
-
-
-        const html =
-            createCartSummaryHTML(
-                totals
-            );
-
-
-        containers.forEach(
-            function (container) {
-
-                container.innerHTML =
-                    html;
-
-            }
-        );
-
-
-        return true;
-
-    }
-
-
-    /*=====================================================
-      RENDER EMPTY CART STATE
-    =====================================================*/
-
-    function renderEmptyCartState() {
-
-        const totals =
-            Cart.calculate();
-
-
-        const empty =
-            Number(
-                totals.itemCount
-            ) <= 0;
-
-
-        const containers =
-            getEmptyContainers();
-
-
-        containers.forEach(
-            function (container) {
-
-                container.innerHTML =
-                    empty
-
-                        ? createEmptyCartHTML()
-
-                        : "";
-
-                container.style.display =
-                    empty
-                        ? ""
-                        : "none";
-
-            }
-        );
-
-    }
-
-
-    /*=====================================================
-      RENDER EVERYTHING
-    =====================================================*/
-
-    function renderCart() {
-
-        renderCartItems();
-
-        renderCartSummary();
-
-        renderEmptyCartState();
-
-
-        /*
-         * Part 4 handles badges, product states and
-         * other UI synchronization.
-         */
-
-        if (
-            typeof Cart.updateUI ===
-            "function"
-        ) {
-
-            Cart.updateUI();
-
-        }
-
-
-        return {
-
-            success:
-                true,
-
-            cart:
-                Cart.get(),
-
-            totals:
-                Cart.calculate()
-
-        };
-
-    }
-
-
-    /*=====================================================
-      RENDER SINGLE ITEM
-    =====================================================*/
-
-    function renderSingleCartItem(
-        productId
-    ) {
-
-        productId =
-            String(
-                productId || ""
-            ).trim();
-
-
-        if (!productId) {
-
-            return false;
-
-        }
-
-
-        const item =
-            Cart.getItem(
-                productId
-            );
-
-
-        const containers =
-            document.querySelectorAll(
-
-                '[data-cart-item="' +
-                CSS.escape(
-                    productId
-                ) +
-                '"]'
-
-            );
-
-
-        if (!item) {
-
-            containers.forEach(
-                function (element) {
-
-                    element.remove();
-
-                }
-            );
-
-
-            return false;
-
-        }
-
-
-        const html =
-            createCartItemHTML(
-                item
-            );
-
-
-        containers.forEach(
-            function (element) {
-
-                const temporary =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                temporary.innerHTML =
-                    html;
-
-
-                const replacement =
-                    temporary.firstElementChild;
-
-
-                if (
-                    replacement
-                ) {
-
-                    element.replaceWith(
-                        replacement
-                    );
-
-                }
-
-            }
-        );
-
-
-        return true;
-
-    }
-
-
-    /*=====================================================
-      CART ITEM COUNT LABEL
-    =====================================================*/
-
-    function createItemCountLabel() {
-
-        const totals =
-            Cart.calculate();
-
-
-        const count =
-            Number(
-                totals.itemCount
-            ) || 0;
-
-
-        return (
-            count === 1
-                ? "1 item"
-                : count + " items"
-        );
-
-    }
-
-
-    /*=====================================================
-      CONTINUE SHOPPING
-    =====================================================*/
-
-    function handleContinueShopping() {
-
-        const buttons =
-            document.querySelectorAll(
-                "[data-continue-shopping]"
-            );
-
-
-        buttons.forEach(
-            function (button) {
-
-                button.addEventListener(
-                    "click",
-                    function () {
-
-                        /*
-                         * If online.js provides a shop
-                         * navigation function, use it.
-                         */
-
-                        if (
-                            typeof window.goToOnlineShop ===
-                            "function"
-                        ) {
-
-                            window.goToOnlineShop();
-
-                            return;
-
-                        }
-
-
-                        if (
-                            typeof window.openOnlineShop ===
-                            "function"
-                        ) {
-
-                            window.openOnlineShop();
-
-                            return;
-
-                        }
-
-
-                        /*
-                         * Fallback.
-                         */
-
-                        const shopLink =
-                            document.querySelector(
-                                '[href*="online.html"]'
-                            );
-
-
-                        if (shopLink) {
-
-                            shopLink.click();
-
-                        }
-
-                    }
-                );
-
-            }
-        );
-
-    }
-
-
-    /*=====================================================
-      CART EVENT LISTENER
-    =====================================================*/
-
-    function bindRenderEvents() {
-
-        window.addEventListener(
-
-            "nexpak:cart:update",
-
-            function () {
-
-                renderCart();
-
-                handleContinueShopping();
-
-            }
-
-        );
-
-    }
-
-
-    /*=====================================================
-      PUBLIC RENDER API
-    =====================================================*/
-
-    Cart.render =
-        renderCart;
-
-
-    Cart.renderItems =
-        renderCartItems;
-
-
-    Cart.renderSummary =
-        renderCartSummary;
-
-
-    Cart.renderEmpty =
-        renderEmptyCartState;
-
-
-    Cart.renderItem =
-        renderSingleCartItem;
-
-
-    Cart.createItemHTML =
-        createCartItemHTML;
-
-
-    Cart.createSummaryHTML =
-        createCartSummaryHTML;
-
-
-    Cart.createEmptyHTML =
-        createEmptyCartHTML;
-
-
-    Cart.getItemCountLabel =
-        createItemCountLabel;
-
-
-    /*=====================================================
-      GLOBAL RENDER FUNCTIONS
-    =====================================================*/
-
-    window.renderOnlineCart =
-        renderCart;
-
-
-    window.renderOnlineCartItems =
-        renderCartItems;
-
-
-    window.renderOnlineCartSummary =
-        renderCartSummary;
-
-
-    /*=====================================================
-      INITIALISE
-    =====================================================*/
-
-    function initPart5() {
-
-        bindRenderEvents();
-
-        renderCart();
-
-        handleContinueShopping();
-
-    }
-
-
-    if (
-        document.readyState ===
-        "loading"
-    ) {
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            initPart5
-        );
-
-    } else {
-
-        initPart5();
-
-    }
-
-
-    /*=====================================================
-      READY MESSAGE
-    =====================================================*/
-
-    console.log(
-        "[NEXPAK ONLINE CART] Part 5 loaded."
-    );
-
-
-})();
-
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE — CART ENGINE
- ---------------------------------------------------------
- File: onlinecart.js
- Part: 6/8
- Purpose:
- Cart persistence, recovery, promo codes, stock checks,
- cart metadata and customer session support.
-=========================================================*/
-
-
-(function () {
-
-    "use strict";
-
-
-    /*=====================================================
-      CART ENGINE CHECK
-    =====================================================*/
-
-    if (!window.NEXPAKOnlineCart) {
-
-        console.error(
-            "[NEXPAK ONLINE CART] Parts 1-5 must load first."
-        );
-
-        return;
-
-    }
-
-
-    const Cart =
-        window.NEXPAKOnlineCart;
-
-
-    /*=====================================================
-      STORAGE KEYS
-    =====================================================*/
-
-    const STORAGE = {
-
-        CART:
-            "nexpak_online_cart_v1",
-
-        CART_META:
-            "nexpak_online_cart_meta_v1",
-
-        PROMO:
-            "nexpak_online_cart_promo_v1",
-
-        SESSION:
-            "nexpak_online_cart_session_v1"
+        index:
+            index
 
     };
 
-
-    /*=====================================================
-      CART SESSION
-    =====================================================*/
-
-    let cartMeta = {
-
-        createdAt:
-            null,
-
-        updatedAt:
-            null,
-
-        customerType:
-            "retail",
-
-        currency:
-            "ZAR",
-
-        deliveryMethod:
-            null,
-
-        notes:
-            "",
-
-        reference:
-            null
-
-    };
+}
 
 
-    /*=====================================================
-      ACTIVE PROMO
-    =====================================================*/
+/* =====================================================
+   58. HANDLE CART ACTION
+   ===================================================== */
 
-    let activePromo = null;
+function handleNexpakOnlineCartAction(
+    action,
+    element
+) {
 
+    const cartItem =
+        getNexpakOnlineCartItemFromElement(
+            element
+        );
 
-    /*=====================================================
-      PROMO DATABASE
-    =====================================================*/
 
     /*
-     * Promo codes can be added here later.
-     *
-     * The structure deliberately supports:
-     *
-     * percentage discounts
-     * fixed discounts
-     * minimum order values
-     * expiry dates
-     * usage restrictions
-     *
-     * No live promotion is assumed at this stage.
+     * Clear cart does not require
+     * an individual cart item.
      */
 
-    const PROMO_CODES = {
+    if (
+        action === "clear"
+    ) {
+
+        return clearNexpakOnlineCart();
+
+    }
 
 
-        /*-------------------------------------------------
-          EXAMPLE STRUCTURE
-          Disabled until real promotions are configured.
-        -------------------------------------------------*/
+    if (!cartItem) {
 
-        /*
-        NEXPAK10: {
+        console.warn(
+            "NEXPAK Online Cart: Could not locate cart item."
+        );
 
-            code: "NEXPAK10",
 
-            type: "percentage",
+        return {
 
-            value: 10,
+            success: false,
 
-            minimumOrder: 500,
+            message:
+                "Cart item not found."
 
-            expires:
-                "2026-12-31T23:59:59",
+        };
 
-            active: true
+    }
 
-        }
-        */
+
+    const item =
+        cartItem.item;
+
+
+    const itemId =
+        item.id;
+
+
+    /* -------------------------------------------------
+       Increase
+       ------------------------------------------------- */
+
+    if (
+        action === "increase"
+    ) {
+
+        return increaseNexpakOnlineKitQuantity(
+            itemId
+        );
+
+    }
+
+
+    /* -------------------------------------------------
+       Decrease
+       ------------------------------------------------- */
+
+    if (
+        action === "decrease"
+    ) {
+
+        return decreaseNexpakOnlineKitQuantity(
+            itemId
+        );
+
+    }
+
+
+    /* -------------------------------------------------
+       Remove
+       ------------------------------------------------- */
+
+    if (
+        action === "remove"
+    ) {
+
+        return removeNexpakOnlineKitFromCart(
+            itemId
+        );
+
+    }
+
+
+    /* -------------------------------------------------
+       Direct quantity
+       ------------------------------------------------- */
+
+    if (
+        action === "quantity"
+    ) {
+
+        const quantity =
+            element.value;
+
+
+        return setNexpakOnlineKitQuantity(
+            itemId,
+            quantity
+        );
+
+    }
+
+
+    return {
+
+        success: false,
+
+        message:
+            "Unknown cart action."
 
     };
 
+}
 
-    /*=====================================================
-      SAFE NUMBER
-    =====================================================*/
 
-    function safeNumber(
-        value,
-        fallback
-    ) {
+/* =====================================================
+   59. CART CLICK HANDLER
+   ===================================================== */
 
-        const number =
-            Number(value);
+function handleNexpakOnlineCartClick(
+    event
+) {
 
+    const target =
+        event.target;
 
-        if (
-            !Number.isFinite(number)
-        ) {
 
-            return (
-                fallback || 0
-            );
-
-        }
-
-
-        return number;
-
-    }
-
-
-    /*=====================================================
-      GENERATE CART REFERENCE
-    =====================================================*/
-
-    function generateReference() {
-
-        const timestamp =
-            Date.now()
-                .toString(36)
-                .toUpperCase();
-
-
-        const random =
-            Math.random()
-                .toString(36)
-                .substring(
-                    2,
-                    7
-                )
-                .toUpperCase();
-
-
-        return (
-            "NXP-" +
-            timestamp +
-            "-" +
-            random
-        );
-
-    }
-
-
-    /*=====================================================
-      SAVE CART METADATA
-    =====================================================*/
-
-    function saveCartMeta() {
-
-        try {
-
-            localStorage.setItem(
-
-                STORAGE.CART_META,
-
-                JSON.stringify(
-                    cartMeta
-                )
-
-            );
-
-            return true;
-
-        } catch (error) {
-
-            console.error(
-
-                "[NEXPAK ONLINE CART] Unable to save cart metadata:",
-
-                error
-
-            );
-
-            return false;
-
-        }
-
-    }
-
-
-    /*=====================================================
-      LOAD CART METADATA
-    =====================================================*/
-
-    function loadCartMeta() {
-
-        try {
-
-            const stored =
-                localStorage.getItem(
-                    STORAGE.CART_META
-                );
-
-
-            if (!stored) {
-
-                return cartMeta;
-
-            }
-
-
-            const parsed =
-                JSON.parse(stored);
-
-
-            if (
-                parsed &&
-                typeof parsed ===
-                "object"
-            ) {
-
-                cartMeta = {
-
-                    ...cartMeta,
-
-                    ...parsed
-
-                };
-
-            }
-
-        } catch (error) {
-
-            console.warn(
-
-                "[NEXPAK ONLINE CART] Unable to load cart metadata:",
-
-                error
-
-            );
-
-        }
-
-
-        return cartMeta;
-
-    }
-
-
-    /*=====================================================
-      UPDATE CART METADATA
-    =====================================================*/
-
-    function updateCartMeta(
-        updates
-    ) {
-
-        if (
-            !updates ||
-            typeof updates !==
-            "object"
-        ) {
-
-            return cartMeta;
-
-        }
-
-
-        cartMeta = {
-
-            ...cartMeta,
-
-            ...updates,
-
-            updatedAt:
-                new Date().toISOString()
-
-        };
-
-
-        saveCartMeta();
-
-
-        return {
-
-            ...cartMeta
-
-        };
-
-    }
-
-
-    /*=====================================================
-      GET CART METADATA
-    =====================================================*/
-
-    function getCartMeta() {
-
-        return {
-
-            ...cartMeta
-
-        };
-
-    }
-
-
-    /*=====================================================
-      START CART SESSION
-    =====================================================*/
-
-    function startCartSession() {
-
-        if (
-            !cartMeta.createdAt
-        ) {
-
-            cartMeta.createdAt =
-                new Date().toISOString();
-
-        }
-
-
-        cartMeta.updatedAt =
-            new Date().toISOString();
-
-
-        if (
-            !cartMeta.reference
-        ) {
-
-            cartMeta.reference =
-                generateReference();
-
-        }
-
-
-        saveCartMeta();
-
-
-        return getCartMeta();
-
-    }
-
-
-    /*=====================================================
-      CART AGE
-    =====================================================*/
-
-    function getCartAge() {
-
-        if (
-            !cartMeta.createdAt
-        ) {
-
-            return 0;
-
-        }
-
-
-        const created =
-            new Date(
-                cartMeta.createdAt
-            ).getTime();
-
-
-        if (
-            !Number.isFinite(
-                created
-            )
-        ) {
-
-            return 0;
-
-        }
-
-
-        return Math.max(
-
-            0,
-
-            Date.now() -
-            created
-
-        );
-
-    }
-
-
-    /*=====================================================
-      CART RECOVERY
-    =====================================================*/
-
-    function recoverCart() {
-
-        /*
-         * Part 1 already restores the main cart.
-         * Here we restore the metadata and promotion state.
-         */
-
-        loadCartMeta();
-
-        loadPromo();
-
-
-        if (
-            Cart.get().length > 0
-        ) {
-
-            startCartSession();
-
-        }
-
-
-        return {
-
-            cart:
-                Cart.get(),
-
-            meta:
-                getCartMeta(),
-
-            promo:
-                getActivePromo()
-
-        };
-
-    }
-
-
-    /*=====================================================
-      CLEAR CART SESSION
-    =====================================================*/
-
-    function clearCartSession() {
-
-        try {
-
-            localStorage.removeItem(
-                STORAGE.CART_META
-            );
-
-            localStorage.removeItem(
-                STORAGE.PROMO
-            );
-
-        } catch (error) {
-
-            console.warn(
-
-                "[NEXPAK ONLINE CART] Session cleanup failed:",
-
-                error
-
-            );
-
-        }
-
-
-        cartMeta = {
-
-            createdAt:
-                null,
-
-            updatedAt:
-                null,
-
-            customerType:
-                "retail",
-
-            currency:
-                "ZAR",
-
-            deliveryMethod:
-                null,
-
-            notes:
-                "",
-
-            reference:
-                null
-
-        };
-
-
-        activePromo =
-            null;
-
-    }
-
-
-    /*=====================================================
-      VALIDATE PROMO CODE
-    =====================================================*/
-
-    function validatePromoCode(
-        code
-    ) {
-
-        code =
-            String(
-                code || ""
-            )
-            .trim()
-            .toUpperCase();
-
-
-        if (!code) {
-
-            return {
-
-                valid:
-                    false,
-
-                message:
-                    "Please enter a promo code."
-
-            };
-
-        }
-
-
-        const promo =
-            PROMO_CODES[code];
-
-
-        if (!promo) {
-
-            return {
-
-                valid:
-                    false,
-
-                message:
-                    "Promo code is not valid."
-
-            };
-
-        }
-
-
-        if (
-            promo.active === false
-        ) {
-
-            return {
-
-                valid:
-                    false,
-
-                message:
-                    "This promo code is inactive."
-
-            };
-
-        }
-
-
-        if (
-            promo.expires
-        ) {
-
-            const expiry =
-                new Date(
-                    promo.expires
-                ).getTime();
-
-
-            if (
-                Number.isFinite(
-                    expiry
-                ) &&
-                Date.now() >
-                expiry
-            ) {
-
-                return {
-
-                    valid:
-                        false,
-
-                    message:
-                        "This promo code has expired."
-
-                };
-
-            }
-
-        }
-
-
-        const subtotal =
-            typeof Cart.calculateSubtotal ===
-            "function"
-
-                ? Cart.calculateSubtotal()
-
-                : 0;
-
-
-        const minimumOrder =
-            Math.max(
-
-                0,
-
-                safeNumber(
-                    promo.minimumOrder,
-                    0
-                )
-
-            );
-
-
-        if (
-            subtotal <
-            minimumOrder
-        ) {
-
-            return {
-
-                valid:
-                    false,
-
-                message:
-
-                    "Minimum order value is " +
-                    Cart.formatMoney(
-                        minimumOrder
-                    ) +
-                    "."
-
-            };
-
-        }
-
-
-        return {
-
-            valid:
-                true,
-
-            promo:
-                promo,
-
-            message:
-                "Promo code applied."
-
-        };
-
-    }
-
-
-    /*=====================================================
-      APPLY PROMO CODE
-    =====================================================*/
-
-    function applyPromoCode(
-        code
-    ) {
-
-        const result =
-            validatePromoCode(
-                code
-            );
-
-
-        if (!result.valid) {
-
-            return result;
-
-        }
-
-
-        activePromo = {
-
-            code:
-                result.promo.code,
-
-            type:
-                result.promo.type,
-
-            value:
-                safeNumber(
-                    result.promo.value,
-                    0
-                ),
-
-            appliedAt:
-                new Date().toISOString()
-
-        };
-
-
-        try {
-
-            localStorage.setItem(
-
-                STORAGE.PROMO,
-
-                JSON.stringify(
-                    activePromo
-                )
-
-            );
-
-        } catch (error) {
-
-            console.warn(
-
-                "[NEXPAK ONLINE CART] Unable to save promo:",
-
-                error
-
-            );
-
-        }
-
-
-        /*
-         * Apply the discount through the calculation
-         * engine from Part 3.
-         */
-
-        if (
-            activePromo.type ===
-            "percentage"
-        ) {
-
-            Cart.setDiscountRate(
-                activePromo.value
-            );
-
-            Cart.setFixedDiscount(
-                0
-            );
-
-        }
-
-
-        if (
-            activePromo.type ===
-            "fixed"
-        ) {
-
-            Cart.setDiscountRate(
-                0
-            );
-
-            Cart.setFixedDiscount(
-                activePromo.value
-            );
-
-        }
-
-
-        updateCartMeta({
-
-            updatedAt:
-                new Date().toISOString()
-
-        });
-
-
-        window.dispatchEvent(
-
-            new CustomEvent(
-                "nexpak:promo:update",
-                {
-
-                    detail: {
-
-                        action:
-                            "apply",
-
-                        promo:
-                            getActivePromo()
-
-                    }
-
-                }
-            )
-
-        );
-
-
-        return {
-
-            valid:
-                true,
-
-            success:
-                true,
-
-            message:
-                "Promo code applied.",
-
-            promo:
-                getActivePromo(),
-
-            totals:
-                Cart.calculate()
-
-        };
-
-    }
-
-
-    /*=====================================================
-      LOAD PROMO
-    =====================================================*/
-
-    function loadPromo() {
-
-        try {
-
-            const stored =
-                localStorage.getItem(
-                    STORAGE.PROMO
-                );
-
-
-            if (!stored) {
-
-                activePromo =
-                    null;
-
-                return null;
-
-            }
-
-
-            const parsed =
-                JSON.parse(
-                    stored
-                );
-
-
-            if (
-                parsed &&
-                parsed.code
-            ) {
-
-                activePromo =
-                    parsed;
-
-            }
-
-        } catch (error) {
-
-            activePromo =
-                null;
-
-        }
-
-
-        return activePromo;
-
-    }
-
-
-    /*=====================================================
-      GET ACTIVE PROMO
-    =====================================================*/
-
-    function getActivePromo() {
-
-        if (!activePromo) {
-
-            return null;
-
-        }
-
-
-        return {
-
-            ...activePromo
-
-        };
-
-    }
-
-
-    /*=====================================================
-      REMOVE PROMO
-    =====================================================*/
-
-    function removePromoCode() {
-
-        activePromo =
-            null;
-
-
-        try {
-
-            localStorage.removeItem(
-                STORAGE.PROMO
-            );
-
-        } catch (error) {
-
-            console.warn(
-
-                "[NEXPAK ONLINE CART] Unable to remove promo:",
-
-                error
-
-            );
-
-        }
-
-
-        /*
-         * Reset discounts created by the promo engine.
-         */
-
-        Cart.setDiscountRate(
-            0
-        );
-
-
-        Cart.setFixedDiscount(
-            0
-        );
-
-
-        window.dispatchEvent(
-
-            new CustomEvent(
-                "nexpak:promo:update",
-                {
-
-                    detail: {
-
-                        action:
-                            "remove",
-
-                        promo:
-                            null
-
-                    }
-
-                }
-            )
-
-        );
-
-
-        return {
-
-            success:
-                true,
-
-            message:
-                "Promo code removed.",
-
-            totals:
-                Cart.calculate()
-
-        };
-
-    }
-
-
-    /*=====================================================
-      STOCK EXTRACTION
-    =====================================================*/
-
-    function getProductStock(
-        product
-    ) {
-
-        if (!product) {
-
-            return null;
-
-        }
-
-
-        const possibleStock = [
-
-            product.stock,
-
-            product.stockQty,
-
-            product.stockQuantity,
-
-            product.inventory,
-
-            product.quantityAvailable,
-
-            product.availableQuantity
-
-        ];
-
-
-        for (
-            let i = 0;
-            i < possibleStock.length;
-            i++
-        ) {
-
-            const stock =
-                Number(
-                    possibleStock[i]
-                );
-
-
-            if (
-                Number.isFinite(
-                    stock
-                ) &&
-                stock >= 0
-            ) {
-
-                return Math.floor(
-                    stock
-                );
-
-            }
-
-        }
-
-
-        /*
-         * Null means the product does not currently
-         * expose a stock quantity.
-         */
-
-        return null;
-
-    }
-
-
-    /*=====================================================
-      CHECK PRODUCT AVAILABILITY
-    =====================================================*/
-
-             function checkProductAvailability(
-        productId,
-        requestedQuantity
-    ) {
-
-        productId =
-            String(
-                productId || ""
-            ).trim();
-
-
-        requestedQuantity =
-            Math.max(
-
-                1,
-
-                Math.floor(
-                    safeNumber(
-                        requestedQuantity,
-                        1
-                    )
-                )
-
-            );
-
-
-        const product =
-            Cart.findProduct(
-                productId
-            );
-
-
-        if (!product) {
-
-            return {
-
-                available:
-                    false,
-
-                reason:
-                    "Product not found.",
-
-                productId:
-                    productId
-
-            };
-
-        }
-
-
-        /*
-         * Product can explicitly be marked unavailable.
-         */
-
-        if (
-            product.available === false ||
-            product.inStock === false
-        ) {
-
-            return {
-
-                available:
-                    false,
-
-                reason:
-                    "Product is currently unavailable.",
-
-                productId:
-                    productId,
-
-                stock:
-                    0
-
-            };
-
-        }
-
-
-        const stock =
-            getProductStock(
-                product
-            );
-
-
-        /*
-         * No stock number supplied means we cannot
-         * claim the item is out of stock.
-         */
-
-        if (
-            stock === null
-        ) {
-
-            return {
-
-                available:
-                    true,
-
-                reason:
-                    "Availability not stock-limited.",
-
-                productId:
-                    productId,
-
-                stock:
-                    null,
-
-                requestedQuantity:
-                    requestedQuantity
-
-            };
-
-        }
-
-
-        if (
-            stock <= 0
-        ) {
-
-            return {
-
-                available:
-                    false,
-
-                reason:
-                    "Product is out of stock.",
-
-                productId:
-                    productId,
-
-                stock:
-                    0
-
-            };
-
-        }
-
-
-        if (
-            requestedQuantity >
-            stock
-        ) {
-
-            return {
-
-                available:
-                    false,
-
-                reason:
-                    "Requested quantity exceeds available stock.",
-
-                productId:
-                    productId,
-
-                stock:
-                    stock,
-
-                requestedQuantity:
-                    requestedQuantity
-
-            };
-
-        }
-
-
-        return {
-
-            available:
-                true,
-
-            reason:
-                "Product is available.",
-
-            productId:
-                productId,
-
-            stock:
-                stock,
-
-            requestedQuantity:
-                requestedQuantity
-
-        };
-
-    }
-
-
-    /*=====================================================
-      VALIDATE ENTIRE CART
-    =====================================================*/
-
-    function validateCart() {
-
-        const cart =
-            Cart.get();
-
-
-        const issues = [];
-
-
-        cart.forEach(
-            function (item) {
-
-                const result =
-                    checkProductAvailability(
-
-                        item.id,
-
-                        item.quantity
-
-                    );
-
-
-                if (
-                    !result.available
-                ) {
-
-                    issues.push({
-
-                        productId:
-                            item.id,
-
-                        productName:
-                            item.name,
-
-                        quantity:
-                            item.quantity,
-
-                        reason:
-                            result.reason,
-
-                        stock:
-                            result.stock
-
-                    });
-
-                }
-
-            }
-        );
-
-
-        return {
-
-            valid:
-                issues.length === 0,
-
-            issues:
-                issues,
-
-            itemCount:
-                cart.length
-
-        };
-
-    }
-
-
-    /*=====================================================
-      SET CUSTOMER TYPE
-    =====================================================*/
-
-    function setCustomerType(
-        type
-    ) {
-
-        type =
-            String(
-                type || "retail"
-            )
-            .trim()
-            .toLowerCase();
-
-
-        const allowedTypes = [
-
-            "retail",
-
-            "trade",
-
-            "business",
-
-            "contractor"
-
-        ];
-
-
-        if (
-            allowedTypes.indexOf(
-                type
-            ) === -1
-        ) {
-
-            type =
-                "retail";
-
-        }
-
-
-        updateCartMeta({
-
-            customerType:
-                type
-
-        });
-
-
-        return type;
-
-    }
-
-
-    /*=====================================================
-      GET CUSTOMER TYPE
-    =====================================================*/
-
-    function getCustomerType() {
-
-        return (
-            cartMeta.customerType ||
-            "retail"
-        );
-
-    }
-
-
-    /*=====================================================
-      SET DELIVERY METHOD
-    =====================================================*/
-
-    function setDeliveryMethod(
-        method
-    ) {
-
-        method =
-            String(
-                method || ""
-            )
-            .trim()
-            .toLowerCase();
-
-
-        updateCartMeta({
-
-            deliveryMethod:
-                method || null
-
-        });
-
-
-        return (
-            cartMeta.deliveryMethod
-        );
-
-    }
-
-
-    /*=====================================================
-      SET CART NOTES
-    =====================================================*/
-
-    function setNotes(
-        notes
-    ) {
-
-        notes =
-            String(
-                notes || ""
-            ).trim();
-
-
-        /*
-         * Keep notes reasonably sized.
-         */
-
-        if (
-            notes.length > 2000
-        ) {
-
-            notes =
-                notes.substring(
-                    0,
-                    2000
-                );
-
-        }
-
-
-        updateCartMeta({
-
-            notes:
-                notes
-
-        });
-
-
-        return notes;
-
-    }
-
-
-    /*=====================================================
-      GET CART REFERENCE
-    =====================================================*/
-
-    function getReference() {
-
-        startCartSession();
-
-
-        return (
-            cartMeta.reference
-        );
-
-    }
-
-
-    /*=====================================================
-      EXTEND PUBLIC API
-    =====================================================*/
-
-    Cart.getMeta =
-        getCartMeta;
-
-
-    Cart.updateMeta =
-        updateCartMeta;
-
-
-    Cart.startSession =
-        startCartSession;
-
-
-    Cart.recover =
-        recoverCart;
-
-
-    Cart.clearSession =
-        clearCartSession;
-
-
-    Cart.getAge =
-        getCartAge;
-
-
-    Cart.validatePromo =
-        validatePromoCode;
-
-
-    Cart.applyPromo =
-        applyPromoCode;
-
-
-    Cart.removePromo =
-        removePromoCode;
-
-
-    Cart.getPromo =
-        getActivePromo;
-
-
-    Cart.checkAvailability =
-        checkProductAvailability;
-
-
-    Cart.validate =
-        validateCart;
-
-
-    Cart.getStock =
-        getProductStock;
-
-
-    Cart.setCustomerType =
-        setCustomerType;
-
-
-    Cart.getCustomerType =
-        getCustomerType;
-
-
-    Cart.setDeliveryMethod =
-        setDeliveryMethod;
-
-
-    Cart.setNotes =
-        setNotes;
-
-
-    Cart.getReference =
-        getReference;
-
-
-    /*=====================================================
-      GLOBAL HELPERS
-    =====================================================*/
-
-    window.validateOnlineCart =
-        validateCart;
-
-
-    window.applyOnlinePromo =
-        applyPromoCode;
-
-
-    window.removeOnlinePromo =
-        removePromoCode;
-
-
-    window.getOnlineCartReference =
-        getReference;
-
-
-    /*=====================================================
-      CART UPDATE HOOK
-    =====================================================*/
-
-    window.addEventListener(
-
-        "nexpak:cart:update",
-
-        function () {
-
-            if (
-                Cart.get().length > 0
-            ) {
-
-                startCartSession();
-
-            }
-
-        }
-
-    );
-
-
-    /*=====================================================
-      INITIALISE PART 6
-    =====================================================*/
-
-    function initPart6() {
-
-        loadCartMeta();
-
-        loadPromo();
-
-        recoverCart();
-
-    }
-
-
-    if (
-        document.readyState ===
-        "loading"
-    ) {
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            initPart6
-        );
-
-    } else {
-
-        initPart6();
-
-    }
-
-
-    /*=====================================================
-      READY MESSAGE
-    =====================================================*/
-
-    console.log(
-        "[NEXPAK ONLINE CART] Part 6 loaded."
-    );
-
-
-})();
-
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE — CART ENGINE
- ---------------------------------------------------------
- File: onlinecart.js
- Part: 7/8
- Purpose:
- Checkout preparation, order payload generation,
- customer data, order validation and checkout handoff.
-=========================================================*/
-
-
-(function () {
-
-    "use strict";
-
-
-    /*=====================================================
-      CART ENGINE CHECK
-    =====================================================*/
-
-    if (!window.NEXPAKOnlineCart) {
-
-        console.error(
-            "[NEXPAK ONLINE CART] Parts 1-6 must load first."
-        );
+    if (!target) {
 
         return;
 
     }
 
 
-    const Cart =
-        window.NEXPAKOnlineCart;
+    const actionElement =
+        target.closest(
+            "[data-cart-action]"
+        );
 
 
-    /*=====================================================
-      CHECKOUT STATE
-    =====================================================*/
+    if (!actionElement) {
 
-    let checkoutState = {
+        return;
 
-        customer:
-            null,
-
-        delivery:
-            null,
-
-        paymentMethod:
-            null,
-
-        orderNotes:
-            "",
-
-        prepared:
-            false,
-
-        preparedAt:
-            null
-
-    };
+    }
 
 
-    /*=====================================================
-      CUSTOMER DATA
-    =====================================================*/
+    const action =
+        actionElement.getAttribute(
+            "data-cart-action"
+        );
 
-    const CUSTOMER_FIELDS = [
 
-        "firstName",
+    if (!action) {
 
-        "lastName",
+        return;
 
-        "company",
+    }
 
-        "email",
 
-        "phone",
+    /*
+     * Quantity inputs are handled separately.
+     */
 
-        "vatNumber"
+    if (
+        action === "quantity"
+    ) {
+
+        return;
+
+    }
+
+
+    event.preventDefault();
+
+
+    const result =
+        handleNexpakOnlineCartAction(
+            action,
+            actionElement
+        );
+
+
+    if (
+        result &&
+        result.success
+    ) {
+
+        renderNexpakOnlineCart();
+
+    }
+
+}
+
+
+/* =====================================================
+   60. CART CHANGE HANDLER
+   ===================================================== */
+
+function handleNexpakOnlineCartChange(
+    event
+) {
+
+    const target =
+        event.target;
+
+
+    if (!target) {
+
+        return;
+
+    }
+
+
+    const action =
+        target.getAttribute(
+            "data-cart-action"
+        );
+
+
+    if (
+        action !== "quantity"
+    ) {
+
+        return;
+
+    }
+
+
+    event.preventDefault();
+
+
+    const result =
+        handleNexpakOnlineCartAction(
+            "quantity",
+            target
+        );
+
+
+    if (
+        result &&
+        result.success
+    ) {
+
+        renderNexpakOnlineCart();
+
+    }
+
+}
+
+
+/* =====================================================
+   61. CART KEYBOARD HANDLER
+   ===================================================== */
+
+function handleNexpakOnlineCartKeydown(
+    event
+) {
+
+    const target =
+        event.target;
+
+
+    if (!target) {
+
+        return;
+
+    }
+
+
+    const action =
+        target.getAttribute(
+            "data-cart-action"
+        );
+
+
+    if (
+        action !== "quantity"
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+     * Allow Enter to commit the quantity.
+     */
+
+    if (
+        event.key === "Enter"
+    ) {
+
+        event.preventDefault();
+
+
+        target.blur();
+
+    }
+
+}
+
+
+/* =====================================================
+   62. BIND CART EVENTS
+   ===================================================== */
+
+function bindNexpakOnlineCartEvents() {
+
+    /*
+     * Remove previous handlers first.
+     *
+     * This prevents duplicate events if the
+     * cart is initialised more than once.
+     */
+
+    document.removeEventListener(
+        "click",
+        handleNexpakOnlineCartClick
+    );
+
+
+    document.removeEventListener(
+        "change",
+        handleNexpakOnlineCartChange
+    );
+
+
+    document.removeEventListener(
+        "keydown",
+        handleNexpakOnlineCartKeydown
+    );
+
+
+    document.addEventListener(
+        "click",
+        handleNexpakOnlineCartClick
+    );
+
+
+    document.addEventListener(
+        "change",
+        handleNexpakOnlineCartChange
+    );
+
+
+    document.addEventListener(
+        "keydown",
+        handleNexpakOnlineCartKeydown
+    );
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   63. BIND CLEAR CART BUTTONS
+   ===================================================== */
+
+function bindNexpakOnlineClearCartButtons() {
+
+    const selectors = [
+
+        "[data-cart-action=\"clear\"]",
+
+        "#clearOnlineCart",
+
+        "#clearCart",
+
+        ".online-clear-cart",
+
+        ".clear-online-cart"
 
     ];
 
 
-    /*=====================================================
-      SAFE STRING
-    =====================================================*/
+    selectors.forEach(
 
-    function safeString(
-        value
-    ) {
+        selector => {
 
-        if (
-            value === null ||
-            value === undefined
-        ) {
+            document
+                .querySelectorAll(selector)
+                .forEach(
 
-            return "";
+                    button => {
 
-        }
+                        /*
+                         * Avoid adding duplicate
+                         * listeners to the same button.
+                         */
 
+                        if (
+                            button.dataset
+                                .nexpakCartBound ===
+                            "true"
+                        ) {
 
-        return String(
-            value
-        ).trim();
+                            return;
 
-    }
+                        }
 
 
-    /*=====================================================
-      SAFE OBJECT COPY
-    =====================================================*/
+                        button.addEventListener(
+                            "click",
+                            function (event) {
 
-    function copyObject(
-        object
-    ) {
+                                event.preventDefault();
 
-        if (
-            !object ||
-            typeof object !==
-            "object"
-        ) {
 
-            return {};
+                                clearNexpakOnlineCart();
 
-        }
 
-
-        return {
-            ...object
-        };
-
-    }
-
-
-    /*=====================================================
-      EMAIL VALIDATION
-    =====================================================*/
-
-    function isValidEmail(
-        email
-    ) {
-
-        email =
-            safeString(
-                email
-            );
-
-
-        if (!email) {
-
-            return false;
-
-        }
-
-
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-            .test(email);
-
-    }
-
-
-    /*=====================================================
-      PHONE VALIDATION
-    =====================================================*/
-
-    function isValidPhone(
-        phone
-    ) {
-
-        phone =
-            safeString(
-                phone
-            );
-
-
-        if (!phone) {
-
-            return false;
-
-        }
-
-
-        /*
-         * South African-friendly validation.
-         * Allows +27, 0 and spaces/hyphens.
-         */
-
-        const cleaned =
-            phone.replace(
-                /[\s\-().]/g,
-                ""
-            );
-
-
-        return /^(\+27|0)[0-9]{9}$/
-            .test(cleaned);
-
-    }
-
-
-    /*=====================================================
-      SET CUSTOMER
-    =====================================================*/
-
-    function setCustomer(
-        customer
-    ) {
-
-        if (
-            !customer ||
-            typeof customer !==
-            "object"
-        ) {
-
-            checkoutState.customer =
-                null;
-
-
-            return null;
-
-        }
-
-
-        const cleanCustomer = {};
-
-
-        CUSTOMER_FIELDS.forEach(
-            function (field) {
-
-                cleanCustomer[field] =
-                    safeString(
-                        customer[field]
-                    );
-
-            }
-        );
-
-
-        checkoutState.customer =
-            cleanCustomer;
-
-
-        checkoutState.prepared =
-            false;
-
-
-        return copyObject(
-            cleanCustomer
-        );
-
-    }
-
-
-    /*=====================================================
-      GET CUSTOMER
-    =====================================================*/
-
-    function getCustomer() {
-
-        return checkoutState.customer
-            ? copyObject(
-                checkoutState.customer
-            )
-            : null;
-
-    }
-
-
-    /*=====================================================
-      SET DELIVERY DETAILS
-    =====================================================*/
-
-    function setDeliveryDetails(
-        delivery
-    ) {
-
-        if (
-            !delivery ||
-            typeof delivery !==
-            "object"
-        ) {
-
-            checkoutState.delivery =
-                null;
-
-
-            return null;
-
-        }
-
-
-        checkoutState.delivery = {
-
-            method:
-                safeString(
-                    delivery.method
-                ),
-
-            addressLine1:
-                safeString(
-                    delivery.addressLine1
-                ),
-
-            addressLine2:
-                safeString(
-                    delivery.addressLine2
-                ),
-
-            suburb:
-                safeString(
-                    delivery.suburb
-                ),
-
-            city:
-                safeString(
-                    delivery.city
-                ),
-
-            province:
-                safeString(
-                    delivery.province
-                ),
-
-            postalCode:
-                safeString(
-                    delivery.postalCode
-                ),
-
-            country:
-                safeString(
-                    delivery.country
-                ) ||
-                "South Africa",
-
-            instructions:
-                safeString(
-                    delivery.instructions
-                )
-
-        };
-
-
-        /*
-         * Also update Part 6 metadata.
-         */
-
-        if (
-            checkoutState.delivery.method
-        ) {
-
-            Cart.setDeliveryMethod(
-                checkoutState.delivery.method
-            );
-
-        }
-
-
-        checkoutState.prepared =
-            false;
-
-
-        return copyObject(
-            checkoutState.delivery
-        );
-
-    }
-
-
-    /*=====================================================
-      GET DELIVERY DETAILS
-    =====================================================*/
-
-    function getDeliveryDetails() {
-
-        return checkoutState.delivery
-            ? copyObject(
-                checkoutState.delivery
-            )
-            : null;
-
-    }
-
-
-    /*=====================================================
-      SET PAYMENT METHOD
-    =====================================================*/
-
-    function setPaymentMethod(
-        method
-    ) {
-
-        checkoutState.paymentMethod =
-            safeString(
-                method
-            ).toLowerCase();
-
-
-        checkoutState.prepared =
-            false;
-
-
-        return checkoutState.paymentMethod;
-
-    }
-
-
-    /*=====================================================
-      GET PAYMENT METHOD
-    =====================================================*/
-
-    function getPaymentMethod() {
-
-        return (
-            checkoutState.paymentMethod ||
-            null
-        );
-
-    }
-
-
-    /*=====================================================
-      SET ORDER NOTES
-    =====================================================*/
-
-    function setOrderNotes(
-        notes
-    ) {
-
-        notes =
-            safeString(
-                notes
-            );
-
-
-        if (
-            notes.length > 2000
-        ) {
-
-            notes =
-                notes.substring(
-                    0,
-                    2000
-                );
-
-        }
-
-
-        checkoutState.orderNotes =
-            notes;
-
-
-        Cart.setNotes(
-            notes
-        );
-
-
-        checkoutState.prepared =
-            false;
-
-
-        return notes;
-
-    }
-
-
-    /*=====================================================
-      GET ORDER NOTES
-    =====================================================*/
-
-    function getOrderNotes() {
-
-        return (
-            checkoutState.orderNotes ||
-            ""
-        );
-
-    }
-
-
-    /*=====================================================
-      VALIDATE CUSTOMER
-    =====================================================*/
-
-    function validateCustomer(
-        customer
-    ) {
-
-        customer =
-            customer ||
-            checkoutState.customer ||
-            {};
-
-
-        const errors = [];
-
-
-        if (
-            !safeString(
-                customer.firstName
-            )
-        ) {
-
-            errors.push(
-                "First name is required."
-            );
-
-        }
-
-
-        if (
-            !safeString(
-                customer.lastName
-            )
-        ) {
-
-            errors.push(
-                "Last name is required."
-            );
-
-        }
-
-
-        const email =
-            safeString(
-                customer.email
-            );
-
-
-        if (!email) {
-
-            errors.push(
-                "Email address is required."
-            );
-
-        } else if (
-            !isValidEmail(
-                email
-            )
-        ) {
-
-            errors.push(
-                "Please enter a valid email address."
-            );
-
-        }
-
-
-        const phone =
-            safeString(
-                customer.phone
-            );
-
-
-        if (!phone) {
-
-            errors.push(
-                "Phone number is required."
-            );
-
-        } else if (
-            !isValidPhone(
-                phone
-            )
-        ) {
-
-            errors.push(
-                "Please enter a valid South African phone number."
-            );
-
-        }
-
-
-        return {
-
-            valid:
-                errors.length === 0,
-
-            errors:
-                errors
-
-        };
-
-    }
-
-
-    /*=====================================================
-      VALIDATE DELIVERY
-    =====================================================*/
-
-    function validateDelivery(
-        delivery
-    ) {
-
-        delivery =
-            delivery ||
-            checkoutState.delivery ||
-            {};
-
-
-        const errors = [];
-
-
-        const method =
-            safeString(
-                delivery.method
-            );
-
-
-        if (!method) {
-
-            errors.push(
-                "Delivery method is required."
-            );
-
-        }
-
-
-        /*
-         * Collection can work without a delivery address.
-         */
-
-        const collectionMethods = [
-
-            "collection",
-
-            "pickup",
-
-            "pick-up",
-
-            "store collection"
-
-        ];
-
-
-        const isCollection =
-            collectionMethods.indexOf(
-                method.toLowerCase()
-            ) !== -1;
-
-
-        if (!isCollection) {
-
-            if (
-                !safeString(
-                    delivery.addressLine1
-                )
-            ) {
-
-                errors.push(
-                    "Delivery address is required."
-                );
-
-            }
-
-
-            if (
-                !safeString(
-                    delivery.city
-                )
-            ) {
-
-                errors.push(
-                    "City is required."
-                );
-
-            }
-
-
-            if (
-                !safeString(
-                    delivery.province
-                )
-            ) {
-
-                errors.push(
-                    "Province is required."
-                );
-
-            }
-
-
-            if (
-                !safeString(
-                    delivery.postalCode
-                )
-            ) {
-
-                errors.push(
-                    "Postal code is required."
-                );
-
-            }
-
-        }
-
-
-        return {
-
-            valid:
-                errors.length === 0,
-
-            errors:
-                errors
-
-        };
-
-    }
-
-
-    /*=====================================================
-      VALIDATE PAYMENT
-    =====================================================*/
-
-    function validatePayment(
-        method
-    ) {
-
-        method =
-            safeString(
-                method ||
-                checkoutState.paymentMethod
-            );
-
-
-        if (!method) {
-
-            return {
-
-                valid:
-                    false,
-
-                errors: [
-
-                    "Payment method is required."
-
-                ]
-
-            };
-
-        }
-
-
-        return {
-
-            valid:
-                true,
-
-            errors:
-                []
-
-        };
-
-    }
-
-
-    /*=====================================================
-      VALIDATE CHECKOUT
-    =====================================================*/
-
-    function validateCheckout(
-        options
-    ) {
-
-        options =
-            options || {};
-
-
-        const errors = [];
-
-
-        /*
-         * Cart validation.
-         */
-
-        const cartValidation =
-            Cart.validate();
-
-
-        if (
-            !cartValidation.valid
-        ) {
-
-            cartValidation.issues.forEach(
-                function (issue) {
-
-                    errors.push(
-
-                        issue.productName +
-                        ": " +
-                        issue.reason
-
-                    );
-
-                }
-            );
-
-        }
-
-
-        /*
-         * Customer validation.
-         */
-
-        const customerValidation =
-            validateCustomer(
-                options.customer ||
-                checkoutState.customer
-            );
-
-
-        if (
-            !customerValidation.valid
-        ) {
-
-            errors.push(
-                ...customerValidation.errors
-            );
-
-        }
-
-
-        /*
-         * Delivery validation.
-         */
-
-        const deliveryValidation =
-            validateDelivery(
-                options.delivery ||
-                checkoutState.delivery
-            );
-
-
-        if (
-            !deliveryValidation.valid
-        ) {
-
-            errors.push(
-                ...deliveryValidation.errors
-            );
-
-        }
-
-
-        /*
-         * Payment validation.
-         *
-         * Payment can be skipped when this function
-         * is specifically being used to prepare an
-         * enquiry/quote instead of immediate payment.
-         */
-
-        if (
-            options.requirePayment !== false
-        ) {
-
-            const paymentValidation =
-                validatePayment(
-                    options.paymentMethod ||
-                    checkoutState.paymentMethod
-                );
-
-
-            if (
-                !paymentValidation.valid
-            ) {
-
-                errors.push(
-                    ...paymentValidation.errors
-                );
-
-            }
-
-        }
-
-
-        const totals =
-            Cart.calculate();
-
-
-        if (
-            Number(
-                totals.itemCount
-            ) <= 0
-        ) {
-
-            errors.push(
-                "Your cart is empty."
-            );
-
-        }
-
-
-        return {
-
-            valid:
-                errors.length === 0,
-
-            errors:
-                errors,
-
-            cart:
-                cartValidation,
-
-            customer:
-                customerValidation,
-
-            delivery:
-                deliveryValidation,
-
-            totals:
-                totals
-
-        };
-
-    }
-
-
-    /*=====================================================
-      BUILD ORDER ITEMS
-    =====================================================*/
-
-    function buildOrderItems() {
-
-        const lines =
-            Cart.getLineItems();
-
-
-        return lines.map(
-            function (item) {
-
-                return {
-
-                    productId:
-                        safeString(
-                            item.id
-                        ),
-
-                    name:
-                        safeString(
-                            item.name
-                        ),
-
-                    quantity:
-                        Number(
-                            item.quantity
-                        ) || 0,
-
-                    unitPrice:
-                        Number(
-                            item.price
-                        ) || 0,
-
-                    lineTotal:
-                        Number(
-                            item.lineTotal
-                        ) || 0
-
-                };
-
-            }
-        );
-
-    }
-
-
-    /*=====================================================
-      BUILD ORDER PAYLOAD
-    =====================================================*/
-
-    function buildOrderPayload(
-        options
-    ) {
-
-        options =
-            options || {};
-
-
-        /*
-         * Allow checkout information to be passed
-         * directly into this function.
-         */
-
-        if (
-            options.customer
-        ) {
-
-            setCustomer(
-                options.customer
-            );
-
-        }
-
-
-        if (
-            options.delivery
-        ) {
-
-            setDeliveryDetails(
-                options.delivery
-            );
-
-        }
-
-
-        if (
-            options.paymentMethod
-        ) {
-
-            setPaymentMethod(
-                options.paymentMethod
-            );
-
-        }
-
-
-        if (
-            options.orderNotes !== undefined
-        ) {
-
-            setOrderNotes(
-                options.orderNotes
-            );
-
-        }
-
-
-        const validation =
-            validateCheckout(
-                options
-            );
-
-
-        if (
-            !validation.valid
-        ) {
-
-            return {
-
-                success:
-                    false,
-
-                valid:
-                    false,
-
-                errors:
-                    validation.errors,
-
-                validation:
-                    validation
-
-            };
-
-        }
-
-
-        const totals =
-            Cart.calculate();
-
-
-        const reference =
-            Cart.getReference();
-
-
-        const orderDate =
-            new Date().toISOString();
-
-
-        const payload = {
-
-            orderReference:
-                reference,
-
-            orderDate:
-                orderDate,
-
-            status:
-                "pending",
-
-            currency:
-                "ZAR",
-
-            customer:
-                getCustomer(),
-
-            customerType:
-                Cart.getCustomerType(),
-
-            delivery:
-                getDeliveryDetails(),
-
-            paymentMethod:
-                getPaymentMethod(),
-
-            notes:
-                getOrderNotes(),
-
-            items:
-                buildOrderItems(),
-
-            totals: {
-
-                itemCount:
-                    totals.itemCount,
-
-                subtotal:
-                    totals.subtotal,
-
-                discount:
-                    totals.discount,
-
-                tax:
-                    totals.tax,
-
-                delivery:
-                    totals.delivery,
-
-                savings:
-                    totals.savings,
-
-                grandTotal:
-                    totals.grandTotal
-
-            },
-
-            promo:
-                typeof Cart.getPromo ===
-                "function"
-
-                    ? Cart.getPromo()
-
-                    : null
-
-        };
-
-
-        return {
-
-            success:
-                true,
-
-            valid:
-                true,
-
-            order:
-                payload,
-
-            validation:
-                validation
-
-        };
-
-    }
-
-
-    /*=====================================================
-      PREPARE CHECKOUT
-    =====================================================*/
-
-    function prepareCheckout(
-        options
-    ) {
-
-        const result =
-            buildOrderPayload(
-                options
-            );
-
-
-        if (
-            !result.success
-        ) {
-
-            checkoutState.prepared =
-                false;
-
-
-            return result;
-
-        }
-
-
-        checkoutState.prepared =
-            true;
-
-
-        checkoutState.preparedAt =
-            new Date().toISOString();
-
-
-        window.dispatchEvent(
-
-            new CustomEvent(
-                "nexpak:checkout:prepared",
-                {
-
-                    detail: {
-
-                        order:
-                            result.order,
-
-                        preparedAt:
-                            checkoutState.preparedAt
-
-                    }
-
-                }
-            )
-
-        );
-
-
-        return {
-
-            ...result,
-
-            prepared:
-                true,
-
-            preparedAt:
-                checkoutState.preparedAt
-
-        };
-
-    }
-
-
-    /*=====================================================
-      GET CHECKOUT STATE
-    =====================================================*/
-
-    function getCheckoutState() {
-
-        return {
-
-            customer:
-                getCustomer(),
-
-            delivery:
-                getDeliveryDetails(),
-
-            paymentMethod:
-                getPaymentMethod(),
-
-            orderNotes:
-                getOrderNotes(),
-
-            prepared:
-                checkoutState.prepared,
-
-            preparedAt:
-                checkoutState.preparedAt
-
-        };
-
-    }
-
-
-    /*=====================================================
-      RESET CHECKOUT STATE
-    =====================================================*/
-
-    function resetCheckoutState() {
-
-        checkoutState = {
-
-            customer:
-                null,
-
-            delivery:
-                null,
-
-            paymentMethod:
-                null,
-
-            orderNotes:
-                "",
-
-            prepared:
-                false,
-
-            preparedAt:
-                null
-
-        };
-
-
-        return getCheckoutState();
-
-    }
-
-
-    /*=====================================================
-      GET ORDER JSON
-    =====================================================*/
-
-    function getOrderJSON(
-        options
-    ) {
-
-        const result =
-            buildOrderPayload(
-                options
-            );
-
-
-        if (
-            !result.success
-        ) {
-
-            return null;
-
-        }
-
-
-        try {
-
-            return JSON.stringify(
-                result.order
-            );
-
-        } catch (error) {
-
-            console.error(
-
-                "[NEXPAK ONLINE CART] Order JSON failed:",
-
-                error
-
-            );
-
-
-            return null;
-
-        }
-
-    }
-
-
-    /*=====================================================
-      CHECKOUT HANDOFF
-    =====================================================*/
-
-    function handoffToCheckout(
-        options
-    ) {
-
-        const result =
-            prepareCheckout(
-                options
-            );
-
-
-        if (
-            !result.success
-        ) {
-
-            return result;
-
-        }
-
-
-        /*
-         * If online checkout functions exist,
-         * hand the order to them.
-         */
-
-        if (
-            typeof window.openOnlineCheckout ===
-            "function"
-        ) {
-
-            window.openOnlineCheckout(
-                result.order
-            );
-
-            return result;
-
-        }
-
-
-        if (
-            typeof window.startOnlineCheckout ===
-            "function"
-        ) {
-
-            window.startOnlineCheckout(
-                result.order
-            );
-
-            return result;
-
-        }
-
-
-        /*
-         * No checkout engine exists yet.
-         *
-         * We deliberately DO NOT redirect to an
-         * unknown URL.
-         */
-
-        window.dispatchEvent(
-
-            new CustomEvent(
-                "nexpak:checkout:ready",
-                {
-
-                    detail: {
-
-                        order:
-                            result.order
-
-                    }
-
-                }
-            )
-
-        );
-
-
-        return result;
-
-    }
-
-
-    /*=====================================================
-      PUBLIC API
-    =====================================================*/
-
-    Cart.setCustomer =
-        setCustomer;
-
-
-    Cart.getCustomer =
-        getCustomer;
-
-
-    Cart.setDeliveryDetails =
-        setDeliveryDetails;
-
-
-    Cart.getDeliveryDetails =
-        getDeliveryDetails;
-
-
-    Cart.setPaymentMethod =
-        setPaymentMethod;
-
-
-    Cart.getPaymentMethod =
-        getPaymentMethod;
-
-
-    Cart.setOrderNotes =
-        setOrderNotes;
-
-
-    Cart.getOrderNotes =
-        getOrderNotes;
-
-
-    Cart.validateCustomer =
-        validateCustomer;
-
-
-    Cart.validateDelivery =
-        validateDelivery;
-
-
-    Cart.validatePayment =
-        validatePayment;
-
-
-    Cart.validateCheckout =
-        validateCheckout;
-
-
-    Cart.buildOrderItems =
-        buildOrderItems;
-
-
-    Cart.buildOrder =
-        buildOrderPayload;
-
-
-    Cart.prepareCheckout =
-        prepareCheckout;
-
-
-    Cart.getCheckoutState =
-        getCheckoutState;
-
-
-    Cart.resetCheckout =
-        resetCheckoutState;
-
-
-    Cart.getOrderJSON =
-        getOrderJSON;
-
-
-    Cart.checkout =
-        handoffToCheckout;
-
-
-    /*=====================================================
-      GLOBAL FUNCTIONS
-    =====================================================*/
-
-    window.prepareOnlineCheckout =
-        prepareCheckout;
-
-
-    window.buildOnlineOrder =
-        buildOrderPayload;
-
-
-    window.validateOnlineCheckout =
-        validateCheckout;
-
-
-    window.startOnlineCheckout =
-        handoffToCheckout;
-
-
-    /*=====================================================
-      CHECKOUT BUTTON HANDLER
-    =====================================================*/
-
-    function bindCheckoutButtons() {
-
-        document.addEventListener(
-
-            "click",
-
-            function (event) {
-
-                const button =
-                    event.target.closest(
-                        "[data-checkout]"
-                    );
-
-
-                if (!button) {
-
-                    return;
-
-                }
-
-
-                if (
-                    button.disabled
-                ) {
-
-                    return;
-
-                }
-
-
-                /*
-                 * Prevent accidental navigation.
-                 */
-
-                event.preventDefault();
-
-
-                const result =
-                    handoffToCheckout();
-
-
-                if (
-                    !result.success
-                ) {
-
-                    console.warn(
-
-                        "[NEXPAK ONLINE CART] Checkout validation failed:",
-
-                        result.errors
-
-                    );
-
-
-                    window.dispatchEvent(
-
-                        new CustomEvent(
-                            "nexpak:checkout:error",
-                            {
-
-                                detail: {
-
-                                    errors:
-                                        result.errors
-
-                                }
+                                renderNexpakOnlineCart();
 
                             }
-                        )
-
-                    );
-
-                }
-
-            }
-
-        );
-
-    }
+                        );
 
 
-    /*=====================================================
-      INITIALISE PART 7
-    =====================================================*/
+                        button.dataset
+                            .nexpakCartBound =
+                            "true";
 
-    function initPart7() {
+                    }
 
-        bindCheckoutButtons();
+                );
 
-    }
+        }
 
-
-    if (
-        document.readyState ===
-        "loading"
-    ) {
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            initPart7
-        );
-
-    } else {
-
-        initPart7();
-
-    }
-
-
-    /*=====================================================
-      READY MESSAGE
-    =====================================================*/
-
-    console.log(
-        "[NEXPAK ONLINE CART] Part 7 loaded."
     );
 
 
-})();
+    return true;
 
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE — CART ENGINE
- ---------------------------------------------------------
- File: onlinecart.js
- Part: 8/8 — FINAL
- Purpose:
- Final cart interaction layer, quantity controls,
- remove controls, notifications, accessibility,
- event management and final API exposure.
-=========================================================*/
+}
 
 
-(function () {
+/* =====================================================
+   64. CART INITIAL RENDER
+   ===================================================== */
 
-    "use strict";
+function initialiseNexpakOnlineCartUI() {
+
+    /*
+     * Load the cart before rendering.
+     */
+
+    loadNexpakOnlineCart();
 
 
-    /*=====================================================
-      CART ENGINE CHECK
-    =====================================================*/
+    /*
+     * Bind controls.
+     */
 
-    if (!window.NEXPAKOnlineCart) {
+    bindNexpakOnlineCartEvents();
 
-        console.error(
-            "[NEXPAK ONLINE CART] Parts 1-7 must load first."
-        );
 
-        return;
+    bindNexpakOnlineClearCartButtons();
+
+
+    /*
+     * Update badge immediately.
+     */
+
+    updateNexpakOnlineCartCountDisplay();
+
+
+    /*
+     * Render only when a recognised
+     * cart container exists.
+     */
+
+    if (
+        findNexpakOnlineCartContainer()
+    ) {
+
+        renderNexpakOnlineCart();
 
     }
 
 
-    const Cart =
-        window.NEXPAKOnlineCart;
+    return true;
+
+}
 
 
-    /*=====================================================
-      INTERNAL STATE
-    =====================================================*/
+/* =====================================================
+   65. CART UPDATED LISTENER
+   ===================================================== */
 
-    const STATE = {
+document.addEventListener(
 
-        initialized:
-            false,
+    "nexpak:cart-updated",
 
-        busy:
-            false,
+    function () {
 
-        lastAction:
-            null,
-
-        lastProductId:
-            null
-
-    };
+        updateNexpakOnlineCartCountDisplay();
 
 
-    /*=====================================================
-      CONFIGURATION
-    =====================================================*/
-
-    const CONFIG = {
-
-        minQuantity:
-            1,
-
-        maxQuantity:
-            999,
-
-        notificationDuration:
-            3000
-
-    };
-
-
-    /*=====================================================
-      SAFE STRING
-    =====================================================*/
-
-    function safeString(
-        value
-    ) {
+        /*
+         * Re-render only if the cart
+         * is actually present on the page.
+         */
 
         if (
-            value === null ||
-            value === undefined
+            findNexpakOnlineCartContainer()
         ) {
 
-            return "";
+            renderNexpakOnlineCart();
 
         }
 
+    }
 
-        return String(
-            value
-        ).trim();
+);
+
+
+/* =====================================================
+   66. UPDATE PUBLIC CART API
+   ===================================================== */
+
+if (
+    window.NEXPAK_ONLINE_CART
+) {
+
+    window.NEXPAK_ONLINE_CART.handleAction =
+        handleNexpakOnlineCartAction;
+
+
+    window.NEXPAK_ONLINE_CART.bind =
+        bindNexpakOnlineCartEvents;
+
+
+    window.NEXPAK_ONLINE_CART.initialise =
+        initialiseNexpakOnlineCartUI;
+
+}
+
+
+/* =====================================================
+   PART 6 END
+   ========================================================= */
+
+ /* =========================================================
+   NEXPAK ONLINE STORE — CART ENGINE
+   PART 7 — ADD TO CART UI BRIDGE
+   ========================================================= */
+
+
+/* =====================================================
+   67. READ QUANTITY FROM ELEMENT
+   ===================================================== */
+
+function readNexpakOnlineQuantity(
+    element,
+    fallback = 1
+) {
+
+    if (!element) {
+
+        return normaliseCartQuantity(
+            fallback
+        );
 
     }
 
 
-    /*=====================================================
-      SAFE INTEGER
-    =====================================================*/
+    const quantitySources = [
 
-    function safeInteger(
-        value,
+        element.getAttribute(
+            "data-quantity"
+        ),
+
+        element.value,
+
+        element.getAttribute(
+            "data-kit-quantity"
+        )
+
+    ];
+
+
+    for (
+        let i = 0;
+        i < quantitySources.length;
+        i++
+    ) {
+
+        const value =
+            safeCartInteger(
+                quantitySources[i],
+                NaN
+            );
+
+
+        if (
+            Number.isFinite(value) &&
+            value > 0
+        ) {
+
+            return normaliseCartQuantity(
+                value
+            );
+
+        }
+
+    }
+
+
+    return normaliseCartQuantity(
         fallback
-    ) {
+    );
 
-        const number =
-            parseInt(
-                value,
-                10
-            );
+}
 
 
-        if (
-            !Number.isFinite(
-                number
-            )
-        ) {
+/* =====================================================
+   68. READ KIT ID FROM ELEMENT
+   ===================================================== */
 
-            return (
-                fallback || 0
-            );
+function readNexpakOnlineKitId(
+    element
+) {
 
-        }
-
-
-        return number;
-
-    }
-
-
-    /*=====================================================
-      CLAMP QUANTITY
-    =====================================================*/
-
-    function clampQuantity(
-        quantity
-    ) {
-
-        quantity =
-            safeInteger(
-                quantity,
-                CONFIG.minQuantity
-            );
-
-
-        return Math.min(
-
-            CONFIG.maxQuantity,
-
-            Math.max(
-
-                CONFIG.minQuantity,
-
-                quantity
-
-            )
-
-        );
-
-    }
-
-
-    /*=====================================================
-      FIND PRODUCT ID
-    =====================================================*/
-
-    function getProductIdFromElement(
-        element
-    ) {
-
-        if (!element) {
-
-            return "";
-
-        }
-
-
-        const id =
-            element.getAttribute(
-                "data-cart-product-id"
-            );
-
-
-        if (id) {
-
-            return safeString(
-                id
-            );
-
-        }
-
-
-        const parent =
-            element.closest(
-                "[data-cart-product-id]"
-            );
-
-
-        if (parent) {
-
-            return safeString(
-
-                parent.getAttribute(
-                    "data-cart-product-id"
-                )
-
-            );
-
-        }
-
+    if (!element) {
 
         return "";
 
     }
 
 
-    /*=====================================================
-      NOTIFICATION CONTAINER
-    =====================================================*/
+    const sources = [
 
-    function getNotificationContainer() {
+        element.getAttribute(
+            "data-kit-id"
+        ),
 
-        let container =
-            document.querySelector(
-                "[data-online-cart-notification]"
-            );
+        element.getAttribute(
+            "data-kit"
+        ),
+
+        element.getAttribute(
+            "data-product-id"
+        ),
+
+        element.getAttribute(
+            "data-id"
+        )
+
+    ];
 
 
-        if (container) {
+    for (
+        let i = 0;
+        i < sources.length;
+        i++
+    ) {
 
-            return container;
+        if (
+            sources[i] !== null &&
+            String(
+                sources[i]
+            ).trim()
+        ) {
+
+            return String(
+                sources[i]
+            ).trim();
 
         }
-
-
-        container =
-            document.createElement(
-                "div"
-            );
-
-
-        container.className =
-            "online-cart-notification";
-
-
-        container.setAttribute(
-            "data-online-cart-notification",
-            "true"
-        );
-
-
-        container.setAttribute(
-            "role",
-            "status"
-        );
-
-
-        container.setAttribute(
-            "aria-live",
-            "polite"
-        );
-
-
-        document.body.appendChild(
-            container
-        );
-
-
-        return container;
 
     }
 
 
-    /*=====================================================
-      SHOW NOTIFICATION
-    =====================================================*/
+    return "";
 
-    function notify(
-        message,
-        type
-    ) {
-
-        message =
-            safeString(
-                message
-            );
+}
 
 
-        if (!message) {
+/* =====================================================
+   69. READ SELECTED KIT OPTIONS
+   ===================================================== */
 
-            return;
+function readNexpakOnlineKitOptions(
+    source
+) {
 
-        }
-
-
-        type =
-            safeString(
-                type
-            ) ||
-            "info";
+    const options = {};
 
 
-        const container =
-            getNotificationContainer();
+    if (!source) {
+
+        return options;
+
+    }
 
 
-        container.textContent =
-            message;
+    /*
+     * Read explicit JSON options when
+     * supplied by the kit button.
+     */
 
-
-        container.setAttribute(
-            "data-type",
-            type
+    const jsonOptions =
+        source.getAttribute(
+            "data-kit-options"
         );
 
 
-        container.classList.add(
+    if (jsonOptions) {
+
+        try {
+
+            const parsed =
+                JSON.parse(
+                    jsonOptions
+                );
+
+
+            if (
+                parsed &&
+                typeof parsed === "object" &&
+                !Array.isArray(parsed)
+            ) {
+
+                Object.assign(
+                    options,
+                    parsed
+                );
+
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "NEXPAK Online Cart: Invalid data-kit-options.",
+                error
+            );
+
+        }
+
+    }
+
+
+    /*
+     * Read common selector values from
+     * the kit card/container.
+     */
+
+    const container =
+        source.closest(
+            "[data-kit-card], " +
+            ".online-kit-card, " +
+            ".online-product-card, " +
+            ".kit-card"
+        ) ||
+        source.parentElement;
+
+
+    if (container) {
+
+        const optionInputs =
+            container.querySelectorAll(
+                "[data-kit-option]"
+            );
+
+
+        optionInputs.forEach(
+
+            input => {
+
+                const key =
+                    input.getAttribute(
+                        "data-kit-option"
+                    );
+
+
+                if (!key) {
+
+                    return;
+
+                }
+
+
+                let value = "";
+
+
+                if (
+                    input.type ===
+                    "radio"
+                ) {
+
+                    if (
+                        !input.checked
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    value =
+                        input.value;
+
+                }
+
+                else if (
+                    input.type ===
+                    "checkbox"
+                ) {
+
+                    value =
+                        input.checked
+                            ? (
+                                input.value ||
+                                true
+                            )
+                            : false;
+
+                }
+
+                else {
+
+                    value =
+                        input.value;
+
+                }
+
+
+                if (
+                    value !== "" &&
+                    value !== null &&
+                    value !== undefined
+                ) {
+
+                    options[key] =
+                        value;
+
+                }
+
+            }
+
+        );
+
+    }
+
+
+    /*
+     * Support common data attributes
+     * for colour/profile selectors.
+     */
+
+    const colour =
+        source.getAttribute(
+            "data-colour"
+        );
+
+
+    if (
+        colour &&
+        !options.colour
+    ) {
+
+        options.colour =
+            colour;
+
+    }
+
+
+    const color =
+        source.getAttribute(
+            "data-color"
+        );
+
+
+    if (
+        color &&
+        !options.color
+    ) {
+
+        options.color =
+            color;
+
+    }
+
+
+    const profile =
+        source.getAttribute(
+            "data-profile"
+        );
+
+
+    if (
+        profile &&
+        !options.profile
+    ) {
+
+        options.profile =
+            profile;
+
+    }
+
+
+    return options;
+
+}
+
+
+/* =====================================================
+   70. SHOW CART ADD FEEDBACK
+   ===================================================== */
+
+function showNexpakOnlineCartAddFeedback(
+    message = "Kit added to cart."
+) {
+
+    /*
+     * Prefer an existing store notification
+     * element if the page has one.
+     */
+
+    const selectors = [
+
+        "#onlineCartMessage",
+
+        "#cartMessage",
+
+        ".online-cart-message",
+
+        ".online-store-message",
+
+        "[data-online-cart-message]"
+
+    ];
+
+
+    let messageElement = null;
+
+
+    for (
+        let i = 0;
+        i < selectors.length;
+        i++
+    ) {
+
+        messageElement =
+            document.querySelector(
+                selectors[i]
+            );
+
+
+        if (messageElement) {
+
+            break;
+
+        }
+
+    }
+
+
+    if (messageElement) {
+
+        messageElement.textContent =
+            message;
+
+
+        messageElement.classList.add(
             "is-visible"
         );
 
 
-        clearTimeout(
-            container._nexpakTimer
+        window.setTimeout(
+
+            function () {
+
+                messageElement.classList.remove(
+                    "is-visible"
+                );
+
+            },
+
+            3000
+
         );
 
 
-        container._nexpakTimer =
-            setTimeout(
-
-                function () {
-
-                    container.classList.remove(
-                        "is-visible"
-                    );
-
-                },
-
-                CONFIG.notificationDuration
-
-            );
+        return;
 
     }
 
 
-    /*=====================================================
-      DISPATCH CART EVENT
-    =====================================================*/
+    /*
+     * Deliberately do NOT use alert().
+     *
+     * The old Add to Cart problem included
+     * intrusive popup behaviour.
+     */
 
-    function dispatchCartEvent(
-        action,
-        details
+    console.log(
+        "NEXPAK Online Store:",
+        message
+    );
+
+}
+
+
+/* =====================================================
+   71. HANDLE ADD TO CART CLICK
+   ===================================================== */
+
+function handleNexpakOnlineAddToCartClick(
+    event
+) {
+
+    const target =
+        event.target;
+
+
+    if (!target) {
+
+        return;
+
+    }
+
+
+    const button =
+        target.closest(
+            "[data-online-add-to-cart], " +
+            "[data-add-to-cart], " +
+            ".online-add-to-cart, " +
+            ".add-to-cart"
+        );
+
+
+    if (!button) {
+
+        return;
+
+    }
+
+
+    /*
+     * Only handle buttons that belong to
+     * the Online Store.
+     */
+
+    const kitId =
+        readNexpakOnlineKitId(
+            button
+        );
+
+
+    if (!kitId) {
+
+        /*
+         * Do not interfere with unrelated
+         * buttons elsewhere on the website.
+         */
+
+        return;
+
+    }
+
+
+    event.preventDefault();
+
+
+    const quantity =
+        readNexpakOnlineQuantity(
+            button,
+            1
+        );
+
+
+    const options =
+        readNexpakOnlineKitOptions(
+            button
+        );
+
+
+    const result =
+        addNexpakOnlineKitById(
+            kitId,
+            quantity,
+            options
+        );
+
+
+    if (
+        result &&
+        result.success
     ) {
 
-        STATE.lastAction =
-            action;
+        showNexpakOnlineCartAddFeedback(
+            "Kit added to cart."
+        );
 
 
-        if (
-            details &&
-            details.productId
-        ) {
-
-            STATE.lastProductId =
-                details.productId;
-
-        }
+        updateNexpakOnlineCartCountDisplay();
 
 
-        window.dispatchEvent(
+        /*
+         * Allow the existing Online Store
+         * UI to respond to the successful add.
+         */
+
+        document.dispatchEvent(
 
             new CustomEvent(
-                "nexpak:cart:action",
+                "nexpak:kit-added",
                 {
 
-                    detail: {
-
-                        action:
-                            action,
-
-                        ...(details || {}),
-
-                        totals:
-                            Cart.calculate()
-
-                    }
+                    detail: result
 
                 }
+
             )
 
         );
 
     }
 
-
-    /*=====================================================
-      INCREASE QUANTITY
-    =====================================================*/
-
-    function increaseQuantity(
-        productId
-    ) {
-
-        productId =
-            safeString(
-                productId
-            );
-
-
-        if (!productId) {
-
-            return {
-
-                success:
-                    false,
-
-                message:
-                    "Product ID is missing."
-
-            };
-
-        }
-
-
-        const item =
-            Cart.getItem(
-                productId
-            );
-
-
-        if (!item) {
-
-            return {
-
-                success:
-                    false,
-
-                message:
-                    "Product is not in the cart."
-
-            };
-
-        }
-
-
-        const currentQuantity =
-            safeInteger(
-                item.quantity,
-                1
-            );
-
-
-        if (
-            currentQuantity >=
-            CONFIG.maxQuantity
-        ) {
-
-            notify(
-                "Maximum quantity reached.",
-                "warning"
-            );
-
-
-            return {
-
-                success:
-                    false,
-
-                message:
-                    "Maximum quantity reached."
-
-            };
-
-        }
-
-
-        const newQuantity =
-            currentQuantity + 1;
-
-
-        const result =
-            Cart.updateQuantity(
-
-                productId,
-
-                newQuantity
-
-            );
-
-
-        if (
-            result &&
-            result.success !== false
-        ) {
-
-            dispatchCartEvent(
-
-                "increase",
-
-                {
-
-                    productId:
-                        productId,
-
-                    quantity:
-                        newQuantity
-
-                }
-
-            );
-
-        }
-
-
-        return result;
-
-    }
-
-
-    /*=====================================================
-      DECREASE QUANTITY
-    =====================================================*/
-
-    function decreaseQuantity(
-        productId
-    ) {
-
-        productId =
-            safeString(
-                productId
-            );
-
-
-        if (!productId) {
-
-            return {
-
-                success:
-                    false,
-
-                message:
-                    "Product ID is missing."
-
-            };
-
-        }
-
-
-        const item =
-            Cart.getItem(
-                productId
-            );
-
-
-        if (!item) {
-
-            return {
-
-                success:
-                    false,
-
-                message:
-                    "Product is not in the cart."
-
-            };
-
-        }
-
-
-        const currentQuantity =
-            safeInteger(
-                item.quantity,
-                1
-            );
-
-
-        const newQuantity =
-            currentQuantity - 1;
-
-
-        /*
-         * If quantity reaches zero, remove the item.
-         */
-
-        if (
-            newQuantity <= 0
-        ) {
-
-            return removeItem(
-                productId
-            );
-
-        }
-
-
-        const result =
-            Cart.updateQuantity(
-
-                productId,
-
-                newQuantity
-
-            );
-
-
-        if (
-            result &&
-            result.success !== false
-        ) {
-
-            dispatchCartEvent(
-
-                "decrease",
-
-                {
-
-                    productId:
-                        productId,
-
-                    quantity:
-                        newQuantity
-
-                }
-
-            );
-
-        }
-
-
-        return result;
-
-    }
-
-
-    /*=====================================================
-      SET QUANTITY
-    =====================================================*/
-
-    function setQuantity(
-        productId,
-        quantity
-    ) {
-
-        productId =
-            safeString(
-                productId
-            );
-
-
-        if (!productId) {
-
-            return {
-
-                success:
-                    false,
-
-                message:
-                    "Product ID is missing."
-
-            };
-
-        }
-
-
-        quantity =
-            safeInteger(
-                quantity,
-                CONFIG.minQuantity
-            );
-
-
-        /*
-         * Zero means remove.
-         */
-
-        if (
-            quantity <= 0
-        ) {
-
-            return removeItem(
-                productId
-            );
-
-        }
-
-
-        quantity =
-            clampQuantity(
-                quantity
-            );
-
-
-        const result =
-            Cart.updateQuantity(
-
-                productId,
-
-                quantity
-
-            );
-
-
-        if (
-            result &&
-            result.success !== false
-        ) {
-
-            dispatchCartEvent(
-
-                "quantity",
-
-                {
-
-                    productId:
-                        productId,
-
-                    quantity:
-                        quantity
-
-                }
-
-            );
-
-        }
-
-
-        return result;
-
-    }
-
-
-    /*=====================================================
-      REMOVE ITEM
-    =====================================================*/
-
-    function removeItem(
-        productId
-    ) {
-
-        productId =
-            safeString(
-                productId
-            );
-
-
-        if (!productId) {
-
-            return {
-
-                success:
-                    false,
-
-                message:
-                    "Product ID is missing."
-
-            };
-
-        }
-
-
-        const item =
-            Cart.getItem(
-                productId
-            );
-
-
-        if (!item) {
-
-            return {
-
-                success:
-                    false,
-
-                message:
-                    "Product is not in the cart."
-
-            };
-
-        }
-
-
-        const productName =
-            safeString(
-                item.name
-            ) ||
-            "Product";
-
-
-        const result =
-            Cart.remove(
-                productId
-            );
-
-
-        if (
-            result &&
-            result.success !== false
-        ) {
-
-            notify(
-                productName +
-                " removed from cart.",
-                "success"
-            );
-
-
-            dispatchCartEvent(
-
-                "remove",
-
-                {
-
-                    productId:
-                        productId,
-
-                    productName:
-                        productName
-
-                }
-
-            );
-
-        }
-
-
-        return result;
-
-    }
-
-
-    /*=====================================================
-      CLEAR CART
-    =====================================================*/
-
-    function clearCart() {
-
-        const count =
-            Cart.get().length;
-
-
-        if (
-            count === 0
-        ) {
-
-            return {
-
-                success:
-                    true,
-
-                message:
-                    "Cart is already empty."
-
-            };
-
-        }
-
-
-        const result =
-            Cart.clear();
-
-
-        if (
-            result &&
-            result.success !== false
-        ) {
-
-            /*
-             * Remove checkout session data if available.
-             */
-
-            if (
-                typeof Cart.resetCheckout ===
-                "function"
-            ) {
-
-                Cart.resetCheckout();
-
-            }
-
-
-            if (
-                typeof Cart.clearSession ===
-                "function"
-            ) {
-
-                Cart.clearSession();
-
-            }
-
-
-            notify(
-                "Cart cleared.",
-                "success"
-            );
-
-
-            dispatchCartEvent(
-                "clear"
-            );
-
-        }
-
-
-        return result;
-
-    }
-
-
-    /*=====================================================
-      HANDLE QUANTITY INPUT
-    =====================================================*/
-
-    function handleQuantityInput(
-        input
-    ) {
-
-        if (!input) {
-
-            return;
-
-        }
-
-
-        const productId =
-            getProductIdFromElement(
-                input
-            );
-
-
-        if (!productId) {
-
-            return;
-
-        }
-
-
-        const quantity =
-            safeInteger(
-                input.value,
-                CONFIG.minQuantity
-            );
-
-
-        setQuantity(
-
-            productId,
-
-            quantity
-
+    else {
+
+        console.error(
+            "NEXPAK Online Store: Add to Cart failed.",
+            result
         );
 
-    }
 
-
-    /*=====================================================
-      HANDLE CART CLICK
-    =====================================================*/
-
-    function handleCartClick(
-        event
-    ) {
-
-        const target =
-            event.target;
-
-
-        if (!target) {
-
-            return;
-
-        }
-
-
-        /*
-         * Increase button.
-         */
-
-        const increaseButton =
-            target.closest(
-                '[data-cart-action="increase"]'
-            );
-
-
-        if (
-            increaseButton
-        ) {
-
-            event.preventDefault();
-
-
-            const productId =
-                getProductIdFromElement(
-                    increaseButton
-                );
-
-
-            increaseQuantity(
-                productId
-            );
-
-
-            return;
-
-        }
-
-
-        /*
-         * Decrease button.
-         */
-
-        const decreaseButton =
-            target.closest(
-                '[data-cart-action="decrease"]'
-            );
-
-
-        if (
-            decreaseButton
-        ) {
-
-            event.preventDefault();
-
-
-            const productId =
-                getProductIdFromElement(
-                    decreaseButton
-                );
-
-
-            decreaseQuantity(
-                productId
-            );
-
-
-            return;
-
-        }
-
-
-        /*
-         * Remove button.
-         */
-
-        const removeButton =
-            target.closest(
-                "[data-remove-cart-item]"
-            );
-
-
-        if (
-            removeButton
-        ) {
-
-            event.preventDefault();
-
-
-            const productId =
-                getProductIdFromElement(
-                    removeButton
-                );
-
-
-            removeItem(
-                productId
-            );
-
-
-            return;
-
-        }
-
-
-        /*
-         * Clear cart.
-         */
-
-        const clearButton =
-            target.closest(
-                "[data-clear-cart]"
-            );
-
-
-        if (
-            clearButton
-        ) {
-
-            event.preventDefault();
-
-
-            clearCart();
-
-
-            return;
-
-        }
-
-    }
-
-
-    /*=====================================================
-      HANDLE CART CHANGE
-    =====================================================*/
-
-    function handleCartChange(
-        event
-    ) {
-
-        const target =
-            event.target;
-
-
-        if (!target) {
-
-            return;
-
-        }
-
-
-        if (
-            target.matches(
-                "[data-cart-quantity-input]"
+        showNexpakOnlineCartAddFeedback(
+            (
+                result &&
+                result.message
             )
+                ? result.message
+                : "Unable to add kit to cart."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   72. BIND ADD TO CART EVENTS
+   ===================================================== */
+
+function bindNexpakOnlineAddToCartEvents() {
+
+    document.removeEventListener(
+        "click",
+        handleNexpakOnlineAddToCartClick
+    );
+
+
+    document.addEventListener(
+        "click",
+        handleNexpakOnlineAddToCartClick
+    );
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   73. KIT ADDED EVENT
+   ===================================================== */
+
+document.addEventListener(
+
+    "nexpak:kit-added",
+
+    function (event) {
+
+        if (
+            !event ||
+            !event.detail
         ) {
 
-            handleQuantityInput(
-                target
-            );
+            return;
+
+        }
+
+
+        /*
+         * Update the cart badge immediately.
+         */
+
+        updateNexpakOnlineCartCountDisplay();
+
+
+        /*
+         * If a cart container is visible,
+         * refresh it.
+         */
+
+        if (
+            findNexpakOnlineCartContainer()
+        ) {
+
+            renderNexpakOnlineCart();
 
         }
 
     }
 
+);
 
-    /*=====================================================
-      KEYBOARD ACCESSIBILITY
-    =====================================================*/
 
-    function handleKeyboard(
-        event
+/* =====================================================
+   74. EXTEND PUBLIC CART API
+   ===================================================== */
+
+if (
+    window.NEXPAK_ONLINE_CART
+) {
+
+    window.NEXPAK_ONLINE_CART.readKitId =
+        readNexpakOnlineKitId;
+
+
+    window.NEXPAK_ONLINE_CART.readQuantity =
+        readNexpakOnlineQuantity;
+
+
+    window.NEXPAK_ONLINE_CART.readOptions =
+        readNexpakOnlineKitOptions;
+
+
+    window.NEXPAK_ONLINE_CART.addFeedback =
+        showNexpakOnlineCartAddFeedback;
+
+
+    window.NEXPAK_ONLINE_CART.bindAddToCart =
+        bindNexpakOnlineAddToCartEvents;
+
+}
+
+
+/* =====================================================
+   PART 7 END
+   ========================================================= */
+
+ /* =========================================================
+   NEXPAK ONLINE STORE — CART ENGINE
+   PART 8 — INITIALISATION + COMPATIBILITY
+   ========================================================= */
+
+
+/* =====================================================
+   75. CART READY STATE
+   ===================================================== */
+
+let nexpakOnlineCartInitialised = false;
+
+
+/* =====================================================
+   76. CHECK DOM READY
+   ===================================================== */
+
+function isNexpakOnlineCartDomReady() {
+
+    return (
+        document.readyState ===
+        "interactive" ||
+
+        document.readyState ===
+        "complete"
+    );
+
+}
+
+
+/* =====================================================
+   77. INITIALISE CART ENGINE
+   ===================================================== */
+
+function initialiseNexpakOnlineCartEngine() {
+
+    if (
+        nexpakOnlineCartInitialised
     ) {
 
-        const target =
-            event.target;
-
-
-        if (!target) {
-
-            return;
-
-        }
-
-
-        /*
-         * Quantity inputs.
-         */
-
-        if (
-            target.matches(
-                "[data-cart-quantity-input]"
-            )
-        ) {
-
-            if (
-                event.key ===
-                "Enter"
-            ) {
-
-                event.preventDefault();
-
-
-                handleQuantityInput(
-                    target
-                );
-
-
-                target.blur();
-
-            }
-
-        }
+        return true;
 
     }
 
 
-    /*=====================================================
-      CART BADGE ACCESSIBILITY
-    =====================================================*/
+    /*
+     * Load existing cart first.
+     */
 
-    function updateAccessibilityLabels() {
-
-        const totals =
-            Cart.calculate();
+    loadNexpakOnlineCart();
 
 
-        const count =
-            safeInteger(
-                totals.itemCount,
-                0
-            );
+    /*
+     * Bind cart controls.
+     */
+
+    bindNexpakOnlineCartEvents();
 
 
-        document
-            .querySelectorAll(
-                ".cart-count, [data-cart-count]"
-            )
-            .forEach(
-                function (element) {
+    /*
+     * Bind Add to Cart buttons.
+     */
 
-                    element.setAttribute(
-
-                        "aria-label",
-
-                        count === 1
-
-                            ? "1 item in cart"
-
-                            : count +
-                              " items in cart"
-
-                    );
-
-                }
-            );
-
-    }
+    bindNexpakOnlineAddToCartEvents();
 
 
-    /*=====================================================
-      UPDATE QUANTITY INPUTS
-    =====================================================*/
+    /*
+     * Bind Clear Cart buttons.
+     */
 
-    function synchronizeQuantityInputs() {
-
-        const cart =
-            Cart.get();
+    bindNexpakOnlineClearCartButtons();
 
 
-        cart.forEach(
-            function (item) {
+    /*
+     * Update cart badge.
+     */
 
-                const productId =
-                    safeString(
-                        item.id
-                    );
+    updateNexpakOnlineCartCountDisplay();
 
 
-                document
-                    .querySelectorAll(
+    /*
+     * Render cart if a cart container
+     * exists on the current page.
+     */
 
-                        '[data-cart-quantity-input="' +
-                        productId +
-                        '"]'
-
-                    )
-                    .forEach(
-                        function (input) {
-
-                            input.value =
-                                item.quantity;
-
-                        }
-                    );
-
-            }
-        );
-
-    }
-
-
-    /*=====================================================
-      CHECKOUT ERROR HANDLER
-    =====================================================*/
-
-    function handleCheckoutError(
-        event
+    if (
+        findNexpakOnlineCartContainer()
     ) {
 
-        const detail =
-            event.detail ||
-            {};
-
-
-        const errors =
-            Array.isArray(
-                detail.errors
-            )
-                ? detail.errors
-                : [];
-
-
-        if (
-            errors.length === 0
-        ) {
-
-            notify(
-                "Please check your checkout details.",
-                "warning"
-            );
-
-
-            return;
-
-        }
-
-
-        notify(
-            errors[0],
-            "error"
-        );
+        renderNexpakOnlineCart();
 
     }
 
 
-    /*=====================================================
-      CHECKOUT READY HANDLER
-    =====================================================*/
+    nexpakOnlineCartInitialised =
+        true;
 
-    function handleCheckoutReady(
-        event
-    ) {
 
-        const order =
-            event.detail &&
-            event.detail.order;
+    /*
+     * Tell the rest of the Online Store
+     * that the cart engine is ready.
+     */
 
+    try {
 
-        if (!order) {
-
-            return;
-
-        }
-
-
-        /*
-         * This event intentionally does not process
-         * payment. The checkout/payment engine will
-         * consume the prepared order later.
-         */
-
-        console.log(
-
-            "[NEXPAK ONLINE CART] Checkout order ready:",
-
-            order.orderReference
-
-        );
-
-    }
-
-
-    /*=====================================================
-      PROMO UPDATE HANDLER
-    =====================================================*/
-
-    function handlePromoUpdate() {
-
-        if (
-            typeof Cart.render ===
-            "function"
-        ) {
-
-            Cart.render();
-
-        }
-
-    }
-
-
-    /*=====================================================
-      BIND EVENTS
-    =====================================================*/
-
-    function bindEvents() {
-
-        /*
-         * Delegated click listener.
-         * Works for dynamically rendered cart items.
-         */
-
-        document.addEventListener(
-
-            "click",
-
-            handleCartClick
-
-        );
-
-
-        /*
-         * Quantity inputs.
-         */
-
-        document.addEventListener(
-
-            "change",
-
-            handleCartChange
-
-        );
-
-
-        /*
-         * Keyboard controls.
-         */
-
-        document.addEventListener(
-
-            "keydown",
-
-            handleKeyboard
-
-        );
-
-
-        /*
-         * Cart updates.
-         */
-
-        window.addEventListener(
-
-            "nexpak:cart:update",
-
-            handleCartUpdate
-
-        );
-
-
-        /*
-         * Checkout errors.
-         */
-
-        window.addEventListener(
-
-            "nexpak:checkout:error",
-
-            handleCheckoutError
-
-        );
-
-
-        /*
-         * Checkout ready.
-         */
-
-        window.addEventListener(
-
-            "nexpak:checkout:ready",
-
-            handleCheckoutReady
-
-        );
-
-
-        /*
-         * Promo changes.
-         */
-
-        window.addEventListener(
-
-            "nexpak:promo:update",
-
-            handlePromoUpdate
-
-        );
-
-    }
-
-
-    /*=====================================================
-      FINAL CART STATE
-    =====================================================*/
-
-    function getState() {
-
-        return {
-
-            initialized:
-                STATE.initialized,
-
-            busy:
-                STATE.busy,
-
-            lastAction:
-                STATE.lastAction,
-
-            lastProductId:
-                STATE.lastProductId,
-
-            itemCount:
-                Cart.calculate().itemCount,
-
-            totals:
-                Cart.calculate()
-
-        };
-
-    }
-
-
-    /*=====================================================
-      FINAL CART API
-    =====================================================*/
-
-    Cart.increase =
-        increaseQuantity;
-
-
-    Cart.decrease =
-        decreaseQuantity;
-
-
-    Cart.setQuantity =
-        setQuantity;
-
-
-    Cart.removeItem =
-        removeItem;
-
-
-    Cart.clearCart =
-        clearCart;
-
-
-    Cart.notify =
-        notify;
-
-
-    Cart.getState =
-        getState;
-
-
-    Cart.getConfig =
-        function () {
-
-            return {
-
-                ...CONFIG
-
-            };
-
-        };
-
-
-    /*=====================================================
-      GLOBAL HELPERS
-    =====================================================*/
-
-    window.increaseOnlineCartQuantity =
-        increaseQuantity;
-
-
-    window.decreaseOnlineCartQuantity =
-        decreaseQuantity;
-
-
-    window.setOnlineCartQuantity =
-        setQuantity;
-
-
-    window.removeOnlineCartItem =
-        removeItem;
-
-
-    window.clearOnlineCart =
-        clearCart;
-
-
-    window.getOnlineCartState =
-        getState;
-
-
-    /*=====================================================
-      FINAL INITIALIZATION
-    =====================================================*/
-
-    function initPart8() {
-
-        if (
-            STATE.initialized
-        ) {
-
-            return;
-
-        }
-
-
-        bindEvents();
-
-
-        /*
-         * Recover cart/session information if Part 6
-         * exposes the recovery function.
-         */
-
-        if (
-            typeof Cart.recover ===
-            "function"
-        ) {
-
-            Cart.recover();
-
-        }
-
-
-        /*
-         * Render cart one final time if Part 5
-         * exposes the renderer.
-         */
-
-        if (
-            typeof Cart.render ===
-            "function"
-        ) {
-
-            Cart.render();
-
-        }
-
-
-        updateAccessibilityLabels();
-
-
-        synchronizeQuantityInputs();
-
-
-        STATE.initialized =
-            true;
-
-
-        /*
-         * Final ready event.
-         */
-
-        window.dispatchEvent(
+        document.dispatchEvent(
 
             new CustomEvent(
-                "nexpak:onlinecart:ready",
+                "nexpak:cart-ready",
                 {
 
                     detail: {
 
                         cart:
-                            Cart.get(),
+                            nexpakOnlineCart,
 
-                        totals:
-                            Cart.calculate(),
+                        count:
+                            getNexpakOnlineCartCount(),
 
-                        state:
-                            getState()
+                        kitCount:
+                            getNexpakOnlineCartKitCount(),
+
+                        weight:
+                            getNexpakOnlineCartWeight()
 
                     }
 
                 }
+
             )
 
         );
 
-    }
+    } catch (error) {
 
-
-    /*=====================================================
-      DOCUMENT READY
-    =====================================================*/
-
-    if (
-        document.readyState ===
-        "loading"
-    ) {
-
-        document.addEventListener(
-
-            "DOMContentLoaded",
-
-            initPart8
-
+        console.warn(
+            "NEXPAK Online Cart: Ready event failed.",
+            error
         );
 
-    } else {
+    }
 
-        initPart8();
+
+    return true;
+
+}
+
+
+/* =====================================================
+   78. SAFE INITIALISATION
+   ===================================================== */
+
+function startNexpakOnlineCartEngine() {
+
+    if (
+        isNexpakOnlineCartDomReady()
+    ) {
+
+        initialiseNexpakOnlineCartEngine();
+
+        return;
 
     }
 
 
-    /*=====================================================
-      FINAL READY MESSAGE
-    =====================================================*/
+    document.addEventListener(
 
-    console.log(
-        "================================================="
+        "DOMContentLoaded",
+
+        function () {
+
+            initialiseNexpakOnlineCartEngine();
+
+        },
+
+        {
+            once: true
+        }
+
     );
 
-    console.log(
-        " NEXPAK ONLINE CART — COMPLETE"
+}
+
+
+/* =====================================================
+   79. PUBLIC CART STATE
+   ===================================================== */
+
+function getNexpakOnlineCartState() {
+
+    return {
+
+        initialised:
+            nexpakOnlineCartInitialised,
+
+        items:
+            nexpakOnlineCart,
+
+        itemCount:
+            getNexpakOnlineCartCount(),
+
+        kitCount:
+            getNexpakOnlineCartKitCount(),
+
+        totalKitQuantity:
+            calculateNexpakOnlineTotalKitQuantity(),
+
+        weight:
+            getNexpakOnlineCartWeight(),
+
+        totals:
+            getNexpakOnlineCartTotals()
+
+    };
+
+}
+
+
+/* =====================================================
+   80. CHECK CART EMPTY
+   ===================================================== */
+
+function isNexpakOnlineCartEmpty() {
+
+    return (
+        nexpakOnlineCart.length === 0
     );
 
-    console.log(
-        " onlinecart.js Parts 1-8 loaded successfully."
-    );
+}
 
-    console.log(
-        " Cart engine ready for checkout integration."
-    );
 
-    console.log(
-        "================================================="
-    );
+/* =====================================================
+   81. GET CART ITEM
+   ===================================================== */
 
+function getNexpakOnlineCartItem(
+    itemId,
+    options = null
+) {
+
+    const index =
+        findNexpakOnlineCartItemIndex(
+            itemId,
+            options
+        );
+
+
+    if (index === -1) {
+
+        return null;
+
+    }
+
+
+    return nexpakOnlineCart[index];
+
+}
+
+
+/* =====================================================
+   82. REFRESH CART
+   ===================================================== */
+
+function refreshNexpakOnlineCart() {
+
+    updateNexpakOnlineCartCountDisplay();
+
+
+    if (
+        findNexpakOnlineCartContainer()
+    ) {
+
+        renderNexpakOnlineCart();
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   83. UPDATE PUBLIC CART API
+   ===================================================== */
+
+if (
+    window.NEXPAK_ONLINE_CART
+) {
+
+    window.NEXPAK_ONLINE_CART.initialiseEngine =
+        initialiseNexpakOnlineCartEngine;
+
+
+    window.NEXPAK_ONLINE_CART.start =
+        startNexpakOnlineCartEngine;
+
+
+    window.NEXPAK_ONLINE_CART.getState =
+        getNexpakOnlineCartState;
+
+
+    window.NEXPAK_ONLINE_CART.isEmpty =
+        isNexpakOnlineCartEmpty;
+
+
+    window.NEXPAK_ONLINE_CART.getItem =
+        getNexpakOnlineCartItem;
+
+
+    window.NEXPAK_ONLINE_CART.refresh =
+        refreshNexpakOnlineCart;
+
+}
+
+
+/* =====================================================
+   84. AUTOMATIC START
+   ===================================================== */
+
+startNexpakOnlineCartEngine();
+
+
+/* =====================================================
+   85. GLOBAL COMPATIBILITY ALIASES
+   ===================================================== */
+
+window.loadNexpakOnlineCart =
+    loadNexpakOnlineCart;
+
+
+window.saveNexpakOnlineCart =
+    saveNexpakOnlineCart;
+
+
+window.addNexpakOnlineKitToCart =
+    addNexpakOnlineKitToCart;
+
+
+window.addNexpakOnlineKitById =
+    addNexpakOnlineKitById;
+
+
+window.removeNexpakOnlineKitFromCart =
+    removeNexpakOnlineKitFromCart;
+
+
+window.clearNexpakOnlineCart =
+    clearNexpakOnlineCart;
+
+
+window.getNexpakOnlineCartCount =
+    getNexpakOnlineCartCount;
+
+
+window.getNexpakOnlineCartWeight =
+    getNexpakOnlineCartWeight;
+
+
+window.getNexpakOnlineCartTotals =
+    getNexpakOnlineCartTotals;
+
+
+/* =====================================================
+   86. FINAL CART ENGINE STATUS
+   ===================================================== */
+
+console.log(
+    "NEXPAK Online Store: Cart engine loaded."
+);
+
+
+/* =====================================================
+   PART 8 END
+   ===================================================== */
+
+
+/* =========================================================
+   END OF NEXPAK ONLINE CART ENGINE
+   ========================================================= */
 
 })();
+ 
