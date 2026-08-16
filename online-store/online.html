@@ -11,15 +11,15 @@
 
     <style>
         /* =========================================================
-           GLOBAL RESETS & STYLING
+           GLOBAL RESETS & VARIABLES
         ========================================================== */
         :root {
             --primary-navy: #07182e;
-            --accent-blue: #0066ff;
-            --accent-hover: #0052cc;
-            --text-dark: #0f172a;
-            --bg-light: #f8fafc;
-            --border-color: #e2e8f0;
+            --primary-blue: #0066ff;
+            --text-dark: #1e293b;
+            --text-gray: #64748b;
+            --bg-body: #f8fafc;
+            --border-light: #e2e8f0;
         }
 
         * {
@@ -30,373 +30,264 @@
         }
 
         body {
-            background-color: #f1f5f9;
+            background-color: var(--bg-body);
             color: var(--text-dark);
-            min-height: 100vh;
         }
 
         /* =========================================================
-           HEADER & TOP-RIGHT NAVIGATION
+           TOP HEADER (White Bar)
         ========================================================== */
         .top-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px 24px;
-            background-color: var(--primary-navy);
-            color: #ffffff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+            padding: 12px 30px;
+            background-color: #ffffff;
+            border-bottom: 1px solid var(--border-light);
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
         .logo-container img {
-            height: 40px;
-            display: block;
+            height: 35px;
         }
 
         .search-bar {
             display: flex;
             align-items: center;
-            background: #ffffff;
+            background: #f1f5f9;
             border-radius: 4px;
             overflow: hidden;
-            max-width: 420px;
-            width: 100%;
-            margin: 0 16px;
+            width: 400px;
+            border: 1px solid var(--border-light);
         }
 
         .search-bar input {
             border: none;
-            padding: 8px 12px;
+            background: transparent;
+            padding: 10px 15px;
             flex: 1;
             outline: none;
             font-size: 13px;
         }
 
         .search-bar button {
-            background: var(--accent-blue);
+            background: var(--primary-blue);
             border: none;
             color: #ffffff;
-            padding: 8px 14px;
+            padding: 10px 18px;
             cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .search-bar button:hover {
-            background: var(--accent-hover);
         }
 
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 18px;
+            gap: 15px;
         }
 
-        .header-action-item {
-            color: #ffffff;
+        .action-btn {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            padding: 8px 14px;
+            border-radius: 4px;
+            color: var(--text-dark);
             text-decoration: none;
             font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-            font-weight: 500;
-        }
-
-        .header-action-item:hover {
-            color: #93c5fd;
-        }
-
-        /* Nav Dropdown */
-        .nav-dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .nav-dropdown-btn {
-            background: var(--accent-blue);
-            color: #ffffff;
-            padding: 8px 14px;
-            font-size: 12px;
             font-weight: 600;
-            border: none;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .nav-dropdown-btn:hover {
-            background: var(--accent-hover);
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 110%;
-            background-color: #ffffff;
-            min-width: 170px;
-            box-shadow: 0px 8px 20px rgba(0,0,0,0.15);
-            z-index: 1000;
-            border-radius: 4px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-        }
-
-        .dropdown-content a {
-            color: var(--text-dark);
-            padding: 10px 14px;
-            text-decoration: none;
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 12px;
-            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .dropdown-content a:hover {
-            background-color: var(--bg-light);
-            color: var(--accent-blue);
+        .action-btn:hover {
+            background: var(--bg-body);
+            border-color: #cbd5e1;
         }
 
-        .dropdown-content.show {
-            display: block;
-        }
-
-        .badge-icon {
-            position: relative;
-            display: inline-block;
-        }
-
+        .badge-icon { position: relative; }
         .badge {
-            background-color: #e11d48;
-            color: #ffffff;
+            background-color: var(--primary-blue);
+            color: white;
             font-size: 10px;
-            padding: 2px 6px;
+            padding: 2px 5px;
             border-radius: 10px;
             position: absolute;
             top: -8px;
-            right: -10px;
-            font-weight: bold;
+            right: -12px;
         }
 
         /* =========================================================
-           CATALOGUE & CARD LAYOUT
+           SECONDARY NAVIGATION (Dark Blue Bar)
         ========================================================== */
-        .main-container {
-            max-width: 1200px;
-            margin: 24px auto;
-            padding: 0 16px;
+        .category-nav {
+            background-color: var(--primary-navy);
+            padding: 12px 30px;
+            display: flex;
+            gap: 25px;
+            overflow-x: auto;
         }
 
-        .kit-grid-container {
+        .category-nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
+        .category-nav a:hover, .category-nav a.active {
+            color: #93c5fd;
+        }
+
+        /* =========================================================
+           HERO BANNER
+        ========================================================== */
+        .hero-banner {
+            background: linear-gradient(135deg, #07182e 0%, #0040a8 100%);
+            color: #ffffff;
+            padding: 80px 40px;
+            text-align: left;
+        }
+
+        .hero-banner span {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .hero-banner h1 {
+            font-size: 48px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            max-width: 600px;
+        }
+
+        .hero-banner h1 .highlight { color: #408bf9; }
+
+        .hero-banner p {
+            color: #94a3b8;
+            font-size: 15px;
+            max-width: 500px;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+
+        .btn-shop-hero {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.3s;
+        }
+
+        .btn-shop-hero:hover { background: rgba(255, 255, 255, 0.2); }
+
+        /* =========================================================
+           MAIN STORE LAYOUT & CARDS
+        ========================================================== */
+        .store-container {
+            max-width: 1300px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section-header { margin-bottom: 30px; }
+        .section-header h4 { font-size: 12px; color: var(--primary-blue); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+        .section-header h2 { font-size: 28px; color: var(--primary-navy); }
+        .category-title { font-size: 20px; color: var(--text-dark); display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+
+        .kit-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
         }
 
-        .kit-card {
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 16px;
+        .card {
             background: #ffffff;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            border-radius: 10px;
+            border: 1px solid var(--border-light);
+            overflow: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            transition: box-shadow 0.2s;
         }
 
-        .kit-badge {
-            font-size: 10px;
-            background: #e2e8f0;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: #475569;
-            width: fit-content;
-        }
+        .card:hover { box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
 
-        .kit-title {
-            font-size: 16px;
-            margin: 10px 0 4px 0;
-            color: var(--primary-navy);
-        }
-
-        .kit-sku {
-            font-size: 11px;
-            color: #64748b;
-            margin-bottom: 12px;
-        }
-
-        .kit-price {
-            font-size: 20px;
-            font-weight: bold;
-            color: var(--accent-blue);
-            margin-bottom: 12px;
-        }
-
-        .kit-price span {
-            font-size: 11px;
-            color: #64748b;
-            font-weight: normal;
-        }
-
-        .kit-options-container {
-            margin-bottom: 16px;
-        }
-
-        .option-group {
-            margin-bottom: 8px;
-        }
-
-        .option-group label {
-            font-size: 11px;
-            font-weight: 600;
-            display: block;
-            margin-bottom: 2px;
-        }
-
-        .kit-option {
-            width: 100%;
-            padding: 6px;
-            font-size: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            outline: none;
-        }
-
-        .kit-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: auto;
-        }
-
-        .kit-quantity {
-            width: 50px;
-            padding: 6px;
-            text-align: center;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 12px;
-        }
-
-        .btn-cart {
-            flex: 1;
-            background: var(--primary-navy);
-            color: #ffffff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 600;
-            transition: background 0.2s;
-        }
-
-        .btn-cart:hover {
-            background: #0f294a;
-        }
-
-        .btn-pdf {
+        .card-img {
+            height: 200px;
             background: #f1f5f9;
-            border: 1px solid var(--border-color);
-            padding: 8px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-pdf:hover {
-            background: #e2e8f0;
-        }
-
-        /* =========================================================
-           DELIVERY MODAL STYLES
-        ========================================================== */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 2000;
+            position: relative;
+            display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
         }
 
-        .modal.open {
-            display: flex;
-        }
-
-        .modal-content {
-            background: #ffffff;
-            padding: 24px;
-            border-radius: 8px;
-            width: 100%;
-            max-width: 420px;
-            position: relative;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-
-        .close-btn {
+        .card-img img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .wishlist-btn {
             position: absolute;
-            top: 12px;
-            right: 16px;
-            font-size: 20px;
-            cursor: pointer;
-            color: #64748b;
-        }
-
-        .close-btn:hover {
-            color: var(--text-dark);
-        }
-
-        .delivery-summary {
-            margin: 16px 0;
-            background: var(--bg-light);
-            padding: 12px;
-            border-radius: 6px;
-            font-size: 13px;
-            border: 1px solid var(--border-color);
-        }
-
-        .delivery-summary p {
+            top: 10px;
+            right: 10px;
+            background: white;
+            border: 1px solid var(--border-light);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
             display: flex;
-            justify-content: space-between;
-            margin: 6px 0;
-        }
-
-        .btn-primary-block {
-            width: 100%;
-            padding: 10px;
-            background: var(--accent-blue);
-            color: #ffffff;
-            border: none;
-            border-radius: 4px;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            font-weight: 600;
-            font-size: 13px;
-            transition: background 0.2s;
+            color: var(--text-gray);
         }
 
-        .btn-primary-block:hover {
-            background: var(--accent-hover);
-        }
+        .card-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
+        .tag { font-size: 10px; font-weight: bold; color: var(--primary-blue); text-transform: uppercase; margin-bottom: 8px; }
+        .card-title { font-size: 15px; color: var(--primary-navy); margin-bottom: 10px; line-height: 1.3; }
+        .card-desc { font-size: 12px; color: var(--text-gray); margin-bottom: 20px; flex: 1; }
+        .card-price { font-size: 20px; font-weight: bold; color: var(--text-dark); margin-bottom: 20px; }
+
+        .card-actions { display: flex; gap: 10px; }
+        .btn-view { flex: 1; padding: 10px; background: white; border: 1px solid var(--border-light); border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--text-dark); }
+        .btn-add { flex: 1; padding: 10px; background: var(--primary-blue); border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; color: white; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .btn-pdf { background: #fff1f2; border: 1px solid #ffe4e6; color: #e11d48; padding: 10px; border-radius: 6px; cursor: pointer; }
+
+        /* =========================================================
+           MODAL (Delivery)
+        ========================================================== */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center; }
+        .modal.open { display: flex; }
+        .modal-content { background: #fff; padding: 24px; border-radius: 8px; width: 100%; max-width: 400px; position: relative; }
+        .close-btn { position: absolute; top: 12px; right: 16px; font-size: 20px; cursor: pointer; color: var(--text-gray); }
+        .modal-select { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid var(--border-light); border-radius: 4px; }
+        .summary-box { background: var(--bg-body); padding: 15px; border-radius: 6px; margin-bottom: 15px; font-size: 13px; }
+        .summary-box p { display: flex; justify-content: space-between; margin-bottom: 5px; }
     </style>
 </head>
 <body>
 
-    <!-- TOP HEADER -->
+    <!-- TOP HEADER (White) -->
     <header class="top-header">
         <div class="logo-container">
-            <img src="images/logo.png" alt="NexPak Logo" onerror="this.src='https://via.placeholder.com/150x40?text=NEXPAK'">
+            <!-- Ensure your logo path is correct -->
+            <img src="images/logo.png" alt="NexPak" onerror="this.src='https://via.placeholder.com/180x40?text=NEXPAK+SOLUTIONS'">
         </div>
 
         <div class="search-bar">
@@ -407,177 +298,137 @@
         </div>
 
         <div class="header-actions">
-            <a href="#" class="header-action-item" onclick="openDelivery(); return false;">
-                <i class="fa-solid fa-truck"></i> Delivery Calc
-            </a>
-
-            <a href="#" class="header-action-item" onclick="openCart(); return false;">
-                <span class="badge-icon">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <span class="badge cart-badge" id="cartCount">0</span>
-                </span>
-                Cart
-            </a>
-
-            <!-- Top Right Dropdown Navigation -->
-            <div class="nav-dropdown">
-                <button type="button" class="nav-dropdown-btn" onclick="toggleNavDropdown()">
-                    Navigation <i class="fa-solid fa-chevron-down"></i>
-                </button>
-                <div id="navDropdownContent" class="dropdown-content">
-                    <a href="#kitCatalogue" onclick="renderNexpakKitCatalogue('all')"><i class="fa-solid fa-house"></i> Home</a>
-                    <a href="#about" onclick="alert('NexPak Security Solutions - Leading provider of electric fencing, CCTV, and perimeter security.'); return false;">
-                        <i class="fa-solid fa-circle-info"></i> About Us
-                    </a>
-                    <a href="#contact" onclick="alert('Contact NexPak Support:\nEmail: sales@nexpak.co.za\nPhone: +27 (0)11 123 4567'); return false;">
-                        <i class="fa-solid fa-envelope"></i> Contact Us
-                    </a>
-                </div>
-            </div>
+            <!-- Delivery Calc added here seamlessly -->
+            <button class="action-btn" onclick="openDelivery()">
+                <i class="fa-solid fa-truck"></i> Delivery
+            </button>
+            <button class="action-btn">
+                <i class="fa-regular fa-user"></i> Account
+            </button>
+            <button class="action-btn">
+                <span class="badge-icon"><i class="fa-regular fa-heart"></i><span class="badge">0</span></span> Wishlist
+            </button>
+            <button class="action-btn" onclick="alert('Cart clicked')">
+                <span class="badge-icon"><i class="fa-solid fa-cart-shopping"></i><span class="badge" id="cartCount">0</span></span> Cart
+            </button>
         </div>
     </header>
 
-    <!-- MAIN CONTAINER -->
-    <div class="main-container">
-        <main id="kitCatalogue" class="kit-grid-container"></main>
+    <!-- SECONDARY NAV (Dark Blue) -->
+    <nav class="category-nav">
+        <a href="#" class="active" onclick="renderNexpakKitCatalogue('all')"><i class="fa-solid fa-layer-group"></i> All Kits</a>
+        <a href="#" onclick="renderNexpakKitCatalogue('electric-fencing')"><i class="fa-solid fa-bolt"></i> Electric Fencing</a>
+        <a href="#" onclick="renderNexpakKitCatalogue('roboguard')"><i class="fa-solid fa-shield-halved"></i> Roboguard</a>
+        <a href="#" onclick="renderNexpakKitCatalogue('hd-cctv')"><i class="fa-solid fa-video"></i> HD CCTV</a>
+        <a href="#" onclick="renderNexpakKitCatalogue('ip-cctv')"><i class="fa-solid fa-network-wired"></i> IP CCTV</a>
+        <a href="#" onclick="renderNexpakKitCatalogue('alarms')"><i class="fa-solid fa-bell"></i> Alarms</a>
+        <a href="#" onclick="renderNexpakKitCatalogue('gate-automation')"><i class="fa-solid fa-torii-gate"></i> Gate Automation</a>
+    </nav>
+
+    <!-- HERO BANNER -->
+    <section class="hero-banner">
+        <span><i class="fa-solid fa-circle-check"></i> Nexpak Security Store</span>
+        <h1>Professional Security. <br><span class="highlight">Delivered To Your Door.</span></h1>
+        <p>Complete security kits for homes, businesses, estates, farms and other properties.</p>
+        <button class="btn-shop-hero"><i class="fa-solid fa-cart-shopping"></i> Shop Security Kits</button>
+    </section>
+
+    <!-- MAIN STORE AREA -->
+    <div class="store-container">
+        <div class="section-header">
+            <h4>Nexpak Online Store</h4>
+            <h2>Security Kits</h2>
+        </div>
+
+        <div class="category-title">
+            <span style="color: #eab308;"><i class="fa-solid fa-bolt"></i></span> Electric Fencing Kits
+        </div>
+
+        <!-- KIT GRID INJECTED HERE -->
+        <main id="kitCatalogue" class="kit-grid"></main>
     </div>
 
-    <!-- DELIVERY CALCULATOR MODAL -->
+    <!-- DELIVERY MODAL -->
     <div id="deliveryModal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeDelivery()">&times;</span>
-            <h3 style="margin-bottom: 12px; font-size: 16px;">Delivery Fee Calculator</h3>
-            
-            <label for="deliveryProvince" style="font-size: 12px; font-weight: 600;">Destination Province:</label>
-            <select id="deliveryProvince" class="kit-option" style="margin-top: 4px;" onchange="updateDeliverySelection()">
+            <h3 style="margin-bottom: 10px;">Delivery Calculator</h3>
+            <label style="font-size: 12px; font-weight: 600;">Province:</label>
+            <select id="deliveryProvince" class="modal-select" onchange="updateDeliverySelection()">
                 <option value="gauteng">Gauteng (Local)</option>
                 <option value="western-cape">Western Cape</option>
                 <option value="kwazulu-natal">KwaZulu-Natal</option>
-                <option value="eastern-cape">Eastern Cape</option>
-                <option value="freestate">Free State</option>
-                <option value="limpopo">Limpopo</option>
-                <option value="mpumalanga">Mpumalanga</option>
-                <option value="north-west">North West</option>
-                <option value="northern-cape">Northern Cape</option>
+                <option value="other">Other Provinces</option>
             </select>
-
-            <div class="delivery-summary">
-                <p>Subtotal (Excl. VAT): <span id="deliveryCartSubtotal">R 0.00</span></p>
-                <p>VAT (15%): <span id="deliveryCartVAT">R 0.00</span></p>
-                <p>Delivery Fee: <span id="deliveryCharge">R 0.00</span></p>
-                <hr style="margin: 8px 0; border: none; border-top: 1px solid var(--border-color);">
-                <p><strong>Grand Total: <span id="deliveryGrandTotal">R 0.00</span></strong></p>
+            <div class="summary-box">
+                <p>Subtotal: <span id="delSub">R 0.00</span></p>
+                <p>VAT (15%): <span id="delVat">R 0.00</span></p>
+                <p>Delivery: <span id="delCharge">R 0.00</span></p>
+                <hr style="margin:8px 0; border:none; border-top:1px solid #ccc;">
+                <p><strong>Total: <span id="delTotal">R 0.00</span></strong></p>
             </div>
-            
-            <button type="button" class="btn-primary-block" onclick="confirmDelivery()">Proceed to Cart</button>
+            <button class="btn-add" style="width: 100%;" onclick="closeDelivery()">Confirm Area</button>
         </div>
     </div>
 
     <!-- JAVASCRIPT ENGINE -->
     <script>
         /* =========================================================
-           STORE DATA & CATALOGUE CONFIGURATION
+           DATA: Restored to match your screenshot layout
         ========================================================== */
         const nexpakKits = [
             {
-                id: "KIT-EF-01",
-                name: "Standard Electric Fence Kit",
-                category: "fencing",
+                id: "EF-100-RT6",
+                name: "Electric Fence 100m Round Tube 6 Line Kit",
+                desc: "Complete 100m electric fence kit with round tube and 6 lines.",
+                category: "electric-fencing",
                 categoryName: "Electric Fencing",
-                basePrice: 4500,
-                contents: [
-                    "JVA Z11 Energizer (Silver)",
-                    "2x Blue Nova Remotes",
-                    "100m High-Tensile Wire",
-                    "10x Heavy Duty Wall Posts",
-                    "Siren & Strobe Light Kit"
-                ],
-                options: {
-                    posts: [{ label: "10 Posts", price: 0 }, { label: "20 Posts", price: 800 }],
-                    wire: [{ label: "100m HT Wire", price: 0 }, { label: "250m HT Wire", price: 650 }]
-                }
+                basePrice: 0.00,
+                image: "https://via.placeholder.com/400x300?text=Round+Tube+Fence+Kit",
+                contents: ["100m Wire", "Round Tube Posts", "JVA Z11 Energizer"]
             },
             {
-                id: "KIT-CCTV-01",
-                name: "4-Channel HD CCTV Security Kit",
-                category: "cctv",
-                categoryName: "CCTV Systems",
-                basePrice: 3800,
-                contents: [
-                    "4-Channel DVR Unit",
-                    "4x Outdoor Bullet Cameras (1080p)",
-                    "1TB Surveillance Hard Drive",
-                    "100m RG59 Cable + Power Connectors"
-                ],
-                options: {
-                    storage: [{ label: "1TB HDD", price: 0 }, { label: "2TB HDD", price: 750 }]
-                }
+                id: "EF-100-FB6",
+                name: "Electric Fence 100m Flat Bar 6 Line Kit",
+                desc: "Complete 100m electric fence kit with flat bar and 6 lines.",
+                category: "electric-fencing",
+                categoryName: "Electric Fencing",
+                basePrice: 0.00,
+                image: "https://via.placeholder.com/400x300?text=Flat+Bar+Fence+Kit",
+                contents: ["100m Wire", "Flat Bar Posts", "JVA Z11 Energizer"]
+            },
+            {
+                id: "EF-100-ST6",
+                name: "Electric Fence 100m Square Tube 6 Line Kit",
+                desc: "Complete 100m square tube 6 line electric fence kit.",
+                category: "electric-fencing",
+                categoryName: "Electric Fencing",
+                basePrice: 0.00,
+                image: "https://via.placeholder.com/400x300?text=Square+Tube+6+Line",
+                contents: ["100m Wire", "Square Tube Posts (6 Line)", "JVA Z11 Energizer"]
+            },
+            {
+                id: "EF-100-ST8",
+                name: "Electric Fence 100m Square Tube 8 Line Kit",
+                desc: "Complete 100m square tube 8 line electric fence kit.",
+                category: "electric-fencing",
+                categoryName: "Electric Fencing",
+                basePrice: 0.00,
+                image: "https://via.placeholder.com/400x300?text=Square+Tube+8+Line",
+                contents: ["100m Wire", "Square Tube Posts (8 Line)", "JVA Z11 Energizer"]
             }
         ];
 
         let cart = [];
 
         /* =========================================================
-           UTILITIES & FINANCIAL FUNCTIONS
+           FUNCTIONS
         ========================================================== */
         function formatNexpakMoney(amount) {
-            return 'R ' + parseFloat(amount || 0).toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            return 'R' + parseFloat(amount || 0).toFixed(2);
         }
 
-        function getNexpakKitById(id) {
-            return nexpakKits.find(k => k.id === id);
-        }
-
-        function getDefaultNexpakOptions(kit) {
-            const defaults = {};
-            if (kit && kit.options) {
-                Object.keys(kit.options).forEach(opt => {
-                    defaults[opt] = kit.options[opt][0].label;
-                });
-            }
-            return defaults;
-        }
-
-        function getNexpakOptionLabel(key) {
-            return key.charAt(0).toUpperCase() + key.slice(1);
-        }
-
-        function getNexpakKitPrice(kit, selectedOptions) {
-            let price = kit.basePrice;
-            if (kit.options) {
-                Object.keys(selectedOptions).forEach(optKey => {
-                    const match = kit.options[optKey]?.find(o => o.label === selectedOptions[optKey]);
-                    if (match) price += match.price;
-                });
-            }
-            return price;
-        }
-
-        function getDeliveryCost(province) {
-            const rates = {
-                'gauteng': 150,
-                'western-cape': 350,
-                'kwazulu-natal': 300,
-                'eastern-cape': 350,
-                'freestate': 250,
-                'limpopo': 250,
-                'mpumalanga': 250,
-                'north-west': 200,
-                'northern-cape': 400
-            };
-            return rates[province] || 250;
-        }
-
-        function calculateCartTotals() {
-            const subtotalIncVat = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-            const subtotalExVat = subtotalIncVat / 1.15;
-            const vat = subtotalIncVat - subtotalExVat;
-            return { subtotal: subtotalExVat, vat: vat, total: subtotalIncVat };
-        }
-
-        /* =========================================================
-           CATALOGUE RENDER ENGINE
-        ========================================================== */
+        // Generate exactly the card layout seen in screenshot 1000116665.png
         function renderNexpakKitCatalogue(category = "all", searchTerm = "") {
             const container = document.getElementById("kitCatalogue");
             if (!container) return;
@@ -590,215 +441,74 @@
 
             if (searchTerm.trim() !== "") {
                 const term = searchTerm.toLowerCase();
-                filtered = filtered.filter(k => 
-                    k.name.toLowerCase().includes(term) || 
-                    k.id.toLowerCase().includes(term) ||
-                    k.categoryName.toLowerCase().includes(term)
-                );
+                filtered = filtered.filter(k => k.name.toLowerCase().includes(term));
             }
 
-            if (filtered.length === 0) {
-                container.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 40px; color: #64748b;">No security kits matching your criteria.</div>`;
-                return;
-            }
-
-            container.innerHTML = filtered.map(kit => {
-                const optionsHTML = kit.options ? Object.keys(kit.options).map(optKey => `
-                    <div class="option-group">
-                        <label>${getNexpakOptionLabel(optKey)}:</label>
-                        <select class="kit-option" data-option="${optKey}">
-                            ${kit.options[optKey].map(opt => `<option value="${opt.label}">${opt.label} ${opt.price > 0 ? '(+R' + opt.price + ')' : ''}</option>`).join('')}
-                        </select>
+            container.innerHTML = filtered.map(kit => `
+                <div class="card" data-kit-id="${kit.id}">
+                    <div class="card-img">
+                        <img src="${kit.image}" alt="${kit.name}">
+                        <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
                     </div>
-                `).join('') : '';
+                    <div class="card-body">
+                        <span class="tag">${kit.categoryName}</span>
+                        <h3 class="card-title">${kit.name}</h3>
+                        <p class="card-desc">${kit.desc}</p>
+                        <div class="card-price">${formatNexpakMoney(kit.basePrice)}</div>
+                        
+                        <div class="card-actions">
+                            <button class="btn-view" onclick="alert('Viewing details for ${kit.name}')">View Details</button>
+                            <button class="btn-add" onclick="addNexpakKitToCart('${kit.id}')">
+                                <i class="fa-solid fa-cart-shopping"></i> Add To Cart
+                            </button>
+                            <button class="btn-pdf" onclick="generateNexpakKitQuote('${kit.id}')" title="Generate PDF Quote">
+                                <i class="fa-solid fa-file-pdf"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
 
-                return `
-                    <div class="kit-card" data-kit-id="${kit.id}">
-                        <div>
-                            <span class="kit-badge">${kit.categoryName}</span>
-<h3 class="kit-title">${kit.name}</h3>
-<p class="kit-sku">SKU: ${kit.id}</p>
-<div class="kit-price">
-${formatNexpakMoney(kit.basePrice)} <span>Incl. VAT</span>
-</div>
-<div class="kit-options-container">${optionsHTML}</div>
-</div>
-<div class="kit-actions">
-<input type="number" class="kit-quantity" value="1" min="1">
-<button type="button" class="btn-cart" onclick="addNexpakKitToCart('${kit.id}')">
-Add To Cart
-</button>
-<button type="button" class="btn-pdf" onclick="generateNexpakKitQuote('${kit.id}')" title="Download Quote PDF">
-<i class="fa-solid fa-file-pdf" style="color:#e11d48;"></i>
-</button>
-</div>
-</div>
-`;
-}).join('');
-}
-function renderKitCatalogue(category = "all", searchTerm = "") {
-renderNexpakKitCatalogue(category, searchTerm);
-}
-function searchStore() {
-const term = document.getElementById("storeSearch").value;
-renderNexpakKitCatalogue("all", term);
-}
-/* =========================================================
-PDF QUOTATION GENERATOR (jsPDF)
-========================================================== */
-function generateNexpakKitQuote(kitId) {
-const kit = getNexpakKitById(kitId);
-if (!kit) return;
-const card = document.querySelector([data-kit-id="${kitId}"]);
-const selectedOptions = {};
-if (card) {
-card.querySelectorAll('.kit-option').forEach(select => {
-selectedOptions[select.dataset.option] = select.value;
-});
-} else {
-Object.assign(selectedOptions, getDefaultNexpakOptions(kit));
-}
-const qtyInput = card ? card.querySelector('.kit-quantity') : null;
-const qty = qtyInput ? parseInt(qtyInput.value, 10) || 1 : 1;
-const unitPriceIncVat = getNexpakKitPrice(kit, selectedOptions);
-const grandTotalIncVat = unitPriceIncVat * qty;
-const totalExVat = grandTotalIncVat / 1.15;
-const vatAmount = grandTotalIncVat - totalExVat;
-const { jsPDF } = window.jspdf;
-const doc = new jsPDF();
-// Header Banner
-doc.setFillColor(7, 24, 46);
-doc.rect(0, 0, 210, 32, 'F');
-doc.setTextColor(255, 255, 255);
-doc.setFontSize(18);
-doc.setFont(undefined, 'bold');
-doc.text("NEXPAK SECURITY STORE", 14, 18);
-doc.setFontSize(10);
-doc.setFont(undefined, 'normal');
-doc.text("PRODUCT KIT QUOTATION SUMMARY", 14, 26);
-// Document Details
-doc.setTextColor(15, 23, 42);
-doc.setFontSize(12);
-doc.setFont(undefined, 'bold');
-doc.text(Kit: ${kit.name}, 14, 45);
-doc.setFontSize(10);
-doc.setFont(undefined, 'normal');
-doc.text(SKU: ${kit.id}, 14, 52);
-doc.text(Category: ${kit.categoryName}, 14, 58);
-doc.text(Quantity: ${qty}, 14, 64);
-// Selected Configurations
-let yPos = 74;
-doc.setFont(undefined, 'bold');
-doc.text("Selected Configurations:", 14, yPos);
-doc.setFont(undefined, 'normal');
-yPos += 6;
-Object.keys(selectedOptions).forEach(optKey => {
-doc.text(• ${getNexpakOptionLabel(optKey)}: ${selectedOptions[optKey]}, 18, yPos);
-yPos += 6;
-});
-// Included Kit Items
-yPos += 4;
-doc.setFont(undefined, 'bold');
-doc.text("Included Kit Items:", 14, yPos);
-doc.setFont(undefined, 'normal');
-yPos += 6;
-if (Array.isArray(kit.contents)) {
-kit.contents.forEach(item => {
-doc.text(- ${item}, 18, yPos);
-yPos += 5;
-});
-}
-// Financial Summary Box
-yPos += 10;
-doc.setDrawColor(226, 232, 240);
-doc.setFillColor(248, 250, 252);
-doc.roundedRect(14, yPos, 182, 45, 3, 3, 'FD');
-doc.setFontSize(11);
-doc.setFont(undefined, 'bold');
-doc.text("Financial Breakdown", 20, yPos + 10);
-doc.setFontSize(10);
-doc.setFont(undefined, 'normal');
-doc.text("Subtotal (Excl. VAT):", 20, yPos + 20);
-doc.text(formatNexpakMoney(totalExVat), 180, yPos + 20, { align: 'right' });
-doc.text("VAT (15%):", 20, yPos + 27);
-doc.text(formatNexpakMoney(vatAmount), 180, yPos + 27, { align: 'right' });
-doc.setFont(undefined, 'bold');
-doc.setTextColor(0, 102, 255);
-doc.text("Total Amount (Incl. VAT):", 20, yPos + 37);
-doc.text(formatNexpakMoney(grandTotalIncVat), 180, yPos + 37, { align: 'right' });
-doc.save(Quote_${kit.id}.pdf);
-}
-/* =========================================================
-NAVIGATION & CART INTERACTION
-========================================================== */
-function toggleNavDropdown() {
-document.getElementById("navDropdownContent").classList.toggle("show");
-}
-window.onclick = function(event) {
-if (!event.target.matches('.nav-dropdown-btn') && !event.target.matches('.nav-dropdown-btn *')) {
-const dropdowns = document.getElementsByClassName("dropdown-content");
-for (let i = 0; i < dropdowns.length; i++) {
-const openDropdown = dropdowns[i];
-if (openDropdown.classList.contains('show')) {
-openDropdown.classList.remove('show');
-}
-}
-}
-};
-function addNexpakKitToCart(kitId) {
-const kit = getNexpakKitById(kitId);
-if (!kit) return;
-const card = document.querySelector([data-kit-id="${kitId}"]);
-const selectedOptions = {};
-if (card) {
-card.querySelectorAll('.kit-option').forEach(select => {
-selectedOptions[select.dataset.option] = select.value;
-});
-}
-const qtyInput = card ? card.querySelector('.kit-quantity') : null;
-const qty = qtyInput ? parseInt(qtyInput.value, 10) || 1 : 1;
-const price = getNexpakKitPrice(kit, selectedOptions);
-cart.push({ kitId, name: kit.name, price, qty, selectedOptions });
-updateCartBadge();
-alert(${kit.name} added to cart!);
-}
-function updateCartBadge() {
-const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
-const badge = document.getElementById("cartCount");
-if (badge) badge.textContent = totalItems;
-}
-function openDelivery() {
-const modal = document.getElementById("deliveryModal");
-if (modal) {
-modal.classList.add("open");
-updateDeliverySelection();
-}
-}
-function closeDelivery() {
-const modal = document.getElementById("deliveryModal");
-if (modal) modal.classList.remove("open");
-}
-function updateDeliverySelection() {
-const province = document.getElementById("deliveryProvince").value;
-const totals = calculateCartTotals();
-const deliveryCost = getDeliveryCost(province);
-document.getElementById("deliveryCartSubtotal").textContent = formatNexpakMoney(totals.subtotal);
-document.getElementById("deliveryCartVAT").textContent = formatNexpakMoney(totals.vat);
-document.getElementById("deliveryCharge").textContent = formatNexpakMoney(deliveryCost);
-document.getElementById("deliveryGrandTotal").textContent = formatNexpakMoney(totals.total + deliveryCost);
-}
-function confirmDelivery() {
-closeDelivery();
-alert("Delivery location updated. Proceeding to checkout.");
-}
-function openCart() {
-alert(Cart summary:\nItems in cart: ${cart.length}\nTotal Value: ${formatNexpakMoney(calculateCartTotals().total)});
-}
-/* Initialise Application */
-document.addEventListener("DOMContentLoaded", () => {
-renderNexpakKitCatalogue("all");
-updateCartBadge();
-});
-</script>
+        function searchStore() {
+            const term = document.getElementById("storeSearch").value;
+            renderNexpakKitCatalogue("all", term);
+        }
+
+        function addNexpakKitToCart(kitId) {
+            const kit = nexpakKits.find(k => k.id === kitId);
+            if(kit) {
+                cart.push(kit);
+                document.getElementById("cartCount").textContent = cart.length;
+                alert(`${kit.name} added to cart!`);
+            }
+        }
+
+        /* Delivery Logic */
+        function openDelivery() { document.getElementById("deliveryModal").classList.add("open"); updateDeliverySelection(); }
+        function closeDelivery() { document.getElementById("deliveryModal").classList.remove("open"); }
+        function updateDeliverySelection() {
+            const subtotal = cart.reduce((sum, item) => sum + item.basePrice, 0);
+            const delivery = document.getElementById("deliveryProvince").value === "gauteng" ? 150 : 300;
+            document.getElementById("delSub").textContent = formatNexpakMoney(subtotal);
+            document.getElementById("delCharge").textContent = formatNexpakMoney(delivery);
+            document.getElementById("delTotal").textContent = formatNexpakMoney(subtotal + delivery);
+        }
+
+        /* PDF Quotation Logic (Retained from earlier fix) */
+        function generateNexpakKitQuote(kitId) {
+            const kit = nexpakKits.find(k => k.id === kitId);
+            if (!kit) return;
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.setFontSize(16); doc.text("NEXPAK QUOTATION", 14, 20);
+            doc.setFontSize(12); doc.text(`Product: ${kit.name}`, 14, 30);
+            doc.text(`Price: ${formatNexpakMoney(kit.basePrice)}`, 14, 40);
+            doc.save(`Quote_${kit.id}.pdf`);
+        }
+
+        /* Init */
+        document.addEventListener("DOMContentLoaded", () => renderNexpakKitCatalogue("all"));
+    </script>
 </body>
 </html>
