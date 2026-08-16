@@ -5,533 +5,66 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
 
-<meta name="theme-color"
-content="#0057ff">
+<meta
+    name="theme-color"
+    content="#0057ff"
+>
 
-<meta name="description"
-content="Nexpak Security Solutions Online Store - Professional security equipment and complete security kits.">
+<meta
+    name="description"
+    content="Nexpak Security Solutions Online Store - Professional security equipment and complete security kits."
+>
 
 <title>
 Nexpak Security Solutions | Online Store
 </title>
 
-<!-- GOOGLE FONT -->
-<link rel="preconnect"
-href="https://fonts.googleapis.com">
 
-<link rel="preconnect"
-href="https://fonts.gstatic.com"
-crossorigin>
+<!-- =====================================================
+     GOOGLE FONT
+===================================================== -->
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-rel="stylesheet">
+<link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+>
 
+<link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+    crossorigin
+>
 
-<!-- FONT AWESOME -->
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+>
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
+<!-- =====================================================
+     FONT AWESOME
+===================================================== -->
 
-<!-- STORE CSS -->
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+>
 
-<link rel="stylesheet"
-href="online.css">
 
+<!-- =====================================================
+     ONLINE STORE CSS
+===================================================== -->
 
-<style>
+<link
+    rel="stylesheet"
+    href="online.css"
+>
 
-/* =========================================================
-   NEXPAK ONLINE STORE
-   CLEAN KIT-FIRST STORE
-========================================================= */
-
-
-:root{
-
---nex-blue:#0057ff;
-
---nex-dark:#071a2d;
-
---nex-text:#142235;
-
---nex-muted:#667085;
-
---nex-line:#e4e8ef;
-
---nex-bg:#f6f8fb;
-
---white:#ffffff;
-
-}
-
-
-*{
-
-box-sizing:border-box;
-
-margin:0;
-
-padding:0;
-
-}
-
-
-body{
-
-font-family:Inter,Arial,sans-serif;
-
-color:var(--nex-text);
-
-background:#ffffff;
-
-line-height:1.5;
-
-}
-
-
-button,
-input,
-select{
-
-font:inherit;
-
-}
-
-
-.online-container{
-
-width:min(1180px,92%);
-
-margin:auto;
-
-}
-
-
-/* =========================================================
-   STORE HEADER
-========================================================= */
-
-.online-header{
-
-background:#ffffff;
-
-border-bottom:1px solid var(--nex-line);
-
-position:sticky;
-
-top:0;
-
-z-index:100;
-
-}
-
-
-.online-header
-.online-container{
-
-min-height:78px;
-
-display:flex;
-
-align-items:center;
-
-gap:20px;
-
-}
-
-
-.online-logo{
-
-display:block;
-
-}
-
-
-.online-logo img{
-
-width:180px;
-
-max-width:42vw;
-
-display:block;
-
-}
-
-
-/* SEARCH */
-
-.online-search{
-
-flex:1;
-
-display:flex;
-
-max-width:600px;
-
-margin:auto;
-
-}
-
-
-.online-search input{
-
-width:100%;
-
-padding:12px 14px;
-
-border:1px solid #d7dce5;
-
-border-right:0;
-
-border-radius:8px 0 0 8px;
-
-outline:none;
-
-}
-
-
-.online-search input:focus{
-
-border-color:var(--nex-blue);
-
-}
-
-
-.online-search button{
-
-width:50px;
-
-border:0;
-
-border-radius:0 8px 8px 0;
-
-background:var(--nex-blue);
-
-color:#ffffff;
-
-cursor:pointer;
-
-}
-
-
-/* HEADER ACTIONS */
-
-.online-actions{
-
-display:flex;
-
-gap:8px;
-
-}
-
-
-.online-action{
-
-position:relative;
-
-border:1px solid var(--nex-line);
-
-background:#ffffff;
-
-border-radius:8px;
-
-padding:10px 12px;
-
-color:var(--nex-text);
-
-cursor:pointer;
-
-}
-
-
-.online-action:hover{
-
-border-color:var(--nex-blue);
-
-color:var(--nex-blue);
-
-}
-
-
-.online-action b{
-
-position:absolute;
-
-top:-7px;
-
-right:-7px;
-
-min-width:19px;
-
-height:19px;
-
-border-radius:50%;
-
-background:var(--nex-blue);
-
-color:#ffffff;
-
-font-size:11px;
-
-display:grid;
-
-place-items:center;
-
-}
-
-
-/* =========================================================
-   CATEGORY NAVIGATION
-========================================================= */
-
-.online-navigation{
-
-background:var(--nex-dark);
-
-overflow:auto;
-
-white-space:nowrap;
-
-}
-
-
-.online-navigation
-.online-container{
-
-display:flex;
-
-gap:3px;
-
-}
-
-
-.online-category{
-
-border:0;
-
-background:transparent;
-
-color:#ffffff;
-
-padding:11px 14px;
-
-cursor:pointer;
-
-}
-
-
-.online-category:hover,
-.online-category.active{
-
-background:rgba(255,255,255,.12);
-
-}
-
-
-/* =========================================================
-   BLUE HERO BANNER
-========================================================= */
-
-.online-hero{
-
-background:
-
-linear-gradient(
-110deg,
-#06192c,
-#0b3558 60%,
-#0057ff
-);
-
-color:#ffffff;
-
-padding:70px 0;
-
-}
-
-
-.online-hero-content{
-
-max-width:720px;
-
-}
-
-
-.online-hero-label{
-
-text-transform:uppercase;
-
-letter-spacing:.12em;
-
-font-size:12px;
-
-opacity:.85;
-
-}
-
-
-.online-hero h1{
-
-font-size:
-
-clamp(
-32px,
-5vw,
-58px
-);
-
-line-height:1.05;
-
-margin:15px 0;
-
-font-weight:800;
-
-}
-
-
-.online-hero h1 strong{
-
-color:#62a0ff;
-
-}
-
-
-.online-hero p{
-
-max-width:620px;
-
-color:#dce9f8;
-
-font-size:16px;
-
-line-height:1.6;
-
-}
-
-
-.online-hero-actions{
-
-display:flex;
-
-gap:10px;
-
-flex-wrap:wrap;
-
-margin-top:24px;
-
-}
-
-
-.hero-shop-btn{
-
-display:inline-flex;
-
-align-items:center;
-
-gap:8px;
-
-background:#ffffff;
-
-color:var(--nex-dark);
-
-border:0;
-
-border-radius:8px;
-
-padding:13px 18px;
-
-font-weight:800;
-
-text-decoration:none;
-
-}
-
-
-.hero-shop-btn:hover{
-
-background:#eef4ff;
-
-}
-
-
-/* =========================================================
-   MOBILE HEADER
-========================================================= */
-
-@media(max-width:700px){
-
-.online-header
-.online-container{
-
-flex-wrap:wrap;
-
-padding:10px 0;
-
-}
-
-
-.online-logo{
-
-order:1;
-
-}
-
-
-.online-actions{
-
-order:2;
-
-margin-left:auto;
-
-}
-
-
-.online-search{
-
-order:3;
-
-flex-basis:100%;
-
-max-width:none;
-
-}
-
-
-.online-action span{
-
-display:none;
-
-}
-
-
-.online-action{
-
-padding:10px;
-
-}
-
-
-.online-hero{
-
-padding:48px 0;
-
-}
-
-
-.online-hero h1{
-
-font-size:36px;
-
-}
-
-}
-
-
-</style>
 
 </head>
 
@@ -543,100 +76,154 @@ font-size:36px;
      STORE HEADER
 ===================================================== -->
 
-<header class="online-header">
+<header
+    class="online-header"
+>
 
-<div class="online-container">
-
-
-<!-- LOGO -->
-
-<a href="../index.html"
-class="online-logo"
-aria-label="Nexpak Security Solutions Home">
-
-<img
-src="../images/logo.png"
-alt="Nexpak Security Solutions">
-
-</a>
+    <div
+        class="online-container"
+    >
 
 
-<!-- SEARCH -->
+        <!-- =================================================
+             LOGO
+        ================================================== -->
 
-<div class="online-search">
+        <a
+            href="../index.html"
+            class="online-logo"
+            aria-label="Nexpak Security Solutions Home"
+        >
 
-<input
-type="search"
-id="onlineSearch"
-placeholder="Search security kits..."
-autocomplete="off"
-aria-label="Search security kits">
+            <img
+                src="../images/logo.png"
+                alt="Nexpak Security Solutions"
+            >
 
-
-<button
-type="button"
-id="onlineSearchButton"
-aria-label="Search">
-
-<i class="fas fa-search"></i>
-
-</button>
-
-</div>
+        </a>
 
 
-<!-- HEADER ACTIONS -->
+        <!-- =================================================
+             SEARCH
+        ================================================== -->
 
-<div class="online-actions">
+        <div
+            class="online-search"
+        >
 
-
-<button
-type="button"
-id="onlineAccountButton"
-class="online-action"
-aria-label="My Account">
-
-<i class="far fa-user"></i>
-
-<span> Account</span>
-
-</button>
-
-
-<button
-type="button"
-id="onlineWishlistButton"
-class="online-action"
-aria-label="Wishlist">
-
-<i class="far fa-heart"></i>
-
-<span> Wishlist</span>
-
-<b id="onlineWishlistCount">0</b>
-
-</button>
+            <input
+                type="search"
+                id="onlineSearch"
+                placeholder="Search security kits..."
+                autocomplete="off"
+                aria-label="Search security kits"
+            >
 
 
-<button
-type="button"
-id="onlineCartButton"
-class="online-action"
-aria-label="Shopping Cart">
+            <button
+                type="button"
+                id="onlineSearchButton"
+                aria-label="Search"
+            >
 
-<i class="fas fa-shopping-cart"></i>
+                <i
+                    class="fas fa-search"
+                    aria-hidden="true"
+                ></i>
 
-<span> Cart</span>
+            </button>
 
-<b id="onlineCartCount">0</b>
-
-</button>
-
-
-</div>
+        </div>
 
 
-</div>
+        <!-- =================================================
+             HEADER ACTIONS
+        ================================================== -->
+
+        <div
+            class="online-actions"
+        >
+
+
+            <!-- ACCOUNT -->
+
+            <button
+                type="button"
+                id="onlineAccountButton"
+                class="online-action"
+                aria-label="My Account"
+            >
+
+                <i
+                    class="far fa-user"
+                    aria-hidden="true"
+                ></i>
+
+                <span>
+                    Account
+                </span>
+
+            </button>
+
+
+            <!-- WISHLIST -->
+
+            <button
+                type="button"
+                id="onlineWishlistButton"
+                class="online-action"
+                aria-label="Wishlist"
+            >
+
+                <i
+                    class="far fa-heart"
+                    aria-hidden="true"
+                ></i>
+
+                <span>
+                    Wishlist
+                </span>
+
+                <b
+                    id="onlineWishlistCount"
+                >
+                    0
+                </b>
+
+            </button>
+
+
+            <!-- CART -->
+
+            <button
+                type="button"
+                id="onlineCartButton"
+                class="online-action"
+                data-online-action="open-cart"
+                aria-label="Shopping Cart"
+            >
+
+                <i
+                    class="fas fa-shopping-cart"
+                    aria-hidden="true"
+                ></i>
+
+                <span>
+                    Cart
+                </span>
+
+                <b
+                    id="onlineCartCount"
+                >
+                    0
+                </b>
+
+            </button>
+
+
+        </div>
+
+    </div>
 
 </header>
 
@@ -647,104 +234,28 @@ aria-label="Shopping Cart">
 ===================================================== -->
 
 <nav
-class="online-navigation"
-aria-label="Store Categories">
+    class="online-navigation"
+    aria-label="Store Categories"
+>
 
-<div class="online-container">
+    <div
+        class="online-container"
+        id="onlineCategoryNavigation"
+    >
 
+        <!--
+            Categories will be populated
+            by online.js.
+        -->
 
-<button
-type="button"
-class="online-category active"
-data-category="all">
-
-<i class="fas fa-store"></i>
-
-All Kits
-
-</button>
-
-
-<button
-type="button"
-class="online-category"
-data-category="electric-fencing">
-
-<i class="fas fa-bolt"></i>
-
-Electric Fencing
-
-</button>
-
-
-<button
-type="button"
-class="online-category"
-data-category="roboguard">
-
-<i class="fas fa-shield-halved"></i>
-
-Roboguard
-
-</button>
-
-
-<button
-type="button"
-class="online-category"
-data-category="cctv">
-
-<i class="fas fa-video"></i>
-
-HD CCTV
-
-</button>
-
-
-<button
-type="button"
-class="online-category"
-data-category="ip-cctv">
-
-<i class="fas fa-network-wired"></i>
-
-IP CCTV
-
-</button>
-
-
-<button
-type="button"
-class="online-category"
-data-category="alarms">
-
-<i class="fas fa-bell"></i>
-
-Alarms
-
-</button>
-
-
-<button
-type="button"
-class="online-category"
-data-category="gate-automation">
-
-<i class="fas fa-house-lock"></i>
-
-Gate Automation
-
-</button>
-
-
-</div>
+    </div>
 
 </nav>
 
 
 
 <!-- =====================================================
-     MAIN
+     MAIN STORE
 ===================================================== -->
 
 <main>
@@ -754,4248 +265,2611 @@ Gate Automation
      BLUE STORE HERO
 ===================================================== -->
 
-<section class="online-hero">
+<section
+    class="online-hero"
+>
 
-<div class="online-container">
+    <div
+        class="online-container"
+    >
 
-<div class="online-hero-content">
-
-
-<span class="online-hero-label">
-
-<i class="fas fa-shield-halved"></i>
-
-NEXPAK SECURITY STORE
-
-</span>
+        <div
+            class="online-hero-content"
+        >
 
 
-<h1>
+            <!-- HERO LABEL -->
 
-Professional Security.
+            <span
+                class="online-hero-label"
+            >
 
-<br>
+                <i
+                    class="fas fa-shield-halved"
+                    aria-hidden="true"
+                ></i>
 
-<strong>
-Delivered To Your Door.
-</strong>
+                NEXPAK SECURITY STORE
 
-</h1>
-
-
-<p>
-
-Complete security kits for homes,
-businesses, estates, farms and
-other properties.
-
-</p>
+            </span>
 
 
-<div class="online-hero-actions">
+
+            <!-- HERO HEADING -->
+
+            <h1>
+
+                Professional Security.
+
+                <br>
+
+                <strong>
+                    Delivered To Your Door.
+                </strong>
+
+            </h1>
 
 
-<a
-href="#kit-shop"
-class="hero-shop-btn">
 
-<i class="fas fa-cart-shopping"></i>
+            <!-- HERO DESCRIPTION -->
 
-Shop Security Kits
+            <p>
 
-</a>
+                Complete security kits for homes,
+                businesses, estates, farms and
+                other properties.
 
-
-</div>
+            </p>
 
 
-</div>
 
-</div>
+            <!-- HERO ACTION -->
+
+            <div
+                class="online-hero-actions"
+            >
+
+                <a
+                    href="#kit-shop"
+                    class="hero-shop-btn"
+                >
+
+                    <i
+                        class="fas fa-cart-shopping"
+                        aria-hidden="true"
+                    ></i>
+
+                    Shop Security Kits
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
 
 </section>
 
 
-<!-- =====================================================
-     PART 2 WILL START HERE
-===================================================== -->
-
-<section id="kit-shop">
 
 <!-- =====================================================
-     PART 2
-     ELECTRIC FENCING + ROBOGUARD KITS
-===================================================== -->
-
-<style>
-
-/* =========================================================
-   PRODUCT STORE
-========================================================= */
-
-.store-shell{
-
-background:#f6f8fb;
-
-padding:40px 0 70px;
-
-}
-
-
-.store-topbar{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:end;
-
-gap:20px;
-
-margin-bottom:30px;
-
-}
-
-
-.store-topbar small{
-
-color:#0057ff;
-
-font-size:11px;
-
-font-weight:800;
-
-letter-spacing:.12em;
-
-}
-
-
-.store-topbar h2{
-
-font-size:32px;
-
-margin:5px 0 0;
-
-color:#071a2d;
-
-}
-
-
-.kit-section{
-
-margin-bottom:55px;
-
-scroll-margin-top:140px;
-
-}
-
-
-.section-title{
-
-display:flex;
-
-align-items:center;
-
-gap:13px;
-
-margin-bottom:20px;
-
-}
-
-
-.section-title-icon{
-
-width:44px;
-
-height:44px;
-
-border-radius:10px;
-
-background:#eaf1ff;
-
-display:grid;
-
-place-items:center;
-
-font-size:20px;
-
-}
-
-
-.section-title small{
-
-display:block;
-
-color:#0057ff;
-
-font-size:10px;
-
-font-weight:800;
-
-letter-spacing:.1em;
-
-}
-
-
-.section-title h2{
-
-margin:3px 0 0;
-
-font-size:25px;
-
-color:#071a2d;
-
-}
-
-
-/* =========================================================
-   SQUARE PRODUCT GRID
-========================================================= */
-
-.kit-grid{
-
-display:grid;
-
-grid-template-columns:
-repeat(4,minmax(0,1fr));
-
-gap:18px;
-
-}
-
-
-.kit-card{
-
-background:#ffffff;
-
-border:1px solid #e4e8ef;
-
-border-radius:12px;
-
-overflow:hidden;
-
-box-shadow:
-0 3px 12px rgba(7,26,45,.05);
-
-transition:
-transform .2s ease,
-box-shadow .2s ease;
-
-}
-
-
-.kit-card:hover{
-
-transform:translateY(-4px);
-
-box-shadow:
-0 10px 25px rgba(7,26,45,.12);
-
-}
-
-
-/* =========================================================
-   PRODUCT IMAGE
-========================================================= */
-
-.kit-image-wrap{
-
-position:relative;
-
-aspect-ratio:1 / 1;
-
-background:#f4f6f8;
-
-overflow:hidden;
-
-}
-
-
-.kit-image-wrap img{
-
-width:100%;
-
-height:100%;
-
-object-fit:contain;
-
-display:block;
-
-padding:15px;
-
-transition:
-transform .25s ease;
-
-}
-
-
-.kit-card:hover
-.kit-image-wrap img{
-
-transform:scale(1.04);
-
-}
-
-
-/* WISHLIST */
-
-.kit-wishlist{
-
-position:absolute;
-
-top:10px;
-
-right:10px;
-
-width:36px;
-
-height:36px;
-
-border-radius:50%;
-
-border:1px solid #e4e8ef;
-
-background:#ffffff;
-
-font-size:20px;
-
-cursor:pointer;
-
-z-index:5;
-
-}
-
-
-.kit-wishlist:hover{
-
-color:#0057ff;
-
-}
-
-
-/* =========================================================
-   PRODUCT INFORMATION
-========================================================= */
-
-.kit-body{
-
-padding:15px;
-
-}
-
-
-.kit-category{
-
-display:block;
-
-color:#0057ff;
-
-font-size:10px;
-
-font-weight:800;
-
-letter-spacing:.08em;
-
-margin-bottom:7px;
-
-}
-
-
-.kit-body h3{
-
-font-size:15px;
-
-line-height:1.35;
-
-margin:0;
-
-min-height:62px;
-
-color:#142235;
-
-}
-
-
-.kit-description{
-
-font-size:12px;
-
-color:#667085;
-
-margin:8px 0;
-
-line-height:1.45;
-
-}
-
-
-/* PRICE */
-
-.kit-price{
-
-font-size:20px;
-
-font-weight:800;
-
-color:#071a2d;
-
-margin:12px 0;
-
-}
-
-
-/* =========================================================
-   PRODUCT OPTIONS
-========================================================= */
-
-.kit-option{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-gap:8px;
-
-margin:8px 0;
-
-font-size:12px;
-
-color:#667085;
-
-}
-
-
-.kit-option select{
-
-width:115px;
-
-padding:7px;
-
-border:1px solid #d9dee7;
-
-border-radius:6px;
-
-background:#ffffff;
-
-color:#142235;
-
-font-size:12px;
-
-}
-
-
-/* =========================================================
-   PRODUCT BUTTONS
-========================================================= */
-
-.kit-actions{
-
-display:grid;
-
-grid-template-columns:
-1fr 1.2fr;
-
-gap:7px;
-
-margin-top:12px;
-
-}
-
-
-.kit-actions button{
-
-border-radius:7px;
-
-padding:10px 7px;
-
-cursor:pointer;
-
-font-size:11px;
-
-font-weight:700;
-
-}
-
-
-.kit-details{
-
-background:#ffffff;
-
-border:1px solid #dfe4eb;
-
-color:#142235;
-
-}
-
-
-.kit-details:hover{
-
-border-color:#0057ff;
-
-color:#0057ff;
-
-}
-
-
-.kit-add{
-
-background:#0057ff;
-
-border:1px solid #0057ff;
-
-color:#ffffff;
-
-}
-
-
-.kit-add:hover{
-
-background:#0046d1;
-
-}
-
-
-/* =========================================================
-   WHATSAPP FLOATING BUTTON
-========================================================= */
-
-.nexpak-whatsapp{
-
-position:fixed;
-
-right:20px;
-
-bottom:20px;
-
-width:58px;
-
-height:58px;
-
-border-radius:50%;
-
-background:#25D366;
-
-color:#ffffff;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-font-size:30px;
-
-text-decoration:none;
-
-box-shadow:
-0 5px 18px rgba(0,0,0,.25);
-
-z-index:9999;
-
-transition:
-
-transform .2s ease,
-box-shadow .2s ease;
-
-}
-
-
-.nexpak-whatsapp:hover{
-
-transform:
-scale(1.08);
-
-box-shadow:
-0 8px 25px rgba(0,0,0,.3);
-
-}
-
-
-.nexpak-whatsapp-label{
-
-position:absolute;
-
-right:68px;
-
-white-space:nowrap;
-
-background:#071a2d;
-
-color:#ffffff;
-
-font-size:12px;
-
-font-weight:700;
-
-padding:8px 11px;
-
-border-radius:6px;
-
-opacity:0;
-
-pointer-events:none;
-
-transform:translateX(5px);
-
-transition:.2s ease;
-
-}
-
-
-.nexpak-whatsapp:hover
-.nexpak-whatsapp-label{
-
-opacity:1;
-
-transform:translateX(0);
-
-}
-
-
-/* =========================================================
-   TABLET
-========================================================= */
-
-@media(max-width:950px){
-
-.kit-grid{
-
-grid-template-columns:
-repeat(3,minmax(0,1fr));
-
-}
-
-}
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media(max-width:700px){
-
-.store-shell{
-
-padding:30px 0 55px;
-
-}
-
-
-.store-topbar h2{
-
-font-size:27px;
-
-}
-
-
-.kit-grid{
-
-grid-template-columns:
-repeat(2,minmax(0,1fr));
-
-gap:11px;
-
-}
-
-
-.kit-body{
-
-padding:11px;
-
-}
-
-
-.kit-body h3{
-
-font-size:13px;
-
-min-height:60px;
-
-}
-
-
-.kit-description{
-
-font-size:11px;
-
-}
-
-
-.kit-price{
-
-font-size:17px;
-
-}
-
-
-.kit-actions{
-
-grid-template-columns:1fr;
-
-}
-
-
-.kit-actions button{
-
-padding:9px 5px;
-
-}
-
-
-.nexpak-whatsapp{
-
-width:54px;
-
-height:54px;
-
-right:16px;
-
-bottom:16px;
-
-font-size:27px;
-
-}
-
-}
-
-
-</style>
-
-
-
-<div class="store-shell">
-
-<div class="online-container">
-
-
-<!-- =====================================================
-     STORE TITLE
-===================================================== -->
-
-<div class="store-topbar">
-
-<div>
-
-<small>NEXPAK ONLINE STORE</small>
-
-<h2>Security Kits</h2>
-
-</div>
-
-</div>
-
-
-
-<!-- =====================================================
-     ELECTRIC FENCING
+     KIT SHOP START
 ===================================================== -->
 
 <section
-class="kit-section"
-id="section-electric-fencing"
-data-category-section="electric-fencing">
+    id="kit-shop"
+    class="online-kit-shop"
+>
 
+    <div
+        class="online-container"
+    >
 
-<div class="section-title">
 
-<div class="section-title-icon">
+        <!-- =================================================
+             PART 2 CONTINUES HERE
+        ================================================== -->
+               <!-- =================================================
+             STORE TOP BAR
+        ================================================== -->
 
-⚡
+        <div
+            class="store-topbar"
+        >
 
-</div>
+            <div>
 
-<div>
+                <small>
+                    NEXPAK ONLINE STORE
+                </small>
 
-<small>SECURITY KITS</small>
+                <h2>
+                    Security Kits
+                </h2>
 
-<h2>Electric Fencing Kits</h2>
+            </div>
 
-</div>
 
-</div>
+            <!-- =================================================
+                 SORTING
+            ================================================== -->
 
+            <div
+                class="store-controls"
+            >
 
+                <label
+                    for="onlineSort"
+                >
+                    Sort
+                </label>
 
-<div class="kit-grid">
+                <select
+                    id="onlineSort"
+                    aria-label="Sort security kits"
+                >
 
+                    <option value="default">
+                        Featured
+                    </option>
 
+                    <option value="price-low">
+                        Price: Low to High
+                    </option>
 
-<!-- PRODUCT 1 -->
+                    <option value="price-high">
+                        Price: High to Low
+                    </option>
 
-<article
-class="kit-card"
-data-product-id="efkit1"
-data-category="electric-fencing">
+                    <option value="name">
+                        Name: A-Z
+                    </option>
 
+                </select>
 
-<div class="kit-image-wrap">
+            </div>
 
-<img
-src="../images/ef.png"
-alt="Electric Fence 100m Round Tube 6 Line Kit"
-loading="lazy">
+        </div>
 
 
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="efkit1"
-aria-label="Add to wishlist">
 
-♡
-</button>
+        <!-- =================================================
+             STORE STATUS
+        ================================================== -->
 
-</div>
+        <div
+            id="onlineStoreStatus"
+            class="online-store-status"
+            aria-live="polite"
+        >
 
+            <span>
+                Security kits
+            </span>
 
-<div class="kit-body">
+        </div>
 
-<span class="kit-category">
-ELECTRIC FENCING
-</span>
 
 
-<h3>
-Electric Fence 100m Round Tube 6 Line Kit
-</h3>
+        <!-- =================================================
+             KIT STORE
+        ================================================== -->
 
+        <div
+            id="onlineKitStore"
+            class="online-kit-store"
+        >
 
-<p class="kit-description">
-Complete 100m electric fence kit with
-round tube and 6 lines.
-</p>
 
+            <!-- =================================================
+                 LOADING STATE
+            ================================================== -->
 
-<div class="kit-price">
-R0.00
-</div>
+            <div
+                id="onlineKitLoading"
+                class="online-kit-loading"
+            >
 
+                <div
+                    class="online-loading-spinner"
+                    aria-hidden="true"
+                ></div>
 
-<div class="kit-actions">
+                <p>
+                    Loading security kits...
+                </p>
 
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="efkit1">
+            </div>
 
-View Details
 
-</button>
 
+            <!-- =================================================
+                 EMPTY STATE
+            ================================================== -->
 
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="efkit1">
+            <div
+                id="onlineKitEmpty"
+                class="online-kit-empty"
+                hidden
+            >
 
-<i class="fas fa-cart-plus"></i>
+                <div
+                    class="online-empty-icon"
+                    aria-hidden="true"
+                >
 
-Add To Cart
+                    <i
+                        class="fas fa-box-open"
+                    ></i>
 
-</button>
+                </div>
 
-</div>
+                <h3>
+                    No Security Kits Found
+                </h3>
 
-</div>
+                <p>
+                    We couldn't find any kits
+                    matching your selection.
+                </p>
 
-</article>
+                <button
+                    type="button"
+                    class="online-empty-reset"
+                    data-online-action="reset-filters"
+                >
 
+                    View All Kits
 
+                </button>
 
-<!-- PRODUCT 2 -->
+            </div>
 
-<article
-class="kit-card"
-data-product-id="efkit2"
-data-category="electric-fencing">
 
 
-<div class="kit-image-wrap">
+            <!-- =================================================
+                 DYNAMIC KIT GRID
+            ================================================== -->
 
-<img
-src="../images/ef6.png"
-alt="Electric Fence 100m Flat Bar 6 Line Kit"
-loading="lazy">
+            <div
+                id="onlineKitGrid"
+                class="kit-grid"
+                aria-live="polite"
+            >
 
+                <!--
+                    online.js renders the
+                    pre-built kits here.
 
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="efkit2">
+                    DO NOT add individual
+                    product cards manually.
+                -->
 
-♡
+            </div>
 
-</button>
 
-</div>
+        </div>
 
 
-<div class="kit-body">
 
-<span class="kit-category">
-ELECTRIC FENCING
-</span>
+        <!-- =================================================
+             STORE PAGINATION / RESULT AREA
+        ================================================== -->
 
+        <div
+            id="onlineStoreFooter"
+            class="online-store-footer"
+        >
 
-<h3>
-Electric Fence 100m Flat Bar 6 Line Kit
-</h3>
+            <div
+                id="onlineResultCount"
+                class="online-result-count"
+            ></div>
 
+                   </div>
+                               <!-- =================================================
+                 END OF STORE FOOTER
+            ================================================== -->
 
-<p class="kit-description">
-Complete 100m electric fence kit
-with flat bar and 6 lines.
-</p>
+        </div>
 
 
-<div class="kit-price">
-R0.00
-</div>
+        <!-- =================================================
+             END OF KIT SHOP CONTAINER
+        ================================================== -->
 
+    </div>
 
-<div class="kit-actions">
 
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="efkit2">
+    <!-- =====================================================
+         PART 3 CONTINUES HERE
+    ===================================================== -->
 
-View Details
+       <!-- =====================================================
+         KIT DETAILS MODAL
+    ===================================================== -->
 
-</button>
+    <div
+        id="onlineKitModal"
+        class="online-modal"
+        hidden
+        aria-hidden="true"
+    >
 
+        <div
+            class="online-modal-backdrop"
+            data-online-action="close-modal"
+        ></div>
 
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="efkit2">
 
-<i class="fas fa-cart-plus"></i>
+        <div
+            class="online-modal-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="onlineKitModalTitle"
+        >
 
-Add To Cart
 
-</button>
+            <!-- =================================================
+                 MODAL HEADER
+            ================================================== -->
 
-</div>
+            <div
+                class="online-modal-header"
+            >
 
-</div>
+                <div>
 
-</article>
+                    <small>
+                        NEXPAK SECURITY KIT
+                    </small>
 
+                    <h2
+                        id="onlineKitModalTitle"
+                    >
+                        Security Kit
+                    </h2>
 
+                </div>
 
-<!-- PRODUCT 3 -->
 
-<article
-class="kit-card"
-data-product-id="efkit3"
-data-category="electric-fencing">
+                <button
+                    type="button"
+                    class="online-modal-close"
+                    data-online-action="close-modal"
+                    aria-label="Close kit details"
+                >
 
+                    <i
+                        class="fas fa-xmark"
+                        aria-hidden="true"
+                    ></i>
 
-<div class="kit-image-wrap">
+                </button>
 
-<img
-src="../images/ef6.png"
-alt="Electric Fence 100m Square Tube 6 Line Kit"
-loading="lazy">
+            </div>
 
 
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="efkit3">
 
-♡
+            <!-- =================================================
+                 MODAL CONTENT
+            ================================================== -->
 
-</button>
+            <div
+                id="onlineKitModalContent"
+                class="online-modal-content"
+            >
 
-</div>
+                <!--
+                    onlineui.js will populate
+                    the selected kit details here.
+                -->
 
+            </div>
 
-<div class="kit-body">
 
-<span class="kit-category">
-ELECTRIC FENCING
-</span>
 
+            <!-- =================================================
+                 MODAL FOOTER
+            ================================================== -->
 
-<h3>
-Electric Fence 100m Square Tube 6 Line Kit
-</h3>
+            <div
+                class="online-modal-footer"
+            >
 
+                <button
+                    type="button"
+                    class="online-modal-secondary"
+                    data-online-action="close-modal"
+                >
 
-<p class="kit-description">
-Complete 100m square tube
-6 line electric fence kit.
-</p>
+                    Close
 
+                </button>
 
-<div class="kit-price">
-R0.00
-</div>
 
+                <button
+                    type="button"
+                    id="onlineModalAddButton"
+                    class="online-modal-primary"
+                    data-online-action="add-kit"
+                >
 
-<div class="kit-actions">
+                    <i
+                        class="fas fa-cart-plus"
+                        aria-hidden="true"
+                    ></i>
 
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="efkit3">
+                    Add Kit To Cart
 
-View Details
+                </button>
 
-</button>
+            </div>
 
+        </div>
 
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="efkit3">
+    </div>
 
-<i class="fas fa-cart-plus"></i>
 
-Add To Cart
 
-</button>
+    <!-- =====================================================
+         CART DRAWER
+    ===================================================== -->
 
-</div>
+    <aside
+        id="onlineCartDrawer"
+        class="online-cart-drawer"
+        aria-hidden="true"
+    >
 
-</div>
 
-</article>
+        <!-- =================================================
+             CART HEADER
+        ================================================== -->
 
+        <div
+            class="online-cart-header"
+        >
 
+            <div>
 
-<!-- PRODUCT 4 -->
+                <small>
+                    NEXPAK ONLINE STORE
+                </small>
 
-<article
-class="kit-card"
-data-product-id="efkit4"
-data-category="electric-fencing">
+                <h2>
+                    Your Cart
+                </h2>
 
+            </div>
 
-<div class="kit-image-wrap">
 
-<img
-src="../images/ef6.png"
-alt="Electric Fence 100m Square Tube 8 Line Kit"
-loading="lazy">
+            <button
+                type="button"
+                class="online-cart-close"
+                data-online-action="close-cart"
+                aria-label="Close cart"
+            >
 
+                <i
+                    class="fas fa-xmark"
+                    aria-hidden="true"
+                ></i>
 
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="efkit4">
+            </button>
 
-♡
+        </div>
 
-</button>
 
-</div>
 
+        <!-- =================================================
+             CART CONTENT
+        ================================================== -->
 
-<div class="kit-body">
+        <div
+            id="onlineCartContent"
+            class="online-cart-content"
+        >
 
-<span class="kit-category">
-ELECTRIC FENCING
-</span>
+            <!--
+                onlineui.js will render
+                cart items here.
+            -->
 
+        </div>
 
-<h3>
-Electric Fence 100m Square Tube 8 Line Kit
-</h3>
 
 
-<p class="kit-description">
-Complete 100m square tube
-8 line electric fence kit.
-</p>
+        <!-- =================================================
+             CART SUMMARY
+        ================================================== -->
 
+        <div
+            class="online-cart-summary"
+        >
 
-<div class="kit-price">
-R0.00
-</div>
+            <div
+                class="online-cart-summary-row"
+            >
 
+                <span>
+                    Subtotal EX VAT
+                </span>
 
-<div class="kit-actions">
+                <strong
+                    id="onlineCartSubtotal"
+                >
+                    R0.00
+                </strong>
 
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="efkit4">
+            </div>
 
-View Details
 
-</button>
+            <div
+                class="online-cart-summary-row"
+            >
 
+                <span>
+                    VAT @ 15%
+                </span>
 
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="efkit4">
+                <strong
+                    id="onlineCartVat"
+                >
+                    R0.00
+                </strong>
 
-<i class="fas fa-cart-plus"></i>
+            </div>
 
-Add To Cart
 
-</button>
+            <div
+                class="online-cart-summary-row"
+            >
 
-</div>
+                <span>
+                    Delivery
+                </span>
 
-</div>
+                <strong
+                    id="onlineCartDelivery"
+                >
+                    R0.00
+                </strong>
 
-</article>
+            </div>
 
 
+            <div
+                class="online-cart-summary-row online-cart-total"
+            >
 
-<!-- PRODUCT 5 -->
+                <span>
+                    Total Incl VAT
+                </span>
 
-<article
-class="kit-card"
-data-product-id="efkit5"
-data-category="electric-fencing">
+                <strong
+                    id="onlineCartTotal"
+                >
+                    R0.00
+                </strong>
 
+            </div>
 
-<div class="kit-image-wrap">
 
-<img
-src="../images/ef6.png"
-alt="Electric Fence 100m Square Tube 10 Line Kit"
-loading="lazy">
+            <!-- =================================================
+                 CHECKOUT BUTTON
+            ================================================== -->
 
+            <button
+                type="button"
+                id="onlineCheckoutButton"
+                class="online-checkout-button"
+                data-online-action="checkout"
+            >
 
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="efkit5">
+                <i
+                    class="fas fa-lock"
+                    aria-hidden="true"
+                ></i>
 
-♡
+                Proceed To Checkout
 
-</button>
+            </button>
 
-</div>
 
+            <p
+                class="online-secure-note"
+            >
 
-<div class="kit-body">
+                <i
+                    class="fas fa-shield-halved"
+                    aria-hidden="true"
+                ></i>
 
-<span class="kit-category">
-ELECTRIC FENCING
-</span>
+                Secure NEXPAK checkout
 
+            </p>
 
-<h3>
-Electric Fence 100m Square Tube 10 Line Kit
-</h3>
+        </div>
 
+    </aside>
 
-<p class="kit-description">
-Complete 100m square tube
-10 line electric fence kit.
-</p>
 
 
-<div class="kit-price">
-R0.00
-</div>
+    <!-- =====================================================
+         CART BACKDROP
+    ===================================================== -->
 
+    <div
+        id="onlineCartBackdrop"
+        class="online-cart-backdrop"
+        data-online-action="close-cart"
+        hidden
+    ></div>
 
-<div class="kit-actions">
+       <!-- =====================================================
+         DELIVERY + CHECKOUT AREA
+    ===================================================== -->
 
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="efkit5">
+    <section
+        id="onlineCheckout"
+        class="online-checkout-section"
+        hidden
+    >
 
-View Details
+        <div
+            class="online-container"
+        >
 
-</button>
 
+            <!-- =================================================
+                 CHECKOUT HEADER
+            ================================================== -->
 
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="efkit5">
+            <div
+                class="online-checkout-heading"
+            >
 
-<i class="fas fa-cart-plus"></i>
+                <small>
+                    NEXPAK ONLINE STORE
+                </small>
 
-Add To Cart
+                <h2>
+                    Secure Checkout
+                </h2>
 
-</button>
+                <p>
+                    Complete your details and select
+                    your preferred payment method.
+                </p>
 
-</div>
+            </div>
 
-</div>
 
-</article>
 
+            <!-- =================================================
+                 CHECKOUT LAYOUT
+            ================================================== -->
 
+            <div
+                class="online-checkout-layout"
+            >
 
-<!-- PRODUCT 6 -->
 
-<article
-class="kit-card"
-data-product-id="efkit6"
-data-category="electric-fencing">
+                <!-- =================================================
+                     CUSTOMER DETAILS
+                ================================================== -->
 
+                <div
+                    class="online-checkout-card"
+                >
 
-<div class="kit-image-wrap">
+                    <div
+                        class="online-checkout-card-header"
+                    >
 
-<img
-src="../images/ef6.png"
-alt="Electric Fence 100m Square Tube 12 Line Kit"
-loading="lazy">
+                        <span
+                            class="online-checkout-step"
+                        >
+                            1
+                        </span>
 
+                        <div>
 
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="efkit6">
+                            <small>
+                                CUSTOMER
+                            </small>
 
-♡
+                            <h3>
+                                Customer Details
+                            </h3>
 
-</button>
+                        </div>
 
-</div>
+                    </div>
 
 
-<div class="kit-body">
 
-<span class="kit-category">
-ELECTRIC FENCING
-</span>
+                    <div
+                        class="online-form-grid"
+                    >
 
 
-<h3>
-Electric Fence 100m Square Tube 12 Line Kit
-</h3>
+                        <div
+                            class="online-form-field"
+                        >
 
+                            <label
+                                for="onlineCustomerName"
+                            >
+                                Full Name
+                            </label>
 
-<p class="kit-description">
-Complete 100m square tube
-12 line electric fence kit.
-</p>
+                            <input
+                                type="text"
+                                id="onlineCustomerName"
+                                name="customerName"
+                                autocomplete="name"
+                                placeholder="Your full name"
+                            >
 
+                        </div>
 
-<div class="kit-price">
-R0.00
-</div>
 
 
-<div class="kit-actions">
+                        <div
+                            class="online-form-field"
+                        >
 
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="efkit6">
+                            <label
+                                for="onlineCustomerCompany"
+                            >
+                                Company
+                                <span>(Optional)</span>
+                            </label>
 
-View Details
+                            <input
+                                type="text"
+                                id="onlineCustomerCompany"
+                                name="company"
+                                autocomplete="organization"
+                                placeholder="Company name"
+                            >
 
-</button>
+                        </div>
 
 
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="efkit6">
 
-<i class="fas fa-cart-plus"></i>
+                        <div
+                            class="online-form-field"
+                        >
 
-Add To Cart
+                            <label
+                                for="onlineCustomerEmail"
+                            >
+                                Email Address
+                            </label>
 
-</button>
+                            <input
+                                type="email"
+                                id="onlineCustomerEmail"
+                                name="email"
+                                autocomplete="email"
+                                placeholder="you@example.com"
+                            >
 
-</div>
+                        </div>
 
-</div>
 
-</article>
 
+                        <div
+                            class="online-form-field"
+                        >
 
+                            <label
+                                for="onlineCustomerPhone"
+                            >
+                                Phone Number
+                            </label>
 
-<!-- PRODUCT 7 -->
+                            <input
+                                type="tel"
+                                id="onlineCustomerPhone"
+                                name="phone"
+                                autocomplete="tel"
+                                placeholder="082 000 0000"
+                            >
 
-<article
-class="kit-card"
-data-product-id="efkit7"
-data-category="electric-fencing">
+                        </div>
 
 
-<div class="kit-image-wrap">
+                    </div>
 
-<img
-src="../images/ef6.png"
-alt="Electric Fence 200m 6 Line Square Tube Kit"
-loading="lazy">
+                </div>
 
 
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="efkit7">
 
-♡
+                <!-- =================================================
+                     DELIVERY DETAILS
+                ================================================== -->
 
-</button>
+                <div
+                    class="online-checkout-card"
+                >
 
-</div>
+                    <div
+                        class="online-checkout-card-header"
+                    >
 
+                        <span
+                            class="online-checkout-step"
+                        >
+                            2
+                        </span>
 
-<div class="kit-body">
+                        <div>
 
-<span class="kit-category">
-ELECTRIC FENCING
-</span>
+                            <small>
+                                DELIVERY
+                            </small>
 
+                            <h3>
+                                Delivery Details
+                            </h3>
 
-<h3>
-Electric Fence 200m 6 Line Square Tube Kit
-</h3>
+                        </div>
 
+                    </div>
 
-<p class="kit-description">
-Complete 200m square tube
-6 line electric fence kit.
-</p>
 
 
-<div class="kit-price">
-R0.00
-</div>
+                    <div
+                        class="online-form-grid"
+                    >
 
 
-<div class="kit-actions">
+                        <div
+                            class="online-form-field online-form-full"
+                        >
 
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="efkit7">
+                            <label
+                                for="onlineDeliveryAddress"
+                            >
+                                Delivery Address
+                            </label>
 
-View Details
+                            <textarea
+                                id="onlineDeliveryAddress"
+                                name="deliveryAddress"
+                                rows="3"
+                                autocomplete="street-address"
+                                placeholder="Street address, suburb and city"
+                            ></textarea>
 
-</button>
+                        </div>
 
 
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="efkit7">
 
-<i class="fas fa-cart-plus"></i>
+                        <div
+                            class="online-form-field"
+                        >
 
-Add To Cart
+                            <label
+                                for="onlineDeliveryPostalCode"
+                            >
+                                Postal Code
+                            </label>
 
-</button>
+                            <input
+                                type="text"
+                                id="onlineDeliveryPostalCode"
+                                name="postalCode"
+                                autocomplete="postal-code"
+                                placeholder="0000"
+                            >
 
-</div>
+                        </div>
 
-</div>
 
-</article>
 
+                        <div
+                            class="online-form-field"
+                        >
 
+                            <label
+                                for="onlineDeliveryDistance"
+                            >
+                                Estimated Distance
+                            </label>
 
-<!-- PRODUCT 8 -->
+                            <div
+                                class="online-input-with-unit"
+                            >
 
-<article
-class="kit-card"
-data-product-id="efkit8"
-data-category="electric-fencing">
+                                <input
+                                    type="number"
+                                    id="onlineDeliveryDistance"
+                                    name="distance"
+                                    min="0"
+                                    step="0.1"
+                                    placeholder="0"
+                                >
 
+                                <span>
+                                    km
+                                </span>
 
-<div class="kit-image-wrap">
+                            </div>
 
-<img
-src="../images/ef6.png"
-alt="Electric Fence 200m 8 Line Square Tube Kit"
-loading="lazy">
+                        </div>
 
 
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="efkit8">
+                    </div>
 
-♡
 
-</button>
 
-</div>
+                    <!-- =================================================
+                         DELIVERY SUMMARY
+                    ================================================== -->
 
+                    <div
+                        id="onlineDeliverySummary"
+                        class="online-delivery-summary"
+                    >
 
-<div class="kit-body">
+                        <div
+                            class="online-delivery-summary-row"
+                        >
 
-<span class="kit-category">
-ELECTRIC FENCING
-</span>
+                            <span>
+                                Cart Weight
+                            </span>
 
+                            <strong
+                                id="onlineDeliveryWeight"
+                            >
+                                0 kg
+                            </strong>
 
-<h3>
-Electric Fence 200m 8 Line Square Tube Kit
-</h3>
+                        </div>
 
 
-<p class="kit-description">
-Complete 200m square tube
-8 line electric fence kit.
-</p>
+                        <div
+                            class="online-delivery-summary-row"
+                        >
 
+                            <span>
+                                Distance
+                            </span>
 
-<div class="kit-price">
-R0.00
-</div>
+                            <strong
+                                id="onlineDeliveryDistanceDisplay"
+                            >
+                                0 km
+                            </strong>
 
+                        </div>
 
-<div class="kit-actions">
 
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="efkit8">
+                        <div
+                            class="online-delivery-summary-row"
+                        >
 
-View Details
+                            <span>
+                                Delivery Fee
+                            </span>
 
-</button>
+                            <strong
+                                id="onlineDeliveryFee"
+                            >
+                                R0.00
+                            </strong>
 
+                        </div>
 
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="efkit8">
+                    </div>
 
-<i class="fas fa-cart-plus"></i>
+                </div>
 
-Add To Cart
 
-</button>
 
-</div>
+                <!-- =================================================
+                     PAYMENT METHOD
+                ================================================== -->
 
-</div>
+                <div
+                    class="online-checkout-card"
+                >
 
-</article>
+                    <div
+                        class="online-checkout-card-header"
+                    >
 
+                        <span
+                            class="online-checkout-step"
+                        >
+                            3
+                        </span>
 
+                        <div>
 
-<!-- PRODUCT 9 -->
+                            <small>
+                                PAYMENT
+                            </small>
 
-<article
-class="kit-card"
-data-product-id="efkit9"
-data-category="electric-fencing">
+                            <h3>
+                                Payment Method
+                            </h3>
 
+                        </div>
 
-<div class="kit-image-wrap">
+                    </div>
 
-<img
-src="../images/ef6.png"
-alt="Electric Fence 200m 10 Line Square Tube Kit"
-loading="lazy">
 
 
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="efkit9">
+                    <div
+                        class="online-payment-options"
+                    >
 
-♡
 
-</button>
+                        <!-- INSTANT EFT -->
 
-</div>
+                        <label
+                            class="online-payment-option"
+                        >
 
+                            <input
+                                type="radio"
+                                name="paymentMethod"
+                                value="eft"
+                                id="onlinePaymentEft"
+                                checked
+                            >
 
-<div class="kit-body">
+                            <span
+                                class="online-payment-option-content"
+                            >
 
-<span class="kit-category">
-ELECTRIC FENCING
-</span>
+                                <strong>
+                                    Instant EFT
+                                </strong>
 
+                                <small>
+                                    Pay directly using
+                                    NEXPAK bank details.
+                                </small>
 
-<h3>
-Electric Fence 200m 10 Line Square Tube Kit
-</h3>
+                            </span>
 
+                        </label>
 
-<p class="kit-description">
-Complete 200m square tube
-10 line electric fence kit.
-</p>
 
 
-<div class="kit-price">
-R0.00
-</div>
+                        <!-- PAYFAST PLACEHOLDER -->
 
+                        <label
+                            class="online-payment-option online-payment-disabled"
+                        >
 
-<div class="kit-actions">
+                            <input
+                                type="radio"
+                                name="paymentMethod"
+                                value="payfast"
+                                id="onlinePaymentPayfast"
+                                disabled
+                            >
 
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="efkit9">
+                            <span
+                                class="online-payment-option-content"
+                            >
 
-View Details
+                                <strong>
+                                    PayFast
+                                </strong>
 
-</button>
+                                <small>
+                                    Coming soon
+                                </small>
 
+                            </span>
 
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="efkit9">
+                        </label>
 
-<i class="fas fa-cart-plus"></i>
 
-Add To Cart
+                    </div>
 
-</button>
+                </div>
 
-</div>
 
-</div>
 
-</article>
+                <!-- =================================================
+                     ORDER SUMMARY
+                ================================================== -->
 
+                <div
+                    class="online-checkout-card online-order-summary-card"
+                >
 
+                    <div
+                        class="online-checkout-card-header"
+                    >
 
-<!-- PRODUCT 10 -->
+                        <span
+                            class="online-checkout-step"
+                        >
+                            4
+                        </span>
 
-<article
-class="kit-card"
-data-product-id="efkit10"
-data-category="electric-fencing">
+                        <div>
 
+                            <small>
+                                ORDER
+                            </small>
 
-<div class="kit-image-wrap">
+                            <h3>
+                                Order Summary
+                            </h3>
 
-<img
-src="../images/ef6.png"
-alt="Electric Fence 200m 12 Line Square Tube Kit"
-loading="lazy">
+                        </div>
 
+                    </div>
 
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="efkit10">
 
-♡
 
-</button>
+                    <div
+                        id="onlineCheckoutOrderItems"
+                        class="online-checkout-order-items"
+                    >
 
-</div>
+                        <!--
+                            onlinecheckout.js renders
+                            the order items here.
+                        -->
 
+                    </div>
 
-<div class="kit-body">
 
-<span class="kit-category">
-ELECTRIC FENCING
-</span>
 
+                    <div
+                        class="online-checkout-totals"
+                    >
 
-<h3>
-Electric Fence 200m 12 Line Square Tube Kit
-</h3>
+                        <div>
 
+                            <span>
+                                Subtotal EX VAT
+                            </span>
 
-<p class="kit-description">
-Complete 200m square tube
-12 line electric fence kit.
-</p>
+                            <strong
+                                id="onlineCheckoutSubtotal"
+                            >
+                                R0.00
+                            </strong>
 
+                        </div>
 
-<div class="kit-price">
-R0.00
-</div>
 
+                        <div>
 
-<div class="kit-actions">
+                            <span>
+                                VAT @ 15%
+                            </span>
 
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="efkit10">
+                            <strong
+                                id="onlineCheckoutVat"
+                            >
+                                R0.00
+                            </strong>
 
-View Details
+                        </div>
 
-</button>
 
+                        <div>
 
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="efkit10">
+                            <span>
+                                Delivery
+                            </span>
 
-<i class="fas fa-cart-plus"></i>
+                            <strong
+                                id="onlineCheckoutDelivery"
+                            >
+                                R0.00
+                            </strong>
 
-Add To Cart
+                        </div>
 
-</button>
 
-</div>
+                        <div
+                            class="online-checkout-grand-total"
+                        >
 
-</div>
+                            <span>
+                                Total Incl VAT
+                            </span>
 
-</article>
+                            <strong
+                                id="onlineCheckoutTotal"
+                            >
+                                R0.00
+                            </strong>
 
+                        </div>
 
-</div>
+                    </div>
 
-</section>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+                       </section>
+
+       <!-- =====================================================
+         PAYMENT AREA
+    ===================================================== -->
+
+    <section
+        id="onlinePaymentArea"
+        class="online-payment-area"
+        hidden
+    >
+
+        <div
+            class="online-container"
+        >
+
+
+            <!-- =================================================
+                 PAYMENT HEADER
+            ================================================== -->
+
+            <div
+                class="online-payment-heading"
+            >
+
+                <small>
+                    NEXPAK PAYMENT
+                </small>
+
+                <h2>
+                    Complete Your Payment
+                </h2>
+
+                <p>
+                    Your order has been created.
+                    Use the details below to complete
+                    your Instant EFT payment.
+                </p>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 ORDER NUMBER
+            ================================================== -->
+
+            <div
+                class="online-payment-order"
+            >
+
+                <span>
+                    Order Number
+                </span>
+
+                <strong
+                    id="onlinePaymentOrderNumber"
+                >
+                    NEX-00000000-0000
+                </strong>
+
+                <small>
+                    Use this order number as your
+                    EFT payment reference.
+                </small>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 INSTANT EFT CARD
+            ================================================== -->
+
+            <div
+                class="online-eft-card"
+            >
+
+
+                <div
+                    class="online-eft-header"
+                >
+
+                    <div
+                        class="online-eft-icon"
+                    >
+
+                        <i
+                            class="fas fa-building-columns"
+                            aria-hidden="true"
+                        ></i>
+
+                    </div>
+
+                    <div>
+
+                        <small>
+                            PAYMENT METHOD
+                        </small>
+
+                        <h3>
+                            Instant EFT
+                        </h3>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     BANK DETAILS
+                ================================================== -->
+
+                <div
+                    class="online-bank-details"
+                >
+
+
+                    <div
+                        class="online-bank-row"
+                    >
+
+                        <span>
+                            Account Name
+                        </span>
+
+                        <strong
+                            id="onlineEftAccountName"
+                        >
+                            TO BE CONFIGURED
+                        </strong>
+
+                    </div>
+
+
+                    <div
+                        class="online-bank-row"
+                    >
+
+                        <span>
+                            Bank
+                        </span>
+
+                        <strong
+                            id="onlineEftBankName"
+                        >
+                            TO BE CONFIGURED
+                        </strong>
+
+                    </div>
+
+
+                    <div
+                        class="online-bank-row"
+                    >
+
+                        <span>
+                            Account Number
+                        </span>
+
+                        <strong
+                            id="onlineEftAccountNumber"
+                        >
+                            TO BE CONFIGURED
+                        </strong>
+
+                    </div>
+
+
+                    <div
+                        class="online-bank-row"
+                    >
+
+                        <span>
+                            Branch Code
+                        </span>
+
+                        <strong
+                            id="onlineEftBranchCode"
+                        >
+                            TO BE CONFIGURED
+                        </strong>
+
+                    </div>
+
+
+                    <div
+                        class="online-bank-row"
+                    >
+
+                        <span>
+                            Account Type
+                        </span>
+
+                        <strong
+                            id="onlineEftAccountType"
+                        >
+                            TO BE CONFIGURED
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     PAYMENT AMOUNT
+                ================================================== -->
+
+                <div
+                    class="online-eft-amount"
+                >
+
+                    <span>
+                        Amount To Pay
+                    </span>
+
+                    <strong
+                        id="onlineEftAmount"
+                    >
+                        R0.00
+                    </strong>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     PAYMENT INSTRUCTION
+                ================================================== -->
+
+                <div
+                    class="online-eft-instruction"
+                >
+
+                    <i
+                        class="fas fa-circle-info"
+                        aria-hidden="true"
+                    ></i>
+
+                    <p>
+
+                        Please use your order number
+                        as the EFT payment reference.
+                        Your payment will be manually
+                        verified before your order is
+                        processed.
+
+                    </p>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     PAYMENT CONFIRMATION BUTTON
+                ================================================== -->
+
+                <button
+                    type="button"
+                    id="onlinePaymentMadeButton"
+                    class="online-payment-made-button"
+                    data-online-action="payment-made"
+                >
+
+                    <i
+                        class="fas fa-check"
+                        aria-hidden="true"
+                    ></i>
+
+                    I've Made Payment
+
+                </button>
+
+
+                <p
+                    class="online-payment-warning"
+                >
+
+                    <i
+                        class="fas fa-shield-halved"
+                        aria-hidden="true"
+                    ></i>
+
+                    NEXPAK will verify your payment
+                    manually. Your order will not be
+                    marked as paid automatically.
+
+                </p>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         PAYMENT PENDING AREA
+    ===================================================== -->
+
+    <section
+        id="onlinePaymentPending"
+        class="online-payment-pending"
+        hidden
+    >
+
+        <div
+            class="online-container"
+        >
+
+            <div
+                class="online-pending-card"
+            >
+
+
+                <div
+                    class="online-pending-icon"
+                >
+
+                    <i
+                        class="fas fa-clock"
+                        aria-hidden="true"
+                    ></i>
+
+                </div>
+
+
+                <small>
+                    PAYMENT STATUS
+                </small>
+
+
+                <h2>
+                    Payment Pending Verification
+                </h2>
+
+
+                <p>
+
+                    Thank you. We've received your
+                    payment notification.
+
+                    <br>
+
+                    Your order will remain pending
+                    until the EFT payment has been
+                    manually verified by NEXPAK.
+
+                </p>
+
+
+                <div
+                    class="online-pending-order"
+                >
+
+                    <span>
+                        Order Number
+                    </span>
+
+                    <strong
+                        id="onlinePendingOrderNumber"
+                    >
+                        NEX-00000000-0000
+                    </strong>
+
+                </div>
+
+
+                <div
+                    class="online-pending-status"
+                >
+
+                    <span>
+                        Current Status
+                    </span>
+
+                    <strong>
+                        PAYMENT PENDING
+                    </strong>
+
+                </div>
+
+
+                <p
+                    class="online-pending-note"
+                >
+
+                    Please keep your order number
+                    for future reference.
+
+                </p>
+
+
+                <button
+                    type="button"
+                    class="online-return-store-button"
+                    data-online-action="return-store"
+                >
+
+                    <i
+                        class="fas fa-store"
+                        aria-hidden="true"
+                    ></i>
+
+                    Return To Store
+
+                </button>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         ORDER CONFIRMATION AREA
+    ===================================================== -->
+
+    <section
+        id="onlineOrderConfirmation"
+        class="online-order-confirmation"
+        hidden
+    >
+
+        <div
+            class="online-container"
+        >
+
+            <div
+                class="online-confirmation-card"
+            >
+
+                <div
+                    class="online-confirmation-icon"
+                >
+
+                    <i
+                        class="fas fa-check"
+                        aria-hidden="true"
+                    ></i>
+
+                </div>
+
+
+                <small>
+                    NEXPAK SECURITY SOLUTIONS
+                </small>
+
+
+                <h2>
+                    Order Received
+                </h2>
+
+
+                <p>
+                    Your order has been successfully
+                    created and is awaiting payment
+                    verification.
+                </p>
+
+
+                <div
+                    class="online-confirmation-order"
+                >
+
+                    <span>
+                        Order Number
+                    </span>
+
+                    <strong
+                        id="onlineConfirmationOrderNumber"
+                    >
+                        NEX-00000000-0000
+                    </strong>
+
+                </div>
+
+
+                <div
+                    class="online-confirmation-status"
+                >
+
+                    <span>
+                        Status
+                    </span>
+
+                    <strong>
+                        PAYMENT PENDING
+                    </strong>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="online-return-store-button"
+                    data-online-action="return-store"
+                >
+
+                    <i
+                        class="fas fa-store"
+                        aria-hidden="true"
+                    ></i>
+
+                    Continue Shopping
+
+                </button>
+
+
+            </div>
+
+        </div>
+
+                   </section>
+
+       <!-- =====================================================
+         STORE INFORMATION
+    ===================================================== -->
+
+    <section
+        class="online-store-information"
+        id="onlineStoreInformation"
+    >
+
+        <div
+            class="online-container"
+        >
+
+            <div
+                class="online-info-grid"
+            >
+
+
+                <!-- =================================================
+                     PRE-BUILT KITS
+                ================================================== -->
+
+                <div
+                    class="online-info-card"
+                >
+
+                    <div
+                        class="online-info-icon"
+                    >
+
+                        <i
+                            class="fas fa-box-open"
+                            aria-hidden="true"
+                        ></i>
+
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Complete Security Kits
+                        </h3>
+
+                        <p>
+                            Professionally selected
+                            pre-built kits designed for
+                            residential, commercial,
+                            agricultural and estate
+                            security applications.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     DELIVERY
+                ================================================== -->
+
+                <div
+                    class="online-info-card"
+                >
+
+                    <div
+                        class="online-info-icon"
+                    >
+
+                        <i
+                            class="fas fa-truck-fast"
+                            aria-hidden="true"
+                        ></i>
+
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Delivery Available
+                        </h3>
+
+                        <p>
+                            Delivery is calculated from
+                            distance and total kit weight,
+                            with the applicable minimum
+                            and maximum delivery limits.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     EFT
+                ================================================== -->
+
+                <div
+                    class="online-info-card"
+                >
+
+                    <div
+                        class="online-info-icon"
+                    >
+
+                        <i
+                            class="fas fa-building-columns"
+                            aria-hidden="true"
+                        ></i>
+
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Instant EFT
+                        </h3>
+
+                        <p>
+                            Pay directly by EFT using the
+                            NEXPAK banking details supplied
+                            during checkout. Payments are
+                            manually verified.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     SUPPORT
+                ================================================== -->
+
+                <div
+                    class="online-info-card"
+                >
+
+                    <div
+                        class="online-info-icon"
+                    >
+
+                        <i
+                            class="fas fa-headset"
+                            aria-hidden="true"
+                        ></i>
+
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Security Support
+                        </h3>
+
+                        <p>
+                            Need help selecting the right
+                            kit? Contact NEXPAK Security
+                            Solutions before placing your
+                            order.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         DELIVERY NOTICE
+    ===================================================== -->
+
+    <section
+        class="online-delivery-notice"
+    >
+
+        <div
+            class="online-container"
+        >
+
+            <div
+                class="online-delivery-notice-content"
+            >
+
+                <div
+                    class="online-delivery-notice-icon"
+                >
+
+                    <i
+                        class="fas fa-truck"
+                        aria-hidden="true"
+                    ></i>
+
+                </div>
+
+
+                <div>
+
+                    <small>
+                        DELIVERY INFORMATION
+                    </small>
+
+                    <h2>
+                        Delivery Calculated At Checkout
+                    </h2>
+
+                    <p>
+                        Delivery is calculated according
+                        to distance and the combined weight
+                        of the kits in your cart.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         ONLINE STORE FOOTER
+    ===================================================== -->
+
+    <footer
+        class="online-footer"
+    >
+
+        <div
+            class="online-container"
+        >
+
+            <div
+                class="online-footer-grid"
+            >
+
+
+                <!-- =================================================
+                     COMPANY
+                ================================================== -->
+
+                <div
+                    class="online-footer-brand"
+                >
+
+                    <a
+                        href="../index.html"
+                        class="online-footer-logo"
+                    >
+
+                        <img
+                            src="../images/logo.png"
+                            alt="Nexpak Security Solutions"
+                        >
+
+                    </a>
+
+
+                    <p>
+                        Professional security solutions
+                        for homes, businesses, estates,
+                        farms and properties across
+                        South Africa.
+                    </p>
+
+
+                    <div
+                        class="online-footer-social"
+                    >
+
+                        <a
+                            href="#"
+                            aria-label="Facebook"
+                        >
+
+                            <i
+                                class="fab fa-facebook-f"
+                                aria-hidden="true"
+                            ></i>
+
+                        </a>
+
+
+                        <a
+                            href="#"
+                            aria-label="WhatsApp"
+                        >
+
+                            <i
+                                class="fab fa-whatsapp"
+                                aria-hidden="true"
+                            ></i>
+
+                        </a>
+
+
+                        <a
+                            href="#"
+                            aria-label="Instagram"
+                        >
+
+                            <i
+                                class="fab fa-instagram"
+                                aria-hidden="true"
+                            ></i>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     ONLINE STORE
+                ================================================== -->
+
+                <div
+                    class="online-footer-column"
+                >
+
+                    <h3>
+                        Online Store
+                    </h3>
+
+                    <a
+                        href="#kit-shop"
+                    >
+                        Security Kits
+                    </a>
+
+                    <a
+                        href="#onlineCheckout"
+                    >
+                        Checkout
+                    </a>
+
+                    <a
+                        href="#onlinePaymentArea"
+                    >
+                        Payment
+                    </a>
+
+                    <a
+                        href="#onlineStoreInformation"
+                    >
+                        Delivery Information
+                    </a>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     SECURITY SYSTEMS
+                ================================================== -->
+
+                <div
+                    class="online-footer-column"
+                >
+
+                    <h3>
+                        Security Systems
+                    </h3>
+
+                    <a
+                        href="../products.html"
+                    >
+                        CCTV
+                    </a>
+
+                    <a
+                        href="../products.html"
+                    >
+                        Electric Fencing
+                    </a>
+
+                    <a
+                        href="../products.html"
+                    >
+                        Alarm Systems
+                    </a>
+
+                    <a
+                        href="../products.html"
+                    >
+                        Gate Automation
+                    </a>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     CONTACT
+                ================================================== -->
+
+                <div
+                    class="online-footer-column"
+                >
+
+                    <h3>
+                        NEXPAK Security
+                    </h3>
+
+                    <a
+                        href="../contact.html"
+                    >
+                        Contact Us
+                    </a>
+
+                    <a
+                        href="../shop.html"
+                    >
+                        Build Your System
+                    </a>
+
+                    <a
+                        href="../about.html"
+                    >
+                        About NEXPAK
+                    </a>
+
+                    <span>
+                        South Africa
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 FOOTER BOTTOM
+            ================================================== -->
+
+            <div
+                class="online-footer-bottom"
+            >
+
+                <span>
+                    © 2026 Nexpak Security Solutions.
+                    All rights reserved.
+                </span>
+
+
+                <span>
+                    Online Store
+                </span>
+
+            </div>
+
+        </div>
+
+               </footer>
+
+       <!-- =====================================================
+         GLOBAL ONLINE STORE UI
+    ===================================================== -->
+
+
+    <!-- =====================================================
+         NOTIFICATION / TOAST
+    ===================================================== -->
+
+    <div
+        id="onlineToast"
+        class="online-toast"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        hidden
+    >
+
+        <div
+            class="online-toast-icon"
+            aria-hidden="true"
+        >
+
+            <i
+                class="fas fa-circle-check"
+            ></i>
+
+        </div>
+
+
+        <div
+            class="online-toast-content"
+        >
+
+            <strong
+                id="onlineToastTitle"
+            >
+                NEXPAK Online Store
+            </strong>
+
+            <span
+                id="onlineToastMessage"
+            >
+                Action completed.
+            </span>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="online-toast-close"
+            data-online-action="close-toast"
+            aria-label="Close notification"
+        >
+
+            <i
+                class="fas fa-xmark"
+                aria-hidden="true"
+            ></i>
+
+        </button>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         GLOBAL LOADING OVERLAY
+    ===================================================== -->
+
+    <div
+        id="onlineLoadingOverlay"
+        class="online-loading-overlay"
+        hidden
+        aria-hidden="true"
+    >
+
+        <div
+            class="online-loading-card"
+        >
+
+            <div
+                class="online-loading-spinner"
+                aria-hidden="true"
+            ></div>
+
+
+            <strong
+                id="onlineLoadingTitle"
+            >
+                Please wait
+            </strong>
+
+
+            <p
+                id="onlineLoadingMessage"
+            >
+                Processing your request...
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         CONFIRMATION DIALOG
+    ===================================================== -->
+
+    <div
+        id="onlineConfirmDialog"
+        class="online-confirm-dialog"
+        hidden
+        aria-hidden="true"
+    >
+
+        <div
+            class="online-confirm-backdrop"
+            data-online-action="close-confirm"
+        ></div>
+
+
+        <div
+            class="online-confirm-card"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="onlineConfirmTitle"
+        >
+
+            <div
+                class="online-confirm-icon"
+            >
+
+                <i
+                    class="fas fa-circle-question"
+                    aria-hidden="true"
+                ></i>
+
+            </div>
+
+
+            <h2
+                id="onlineConfirmTitle"
+            >
+                Confirm Action
+            </h2>
+
+
+            <p
+                id="onlineConfirmMessage"
+            >
+                Are you sure you want to continue?
+            </p>
+
+
+            <div
+                class="online-confirm-actions"
+            >
+
+                <button
+                    type="button"
+                    class="online-confirm-cancel"
+                    data-online-action="close-confirm"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="button"
+                    id="onlineConfirmButton"
+                    class="online-confirm-primary"
+                    data-online-action="confirm"
+                >
+                    Confirm
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         WHATSAPP FLOATING BUTTON
+    ===================================================== -->
+
+    <a
+        href="https://wa.me/"
+        class="nexpak-whatsapp"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Contact Nexpak Security Solutions on WhatsApp"
+    >
+
+        <i
+            class="fab fa-whatsapp"
+            aria-hidden="true"
+        ></i>
+
+
+        <span
+            class="nexpak-whatsapp-label"
+        >
+            Chat With NEXPAK
+        </span>
+
+    </a>
+
+
+
+    <!-- =====================================================
+         BACK TO TOP
+    ===================================================== -->
+
+    <button
+        type="button"
+        id="onlineBackToTop"
+        class="online-back-to-top"
+        aria-label="Back to top"
+        data-online-action="back-to-top"
+    >
+
+        <i
+            class="fas fa-arrow-up"
+            aria-hidden="true"
+        ></i>
+
+    </button>
+
+
+
+    <!-- =====================================================
+         MOBILE CART BAR
+    ===================================================== -->
+
+    <div
+        id="onlineMobileCartBar"
+        class="online-mobile-cart-bar"
+    >
+
+        <div
+            class="online-mobile-cart-info"
+        >
+
+            <i
+                class="fas fa-cart-shopping"
+                aria-hidden="true"
+            ></i>
+
+
+            <span>
+
+                Cart
+
+                <strong
+                    id="onlineMobileCartCount"
+                >
+                    0
+                </strong>
+
+            </span>
+
+        </div>
+
+
+        <button
+            type="button"
+            data-online-action="open-cart"
+        >
+
+            View Cart
+
+        </button>
+
+           </div>
+
+       <!-- =====================================================
+         ONLINE STORE JAVASCRIPT
+    ===================================================== -->
+
+
+    <!-- =====================================================
+         STORE DATA
+         Must load first.
+    ===================================================== -->
+
+    <script
+        src="online-data.js"
+    ></script>
+
+
+    <!-- =====================================================
+         ONLINE STORE ENGINE
+    ===================================================== -->
+
+    <script
+        src="online.js"
+    ></script>
+
+
+    <!-- =====================================================
+         ONLINE CONFIGURATOR
+         Existing architecture file.
+         Do not confuse with Build Your System
+         configurator.js.
+    ===================================================== -->
+
+    <script
+        src="onlineconfigurator.js"
+    ></script>
+
+
+    <!-- =====================================================
+         DELIVERY ENGINE
+    ===================================================== -->
+
+    <script
+        src="onlinedelivery.js"
+    ></script>
+
+
+    <!-- =====================================================
+         CHECKOUT ENGINE
+    ===================================================== -->
+
+    <script
+        src="onlinecheckout.js"
+    ></script>
+
+
+    <!-- =====================================================
+         INTEGRATION BRIDGE
+    ===================================================== -->
+
+    <script
+        src="onlineintegration.js"
+    ></script>
+
+
+    <!-- =====================================================
+         USER INTERFACE
+         Loads last so the complete UI can connect
+         to the existing store engines.
+    ===================================================== -->
+
+    <script
+        src="onlineui.js"
+    ></script>
+
+
+
+</main>
 
 
 <!-- =====================================================
-     ROBOGUARD KITS
-===================================================== -->
-
-<section
-class="kit-section"
-id="section-roboguard"
-data-category-section="roboguard">
-
-<div class="section-title">
-
-<div class="section-title-icon">
-🛡️
-</div>
-
-<div>
-
-<small>WIRELESS SECURITY</small>
-
-<h2>Roboguard Kits</h2>
-
-</div>
-
-</div>
-
-
-<div class="kit-grid">
-
-
-<!-- =====================================================
-     ROBOGUARD 2 BEAM
-===================================================== -->
-
-<article
-class="kit-card"
-data-product-id="rb2"
-data-category="roboguard">
-
-<div class="kit-image-wrap">
-
-<img
-src="../images/Rob.png"
-alt="Roboguard Wireless Beam 2 Beam Kit"
-loading="lazy">
-
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="rb2">
-
-♡
-
-</button>
-
-</div>
-
-
-<div class="kit-body">
-
-<span class="kit-category">
-ROBOGUARD
-</span>
-
-<h3>
-Roboguard Wireless Beam 2 Beam Kit
-</h3>
-
-
-<label class="kit-option">
-
-<span>Colour</span>
-
-<select
-data-option="colour"
-aria-label="Roboguard colour">
-
-<option value="green">
-Green
-</option>
-
-<option value="black">
-Black
-</option>
-
-<option value="white">
-White
-</option>
-
-</select>
-
-</label>
-
-
-<div class="kit-price">
-R0.00
-</div>
-
-
-<div class="kit-actions">
-
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="rb2">
-
-View Details
-
-</button>
-
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="rb2">
-
-<i class="fas fa-cart-plus"></i>
-Add To Cart
-
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-
-
-<!-- =====================================================
-     ROBOGUARD 4 BEAM
-===================================================== -->
-
-<article
-class="kit-card"
-data-product-id="rb4"
-data-category="roboguard">
-
-<div class="kit-image-wrap">
-
-<img
-src="../images/Rob.png"
-alt="Roboguard Wireless Beam 4 Beam Kit"
-loading="lazy">
-
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="rb4">
-
-♡
-
-</button>
-
-</div>
-
-
-<div class="kit-body">
-
-<span class="kit-category">
-ROBOGUARD
-</span>
-
-<h3>
-Roboguard Wireless Beam 4 Beam Kit
-</h3>
-
-
-<label class="kit-option">
-
-<span>Colour</span>
-
-<select
-data-option="colour"
-aria-label="Roboguard colour">
-
-<option value="green">
-Green
-</option>
-
-<option value="black">
-Black
-</option>
-
-<option value="white">
-White
-</option>
-
-</select>
-
-</label>
-
-
-<div class="kit-price">
-R0.00
-</div>
-
-
-<div class="kit-actions">
-
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="rb4">
-
-View Details
-
-</button>
-
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="rb4">
-
-<i class="fas fa-cart-plus"></i>
-Add To Cart
-
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-
-
-<!-- =====================================================
-     ROBOGUARD 6 BEAM
-===================================================== -->
-
-<article
-class="kit-card"
-data-product-id="rb6"
-data-category="roboguard">
-
-<div class="kit-image-wrap">
-
-<img
-src="../images/Rob.png"
-alt="Roboguard Wireless Beam 6 Beam Kit"
-loading="lazy">
-
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="rb6">
-
-♡
-
-</button>
-
-</div>
-
-
-<div class="kit-body">
-
-<span class="kit-category">
-ROBOGUARD
-</span>
-
-<h3>
-Roboguard Wireless Beam 6 Beam Kit
-</h3>
-
-
-<label class="kit-option">
-
-<span>Colour</span>
-
-<select
-data-option="colour"
-aria-label="Roboguard colour">
-
-<option value="green">
-Green
-</option>
-
-<option value="black">
-Black
-</option>
-
-<option value="white">
-White
-</option>
-
-</select>
-
-</label>
-
-
-<div class="kit-price">
-R0.00
-</div>
-
-
-<div class="kit-actions">
-
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="rb6">
-
-View Details
-
-</button>
-
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="rb6">
-
-<i class="fas fa-cart-plus"></i>
-Add To Cart
-
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-
-
-<!-- =====================================================
-     ROBOGUARD 8 BEAM
-===================================================== -->
-
-<article
-class="kit-card"
-data-product-id="rb8"
-data-category="roboguard">
-
-<div class="kit-image-wrap">
-
-<img
-src="../images/Rob.png"
-alt="Roboguard Wireless Beam 8 Beam Kit"
-loading="lazy">
-
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="rb8">
-
-♡
-
-</button>
-
-</div>
-
-
-<div class="kit-body">
-
-<span class="kit-category">
-ROBOGUARD
-</span>
-
-<h3>
-Roboguard Wireless Beam 8 Beam Kit
-</h3>
-
-
-<label class="kit-option">
-
-<span>Colour</span>
-
-<select
-data-option="colour"
-aria-label="Roboguard colour">
-
-<option value="green">
-Green
-</option>
-
-<option value="black">
-Black
-</option>
-
-<option value="white">
-White
-</option>
-
-</select>
-
-</label>
-
-
-<div class="kit-price">
-R0.00
-</div>
-
-
-<div class="kit-actions">
-
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="rb8">
-
-View Details
-
-</button>
-
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="rb8">
-
-<i class="fas fa-cart-plus"></i>
-Add To Cart
-
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-
-</div>
-
-</section>
-
-     <!-- =====================================================
-     PART 3
-     HD CCTV KITS
-===================================================== -->
-
-<section
-class="kit-section"
-id="section-cctv"
-data-category-section="cctv">
-
-
-<div class="section-title">
-
-<div class="section-title-icon">
-📹
-</div>
-
-<div>
-
-<small>CAMERA SECURITY</small>
-
-<h2>HD CCTV Kits</h2>
-
-</div>
-
-</div>
-
-
-<div class="kit-grid">
-
-
-<!-- =====================================================
-     HD CCTV 8 CAMERA
-===================================================== -->
-
-<article
-class="kit-card"
-data-product-id="cctv8"
-data-category="cctv">
-
-
-<div class="kit-image-wrap">
-
-<img
-src="../images/8ch.png"
-alt="HD CCTV 8 Camera Kit"
-loading="lazy">
-
-
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="cctv8">
-
-♡
-
-</button>
-
-</div>
-
-
-<div class="kit-body">
-
-<span class="kit-category">
-HD CCTV
-</span>
-
-
-<h3>
-HD CCTV 8 Camera Kit
-</h3>
-
-
-<label class="kit-option">
-
-<span>Camera Type</span>
-
-<select
-data-option="camera-type"
-aria-label="HD CCTV camera type">
-
-<option value="bullet">
-Bullet
-</option>
-
-<option value="dome">
-Dome
-</option>
-
-</select>
-
-</label>
-
-
-<div class="kit-price">
-R0.00
-</div>
-
-
-<div class="kit-actions">
-
-
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="cctv8">
-
-View Details
-
-</button>
-
-
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="cctv8">
-
-<i class="fas fa-cart-plus"></i>
-
-Add To Cart
-
-</button>
-
-
-</div>
-
-</div>
-
-</article>
-
-
-
-<!-- =====================================================
-     HD CCTV 16 CAMERA
-===================================================== -->
-
-<article
-class="kit-card"
-data-product-id="cctv16"
-data-category="cctv">
-
-
-<div class="kit-image-wrap">
-
-<img
-src="../images/16ch.png"
-alt="HD CCTV 16 Camera Kit"
-loading="lazy">
-
-
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="cctv16">
-
-♡
-
-</button>
-
-</div>
-
-
-<div class="kit-body">
-
-<span class="kit-category">
-HD CCTV
-</span>
-
-
-<h3>
-HD CCTV 16 Camera Kit
-</h3>
-
-
-<label class="kit-option">
-
-<span>Camera Type</span>
-
-<select
-data-option="camera-type"
-aria-label="HD CCTV camera type">
-
-<option value="bullet">
-Bullet
-</option>
-
-<option value="dome">
-Dome
-</option>
-
-</select>
-
-</label>
-
-
-<div class="kit-price">
-R0.00
-</div>
-
-
-<div class="kit-actions">
-
-
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="cctv16">
-
-View Details
-
-</button>
-
-
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="cctv16">
-
-<i class="fas fa-cart-plus"></i>
-
-Add To Cart
-
-</button>
-
-
-</div>
-
-</div>
-
-</article>
-
-
-
-<!-- =====================================================
-     HD CCTV 32 CAMERA
-===================================================== -->
-
-<article
-class="kit-card"
-data-product-id="cctv32"
-data-category="cctv">
-
-
-<div class="kit-image-wrap">
-
-<img
-src="../images/32ch.png"
-alt="HD CCTV 32 Camera Kit"
-loading="lazy">
-
-
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="cctv32">
-
-♡
-
-</button>
-
-</div>
-
-
-<div class="kit-body">
-
-<span class="kit-category">
-HD CCTV
-</span>
-
-
-<h3>
-HD CCTV 32 Camera Kit
-</h3>
-
-
-<label class="kit-option">
-
-<span>Camera Type</span>
-
-<select
-data-option="camera-type"
-aria-label="HD CCTV camera type">
-
-<option value="bullet">
-Bullet
-</option>
-
-<option value="dome">
-Dome
-</option>
-
-</select>
-
-</label>
-
-
-<div class="kit-price">
-R0.00
-</div>
-
-
-<div class="kit-actions">
-
-
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="cctv32">
-
-View Details
-
-</button>
-
-
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="cctv32">
-
-<i class="fas fa-cart-plus"></i>
-
-Add To Cart
-
-</button>
-
-
-</div>
-
-</div>
-
-</article>
-
-
-</div>
-
-     </section>
-
-     <!-- =====================================================
-     PART 4
-     IP CCTV KITS
-===================================================== -->
-
-<section
-class="kit-section"
-id="section-ip-cctv"
-data-category-section="ip-cctv">
-
-
-<div class="section-title">
-
-<div class="section-title-icon">
-🌐
-</div>
-
-<div>
-
-<small>NETWORK CAMERA SECURITY</small>
-
-<h2>IP CCTV Kits</h2>
-
-</div>
-
-</div>
-
-
-<div class="kit-grid">
-
-
-<!-- =====================================================
-     IP CCTV 8 CAMERA
-===================================================== -->
-
-<article
-class="kit-card"
-data-product-id="ipcctv8"
-data-category="ip-cctv">
-
-
-<div class="kit-image-wrap">
-
-<img
-src="../images/ip.png"
-alt="IP CCTV 8 Camera Kit"
-loading="lazy">
-
-
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="ipcctv8">
-
-♡
-
-</button>
-
-</div>
-
-
-<div class="kit-body">
-
-<span class="kit-category">
-IP CCTV
-</span>
-
-
-<h3>
-IP CCTV 8 Camera Kit
-</h3>
-
-
-<label class="kit-option">
-
-<span>Camera Type</span>
-
-<select
-data-option="camera-type"
-aria-label="IP CCTV camera type">
-
-<option value="bullet">
-Bullet
-</option>
-
-<option value="dome">
-Dome
-</option>
-
-</select>
-
-</label>
-
-
-<div class="kit-price">
-R0.00
-</div>
-
-
-<div class="kit-actions">
-
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="ipcctv8">
-
-View Details
-
-</button>
-
-
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="ipcctv8">
-
-<i class="fas fa-cart-plus"></i>
-
-Add To Cart
-
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-
-
-<!-- =====================================================
-     IP CCTV 16 CAMERA
-===================================================== -->
-
-<article
-class="kit-card"
-data-product-id="ipcctv16"
-data-category="ip-cctv">
-
-
-<div class="kit-image-wrap">
-
-<img
-src="../images/ip.png"
-alt="IP CCTV 16 Camera Kit"
-loading="lazy">
-
-
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="ipcctv16">
-
-♡
-
-</button>
-
-</div>
-
-
-<div class="kit-body">
-
-<span class="kit-category">
-IP CCTV
-</span>
-
-
-<h3>
-IP CCTV 16 Camera Kit
-</h3>
-
-
-<label class="kit-option">
-
-<span>Camera Type</span>
-
-<select
-data-option="camera-type"
-aria-label="IP CCTV camera type">
-
-<option value="bullet">
-Bullet
-</option>
-
-<option value="dome">
-Dome
-</option>
-
-</select>
-
-</label>
-
-
-<div class="kit-price">
-R0.00
-</div>
-
-
-<div class="kit-actions">
-
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="ipcctv16">
-
-View Details
-
-</button>
-
-
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="ipcctv16">
-
-<i class="fas fa-cart-plus"></i>
-
-Add To Cart
-
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-
-
-<!-- =====================================================
-     IP CCTV 32 CAMERA
-===================================================== -->
-
-<article
-class="kit-card"
-data-product-id="ipcctv32"
-data-category="ip-cctv">
-
-
-<div class="kit-image-wrap">
-
-<img
-src="../images/ip.png"
-alt="IP CCTV 32 Camera Kit"
-loading="lazy">
-
-
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="ipcctv32">
-
-♡
-
-</button>
-
-</div>
-
-
-<div class="kit-body">
-
-<span class="kit-category">
-IP CCTV
-</span>
-
-
-<h3>
-IP CCTV 32 Camera Kit
-</h3>
-
-
-<label class="kit-option">
-
-<span>Camera Type</span>
-
-<select
-data-option="camera-type"
-aria-label="IP CCTV camera type">
-
-<option value="bullet">
-Bullet
-</option>
-
-<option value="dome">
-Dome
-</option>
-
-</select>
-
-</label>
-
-
-<div class="kit-price">
-R0.00
-</div>
-
-
-<div class="kit-actions">
-
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="ipcctv32">
-
-View Details
-
-</button>
-
-
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="ipcctv32">
-
-<i class="fas fa-cart-plus"></i>
-
-Add To Cart
-
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-
-</div>
-
-     </section>
-
-     <!-- =====================================================
-     PART 5
-     IDS + AJAX ALARM KITS
-===================================================== -->
-
-<section
-class="kit-section"
-id="section-alarms"
-data-category-section="alarms">
-
-
-<div class="section-title">
-
-<div class="section-title-icon">
-🚨
-</div>
-
-<div>
-
-<small>ALARM SECURITY</small>
-
-<h2>Alarm Kits</h2>
-
-</div>
-
-</div>
-
-
-<div class="kit-grid">
-
-
-<!-- =====================================================
-     IDS 806 KIT
-===================================================== -->
-
-<article
-class="kit-card"
-data-product-id="ids806"
-data-category="alarms">
-
-
-<div class="kit-image-wrap">
-
-<img
-src="../images/806.png"
-alt="IDS 806 Alarm Kit with 2 PIR and 2 Door Magnets"
-loading="lazy">
-
-
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="ids806">
-
-♡
-
-</button>
-
-</div>
-
-
-<div class="kit-body">
-
-<span class="kit-category">
-IDS ALARM
-</span>
-
-
-<h3>
-IDS 806 Kit — 2 PIR + 2 Door Magnets
-</h3>
-
-
-<p class="kit-description">
-IDS 806 alarm kit supplied with
-2 PIR sensors and 2 door magnets.
-</p>
-
-
-<div class="kit-price">
-R0.00
-</div>
-
-
-<div class="kit-actions">
-
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="ids806">
-
-View Details
-
-</button>
-
-
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="ids806">
-
-<i class="fas fa-cart-plus"></i>
-
-Add To Cart
-
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-
-
-<!-- =====================================================
-     IDS X64 KIT
-===================================================== -->
-
-<article
-class="kit-card"
-data-product-id="idsx64"
-data-category="alarms">
-
-
-<div class="kit-image-wrap">
-
-<img
-src="../images/X64.png"
-alt="IDS X64 Alarm Kit with 5 PIR and 2 Door Magnets"
-loading="lazy">
-
-
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="idsx64">
-
-♡
-
-</button>
-
-</div>
-
-
-<div class="kit-body">
-
-<span class="kit-category">
-IDS ALARM
-</span>
-
-
-<h3>
-IDS X64 Kit — 5 PIR + 2 Door Magnets
-</h3>
-
-
-<p class="kit-description">
-IDS X64 alarm kit supplied with
-4 PIR sensors and 2 door magnets.
-</p>
-
-
-<div class="kit-price">
-R0.00
-</div>
-
-
-<div class="kit-actions">
-
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="idsx64">
-
-View Details
-
-</button>
-
-
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="idsx64">
-
-<i class="fas fa-cart-plus"></i>
-
-Add To Cart
-
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-
-
-<!-- =====================================================
-     AJAX WIRELESS KIT
-===================================================== -->
-
-<article
-class="kit-card"
-data-product-id="ajax-kit"
-data-category="alarms">
-
-
-<div class="kit-image-wrap">
-
-<img
-src="../images/products/ajax.png"
-alt="Ajax Wireless Alarm Kit"
-loading="lazy">
-
-
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="ajax-kit">
-
-♡
-
-</button>
-
-</div>
-
-
-<div class="kit-body">
-
-<span class="kit-category">
-AJAX SECURITY
-</span>
-
-
-<h3>
-Ajax Wireless Alarm Kit
-</h3>
-
-
-<p class="kit-description">
-Wireless Ajax security alarm kit
-for modern home and business protection.
-</p>
-
-
-<div class="kit-price">
-R0.00
-</div>
-
-
-<div class="kit-actions">
-
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="ajax-kit">
-
-View Details
-
-</button>
-
-
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="ajax-kit">
-
-<i class="fas fa-cart-plus"></i>
-
-Add To Cart
-
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-
-</div>
-
-</section>
-
-     <!-- =====================================================
-     PART 6
-     GATE AUTOMATION KITS
-===================================================== -->
-
-<section
-class="kit-section"
-id="section-gate-automation"
-data-category-section="gate-automation">
-
-
-<div class="section-title">
-
-<div class="section-title-icon">
-🚪
-</div>
-
-<div>
-
-<small>GATE & GARAGE AUTOMATION</small>
-
-<h2>Gate Automation Kits</h2>
-
-</div>
-
-</div>
-
-
-<div class="kit-grid">
-
-
-<!-- =====================================================
-     D5 SMART
-===================================================== -->
-
-<article
-class="kit-card"
-data-product-id="d5-smart"
-data-category="gate-automation">
-
-
-<div class="kit-image-wrap">
-
-<img
-src="../images/D5.png"
-alt="Centurion D5 Smart Gate Motor Kit"
-loading="lazy">
-
-
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="d5-smart">
-
-♡
-
-</button>
-
-</div>
-
-
-<div class="kit-body">
-
-<span class="kit-category">
-GATE AUTOMATION
-</span>
-
-
-<h3>
-D5 Smart Gate Motor Kit
-</h3>
-
-
-<p class="kit-description">
-Complete D5 Smart sliding gate
-automation kit.
-</p>
-
-
-<div class="kit-price">
-R0.00
-</div>
-
-
-<div class="kit-actions">
-
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="d5-smart">
-
-View Details
-
-</button>
-
-
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="d5-smart">
-
-<i class="fas fa-cart-plus"></i>
-
-Add To Cart
-
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-
-
-<!-- =====================================================
-     D10 SMART
-===================================================== -->
-
-<article
-class="kit-card"
-data-product-id="d10-smart"
-data-category="gate-automation">
-
-
-<div class="kit-image-wrap">
-
-<img
-src="../images/D10.png"
-alt="Centurion D10 Smart Gate Motor Kit"
-loading="lazy">
-
-
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="d10-smart">
-
-♡
-
-</button>
-
-</div>
-
-
-<div class="kit-body">
-
-<span class="kit-category">
-GATE AUTOMATION
-</span>
-
-
-<h3>
-D10 Smart Gate Motor Kit
-</h3>
-
-
-<p class="kit-description">
-Complete D10 Smart sliding gate
-automation kit.
-</p>
-
-
-<div class="kit-price">
-R0.00
-</div>
-
-
-<div class="kit-actions">
-
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="d10-smart">
-
-View Details
-
-</button>
-
-
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="d10-smart">
-
-<i class="fas fa-cart-plus"></i>
-
-Add To Cart
-
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-
-
-<!-- =====================================================
-     D20 SMART
-===================================================== -->
-
-<article
-class="kit-card"
-data-product-id="d20-smart"
-data-category="gate-automation">
-
-
-<div class="kit-image-wrap">
-
-<img
-src="../images/D10.png"
-alt="Centurion D20 Smart Gate Motor Kit"
-loading="lazy">
-
-
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="d20-smart">
-
-♡
-
-</button>
-
-</div>
-
-
-<div class="kit-body">
-
-<span class="kit-category">
-GATE AUTOMATION
-</span>
-
-
-<h3>
-D20 Smart Gate Motor Kit
-</h3>
-
-
-<p class="kit-description">
-Complete D20 Smart sliding gate
-automation kit.
-</p>
-
-
-<div class="kit-price">
-R0.00
-</div>
-
-
-<div class="kit-actions">
-
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="d20-smart">
-
-View Details
-
-</button>
-
-
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="d20-smart">
-
-<i class="fas fa-cart-plus"></i>
-
-Add To Cart
-
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-
-
-<!-- =====================================================
-     VANTAGE SWING KIT
-===================================================== -->
-
-<article
-class="kit-card"
-data-product-id="vantage-swing"
-data-category="gate-automation">
-
-
-<div class="kit-image-wrap">
-
-<img
-src="../images/products/vantage.png"
-alt="Vantage Swing Gate Kit"
-loading="lazy">
-
-
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="vantage-swing">
-
-♡
-
-</button>
-
-</div>
-
-
-<div class="kit-body">
-
-<span class="kit-category">
-GATE AUTOMATION
-</span>
-
-
-<h3>
-Vantage Swing Gate Kit
-</h3>
-
-
-<p class="kit-description">
-Complete automated swing gate
-solution.
-</p>
-
-
-<div class="kit-price">
-R0.00
-</div>
-
-
-<div class="kit-actions">
-
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="vantage-swing">
-
-View Details
-
-</button>
-
-
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="vantage-swing">
-
-<i class="fas fa-cart-plus"></i>
-
-Add To Cart
-
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-
-
-<!-- =====================================================
-     CENTURION SD04 SMART GARAGE
-===================================================== -->
-
-<article
-class="kit-card"
-data-product-id="sd04-smart"
-data-category="gate-automation">
-
-
-<div class="kit-image-wrap">
-
-<img
-src="../images/products/sd04-smart.png"
-alt="Centurion SD04 Smart Garage Kit"
-loading="lazy">
-
-
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="sd04-smart">
-
-♡
-
-</button>
-
-</div>
-
-
-<div class="kit-body">
-
-<span class="kit-category">
-GARAGE AUTOMATION
-</span>
-
-
-<h3>
-Centurion SD04 Smart Garage Kit
-</h3>
-
-
-<p class="kit-description">
-Smart garage door automation
-kit.
-</p>
-
-
-<div class="kit-price">
-R0.00
-</div>
-
-
-<div class="kit-actions">
-
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="sd04-smart">
-
-View Details
-
-</button>
-
-
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="sd04-smart">
-
-<i class="fas fa-cart-plus"></i>
-
-Add To Cart
-
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-
-
-<!-- =====================================================
-     CENTURION RDO ROLL-UP
-===================================================== -->
-
-<article
-class="kit-card"
-data-product-id="rdo-rollup"
-data-category="gate-automation">
-
-
-<div class="kit-image-wrap">
-
-<img
-src="../images/products/rdo.png"
-alt="Centurion RDO Roll Up Garage Kit"
-loading="lazy">
-
-
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="rdo-rollup">
-
-♡
-
-</button>
-
-</div>
-
-
-<div class="kit-body">
-
-<span class="kit-category">
-GARAGE AUTOMATION
-</span>
-
-
-<h3>
-Centurion RDO Roll-Up Kit
-</h3>
-
-
-<p class="kit-description">
-Complete RDO roll-up door
-automation kit.
-</p>
-
-
-<div class="kit-price">
-R0.00
-</div>
-
-
-<div class="kit-actions">
-
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="rdo-rollup">
-
-View Details
-
-</button>
-
-
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="rdo-rollup">
-
-<i class="fas fa-cart-plus"></i>
-
-Add To Cart
-
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-
-</div>
-
-     </section>
-
-     <!-- =====================================================
-     PART 7
-     ACCESS CONTROL + INTERCOM + SECURITY KITS
-===================================================== -->
-
-<section
-class="kit-section"
-id="section-access-control"
-data-category-section="access-control">
-
-<div class="section-title">
-
-<div class="section-title-icon">
-🔐
-</div>
-
-<div>
-
-<small>ACCESS SECURITY</small>
-
-<h2>Access Control Kits</h2>
-
-</div>
-
-</div>
-
-
-<div class="kit-grid">
-
-
-<!-- ACCESS CONTROL KIT -->
-
-<article
-class="kit-card"
-data-product-id="access-kit"
-data-category="access-control">
-
-<div class="kit-image-wrap">
-
-<img
-src="../images/products/access.png"
-alt="Access Control Kit"
-loading="lazy">
-
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="access-kit">
-♡
-</button>
-
-</div>
-
-
-<div class="kit-body">
-
-<span class="kit-category">
-ACCESS CONTROL
-</span>
-
-<h3>
-Access Control Kit
-</h3>
-
-<p class="kit-description">
-Complete access control solution
-for controlled entry points.
-</p>
-
-<div class="kit-price">
-R0.00
-</div>
-
-<div class="kit-actions">
-
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="access-kit">
-View Details
-</button>
-
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="access-kit">
-
-<i class="fas fa-cart-plus"></i>
-Add To Cart
-
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-
-<!-- RFID ACCESS KIT -->
-
-<article
-class="kit-card"
-data-product-id="rfid-kit"
-data-category="access-control">
-
-<div class="kit-image-wrap">
-
-<img
-src="../images/products/rfid.png"
-alt="RFID Access Control Kit"
-loading="lazy">
-
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="rfid-kit">
-♡
-</button>
-
-</div>
-
-
-<div class="kit-body">
-
-<span class="kit-category">
-ACCESS CONTROL
-</span>
-
-<h3>
-RFID Access Control Kit
-</h3>
-
-<p class="kit-description">
-RFID reader and access control
-kit for secure entry.
-</p>
-
-<div class="kit-price">
-R0.00
-</div>
-
-<div class="kit-actions">
-
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="rfid-kit">
-View Details
-</button>
-
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="rfid-kit">
-
-<i class="fas fa-cart-plus"></i>
-Add To Cart
-
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-
-<!-- =====================================================
-     INTERCOM
-===================================================== -->
-
-</div>
-
-</section>
-
-
-<section
-class="kit-section"
-id="section-intercom"
-data-category-section="intercom">
-
-<div class="section-title">
-
-<div class="section-title-icon">
-🔔
-</div>
-
-<div>
-
-<small>ENTRY COMMUNICATION</small>
-
-<h2>Intercom Kits</h2>
-
-</div>
-
-</div>
-
-
-<div class="kit-grid">
-
-
-<!-- VIDEO INTERCOM -->
-
-<article
-class="kit-card"
-data-product-id="video-intercom"
-data-category="intercom">
-
-<div class="kit-image-wrap">
-
-<img
-src="../images/products/intercom.png"
-alt="Video Intercom Kit"
-loading="lazy">
-
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="video-intercom">
-♡
-</button>
-
-</div>
-
-
-<div class="kit-body">
-
-<span class="kit-category">
-INTERCOM
-</span>
-
-<h3>
-Video Intercom Kit
-</h3>
-
-<p class="kit-description">
-Video intercom solution for
-secure visitor communication.
-</p>
-
-<div class="kit-price">
-R0.00
-</div>
-
-<div class="kit-actions">
-
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="video-intercom">
-View Details
-</button>
-
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="video-intercom">
-
-<i class="fas fa-cart-plus"></i>
-Add To Cart
-
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-
-<!-- AUDIO INTERCOM -->
-
-<article
-class="kit-card"
-data-product-id="audio-intercom"
-data-category="intercom">
-
-<div class="kit-image-wrap">
-
-<img
-src="../images/products/audio-intercom.png"
-alt="Audio Intercom Kit"
-loading="lazy">
-
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="audio-intercom">
-♡
-</button>
-
-</div>
-
-
-<div class="kit-body">
-
-<span class="kit-category">
-INTERCOM
-</span>
-
-<h3>
-Audio Intercom Kit
-</h3>
-
-<p class="kit-description">
-Reliable audio communication
-for secure entrances.
-</p>
-
-<div class="kit-price">
-R0.00
-</div>
-
-<div class="kit-actions">
-
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="audio-intercom">
-View Details
-</button>
-
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="audio-intercom">
-
-<i class="fas fa-cart-plus"></i>
-Add To Cart
-
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-
-</div>
-
-</section>
-
-
-<!-- =====================================================
-     SECURITY ACCESSORIES
-===================================================== -->
-
-<section
-class="kit-section"
-id="section-accessories"
-data-category-section="accessories">
-
-<div class="section-title">
-
-<div class="section-title-icon">
-🧰
-</div>
-
-<div>
-
-<small>SECURITY HARDWARE</small>
-
-<h2>Security Accessories</h2>
-
-</div>
-
-</div>
-
-
-<div class="kit-grid">
-
-
-<!-- ACCESSORIES -->
-
-<article
-class="kit-card"
-data-product-id="security-accessories"
-data-category="accessories">
-
-<div class="kit-image-wrap">
-
-<img
-src="../images/products/security-accessories.png"
-alt="Security Accessories"
-loading="lazy">
-
-<button
-type="button"
-class="kit-wishlist online-wishlist-product"
-data-product-id="security-accessories">
-♡
-</button>
-
-</div>
-
-
-<div class="kit-body">
-
-<span class="kit-category">
-ACCESSORIES
-</span>
-
-<h3>
-Security Accessories
-</h3>
-
-<p class="kit-description">
-Cables, connectors, power supplies,
-mounting hardware and accessories.
-</p>
-
-<div class="kit-price">
-R0.00
-</div>
-
-<div class="kit-actions">
-
-<button
-type="button"
-class="kit-details online-product-view"
-data-product-id="security-accessories">
-View Details
-</button>
-
-<button
-type="button"
-class="kit-add online-add-to-cart"
-data-product-id="security-accessories">
-
-<i class="fas fa-cart-plus"></i>
-Add To Cart
-
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-
-</div>
-
-</section>
-
-
-<!-- =====================================================
-     END OF PRODUCT SECTIONS
-===================================================== -->
-
-     <!-- =====================================================
-     PART 8
-     STORE FOOTER + WHATSAPP + STORE ENGINES
-===================================================== -->
-
-
-<!-- =====================================================
-     STORE FOOTER
-===================================================== -->
-
-<footer class="online-store-footer">
-
-<div class="online-container">
-
-<div class="store-footer-grid">
-
-
-<div>
-
-<strong>NEXPAK SECURITY SOLUTIONS</strong>
-
-<p>
-Security equipment and complete security
-solutions for homes, businesses and properties.
-</p>
-
-</div>
-
-
-<div>
-
-<strong>ONLINE STORE</strong>
-
-<a href="#section-electric-fencing">
-Electric Fencing
-</a>
-
-<a href="#section-roboguard">
-Roboguard
-</a>
-
-<a href="#section-cctv">
-HD CCTV
-</a>
-
-<a href="#section-ip-cctv">
-IP CCTV
-</a>
-
-</div>
-
-
-<div>
-
-<strong>SECURITY</strong>
-
-<a href="#section-alarms">
-Alarm Systems
-</a>
-
-<a href="#section-gate-automation">
-Gate Automation
-</a>
-
-<a href="#section-access-control">
-Access Control
-</a>
-
-<a href="#section-intercom">
-Intercom Systems
-</a>
-
-</div>
-
-
-<div>
-
-<strong>NEED HELP?</strong>
-
-<p>
-Speak to Nexpak about your security
-requirements.
-</p>
-
-<a
-href="https://wa.me/27836308249"
-target="_blank"
-rel="noopener noreferrer">
-
-WhatsApp Nexpak
-
-</a>
-
-</div>
-
-
-</div>
-
-
-<div class="store-footer-bottom">
-
-<span>
-© 2024 Nexpak Security Solutions
-</span>
-
-<span>
-All prices currently displayed as R0.00
-</span>
-
-</div>
-
-</div>
-
-</footer>
-
-
-
-<!-- =====================================================
-     FLOATING WHATSAPP BUTTON
-===================================================== -->
-
-<a
-href="https://wa.me/27836308249?text=Hi%20Nexpak%20Security%20Solutions%2C%20I%20would%20like%20more%20information%20about%20your%20security%20products."
-class="nexpak-whatsapp"
-target="_blank"
-rel="noopener noreferrer"
-aria-label="Chat with Nexpak Security Solutions on WhatsApp">
-
-
-<i class="fab fa-whatsapp"></i>
-
-
-<span class="nexpak-whatsapp-label">
-Chat with Nexpak
-</span>
-
-
-</a>
-
-
-
-<!-- =====================================================
-     WHATSAPP BUTTON STYLE
-===================================================== -->
-
-<style>
-
-.nexpak-whatsapp{
-
-position:fixed;
-
-right:20px;
-bottom:20px;
-
-width:60px;
-height:60px;
-
-border-radius:50%;
-
-background:#25D366;
-
-color:#ffffff;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-font-size:31px;
-
-text-decoration:none;
-
-box-shadow:
-0 6px 20px rgba(0,0,0,.25);
-
-z-index:999999;
-
-transition:
-transform .2s ease,
-box-shadow .2s ease;
-
-}
-
-
-.nexpak-whatsapp:hover{
-
-transform:scale(1.08);
-
-box-shadow:
-0 9px 28px rgba(0,0,0,.30);
-
-}
-
-
-.nexpak-whatsapp-label{
-
-position:absolute;
-
-right:72px;
-
-top:50%;
-
-transform:
-translateY(-50%);
-
-white-space:nowrap;
-
-background:#071a2d;
-
-color:#ffffff;
-
-padding:9px 13px;
-
-border-radius:7px;
-
-font-size:12px;
-
-font-weight:700;
-
-opacity:0;
-
-visibility:hidden;
-
-transition:.2s ease;
-
-}
-
-
-.nexpak-whatsapp:hover
-.nexpak-whatsapp-label{
-
-opacity:1;
-
-visibility:visible;
-
-}
-
-
-@media(max-width:700px){
-
-.nexpak-whatsapp{
-
-right:15px;
-bottom:15px;
-
-width:56px;
-height:56px;
-
-font-size:28px;
-
-}
-
-
-.nexpak-whatsapp-label{
-
-display:none;
-
-}
-
-}
-
-</style>
-
-
-
-<!-- =====================================================
-     STORE ENGINES
-===================================================== -->
-
-<script src="online-data.js"></script>
-
-<script src="online.js"></script>
-
-<script src="onlinecart.js"></script>
-
-<script src="onlinecheckout.js"></script>
-
-
-
-<!-- =====================================================
-     END ONLINE STORE
+     END BODY
 ===================================================== -->
 
 </body>
+
+
+<!-- =====================================================
+     END HTML
+===================================================== -->
 
 </html>
