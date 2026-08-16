@@ -24,7 +24,7 @@
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
         .visualizer-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
-        .marker { position: absolute; transform: translate(-50%, -50%); transition: all 0.3s ease; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .marker { position: absolute; transform: translate(-50%, -50%); transition: all 0.3s ease; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: auto; cursor: pointer; z-index: 10; }
         .pulse { animation: pulse 2s infinite; }
         
         @keyframes popIn { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
@@ -33,9 +33,10 @@
         .ef-active {
             position: absolute; top: 15%; left: 10%; width: 80%; height: 75%;
             border: 2px dashed #fbbf24; border-radius: 10px;
-            box-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.5); pointer-events: none;
         }
         .hide { display: none !important; }
+        .canvas-interactive { cursor: crosshair; }
     </style>
 </head>
 <body class="text-slate-800">
@@ -63,7 +64,7 @@
         <div class="max-w-3xl mx-auto px-4">
             <span class="text-nexpakAccent font-bold text-sm tracking-widest uppercase mb-2 block"><i class="fa-solid fa-layer-group mr-2"></i>Build Your System</span>
             <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Build Your Own Security System</h1>
-            <p class="text-slate-300 text-lg">Choose the security products you need, configure quantities, and see a visual layout tailored to your property.</p>
+            <p class="text-slate-300 text-lg">Choose security categories, configure your products, and click directly on the property visualizer to map your setup layout.</p>
         </div>
     </section>
 
@@ -76,19 +77,19 @@
                 <h2 class="text-xl font-bold mb-4 border-b pb-2">1. Select Category</h2>
                 <select id="categorySelect" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-nexpakAccent outline-none font-semibold" onchange="loadCategoryForm()">
                     <option value="">-- Choose a Product Category --</option>
-                    <option value="electricFence">Electric Fencing</option>
-                    <option value="roboguard">Roboguard Wireless Beams</option>
-                    <option value="gateD5">Gate Automation (Centurion D5)</option>
-                    <option value="gateD10">Gate Automation (Centurion D10)</option>
-                    <option value="cctv">CCTV Systems</option>
+                    <option value="electricFence">⚡ Electric Fencing (Perimeter Walls)</option>
+                    <option value="gateMotors">⚙️ Gate Automation (Driveway Gate)</option>
+                    <option value="cameras">📷 Cameras (Exterior Walls)</option>
+                    <option value="roboguardBeams">📡 Roboguard Beams (Yard / Garden)</option>
+                    <option value="alarmSystems">🚨 Alarm Systems (Internal Property)</option>
                 </select>
             </div>
 
             <div id="product-form-container" class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hide">
                 <h2 class="text-xl font-bold mb-4 border-b pb-2">2. Configure Products</h2>
-                <div id="dynamic-form" class="space-y-4 max-h-[500px] overflow-y-auto pr-2"></div>
+                <div id="dynamic-form" class="space-y-4 max-h-[400px] overflow-y-auto pr-2"></div>
                 <button onclick="addCurrentCategoryToCart()" class="mt-6 w-full bg-nexpakBlue hover:bg-slate-800 text-white font-bold py-3 px-4 rounded-lg transition shadow-lg">
-                    Add Selection to Cart <i class="fa-solid fa-arrow-right ml-2"></i>
+                    Add Selection to Cart & Map <i class="fa-solid fa-arrow-right ml-2"></i>
                 </button>
             </div>
         </div>
@@ -98,12 +99,18 @@
             
             <!-- 3D Visualizer -->
             <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
-                <h2 class="text-xl font-bold mb-4"><i class="fa-solid fa-map-location-dot text-nexpakAccent mr-2"></i>Property View (Live Layout)</h2>
-                <div class="relative w-full rounded-lg overflow-hidden border border-slate-800 bg-black min-h-[350px]" id="visualizer-box">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold"><i class="fa-solid fa-map-location-dot text-nexpakAccent mr-2"></i>Property View (Live Layout)</h2>
+                    <span id="placement-instruction" class="text-xs font-semibold bg-blue-50 text-blue-600 px-3 py-1 rounded-full border border-blue-200">Select a category to place markers</span>
+                </div>
+                <div class="relative w-full rounded-lg overflow-hidden border border-slate-800 bg-black min-h-[350px] canvas-interactive" id="visualizer-box" onclick="handleCanvasClick(event)">
                     <img src="lay.png" alt="3D Property Layout" class="w-full object-contain opacity-90 block" onerror="this.src='https://via.placeholder.com/800x500/0f172a/3b82f6?text=Please+Save+1000116324.png+in+Same+Folder'">
                     <div id="visualizer-overlay" class="visualizer-overlay"></div>
                 </div>
-                <p class="text-sm text-slate-500 mt-3"><i class="fa-solid fa-circle-info mr-1"></i> Add products to see them appear on your layout.</p>
+                <div class="flex justify-between items-center mt-3">
+                    <p class="text-sm text-slate-500"><i class="fa-solid fa-circle-info mr-1"></i> Click on the layout image above to pin your equipment positions.</p>
+                    <button onclick="clearMarkers()" class="text-xs text-red-500 hover:text-red-700 font-bold"><i class="fa-solid fa-rotate-left mr-1"></i> Reset Pins</button>
+                </div>
             </div>
 
             <!-- Cart & Checkout -->
@@ -181,60 +188,52 @@
                 { id: 'ef_strobe', name: 'Strobe', price: 85, weight: 0.3 },
                 { id: 'ef_divertor', name: 'Lightning divertor', price: 110, weight: 0.4 }
             ],
-            roboguard: [
+            roboguardBeams: [
                 { id: 'rg_beam', name: 'Roboguard Beam', variants: ['Black', 'Green', 'White'], price: 2500, weight: 1.5 },
                 { id: 'rg_hq', name: 'HQ Handheld', price: 1200, weight: 0.5 },
                 { id: 'rg_powerpack', name: 'Powerpack', price: 800, weight: 1 },
                 { id: 'rg_remote', name: '4 Button Remote', price: 150, weight: 0.1 },
                 { id: 'rg_siren', name: 'Siren', price: 150, weight: 0.8 }
             ],
-            gateD5: [
+            gateMotors: [
                 { id: 'd5_motor', name: 'Centurion D5 Smart Motor', price: 5500, weight: 10 },
                 { id: 'd5_battery', name: 'Battery', price: 350, weight: 2.5 },
                 { id: 'd5_rack', name: '2m Nylon Rack', price: 250, weight: 1.5 },
-                { id: 'd5_remote', name: '4 Button Remotes', price: 150, weight: 0.1 },
                 { id: 'd5_antitheft', name: 'Anti-Theft Bracket', price: 450, weight: 2 },
                 { id: 'd5_beams', name: 'Infrared Wireless Beams', price: 650, weight: 0.5 }
             ],
-            gateD10: [
-                { id: 'd10_motor', name: 'Centurion D10 Smart Motor', price: 8500, weight: 13 },
-                { id: 'd10_battery', name: 'Battery', price: 700, weight: 5 },
-                { id: 'd10_rack', name: 'Steel 2m Rack', price: 350, weight: 3 },
-                { id: 'd10_antitheft', name: 'Anti-Theft Bracket', price: 550, weight: 2 },
-                { id: 'd10_beams', name: 'Infrared Beams', price: 650, weight: 0.5 }
-            ],
-            cctv: [
+            cameras: [
                 { id: 'cctv_sys', name: 'System Type', variants: ['IP System', 'HD System'], price: 0, weight: 0 },
                 { id: 'cctv_dvr', name: 'DVR', variants: ['8 Channel', '16 Channel', '32 Channel'], price: 1500, weight: 2 },
                 { id: 'cctv_nvr', name: 'NVR', variants: ['8 Channel', '16 Channel'], price: 2000, weight: 2 },
                 { id: 'cctv_hdd', name: 'Hard Drive', variants: ['1TB', '2TB', '4TB'], price: 1000, weight: 0.5 },
                 { id: 'cctv_poe', name: 'Power/PoE', variants: ['8 Way', '16 Way', '9 Way PSU'], price: 600, weight: 1 },
-                { id: 'cctv_connector', name: 'Connectors', variants: ['RJ45', 'BNC'], price: 5, weight: 0.01 },
-                { id: 'cctv_boots', name: 'Accessories', variants: ['DC Leads', 'RJ45 Boots'], price: 10, weight: 0.05 },
                 { id: 'cctv_cam', name: 'Cameras', variants: ['IP Camera', 'HD Camera'], price: 600, weight: 0.4 },
-                { id: 'cctv_cable', name: 'Cable (100m)', variants: ['Cat 5', 'Poax'], price: 450, weight: 3 },
-                { id: 'cctv_enclosure', name: '100x100 Enclosure', price: 45, weight: 0.1 }
+                { id: 'cctv_cable', name: 'Cable (100m)', variants: ['Cat 5', 'Poax'], price: 450, weight: 3 }
+            ],
+            alarmSystems: [
+                { id: 'al_panel', name: '8-Zone Hybrid Alarm Panel', price: 2100, weight: 2.0 },
+                { id: 'al_pir', name: 'PIR Indoor Motion Detector', price: 380, weight: 0.3 },
+                { id: 'al_batt', name: 'Backup Lead Acid Battery', price: 290, weight: 2.1 }
             ]
         };
 
         let cart = [];
         let currentCategory = "";
-
-        const markerPositions = {
-            cameras: [
-                { top: '35%', left: '30%' }, { top: '35%', left: '60%' }, { top: '65%', left: '25%' }, { top: '65%', left: '75%' }, 
-                { top: '25%', left: '45%' }, { top: '25%', left: '55%' }, { top: '75%', left: '45%' }, { top: '75%', left: '55%' },
-                { top: '45%', left: '20%' }, { top: '45%', left: '80%' }, { top: '55%', left: '20%' }, { top: '55%', left: '80%' }
-            ],
-            roboguards: [
-                { top: '75%', left: '35%' }, { top: '75%', left: '65%' }, { top: '25%', left: '35%' }, { top: '25%', left: '65%' }
-            ],
-            gate: { top: '82%', left: '50%' }
-        };
+        let placedMarkers = []; // Dynamic storage for placed markers on canvas
 
         const formContainer = document.getElementById('dynamic-form');
         const productFormBox = document.getElementById('product-form-container');
         const overlay = document.getElementById('visualizer-overlay');
+        const instructionBox = document.getElementById('placement-instruction');
+
+        const categoryMeta = {
+            electricFence: { name: 'Electric Fencing', zone: 'perimeter walls', icon: 'fa-bolt', color: 'bg-amber-500' },
+            gateMotors: { name: 'Gate Automation', zone: 'driveway gate', icon: 'fa-torii-gate', color: 'bg-red-600' },
+            cameras: { name: 'CCTV Camera', zone: 'exterior walls', icon: 'fa-video', color: 'bg-blue-600' },
+            roboguardBeams: { name: 'Roboguard Beam', zone: 'yard / garden', icon: 'fa-wave-square', color: 'bg-green-600' },
+            alarmSystems: { name: 'Alarm System', zone: 'internal property', icon: 'fa-shield', color: 'bg-slate-700' }
+        };
 
         function loadCategoryForm() {
             const select = document.getElementById('categorySelect');
@@ -242,12 +241,16 @@
             
             if (!currentCategory) {
                 productFormBox.classList.add('hide');
+                instructionBox.innerText = "Select a category to place markers";
                 return;
             }
 
             productFormBox.classList.remove('hide');
             formContainer.innerHTML = '';
             
+            const meta = categoryMeta[currentCategory];
+            instructionBox.innerText = `Click property layout to place: ${meta.name} (${meta.zone})`;
+
             const products = productDb[currentCategory];
             
             products.forEach(prod => {
@@ -272,6 +275,65 @@
                 
                 formContainer.insertAdjacentHTML('beforeend', html);
             });
+        }
+
+        // Live Click-to-Place Handler
+        function handleCanvasClick(event) {
+            if (!currentCategory) {
+                alert("Please select a product category from Step 1 first before placing markers on the layout.");
+                return;
+            }
+
+            const box = document.getElementById('visualizer-box');
+            const rect = box.getBoundingClientRect();
+            
+            // Calculate exact click percentage relative to layout container dimensions
+            const x = ((event.clientX - rect.left) / rect.width) * 100;
+            const y = ((event.clientY - rect.top) / rect.height) * 100;
+
+            const meta = categoryMeta[currentCategory];
+
+            // Store marker info
+            placedMarkers.push({
+                category: currentCategory,
+                x: x,
+                y: y,
+                name: meta.name,
+                icon: meta.icon,
+                color: meta.color
+            });
+
+            renderMarkers();
+        }
+
+        function renderMarkers() {
+            overlay.innerHTML = '';
+
+            // Check if electric fence is added to display boundary outline
+            const hasEF = cart.some(item => item.category === 'electricFence') || currentCategory === 'electricFence';
+            if (hasEF) {
+                overlay.innerHTML += `<div class="ef-active"></div>`;
+            }
+
+            placedMarkers.forEach((marker, index) => {
+                overlay.innerHTML += `
+                    <div class="marker pulse" style="top: ${marker.y}%; left: ${marker.x}%;" title="${marker.name} (Click to remove)" onclick="removeMarker(${index}, event)">
+                        <div class="${marker.color} text-white px-2 py-1 rounded-full shadow-lg text-xs font-bold border-2 border-white flex items-center gap-1">
+                            <i class="fa-solid ${marker.icon}"></i> <span>${marker.name}</span>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function removeMarker(index, event) {
+            event.stopPropagation();
+            placedMarkers.splice(index, 1);
+            renderMarkers();
+        }
+
+        function clearMarkers() {
+            placedMarkers = [];
+            renderMarkers();
         }
 
         function addCurrentCategoryToCart() {
@@ -312,7 +374,7 @@
 
             if (addedCount > 0) {
                 updateCartUI();
-                updateVisualizer();
+                renderMarkers();
             } else {
                 alert("Please specify a quantity greater than 0 for at least one item.");
             }
@@ -321,7 +383,7 @@
         function removeFromCart(index) {
             cart.splice(index, 1);
             updateCartUI();
-            updateVisualizer();
+            renderMarkers();
         }
 
         function updateCartUI() {
@@ -382,53 +444,6 @@
                 el.classList.remove('hide');
             } else {
                 el.classList.add('hide');
-            }
-        }
-
-        function updateVisualizer() {
-            overlay.innerHTML = '';
-            
-            let cameraCount = 0;
-            let hasElectricFence = false;
-            let hasGateMotor = false;
-            let roboguardCount = 0;
-
-            cart.forEach(item => {
-                if (item.category === 'cctv' && item.id === 'cctv_cam') cameraCount += item.qty;
-                if (item.category === 'electricFence') hasElectricFence = true;
-                if (item.category === 'gateD5' || item.category === 'gateD10') {
-                    if(item.id.includes('motor')) hasGateMotor = true;
-                }
-                if (item.category === 'roboguard' && item.id === 'rg_beam') roboguardCount += item.qty;
-            });
-
-            if (hasElectricFence) {
-                overlay.innerHTML += `<div class="ef-active"></div>`;
-            }
-
-            if (hasGateMotor) {
-                overlay.innerHTML += `
-                    <div class="marker pulse" style="top: ${markerPositions.gate.top}; left: ${markerPositions.gate.left};">
-                        <div class="bg-red-600 text-white p-1.5 rounded shadow-lg text-xs font-bold border-2 border-white"><i class="fa-solid fa-torii-gate"></i> Gate</div>
-                    </div>`;
-            }
-
-            for (let i = 0; i < cameraCount; i++) {
-                if (i >= markerPositions.cameras.length) break; 
-                const pos = markerPositions.cameras[i];
-                overlay.innerHTML += `
-                    <div class="marker" style="top: ${pos.top}; left: ${pos.left};">
-                        <div class="bg-blue-600 text-white h-6 w-6 flex items-center justify-center rounded-full shadow-lg text-xs border-2 border-white"><i class="fa-solid fa-video"></i></div>
-                    </div>`;
-            }
-
-            for (let i = 0; i < roboguardCount; i++) {
-                if (i >= markerPositions.roboguards.length) break;
-                const pos = markerPositions.roboguards[i];
-                overlay.innerHTML += `
-                    <div class="marker" style="top: ${pos.top}; left: ${pos.left};">
-                        <div class="bg-green-600 text-white h-6 w-6 flex items-center justify-center rounded-full shadow-lg text-xs border-2 border-white pulse"><i class="fa-solid fa-wave-square"></i></div>
-                    </div>`;
             }
         }
     </script>
