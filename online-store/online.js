@@ -1,13725 +1,7721 @@
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE ENGINE
- ---------------------------------------------------------
- File: online.js
- Part: 1/8
- Purpose:
- - Database connection
- - Global store state
- - Store configuration
- - DOM references
- - Safe utility helpers
- - Initialization foundation
-
- IMPORTANT:
- - Product data comes ONLY from online-data/*.js
- - Do NOT duplicate products here
- - Do NOT modify online.css
-=========================================================*/
+/* =========================================================
+   NEXPAK SECURITY SOLUTIONS
+   ONLINE STORE — MAIN ENGINE
 
+   File: online.js
+   Version: 1.0
+   Part: 1/8
 
-/*=========================================================
- 1. GLOBAL NEXPAK ONLINE STORE NAMESPACE
-=========================================================*/
+   PURPOSE:
+   - Control the NEXPAK Online Store
+   - Display PRE-BUILT KITS ONLY
+   - Handle kit quantities
+   - Handle kit options
+   - Prepare kits for cart
+   - Prepare kits for PDF breakdown
+   - Connect with onlinecart.js
+   - Connect with onlinedelivery.js
+   - Connect with onlinecheckout.js
 
-(function (window, document) {
+   IMPORTANT:
+   This file is for the ONLINE STORE ONLY.
 
-    "use strict";
+   DO NOT use this file for:
+   - Build Your System
+   - Individual product selection
+   - Existing configurator.js
+========================================================= */
 
 
-    /*=====================================================
-      2. MAIN STORE OBJECT
-    =====================================================*/
+/* =========================================================
+   1. ONLINE STORE CONFIGURATION
+========================================================= */
 
-    const NEXPAK_ONLINE = {
+const NEXPAK_ONLINE_CONFIG = {
 
-        /*-----------------------------------------------
-          Store information
-        -----------------------------------------------*/
+    version: "1.0",
 
-        version: "1.0.0",
-        engine: "online.js",
-        build: "08 August 2026",
+    storeName:
+        "NEXPAK Online Store",
 
-        initialized: false,
+    companyName:
+        "NEXPAK Security Solutions",
 
-        /*-----------------------------------------------
-          Database
-        -----------------------------------------------*/
+    currency:
+        "ZAR",
 
-        database: {
-            products: [],
-            categories: {},
-            brands: {},
-            aliases: {},
-            productTypes: {},
-            compatibility: {},
-            deliveryClasses: {},
-            info: {},
-            validation: {},
-            stats: {},
-            categoryCounts: {},
-            storeData: {}
-        },
+    currencySymbol:
+        "R",
 
+    vatRate:
+        0.15,
 
-        /*-----------------------------------------------
-          Global product state
-        -----------------------------------------------*/
+    defaultQuantity:
+        1,
 
-        state: {
+    minimumQuantity:
+        1,
 
-            /* Complete database */
-            allProducts: [],
+    maximumQuantity:
+        99,
 
-            /* Currently displayed products */
-            visibleProducts: [],
+    defaultCategory:
+        "all",
 
-            /* Currently selected product */
-            selectedProduct: null,
+    defaultSort:
+        "featured",
 
-            /* Search */
-            searchTerm: "",
+    cartStorageKey:
+        "nexpak-online-cart",
 
-            /* Filters */
-            category: "all",
-            subcategory: "all",
-            brand: "all",
-            productType: "all",
+    selectedKitStorageKey:
+        "nexpak-online-selected-kit"
 
-            /* Product status filters */
-            stockStatus: "all",
+};
 
-            /* Special collections */
-            featuredOnly: false,
-            popularOnly: false,
-            newOnly: false,
 
-            /* Sorting */
-            sortBy: "default",
+/* =========================================================
+   2. ONLINE STORE STATE
+========================================================= */
 
-            /* Pagination */
-            currentPage: 1,
-            productsPerPage: 24,
+const NEXPAK_ONLINE_STATE = {
 
-            /* View */
-            viewMode: "grid",
+    initialized:
+        false,
 
-            /* Product count */
-            totalProducts: 0,
-            filteredProducts: 0,
+    currentCategory:
+        "all",
 
-            /* UI */
-            loading: false,
-            error: null
-        },
+    currentSearch:
+        "",
 
+    currentSort:
+        "featured",
 
-        /*-----------------------------------------------
-          Store configuration
-        -----------------------------------------------*/
+    currentKit:
+        null,
 
-        config: {
+    currentKitQuantity:
+        1,
 
-            /* Default pagination */
-            defaultProductsPerPage: 24,
+    selectedOptions:
+        {},
 
-            /* Search behaviour */
-            minimumSearchLength: 1,
+    displayedKits:
+        [],
 
-            /* Default category */
-            defaultCategory: "all",
+    cart:
+        []
 
-            /* Default brand */
-            defaultBrand: "all",
+};
 
-            /* Default product type */
-            defaultProductType: "all",
 
-            /* Default sorting */
-            defaultSort: "default",
+/* =========================================================
+   3. VERIFY ONLINE DATABASE
+========================================================= */
 
-            /* Default view */
-            defaultViewMode: "grid",
+function verifyNexpakOnlineDatabase() {
 
-            /* Product statuses */
-            pricedStatus: "priced",
-            requestPriceStatus: "request-price",
-            quoteStatus: "quote",
-
-            /* Storage */
-            storageKey: "nexpak_online_store_state_v1",
-
-            /* Debugging */
-            debug: true
-        },
-
-
-        /*-----------------------------------------------
-          DOM references
-        -----------------------------------------------*/
-
-        elements: {},
-
-
-        /*-----------------------------------------------
-          Runtime flags
-        -----------------------------------------------*/
-
-        flags: {
-
-            databaseReady: false,
-            domReady: false,
-            renderingReady: false,
-            eventsReady: false
-        },
-
-
-        /*-----------------------------------------------
-          Runtime metadata
-        -----------------------------------------------*/
-
-        meta: {
-
-            initializedAt: null,
-            lastRenderAt: null,
-            lastSearchAt: null,
-            lastFilterAt: null,
-
-            databaseProductCount: 0,
-            databaseCategoryCount: 0,
-            databaseBrandCount: 0
-        }
-    };
-
-
-    /*=====================================================
-      3. DATABASE CONNECTION
-    =====================================================*/
-
-    function connectDatabase() {
-
-        /*
-         * The eight database files are loaded before
-         * online.js by online.html.
-         *
-         * The database therefore exists in the global
-         * NEXPAK database namespace when this function runs.
-         */
-
-        const products =
-            window.NEXPAK_PRODUCTS ||
-            [];
-
-        const categoryMap =
-            window.NEXPAK_CATEGORY_MAP ||
-            {};
-
-        const brandMap =
-            window.NEXPAK_BRAND_MAP ||
-            {};
-
-        const searchAliases =
-            window.NEXPAK_SEARCH_ALIASES ||
-            {};
-
-        const productTypes =
-            window.NEXPAK_PRODUCT_TYPES ||
-            {};
-
-        const compatibilityMap =
-            window.NEXPAK_COMPATIBILITY_MAP ||
-            {};
-
-        const deliveryClasses =
-            window.NEXPAK_DELIVERY_CLASSES ||
-            {};
-
-        const databaseInfo =
-            window.NEXPAK_DATABASE_INFO ||
-            {};
-
-        const databaseValidation =
-            window.NEXPAK_DATABASE_VALIDATION ||
-            {};
-
-        const databaseStats =
-            window.NEXPAK_DATABASE_STATS ||
-            {};
-
-        const categoryCounts =
-            window.NEXPAK_CATEGORY_COUNTS ||
-            {};
-
-        const onlineStoreData =
-            window.NEXPAK_ONLINE_STORE_DATA ||
-            {};
-
-
-        /*-----------------------------------------------
-          Store database references
-        -----------------------------------------------*/
-
-        NEXPAK_ONLINE.database.products = products;
-        NEXPAK_ONLINE.database.categories = categoryMap;
-        NEXPAK_ONLINE.database.brands = brandMap;
-        NEXPAK_ONLINE.database.aliases = searchAliases;
-        NEXPAK_ONLINE.database.productTypes = productTypes;
-        NEXPAK_ONLINE.database.compatibility = compatibilityMap;
-        NEXPAK_ONLINE.database.deliveryClasses = deliveryClasses;
-        NEXPAK_ONLINE.database.info = databaseInfo;
-        NEXPAK_ONLINE.database.validation = databaseValidation;
-        NEXPAK_ONLINE.database.stats = databaseStats;
-        NEXPAK_ONLINE.database.categoryCounts = categoryCounts;
-        NEXPAK_ONLINE.database.storeData = onlineStoreData;
-
-
-        /*-----------------------------------------------
-          Product state
-        -----------------------------------------------*/
-
-        NEXPAK_ONLINE.state.allProducts =
-            Array.isArray(products)
-                ? products.slice()
-                : [];
-
-
-        NEXPAK_ONLINE.state.visibleProducts =
-            NEXPAK_ONLINE.state.allProducts.slice();
-
-
-        NEXPAK_ONLINE.state.totalProducts =
-            NEXPAK_ONLINE.state.allProducts.length;
-
-
-        NEXPAK_ONLINE.state.filteredProducts =
-            NEXPAK_ONLINE.state.allProducts.length;
-
-
-        /*-----------------------------------------------
-          Metadata
-        -----------------------------------------------*/
-
-        NEXPAK_ONLINE.meta.databaseProductCount =
-            NEXPAK_ONLINE.state.allProducts.length;
-
-
-        NEXPAK_ONLINE.meta.databaseCategoryCount =
-            Object.keys(categoryMap).length;
-
-
-        NEXPAK_ONLINE.meta.databaseBrandCount =
-            Object.keys(brandMap).length;
-
-
-        /*-----------------------------------------------
-          Database ready flag
-        -----------------------------------------------*/
-
-        NEXPAK_ONLINE.flags.databaseReady = true;
-
-
-        return true;
-    }
-
-
-    /*=====================================================
-      4. DATABASE VALIDATION
-    =====================================================*/
-
-    function validateDatabaseConnection() {
-
-        const database =
-            NEXPAK_ONLINE.database;
-
-
-        /*-----------------------------------------------
-          Products must exist
-        -----------------------------------------------*/
-
-        if (!Array.isArray(database.products)) {
-
-            NEXPAK_ONLINE.state.error =
-                "NEXPAK product database is unavailable.";
-
-            return false;
-        }
-
-
-        /*-----------------------------------------------
-          Empty database warning
-        -----------------------------------------------*/
-
-        if (database.products.length === 0) {
-
-            console.warn(
-                "[NEXPAK ONLINE] Product database contains no products."
-            );
-
-        }
-
-
-        /*-----------------------------------------------
-          Confirm database objects
-        -----------------------------------------------*/
-
-        const databaseObjects = [
-            "categories",
-            "brands",
-            "aliases",
-            "productTypes",
-            "compatibility",
-            "deliveryClasses",
-            "info",
-            "validation",
-            "stats",
-            "categoryCounts",
-            "storeData"
-        ];
-
-
-        databaseObjects.forEach(function (key) {
-
-            if (
-                database[key] === null ||
-                typeof database[key] !== "object"
-            ) {
-
-                database[key] = {};
-            }
-
-        });
-
-
-        return true;
-    }
-
-
-    /*=====================================================
-      5. DOM ELEMENT DISCOVERY
-    =====================================================*/
-
-    function cacheDOMElements() {
-
-        /*
-         * We intentionally use flexible selectors.
-         *
-         * The existing online.html remains untouched.
-         * Parts 2–8 can use these cached references where
-         * the corresponding elements already exist.
-         */
-
-        NEXPAK_ONLINE.elements = {
-
-            /* Main store */
-            store:
-                document.querySelector(
-                    "#online-store, .online-store, [data-online-store]"
-                ),
-
-            /* Product area */
-            productGrid:
-                document.querySelector(
-                    "#product-grid, .product-grid, [data-product-grid]"
-                ),
-
-            productList:
-                document.querySelector(
-                    "#product-list, .product-list, [data-product-list]"
-                ),
-
-            /* Search */
-            search:
-                document.querySelector(
-                    "#product-search, #online-search, [data-product-search]"
-                ),
-
-            searchForm:
-                document.querySelector(
-                    "#product-search-form, #online-search-form, [data-search-form]"
-                ),
-
-            /* Category */
-            categoryFilter:
-                document.querySelector(
-                    "#category-filter, #online-category-filter, [data-category-filter]"
-                ),
-
-            /* Brand */
-            brandFilter:
-                document.querySelector(
-                    "#brand-filter, #online-brand-filter, [data-brand-filter]"
-                ),
-
-            /* Product type */
-            productTypeFilter:
-                document.querySelector(
-                    "#product-type-filter, [data-product-type-filter]"
-                ),
-
-            /* Sorting */
-            sort:
-                document.querySelector(
-                    "#sort-products, #product-sort, [data-product-sort]"
-                ),
-
-            /* Pagination */
-            pagination:
-                document.querySelector(
-                    "#pagination, .pagination, [data-pagination]"
-                ),
-
-            /* Product count */
-            productCount:
-                document.querySelector(
-                    "#product-count, .product-count, [data-product-count]"
-                ),
-
-            /* Product details */
-            productDetails:
-                document.querySelector(
-                    "#product-details, .product-details, [data-product-details]"
-                ),
-
-            /* Featured */
-            featured:
-                document.querySelector(
-                    "#featured-products, .featured-products, [data-featured-products]"
-                ),
-
-            /* Popular */
-            popular:
-                document.querySelector(
-                    "#popular-products, .popular-products, [data-popular-products]"
-                ),
-
-            /* Related */
-            related:
-                document.querySelector(
-                    "#related-products, .related-products, [data-related-products]"
-                ),
-
-            /* Loading */
-            loading:
-                document.querySelector(
-                    "#store-loading, .store-loading, [data-store-loading]"
-                ),
-
-            /* Error */
-            error:
-                document.querySelector(
-                    "#store-error, .store-error, [data-store-error]"
-                )
-        };
-
-
-        NEXPAK_ONLINE.flags.domReady = true;
-    }
-
-
-    /*=====================================================
-      6. SAFE VALUE HELPERS
-    =====================================================*/
-
-    function safeString(value) {
-
-        if (
-            value === null ||
-            value === undefined
-        ) {
-            return "";
-        }
-
-        return String(value).trim();
-    }
-
-
-    function safeLower(value) {
-
-        return safeString(value).toLowerCase();
-    }
-
-
-    function safeArray(value) {
-
-        return Array.isArray(value)
-            ? value
-            : [];
-    }
-
-
-    function safeObject(value) {
-
-        return (
-            value !== null &&
-            typeof value === "object" &&
-            !Array.isArray(value)
-        )
-            ? value
-            : {};
-    }
-
-
-    function escapeHTML(value) {
-
-        const text = safeString(value);
-
-        return text
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-    }
-
-
-    /*=====================================================
-      7. PRODUCT IDENTIFICATION HELPERS
-    =====================================================*/
-
-    function getProductID(product) {
-
-        if (!product) {
-            return "";
-        }
-
-        return safeString(
-            product.id ||
-            product.productId ||
-            product.productID ||
-            product.sku ||
-            ""
-        );
-    }
-
-
-    function getProductSKU(product) {
-
-        if (!product) {
-            return "";
-        }
-
-        return safeString(
-            product.sku ||
-            product.SKU ||
-            product.productSku ||
-            ""
-        );
-    }
-
-
-    function getProductName(product) {
-
-        if (!product) {
-            return "";
-        }
-
-        return safeString(
-            product.name ||
-            product.productName ||
-            product.title ||
-            ""
-        );
-    }
-
-
-    function getProductBrand(product) {
-
-        if (!product) {
-            return "";
-        }
-
-        return safeString(
-            product.brand ||
-            product.manufacturer ||
-            ""
-        );
-    }
-
-
-    function getProductCategory(product) {
-
-        if (!product) {
-            return "";
-        }
-
-        return safeString(
-            product.category ||
-            product.mainCategory ||
-            ""
-        );
-    }
-
-
-    /*=====================================================
-      8. PRODUCT PRICING HELPERS
-    =====================================================*/
-
-    function getProductPriceStatus(product) {
-
-        if (!product) {
-            return "quote";
-        }
-
-
-        const status =
-            safeLower(
-                product.priceStatus ||
-                product.pricingStatus ||
-                product.priceType ||
-                ""
-            );
-
-
-        if (
-            status === "priced" ||
-            status === "price"
-        ) {
-            return "priced";
-        }
-
-
-        if (
-            status === "request-price" ||
-            status === "request_price" ||
-            status === "requestprice"
-        ) {
-            return "request-price";
-        }
-
-
-        if (
-            status === "quote" ||
-            status === "request-quote" ||
-            status === "request_quote"
-        ) {
-            return "quote";
-        }
-
-
-        /*
-         * Never assume a missing price is a real price.
-         */
-
-        if (
-            product.price === null ||
-            product.price === undefined ||
-            product.price === ""
-        ) {
-            return "quote";
-        }
-
-
-        return "priced";
-    }
-
-
-    function hasConfirmedPrice(product) {
-
-        if (!product) {
-            return false;
-        }
-
-
-        const status =
-            getProductPriceStatus(product);
-
-
-        if (status !== "priced") {
-            return false;
-        }
-
-
-        const price =
-            Number(product.price);
-
-
-        return (
-            Number.isFinite(price) &&
-            price >= 0
-        );
-    }
-
-
-    /*=====================================================
-      9. DEBUG LOGGER
-    =====================================================*/
-
-    function log() {
-
-        if (!NEXPAK_ONLINE.config.debug) {
-            return;
-        }
-
-        const args =
-            Array.prototype.slice.call(arguments);
-
-        args.unshift("[NEXPAK ONLINE]");
-
-        console.log.apply(
-            console,
-            args
-        );
-    }
-
-
-    function warn() {
-
-        const args =
-            Array.prototype.slice.call(arguments);
-
-        args.unshift("[NEXPAK ONLINE]");
-
-        console.warn.apply(
-            console,
-            args
-        );
-    }
-
-
-    function error() {
-
-        const args =
-            Array.prototype.slice.call(arguments);
-
-        args.unshift("[NEXPAK ONLINE]");
-
-        console.error.apply(
-            console,
-            args
-        );
-    }
-
-
-    /*=====================================================
-      10. INITIAL STATE RESET
-    =====================================================*/
-
-    function resetStoreState() {
-
-        const state =
-            NEXPAK_ONLINE.state;
-
-
-        state.searchTerm = "";
-
-        state.category =
-            NEXPAK_ONLINE.config.defaultCategory;
-
-        state.subcategory = "all";
-
-        state.brand =
-            NEXPAK_ONLINE.config.defaultBrand;
-
-        state.productType =
-            NEXPAK_ONLINE.config.defaultProductType;
-
-        state.stockStatus = "all";
-
-        state.featuredOnly = false;
-
-        state.popularOnly = false;
-
-        state.newOnly = false;
-
-        state.sortBy =
-            NEXPAK_ONLINE.config.defaultSort;
-
-        state.currentPage = 1;
-
-        state.productsPerPage =
-            NEXPAK_ONLINE.config.defaultProductsPerPage;
-
-        state.viewMode =
-            NEXPAK_ONLINE.config.defaultViewMode;
-
-        state.selectedProduct = null;
-
-        state.error = null;
-
-
-        state.visibleProducts =
-            state.allProducts.slice();
-
-        state.filteredProducts =
-            state.visibleProducts.length;
-    }
-
-
-    /*=====================================================
-      11. MAIN INITIALIZATION
-    =====================================================*/
-          function initialize() {
-
-        if (NEXPAK_ONLINE.initialized) {
-
-            log(
-                "Store engine already initialized."
-            );
-
-            return NEXPAK_ONLINE;
-        }
-
-
-        log(
-            "Initializing NEXPAK Online Store Engine..."
-        );
-
-
-        /*-----------------------------------------------
-          Connect database
-        -----------------------------------------------*/
-
-        connectDatabase();
-
-
-        /*-----------------------------------------------
-          Validate database
-        -----------------------------------------------*/
-
-        if (!validateDatabaseConnection()) {
-
-            error(
-                "Database initialization failed."
-            );
-
-            return NEXPAK_ONLINE;
-        }
-
-
-        /*-----------------------------------------------
-          Cache DOM
-        -----------------------------------------------*/
-
-        cacheDOMElements();
-
-
-        /*-----------------------------------------------
-          Reset state
-        -----------------------------------------------*/
-
-        resetStoreState();
-
-
-        /*-----------------------------------------------
-          Runtime metadata
-        -----------------------------------------------*/
-
-        NEXPAK_ONLINE.meta.initializedAt =
-            new Date().toISOString();
-
-
-        NEXPAK_ONLINE.initialized =
-            true;
-
-
-        log(
-            "Database connected:",
-            NEXPAK_ONLINE.state.totalProducts,
-            "products"
-        );
-
-
-        log(
-            "NEXPAK Online Store Engine Part 1 ready."
-        );
-
-
-        return NEXPAK_ONLINE;
-    }
-
-
-    /*=====================================================
-      12. PUBLIC API
-    =====================================================*/
-
-    NEXPAK_ONLINE.init =
-        initialize;
-
-    NEXPAK_ONLINE.connectDatabase =
-        connectDatabase;
-
-    NEXPAK_ONLINE.validateDatabase =
-        validateDatabaseConnection;
-
-    NEXPAK_ONLINE.cacheDOM =
-        cacheDOMElements;
-
-    NEXPAK_ONLINE.resetState =
-        resetStoreState;
-
-
-    /* Safe helpers exposed for Parts 2–8 */
-
-    NEXPAK_ONLINE.helpers = {
-
-        safeString: safeString,
-        safeLower: safeLower,
-        safeArray: safeArray,
-        safeObject: safeObject,
-        escapeHTML: escapeHTML,
-
-        getProductID: getProductID,
-        getProductSKU: getProductSKU,
-        getProductName: getProductName,
-        getProductBrand: getProductBrand,
-        getProductCategory: getProductCategory,
-
-        getProductPriceStatus:
-            getProductPriceStatus,
-
-        hasConfirmedPrice:
-            hasConfirmedPrice,
-
-        log: log,
-        warn: warn,
-        error: error
-    };
-
-
-    /*=====================================================
-      13. GLOBAL EXPORT
-    =====================================================*/
-
-    window.NEXPAK_ONLINE =
-        NEXPAK_ONLINE;
-
-
-    /*
-     * Compatibility alias.
-     *
-     * This allows later scripts to reference the engine
-     * using either NEXPAK_ONLINE or NEXPAKOnline.
-     */
-
-    window.NEXPAKOnline =
-        NEXPAK_ONLINE;
-
-
-    /*=====================================================
-      14. AUTOMATIC INITIALIZATION
-    =====================================================*/
-
-    function boot() {
-
-        try {
-
-            initialize();
-
-        } catch (err) {
-
-            NEXPAK_ONLINE.state.error =
-                err.message ||
-                "Unknown online store initialization error.";
-
-            error(
-                "Store initialization error:",
-                err
-            );
-        }
-    }
-
-
-    if (document.readyState === "loading") {
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            boot,
-            {
-                once: true
-            }
-        );
-
-    } else {
-
-        boot();
-    }
-
-
-})(window, document);
-
-
-/*=========================================================
- END OF online.js — PART 1/8
-=========================================================*/
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE ENGINE
- ---------------------------------------------------------
- File: online.js
- Part: 2/8
- Purpose:
- - Product rendering engine
- - Product card generation
- - Product pricing display
- - Product action buttons
- - Product selection hooks
- - Empty-state rendering
-
- Continues directly from:
- online.js — Part 1/8
-=========================================================*/
-
-
-/*=========================================================
- 15. PRODUCT RENDERING ENGINE
-=========================================================*/
-
-(function (window, document) {
-
-    "use strict";
-
-
-    /*-----------------------------------------------------
-      Get existing NEXPAK online engine
-    -----------------------------------------------------*/
-
-    const STORE =
-        window.NEXPAK_ONLINE;
-
-
-    if (!STORE) {
+    if (
+        typeof NEXPAK_ONLINE_KITS === "undefined"
+    ) {
 
         console.error(
-            "[NEXPAK ONLINE] Part 2 could not start. " +
-            "Part 1 must load first."
+            "NEXPAK Online Store: NEXPAK_ONLINE_KITS is not loaded."
         );
 
-        return;
+        return false;
+
     }
 
-
-    const helpers =
-        STORE.helpers;
-
-
-    /*=====================================================
-      16. PRODUCT FIELD HELPERS
-    =====================================================*/
-
-
-    function getProductImage(product) {
-
-        if (!product) {
-            return "";
-        }
-
-
-        /*
-         * Support multiple possible database image fields.
-         */
-
-        const image =
-            product.image ||
-            product.imageUrl ||
-            product.imageURL ||
-            product.img ||
-            product.thumbnail ||
-            product.photo ||
-            "";
-
-
-        if (typeof image === "string") {
-            return image.trim();
-        }
-
-
-        /*
-         * Some product databases may store images
-         * inside an array.
-         */
-
-        if (Array.isArray(product.images)) {
-
-            if (product.images.length > 0) {
-
-                const firstImage =
-                    product.images[0];
-
-                if (typeof firstImage === "string") {
-                    return firstImage;
-                }
-
-                if (
-                    firstImage &&
-                    typeof firstImage === "object"
-                ) {
-
-                    return (
-                        firstImage.url ||
-                        firstImage.src ||
-                        firstImage.image ||
-                        ""
-                    );
-                }
-            }
-        }
-
-
-        return "";
-    }
-
-
-    function getProductDescription(product) {
-
-        if (!product) {
-            return "";
-        }
-
-
-        return helpers.safeString(
-            product.shortDescription ||
-            product.short_description ||
-            product.description ||
-            product.summary ||
-            ""
-        );
-    }
-
-
-    function getProductSubcategory(product) {
-
-        if (!product) {
-            return "";
-        }
-
-
-        return helpers.safeString(
-            product.subcategory ||
-            product.subCategory ||
-            product.sub_category ||
-            ""
-        );
-    }
-
-
-    function getProductType(product) {
-
-        if (!product) {
-            return "";
-        }
-
-
-        return helpers.safeString(
-            product.productType ||
-            product.type ||
-            product.product_type ||
-            ""
-        );
-    }
-
-
-    function getProductStockStatus(product) {
-
-        if (!product) {
-            return "unknown";
-        }
-
-
-        return helpers.safeLower(
-            product.stockStatus ||
-            product.stock ||
-            product.availability ||
-            "unknown"
-        );
-    }
-
-
-    function getProductWarranty(product) {
-
-        if (!product) {
-            return "";
-        }
-
-
-        return helpers.safeString(
-            product.warranty ||
-            product.warrantyPeriod ||
-            product.guarantee ||
-            ""
-        );
-    }
-
-
-    /*=====================================================
-      17. PRODUCT URL / LINK HANDLING
-    =====================================================*/
-
-
-    function getProductLink(product) {
-
-        if (!product) {
-            return "#";
-        }
-
-
-        /*
-         * Respect an existing product URL if the database
-         * contains one.
-         */
-
-        const existingURL =
-            product.url ||
-            product.link ||
-            product.productUrl ||
-            product.productURL;
-
-
-        if (existingURL) {
-            return helpers.safeString(existingURL);
-        }
-
-
-        /*
-         * No fake page is created here.
-         *
-         * The product-card button uses the internal
-         * product-selection engine instead.
-         */
-
-        return "#";
-    }
-
-
-    /*=====================================================
-      18. PRICE FORMATTING
-    =====================================================*/
-
-
-    function formatPrice(product) {
-
-        if (!product) {
-            return "";
-        }
-
-
-        if (!helpers.hasConfirmedPrice(product)) {
-            return "";
-        }
-
-
-        const numericPrice =
-            Number(product.price);
-
-
-        if (!Number.isFinite(numericPrice)) {
-            return "";
-        }
-
-
-        /*
-         * South African Rand formatting.
-         */
-
-        try {
-
-            return new Intl.NumberFormat(
-                "en-ZA",
-                {
-                    style: "currency",
-                    currency: "ZAR",
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                }
-            ).format(numericPrice);
-
-        } catch (error) {
-
-            return "R " +
-                numericPrice.toFixed(2);
-        }
-    }
-
-
-    /*=====================================================
-      19. PRICE DISPLAY
-    =====================================================*/
-
-
-    function renderPrice(product) {
-
-        const status =
-            helpers.getProductPriceStatus(product);
-
-
-        /*-----------------------------------------------
-          Confirmed price
-        -----------------------------------------------*/
-
-        if (status === "priced") {
-
-            const price =
-                formatPrice(product);
-
-
-            if (price) {
-
-                return `
-                    <div class="online-product-price"
-                         data-price-status="priced">
-                        <span class="price-label">
-                            ${helpers.escapeHTML(price)}
-                        </span>
-                    </div>
-                `;
-            }
-        }
-
-
-        /*-----------------------------------------------
-          Request price
-        -----------------------------------------------*/
-
-        if (status === "request-price") {
-
-            return `
-                <div class="online-product-price online-request-price"
-                     data-price-status="request-price">
-                    <span class="price-label">
-                        Request Price
-                    </span>
-                </div>
-            `;
-        }
-
-
-        /*-----------------------------------------------
-          Quote
-        -----------------------------------------------*/
-
-        return `
-            <div class="online-product-price online-quote-price"
-                 data-price-status="quote">
-                <span class="price-label">
-                    Request Quote
-                </span>
-            </div>
-        `;
-    }
-
-
-    /*=====================================================
-      20. PRODUCT BADGES
-    =====================================================*/
-
-
-    function renderProductBadges(product) {
-
-        if (!product) {
-            return "";
-        }
-
-
-        const badges = [];
-
-
-        /* Featured */
-
-        if (
-            product.featured === true ||
-            product.isFeatured === true
-        ) {
-
-            badges.push(
-                `<span class="online-product-badge featured">
-                    Featured
-                </span>`
-            );
-        }
-
-
-        /* Popular */
-
-        if (
-            product.popular === true ||
-            product.isPopular === true
-        ) {
-
-            badges.push(
-                `<span class="online-product-badge popular">
-                    Popular
-                </span>`
-            );
-        }
-
-
-        /* New */
-
-        if (
-            product.new === true ||
-            product.isNew === true ||
-            product.newProduct === true
-        ) {
-
-            badges.push(
-                `<span class="online-product-badge new">
-                    New
-                </span>`
-            );
-        }
-
-
-        /* Kit */
-
-        if (
-            product.isKit === true ||
-            product.kit === true
-        ) {
-
-            badges.push(
-                `<span class="online-product-badge kit">
-                    Kit
-                </span>`
-            );
-        }
-
-
-        if (!badges.length) {
-            return "";
-        }
-
-
-        return `
-            <div class="online-product-badges">
-                ${badges.join("")}
-            </div>
-        `;
-    }
-
-
-    /*=====================================================
-      21. STOCK DISPLAY
-    =====================================================*/
-
-
-    function renderStockStatus(product) {
-
-        const status =
-            getProductStockStatus(product);
-
-
-        switch (status) {
-
-            case "in-stock":
-            case "instock":
-            case "available":
-
-                return `
-                    <span class="online-stock-status in-stock">
-                        In Stock
-                    </span>
-                `;
-
-
-            case "low-stock":
-            case "lowstock":
-
-                return `
-                    <span class="online-stock-status low-stock">
-                        Low Stock
-                    </span>
-                `;
-
-
-            case "out-of-stock":
-            case "outofstock":
-            case "unavailable":
-
-                return `
-                    <span class="online-stock-status out-of-stock">
-                        Out of Stock
-                    </span>
-                `;
-
-
-            case "pre-order":
-            case "preorder":
-
-                return `
-                    <span class="online-stock-status pre-order">
-                        Pre-Order
-                    </span>
-                `;
-
-
-            default:
-
-                return "";
-        }
-    }
-
-
-    /*=====================================================
-      22. PRODUCT ACTION BUTTON
-    =====================================================*/
-
-
-    function getPrimaryAction(product) {
-
-        if (!product) {
-            return "";
-        }
-
-
-        const priceStatus =
-            helpers.getProductPriceStatus(product);
-
-
-        const productID =
-            helpers.getProductID(product);
-
-
-        const escapedID =
-            helpers.escapeHTML(productID);
-
-
-        /*-----------------------------------------------
-          Confirmed price
-        -----------------------------------------------*/
-
-        if (priceStatus === "priced") {
-
-            return `
-                <button
-                    type="button"
-                    class="online-product-action online-add-to-cart"
-                    data-action="add-to-cart"
-                    data-product-id="${escapedID}"
-                    aria-label="Add ${helpers.escapeHTML(
-                        helpers.getProductName(product)
-                    )} to cart">
-
-                    <span class="action-text">
-                        Add to Cart
-                    </span>
-
-                </button>
-            `;
-        }
-
-
-        /*-----------------------------------------------
-          Request price
-        -----------------------------------------------*/
-
-        if (priceStatus === "request-price") {
-
-            return `
-                <button
-                    type="button"
-                    class="online-product-action online-request-product-price"
-                    data-action="request-price"
-                    data-product-id="${escapedID}">
-
-                    <span class="action-text">
-                        Request Price
-                    </span>
-
-                </button>
-            `;
-        }
-
-
-        /*-----------------------------------------------
-          Quote
-        -----------------------------------------------*/
-
-        return `
-            <button
-                type="button"
-                class="online-product-action online-request-quote"
-                data-action="request-quote"
-                data-product-id="${escapedID}">
-
-                <span class="action-text">
-                    Request Quote
-                </span>
-
-            </button>
-        `;
-    }
-
-
-    /*=====================================================
-      23. PRODUCT CARD
-    =====================================================*/
-
-
-    function renderProductCard(product) {
-
-        if (!product) {
-            return "";
-        }
-
-
-        const productID =
-            helpers.getProductID(product);
-
-
-        const sku =
-            helpers.getProductSKU(product);
-
-
-        const name =
-            helpers.getProductName(product);
-
-
-        const brand =
-            helpers.getProductBrand(product);
-
-
-        const category =
-            helpers.getProductCategory(product);
-
-
-        const subcategory =
-            getProductSubcategory(product);
-
-
-        const productType =
-            getProductType(product);
-
-
-        const description =
-            getProductDescription(product);
-
-
-        const image =
-            getProductImage(product);
-
-
-        const warranty =
-            getProductWarranty(product);
-
-
-        const escapedID =
-            helpers.escapeHTML(productID);
-
-
-        const escapedName =
-            helpers.escapeHTML(name);
-
-
-        const escapedSKU =
-            helpers.escapeHTML(sku);
-
-
-        const escapedBrand =
-            helpers.escapeHTML(brand);
-
-
-        const escapedCategory =
-            helpers.escapeHTML(category);
-
-
-        const escapedSubcategory =
-            helpers.escapeHTML(subcategory);
-
-
-        const escapedProductType =
-            helpers.escapeHTML(productType);
-
-
-        const escapedDescription =
-            helpers.escapeHTML(description);
-
-
-        const escapedWarranty =
-            helpers.escapeHTML(warranty);
-
-
-        /*-----------------------------------------------
-          Image
-        -----------------------------------------------*/
-
-        let imageHTML;
-
-
-        if (image) {
-
-            imageHTML = `
-                <img
-                    src="${helpers.escapeHTML(image)}"
-                    alt="${escapedName}"
-                    class="online-product-image"
-                    loading="lazy"
-                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                >
-
-                <div
-                    class="online-product-image-placeholder"
-                    style="display:none;"
-                    aria-hidden="true">
-                    <span>Image unavailable</span>
-                </div>
-            `;
-
-        } else {
-
-            imageHTML = `
-                <div
-                    class="online-product-image-placeholder"
-                    aria-hidden="true">
-
-                    <span>
-                        NEXPAK Security
-                    </span>
-
-                </div>
-            `;
-        }
-
-
-        /*-----------------------------------------------
-          Product metadata
-        -----------------------------------------------*/
-
-        const metadata = [];
-
-
-        if (brand) {
-
-            metadata.push(`
-                <span class="online-product-brand">
-                    ${escapedBrand}
-                </span>
-            `);
-        }
-
-
-        if (category) {
-
-            metadata.push(`
-                <span class="online-product-category">
-                    ${escapedCategory}
-                </span>
-            `);
-        }
-
-
-        /*-----------------------------------------------
-          SKU
-        -----------------------------------------------*/
-
-        const skuHTML =
-            sku
-                ? `
-                    <div class="online-product-sku">
-                        SKU:
-                        <span>${escapedSKU}</span>
-                    </div>
-                `
-                : "";
-
-
-        /*-----------------------------------------------
-          Product type
-        -----------------------------------------------*/
-
-        const typeHTML =
-            productType
-                ? `
-                    <div class="online-product-type"
-                         data-product-type="${escapedProductType}">
-                        ${escapedProductType}
-                    </div>
-                `
-                : "";
-
-
-        /*-----------------------------------------------
-          Subcategory
-        -----------------------------------------------*/
-
-        const subcategoryHTML =
-            subcategory
-                ? `
-                    <div class="online-product-subcategory">
-                        ${escapedSubcategory}
-                    </div>
-                `
-                : "";
-
-
-        /*-----------------------------------------------
-          Warranty
-        -----------------------------------------------*/
-
-        const warrantyHTML =
-            warranty
-                ? `
-                    <div class="online-product-warranty">
-                        Warranty:
-                        ${escapedWarranty}
-                    </div>
-                `
-                : "";
-
-
-        /*-----------------------------------------------
-          Description
-        -----------------------------------------------*/
-
-        const descriptionHTML =
-            description
-                ? `
-                    <div class="online-product-description">
-                        ${escapedDescription}
-                    </div>
-                `
-                : "";
-
-
-        /*-----------------------------------------------
-          Product card
-        -----------------------------------------------*/
-
-        return `
-            <article
-                class="online-product-card"
-                data-product-id="${escapedID}"
-                data-product-sku="${escapedSKU}"
-                data-category="${escapedCategory}"
-                data-subcategory="${escapedSubcategory}"
-                data-brand="${escapedBrand}"
-                data-product-type="${escapedProductType}"
-                tabindex="0">
-
-                <div class="online-product-image-wrap">
-
-                    ${renderProductBadges(product)}
-
-                    ${imageHTML}
-
-                </div>
-
-
-                <div class="online-product-card-body">
-
-                    <div class="online-product-meta">
-
-                        ${metadata.join("")}
-
-                    </div>
-
-
-                    <h3 class="online-product-name">
-                        ${escapedName}
-                    </h3>
-
-
-                    ${skuHTML}
-
-
-                    ${typeHTML}
-
-
-                    ${subcategoryHTML}
-
-
-                    ${descriptionHTML}
-
-
-                    ${renderStockStatus(product)}
-
-
-                    ${warrantyHTML}
-
-
-                    <div class="online-product-purchase">
-
-                        ${renderPrice(product)}
-
-                        <div class="online-product-actions">
-
-                            <button
-                                type="button"
-                                class="online-product-view"
-                                data-action="view-product"
-                                data-product-id="${escapedID}">
-                                View Details
-                            </button>
-                                          ${getPrimaryAction(product)}
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </article>
-        `;
-    }
-
-
-    /*=====================================================
-      24. PRODUCT COLLECTION RENDERING
-    =====================================================*/
-
-
-    function renderProducts(products, container) {
-
-        /*
-         * If no explicit product array is supplied,
-         * use the current visible product collection.
-         */
-
-        const collection =
-            Array.isArray(products)
-                ? products
-                : STORE.state.visibleProducts;
-
-
-        /*
-         * If no container is supplied, use the product grid
-         * discovered during Part 1.
-         */
-
-        const target =
-            container ||
-            STORE.elements.productGrid ||
-            STORE.elements.productList;
-
-
-        if (!target) {
-
-            STORE.helpers.warn(
-                "Product rendering skipped: product container not found."
-            );
-
-            return false;
-        }
-
-
-        /*-----------------------------------------------
-          Empty results
-        -----------------------------------------------*/
-
-        if (!collection.length) {
-
-            renderEmptyProducts(target);
-
-            STORE.meta.lastRenderAt =
-                new Date().toISOString();
-
-            return true;
-        }
-
-
-        /*-----------------------------------------------
-          Render cards
-        -----------------------------------------------*/
-
-        target.innerHTML =
-            collection
-                .map(renderProductCard)
-                .join("");
-
-
-        STORE.meta.lastRenderAt =
-            new Date().toISOString();
-
-
-        STORE.flags.renderingReady =
-            true;
-
-
-        updateProductCount(
-            collection.length
+    if (
+        !Array.isArray(
+            NEXPAK_ONLINE_KITS
+        )
+    ) {
+
+        console.error(
+            "NEXPAK Online Store: NEXPAK_ONLINE_KITS is not an array."
         );
 
+        return false;
 
-        return true;
     }
 
+    return true;
 
-    /*=====================================================
-      25. EMPTY PRODUCT STATE
-    =====================================================*/
-
-
-    function renderEmptyProducts(container) {
-
-        if (!container) {
-            return;
-        }
+}
 
 
-        container.innerHTML = `
-            <div class="online-empty-products">
+/* =========================================================
+   4. GET ALL ONLINE KITS
+========================================================= */
 
-                <div class="online-empty-products-icon">
-                    🔍
-                </div>
+function getAllNexpakOnlineKits() {
 
-                <h3>
-                    No Security Products Found
-                </h3>
+    if (
+        !verifyNexpakOnlineDatabase()
+    ) {
 
-                <p>
-                    We couldn't find products matching
-                    your current selection.
-                </p>
+        return [];
 
-                <button
-                    type="button"
-                    class="online-reset-products"
-                    data-action="reset-store">
-
-                    Clear Filters
-
-                </button>
-
-            </div>
-        `;
     }
 
+    return [
+        ...NEXPAK_ONLINE_KITS
+    ];
 
-    /*=====================================================
-      26. PRODUCT COUNT
-    =====================================================*/
+}
 
 
-    function updateProductCount(count) {
+/* =========================================================
+   5. GET CURRENT CATEGORY
+========================================================= */
 
-        const countElement =
-            STORE.elements.productCount;
+function getCurrentNexpakOnlineCategory() {
 
-
-        if (!countElement) {
-            return;
-        }
-
-
-        const safeCount =
-            Number.isFinite(Number(count))
-                ? Number(count)
-                : 0;
-
-
-        countElement.textContent =
-            safeCount.toLocaleString("en-ZA");
-    }
-
-
-    /*=====================================================
-      27. PRODUCT LOOKUP
-    =====================================================*/
-
-
-    function findProduct(productID) {
-
-        const id =
-            helpers.safeLower(productID);
-
-
-        if (!id) {
-            return null;
-        }
-
-
-        const products =
-            STORE.state.allProducts;
-
-
-        return products.find(function (product) {
-
-            return (
-                helpers.safeLower(
-                    helpers.getProductID(product)
-                ) === id
-            );
-
-        }) || null;
-    }
-
-
-    /*=====================================================
-      28. PRODUCT SELECTION
-    =====================================================*/
-
-
-    function selectProduct(productID) {
-
-        const product =
-            findProduct(productID);
-
-
-        if (!product) {
-
-            helpers.warn(
-                "Product not found:",
-                productID
-            );
-
-            return null;
-        }
-
-
-        STORE.state.selectedProduct =
-            product;
-
-
-        /*
-         * Later Parts can listen for this event.
-         */
-
-        document.dispatchEvent(
-            new CustomEvent(
-                "nexpak:product-selected",
-                {
-                    detail: {
-                        product: product,
-                        productID:
-                            helpers.getProductID(product)
-                    }
-                }
-            )
-        );
-
-
-        return product;
-    }
-
-
-    /*=====================================================
-      29. PRODUCT DETAIL TARGET
-    =====================================================*/
-
-
-    function renderSelectedProduct(container) {
-
-        const product =
-            STORE.state.selectedProduct;
-
-
-        if (!product) {
-            return false;
-        }
-
-
-        const target =
-            container ||
-            STORE.elements.productDetails;
-
-
-        if (!target) {
-            return false;
-        }
-
-
-        const name =
-            helpers.escapeHTML(
-                helpers.getProductName(product)
-            );
-
-
-        const sku =
-            helpers.escapeHTML(
-                helpers.getProductSKU(product)
-            );
-
-
-        const brand =
-            helpers.escapeHTML(
-                helpers.getProductBrand(product)
-            );
-
-
-        const category =
-            helpers.escapeHTML(
-                helpers.getProductCategory(product)
-            );
-
-
-        const description =
-            helpers.escapeHTML(
-                getProductDescription(product)
-            );
-
-
-        const image =
-            getProductImage(product);
-
-
-        const imageHTML =
-            image
-                ? `
-                    <img
-                        src="${helpers.escapeHTML(image)}"
-                        alt="${name}"
-                        class="online-product-detail-image"
-                        loading="lazy">
-                `
-                : `
-                    <div class="online-product-detail-image-placeholder">
-                        NEXPAK Security
-                    </div>
-                `;
-
-
-        target.innerHTML = `
-            <section
-                class="online-product-detail"
-                data-product-id="${helpers.escapeHTML(
-                    helpers.getProductID(product)
-                )}">
-
-                <div class="online-product-detail-image-wrap">
-
-                    ${imageHTML}
-
-                </div>
-
-
-                <div class="online-product-detail-content">
-
-                    <div class="online-product-detail-brand">
-                        ${brand}
-                    </div>
-
-
-                    <h2 class="online-product-detail-title">
-                        ${name}
-                    </h2>
-
-
-                    ${
-                        sku
-                            ? `
-                                <div class="online-product-detail-sku">
-                                    SKU: ${sku}
-                                </div>
-                            `
-                            : ""
-                    }
-
-
-                    ${
-                        category
-                            ? `
-                                <div class="online-product-detail-category">
-                                    ${category}
-                                </div>
-                            `
-                            : ""
-                    }
-
-
-                    ${
-                        description
-                            ? `
-                                <div class="online-product-detail-description">
-                                    ${description}
-                                </div>
-                            `
-                            : ""
-                    }
-
-
-                    <div class="online-product-detail-price">
-
-                        ${renderPrice(product)}
-
-                    </div>
-
-
-                    <div class="online-product-detail-action">
-
-                        ${getPrimaryAction(product)}
-
-                    </div>
-
-                </div>
-
-            </section>
-        `;
-
-
-        return true;
-    }
-
-
-    /*=====================================================
-      30. EVENT DELEGATION FOR PRODUCT CARDS
-    =====================================================*/
-
-
-    function handleProductAction(event) {
-
-        const button =
-            event.target.closest(
-                "[data-action]"
-            );
-
-
-        if (!button) {
-            return;
-        }
-
-
-        const action =
-            button.getAttribute(
-                "data-action"
-            );
-
-
-        const productID =
-            button.getAttribute(
-                "data-product-id"
-            );
-
-
-        if (!action) {
-            return;
-        }
-
-
-        /*-----------------------------------------------
-          View product
-        -----------------------------------------------*/
-
-        if (
-            action === "view-product"
-        ) {
-
-            const product =
-                selectProduct(productID);
-
-
-            if (product) {
-
-                renderSelectedProduct();
-
-                document.dispatchEvent(
-                    new CustomEvent(
-                        "nexpak:view-product",
-                        {
-                            detail: {
-                                product: product
-                            }
-                        }
-                    )
-                );
-            }
-
-
-            return;
-        }
-
-
-        /*-----------------------------------------------
-          Add to cart
-        -----------------------------------------------*/
-
-        if (
-            action === "add-to-cart"
-        ) {
-
-            const product =
-                selectProduct(productID);
-
-
-            if (!product) {
-                return;
-            }
-
-
-            /*
-             * onlinecart.js will eventually listen for
-             * this event.
-             *
-             * This keeps Part 2 independent from the cart
-             * engine while making integration possible.
-             */
-
-            document.dispatchEvent(
-                new CustomEvent(
-                    "nexpak:add-to-cart",
-                    {
-                        detail: {
-                            product: product,
-                            productID:
-                                helpers.getProductID(product),
-                            quantity: 1
-                        }
-                    }
-                )
-            );
-
-
-            return;
-        }
-
-
-        /*-----------------------------------------------
-          Request price
-        -----------------------------------------------*/
-
-        if (
-            action === "request-price"
-        ) {
-
-            const product =
-                selectProduct(productID);
-
-
-            if (!product) {
-                return;
-            }
-
-
-            document.dispatchEvent(
-                new CustomEvent(
-                    "nexpak:request-price",
-                    {
-                        detail: {
-                            product: product
-                        }
-                    }
-                )
-            );
-
-
-            return;
-        }
-
-
-        /*-----------------------------------------------
-          Request quote
-        -----------------------------------------------*/
-
-        if (
-            action === "request-quote"
-        ) {
-
-            const product =
-                selectProduct(productID);
-
-
-            if (!product) {
-                return;
-            }
-
-
-            document.dispatchEvent(
-                new CustomEvent(
-                    "nexpak:request-quote",
-                    {
-                        detail: {
-                            product: product
-                        }
-                    }
-                )
-            );
-
-
-            return;
-        }
-
-
-        /*-----------------------------------------------
-          Reset store
-        -----------------------------------------------*/
-
-        if (
-            action === "reset-store"
-        ) {
-
-            STORE.resetState();
-
-
-            renderProducts(
-                STORE.state.visibleProducts
-            );
-
-
-            return;
-        }
-    }
-
-
-    /*=====================================================
-      31. PRODUCT CARD KEYBOARD ACCESSIBILITY
-    =====================================================*/
-
-
-    function handleProductKeyboard(event) {
-
-        const card =
-            event.target.closest(
-                ".online-product-card"
-            );
-
-
-        if (!card) {
-            return;
-        }
-
-
-        /*
-         * Do not interfere with buttons.
-         */
-
-        if (
-            event.target.closest("button") ||
-            event.target.closest("a") ||
-            event.target.closest("input")
-        ) {
-            return;
-        }
-
-
-        if (
-            event.key === "Enter" ||
-            event.key === " "
-        ) {
-
-            event.preventDefault();
-
-
-            const productID =
-                card.getAttribute(
-                    "data-product-id"
-                );
-
-
-            if (productID) {
-
-                selectProduct(productID);
-
-                renderSelectedProduct();
-
-
-                document.dispatchEvent(
-                    new CustomEvent(
-                        "nexpak:view-product",
-                        {
-                            detail: {
-                                product:
-                                    STORE.state.selectedProduct
-                            }
-                        }
-                    )
-                );
-            }
-        }
-    }
-
-
-    /*=====================================================
-      32. PRODUCT EVENTS
-    =====================================================*/
-
-
-    function initializeProductEvents() {
-
-        /*
-         * Use document-level delegation so dynamically
-         * rendered product cards work automatically.
-         */
-
-        document.addEventListener(
-            "click",
-            handleProductAction
-        );
-
-
-        document.addEventListener(
-            "keydown",
-            handleProductKeyboard
-        );
-
-
-        STORE.flags.eventsReady =
-            true;
-    }
-
-
-    /*=====================================================
-      33. PUBLIC PRODUCT API
-    =====================================================*/
-
-
-    STORE.products = {
-
-        /* Rendering */
-
-        render:
-            renderProducts,
-
-        renderCard:
-            renderProductCard,
-
-        renderSelected:
-            renderSelectedProduct,
-
-        renderEmpty:
-            renderEmptyProducts,
-
-
-        /* Lookup */
-
-        find:
-            findProduct,
-
-        select:
-            selectProduct,
-
-
-        /* Pricing */
-
-        formatPrice:
-            formatPrice,
-
-        renderPrice:
-            renderPrice,
-
-
-        /* Product fields */
-
-        getImage:
-            getProductImage,
-
-        getDescription:
-            getProductDescription,
-
-        getSubcategory:
-            getProductSubcategory,
-
-        getType:
-            getProductType,
-
-        getStockStatus:
-            getProductStockStatus,
-
-        getWarranty:
-            getProductWarranty,
-
-
-        /* Actions */
-
-        getPrimaryAction:
-            getPrimaryAction,
-
-
-        /* Events */
-
-        initializeEvents:
-            initializeProductEvents
-    };
-
-
-    /*=====================================================
-      34. INITIALIZE PRODUCT EVENTS
-    =====================================================*/
-
-    initializeProductEvents();
-
-
-    /*=====================================================
-      35. PART 2 READY
-    =====================================================*/
-
-    helpers.log(
-        "online.js Part 2 loaded — Product Rendering Engine ready."
+    return (
+        NEXPAK_ONLINE_STATE.currentCategory
+        || "all"
     );
 
-
-})(window, document);
-
-
-/*=========================================================
- END OF online.js — PART 2/8
-=========================================================*/
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE ENGINE
- ---------------------------------------------------------
- File: online.js
- Part: 3/8
- Purpose:
- - Product search
- - Category filtering
- - Subcategory filtering
- - Brand filtering
- - Product type filtering
- - Stock filtering
- - Featured filtering
- - Popular filtering
- - New-product filtering
- - Search aliases
- - Combined filtering
-
- Continues directly from:
- online.js — Part 1/8
- online.js — Part 2/8
-=========================================================*/
-
-(function (window, document) {
-
-    "use strict";
+}
 
 
-    /*=====================================================
-      36. STORE CONNECTION
-    =====================================================*/
+/* =========================================================
+   6. SET CURRENT CATEGORY
+========================================================= */
 
-    const STORE =
-        window.NEXPAK_ONLINE;
+function setNexpakOnlineCategory(
+    categoryId
+) {
+
+    NEXPAK_ONLINE_STATE.currentCategory =
+        categoryId || "all";
+
+    return getNexpakOnlineKitsForDisplay();
+
+}
 
 
-    if (!STORE) {
+/* =========================================================
+   7. GET KITS FOR CURRENT CATEGORY
+========================================================= */
 
-        console.error(
-            "[NEXPAK ONLINE] Part 3 could not start. " +
-            "Parts 1 and 2 must load first."
-        );
+function getNexpakOnlineKitsForDisplay() {
 
-        return;
+    let kits =
+        getAllNexpakOnlineKits();
+
+    const category =
+        getCurrentNexpakOnlineCategory();
+
+    const search =
+        (
+            NEXPAK_ONLINE_STATE.currentSearch
+            || ""
+        )
+        .trim()
+        .toLowerCase();
+
+
+    /* -----------------------------------------------------
+       CATEGORY FILTER
+    ----------------------------------------------------- */
+
+    if (
+        category &&
+        category !== "all"
+    ) {
+
+        kits =
+            kits.filter(
+
+                kit =>
+                    kit.category ===
+                    category
+
+            );
+
     }
 
 
-    const helpers =
-        STORE.helpers;
+    /* -----------------------------------------------------
+       SEARCH FILTER
+    ----------------------------------------------------- */
+
+    if (search) {
+
+        kits =
+            kits.filter(
+
+                kit => {
+
+                    const name =
+                        (
+                            kit.name ||
+                            ""
+                        ).toLowerCase();
+
+                    const description =
+                        (
+                            kit.shortDescription ||
+                            ""
+                        ).toLowerCase();
+
+                    const brand =
+                        (
+                            kit.brand ||
+                            ""
+                        ).toLowerCase();
+
+                    const sku =
+                        (
+                            kit.sku ||
+                            ""
+                        ).toLowerCase();
+
+                    const tags =
+                        Array.isArray(
+                            kit.tags
+                        )
+                            ? kit.tags.join(" ")
+                                .toLowerCase()
+                            : "";
 
 
-    /*=====================================================
-      37. SEARCHABLE PRODUCT CONTENT
-    =====================================================*/
+                    return (
 
-    function getSearchableText(product) {
+                        name.includes(search) ||
 
-        if (!product) {
-            return "";
-        }
+                        description.includes(search) ||
+
+                        brand.includes(search) ||
+
+                        sku.includes(search) ||
+
+                        tags.includes(search)
+
+                    );
+
+                }
+
+            );
+
+    }
 
 
-        const searchableFields = [
+    /* -----------------------------------------------------
+       SORT
+    ----------------------------------------------------- */
 
-            product.id,
-            product.productId,
-            product.productID,
+    kits =
+        sortNexpakOnlineKits(
+            kits,
+            NEXPAK_ONLINE_STATE.currentSort
+        );
 
-            product.sku,
-            product.SKU,
 
-            product.name,
-            product.productName,
-            product.title,
+    NEXPAK_ONLINE_STATE.displayedKits =
+        kits;
 
-            product.brand,
-            product.manufacturer,
+    return kits;
 
-            product.category,
-            product.mainCategory,
+}
 
-            product.subcategory,
-            product.subCategory,
 
-            product.productType,
-            product.type,
+/* =========================================================
+   8. SEARCH ONLINE STORE
+========================================================= */
 
-            product.description,
-            product.shortDescription,
-            product.summary,
+function searchNexpakOnlineStore(
+    searchTerm
+) {
 
-            product.tags,
-            product.keywords,
+    NEXPAK_ONLINE_STATE.currentSearch =
+        searchTerm || "";
 
-            product.features,
-            product.specifications,
+    return getNexpakOnlineKitsForDisplay();
 
-            product.compatibility,
+}
 
-            product.model,
-            product.series,
 
-            product.code
+/* =========================================================
+   9. CLEAR SEARCH
+========================================================= */
+
+function clearNexpakOnlineSearch() {
+
+    NEXPAK_ONLINE_STATE.currentSearch =
+        "";
+
+    return getNexpakOnlineKitsForDisplay();
+
+}
+
+
+/* =========================================================
+   10. SORT KITS
+========================================================= */
+
+function sortNexpakOnlineKits(
+    kits,
+    sortType
+) {
+
+    const sorted =
+        [
+            ...kits
         ];
 
 
-        let text = "";
+    switch (
+        sortType
+    ) {
+
+        case "price-low":
+
+            sorted.sort(
+
+                (
+                    a,
+                    b
+                ) =>
+                    (
+                        Number(
+                            a.priceInclVat
+                        ) || 0
+                    )
+                    -
+                    (
+                        Number(
+                            b.priceInclVat
+                        ) || 0
+                    )
+
+            );
+
+            break;
 
 
-        searchableFields.forEach(function (field) {
+        case "price-high":
 
-            if (Array.isArray(field)) {
+            sorted.sort(
 
-                text += " " +
-                    field.join(" ");
+                (
+                    a,
+                    b
+                ) =>
+                    (
+                        Number(
+                            b.priceInclVat
+                        ) || 0
+                    )
+                    -
+                    (
+                        Number(
+                            a.priceInclVat
+                        ) || 0
+                    )
 
-            } else if (
-                field !== null &&
-                field !== undefined
-            ) {
+            );
 
-                text += " " +
-                    String(field);
-            }
-
-        });
-
-
-        return helpers.safeLower(text);
-    }
-
-
-    /*=====================================================
-      38. SEARCH ALIAS MATCHING
-    =====================================================*/
-
-    function getSearchAliases() {
-
-        return STORE.database.aliases || {};
-    }
+            break;
 
 
-    function getAliasesForTerm(term) {
+        case "name":
 
-        const aliases =
-            getSearchAliases();
+            sorted.sort(
 
+                (
+                    a,
+                    b
+                ) =>
+                    (
+                        a.name || ""
+                    ).localeCompare(
+                        b.name || ""
+                    )
 
-        const normalizedTerm =
-            helpers.safeLower(term);
+            );
 
-
-        if (!normalizedTerm) {
-            return [];
-        }
-
-
-        /*
-         * Supported structures:
-         *
-         * {
-         *   cctv: ["camera", "dvr", ...]
-         * }
-         *
-         * or
-         *
-         * {
-         *   CCTV: "camera"
-         * }
-         */
-
-        const matched = [];
+            break;
 
 
-        Object.keys(aliases).forEach(function (key) {
+        case "newest":
 
-            const normalizedKey =
-                helpers.safeLower(key);
+            sorted.sort(
 
-
-            let values =
-                aliases[key];
-
-
-            if (!Array.isArray(values)) {
-
-                values = [
-                    values
-                ];
-            }
-
-
-            const normalizedValues =
-                values
-                    .map(function (value) {
-                        return helpers.safeLower(value);
-                    })
-                    .filter(Boolean);
-
-
-            if (
-                normalizedKey === normalizedTerm ||
-                normalizedValues.indexOf(normalizedTerm) !== -1
-            ) {
-
-                matched.push(
-                    normalizedKey
-                );
-
-
-                normalizedValues.forEach(function (value) {
+                (
+                    a,
+                    b
+                ) => {
 
                     if (
-                        matched.indexOf(value) === -1
+                        a.newProduct ===
+                        b.newProduct
                     ) {
 
-                        matched.push(value);
+                        return 0;
+
                     }
 
-                });
+                    return a.newProduct
+                        ? -1
+                        : 1;
+
+                }
+
+            );
+
+            break;
+
+
+        case "popular":
+
+            sorted.sort(
+
+                (
+                    a,
+                    b
+                ) => {
+
+                    if (
+                        a.popular ===
+                        b.popular
+                    ) {
+
+                        return 0;
+
+                    }
+
+                    return a.popular
+                        ? -1
+                        : 1;
+
+                }
+
+            );
+
+            break;
+
+
+        case "featured":
+
+        default:
+
+            sorted.sort(
+
+                (
+                    a,
+                    b
+                ) => {
+
+                    if (
+                        a.featured ===
+                        b.featured
+                    ) {
+
+                        if (
+                            a.popular ===
+                            b.popular
+                        ) {
+
+                            return 0;
+
+                        }
+
+                        return a.popular
+                            ? -1
+                            : 1;
+
+                    }
+
+                    return a.featured
+                        ? -1
+                        : 1;
+
+                }
+
+            );
+
+            break;
+
+    }
+
+
+    return sorted;
+
+}
+
+
+/* =========================================================
+   11. SET SORT
+========================================================= */
+
+function setNexpakOnlineSort(
+    sortType
+) {
+
+    NEXPAK_ONLINE_STATE.currentSort =
+        sortType || "featured";
+
+    return getNexpakOnlineKitsForDisplay();
+
+}
+
+
+/* =========================================================
+   12. GET KIT
+========================================================= */
+
+function getNexpakOnlineKit(
+    kitId
+) {
+
+    if (
+        typeof getNexpakOnlineKitById ===
+        "function"
+    ) {
+
+        return getNexpakOnlineKitById(
+            kitId
+        );
+
+    }
+
+
+    const kits =
+        getAllNexpakOnlineKits();
+
+
+    return kits.find(
+
+        kit =>
+            kit.id === kitId
+
+    ) || null;
+
+}
+
+
+/* =========================================================
+   13. SELECT KIT
+========================================================= */
+
+function selectNexpakOnlineKit(
+    kitId
+) {
+
+    const kit =
+        getNexpakOnlineKit(
+            kitId
+        );
+
+
+    if (!kit) {
+
+        console.error(
+            "NEXPAK Online Store: Kit not found:",
+            kitId
+        );
+
+        return null;
+
+    }
+
+
+    NEXPAK_ONLINE_STATE.currentKit =
+        kit;
+
+
+    NEXPAK_ONLINE_STATE.currentKitQuantity =
+        NEXPAK_ONLINE_CONFIG.defaultQuantity;
+
+
+    NEXPAK_ONLINE_STATE.selectedOptions =
+        {};
+
+
+    if (
+        Array.isArray(
+            kit.options
+        )
+    ) {
+
+        kit.options.forEach(
+
+            option => {
+
+                if (
+                    option &&
+                    option.id
+                ) {
+
+                    NEXPAK_ONLINE_STATE.selectedOptions[
+                        option.id
+                    ] =
+                        option.default ||
+                        (
+                            option.values &&
+                            option.values[0] &&
+                            option.values[0].id
+                        ) ||
+                        null;
+
+                }
+
             }
 
-        });
+        );
 
-
-        return matched;
     }
 
 
-    /*=====================================================
-      39. SEARCH TERM MATCHING
-    =====================================================*/
+    return kit;
 
-    function productMatchesSearch(
-        product,
-        searchTerm
+}
+
+
+/* =========================================================
+   14. SET KIT QUANTITY
+========================================================= */
+
+function setNexpakOnlineKitQuantity(
+    quantity
+) {
+
+    let value =
+        parseInt(
+            quantity,
+            10
+        );
+
+
+    if (
+        Number.isNaN(value)
     ) {
 
-        const term =
-            helpers.safeLower(searchTerm);
+        value =
+            NEXPAK_ONLINE_CONFIG.defaultQuantity;
 
-
-        if (!term) {
-            return true;
-        }
-
-
-        if (
-            term.length <
-            STORE.config.minimumSearchLength
-        ) {
-            return true;
-        }
-
-
-        const searchableText =
-            getSearchableText(product);
-
-
-        /*
-         * Direct search.
-         */
-
-        if (
-            searchableText.indexOf(term) !== -1
-        ) {
-
-            return true;
-        }
-
-
-        /*
-         * Alias search.
-         */
-
-        const aliases =
-            getAliasesForTerm(term);
-
-
-        if (!aliases.length) {
-            return false;
-        }
-
-
-        return aliases.some(function (alias) {
-
-            return searchableText.indexOf(alias) !== -1;
-
-        });
     }
 
 
-    /*=====================================================
-      40. MULTI-WORD SEARCH
-    =====================================================*/
+    value =
+        Math.max(
 
-    function productMatchesMultiWordSearch(
-        product,
-        searchTerm
-    ) {
+            NEXPAK_ONLINE_CONFIG.minimumQuantity,
 
-        const term =
-            helpers.safeLower(searchTerm);
+            Math.min(
 
+                NEXPAK_ONLINE_CONFIG.maximumQuantity,
 
-        if (!term) {
-            return true;
-        }
+                value
 
-
-        /*
-         * First attempt the complete phrase.
-         */
-
-        if (
-            productMatchesSearch(
-                product,
-                term
             )
-        ) {
 
-            return true;
-        }
-
-
-        /*
-         * Then check individual meaningful words.
-         *
-         * Example:
-         * "Dahua 8 channel"
-         *
-         * A product can match all terms even when they
-         * aren't stored next to one another.
-         */
-
-        const words =
-            term
-                .split(/\s+/)
-                .map(function (word) {
-                    return word.trim();
-                })
-                .filter(function (word) {
-                    return word.length >= 2;
-                });
-
-
-        if (!words.length) {
-            return true;
-        }
-
-
-        const searchableText =
-            getSearchableText(product);
-
-
-        return words.every(function (word) {
-
-            if (
-                searchableText.indexOf(word) !== -1
-            ) {
-
-                return true;
-            }
-
-
-            const aliases =
-                getAliasesForTerm(word);
-
-
-            if (!aliases.length) {
-                return false;
-            }
-
-
-            return aliases.some(function (alias) {
-
-                return searchableText.indexOf(alias) !== -1;
-
-            });
-
-        });
-    }
-
-
-    /*=====================================================
-      41. GENERIC VALUE MATCHER
-    =====================================================*/
-
-    function valueMatches(
-        productValue,
-        selectedValue
-    ) {
-
-        const selected =
-            helpers.safeLower(selectedValue);
-
-
-        if (
-            !selected ||
-            selected === "all" ||
-            selected === "*" ||
-            selected === "any"
-        ) {
-
-            return true;
-        }
-
-
-        if (Array.isArray(productValue)) {
-
-            return productValue.some(function (value) {
-
-                return valueMatches(
-                    value,
-                    selected
-                );
-
-            });
-        }
-
-
-        return (
-            helpers.safeLower(productValue) ===
-            selected
         );
+
+
+    NEXPAK_ONLINE_STATE.currentKitQuantity =
+        value;
+
+
+    return value;
+
+}
+
+
+/* =========================================================
+   15. INCREASE KIT QUANTITY
+========================================================= */
+
+function increaseNexpakOnlineKitQuantity() {
+
+    return setNexpakOnlineKitQuantity(
+
+        NEXPAK_ONLINE_STATE.currentKitQuantity
+        + 1
+
+    );
+
+}
+
+
+/* =========================================================
+   16. DECREASE KIT QUANTITY
+========================================================= */
+
+function decreaseNexpakOnlineKitQuantity() {
+
+    return setNexpakOnlineKitQuantity(
+
+        NEXPAK_ONLINE_STATE.currentKitQuantity
+        - 1
+
+    );
+
+}
+
+
+/* =========================================================
+   17. GET CURRENT KIT QUANTITY
+========================================================= */
+
+function getNexpakOnlineKitQuantity() {
+
+    return (
+        NEXPAK_ONLINE_STATE.currentKitQuantity
+        || 1
+    );
+
+}
+
+
+/* =========================================================
+   18. SET KIT OPTION
+========================================================= */
+
+function setNexpakOnlineKitOption(
+    optionId,
+    value
+) {
+
+    if (!optionId) {
+
+        return false;
+
     }
 
 
-    /*=====================================================
-      42. CATEGORY MATCHING
-    =====================================================*/
-
-    function productMatchesCategory(
-        product,
-        category
-    ) {
-
-        if (
-            !category ||
-            category === "all"
-        ) {
-
-            return true;
-        }
+    NEXPAK_ONLINE_STATE.selectedOptions[
+        optionId
+    ] =
+        value;
 
 
-        const selected =
-            helpers.safeLower(category);
+    return true;
+
+}
 
 
-        const productCategory =
-            helpers.safeLower(
-                helpers.getProductCategory(product)
-            );
+/* =========================================================
+   19. GET KIT OPTION
+========================================================= */
 
+function getNexpakOnlineKitOption(
+    optionId
+) {
 
-        if (
-            productCategory === selected
-        ) {
+    if (!optionId) {
 
-            return true;
-        }
+        return null;
 
-
-        /*
-         * Category aliases from database.
-         */
-
-        const aliases =
-            getAliasesForTerm(selected);
-
-
-        if (!aliases.length) {
-            return false;
-        }
-
-
-        return aliases.some(function (alias) {
-
-            return (
-                productCategory ===
-                helpers.safeLower(alias)
-            );
-
-        });
     }
 
 
-    /*=====================================================
-      43. SUBCATEGORY MATCHING
-    =====================================================*/
+    return (
+        NEXPAK_ONLINE_STATE.selectedOptions[
+            optionId
+        ]
+        || null
+    );
 
-    function productMatchesSubcategory(
-        product,
-        subcategory
-    ) {
-
-        if (
-            !subcategory ||
-            subcategory === "all"
-        ) {
-
-            return true;
-        }
+}
 
 
-        const productSubcategory =
-            helpers.safeLower(
-                product.subcategory ||
-                product.subCategory ||
-                ""
-            );
+/* =========================================================
+   20. GET SELECTED OPTIONS
+========================================================= */
+
+function getNexpakOnlineSelectedOptions() {
+
+    return {
+
+        ...NEXPAK_ONLINE_STATE.selectedOptions
+
+    };
+
+}
 
 
-        const selected =
-            helpers.safeLower(subcategory);
+/* =========================================================
+   21. CALCULATE KIT TOTAL
+========================================================= */
+
+function calculateNexpakOnlineKitTotal(
+    kit,
+    quantity
+) {
+
+    if (!kit) {
+
+        return {
+
+            quantity: 0,
+
+            priceExVat: 0,
+
+            vatAmount: 0,
+
+            totalInclVat: 0
+
+        };
+
+    }
 
 
-        return (
-            productSubcategory ===
-            selected
+    const qty =
+        Math.max(
+
+            1,
+
+            Number(
+                quantity
+            ) || 1
+
         );
-    }
 
 
-    /*=====================================================
-      44. BRAND MATCHING
-    =====================================================*/
-
-    function productMatchesBrand(
-        product,
-        brand
-    ) {
-
-        if (
-            !brand ||
-            brand === "all"
-        ) {
-
-            return true;
-        }
+    const unitTotal =
+        Number(
+            kit.priceInclVat
+        ) || 0;
 
 
-        const productBrand =
-            helpers.safeLower(
-                helpers.getProductBrand(product)
+    const totalInclVat =
+        Number(
+
+            (
+                unitTotal *
+                qty
+
+            ).toFixed(2)
+
+        );
+
+
+    const vatAmount =
+        typeof calculateNexpakOnlineVAT ===
+        "function"
+
+            ? calculateNexpakOnlineVAT(
+                totalInclVat
+            )
+
+            : Number(
+
+                (
+                    totalInclVat -
+                    (
+                        totalInclVat /
+                        1.15
+                    )
+
+                ).toFixed(2)
+
             );
 
 
-        const selected =
-            helpers.safeLower(brand);
+    const priceExVat =
+        Number(
+
+            (
+                totalInclVat -
+                vatAmount
+
+            ).toFixed(2)
+
+        );
 
 
-        if (
-            productBrand === selected
-        ) {
+    return {
 
-            return true;
+        quantity:
+            qty,
+
+        unitPriceInclVat:
+            Number(
+                unitTotal.toFixed(2)
+            ),
+
+        priceExVat:
+            priceExVat,
+
+        vatAmount:
+            vatAmount,
+
+        totalInclVat:
+            totalInclVat
+
+    };
+
+}
+
+
+/* =========================================================
+   22. PREPARE SELECTED KIT
+========================================================= */
+
+function prepareNexpakOnlineSelectedKit() {
+
+    const kit =
+        NEXPAK_ONLINE_STATE.currentKit;
+
+
+    if (!kit) {
+
+        return null;
+
+    }
+
+
+    const quantity =
+        getNexpakOnlineKitQuantity();
+
+
+    const pricing =
+        calculateNexpakOnlineKitTotal(
+
+            kit,
+
+            quantity
+
+        );
+
+
+    return {
+
+        kitId:
+            kit.id,
+
+        sku:
+            kit.sku,
+
+        name:
+            kit.name,
+
+        brand:
+            kit.brand,
+
+        category:
+            kit.category,
+
+        quantity:
+            quantity,
+
+        options:
+            getNexpakOnlineSelectedOptions(),
+
+        contents:
+            Array.isArray(
+                kit.contents
+            )
+                ? [...kit.contents]
+                : [],
+
+        image:
+            kit.image || "",
+
+        weight:
+            Number(
+                kit.weight
+            ) || 0,
+
+        weightUnit:
+            kit.weightUnit || "kg",
+
+        unitPriceInclVat:
+            pricing.unitPriceInclVat,
+
+        priceExVat:
+            pricing.priceExVat,
+
+        vatAmount:
+            pricing.vatAmount,
+
+        totalInclVat:
+            pricing.totalInclVat
+
+    };
+
+}
+
+
+/* =========================================================
+   23. SAVE SELECTED KIT
+========================================================= */
+
+function saveNexpakOnlineSelectedKit() {
+
+    const selectedKit =
+        prepareNexpakOnlineSelectedKit();
+
+
+    if (!selectedKit) {
+
+        return false;
+
+    }
+
+
+    try {
+
+        localStorage.setItem(
+
+            NEXPAK_ONLINE_CONFIG.selectedKitStorageKey,
+
+            JSON.stringify(
+                selectedKit
+            )
+
+        );
+
+        return true;
+
+    } catch (
+        error
+    ) {
+
+        console.error(
+            "NEXPAK Online Store: Unable to save selected kit.",
+            error
+        );
+
+        return false;
+
+    }
+
+}
+
+
+/* =========================================================
+   24. LOAD SELECTED KIT
+========================================================= */
+
+function loadNexpakOnlineSelectedKit() {
+
+    try {
+
+        const saved =
+            localStorage.getItem(
+
+                NEXPAK_ONLINE_CONFIG.selectedKitStorageKey
+
+            );
+
+
+        if (!saved) {
+
+            return null;
+
         }
 
 
-        /*
-         * Allow products with multiple brands stored
-         * as an array.
-         */
+        return JSON.parse(
+            saved
+        );
 
-        if (
-            Array.isArray(product.brand)
-        ) {
+    } catch (
+        error
+    ) {
 
-            return product.brand.some(function (item) {
+        console.error(
+            "NEXPAK Online Store: Unable to load selected kit.",
+            error
+        );
 
-                return (
-                    helpers.safeLower(item) ===
-                    selected
-                );
+        return null;
 
-            });
-        }
+    }
+
+}
 
 
+/* =========================================================
+   25. CLEAR SELECTED KIT
+========================================================= */
+
+function clearNexpakOnlineSelectedKit() {
+
+    NEXPAK_ONLINE_STATE.currentKit =
+        null;
+
+    NEXPAK_ONLINE_STATE.currentKitQuantity =
+        1;
+
+    NEXPAK_ONLINE_STATE.selectedOptions =
+        {};
+
+
+    try {
+
+        localStorage.removeItem(
+
+            NEXPAK_ONLINE_CONFIG.selectedKitStorageKey
+
+        );
+
+    } catch (
+        error
+    ) {
+
+        console.warn(
+            "NEXPAK Online Store: Could not clear saved kit.",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   26. INITIALISE ONLINE STORE ENGINE
+========================================================= */
+
+function initialiseNexpakOnlineEngine() {
+
+    if (NEXPAK_ONLINE_STATE.initialized) {
+        return true;
+    }
+
+    if (!verifyNexpakOnlineDatabase()) {
         return false;
     }
 
-
-    /*=====================================================
-      45. PRODUCT TYPE MATCHING
-    =====================================================*/
-
-    function productMatchesType(
-        product,
-        productType
-    ) {
-
-        if (
-            !productType ||
-            productType === "all"
-        ) {
-
-            return true;
-        }
-
-
-        const selected =
-            helpers.safeLower(productType);
-
-
-        const actual =
-            helpers.safeLower(
-                product.productType ||
-                product.type ||
-                ""
-            );
-
-
-        return actual === selected;
-    }
-
-
-    /*=====================================================
-      46. STOCK STATUS MATCHING
-    =====================================================*/
-
-    function productMatchesStock(
-        product,
-        stockStatus
-    ) {
-
-        if (
-            !stockStatus ||
-            stockStatus === "all"
-        ) {
-
-            return true;
-        }
-
-
-        const actual =
-            helpers.safeLower(
-                product.stockStatus ||
-                product.stock ||
-                product.availability ||
-                ""
-            );
-
-
-        const selected =
-            helpers.safeLower(stockStatus);
-
-
-        return (
-            actual === selected
-        );
-    }
-
-
-    /*=====================================================
-      47. FEATURED MATCHING
-    =====================================================*/
-
-    function productIsFeatured(product) {
-
-        if (!product) {
-            return false;
-        }
-
-
-        return (
-            product.featured === true ||
-            product.isFeatured === true ||
-            product.featuredProduct === true
-        );
-    }
-
-
-    function productMatchesFeatured(
-        product,
-        enabled
-    ) {
-
-        if (!enabled) {
-            return true;
-        }
-
-
-        return productIsFeatured(product);
-    }
-
-
-    /*=====================================================
-      48. POPULAR MATCHING
-    =====================================================*/
-
-    function productIsPopular(product) {
-
-        if (!product) {
-            return false;
-        }
-
-
-        return (
-            product.popular === true ||
-            product.isPopular === true ||
-            product.popularProduct === true ||
-            product.bestSeller === true ||
-            product.bestseller === true
-        );
-    }
-
-
-    function productMatchesPopular(
-        product,
-        enabled
-    ) {
-
-        if (!enabled) {
-            return true;
-        }
-
-
-        return productIsPopular(product);
-    }
-
-
-    /*=====================================================
-      49. NEW PRODUCT MATCHING
-    =====================================================*/
-
-    function productIsNew(product) {
-
-        if (!product) {
-            return false;
-        }
-
-
-        return (
-            product.new === true ||
-            product.isNew === true ||
-            product.newProduct === true
-        );
-    }
-
-
-    function productMatchesNew(
-        product,
-        enabled
-    ) {
-
-        if (!enabled) {
-            return true;
-        }
-
-
-        return productIsNew(product);
-    }
-
-
-    /*=====================================================
-      50. COMPLETE PRODUCT FILTER
-    =====================================================*/
-
-    function productPassesFilters(
-        product,
-        state
-    ) {
-
-        if (!product) {
-            return false;
-        }
-
-
-        /*
-         * Search
-         */
-
-        if (
-            !productMatchesMultiWordSearch(
-                product,
-                state.searchTerm
-            )
-        ) {
-
-            return false;
-        }
-
-
-        /*
-         * Category
-         */
-
-        if (
-            !productMatchesCategory(
-                product,
-                state.category
-            )
-        ) {
-
-            return false;
-        }
-
-
-        /*
-         * Subcategory
-         */
-
-        if (
-            !productMatchesSubcategory(
-                product,
-                state.subcategory
-            )
-        ) {
-
-            return false;
-        }
-
-
-        /*
-         * Brand
-         */
-
-        if (
-            !productMatchesBrand(
-                product,
-                state.brand
-            )
-        ) {
-
-            return false;
-        }
-
-
-        /*
-         * Product type
-         */
-
-        if (
-            !productMatchesType(
-                product,
-                state.productType
-            )
-        ) {
-
-            return false;
-        }
-
-
-        /*
-         * Stock
-         */
-
-        if (
-            !productMatchesStock(
-                product,
-                state.stockStatus
-            )
-        ) {
-
-            return false;
-        }
-
-
-        /*
-         * Featured
-         */
-
-        if (
-            !productMatchesFeatured(
-                product,
-                state.featuredOnly
-            )
-        ) {
-
-            return false;
-        }
-
-
-        /*
-         * Popular
-         */
-
-        if (
-            !productMatchesPopular(
-                product,
-                state.popularOnly
-            )
-        ) {
-
-            return false;
-        }
-
-
-        /*
-         * New
-         */
-
-        if (
-            !productMatchesNew(
-                product,
-                state.newOnly
-            )
-        ) {
-
-            return false;
-        }
-
-
-        return true;
-    }
-
-
-    /*=====================================================
-      51. APPLY ALL FILTERS
-    =====================================================*/
-
-    function applyFilters(options) {
-
-        const state =
-            STORE.state;
-
-
-        const settings =
-            options || {};
-
-
-        /*
-         * Optional state updates.
-         *
-         * This allows:
-         *
-         * STORE.filters.apply({
-         *     category: "CCTV"
-         * });
-         */
-
-        if (
-            Object.prototype.hasOwnProperty.call(
-                settings,
-                "searchTerm"
-            )
-        ) {
-
-            state.searchTerm =
-                helpers.safeString(
-                    settings.searchTerm
-                );
-        }
-
-
-        if (
-            Object.prototype.hasOwnProperty.call(
-                settings,
-                "category"
-            )
-        ) {
-
-            state.category =
-                helpers.safeString(
-                    settings.category
-                ) || "all";
-        }
-
-
-        if (
-            Object.prototype.hasOwnProperty.call(
-                settings,
-                "subcategory"
-            )
-        ) {
-
-            state.subcategory =
-                helpers.safeString(
-                    settings.subcategory
-                ) || "all";
-        }
-
-
-        if (
-            Object.prototype.hasOwnProperty.call(
-                settings,
-                "brand"
-            )
-        ) {
-
-            state.brand =
-                helpers.safeString(
-                    settings.brand
-                ) || "all";
-        }
-
-
-        if (
-            Object.prototype.hasOwnProperty.call(
-                settings,
-                "productType"
-            )
-        ) {
-
-            state.productType =
-                helpers.safeString(
-                    settings.productType
-                ) || "all";
-        }
-
-
-        if (
-            Object.prototype.hasOwnProperty.call(
-                settings,
-                "stockStatus"
-            )
-        ) {
-
-            state.stockStatus =
-                helpers.safeString(
-                    settings.stockStatus
-                ) || "all";
-        }
-
-
-        if (
-            Object.prototype.hasOwnProperty.call(
-                settings,
-                "featuredOnly"
-            )
-        ) {
-
-            state.featuredOnly =
-                Boolean(
-                    settings.featuredOnly
-                );
-        }
-
-
-        if (
-            Object.prototype.hasOwnProperty.call(
-                settings,
-                "popularOnly"
-            )
-        ) {
-
-            state.popularOnly =
-                Boolean(
-                    settings.popularOnly
-                );
-        }
-
-
-        if (
-            Object.prototype.hasOwnProperty.call(
-                settings,
-                "newOnly"
-            )
-        ) {
-
-            state.newOnly =
-                Boolean(
-                    settings.newOnly
-                );
-        }
-
-
-        /*
-         * Filtering starts from the complete database.
-         */
-
-        const products =
-            STORE.state.allProducts;
-
-
-        const filtered =
-            products.filter(function (product) {
-
-                return productPassesFilters(
-                    product,
-                    state
-                );
-
-            });
-
-
-        STORE.state.visibleProducts =
-            filtered;
-
-
-        STORE.state.filteredProducts =
-            filtered.length;
-
-
-        /*
-         * New filter result starts at page 1.
-         *
-         * Part 4 will take over pagination.
-         */
-
-        STORE.state.currentPage = 1;
-
-
-        STORE.meta.lastFilterAt =
-            new Date().toISOString();
-
-
-        /*
-         * Render current filtered collection.
-         */
-
-        if (
-            STORE.products &&
-            typeof STORE.products.render ===
-            "function"
-        ) {
-
-            STORE.products.render(
-                filtered
-            );
-        }
-
-
-        /*
-         * Search-specific metadata.
-         */
-
-        if (state.searchTerm) {
-
-            STORE.meta.lastSearchAt =
-                new Date().toISOString();
-        }
-
-
-        /*
-         * Notify the rest of the store.
-         */
-
-        document.dispatchEvent(
-            new CustomEvent(
-                "nexpak:products-filtered",
-                {
-                    detail: {
-                        products: filtered,
-                        count: filtered.length,
-                        state: state
-                    }
-                }
-            )
-        );
-
-
-        return filtered;
-    }
-
-
-    /*=====================================================
-      52. SEARCH
-    =====================================================*/
-
-    function search(searchTerm) {
-
-        const term =
-            helpers.safeString(searchTerm);
-
-
-        STORE.state.searchTerm =
-            term;
-
-
-        return applyFilters();
-    }
-
-
-    /*=====================================================
-      53. CATEGORY FILTER
-    =====================================================*/
-
-    function setCategory(category) {
-
-        STORE.state.category =
-            helpers.safeString(category) ||
-            "all";
-
-
-        /*
-         * Reset subcategory when main category changes.
-         */
-
-        STORE.state.subcategory =
-            "all";
-
-
-        return applyFilters();
-    }
-
-
-    /*=====================================================
-      54. SUBCATEGORY FILTER
-    =====================================================*/
-
-    function setSubcategory(subcategory) {
-
-        STORE.state.subcategory =
-            helpers.safeString(subcategory) ||
-            "all";
-
-
-        return applyFilters();
-    }
-
-
-    /*=====================================================
-      55. BRAND FILTER
-    =====================================================*/
-
-    function setBrand(brand) {
-
-        STORE.state.brand =
-            helpers.safeString(brand) ||
-            "all";
-
-
-        return applyFilters();
-    }
-
-
-    /*=====================================================
-      56. PRODUCT TYPE FILTER
-    =====================================================*/
-
-    function setProductType(productType) {
-
-        STORE.state.productType =
-            helpers.safeString(productType) ||
-            "all";
-
-
-        return applyFilters();
-    }
-
-
-    /*=====================================================
-      57. STOCK FILTER
-    =====================================================*/
-
-    function setStockStatus(stockStatus) {
-
-        STORE.state.stockStatus =
-            helpers.safeString(stockStatus) ||
-            "all";
-
-
-        return applyFilters();
-    }
-
-
-    /*=====================================================
-      58. SPECIAL COLLECTION FILTERS
-    =====================================================*/
-
-    function setFeaturedOnly(enabled) {
-
-        STORE.state.featuredOnly =
-            Boolean(enabled);
-
-
-        return applyFilters();
-    }
-
-
-    function setPopularOnly(enabled) {
-
-        STORE.state.popularOnly =
-            Boolean(enabled);
-
-
-        return applyFilters();
-    }
-
-
-    function setNewOnly(enabled) {
-
-        STORE.state.newOnly =
-            Boolean(enabled);
-
-
-        return applyFilters();
-    }
-
-
-    /*=====================================================
-      59. CLEAR FILTERS
-    =====================================================*/
-
-    function clearFilters() {
-
-        STORE.state.searchTerm =
-            "";
-
-        STORE.state.category =
-            "all";
-
-        STORE.state.subcategory =
-            "all";
-
-        STORE.state.brand =
-            "all";
-
-        STORE.state.productType =
-            "all";
-
-        STORE.state.stockStatus =
-            "all";
-
-        STORE.state.featuredOnly =
-            false;
-
-        STORE.state.popularOnly =
-            false;
-
-        STORE.state.newOnly =
-            false;
-
-        STORE.state.currentPage =
-            1;
-
-
-        return applyFilters();
-    }
-
-
-    /*=====================================================
-      60. ACTIVE FILTER SUMMARY
-    =====================================================*/
-
-    function getActiveFilters() {
-
-        const state =
-            STORE.state;
-
-
-        const filters = [];
-
-
-        if (state.searchTerm) {
-
-            filters.push({
-                type: "search",
-                value: state.searchTerm
-            });
-        }
-
-
-        if (
-            state.category &&
-            state.category !== "all"
-        ) {
-
-            filters.push({
-                type: "category",
-                value: state.category
-            });
-        }
-
-
-        if (
-            state.subcategory &&
-            state.subcategory !== "all"
-        ) {
-
-            filters.push({
-                type: "subcategory",
-                value: state.subcategory
-            });
-        }
-
-
-        if (
-            state.brand &&
-            state.brand !== "all"
-        ) {
-
-            filters.push({
-                type: "brand",
-                value: state.brand
-            });
-        }
-
-
-        if (
-            state.productType &&
-            state.productType !== "all"
-        ) {
-
-            filters.push({
-                type: "productType",
-                value: state.productType
-            });
-        }
-
-
-        if (
-            state.stockStatus &&
-            state.stockStatus !== "all"
-        ) {
-
-            filters.push({
-                type: "stockStatus",
-                value: state.stockStatus
-            });
-        }
-
-
-        if (state.featuredOnly) {
-
-            filters.push({
-                type: "featured",
-                value: true
-            });
-        }
-
-
-        if (state.popularOnly) {
-
-            filters.push({
-                type: "popular",
-                value: true
-            });
-        }
-
-
-        if (state.newOnly) {
-
-            filters.push({
-                type: "new",
-                value: true
-            });
-        }
-
-
-        return filters;
-    }
-
-
-    /*=====================================================
-      61. FILTER STATE
-    =====================================================*/
-
-    function getFilterState() {
-
-        return {
-
-            searchTerm:
-                STORE.state.searchTerm,
-
-            category:
-                STORE.state.category,
-
-            subcategory:
-                STORE.state.subcategory,
-
-            brand:
-                STORE.state.brand,
-
-            productType:
-                STORE.state.productType,
-
-            stockStatus:
-                STORE.state.stockStatus,
-
-            featuredOnly:
-                STORE.state.featuredOnly,
-
-            popularOnly:
-                STORE.state.popularOnly,
-
-            newOnly:
-                STORE.state.newOnly
-        };
-    }
-
-
-    /*=====================================================
-      62. FILTER DOM EVENTS
-    =====================================================*/
-
-    function initializeFilterEvents() {
-
-        const elements =
-            STORE.elements;
-
-
-        /*-----------------------------------------------
-          Search input
-        -----------------------------------------------*/
-
-        if (elements.search) {
-
-            elements.search.addEventListener(
-                "input",
-                function (event) {
-
-                    search(
-                        event.target.value
-                    );
-
-                }
-            );
-        }
-
-
-        /*-----------------------------------------------
-          Search form
-        -----------------------------------------------*/
-
-        if (elements.searchForm) {
-
-            elements.searchForm.addEventListener(
-                "submit",
-                function (event) {
-
-                    event.preventDefault();
-
-
-                    if (elements.search) {
-
-                        search(
-                            elements.search.value
-                        );
-                    }
-
-                }
-            );
-        }
-
-
-        /*-----------------------------------------------
-          Category
-        -----------------------------------------------*/
-
-        if (elements.categoryFilter) {
-
-            elements.categoryFilter.addEventListener(
-                "change",
-                function (event) {
-
-                    setCategory(
-                        event.target.value
-                    );
-
-                }
-            );
-        }
-
-
-        /*-----------------------------------------------
-          Brand
-        -----------------------------------------------*/
-
-        if (elements.brandFilter) {
-
-            elements.brandFilter.addEventListener(
-                "change",
-                function (event) {
-
-                    setBrand(
-                        event.target.value
-                    );
-
-                }
-            );
-        }
-
-
-        /*-----------------------------------------------
-          Product type
-        -----------------------------------------------*/
-
-        if (elements.productTypeFilter) {
-
-            elements.productTypeFilter.addEventListener(
-                "change",
-                function (event) {
-
-                    setProductType(
-                        event.target.value
-                    );
-
-                }
-            );
-        }
-
-
-        /*-----------------------------------------------
-          Sorting is handled in Part 4.
-          We intentionally do not attach sorting here.
-        -----------------------------------------------*/
-    }
-
-
-    /*=====================================================
-      63. PUBLIC FILTER API
-    =====================================================*/
-
-    STORE.filters = {
-
-        apply:
-            applyFilters,
-
-        search:
-            search,
-
-        category:
-            setCategory,
-
-        subcategory:
-            setSubcategory,
-
-        brand:
-            setBrand,
-
-        productType:
-            setProductType,
-
-        stock:
-            setStockStatus,
-
-        featured:
-            setFeaturedOnly,
-
-        popular:
-            setPopularOnly,
-
-        newest:
-            setNewOnly,
-
-        clear:
-            clearFilters,
-
-        active:
-            getActiveFilters,
-
-        state:
-            getFilterState,
-
-        matchesSearch:
-            productMatchesSearch,
-
-        matchesCategory:
-            productMatchesCategory,
-
-        matchesBrand:
-            productMatchesBrand,
-
-        matchesType:
-            productMatchesType,
-
-        matchesStock:
-            productMatchesStock,
-
-        isFeatured:
-            productIsFeatured,
-
-        isPopular:
-            productIsPopular,
-
-        isNew:
-            productIsNew
-    };
-
-
-    /*=====================================================
-      64. INITIALIZE FILTER EVENTS
-    =====================================================*/
-
-    initializeFilterEvents();
-
-
-    /*=====================================================
-      65. PART 3 READY
-    =====================================================*/
-
-    helpers.log(
-        "online.js Part 3 loaded — Search & Filtering Engine ready."
+    NEXPAK_ONLINE_STATE.displayedKits =
+        getNexpakOnlineKitsForDisplay();
+
+    NEXPAK_ONLINE_STATE.initialized = true;
+
+    console.log(
+        "NEXPAK Online Store initialized:",
+        NEXPAK_ONLINE_STATE.displayedKits.length,
+        "kits loaded."
     );
 
-
-})(window, document);
-
-
-/*=========================================================
- END OF online.js — PART 3/8
-=========================================================*/
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE ENGINE
- ---------------------------------------------------------
- File: online.js
- Part: 4/8
- Purpose:
- - Product sorting
- - Pagination
- - Products per page
- - Grid/List view
- - Pagination controls
- - View controls
- - Sort state management
-
- Continues directly from:
- online.js — Part 1/8
- online.js — Part 2/8
- online.js — Part 3/8
-=========================================================*/
-
-(function (window, document) {
-
-    "use strict";
+    return true;
+}
 
 
-    /*=====================================================
-      66. STORE CONNECTION
-    =====================================================*/
+/* =========================================================
+   27. AUTO INITIALISE
+========================================================= */
 
-    const STORE =
-        window.NEXPAK_ONLINE;
+if (document.readyState === "loading") {
 
-
-    if (!STORE) {
-
-        console.error(
-            "[NEXPAK ONLINE] Part 4 could not start. " +
-            "Parts 1–3 must load first."
-        );
-
-        return;
-    }
-
-
-    const helpers =
-        STORE.helpers;
-
-
-    /*=====================================================
-      67. SORTING HELPERS
-    =====================================================*/
-
-
-    function getNumericPrice(product) {
-
-        if (!product) {
-            return null;
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+            initialiseNexpakOnlineEngine();
         }
+    );
+
+} else {
+
+    initialiseNexpakOnlineEngine();
+
+}
 
 
-        const price =
-            Number(product.price);
+/* =========================================================
+   END OF PART 1/8
+
+   NEXT:
+   PART 2/8
+
+   STORE DISPLAY ENGINE
+
+   Will handle:
+   - Existing kit cards
+   - Kit images
+   - Kit names
+   - Prices
+   - Quantity controls
+   - Kit options
+   - Add To Cart
+   - View More
+
+   Existing Online Store design remains unchanged.
+========================================================= */
+
+/* =========================================================
+   NEXPAK ONLINE STORE
+   online.js — PART 2/8
+
+   STORE DISPLAY ENGINE
+
+   Handles:
+   - Kit cards
+   - Kit images
+   - Kit names
+   - Kit descriptions
+   - Kit pricing
+   - Quantity selector
+   - Kit options
+   - Add To Cart button
+   - View More button
+
+   IMPORTANT:
+   PRE-BUILT KITS ONLY.
+========================================================= */
 
 
-        if (
-            !Number.isFinite(price)
-        ) {
+/* =========================================================
+   28. FIND STORE CONTAINER
+========================================================= */
 
-            return null;
-        }
+function getNexpakOnlineStoreContainer() {
 
+    return (
+        document.getElementById("onlineProducts") ||
+        document.getElementById("online-products") ||
+        document.getElementById("productGrid") ||
+        document.getElementById("product-grid") ||
+        document.getElementById("shopProducts") ||
+        document.querySelector(".online-products") ||
+        document.querySelector(".product-grid")
+    );
 
-        return price;
-    }
-
-
-    function getProductTimestamp(product) {
-
-        if (!product) {
-            return 0;
-        }
-
-
-        const possibleDates = [
-
-            product.dateAdded,
-            product.addedDate,
-
-            product.createdAt,
-            product.createdDate,
-
-            product.updatedAt,
-            product.updatedDate,
-
-            product.releaseDate,
-
-            product.date
-        ];
+}
 
 
-        for (
-            let i = 0;
-            i < possibleDates.length;
-            i++
-        ) {
+/* =========================================================
+   29. FORMAT CURRENCY
+========================================================= */
 
-            const value =
-                possibleDates[i];
+function formatNexpakOnlinePrice(amount) {
 
+    const value =
+        Number(amount) || 0;
 
-            if (!value) {
-                continue;
+    return (
+        "R" +
+        value.toLocaleString(
+            "en-ZA",
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
             }
-
-
-            const timestamp =
-                new Date(value).getTime();
-
-
-            if (
-                Number.isFinite(timestamp)
-            ) {
-
-                return timestamp;
-            }
-        }
-
-
-        return 0;
-    }
-
-
-    function getPopularityScore(product) {
-
-        if (!product) {
-            return 0;
-        }
-
-
-        const possibleScores = [
-
-            product.popularity,
-
-            product.popularityScore,
-
-            product.sales,
-
-            product.salesCount,
-
-            product.orders,
-
-            product.orderCount,
-
-            product.views,
-
-            product.viewCount
-        ];
-
-
-        for (
-            let i = 0;
-            i < possibleScores.length;
-            i++
-        ) {
-
-            const score =
-                Number(
-                    possibleScores[i]
-                );
-
-
-            if (
-                Number.isFinite(score)
-            ) {
-
-                return score;
-            }
-        }
-
-
-        /*
-         * Boolean popular/bestseller products receive
-         * a small fallback score.
-         */
-
-        if (
-            product.popular === true ||
-            product.isPopular === true ||
-            product.bestSeller === true ||
-            product.bestseller === true
-        ) {
-
-            return 1;
-        }
-
-
-        return 0;
-    }
-
-
-    function getFeaturedScore(product) {
-
-        if (!product) {
-            return 0;
-        }
-
-
-        return (
-            product.featured === true ||
-            product.isFeatured === true ||
-            product.featuredProduct === true
         )
-            ? 1
-            : 0;
-    }
-
-
-    function getStockScore(product) {
-
-        if (!product) {
-            return 0;
-        }
-
-
-        const status =
-            helpers.safeLower(
-                product.stockStatus ||
-                product.stock ||
-                product.availability ||
-                ""
-            );
-
-
-        switch (status) {
-
-            case "in-stock":
-            case "instock":
-            case "available":
-                return 4;
-
-            case "low-stock":
-            case "lowstock":
-                return 3;
-
-            case "pre-order":
-            case "preorder":
-                return 2;
-
-            case "out-of-stock":
-            case "outofstock":
-            case "unavailable":
-                return 1;
-
-            default:
-                return 0;
-        }
-    }
-
-
-    /*=====================================================
-      68. PRODUCT COMPARISON
-    =====================================================*/
-
-
-    function compareText(
-        first,
-        second,
-        direction
-    ) {
-
-        const a =
-            helpers.safeLower(first);
-
-
-        const b =
-            helpers.safeLower(second);
-
-
-        const result =
-            a.localeCompare(
-                b,
-                "en",
-                {
-                    numeric: true,
-                    sensitivity: "base"
-                }
-            );
-
-
-        return (
-            direction === "desc"
-                ? result * -1
-                : result
-        );
-    }
-
-
-    function compareNumbers(
-        first,
-        second,
-        direction
-    ) {
-
-        const a =
-            Number(first);
-
-
-        const b =
-            Number(second);
-
-
-        const result =
-            a - b;
-
-
-        return (
-            direction === "desc"
-                ? result * -1
-                : result
-        );
-    }
-
-
-    /*=====================================================
-      69. SORT COLLECTION
-    =====================================================*/
-
-
-    function sortProducts(
-        products,
-        sortBy
-    ) {
-
-        const collection =
-            Array.isArray(products)
-                ? products.slice()
-                : [];
-
-
-        const sort =
-            helpers.safeLower(
-                sortBy ||
-                STORE.state.sortBy ||
-                "default"
-            );
-
-
-        /*
-         * Keep original order for default sorting.
-         */
-
-        if (
-            sort === "default" ||
-            sort === "relevance" ||
-            sort === ""
-        ) {
-
-            return collection;
-        }
-
-
-        /*-----------------------------------------------
-          Name A-Z
-        -----------------------------------------------*/
-
-        if (
-            sort === "name-asc" ||
-            sort === "name-a-z" ||
-            sort === "az" ||
-            sort === "a-z"
-        ) {
-
-            return collection.sort(
-                function (a, b) {
-
-                    return compareText(
-                        helpers.getProductName(a),
-                        helpers.getProductName(b),
-                        "asc"
-                    );
-
-                }
-            );
-        }
-
-
-        /*-----------------------------------------------
-          Name Z-A
-        -----------------------------------------------*/
-
-        if (
-            sort === "name-desc" ||
-            sort === "name-z-a" ||
-            sort === "za" ||
-            sort === "z-a"
-        ) {
-
-            return collection.sort(
-                function (a, b) {
-
-                    return compareText(
-                        helpers.getProductName(a),
-                        helpers.getProductName(b),
-                        "desc"
-                    );
-
-                }
-            );
-        }
-
-
-        /*-----------------------------------------------
-          Price low → high
-        -----------------------------------------------*/
-
-        if (
-            sort === "price-low" ||
-            sort === "price-asc" ||
-            sort === "price-low-high" ||
-            sort === "low-price"
-        ) {
-
-            return collection.sort(
-                function (a, b) {
-
-                    const priceA =
-                        getNumericPrice(a);
-
-                    const priceB =
-                        getNumericPrice(b);
-
-
-                    /*
-                     * Products without confirmed prices are
-                     * placed at the end rather than treated
-                     * as R0.
-                     */
-
-                    if (
-                        priceA === null &&
-                        priceB === null
-                    ) {
-
-                        return 0;
-                    }
-
-
-                    if (
-                        priceA === null
-                    ) {
-
-                        return 1;
-                    }
-
-
-                    if (
-                        priceB === null
-                    ) {
-
-                        return -1;
-                    }
-
-
-                    return compareNumbers(
-                        priceA,
-                        priceB,
-                        "asc"
-                    );
-
-                }
-            );
-        }
-
-
-        /*-----------------------------------------------
-          Price high → low
-        -----------------------------------------------*/
-
-        if (
-            sort === "price-high" ||
-            sort === "price-desc" ||
-            sort === "price-high-low" ||
-            sort === "high-price"
-        ) {
-
-            return collection.sort(
-                function (a, b) {
-
-                    const priceA =
-                        getNumericPrice(a);
-
-                    const priceB =
-                        getNumericPrice(b);
-
-
-                    if (
-                        priceA === null &&
-                        priceB === null
-                    ) {
-
-                        return 0;
-                    }
-
-
-                    if (
-                        priceA === null
-                    ) {
-
-                        return 1;
-                    }
-
-
-                    if (
-                        priceB === null
-                    ) {
-
-                        return -1;
-                    }
-
-
-                    return compareNumbers(
-                        priceA,
-                        priceB,
-                        "desc"
-                    );
-
-                }
-            );
-        }
-
-
-        /*-----------------------------------------------
-          Newest
-        -----------------------------------------------*/
-
-        if (
-            sort === "newest" ||
-            sort === "new" ||
-            sort === "latest" ||
-            sort === "date-desc"
-        ) {
-
-            return collection.sort(
-                function (a, b) {
-
-                    return (
-                        getProductTimestamp(b) -
-                        getProductTimestamp(a)
-                    );
-
-                }
-            );
-        }
-
-
-        /*-----------------------------------------------
-          Oldest
-        -----------------------------------------------*/
-
-        if (
-            sort === "oldest" ||
-            sort === "date-asc"
-        ) {
-
-            return collection.sort(
-                function (a, b) {
-
-                    return (
-                        getProductTimestamp(a) -
-                        getProductTimestamp(b)
-                    );
-
-                }
-            );
-        }
-
-
-        /*-----------------------------------------------
-          Popular
-        -----------------------------------------------*/
-
-        if (
-            sort === "popular" ||
-            sort === "popularity" ||
-            sort === "best-selling" ||
-            sort === "bestseller"
-        ) {
-
-            return collection.sort(
-                function (a, b) {
-
-                    return (
-                        getPopularityScore(b) -
-                        getPopularityScore(a)
-                    );
-
-                }
-            );
-        }
-
-
-        /*-----------------------------------------------
-          Featured
-        -----------------------------------------------*/
-
-        if (
-            sort === "featured"
-        ) {
-
-            return collection.sort(
-                function (a, b) {
-
-                    return (
-                        getFeaturedScore(b) -
-                        getFeaturedScore(a)
-                    );
-
-                }
-            );
-        }
-
-
-        /*-----------------------------------------------
-          Stock available first
-        -----------------------------------------------*/
-
-        if (
-            sort === "stock" ||
-            sort === "availability" ||
-            sort === "in-stock"
-        ) {
-
-            return collection.sort(
-                function (a, b) {
-
-                    return (
-                        getStockScore(b) -
-                        getStockScore(a)
-                    );
-
-                }
-            );
-        }
-
-
-        /*
-         * Unknown sorting option.
-         *
-         * Safely return the collection without changing
-         * its order.
-         */
-
-        return collection;
-    }
-
-
-    /*=====================================================
-      70. PAGINATION CALCULATIONS
-    =====================================================*/
-
-
-    function getTotalPages(
-        totalItems,
-        itemsPerPage
-    ) {
-
-        const total =
-            Number(totalItems);
-
-
-        const perPage =
-            Number(itemsPerPage);
-
-
-        if (
-            !Number.isFinite(total) ||
-            total <= 0
-        ) {
-
-            return 1;
-        }
-
-
-        if (
-            !Number.isFinite(perPage) ||
-            perPage <= 0
-        ) {
-
-            return 1;
-        }
-
-
-        return Math.max(
-            1,
-            Math.ceil(
-                total / perPage
-            )
-        );
-    }
-
-
-    function getPageStart(
-        page,
-        itemsPerPage
-    ) {
-
-        return (
-            (page - 1) *
-            itemsPerPage
-        );
-    }
-
-
-    function getPageEnd(
-        page,
-        itemsPerPage
-    ) {
-
-        return (
-            page *
-            itemsPerPage
-        );
-    }
-
-
-    /*=====================================================
-      71. PAGINATE COLLECTION
-    =====================================================*/
-
-
-    function paginateProducts(
-        products,
-        page,
-        itemsPerPage
-    ) {
-
-        const collection =
-            Array.isArray(products)
-                ? products
-                : [];
-
-
-        const perPage =
-            Number(itemsPerPage) > 0
-                ? Number(itemsPerPage)
-                : STORE.config.defaultProductsPerPage;
-
-
-        const totalPages =
-            getTotalPages(
-                collection.length,
-                perPage
-            );
-
-
-        let currentPage =
-            Number(page);
-
-
-        if (
-            !Number.isFinite(currentPage) ||
-            currentPage < 1
-        ) {
-
-            currentPage = 1;
-        }
-
-
-        if (
-            currentPage > totalPages
-        ) {
-
-            currentPage =
-                totalPages;
-        }
-
-
-        const start =
-            getPageStart(
-                currentPage,
-                perPage
-            );
-
-
-        const end =
-            getPageEnd(
-                currentPage,
-                perPage
-            );
-
-
-        return {
-
-            products:
-                collection.slice(
-                    start,
-                    end
-                ),
-
-            page:
-                currentPage,
-
-            perPage:
-                perPage,
-
-            totalItems:
-                collection.length,
-
-            totalPages:
-                totalPages,
-
-            startIndex:
-                collection.length
-                    ? start
-                    : 0,
-
-            endIndex:
-                collection.length
-                    ? Math.min(
-                        end,
-                        collection.length
-                    )
-                    : 0
-        };
-    }
-
-
-    /*=====================================================
-      72. BUILD CURRENT PRODUCT PAGE
-    =====================================================*/
-
-
-    function getCurrentProductPage() {
-
-        /*
-         * Start with the filtered products produced by
-         * Part 3.
-         */
-
-        const filtered =
-            STORE.state.visibleProducts || [];
-
-
-        /*
-         * Sort without modifying the original filtered
-         * array.
-         */
-
-        const sorted =
-            sortProducts(
-                filtered,
-                STORE.state.sortBy
-            );
-
-
-        /*
-         * Store the sorted collection so later parts can
-         * access the current ordering.
-         */
-
-        STORE.state.sortedProducts =
-            sorted;
-
-
-        const pagination =
-            paginateProducts(
-                sorted,
-                STORE.state.currentPage,
-                STORE.state.productsPerPage
-            );
-
-
-        /*
-         * Keep pagination information available globally.
-         */
-
-        STORE.state.totalPages =
-            pagination.totalPages;
-
-
-        STORE.state.pageStart =
-            pagination.startIndex;
-
-
-        STORE.state.pageEnd =
-            pagination.endIndex;
-
-
-        STORE.state.currentPage =
-            pagination.page;
-
-
-        return pagination;
-    }
-
-
-    /*=====================================================
-      73. RENDER CURRENT PAGE
-    =====================================================*/
-
-
-    function renderCurrentPage() {
-
-        const pagination =
-            getCurrentProductPage();
-
-
-        /*
-         * Part 2's renderer handles the actual product cards.
-         */
-
-        if (
-            STORE.products &&
-            typeof STORE.products.render ===
-            "function"
-        ) {
-
-            STORE.products.render(
-                pagination.products
-            );
-        }
-
-
-        renderPagination(
-            pagination
-        );
-
-
-        updateResultsSummary(
-            pagination
-        );
-
-
-        return pagination;
-    }
-
-
-    /*=====================================================
-      74. PAGINATION BUTTONS
-    =====================================================*/
-
-
-    function createPaginationButton(
-        label,
-        page,
-        disabled,
-        active
-    ) {
-
-        const safePage =
-            Number(page);
-
-
-        return `
-            <button
-                type="button"
-                class="online-pagination-button${
-                    active
-                        ? " active"
-                        : ""
-                }"
-                data-pagination-page="${safePage}"
-                ${disabled ? "disabled" : ""}
-                aria-label="Go to page ${safePage}"
-                ${
-                    active
-                        ? 'aria-current="page"'
-                        : ""
-                }>
-
-                ${helpers.escapeHTML(label)}
-
-            </button>
-        `;
-    }
-
-
-    /*=====================================================
-      75. PAGE NUMBER RANGE
-    =====================================================*/
-
-function setPage(page) {
-
-        let requestedPage =
-            Number(page);
-
-
-        if (
-            !Number.isFinite(
-                requestedPage
-            )
-        ) {
-
-            requestedPage = 1;
-        }
-
-
-        requestedPage =
-            Math.floor(
-                requestedPage
-            );
-
-
-        const totalPages =
-            getTotalPages();
-
-
-        requestedPage =
-            Math.max(
-                1,
-                Math.min(
-                    requestedPage,
-                    totalPages
-                )
-            );
-
-
-        STORE.state.currentPage =
-            requestedPage;
-
-
-        renderCurrentPage();
-
-
-        document.dispatchEvent(
-            new CustomEvent(
-                "nexpak:page-changed",
-                {
-                    detail: {
-                        page:
-                            requestedPage,
-
-                        totalPages:
-                            totalPages
-                    }
-                }
-            )
-        );
-
-
-        return requestedPage;
-    }
-
-
-    /*=====================================================
-      76. NEXT PAGE
-    =====================================================*/
-
-
-    function nextPage() {
-
-        const current =
-            STORE.state.currentPage;
-
-
-        const total =
-            getTotalPages();
-
-
-        if (
-            current >= total
-        ) {
-
-            return current;
-        }
-
-
-        return setPage(
-            current + 1
-        );
-    }
-
-
-    /*=====================================================
-      77. PREVIOUS PAGE
-    =====================================================*/
-
-
-    function previousPage() {
-
-        const current =
-            STORE.state.currentPage;
-
-
-        if (current <= 1) {
-            return current;
-        }
-
-
-        return setPage(
-            current - 1
-        );
-    }
-
-
-    /*=====================================================
-      78. FIRST / LAST PAGE
-    =====================================================*/
-
-
-    function firstPage() {
-
-        return setPage(1);
-    }
-
-
-    function lastPage() {
-
-        return setPage(
-            getTotalPages()
-        );
-    }
-
-
-    /*=====================================================
-      79. PRODUCTS PER PAGE
-    =====================================================*/
-
-
-    function setProductsPerPage(
-        amount
-    ) {
-
-        let perPage =
-            Number(amount);
-
-
-        if (
-            !Number.isFinite(perPage) ||
-            perPage <= 0
-        ) {
-
-            perPage =
-                STORE.config.defaultProductsPerPage;
-        }
-
-
-        /*
-         * Protect against accidental huge values.
-         */
-
-        perPage =
-            Math.min(
-                Math.floor(perPage),
-                100
-            );
-
-
-        STORE.state.productsPerPage =
-            perPage;
-
-
-        STORE.state.currentPage =
-            1;
-
-
-        renderCurrentPage();
-
-
-        document.dispatchEvent(
-            new CustomEvent(
-                "nexpak:products-per-page-changed",
-                {
-                    detail: {
-                        productsPerPage:
-                            perPage
-                    }
-                }
-            )
-        );
-
-
-        return perPage;
-    }
-
-
-    /*=====================================================
-      80. PAGE NUMBER RANGE
-    =====================================================*/
-
-
-    function getPageNumbers() {
-
-        const totalPages =
-            getTotalPages();
-
-
-        const currentPage =
-            STORE.state.currentPage;
-
-
-        /*
-         * Small stores:
-         * show every page.
-         */
-
-        if (totalPages <= 7) {
-
-            return Array.from(
-                {
-                    length:
-                        totalPages
-                },
-                function (_, index) {
-
-                    return index + 1;
-
-                }
-            );
-        }
-
-
-        const pages = [];
-
-
-        pages.push(1);
-
-
-        /*
-         * Near beginning
-         */
-
-        if (currentPage <= 4) {
-
-            pages.push(2);
-            pages.push(3);
-            pages.push(4);
-            pages.push(5);
-
-            pages.push("...");
-
-            pages.push(totalPages);
-
-            return pages;
-        }
-
-
-        /*
-         * Near end
-         */
-
-        if (
-            currentPage >=
-            totalPages - 3
-        ) {
-
-            pages.push("...");
-
-            pages.push(
-                totalPages - 4
-            );
-
-            pages.push(
-                totalPages - 3
-            );
-
-            pages.push(
-                totalPages - 2
-            );
-
-            pages.push(
-                totalPages - 1
-            );
-
-            pages.push(
-                totalPages
-            );
-
-            return pages;
-        }
-
-
-        /*
-         * Middle
-         */
-
-        pages.push("...");
-
-        pages.push(
-            currentPage - 1
-        );
-
-        pages.push(
-            currentPage
-        );
-
-        pages.push(
-            currentPage + 1
-        );
-
-        pages.push("...");
-
-        pages.push(totalPages);
-
-
-        return pages;
-    }
-
-
-    /*=====================================================
-      81. RENDER CURRENT PAGE
-    =====================================================*/
-
-
-    function renderCurrentPage() {
-
-        const products =
-            getCurrentPageProducts();
-
-
-        /*
-         * Part 2 handles actual product cards.
-         */
-
-        if (
-            STORE.products &&
-            typeof STORE.products.render ===
-            "function"
-        ) {
-
-            STORE.products.render(
-                products
-            );
-        }
-
-
-        renderPagination();
-
-
-        updatePaginationSummary();
-
-
-        return products;
-    }
-
-
-    /*=====================================================
-      82. PAGINATION HTML
-    =====================================================*/
-
-
-    function renderPagination() {
-
-        const container =
-            STORE.elements.pagination;
-
-
-        if (!container) {
-            return;
-        }
-
-
-        const totalPages =
-            getTotalPages();
-
-
-        const currentPage =
-            STORE.state.currentPage;
-
-
-        /*
-         * No pagination required for one page.
-         */
-
-        if (totalPages <= 1) {
-
-            container.innerHTML = "";
-
-            return;
-        }
-
-
-        const pageNumbers =
-            getPageNumbers();
-
-
-        let html = `
-            <nav
-                class="online-pagination"
-                aria-label="Product pagination">
-
-                <button
-                    type="button"
-                    class="online-page-button online-page-first"
-                    data-page-action="first"
-                    ${currentPage === 1 ? "disabled" : ""}>
-                    First
-                </button>
-
-
-                <button
-                    type="button"
-                    class="online-page-button online-page-prev"
-                    data-page-action="previous"
-                    ${currentPage === 1 ? "disabled" : ""}>
-                    Previous
-                </button>
-
-
-                <div class="online-page-numbers">
-        `;
-
-
-        pageNumbers.forEach(function (page) {
-
-            if (page === "...") {
-
-                html += `
-                    <span class="online-page-ellipsis">
-                        …
-                    </span>
-                `;
-
-                return;
-            }
-
-
-            html += `
-                <button
-                    type="button"
-                    class="online-page-number
-                    ${page === currentPage ? "active" : ""}"
-                    data-page="${page}"
-                    aria-current="${
-                        page === currentPage
-                            ? "page"
-                            : "false"
-                    }">
-
-                    ${page}
-
-                </button>
-            `;
-        });
-
-
-        html += `
-                </div>
-
-
-                <button
-                    type="button"
-                    class="online-page-button online-page-next"
-                    data-page-action="next"
-                    ${currentPage === totalPages ? "disabled" : ""}>
-                    Next
-                </button>
-
-
-                <button
-                    type="button"
-                    class="online-page-button online-page-last"
-                    data-page-action="last"
-                    ${currentPage === totalPages ? "disabled" : ""}>
-                    Last
-                </button>
-
-            </nav>
-        `;
-
-
-        container.innerHTML =
-            html;
-    }
-
-
-    /*=====================================================
-      83. PAGINATION SUMMARY
-    =====================================================*/
-
-
-    function updatePaginationSummary() {
-
-        const total =
-            STORE.state.visibleProducts.length;
-
-
-        const currentPage =
-            STORE.state.currentPage;
-
-
-        const perPage =
-            STORE.state.productsPerPage;
-
-
-        const totalPages =
-            getTotalPages();
-
-
-        const start =
-            total === 0
-                ? 0
-                : getPageStart() + 1;
-
-
-        const end =
-            Math.min(
-                getPageEnd(),
-                total
-            );
-
-
-        /*
-         * Existing product-count element is used when
-         * available.
-         */
-
-        const countElement =
-            STORE.elements.productCount;
-
-
-        if (countElement) {
-
-            if (total === 0) {
-
-                countElement.textContent =
-                    "0";
-
-            } else {
-
-                countElement.textContent =
-                    `${start}–${end} of ${total}`;
-            }
-        }
-
-
-        /*
-         * Dispatch useful pagination information for
-         * future UI components.
-         */
-
-        document.dispatchEvent(
-            new CustomEvent(
-                "nexpak:pagination-updated",
-                {
-                    detail: {
-                        currentPage:
-                            currentPage,
-
-                        totalPages:
-                            totalPages,
-
-                        productsPerPage:
-                            perPage,
-
-                        totalProducts:
-                            total,
-
-                        start:
-                            start,
-
-                        end:
-                            end
-                    }
-                }
-            )
-        );
-    }
-
-
-    /*=====================================================
-      84. PAGINATION EVENTS
-    =====================================================*/
-
-
-    function handlePaginationClick(
-        event
-    ) {
-
-        const pageButton =
-            event.target.closest(
-                "[data-page]"
-            );
-
-
-        if (pageButton) {
-
-            const page =
-                pageButton.getAttribute(
-                    "data-page"
-                );
-
-
-            setPage(page);
-
-            return;
-        }
-
-
-        const actionButton =
-            event.target.closest(
-                "[data-page-action]"
-            );
-
-
-        if (!actionButton) {
-            return;
-        }
-
-
-        const action =
-            actionButton.getAttribute(
-                "data-page-action"
-            );
-
-
-        switch (action) {
-
-            case "first":
-
-                firstPage();
-
-                break;
-
-
-            case "previous":
-
-                previousPage();
-
-                break;
-
-
-            case "next":
-
-                nextPage();
-
-                break;
-
-
-            case "last":
-
-                lastPage();
-
-                break;
-        }
-    }
-
-
-    /*=====================================================
-      85. VIEW MODE
-    =====================================================*/
-
-
-    function setViewMode(
-        mode
-    ) {
-
-        const requestedMode =
-            helpers.safeLower(mode);
-
-
-        let viewMode;
-
-
-        if (
-            requestedMode === "list" ||
-            requestedMode === "list-view"
-        ) {
-
-            viewMode =
-                "list";
-
-        } else {
-
-            viewMode =
-                "grid";
-        }
-
-
-        STORE.state.viewMode =
-            viewMode;
-
-
-        applyViewModeToDOM();
-
-
-        document.dispatchEvent(
-            new CustomEvent(
-                "nexpak:view-mode-changed",
-                {
-                    detail: {
-                        viewMode:
-                            viewMode
-                    }
-                }
-            )
-        );
-
-
-        return viewMode;
-    }
-
-
-    /*=====================================================
-      86. APPLY VIEW MODE TO DOM
-    =====================================================*/
-
-
-    function applyViewModeToDOM() {
-
-        const mode =
-            STORE.state.viewMode;
-
-
-        const targets = [];
-
-
-        if (STORE.elements.productGrid) {
-
-            targets.push(
-                STORE.elements.productGrid
-            );
-        }
-
-
-        if (
-            STORE.elements.productList &&
-            targets.indexOf(
-                STORE.elements.productList
-            ) === -1
-        ) {
-
-            targets.push(
-                STORE.elements.productList
-            );
-        }
-
-
-        targets.forEach(function (element) {
-
-            element.setAttribute(
-                "data-view-mode",
-                mode
-            );
-
-
-            element.classList.toggle(
-                "online-view-grid",
-                mode === "grid"
-            );
-
-
-            element.classList.toggle(
-                "online-view-list",
-                mode === "list"
-            );
-        });
-
-
-        /*
-         * Update view buttons if they exist.
-         */
-
-        document
-            .querySelectorAll(
-                "[data-view-mode]"
-            )
-            .forEach(function (button) {
-
-                const buttonMode =
-                    helpers.safeLower(
-                        button.getAttribute(
-                            "data-view-mode"
-                        )
-                    );
-
-
-                /*
-                 * Don't alter the actual product
-                 * container's active state here.
-                 */
-
-                if (
-                    button !== STORE.elements.productGrid &&
-                    button !== STORE.elements.productList
-                ) {
-
-                    button.classList.toggle(
-                        "active",
-                        buttonMode === mode
-                    );
-                }
-
-            });
-    }
-
-
-    /*=====================================================
-      87. VIEW MODE EVENTS
-    =====================================================*/
-
-
-    function handleViewModeClick(
-        event
-    ) {
-
-        const button =
-            event.target.closest(
-                "[data-view-mode]"
-            );
-
-
-        if (!button) {
-            return;
-        }
-
-
-        /*
-         * Ignore actual product containers.
-         */
-
-        if (
-            button ===
-            STORE.elements.productGrid ||
-            button ===
-            STORE.elements.productList
-        ) {
-
-            return;
-        }
-
-
-        const mode =
-            button.getAttribute(
-                "data-view-mode"
-            );
-
-
-        if (mode) {
-
-            setViewMode(
-                mode
-            );
-        }
-    }
-
-
-    /*=====================================================
-      88. SORT CONTROL EVENTS
-    =====================================================*/
-
-
-    function initializeSortEvents() {
-
-        const sortElement =
-            STORE.elements.sort;
-
-
-        if (!sortElement) {
-            return;
-        }
-
-
-        sortElement.addEventListener(
-            "change",
-            function (event) {
-
-                applySorting(
-                    event.target.value
-                );
-
-            }
-        );
-    }
-
-
-    /*=====================================================
-      89. PAGINATION EVENTS INITIALIZATION
-    =====================================================*/
-
-
-    function initializePaginationEvents() {
-
-        document.addEventListener(
-            "click",
-            function (event) {
-
-                if (
-                    event.target.closest(
-                        "[data-page], [data-page-action]"
-                    )
-                ) {
-
-                    handlePaginationClick(
-                        event
-                    );
-                }
-            }
-        );
-
-
-        document.addEventListener(
-            "click",
-            handleViewModeClick
-        );
-    }
-
-
-    /*=====================================================
-      90. SORT + PAGINATION PUBLIC API
-    =====================================================*/
-
-
-    STORE.sorting = {
-
-        sort:
-            sortProducts,
-
-        apply:
-            applySorting,
-
-        comparator:
-            createSortComparator,
-
-        getPrice:
-            getNumericPrice
-    };
-
-
-    STORE.pagination = {
-
-        getTotalPages:
-            getTotalPages,
-
-        getPageStart:
-            getPageStart,
-
-        getPageEnd:
-            getPageEnd,
-
-        getCurrentProducts:
-            getCurrentPageProducts,
-
-        getPages:
-            getPageNumbers,
-
-        setPage:
-            setPage,
-
-        next:
-            nextPage,
-
-        previous:
-            previousPage,
-
-        first:
-            firstPage,
-
-        last:
-            lastPage,
-
-        setProductsPerPage:
-            setProductsPerPage,
-
-        render:
-            renderPagination,
-
-        renderCurrent:
-            renderCurrentPage
-    };
-
-
-    STORE.view = {
-
-        get:
-            function () {
-                return STORE.state.viewMode;
-            },
-
-        set:
-            setViewMode,
-
-        apply:
-            applyViewModeToDOM
-    };
-
-
-    /*=====================================================
-      91. INITIALIZE PART 4 EVENTS
-    =====================================================*/
-
-    initializeSortEvents();
-
-    initializePaginationEvents();
-
-    applyViewModeToDOM();
-
-
-    /*=====================================================
-      92. PART 4 READY
-    =====================================================*/
-
-    helpers.log(
-        "online.js Part 4 loaded — Sorting, Pagination & View Controls ready."
     );
 
+}
 
-})(window, document);
 
+/* =========================================================
+   30. ESCAPE HTML
+========================================================= */
 
-/*=========================================================
- END OF online.js — PART 4/8
-=========================================================*/
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE ENGINE
- ---------------------------------------------------------
- File: online.js
- Part: 5/8
- Purpose:
- - Product selection
- - Product detail state
- - Product detail rendering
- - Product specifications
- - Product features
- - Product images
- - Product pricing/actions
- - Product detail modal/container support
- - Product navigation
- - Product history
+function escapeNexpakOnlineHTML(value) {
 
- Continues directly from:
- online.js — Part 1/8
- online.js — Part 2/8
- online.js — Part 3/8
- online.js — Part 4/8
-=========================================================*/
+    return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 
-(function (window, document) {
+}
 
-    "use strict";
 
+/* =========================================================
+   31. CREATE KIT OPTIONS HTML
+========================================================= */
 
-    /*=====================================================
-      93. STORE CONNECTION
-    =====================================================*/
+function createNexpakOnlineOptionsHTML(kit) {
 
-    const STORE =
-        window.NEXPAK_ONLINE;
-
-
-    if (!STORE) {
-
-        console.error(
-            "[NEXPAK ONLINE] Part 5 could not start. " +
-            "Parts 1–4 must load first."
-        );
-
-        return;
-    }
-
-
-    const helpers =
-        STORE.helpers;
-
-
-    /*=====================================================
-      94. PRODUCT DETAIL STATE
-    =====================================================*/
-
-    if (!STORE.state.productDetails) {
-
-        STORE.state.productDetails = {
-
-            product: null,
-
-            productID: null,
-
-            quantity: 1,
-
-            activeImage: 0,
-
-            history: [],
-
-            isOpen: false
-        };
-    }
-
-
-    /*=====================================================
-      95. PRODUCT LOOKUP
-    =====================================================*/
-
-    function findProduct(productID) {
-
-        const requestedID =
-            helpers.safeLower(
-                productID
-            );
-
-
-        if (!requestedID) {
-            return null;
-        }
-
-
-        const products =
-            STORE.state.allProducts;
-
-
-        return products.find(
-            function (product) {
-
-                const id =
-                    helpers.safeLower(
-                        helpers.getProductID(product)
-                    );
-
-
-                const sku =
-                    helpers.safeLower(
-                        helpers.getProductSKU(product)
-                    );
-
-
-                return (
-                    id === requestedID ||
-                    sku === requestedID
-                );
-            }
-        ) || null;
-    }
-
-
-    /*=====================================================
-      96. PRODUCT FIELD NORMALIZATION
-    =====================================================*/
-
-    function getProductFeatures(product) {
-
-        if (!product) {
-            return [];
-        }
-
-
-        const features =
-            product.features ||
-            product.keyFeatures ||
-            product.key_features ||
-            [];
-
-
-        if (Array.isArray(features)) {
-
-            return features
-                .map(function (item) {
-
-                    if (
-                        item &&
-                        typeof item === "object"
-                    ) {
-
-                        return helpers.safeString(
-                            item.name ||
-                            item.title ||
-                            item.value ||
-                            ""
-                        );
-                    }
-
-
-                    return helpers.safeString(
-                        item
-                    );
-
-                })
-                .filter(Boolean);
-        }
-
-
-        if (
-            typeof features === "string"
-        ) {
-
-            return features
-                .split(/\n|•|;/)
-                .map(function (item) {
-                    return item.trim();
-                })
-                .filter(Boolean);
-        }
-
-
-        return [];
-    }
-
-
-    function getProductSpecifications(product) {
-
-        if (!product) {
-            return {};
-        }
-
-
-        const specifications =
-            product.specifications ||
-            product.specs ||
-            product.attributes ||
-            product.details ||
-            {};
-
-
-        if (
-            specifications &&
-            typeof specifications === "object" &&
-            !Array.isArray(specifications)
-        ) {
-
-            return specifications;
-        }
-
-
-        return {};
-    }
-
-
-    function getProductImages(product) {
-
-        if (!product) {
-            return [];
-        }
-
-
-        const images = [];
-
-
-        /*
-         * Primary image.
-         */
-
-        const primaryImage =
-            product.image ||
-            product.imageUrl ||
-            product.imageURL ||
-            product.thumbnail ||
-            "";
-
-
-        if (
-            typeof primaryImage === "string" &&
-            primaryImage.trim()
-        ) {
-
-            images.push(
-                primaryImage.trim()
-            );
-        }
-
-
-        /*
-         * Additional images.
-         */
-
-        if (Array.isArray(product.images)) {
-
-            product.images.forEach(
-                function (image) {
-
-                    let imageURL = "";
-
-
-                    if (
-                        typeof image === "string"
-                    ) {
-
-                        imageURL =
-                            image.trim();
-
-                    } else if (
-                        image &&
-                        typeof image === "object"
-                    ) {
-
-                        imageURL =
-                            image.url ||
-                            image.src ||
-                            image.image ||
-                            "";
-                    }
-
-
-                    if (
-                        imageURL &&
-                        images.indexOf(
-                            imageURL
-                        ) === -1
-                    ) {
-
-                        images.push(
-                            imageURL
-                        );
-                    }
-                }
-            );
-        }
-
-
-        return images;
-    }
-
-
-    function getProductLongDescription(product) {
-
-        if (!product) {
-            return "";
-        }
-
-
-        return helpers.safeString(
-            product.longDescription ||
-            product.long_description ||
-            product.description ||
-            product.details ||
-            product.summary ||
-            ""
-        );
-    }
-
-
-    function getProductTags(product) {
-
-        if (!product) {
-            return [];
-        }
-
-
-        const tags =
-            product.tags ||
-            product.keywords ||
-            [];
-
-
-        if (Array.isArray(tags)) {
-
-            return tags
-                .map(function (tag) {
-                    return helpers.safeString(tag);
-                })
-                .filter(Boolean);
-        }
-
-
-        if (
-            typeof tags === "string"
-        ) {
-
-            return tags
-                .split(",")
-                .map(function (tag) {
-                    return tag.trim();
-                })
-                .filter(Boolean);
-        }
-
-
-        return [];
-    }
-
-
-    /*=====================================================
-      97. PRODUCT SELECTION
-    =====================================================*/
-
-    function selectProduct(
-        productOrID,
-        options
+    if (
+        !Array.isArray(kit.options) ||
+        kit.options.length === 0
     ) {
 
-        let product = null;
+        return "";
 
-
-        /*
-         * Accept either:
-         *
-         * selectProduct("SKU123")
-         *
-         * or
-         *
-         * selectProduct(productObject)
-         */
-
-        if (
-            productOrID &&
-            typeof productOrID === "object"
-        ) {
-
-            product =
-                productOrID;
-
-        } else {
-
-            product =
-                findProduct(
-                    productOrID
-                );
-        }
-
-
-        if (!product) {
-
-            helpers.warn(
-                "Unable to select product:",
-                productOrID
-            );
-
-            return null;
-        }
-
-
-        const settings =
-            options || {};
-
-
-        const productID =
-            helpers.getProductID(
-                product
-            );
-
-
-        /*
-         * Save previous selection.
-         */
-
-        const previousProduct =
-            STORE.state.productDetails.product;
-
-
-        if (
-            previousProduct &&
-            helpers.getProductID(
-                previousProduct
-            ) !== productID
-        ) {
-
-            STORE.state.productDetails.history.push(
-                helpers.getProductID(
-                    previousProduct
-                )
-            );
-
-
-            /*
-             * Keep history manageable.
-             */
-
-            if (
-                STORE.state.productDetails.history.length >
-                20
-            ) {
-
-                STORE.state.productDetails.history.shift();
-            }
-        }
-
-
-        STORE.state.selectedProduct =
-            product;
-
-
-        STORE.state.productDetails.product =
-            product;
-
-
-        STORE.state.productDetails.productID =
-            productID;
-
-
-        STORE.state.productDetails.activeImage =
-            0;
-
-
-        STORE.state.productDetails.quantity =
-            1;
-
-
-        /*
-         * Optionally render immediately.
-         */
-
-        if (
-            settings.render !== false
-        ) {
-
-            renderProductDetails(
-                settings.container
-            );
-        }
-
-
-        /*
-         * Notify the rest of the store.
-         */
-
-        document.dispatchEvent(
-            new CustomEvent(
-                "nexpak:product-selected",
-                {
-                    detail: {
-                        product: product,
-                        productID: productID
-                    }
-                }
-            )
-        );
-
-
-        return product;
     }
 
 
-    /*=====================================================
-      98. PRODUCT DETAIL CONTAINER
-    =====================================================*/
+    return kit.options.map(
+        option => {
 
-    function getDetailContainer(
-        suppliedContainer
-    ) {
-
-        if (suppliedContainer) {
-
-            if (
-                typeof suppliedContainer ===
-                "string"
-            ) {
-
-                return document.querySelector(
-                    suppliedContainer
-                );
+            if (!option || !option.id) {
+                return "";
             }
 
+            const values =
+                Array.isArray(option.values)
+                    ? option.values
+                    : [];
 
-            if (
-                suppliedContainer instanceof
-                Element
-            ) {
-
-                return suppliedContainer;
+            if (!values.length) {
+                return "";
             }
-        }
 
-
-        /*
-         * Existing Part 1 reference.
-         */
-
-        if (
-            STORE.elements.productDetails
-        ) {
-
-            return STORE.elements.productDetails;
-        }
-
-
-        /*
-         * Flexible fallback selectors.
-         */
-
-        return document.querySelector(
-            "#product-details, " +
-            ".product-details, " +
-            "[data-product-details]"
-        );
-    }
-
-
-    /*=====================================================
-      99. PRODUCT DETAIL IMAGE GALLERY
-    =====================================================*/
-
-    function renderImageGallery(
-        product
-    ) {
-
-        const images =
-            getProductImages(
-                product
-            );
-
-
-        if (!images.length) {
+            const selected =
+                option.default ||
+                values[0].id;
 
             return `
-                <div
-                    class="online-detail-image-placeholder"
-                    aria-label="Product image unavailable">
+                <div class="online-kit-option">
 
-                    <span>
-                        NEXPAK Security
-                    </span>
+                    <label
+                        for="online-option-${escapeNexpakOnlineHTML(kit.id)}-${escapeNexpakOnlineHTML(option.id)}"
+                    >
+                        ${escapeNexpakOnlineHTML(option.name)}
+                    </label>
+
+                    <select
+                        id="online-option-${escapeNexpakOnlineHTML(kit.id)}-${escapeNexpakOnlineHTML(option.id)}"
+                        class="online-kit-option-select"
+                        data-kit-id="${escapeNexpakOnlineHTML(kit.id)}"
+                        data-option-id="${escapeNexpakOnlineHTML(option.id)}"
+                    >
+
+                        ${values.map(
+                            value => `
+                                <option
+                                    value="${escapeNexpakOnlineHTML(value.id)}"
+                                    ${value.id === selected ? "selected" : ""}
+                                >
+                                    ${escapeNexpakOnlineHTML(value.name)}
+                                </option>
+                            `
+                        ).join("")}
+
+                    </select>
 
                 </div>
             `;
+
         }
+    ).join("");
+
+}
 
 
-        const activeIndex =
-            Math.min(
-                Math.max(
-                    Number(
-                        STORE.state.productDetails.activeImage
-                    ) || 0,
-                    0
-                ),
-                images.length - 1
-            );
+/* =========================================================
+   32. CREATE KIT CARD
+========================================================= */
+
+function createNexpakOnlineKitCard(kit) {
+
+    const price =
+        Number(kit.priceInclVat) || 0;
+
+    const quantity =
+        NEXPAK_ONLINE_CONFIG.defaultQuantity;
+
+    const image =
+        kit.image ||
+        "images/products/placeholder.jpg";
+
+    const optionsHTML =
+        createNexpakOnlineOptionsHTML(kit);
 
 
-        const activeImage =
-            images[
-                activeIndex
-            ];
+    return `
 
+        <article
+            class="online-kit-card"
+            data-kit-id="${escapeNexpakOnlineHTML(kit.id)}"
+        >
 
-        let thumbnails = "";
+            <div class="online-kit-image-wrap">
 
-
-        if (
-            images.length > 1
-        ) {
-
-            thumbnails = `
-                <div class="online-detail-thumbnails">
-            `;
-
-
-            images.forEach(
-                function (image, index) {
-
-                    thumbnails += `
-                        <button
-                            type="button"
-                            class="
-                                online-detail-thumbnail
-                                ${
-                                    index === activeIndex
-                                        ? "active"
-                                        : ""
-                                }
-                            "
-                            data-detail-image="${index}"
-                            aria-label="View product image ${
-                                index + 1
-                            }">
-
-                            <img
-                                src="${helpers.escapeHTML(
-                                    image
-                                )}"
-                                alt=""
-                                loading="lazy">
-
-                        </button>
-                    `;
-                }
-            );
-
-
-            thumbnails += `
-                </div>
-            `;
-        }
-
-
-        return `
-            <div
-                class="online-detail-gallery"
-                data-image-index="${activeIndex}">
-
-                <div class="online-detail-main-image">
-
-                    <img
-                        src="${helpers.escapeHTML(
-                            activeImage
-                        )}"
-                        alt="${helpers.escapeHTML(
-                            helpers.getProductName(
-                                product
-                            )
-                        )}"
-                        loading="eager">
-
-                </div>
-
-                ${thumbnails}
+                <img
+                    class="online-kit-image"
+                    src="${escapeNexpakOnlineHTML(image)}"
+                    alt="${escapeNexpakOnlineHTML(kit.name)}"
+                    loading="lazy"
+                >
 
             </div>
-        `;
-    }
 
 
-    /*=====================================================
-      100. PRODUCT FEATURES
-    =====================================================*/
+            <div class="online-kit-content">
 
-    function renderFeatures(
-        product
-    ) {
-
-        const features =
-            getProductFeatures(
-                product
-            );
-
-
-        if (!features.length) {
-            return "";
-        }
-
-
-        return `
-            <section class="online-detail-section
-                            online-detail-features">
-
-                <h3>
-                    Key Features
-                </h3>
-
-                <ul>
-                    ${
-                        features
-                            .map(
-                                function (feature) {
-
-                                    return `
-                                        <li>
-                                            ${helpers.escapeHTML(
-                                                feature
-                                            )}
-                                        </li>
-                                    `;
-                                }
-                            )
-                            .join("")
-                    }
-                </ul>
-
-            </section>
-        `;
-    }
-
-
-    /*=====================================================
-      101. PRODUCT SPECIFICATIONS
-    =====================================================*/
-
-    function renderSpecifications(
-        product
-    ) {
-
-        const specifications =
-            getProductSpecifications(
-                product
-            );
-
-
-        const keys =
-            Object.keys(
-                specifications
-            );
-
-
-        if (!keys.length) {
-            return "";
-        }
-
-
-        let rows = "";
-
-
-        keys.forEach(
-            function (key) {
-
-                const value =
-                    specifications[key];
-
-
-                let displayValue;
-
-
-                if (
-                    Array.isArray(value)
-                ) {
-
-                    displayValue =
-                        value.join(", ");
-
-                } else if (
-                    value &&
-                    typeof value === "object"
-                ) {
-
-                    displayValue =
-                        Object.values(value)
-                            .join(", ");
-
-                } else {
-
-                    displayValue =
-                        String(
-                            value
-                        );
-                }
-
-
-                rows += `
-                    <tr>
-
-                        <th>
-                            ${helpers.escapeHTML(
-                                key
-                            )}
-                        </th>
-
-                        <td>
-                            ${helpers.escapeHTML(
-                                displayValue
-                            )}
-                        </td>
-
-                    </tr>
-                `;
-            }
-        );
-
-
-        return `
-            <section class="online-detail-section
-                            online-detail-specifications">
-
-                <h3>
-                    Specifications
-                </h3>
-
-                <div class="online-specifications-table-wrap">
-
-                    <table class="online-specifications-table">
-
-                        <tbody>
-
-                            ${rows}
-
-                        </tbody>
-
-                    </table>
-
+                <div class="online-kit-brand">
+                    ${escapeNexpakOnlineHTML(kit.brand)}
                 </div>
 
-            </section>
-        `;
-    }
+                <h3 class="online-kit-title">
+                    ${escapeNexpakOnlineHTML(kit.name)}
+                </h3>
 
-
-    /*=====================================================
-      102. PRODUCT TAGS
-    =====================================================*/
-
-    function renderTags(
-        product
-    ) {
-
-        const tags =
-            getProductTags(
-                product
-            );
-
-
-        if (!tags.length) {
-            return "";
-        }
-
-
-        return `
-            <div class="online-detail-tags">
-
-                ${
-                    tags
-                        .map(
-                            function (tag) {
-
-                                return `
-                                    <span
-                                        class="online-detail-tag">
-
-                                        ${helpers.escapeHTML(
-                                            tag
-                                        )}
-
-                                    </span>
-                                `;
-                            }
-                        )
-                        .join("")
-                }
-
-            </div>
-        `;
-    }
-
-
-    /*=====================================================
-      103. PRODUCT BASIC INFORMATION
-    =====================================================*/
-
-    function renderBasicInformation(
-        product
-    ) {
-
-        const name =
-            helpers.getProductName(
-                product
-            );
-
-
-        const brand =
-            helpers.getProductBrand(
-                product
-            );
-
-
-        const category =
-            helpers.getProductCategory(
-                product
-            );
-
-
-        const subcategory =
-            STORE.products &&
-            typeof STORE.products.getSubcategory ===
-            "function"
-                ? STORE.products.getSubcategory(
-                    product
-                )
-                : "";
-
-
-        const sku =
-            helpers.getProductSKU(
-                product
-            );
-
-
-        const productType =
-            STORE.products &&
-            typeof STORE.products.getType ===
-            "function"
-                ? STORE.products.getType(
-                    product
-                )
-                : "";
-
-
-        return `
-            <div class="online-detail-information">
-
-                ${
-                    brand
-                        ? `
-                            <div class="online-detail-brand">
-                                ${helpers.escapeHTML(
-                                    brand
-                                )}
-                            </div>
-                        `
-                        : ""
-                }
-
-
-                <h2 class="online-detail-title">
-
-                    ${helpers.escapeHTML(
-                        name
+                <p class="online-kit-description">
+                    ${escapeNexpakOnlineHTML(
+                        kit.shortDescription
                     )}
-
-                </h2>
-
-
-                ${
-                    sku
-                        ? `
-                            <div class="online-detail-sku">
-                                SKU:
-                                ${helpers.escapeHTML(
-                                    sku
-                                )}
-                            </div>
-                        `
-                        : ""
-                }
+                </p>
 
 
-                ${
-                    category
-                        ? `
-                            <div class="online-detail-category">
-                                Category:
-                                ${helpers.escapeHTML(
-                                    category
-                                )}
-                            </div>
-                        `
-                        : ""
-                }
+                <div class="online-kit-price">
+
+                    ${formatNexpakOnlinePrice(price)}
+
+                    <small>
+                        incl. VAT
+                    </small>
+
+                </div>
 
 
-                ${
-                    subcategory
-                        ? `
-                            <div class="online-detail-subcategory">
-                                ${helpers.escapeHTML(
-                                    subcategory
-                                )}
-                            </div>
-                        `
-                        : ""
-                }
+                ${optionsHTML}
 
 
-                ${
-                    productType
-                        ? `
-                            <div class="online-detail-type">
-                                Type:
-                                ${helpers.escapeHTML(
-                                    productType
-                                )}
-                            </div>
-                        `
-                        : ""
-                }
+                <div class="online-kit-actions">
 
-            </div>
-        `;
-    }
-
-
-    /*=====================================================
-      104. PRODUCT DETAIL ACTIONS
-    =====================================================*/
-
-    function renderDetailActions(
-        product
-    ) {
-
-        const productID =
-            helpers.getProductID(
-                product
-            );
-
-
-        const priceStatus =
-            helpers.getProductPriceStatus(
-                product
-            );
-
-
-        let actionHTML = "";
-
-
-        if (
-            priceStatus === "priced"
-        ) {
-
-            actionHTML = `
-                <button
-                    type="button"
-                    class="online-detail-add-cart"
-                    data-detail-action="add-to-cart"
-                    data-product-id="${helpers.escapeHTML(
-                        productID
-                    )}">
-
-                    Add to Cart
-
-                </button>
-            `;
-
-        } else if (
-            priceStatus === "request-price"
-        ) {
-
-            actionHTML = `
-                <button
-                    type="button"
-                    class="online-detail-request-price"
-                    data-detail-action="request-price"
-                    data-product-id="${helpers.escapeHTML(
-                        productID
-                    )}">
-
-                    Request Price
-
-                </button>
-            `;
-
-        } else {
-
-            actionHTML = `
-                <button
-                    type="button"
-                    class="online-detail-request-quote"
-                    data-detail-action="request-quote"
-                    data-product-id="${helpers.escapeHTML(
-                        productID
-                    )}">
-
-                    Request Quote
-
-                </button>
-            `;
-        }
-
-
-        /*
-         * Quantity only makes sense for confirmed priced
-         * products.
-         */
-
-        const quantityHTML =
-            priceStatus === "priced"
-                ? `
-                    <div class="online-detail-quantity">
+                    <div class="online-kit-quantity">
 
                         <button
                             type="button"
-                            data-quantity-action="decrease"
-                            aria-label="Decrease quantity">
-
+                            class="online-qty-minus"
+                            data-kit-id="${escapeNexpakOnlineHTML(kit.id)}"
+                            aria-label="Decrease quantity"
+                        >
                             −
-
                         </button>
-
 
                         <input
                             type="number"
+                            class="online-qty-input"
+                            data-kit-id="${escapeNexpakOnlineHTML(kit.id)}"
+                            value="${quantity}"
                             min="1"
-                            value="1"
-                            data-product-quantity
-                            aria-label="Product quantity">
-
+                            max="99"
+                        >
 
                         <button
                             type="button"
-                            data-quantity-action="increase"
-                            aria-label="Increase quantity">
-
+                            class="online-qty-plus"
+                            data-kit-id="${escapeNexpakOnlineHTML(kit.id)}"
+                            aria-label="Increase quantity"
+                        >
                             +
-
                         </button>
 
                     </div>
-                `
-                : "";
 
 
-        return `
-            <div class="online-detail-actions">
+                    <div class="online-kit-buttons">
 
-                ${quantityHTML}
+                        <button
+                            type="button"
+                            class="online-add-cart"
+                            data-kit-id="${escapeNexpakOnlineHTML(kit.id)}"
+                        >
+                            Add to Cart
+                        </button>
 
-                ${actionHTML}
+                        <button
+                            type="button"
+                            class="online-view-more"
+                            data-kit-id="${escapeNexpakOnlineHTML(kit.id)}"
+                        >
+                            View More
+                        </button>
+
+                    </div>
+
+                </div>
 
             </div>
-        `;
-    }
 
+        </article>
 
-    /*=====================================================
-      105. PRODUCT DETAIL RENDERING
-    =====================================================*/
+    `;
 
-    function renderProductDetails(
-        suppliedContainer
-    ) {
+}
 
-        const product =
-            STORE.state.productDetails.product ||
-            STORE.state.selectedProduct;
 
+/* =========================================================
+   33. RENDER KIT CARDS
+========================================================= */
 
-        if (!product) {
+function renderNexpakOnlineKits() {
 
-            helpers.warn(
-                "No product selected for detail rendering."
-            );
+    const container =
+        getNexpakOnlineStoreContainer();
 
-            return false;
-        }
+    if (!container) {
 
-
-        const container =
-            getDetailContainer(
-                suppliedContainer
-            );
-
-
-        if (!container) {
-
-            helpers.warn(
-                "Product detail container not found."
-            );
-
-            return false;
-        }
-
-
-        const description =
-            getProductLongDescription(
-                product
-            );
-
-
-        const warranty =
-            helpers.safeString(
-                product.warranty ||
-                product.warrantyPeriod ||
-                product.guarantee ||
-                ""
-            );
-
-
-        const deliveryClass =
-            helpers.safeString(
-                product.deliveryClass ||
-                product.delivery_class ||
-                ""
-            );
-
-
-        container.innerHTML = `
-            <article
-                class="online-product-detail-page"
-                data-product-id="${helpers.escapeHTML(
-                    helpers.getProductID(
-                        product
-                    )
-                )}">
-
-                <div class="online-detail-header">
-
-                    <button
-                        type="button"
-                        class="online-detail-close"
-                        data-detail-action="close"
-                        aria-label="Close product details">
-
-                        ×
-
-                    </button>
-
-                </div>
-
-
-                <div class="online-detail-main">
-
-                    <div class="online-detail-media">
-
-                        ${renderImageGallery(
-                            product
-                        )}
-
-                    </div>
-
-
-                    <div class="online-detail-content">
-
-                        ${renderBasicInformation(
-                            product
-                        )}
-
-
-                        ${STORE.products.renderPrice(
-                            product
-                        )}
-
-
-                        ${
-                            description
-                                ? `
-                                    <section
-                                        class="online-detail-section
-                                               online-detail-description">
-
-                                        <h3>
-                                            Description
-                                        </h3>
-
-                                        <p>
-                                            ${helpers.escapeHTML(
-                                                description
-                                            )}
-                                        </p>
-
-                                    </section>
-                                `
-                                : ""
-                        }
-
-
-                        ${renderDetailActions(
-                            product
-                        )}
-
-
-                        ${
-                            warranty
-                                ? `
-                                    <div class="online-detail-warranty">
-                                        <strong>
-                                            Warranty:
-                                        </strong>
-                                        ${helpers.escapeHTML(
-                                            warranty
-                                        )}
-                                    </div>
-                                `
-                                : ""
-                        }
-
-
-                        ${
-                            deliveryClass
-                                ? `
-                                    <div class="online-detail-delivery-class">
-                                        <strong>
-                                            Delivery:
-                                        </strong>
-                                        ${helpers.escapeHTML(
-                                            deliveryClass
-                                        )}
-                                    </div>
-                                `
-                                : ""
-                        }
-
-
-                        ${renderTags(
-                            product
-                        )}
-
-                    </div>
-
-                </div>
-
-
-                ${renderFeatures(
-                    product
-                )}
-
-
-                ${renderSpecifications(
-                    product
-                )}
-
-
-                <div
-                    class="online-detail-related-hook"
-                    data-related-products-for="${helpers.escapeHTML(
-                        helpers.getProductID(
-                            product
-                        )
-                    )}">
-                </div>
-
-            </article>
-        `;
-
-
-        STORE.state.productDetails.isOpen =
-            true;
-
-
-        /*
-         * Notify future UI components.
-         */
-
-        document.dispatchEvent(
-            new CustomEvent(
-                "nexpak:product-details-rendered",
-                {
-                    detail: {
-                        product:
-                            product,
-
-                        container:
-                            container
-                    }
-                }
-            )
-        );
-
-
-        return true;
-    }
-
-
-    /*=====================================================
-      106. PRODUCT IMAGE SELECTION
-    =====================================================*/
-
-    function setActiveImage(
-        index
-    ) {
-
-        const product =
-            STORE.state.productDetails.product;
-
-
-        if (!product) {
-            return false;
-        }
-
-
-        const images =
-            getProductImages(
-                product
-            );
-
-
-        if (!images.length) {
-            return false;
-        }
-
-
-        let requestedIndex =
-            Number(index);
-
-
-        if (
-            !Number.isFinite(
-                requestedIndex
-            )
-        ) {
-
-            requestedIndex = 0;
-        }
-
-
-        requestedIndex =
-            Math.max(
-                0,
-                Math.min(
-                    Math.floor(
-                        requestedIndex
-                    ),
-                    images.length - 1
-                )
-            );
-
-
-        STORE.state.productDetails.activeImage =
-            requestedIndex;
-
-
-        renderProductDetails();
-
-
-        return true;
-    }
-
-
-    /*=====================================================
-      107. PRODUCT QUANTITY
-    =====================================================*/
-
-    function setProductQuantity(
-        quantity
-    ) {
-
-        let requestedQuantity =
-            Number(quantity);
-
-
-        if (
-            !Number.isFinite(
-                requestedQuantity
-            )
-        ) {
-
-            requestedQuantity = 1;
-        }
-
-
-        requestedQuantity =
-            Math.max(
-                1,
-                Math.floor(
-                    requestedQuantity
-                )
-            );
-
-
-        /*
-         * Prevent accidental extreme quantities.
-         */
-
-        requestedQuantity =
-            Math.min(
-                requestedQuantity,
-                999
-            );
-
-
-        STORE.state.productDetails.quantity =
-            requestedQuantity;
-
-
-        return requestedQuantity;
-    }
-
-
-    function getProductQuantity() {
-
-        return Math.max(
-            1,
-            Number(
-                STORE.state.productDetails.quantity
-            ) || 1
-        );
-    }
-
-
-    /*=====================================================
-      108. DETAIL ACTION HANDLER
-    =====================================================*/
-
-    function handleDetailAction(
-        event
-    ) {
-
-        const detailAction =
-            event.target.closest(
-                "[data-detail-action]"
-            );
-
-
-        if (detailAction) {
-
-            const action =
-                detailAction.getAttribute(
-                    "data-detail-action"
-                );
-
-
-            const productID =
-                detailAction.getAttribute(
-                    "data-product-id"
-                );
-
-
-            switch (action) {
-
-                case "add-to-cart": {
-
-                    const product =
-                        selectProduct(
-                            productID,
-                            {
-                                render: false
-                            }
-                        );
-
-
-                    if (!product) {
-                        break;
-                    }
-
-
-                    document.dispatchEvent(
-                        new CustomEvent(
-                            "nexpak:add-to-cart",
-                            {
-                                detail: {
-
-                                    product:
-                                        product,
-
-                                    productID:
-                                        helpers.getProductID(
-                                            product
-                                        ),
-
-                                    quantity:
-                                        getProductQuantity()
-                                }
-                            }
-                        )
-                    );
-
-
-                    break;
-                }
-
-
-                case "request-price": {
-
-                    const product =
-                        selectProduct(
-                            productID,
-                            {
-                                render: false
-                            }
-                        );
-
-
-                    if (!product) {
-                        break;
-                    }
-
-
-                    document.dispatchEvent(
-                        new CustomEvent(
-                            "nexpak:request-price",
-                            {
-                                detail: {
-                                    product:
-                                        product
-                                }
-                            }
-                        )
-                    );
-
-
-                    break;
-                }
-
-
-                case "request-quote": {
-
-                    const product =
-                        selectProduct(
-                            productID,
-                            {
-                                render: false
-                            }
-                        );
-
-
-                    if (!product) {
-                        break;
-                    }
-
-
-                    document.dispatchEvent(
-                        new CustomEvent(
-                            "nexpak:request-quote",
-                            {
-                                detail: {
-                                    product:
-                                        product
-                                }
-                            }
-                        )
-                    );
-
-
-                    break;
-                }
-
-
-                case "close":
-
-                    closeProductDetails();
-
-                    break;
-            }
-
-
-            return;
-        }
-
-
-        /*-----------------------------------------------
-          Product image
-        -----------------------------------------------*/
-
-        const imageButton =
-            event.target.closest(
-                "[data-detail-image]"
-            );
-
-
-        if (imageButton) {
-
-            const index =
-                imageButton.getAttribute(
-                    "data-detail-image"
-                );
-
-
-            setActiveImage(
-                index
-            );
-
-
-            return;
-        }
-
-
-        /*-----------------------------------------------
-          Quantity
-        -----------------------------------------------*/
-
-        const quantityAction =
-            event.target.closest(
-                "[data-quantity-action]"
-            );
-
-
-        if (quantityAction) {
-
-            const action =
-                quantityAction.getAttribute(
-                    "data-quantity-action"
-                );
-
-
-            let quantity =
-                getProductQuantity();
-
-
-            if (
-                action === "increase"
-            ) {
-
-                quantity++;
-
-            } else if (
-                action === "decrease"
-            ) {
-
-                quantity--;
-            }
-
-
-            setProductQuantity(
-                quantity
-            );
-
-
-            updateQuantityInput();
-
-
-            return;
-        }
-    }
-
-
-    /*=====================================================
-      109. QUANTITY INPUT
-    =====================================================*/
-
-    function handleQuantityInput(
-        event
-    ) {
-
-        const input =
-            event.target.closest(
-                "[data-product-quantity]"
-            );
-
-
-        if (!input) {
-            return;
-        }
-
-
-        setProductQuantity(
-            input.value
-        );
-
-
-        updateQuantityInput();
-    }
-
-
-    function updateQuantityInput() {
-
-        const input =
-            document.querySelector(
-                "[data-product-quantity]"
-            );
-
-
-        if (!input) {
-            return;
-        }
-
-
-        input.value =
-            getProductQuantity();
-    }
-
-
-    /*=====================================================
-      110. CLOSE PRODUCT DETAILS
-    =====================================================*/
-
-    function closeProductDetails() {
-
-        const container =
-            getDetailContainer();
-
-
-        STORE.state.productDetails.isOpen =
-            false;
-
-
-        if (container) {
-
-            /*
-             * Don't destroy unrelated HTML.
-             * Only clear a container that is clearly being
-             * used as the product-detail target.
-             */
-
-            container.innerHTML = "";
-        }
-
-
-        document.dispatchEvent(
-            new CustomEvent(
-                "nexpak:product-details-closed"
-            )
-        );
-    }
-
-
-    /*=====================================================
-      111. PRODUCT HISTORY
-    =====================================================*/
-
-    function getProductHistory() {
-
-        return STORE.state.productDetails.history
-            .map(function (id) {
-
-                return findProduct(id);
-
-            })
-            .filter(Boolean);
-    }
-
-
-    function clearProductHistory() {
-
-        STORE.state.productDetails.history =
-            [];
-    }
-
-
-    /*=====================================================
-      112. BACK TO PREVIOUS PRODUCT
-    =====================================================*/
-
-    function previousProduct() {
-
-        const history =
-            STORE.state.productDetails.history;
-
-
-        if (!history.length) {
-            return null;
-        }
-
-
-        const previousID =
-            history.pop();
-
-
-        const product =
-            findProduct(
-                previousID
-            );
-
-
-        if (!product) {
-            return null;
-        }
-
-
-        return selectProduct(
-            product
-        );
-    }
-
-
-    /*=====================================================
-      113. OPEN PRODUCT FROM EVENT
-    =====================================================*/
-
-    function handleProductViewEvent(
-        event
-    ) {
-
-        const product =
-            event.detail &&
-            event.detail.product;
-
-
-        if (!product) {
-            return;
-        }
-
-
-        selectProduct(
-            product
-        );
-    }
-
-
-    /*=====================================================
-      114. INITIALIZE PRODUCT DETAIL EVENTS
-    =====================================================*/
-
-    function initializeProductDetailEvents() {
-
-        /*
-         * Detail buttons.
-         */
-
-        document.addEventListener(
-            "click",
-            handleDetailAction
-        );
-
-
-        /*
-         * Quantity controls.
-         */
-
-        document.addEventListener(
-            "input",
-            handleQuantityInput
-        );
-
-
-        /*
-         * Existing Part 2 view-product event.
-         */
-
-        document.addEventListener(
-            "nexpak:view-product",
-            handleProductViewEvent
-        );
-    }
-
-
-    /*=====================================================
-      115. PUBLIC PRODUCT DETAIL API
-    =====================================================*/
-
-    STORE.details = {
-
-        find:
-            findProduct,
-
-        select:
-            selectProduct,
-
-        render:
-            renderProductDetails,
-
-        close:
-            closeProductDetails,
-
-        setImage:
-            setActiveImage,
-
-        getImages:
-            getProductImages,
-
-        getFeatures:
-            getProductFeatures,
-
-        getSpecifications:
-            getProductSpecifications,
-
-        getTags:
-            getProductTags,
-
-        setQuantity:
-            setProductQuantity,
-
-        getQuantity:
-            getProductQuantity,
-
-        history:
-            getProductHistory,
-
-        clearHistory:
-            clearProductHistory,
-
-        previous:
-            previousProduct,
-
-        isOpen:
-            function () {
-                return STORE.state.productDetails.isOpen;
-            }
-    };
-
-
-    /*=====================================================
-      116. INITIALIZE
-    =====================================================*/
-
-    initializeProductDetailEvents();
-
-
-    /*=====================================================
-      117. PART 5 READY
-    =====================================================*/
-
-    helpers.log(
-        "online.js Part 5 loaded — Product Details & Selection ready."
-    );
-
-
-})(window, document);
-
-
-/*=========================================================
- END OF online.js — PART 5/8
-=========================================================*/
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE ENGINE
- ---------------------------------------------------------
- File: online.js
- Part: 6/8
- Purpose:
- - Featured products
- - Popular products
- - New products
- - Related products
- - Similar products
- - Cross-category recommendations
- - Product recommendation scoring
- - Recommendation rendering
-
- Continues directly from:
- online.js — Part 1/8
- online.js — Part 2/8
- online.js — Part 3/8
- online.js — Part 4/8
- online.js — Part 5/8
-=========================================================*/
-
-(function (window, document) {
-
-    "use strict";
-
-
-    /*=====================================================
-      118. STORE CONNECTION
-    =====================================================*/
-
-    const STORE =
-        window.NEXPAK_ONLINE;
-
-
-    if (!STORE) {
-
-        console.error(
-            "[NEXPAK ONLINE] Part 6 could not start. " +
-            "Parts 1–5 must load first."
+        console.warn(
+            "NEXPAK Online Store: Product container not found."
         );
 
         return;
+
     }
 
 
-    const helpers =
-        STORE.helpers;
+    const kits =
+        getNexpakOnlineKitsForDisplay();
 
 
-    /*=====================================================
-      119. RECOMMENDATION CONFIGURATION
-    =====================================================*/
+    if (!kits.length) {
 
-    const recommendationConfig = {
+        container.innerHTML = `
 
-        defaultLimit: 8,
+            <div class="online-no-products">
 
-        relatedLimit: 8,
-
-        popularLimit: 8,
-
-        featuredLimit: 8,
-
-        newLimit: 8,
-
-        minimumRelatedScore: 10,
-
-        categoryWeight: 40,
-
-        subcategoryWeight: 30,
-
-        brandWeight: 20,
-
-        typeWeight: 25,
-
-        tagWeight: 8,
-
-        compatibilityWeight: 35,
-
-        priceRangeWeight: 5,
-
-        featuredWeight: 15,
-
-        popularWeight: 15,
-
-        newWeight: 10
-    };
-
-
-    /*=====================================================
-      120. PRODUCT COLLECTION
-    =====================================================*/
-
-    function getAllProducts() {
-
-        return Array.isArray(
-            STORE.state.allProducts
-        )
-            ? STORE.state.allProducts
-            : [];
-    }
-
-
-    /*=====================================================
-      121. FLAG CHECKERS
-    =====================================================*/
-
-    function isFeatured(
-        product
-    ) {
-
-        if (!product) {
-            return false;
-        }
-
-
-        return (
-            product.featured === true ||
-            product.isFeatured === true ||
-            product.featuredProduct === true
-        );
-    }
-
-
-    function isPopular(
-        product
-    ) {
-
-        if (!product) {
-            return false;
-        }
-
-
-        return (
-            product.popular === true ||
-            product.isPopular === true ||
-            product.popularProduct === true ||
-            product.bestSeller === true ||
-            product.bestSeller === "true"
-        );
-    }
-
-
-    function isNewProduct(
-        product
-    ) {
-
-        if (!product) {
-            return false;
-        }
-
-
-        return (
-            product.new === true ||
-            product.isNew === true ||
-            product.newProduct === true
-        );
-    }
-
-
-    /*=====================================================
-      122. PRODUCT METADATA
-    =====================================================*/
-
-    function getSubcategory(
-        product
-    ) {
-
-        if (!product) {
-            return "";
-        }
-
-
-        return helpers.safeString(
-            product.subcategory ||
-            product.subCategory ||
-            product.sub_category ||
-            ""
-        );
-    }
-
-
-    function getProductType(
-        product
-    ) {
-
-        if (!product) {
-            return "";
-        }
-
-
-        return helpers.safeString(
-            product.productType ||
-            product.product_type ||
-            product.type ||
-            ""
-        );
-    }
-
-
-    function getProductTags(
-        product
-    ) {
-
-        if (!product) {
-            return [];
-        }
-
-
-        const tags =
-            product.tags ||
-            product.keywords ||
-            [];
-
-
-        if (Array.isArray(tags)) {
-
-            return tags
-                .map(function (tag) {
-
-                    return helpers.safeLower(
-                        tag
-                    );
-
-                })
-                .filter(Boolean);
-        }
-
-
-        if (
-            typeof tags === "string"
-        ) {
-
-            return tags
-                .split(",")
-                .map(function (tag) {
-
-                    return helpers.safeLower(
-                        tag.trim()
-                    );
-
-                })
-                .filter(Boolean);
-        }
-
-
-        return [];
-    }
-
-
-    /*=====================================================
-      123. CATEGORY NORMALIZATION
-    =====================================================*/
-
-    function normalizeCategory(
-        value
-    ) {
-
-        return helpers.safeLower(
-            value
-        )
-            .replace(/&/g, "and")
-            .replace(/[^a-z0-9]+/g, " ")
-            .trim();
-    }
-
-
-    /*=====================================================
-      124. PRODUCT PRICE RANGE
-    =====================================================*/
-
-    function getPrice(
-        product
-    ) {
-
-        if (
-            !product ||
-            !helpers.hasConfirmedPrice(
-                product
-            )
-        ) {
-
-            return null;
-        }
-
-
-        const price =
-            Number(
-                product.price
-            );
-
-
-        return Number.isFinite(
-            price
-        )
-            ? price
-            : null;
-    }
-
-
-    function getPriceSimilarity(
-        productA,
-        productB
-    ) {
-
-        const priceA =
-            getPrice(productA);
-
-
-        const priceB =
-            getPrice(productB);
-
-
-        if (
-            priceA === null ||
-            priceB === null
-        ) {
-
-            return 0;
-        }
-
-
-        const highest =
-            Math.max(
-                priceA,
-                priceB
-            );
-
-
-        if (
-            highest <= 0
-        ) {
-
-            return 0;
-        }
-
-
-        const difference =
-            Math.abs(
-                priceA - priceB
-            );
-
-
-        const percentage =
-            difference /
-            highest;
-
-
-        /*
-         * Products within roughly 25% of one another
-         * receive the strongest price similarity.
-         */
-
-        if (
-            percentage <= 0.10
-        ) {
-
-            return 10;
-        }
-
-
-        if (
-            percentage <= 0.25
-        ) {
-
-            return 7;
-        }
-
-
-        if (
-            percentage <= 0.50
-        ) {
-
-            return 4;
-        }
-
-
-        return 0;
-    }
-
-
-    /*=====================================================
-      125. PRODUCT RELATION SCORE
-    =====================================================*/
-
-    function calculateRelatedScore(
-        source,
-        candidate
-    ) {
-
-        if (
-            !source ||
-            !candidate
-        ) {
-
-            return 0;
-        }
-
-
-        const sourceID =
-            helpers.safeLower(
-                helpers.getProductID(
-                    source
-                )
-            );
-
-
-        const candidateID =
-            helpers.safeLower(
-                helpers.getProductID(
-                    candidate
-                )
-            );
-
-
-        /*
-         * Never recommend the current product itself.
-         */
-
-        if (
-            sourceID &&
-            candidateID &&
-            sourceID === candidateID
-        ) {
-
-            return -9999;
-        }
-
-
-        let score = 0;
-
-
-        /*-----------------------------------------------
-          Category
-        -----------------------------------------------*/
-
-        const sourceCategory =
-            normalizeCategory(
-                helpers.getProductCategory(
-                    source
-                )
-            );
-
-
-        const candidateCategory =
-            normalizeCategory(
-                helpers.getProductCategory(
-                    candidate
-                )
-            );
-
-
-        if (
-            sourceCategory &&
-            candidateCategory &&
-            sourceCategory === candidateCategory
-        ) {
-
-            score +=
-                recommendationConfig.categoryWeight;
-        }
-
-
-        /*-----------------------------------------------
-          Subcategory
-        -----------------------------------------------*/
-
-        const sourceSubcategory =
-            normalizeCategory(
-                getSubcategory(
-                    source
-                )
-            );
-
-
-        const candidateSubcategory =
-            normalizeCategory(
-                getSubcategory(
-                    candidate
-                )
-            );
-
-
-        if (
-            sourceSubcategory &&
-            candidateSubcategory &&
-            sourceSubcategory === candidateSubcategory
-        ) {
-
-            score +=
-                recommendationConfig.subcategoryWeight;
-        }
-
-
-        /*-----------------------------------------------
-          Brand
-        -----------------------------------------------*/
-
-        const sourceBrand =
-            helpers.safeLower(
-                helpers.getProductBrand(
-                    source
-                )
-            );
-
-
-        const candidateBrand =
-            helpers.safeLower(
-                helpers.getProductBrand(
-                    candidate
-                )
-            );
-
-
-        if (
-            sourceBrand &&
-            candidateBrand &&
-            sourceBrand === candidateBrand
-        ) {
-
-            score +=
-                recommendationConfig.brandWeight;
-        }
-
-
-        /*-----------------------------------------------
-          Product type
-        -----------------------------------------------*/
-
-        const sourceType =
-            helpers.safeLower(
-                getProductType(
-                    source
-                )
-            );
-
-
-        const candidateType =
-            helpers.safeLower(
-                getProductType(
-                    candidate
-                )
-            );
-
-
-        if (
-            sourceType &&
-            candidateType &&
-            sourceType === candidateType
-        ) {
-
-            score +=
-                recommendationConfig.typeWeight;
-        }
-
-
-        /*-----------------------------------------------
-          Tags
-        -----------------------------------------------*/
-
-        const sourceTags =
-            getProductTags(
-                source
-            );
-
-
-        const candidateTags =
-            getProductTags(
-                candidate
-            );
-
-
-        if (
-            sourceTags.length &&
-            candidateTags.length
-        ) {
-
-            const commonTags =
-                sourceTags.filter(
-                    function (tag) {
-
-                        return candidateTags.indexOf(
-                            tag
-                        ) !== -1;
-                    }
-                );
-
-
-            score +=
-                commonTags.length *
-                recommendationConfig.tagWeight;
-        }
-
-
-        /*-----------------------------------------------
-          Compatibility
-        -----------------------------------------------*/
-
-        const sourceCompatibility =
-            source.compatibility ||
-            source.compatibleWith ||
-            source.compatible_with ||
-            [];
-
-
-        const candidateCompatibility =
-            candidate.compatibility ||
-            candidate.compatibleWith ||
-            candidate.compatible_with ||
-            [];
-
-
-        const sourceCompatibilityText =
-            JSON.stringify(
-                sourceCompatibility
-            ).toLowerCase();
-
-
-        const candidateCompatibilityText =
-            JSON.stringify(
-                candidateCompatibility
-            ).toLowerCase();
-
-
-        if (
-            sourceCompatibilityText &&
-            candidateCompatibilityText &&
-            (
-                sourceCompatibilityText.includes(
-                    candidateID
-                ) ||
-                candidateCompatibilityText.includes(
-                    sourceID
-                )
-            )
-        ) {
-
-            score +=
-                recommendationConfig.compatibilityWeight;
-        }
-
-
-        /*-----------------------------------------------
-          Price similarity
-        -----------------------------------------------*/
-
-        score +=
-            getPriceSimilarity(
-                source,
-                candidate
-            );
-
-
-        /*-----------------------------------------------
-          Featured / popular / new signals
-        -----------------------------------------------*/
-
-        if (
-            isFeatured(candidate)
-        ) {
-
-            score +=
-                recommendationConfig.featuredWeight;
-        }
-
-
-        if (
-            isPopular(candidate)
-        ) {
-
-            score +=
-                recommendationConfig.popularWeight;
-        }
-
-
-        if (
-            isNewProduct(candidate)
-        ) {
-
-            score +=
-                recommendationConfig.newWeight;
-        }
-
-
-        return score;
-    }
-
-
-    /*=====================================================
-      126. SORT RECOMMENDATIONS
-    =====================================================*/
-
-    function sortRecommendations(
-        source,
-        products
-    ) {
-
-        return products
-            .map(function (product) {
-
-                return {
-
-                    product:
-                        product,
-
-                    score:
-                        calculateRelatedScore(
-                            source,
-                            product
-                        )
-                };
-
-            })
-            .filter(function (item) {
-
-                return (
-                    item.score >=
-                    recommendationConfig.minimumRelatedScore
-                );
-
-            })
-            .sort(function (a, b) {
-
-                return (
-                    b.score -
-                    a.score
-                );
-
-            })
-            .map(function (item) {
-
-                return item.product;
-
-            });
-    }
-
-
-    /*=====================================================
-      127. GET FEATURED PRODUCTS
-    =====================================================*/
-
-    function getFeaturedProducts(
-        limit
-    ) {
-
-        const requestedLimit =
-            Number(limit);
-
-
-        const finalLimit =
-            Number.isFinite(
-                requestedLimit
-            )
-                ? Math.max(
-                    1,
-                    Math.floor(
-                        requestedLimit
-                    )
-                )
-                : recommendationConfig.featuredLimit;
-
-
-        return getAllProducts()
-            .filter(
-                isFeatured
-            )
-            .slice(
-                0,
-                finalLimit
-            );
-    }
-
-
-    /*=====================================================
-      128. GET POPULAR PRODUCTS
-    =====================================================*/
-
-    function getPopularProducts(
-        limit
-    ) {
-
-        const requestedLimit =
-            Number(limit);
-
-
-        const finalLimit =
-            Number.isFinite(
-                requestedLimit
-            )
-                ? Math.max(
-                    1,
-                    Math.floor(
-                        requestedLimit
-                    )
-                )
-                : recommendationConfig.popularLimit;
-
-
-        return getAllProducts()
-            .filter(
-                isPopular
-            )
-            .slice(
-                0,
-                finalLimit
-            );
-    }
-
-
-    /*=====================================================
-      129. GET NEW PRODUCTS
-    =====================================================*/
-
-    function getNewProducts(
-        limit
-    ) {
-
-        const requestedLimit =
-            Number(limit);
-
-
-        const finalLimit =
-            Number.isFinite(
-                requestedLimit
-            )
-                ? Math.max(
-                    1,
-                    Math.floor(
-                        requestedLimit
-                    )
-                )
-                : recommendationConfig.newLimit;
-
-
-        return getAllProducts()
-            .filter(
-                isNewProduct
-            )
-            .slice(
-                0,
-                finalLimit
-            );
-    }
-
-
-    /*=====================================================
-      130. GET RELATED PRODUCTS
-    =====================================================*/
-
-    function getRelatedProducts(
-        sourceProduct,
-        limit
-    ) {
-
-        let source =
-            sourceProduct;
-
-
-        if (
-            !source ||
-            typeof source !== "object"
-        ) {
-
-            source =
-                STORE.details &&
-                typeof STORE.details.find ===
-                "function"
-                    ? STORE.details.find(
-                        sourceProduct
-                    )
-                    : null;
-        }
-
-
-        if (!source) {
-            return [];
-        }
-
-
-        const requestedLimit =
-            Number(limit);
-
-
-        const finalLimit =
-            Number.isFinite(
-                requestedLimit
-            )
-                ? Math.max(
-                    1,
-                    Math.floor(
-                        requestedLimit
-                    )
-                )
-                : recommendationConfig.relatedLimit;
-
-
-        const candidates =
-            getAllProducts()
-                .filter(function (product) {
-
-                    const id =
-                        helpers.safeLower(
-                            helpers.getProductID(
-                                product
-                            )
-                        );
-
-
-                    const sourceID =
-                        helpers.safeLower(
-                            helpers.getProductID(
-                                source
-                            )
-                        );
-
-
-                    return (
-                        !sourceID ||
-                        id !== sourceID
-                    );
-                });
-
-
-        const related =
-            sortRecommendations(
-                source,
-                candidates
-            );
-
-
-        /*
-         * If there are not enough strongly related
-         * products, use category fallback.
-         */
-
-        if (
-            related.length <
-            finalLimit
-        ) {
-
-            const sourceCategory =
-                normalizeCategory(
-                    helpers.getProductCategory(
-                        source
-                    )
-                );
-
-
-            const fallback =
-                candidates.filter(
-                    function (product) {
-
-                        return (
-                            normalizeCategory(
-                                helpers.getProductCategory(
-                                    product
-                                )
-                            ) ===
-                            sourceCategory
-                        );
-                    }
-                );
-
-
-            fallback.forEach(
-                function (product) {
-
-                    const exists =
-                        related.some(
-                            function (item) {
-
-                                return (
-                                    helpers.getProductID(
-                                        item
-                                    ) ===
-                                    helpers.getProductID(
-                                        product
-                                    )
-                                );
-                            }
-                        );
-
-
-                    if (!exists) {
-
-                        related.push(
-                            product
-                        );
-                    }
-                }
-            );
-        }
-
-
-        return related.slice(
-            0,
-            finalLimit
-        );
-    }
-
-
-    /*=====================================================
-      131. GET SIMILAR PRODUCTS
-    =====================================================*/
-
-    function getSimilarProducts(
-        sourceProduct,
-        limit
-    ) {
-
-        let source =
-            sourceProduct;
-
-
-        if (
-            !source ||
-            typeof source !== "object"
-        ) {
-
-            source =
-                STORE.details.find(
-                    sourceProduct
-                );
-        }
-
-
-        if (!source) {
-            return [];
-        }
-
-
-        const sourceCategory =
-            normalizeCategory(
-                helpers.getProductCategory(
-                    source
-                )
-            );
-
-
-        const sourceType =
-            helpers.safeLower(
-                getProductType(
-                    source
-                )
-            );
-
-
-        const candidates =
-            getAllProducts()
-                .filter(function (product) {
-
-                    if (
-                        helpers.getProductID(
-                            product
-                        ) ===
-                        helpers.getProductID(
-                            source
-                        )
-                    ) {
-
-                        return false;
-                    }
-
-
-                    const category =
-                        normalizeCategory(
-                            helpers.getProductCategory(
-                                product
-                            )
-                        );
-
-
-                    const type =
-                        helpers.safeLower(
-                            getProductType(
-                                product
-                            )
-                        );
-
-
-                    return (
-                        category ===
-                        sourceCategory ||
-                        (
-                            sourceType &&
-                            type === sourceType
-                        )
-                    );
-                });
-
-
-        return sortRecommendations(
-            source,
-            candidates
-        ).slice(
-            0,
-            Number(limit) || recommendationConfig.defaultLimit
-        );
-    }
-
-
-    /*=====================================================
-      132. RECOMMENDATION CARD
-    =====================================================*/
-
-    function renderRecommendationCard(
-        product
-    ) {
-
-        if (!product) {
-            return "";
-        }
-
-
-        const productID =
-            helpers.getProductID(
-                product
-            );
-
-
-        const name =
-            helpers.getProductName(
-                product
-            );
-
-
-        const image =
-            product.image ||
-            product.imageUrl ||
-            product.thumbnail ||
-            "";
-
-
-        const brand =
-            helpers.getProductBrand(
-                product
-            );
-
-
-        const category =
-            helpers.getProductCategory(
-                product
-            );
-
-
-        const priceHTML =
-            STORE.products &&
-            typeof STORE.products.renderPrice ===
-            "function"
-                ? STORE.products.renderPrice(
-                    product
-                )
-                : "";
-
-
-        return `
-            <article
-                class="online-recommendation-card"
-                data-product-id="${helpers.escapeHTML(
-                    productID
-                )}">
-
-                <button
-                    type="button"
-                    class="online-recommendation-image"
-                    data-recommendation-product="${helpers.escapeHTML(
-                        productID
-                    )}">
-
-                    ${
-                        image
-                            ? `
-                                <img
-                                    src="${helpers.escapeHTML(
-                                        image
-                                    )}"
-                                    alt="${helpers.escapeHTML(
-                                        name
-                                    )}"
-                                    loading="lazy">
-                            `
-                            : `
-                                <span>
-                                    NEXPAK Security
-                                </span>
-                            `
-                    }
-
-                </button>
-
-
-                ${
-                    brand
-                        ? `
-                            <div
-                                class="online-recommendation-brand">
-
-                                ${helpers.escapeHTML(
-                                    brand
-                                )}
-
-                            </div>
-                        `
-                        : ""
-                }
-
-
-                <h3
-                    class="online-recommendation-title">
-
-                    ${helpers.escapeHTML(
-                        name
-                    )}
-
+                <h3>
+                    No kits found
                 </h3>
 
+                <p>
+                    Try another category or search term.
+                </p>
 
-                ${
-                    category
-                        ? `
-                            <div
-                                class="online-recommendation-category">
+            </div>
 
-                                ${helpers.escapeHTML(
-                                    category
-                                )}
-
-                            </div>
-                        `
-                        : ""
-                }
-
-
-                <div
-                    class="online-recommendation-price">
-
-                    ${priceHTML}
-
-                </div>
-
-
-                <button
-                    type="button"
-                    class="online-recommendation-view"
-                    data-recommendation-product="${helpers.escapeHTML(
-                        productID
-                    )}">
-
-                    View Product
-
-                </button>
-
-            </article>
-        `;
-    }
-
-
-    /*=====================================================
-      133. RENDER PRODUCT COLLECTION
-    =====================================================*/
-
-    function renderProductCollection(
-        products,
-        container,
-        title
-    ) {
-
-        if (!container) {
-            return false;
-        }
-
-
-        const collection =
-            Array.isArray(products)
-                ? products
-                : [];
-
-
-        if (!collection.length) {
-
-            container.innerHTML = "";
-
-            return false;
-        }
-
-
-        const heading =
-            title
-                ? `
-                    <div class="online-recommendation-heading">
-
-                        <h2>
-                            ${helpers.escapeHTML(
-                                title
-                            )}
-                        </h2>
-
-                    </div>
-                `
-                : "";
-
-
-        container.innerHTML = `
-            <section
-                class="online-recommendation-section">
-
-                ${heading}
-
-                <div
-                    class="online-recommendation-grid">
-
-                    ${
-                        collection
-                            .map(
-                                renderRecommendationCard
-                            )
-                            .join("")
-                    }
-
-                </div>
-
-            </section>
         `;
 
-
-        return true;
-    }
-
-
-    /*=====================================================
-      134. RENDER FEATURED
-    =====================================================*/
-
-    function renderFeatured(
-        container,
-        limit
-    ) {
-
-        const target =
-            resolveRecommendationContainer(
-                container,
-                "featured"
-            );
-
-
-        if (!target) {
-            return false;
-        }
-
-
-        return renderProductCollection(
-            getFeaturedProducts(
-                limit
-            ),
-            target,
-            "Featured Products"
-        );
-    }
-
-
-    /*=====================================================
-      135. RENDER POPULAR
-    =====================================================*/
-
-    function renderPopular(
-        container,
-        limit
-    ) {
-
-        const target =
-            resolveRecommendationContainer(
-                container,
-                "popular"
-            );
-
-
-        if (!target) {
-            return false;
-        }
-
-
-        return renderProductCollection(
-            getPopularProducts(
-                limit
-            ),
-            target,
-            "Popular Products"
-        );
-    }
-
-
-    /*=====================================================
-      136. RENDER NEW
-    =====================================================*/
-
-    function renderNewProducts(
-        container,
-        limit
-    ) {
-
-        const target =
-            resolveRecommendationContainer(
-                container,
-                "new"
-            );
-
-
-        if (!target) {
-            return false;
-        }
-
-
-        return renderProductCollection(
-            getNewProducts(
-                limit
-            ),
-            target,
-            "New Products"
-        );
-    }
-
-
-    /*=====================================================
-      137. RENDER RELATED
-    =====================================================*/
-
-    function renderRelated(
-        sourceProduct,
-        container,
-        limit
-    ) {
-
-        const target =
-            resolveRecommendationContainer(
-                container,
-                "related"
-            );
-
-
-        if (!target) {
-            return false;
-        }
-
-
-        const products =
-            getRelatedProducts(
-                sourceProduct,
-                limit
-            );
-
-
-        return renderProductCollection(
-            products,
-            target,
-            "You May Also Like"
-        );
-    }
-
-
-    /*=====================================================
-      138. CONTAINER RESOLVER
-    =====================================================*/
-
-    function resolveRecommendationContainer(
-        suppliedContainer,
-        type
-    ) {
-
-        if (suppliedContainer) {
-
-            if (
-                typeof suppliedContainer ===
-                "string"
-            ) {
-
-                return document.querySelector(
-                    suppliedContainer
-                );
-            }
-
-
-            if (
-                suppliedContainer instanceof
-                Element
-            ) {
-
-                return suppliedContainer;
-            }
-        }
-
-
-        const selectorMap = {
-
-            featured:
-                "#featured-products, " +
-                "[data-online-featured]",
-
-            popular:
-                "#popular-products, " +
-                "[data-online-popular]",
-
-            new:
-                "#new-products, " +
-                "[data-online-new]",
-
-            related:
-                "#related-products, " +
-                "[data-online-related]"
-        };
-
-
-        return document.querySelector(
-            selectorMap[type] || ""
-        );
-    }
-
-
-    /*=====================================================
-      139. RECOMMENDATION CLICK HANDLER
-    =====================================================*/
-
-    function handleRecommendationClick(
-        event
-    ) {
-
-        const button =
-            event.target.closest(
-                "[data-recommendation-product]"
-            );
-
-
-        if (!button) {
-            return;
-        }
-
-
-        const productID =
-            button.getAttribute(
-                "data-recommendation-product"
-            );
-
-
-        if (!productID) {
-            return;
-        }
-
-
-        /*
-         * Use Part 5 product-selection engine.
-         */
-
-        if (
-            STORE.details &&
-            typeof STORE.details.select ===
-            "function"
-        ) {
-
-            STORE.details.select(
-                productID
-            );
-        }
-
-
-        document.dispatchEvent(
-            new CustomEvent(
-                "nexpak:recommendation-selected",
-                {
-                    detail: {
-                        productID:
-                            productID,
-
-                        product:
-                            STORE.details &&
-                            STORE.details.find
-                                ? STORE.details.find(
-                                    productID
-                                )
-                                : null
-                    }
-                }
-            )
-        );
-    }
-
-
-    /*=====================================================
-      140. AUTOMATIC RELATED PRODUCTS
-    =====================================================*/
-
-    function renderAutomaticRelatedProducts() {
-
-        const product =
-            STORE.state.productDetails &&
-            STORE.state.productDetails.product;
-
-
-        if (!product) {
-            return;
-        }
-
-
-        const container =
-            document.querySelector(
-                "[data-related-products-for]"
-            );
-
-
-        if (!container) {
-            return;
-        }
-
-
-        renderRelated(
-            product,
-            container,
-            recommendationConfig.relatedLimit
-        );
-    }
-
-
-    /*=====================================================
-      141. PRODUCT DETAIL EVENT
-    =====================================================*/
-
-    function handleProductDetailsRendered(
-        event
-    ) {
-
-        if (
-            !event.detail ||
-            !event.detail.product
-        ) {
-
-            return;
-        }
-
-
-        /*
-         * Wait until Part 5 has finished inserting
-         * the detail structure.
-         */
-
-        window.setTimeout(
-            renderAutomaticRelatedProducts,
-            0
-        );
-    }
-
-
-    /*=====================================================
-      142. PUBLIC RECOMMENDATION API
-    =====================================================*/
-
-    STORE.recommendations = {
-
-        config:
-            recommendationConfig,
-
-        isFeatured:
-            isFeatured,
-
-        isPopular:
-            isPopular,
-
-        isNew:
-            isNewProduct,
-
-        featured:
-            getFeaturedProducts,
-
-        popular:
-            getPopularProducts,
-
-        newest:
-            getNewProducts,
-
-        related:
-            getRelatedProducts,
-
-        similar:
-            getSimilarProducts,
-
-        score:
-            calculateRelatedScore,
-
-        renderFeatured:
-            renderFeatured,
-
-        renderPopular:
-            renderPopular,
-
-        renderNew:
-            renderNewProducts,
-
-        renderRelated:
-            renderRelated,
-
-        renderCard:
-            renderRecommendationCard
-    };
-
-
-    /*=====================================================
-      143. EVENT INITIALIZATION
-    =====================================================*/
-
-    document.addEventListener(
-        "click",
-        handleRecommendationClick
-    );
-
-
-    document.addEventListener(
-        "nexpak:product-details-rendered",
-        handleProductDetailsRendered
-    );
-
-
-    /*=====================================================
-      144. PART 6 READY
-    =====================================================*/
-
-    helpers.log(
-        "online.js Part 6 loaded — Featured, Popular & Related Products ready."
-    );
-
-
-})(window, document);
-
-
-/*=========================================================
- END OF online.js — PART 6/8
-=========================================================*/
-    
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE ENGINE
- ---------------------------------------------------------
- File: online.js
- Part: 7/8
- Purpose:
- - Product compatibility engine
- - Compatibility lookup
- - Compatible product matching
- - System/component relationships
- - Configurator integration hooks
- - Recommended compatible products
- - Compatibility validation
- - Configurator events
-
- Continues directly from:
- online.js — Part 1/8
- online.js — Part 2/8
- online.js — Part 3/8
- online.js — Part 4/8
- online.js — Part 5/8
- online.js — Part 6/8
-=========================================================*/
-
-(function (window, document) {
-
-    "use strict";
-
-
-    /*=====================================================
-      145. STORE CONNECTION
-    =====================================================*/
-
-    const STORE =
-        window.NEXPAK_ONLINE;
-
-
-    if (!STORE) {
-
-        console.error(
-            "[NEXPAK ONLINE] Part 7 could not start. " +
-            "Parts 1–6 must load first."
-        );
-
         return;
+
     }
 
 
-    const helpers =
-        STORE.helpers;
+    container.innerHTML =
+        kits.map(
+            kit =>
+                createNexpakOnlineKitCard(kit)
+        ).join("");
 
 
-    /*=====================================================
-      146. CONFIGURATOR STATE
-    =====================================================*/
+    attachNexpakOnlineCardEvents();
 
-    if (!STORE.state.configurator) {
-
-        STORE.state.configurator = {
-
-            active: false,
-
-            mode: null,
-
-            baseProduct: null,
-
-            selectedProducts: [],
-
-            compatibleProducts: [],
-
-            incompatibleProducts: [],
-
-            warnings: [],
-
-            validation: {
-
-                valid: true,
-
-                errors: [],
-
-                warnings: []
-            }
-        };
-    }
+}
 
 
-    /*=====================================================
-      147. COMPATIBILITY MAP
-    =====================================================*/
+/* =========================================================
+   34. CARD EVENTS
+========================================================= */
 
-    function getCompatibilityMap() {
+function attachNexpakOnlineCardEvents() {
 
-        /*
-         * The database created earlier owns the actual
-         * compatibility information.
-         *
-         * This engine only reads it.
-         */
+    document
+        .querySelectorAll(".online-qty-minus")
+        .forEach(button => {
 
-        return (
-            window.NEXPAK_COMPATIBILITY_MAP ||
-            STORE.data &&
-            STORE.data.compatibilityMap ||
-            {}
-        );
-    }
+            button.addEventListener(
+                "click",
+                function () {
 
+                    const input =
+                        this.closest(
+                            ".online-kit-card"
+                        )
+                        ?.querySelector(
+                            ".online-qty-input"
+                        );
 
-    /*=====================================================
-      148. NORMALIZE COMPATIBILITY VALUE
-    =====================================================*/
+                    if (!input) return;
 
-    function normalizeCompatibilityValue(
-        value
-    ) {
+                    input.value =
+                        Math.max(
+                            1,
+                            Number(input.value || 1) - 1
+                        );
 
-        if (
-            value === null ||
-            value === undefined
-        ) {
+                }
+            );
 
-            return "";
-        }
+        });
 
 
-        return helpers.safeLower(
-            String(value)
+    document
+        .querySelectorAll(".online-qty-plus")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    const input =
+                        this.closest(
+                            ".online-kit-card"
+                        )
+                        ?.querySelector(
+                            ".online-qty-input"
+                        );
+
+                    if (!input) return;
+
+                    input.value =
+                        Math.min(
+                            99,
+                            Number(input.value || 1) + 1
+                        );
+
+                }
+            );
+
+        });
+
+
+    document
+        .querySelectorAll(
+            ".online-kit-option-select"
         )
-            .replace(/[_-]+/g, " ")
-            .replace(/\s+/g, " ")
-            .trim();
-    }
+        .forEach(select => {
+
+            select.addEventListener(
+                "change",
+                function () {
+
+                    setNexpakOnlineKitOption(
+                        this.dataset.optionId,
+                        this.value
+                    );
+
+                }
+            );
+
+        });
 
 
-    /*=====================================================
-      149. CONVERT VALUE TO ARRAY
-    =====================================================*/
+    document
+        .querySelectorAll(".online-add-cart")
+        .forEach(button => {
 
-    function valueToArray(
-        value
-    ) {
+            button.addEventListener(
+                "click",
+                function () {
 
-        if (
-            value === null ||
-            value === undefined
-        ) {
+                    handleNexpakOnlineAddToCart(
+                        this.dataset.kitId,
+                        this
+                    );
 
+                }
+            );
+
+        });
+
+
+    document
+        .querySelectorAll(".online-view-more")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    handleNexpakOnlineViewMore(
+                        this.dataset.kitId
+                    );
+
+                }
+            );
+
+        });
+
+}
+
+
+/* =========================================================
+   35. INITIAL RENDER
+========================================================= */
+
+function refreshNexpakOnlineStore() {
+
+    renderNexpakOnlineKits();
+
+}
+
+
+/* =========================================================
+   END OF PART 2/8
+
+   NEXT:
+   PART 3/8
+
+   ADD TO CART ENGINE
+
+   Will handle:
+   - Kit quantity
+   - Selected options
+   - Cart item creation
+   - Cart storage
+   - Cart count
+   - Add-to-cart feedback
+
+   VIEW MORE / PDF WILL BE BUILT AFTER THAT.
+========================================================= */
+
+/* =========================================================
+   NEXPAK ONLINE STORE
+   online.js — PART 3/8
+
+   ADD TO CART ENGINE
+
+   Handles:
+   - Pre-built kits only
+   - Kit quantity
+   - Kit options
+   - Cart storage
+   - Duplicate kits
+   - Cart quantity updates
+   - Cart count
+   - Add-to-cart feedback
+========================================================= */
+
+
+/* =========================================================
+   36. GET CART FROM STORAGE
+========================================================= */
+
+function getNexpakOnlineCart() {
+
+    try {
+
+        const saved =
+            localStorage.getItem(
+                NEXPAK_ONLINE_CONFIG.cartStorageKey
+            );
+
+        if (!saved) {
             return [];
         }
-
-
-        if (Array.isArray(value)) {
-
-            return value
-                .flat(Infinity)
-                .filter(function (item) {
-
-                    return (
-                        item !== null &&
-                        item !== undefined &&
-                        String(item).trim() !== ""
-                    );
-                });
-        }
-
-
-        if (
-            typeof value === "string"
-        ) {
-
-            return value
-                .split(/[,\n;|]+/)
-                .map(function (item) {
-
-                    return item.trim();
-
-                })
-                .filter(Boolean);
-        }
-
-
-        return [value];
-    }
-
-
-    /*=====================================================
-      150. PRODUCT COMPATIBILITY DATA
-    =====================================================*/
-
-    function getProductCompatibility(
-        product
-    ) {
-
-        if (!product) {
-            return {};
-        }
-
-
-        return (
-            product.compatibility ||
-            product.compatibleWith ||
-            product.compatible_with ||
-            product.compatibilityMap ||
-            product.compatibility_map ||
-            {}
-        );
-    }
-
-
-    /*=====================================================
-      151. COMPATIBLE WITH PRODUCT IDS
-    =====================================================*/
-
-    function getExplicitCompatibleIDs(
-        product
-    ) {
-
-        if (!product) {
-            return [];
-        }
-
-
-        const compatibility =
-            getProductCompatibility(
-                product
-            );
-
-
-        let values = [];
-
-
-        if (
-            typeof compatibility ===
-            "object" &&
-            !Array.isArray(
-                compatibility
-            )
-        ) {
-
-            values = [
-                compatibility.products,
-                compatibility.productIDs,
-                compatibility.productIds,
-                compatibility.ids,
-                compatibility.skus,
-                compatibility.models,
-                compatibility.compatibleProducts
-            ];
-
-
-        } else {
-
-            values = [
-                compatibility
-            ];
-        }
-
-
-        return valueToArray(
-            values
-        )
-            .map(function (value) {
-
-                return normalizeCompatibilityValue(
-                    value
-                );
-
-            })
-            .filter(Boolean);
-    }
-
-
-    /*=====================================================
-      152. COMPATIBILITY KEY/VALUE EXTRACTION
-    =====================================================*/
-
-    function getCompatibilityAttributes(
-        product
-    ) {
-
-        if (!product) {
-            return {};
-        }
-
-
-        const compatibility =
-            getProductCompatibility(
-                product
-            );
-
-
-        if (
-            !compatibility ||
-            typeof compatibility !== "object" ||
-            Array.isArray(compatibility)
-        ) {
-
-            return {};
-        }
-
-
-        const attributes = {};
-
-
-        Object.keys(
-            compatibility
-        ).forEach(
-            function (key) {
-
-                const normalizedKey =
-                    normalizeCompatibilityValue(
-                        key
-                    );
-
-
-                if (
-                    [
-                        "products",
-                        "product ids",
-                        "productids",
-                        "product ids",
-                        "ids",
-                        "skus",
-                        "models",
-                        "compatible products"
-                    ].indexOf(
-                        normalizedKey
-                    ) !== -1
-                ) {
-
-                    return;
-                }
-
-
-                const values =
-                    valueToArray(
-                        compatibility[key]
-                    )
-                        .map(
-                            normalizeCompatibilityValue
-                        )
-                        .filter(Boolean);
-
-
-                if (
-                    values.length
-                ) {
-
-                    attributes[
-                        normalizedKey
-                    ] = values;
-                }
-            }
-        );
-
-
-        return attributes;
-    }
-
-
-    /*=====================================================
-      153. PRODUCT ID MATCH
-    =====================================================*/
-
-    function productIdentifierMatches(
-        productA,
-        productB
-    ) {
-
-        if (
-            !productA ||
-            !productB
-        ) {
-
-            return false;
-        }
-
-
-        const identifiersA = [
-
-            helpers.getProductID(
-                productA
-            ),
-
-            helpers.getProductSKU(
-                productA
-            ),
-
-            productA.model,
-
-            productA.modelNumber,
-
-            productA.productCode
-
-        ]
-            .map(
-                normalizeCompatibilityValue
-            )
-            .filter(Boolean);
-
-
-        const identifiersB = [
-
-            helpers.getProductID(
-                productB
-            ),
-
-            helpers.getProductSKU(
-                productB
-            ),
-
-            productB.model,
-
-            productB.modelNumber,
-
-            productB.productCode
-
-        ]
-            .map(
-                normalizeCompatibilityValue
-            )
-            .filter(Boolean);
-
-
-        return identifiersA.some(
-            function (identifier) {
-
-                return identifiersB.indexOf(
-                    identifier
-                ) !== -1;
-            }
-        );
-    }
-
-
-    /*=====================================================
-      154. EXPLICIT COMPATIBILITY CHECK
-    =====================================================*/
-
-    function hasExplicitCompatibility(
-        productA,
-        productB
-    ) {
-
-        if (
-            !productA ||
-            !productB
-        ) {
-
-            return false;
-        }
-
-
-        const idB = [
-
-            helpers.getProductID(
-                productB
-            ),
-
-            helpers.getProductSKU(
-                productB
-            ),
-
-            productB.model,
-
-            productB.modelNumber,
-
-            productB.productCode
-
-        ]
-            .map(
-                normalizeCompatibilityValue
-            )
-            .filter(Boolean);
-
-
-        const idA = [
-
-            helpers.getProductID(
-                productA
-            ),
-
-            helpers.getProductSKU(
-                productA
-            ),
-
-            productA.model,
-
-            productA.modelNumber,
-
-            productA.productCode
-
-        ]
-            .map(
-                normalizeCompatibilityValue
-            )
-            .filter(Boolean);
-
-
-        const compatibleA =
-            getExplicitCompatibleIDs(
-                productA
-            );
-
-
-        const compatibleB =
-            getExplicitCompatibleIDs(
-                productB
-            );
-
-
-        return (
-            compatibleA.some(
-                function (value) {
-
-                    return idB.indexOf(
-                        value
-                    ) !== -1;
-                }
-            ) ||
-            compatibleB.some(
-                function (value) {
-
-                    return idA.indexOf(
-                        value
-                    ) !== -1;
-                }
-            )
-        );
-    }
-
-
-    /*=====================================================
-      155. ATTRIBUTE COMPATIBILITY
-    =====================================================*/
-
-    function hasAttributeCompatibility(
-        productA,
-        productB
-    ) {
-
-        const attributesA =
-            getCompatibilityAttributes(
-                productA
-            );
-
-
-        const attributesB =
-            getCompatibilityAttributes(
-                productB
-            );
-
-
-        const keys =
-            Object.keys(
-                attributesA
-            );
-
-
-        if (!keys.length) {
-            return false;
-        }
-
-
-        let matches = 0;
-
-
-        keys.forEach(
-            function (key) {
-
-                if (
-                    !attributesB[key]
-                ) {
-
-                    return;
-                }
-
-
-                const valuesA =
-                    attributesA[key];
-
-
-                const valuesB =
-                    attributesB[key];
-
-
-                const match =
-                    valuesA.some(
-                        function (value) {
-
-                            return valuesB.indexOf(
-                                value
-                            ) !== -1;
-                        }
-                    );
-
-
-                if (match) {
-                    matches++;
-                }
-            }
-        );
-
-
-        return (
-            matches > 0
-        );
-    }
-
-
-    /*=====================================================
-      156. CATEGORY COMPATIBILITY
-    =====================================================*/
-
-    function getCategoryRelationship(
-        productA,
-        productB
-    ) {
-
-        if (
-            !productA ||
-            !productB
-        ) {
-
-            return false;
-        }
-
-
-        const categoryA =
-            normalizeCompatibilityValue(
-                helpers.getProductCategory(
-                    productA
-                )
-            );
-
-
-        const categoryB =
-            normalizeCompatibilityValue(
-                helpers.getProductCategory(
-                    productB
-                )
-            );
-
-
-        /*
-         * Same category does NOT automatically mean
-         * compatible.
-         *
-         * This function only identifies potentially
-         * related system components.
-         */
-
-        const relationships = {
-
-            "cctv": [
-                "cctv",
-                "cctv accessories",
-                "cctv hard drives",
-                "power and backup",
-                "installation accessories",
-                "cabling"
-            ],
-
-            "ip cctv": [
-                "ip cctv",
-                "cctv",
-                "cabling",
-                "installation accessories",
-                "power and backup"
-            ],
-
-            "electric fencing": [
-                "electric fencing",
-                "power and backup",
-                "installation accessories"
-            ],
-
-            "gate automation": [
-                "gate automation",
-                "access control",
-                "intercom",
-                "power and backup"
-            ],
-
-            "access control": [
-                "access control",
-                "intercom",
-                "gate automation",
-                "power and backup"
-            ],
-
-            "intercom": [
-                "intercom",
-                "access control",
-                "gate automation",
-                "power and backup"
-            ],
-
-            "roboguard": [
-                "roboguard",
-                "agricultural security",
-                "power and backup"
-            ],
-
-            "agricultural security": [
-                "agricultural security",
-                "roboguard",
-                "electric fencing",
-                "cctv",
-                "power and backup"
-            ]
-        };
-
-
-        const relatedCategories =
-            relationships[
-                categoryA
-            ] || [];
-
-
-        return (
-            relatedCategories.indexOf(
-                categoryB
-            ) !== -1
-        );
-    }
-
-
-    /*=====================================================
-      157. COMPATIBILITY SCORE
-    =====================================================*/
-
-    function calculateCompatibilityScore(
-        source,
-        candidate
-    ) {
-
-        if (
-            !source ||
-            !candidate
-        ) {
-
-            return {
-
-                score: 0,
-
-                reasons: [],
-
-                explicit: false,
-
-                compatible: false
-            };
-        }
-
-
-        if (
-            productIdentifierMatches(
-                source,
-                candidate
-            )
-        ) {
-
-            return {
-
-                score: 0,
-
-                reasons: [],
-
-                explicit: false,
-
-                compatible: false
-            };
-        }
-
-
-        let score = 0;
-
-
-        const reasons = [];
-
-
-        const explicit =
-            hasExplicitCompatibility(
-                source,
-                candidate
-            );
-
-
-        const attributeMatch =
-            hasAttributeCompatibility(
-                source,
-                candidate
-            );
-
-
-        const categoryMatch =
-            getCategoryRelationship(
-                source,
-                candidate
-            );
-
-
-        if (explicit) {
-
-            score += 100;
-
-            reasons.push(
-                "Explicit database compatibility"
-            );
-        }
-
-
-        if (attributeMatch) {
-
-            score += 50;
-
-            reasons.push(
-                "Matching compatibility attributes"
-            );
-        }
-
-
-        if (categoryMatch) {
-
-            score += 20;
-
-            reasons.push(
-                "Related security-system category"
-            );
-        }
-
-
-        const sourceBrand =
-            normalizeCompatibilityValue(
-                helpers.getProductBrand(
-                    source
-                )
-            );
-
-
-        const candidateBrand =
-            normalizeCompatibilityValue(
-                helpers.getProductBrand(
-                    candidate
-                )
-            );
-
-
-        if (
-            sourceBrand &&
-            candidateBrand &&
-            sourceBrand === candidateBrand
-        ) {
-
-            score += 5;
-
-            reasons.push(
-                "Same brand"
-            );
-        }
-
-
-        return {
-
-            score: score,
-
-            reasons: reasons,
-
-            explicit: explicit,
-
-            compatible: (
-                explicit ||
-                attributeMatch
-            )
-        };
-    }
-
-
-    /*=====================================================
-      158. FIND COMPATIBLE PRODUCTS
-    =====================================================*/
-
-    function findCompatibleProducts(
-        sourceProduct,
-        options
-    ) {
-
-        let source =
-            sourceProduct;
-
-
-        if (
-            !source ||
-            typeof source !== "object"
-        ) {
-
-            source =
-                STORE.details &&
-                typeof STORE.details.find ===
-                "function"
-                    ? STORE.details.find(
-                        sourceProduct
-                    )
-                    : null;
-        }
-
-
-        if (!source) {
-            return [];
-        }
-
-
-        const settings =
-            options || {};
-
-
-        const explicitOnly =
-            settings.explicitOnly === true;
-
-
-        const limit =
-            Number.isFinite(
-                Number(
-                    settings.limit
-                )
-            )
-                ? Math.max(
-                    1,
-                    Math.floor(
-                        Number(
-                            settings.limit
-                        )
-                    )
-                )
-                : 20;
-
-
-        const results = [];
-
-
-        getAllProducts()
-            .forEach(
-                function (candidate) {
-
-                    const result =
-                        calculateCompatibilityScore(
-                            source,
-                            candidate
-                        );
-
-
-                    if (
-                        explicitOnly &&
-                        !result.explicit
-                    ) {
-
-                        return;
-                    }
-
-
-                    if (
-                        result.compatible ||
-                        (
-                            !explicitOnly &&
-                            result.score >= 20
-                        )
-                    ) {
-
-                        results.push({
-
-                            product:
-                                candidate,
-
-                            score:
-                                result.score,
-
-                            reasons:
-                                result.reasons,
-
-                            explicit:
-                                result.explicit
-                        });
-                    }
-                }
-            );
-
-
-        results.sort(
-            function (a, b) {
-
-                return (
-                    b.score -
-                    a.score
-                );
-            }
-        );
-
-
-        return results.slice(
-            0,
-            limit
-        );
-    }
-
-
-    /*=====================================================
-      159. COMPATIBILITY CHECK
-    =====================================================*/
-
-    function checkCompatibility(
-        productA,
-        productB
-    ) {
-
-        let first =
-            productA;
-
-
-        let second =
-            productB;
-
-
-        if (
-            typeof first !== "object"
-        ) {
-
-            first =
-                STORE.details.find(
-                    first
-                );
-        }
-
-
-        if (
-            typeof second !== "object"
-        ) {
-
-            second =
-                STORE.details.find(
-                    second
-                );
-        }
-
-
-        if (
-            !first ||
-            !second
-        ) {
-
-            return {
-
-                compatible: false,
-
-                score: 0,
-
-                reasons: [
-                    "One or both products could not be found."
-                ],
-
-                error: true
-            };
-        }
-
-
-        const result =
-            calculateCompatibilityScore(
-                first,
-                second
-            );
-
-
-        return {
-
-            compatible:
-                result.compatible,
-
-            explicit:
-                result.explicit,
-
-            score:
-                result.score,
-
-            reasons:
-                result.reasons,
-
-            productA:
-                first,
-
-            productB:
-                second,
-
-            error:
-                false
-        };
-    }
-
-
-    /*=====================================================
-      160. CONFIGURATOR START
-    =====================================================*/
-
-    function startConfigurator(
-        baseProduct,
-        options
-    ) {
-
-        let product =
-            baseProduct;
-
-
-        if (
-            !product ||
-            typeof product !== "object"
-        ) {
-
-            product =
-                STORE.details &&
-                STORE.details.find
-                    ? STORE.details.find(
-                        baseProduct
-                    )
-                    : null;
-        }
-
-
-        if (!product) {
-
-            helpers.warn(
-                "Unable to start configurator. " +
-                "Base product not found."
-            );
-
-            return null;
-        }
-
-
-        const settings =
-            options || {};
-
-
-        STORE.state.configurator = {
-
-            active: true,
-
-            mode:
-                settings.mode ||
-                "security-system",
-
-            baseProduct:
-                product,
-
-            selectedProducts: [
-                product
-            ],
-
-            compatibleProducts:
-                findCompatibleProducts(
-                    product,
-                    {
-                        limit: 50
-                    }
-                ),
-
-            incompatibleProducts: [],
-
-            warnings: [],
-
-            validation: {
-
-                valid: true,
-
-                errors: [],
-
-                warnings: []
-            }
-        };
-
-
-        document.dispatchEvent(
-            new CustomEvent(
-                "nexpak:configurator-started",
-                {
-                    detail: {
-                        state:
-                            STORE.state.configurator,
-
-                        product:
-                            product
-                    }
-                }
-            )
-        );
-
-
-        return STORE.state.configurator;
-    }
-
-
-    /*=====================================================
-      161. ADD CONFIGURATOR PRODUCT
-    =====================================================*/
-
-    function addConfiguratorProduct(
-        product
-    ) {
-
-        let selected =
-            product;
-
-
-        if (
-            !selected ||
-            typeof selected !== "object"
-        ) {
-
-            selected =
-                STORE.details.find(
-                    product
-                );
-        }
-
-
-        if (!selected) {
-
-            return {
-
-                success: false,
-
-                reason:
-                    "Product not found."
-            };
-        }
-
-
-        const state =
-            STORE.state.configurator;
-
-
-        if (
-            !state.active
-        ) {
-
-            startConfigurator(
-                selected
-            );
-
-            return {
-
-                success: true,
-
-                added: true,
-
-                product:
-                    selected
-            };
-        }
-
-
-        const existing =
-            state.selectedProducts.some(
-                function (item) {
-
-                    return (
-                        helpers.getProductID(
-                            item
-                        ) ===
-                        helpers.getProductID(
-                            selected
-                        )
-                    );
-                }
-            );
-
-
-        if (existing) {
-
-            return {
-
-                success: false,
-
-                added: false,
-
-                reason:
-                    "Product is already in the configuration.",
-
-                product:
-                    selected
-            };
-        }
-
-
-        /*
-         * Validate against every existing product.
-         */
-
-        const conflicts = [];
-
-
-        state.selectedProducts.forEach(
-            function (existingProduct) {
-
-                const result =
-                    checkCompatibility(
-                        existingProduct,
-                        selected
-                    );
-
-
-                if (
-                    !result.compatible
-                ) {
-
-                    conflicts.push(
-                        result
-                    );
-                }
-            }
-        );
-
-
-        if (
-            conflicts.length
-        ) {
-
-            state.incompatibleProducts.push(
-                selected
-            );
-
-
-            state.warnings.push({
-
-                product:
-                    selected,
-
-                conflicts:
-                    conflicts
-            });
-
-
-            document.dispatchEvent(
-                new CustomEvent(
-                    "nexpak:configurator-incompatible",
-                    {
-                        detail: {
-
-                            product:
-                                selected,
-
-                            conflicts:
-                                conflicts
-                        }
-                    }
-                )
-            );
-
-
-            return {
-
-                success: false,
-
-                added: false,
-
-                compatible: false,
-
-                reason:
-                    "Product is not compatible with the current configuration.",
-
-                conflicts:
-                    conflicts,
-
-                product:
-                    selected
-            };
-        }
-
-
-        state.selectedProducts.push(
-            selected
-        );
-
-
-        /*
-         * Refresh recommendations.
-         */
-
-        refreshConfiguratorRecommendations();
-
-
-        document.dispatchEvent(
-            new CustomEvent(
-                "nexpak:configurator-product-added",
-                {
-                    detail: {
-
-                        product:
-                            selected,
-
-                        state:
-                            state
-                    }
-                }
-            )
-        );
-
-
-        return {
-
-            success: true,
-
-            added: true,
-
-            compatible: true,
-
-            product:
-                selected,
-
-            state:
-                state
-        };
-    }
-
-
-    /*=====================================================
-      162. REMOVE CONFIGURATOR PRODUCT
-    =====================================================*/
-
-    function removeConfiguratorProduct(
-        product
-    ) {
-
-        const state =
-            STORE.state.configurator;
-
-
-        if (
-            !state.active
-        ) {
-
-            return false;
-        }
-
-
-        const productID =
-            typeof product === "object"
-                ? helpers.getProductID(
-                    product
-                )
-                : product;
-
-
-        const normalizedID =
-            normalizeCompatibilityValue(
-                productID
-            );
-
-
-        /*
-         * Base product cannot be removed through the
-         * standard component-removal function.
-         */
-
-        const baseID =
-            normalizeCompatibilityValue(
-                helpers.getProductID(
-                    state.baseProduct
-                )
-            );
-
-
-        if (
-            normalizedID ===
-            baseID
-        ) {
-
-            return false;
-        }
-
-
-        const originalLength =
-            state.selectedProducts.length;
-
-
-        state.selectedProducts =
-            state.selectedProducts.filter(
-                function (item) {
-
-                    return (
-                        normalizeCompatibilityValue(
-                            helpers.getProductID(
-                                item
-                            )
-                        ) !==
-                        normalizedID
-                    );
-                }
-            );
-
-
-        const removed =
-            state.selectedProducts.length <
-            originalLength;
-
-
-        if (removed) {
-
-            validateConfiguration();
-
-
-            refreshConfiguratorRecommendations();
-
-
-            document.dispatchEvent(
-                new CustomEvent(
-                    "nexpak:configurator-product-removed",
-                    {
-                        detail: {
-
-                            productID:
-                                productID,
-
-                            state:
-                                state
-                        }
-                    }
-                )
-            );
-        }
-
-
-        return removed;
-    }
-
-
-    /*=====================================================
-      163. VALIDATE CONFIGURATION
-    =====================================================*/
-
-    function validateConfiguration() {
-
-        const state =
-            STORE.state.configurator;
-
-
-        const errors = [];
-
-
-        const warnings = [];
-
-
-        if (
-            !state.active
-        ) {
-
-            state.validation = {
-
-                valid: true,
-
-                errors: [],
-
-                warnings: []
-            };
-
-
-            return state.validation;
-        }
-
-
-        const products =
-            state.selectedProducts;
-
-
-        /*
-         * Compare every selected product against every
-         * other selected product.
-         */
-
-        for (
-            let i = 0;
-            i < products.length;
-            i++
-        ) {
-
-            for (
-                let j = i + 1;
-                j < products.length;
-                j++
-            ) {
-
-                const result =
-                    checkCompatibility(
-                        products[i],
-                        products[j]
-                    );
-
-
-                if (
-                    !result.compatible
-                ) {
-
-                    errors.push({
-
-                        productA:
-                            products[i],
-
-                        productB:
-                            products[j],
-
-                        message:
-                            "Products may not be compatible."
-                    });
-                }
-            }
-        }
-
-
-        /*
-         * Store validation.
-         */
-
-        state.validation = {
-
-            valid:
-                errors.length === 0,
-
-            errors:
-                errors,
-
-            warnings:
-                warnings
-        };
-
-
-        return state.validation;
-    }
-
-
-    /*=====================================================
-      164. REFRESH CONFIGURATOR RECOMMENDATIONS
-    =====================================================*/
-
-    function refreshConfiguratorRecommendations() {
-
-        const state =
-            STORE.state.configurator;
-
-
-        if (
-            !state.active
-        ) {
-
-            return [];
-        }
-
-
-        const selected =
-            state.selectedProducts;
-
-
-        const candidates =
-            getAllProducts()
-                .filter(
-                    function (candidate) {
-
-                        return !selected.some(
-                            function (selectedProduct) {
-
-                                return (
-                                    helpers.getProductID(
-                                        selectedProduct
-                                    ) ===
-                                    helpers.getProductID(
-                                        candidate
-                                    )
-                                );
-                            }
-                        );
-                    }
-                );
-
-
-        const compatible = [];
-
-
-        candidates.forEach(
-            function (candidate) {
-
-                let compatibleWithAll =
-                    true;
-
-
-                let strongestScore =
-                    0;
-
-
-                selected.forEach(
-                    function (selectedProduct) {
-
-                        const result =
-                            checkCompatibility(
-                                selectedProduct,
-                                candidate
-                            );
-
-
-                        if (
-                            !result.compatible
-                        ) {
-
-                            compatibleWithAll =
-                                false;
-                        }
-
-
-                        strongestScore =
-                            Math.max(
-                                strongestScore,
-                                result.score
-                            );
-                    }
-                );
-
-
-                if (
-                    compatibleWithAll &&
-                    strongestScore > 0
-                ) {
-
-                    compatible.push({
-
-                        product:
-                            candidate,
-
-                        score:
-                            strongestScore
-                    });
-                }
-            }
-        );
-
-
-        compatible.sort(
-            function (a, b) {
-
-                return (
-                    b.score -
-                    a.score
-                );
-            }
-        );
-
-
-        state.compatibleProducts =
-            compatible.map(
-                function (item) {
-
-                    return item.product;
-                }
-            );
-
-
-        return state.compatibleProducts;
-    }
-
-
-    /*=====================================================
-      165. GET CONFIGURATION
-    =====================================================*/
-
-    function getConfiguration() {
-
-        return STORE.state.configurator;
-    }
-
-
-    /*=====================================================
-      166. RESET CONFIGURATOR
-    =====================================================*/
-
-    function resetConfigurator() {
-
-        STORE.state.configurator = {
-
-            active: false,
-
-            mode: null,
-
-            baseProduct: null,
-
-            selectedProducts: [],
-
-            compatibleProducts: [],
-
-            incompatibleProducts: [],
-
-            warnings: [],
-
-            validation: {
-
-                valid: true,
-
-                errors: [],
-
-                warnings: []
-            }
-        };
-
-
-        document.dispatchEvent(
-            new CustomEvent(
-                "nexpak:configurator-reset"
-            )
-        );
-
-
-        return STORE.state.configurator;
-    }
-
-
-    /*=====================================================
-      167. CONFIGURATOR EVENT HANDLER
-    =====================================================*/
-
-    function handleConfiguratorProductRequest(
-        event
-    ) {
-
-        if (
-            !event.detail
-        ) {
-
-            return;
-        }
-
-
-        const product =
-            event.detail.product ||
-            event.detail.productID;
-
-
-        if (!product) {
-            return;
-        }
-
-
-        startConfigurator(
-            product
-        );
-    }
-
-
-    /*=====================================================
-      168. PUBLIC COMPATIBILITY API
-    =====================================================*/
-
-    STORE.compatibility = {
-
-        map:
-            getCompatibilityMap,
-
-        get:
-            getProductCompatibility,
-
-        check:
-            checkCompatibility,
-
-        score:
-            calculateCompatibilityScore,
-
-        find:
-            findCompatibleProducts,
-
-        explicit:
-            getExplicitCompatibleIDs,
-
-        attributes:
-            getCompatibilityAttributes,
-
-        categoryRelationship:
-            getCategoryRelationship
-    };
-
-
-    /*=====================================================
-      169. PUBLIC CONFIGURATOR API
-    =====================================================*/
-
-    STORE.configurator = {
-
-        start:
-            startConfigurator,
-
-        add:
-            addConfiguratorProduct,
-
-        remove:
-            removeConfiguratorProduct,
-
-        validate:
-            validateConfiguration,
-
-        refresh:
-            refreshConfiguratorRecommendations,
-
-        get:
-            getConfiguration,
-
-        reset:
-            resetConfigurator,
-
-        compatible:
-            function (
-                product,
-                options
-            ) {
-
-                return findCompatibleProducts(
-                    product,
-                    options
-                );
-            }
-    };
-
-
-    /*=====================================================
-      170. CONFIGURATOR EVENTS
-    =====================================================*/
-
-    document.addEventListener(
-        "nexpak:start-configurator",
-        handleConfiguratorProductRequest
-    );
-
-
-    /*=====================================================
-      171. PART 7 READY
-    =====================================================*/
-
-    helpers.log(
-        "online.js Part 7 loaded — Compatibility & Configurator integration ready."
-    );
-
-
-})(window, document);
-
-
-/*=========================================================
- END OF online.js — PART 7/8
-=========================================================*/
-
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE ENGINE
- ---------------------------------------------------------
- File: online.js
- Part: 8/8
- Purpose:
- - Final store-engine integration
- - Cross-module API
- - Database validation
- - Engine health checks
- - Event integration
- - Automatic initialization
- - Public NEXPAK online-store API
- - Compatibility with cart / checkout / configurator
- - Final error protection
-
- Continues directly from:
- online.js — Part 1/8
- online.js — Part 2/8
- online.js — Part 3/8
- online.js — Part 4/8
- online.js — Part 5/8
- online.js — Part 6/8
- online.js — Part 7/8
-=========================================================*/
-
-(function (window, document) {
-
-    "use strict";
-
-
-    /*=====================================================
-      172. STORE CONNECTION
-    =====================================================*/
-
-    const STORE =
-        window.NEXPAK_ONLINE;
-
-
-    if (!STORE) {
-
-        console.error(
-            "[NEXPAK ONLINE] Part 8 cannot start. " +
-            "online.js Parts 1–7 must load first."
-        );
-
-        return;
-    }
-
-
-    const helpers =
-        STORE.helpers;
-
-
-    /*=====================================================
-      173. FINAL ENGINE STATE
-    =====================================================*/
-
-    STORE.state.engine = {
-
-        initialized: false,
-
-        ready: false,
-
-        version:
-            STORE.version ||
-            "1.0.0",
-
-        partsLoaded: 8,
-
-        databaseConnected: false,
-
-        databaseValidated: false,
-
-        modulesDetected: [],
-
-        modulesMissing: [],
-
-        errors: [],
-
-        warnings: [],
-
-        initializedAt: null
-    };
-
-
-    /*=====================================================
-      174. DATABASE CONNECTION CHECK
-    =====================================================*/
-
-    function checkDatabaseConnection() {
-
-        const database =
-            window.NEXPAK_ONLINE_STORE_DATA ||
-            window.NEXPAK_PRODUCTS ||
-            STORE.data ||
-            null;
-
-
-        const products =
-            Array.isArray(
-                STORE.state.allProducts
-            )
-                ? STORE.state.allProducts
-                : [];
-
-
-        const connected =
-            !!database &&
-            products.length > 0;
-
-
-        STORE.state.engine.databaseConnected =
-            connected;
-
-
-        return connected;
-    }
-
-
-    /*=====================================================
-      175. DATABASE VALIDATION
-    =====================================================*/
-
-    function validateDatabase() {
-
-        const products =
-            Array.isArray(
-                STORE.state.allProducts
-            )
-                ? STORE.state.allProducts
-                : [];
-
-
-        const errors = [];
-
-
-        const warnings = [];
-
-
-        if (!products.length) {
-
-            errors.push(
-                "No products were loaded into the online store."
-            );
-        }
-
-
-        const productIDs =
-            new Set();
-
-
-        const skus =
-            new Set();
-
-
-        products.forEach(
-            function (product, index) {
-
-                if (!product) {
-
-                    errors.push(
-                        "Product #" +
-                        (index + 1) +
-                        " is empty."
-                    );
-
-                    return;
-                }
-
-
-                const id =
-                    helpers.getProductID(
-                        product
-                    );
-
-
-                if (!id) {
-
-                    errors.push(
-                        "Product #" +
-                        (index + 1) +
-                        " has no product ID."
-                    );
-
-                } else {
-
-                    const normalizedID =
-                        String(
-                            id
-                        ).toLowerCase();
-
-
-                    if (
-                        productIDs.has(
-                            normalizedID
-                        )
-                    ) {
-
-                        errors.push(
-                            "Duplicate product ID: " +
-                            id
-                        );
-                    }
-
-
-                    productIDs.add(
-                        normalizedID
-                    );
-                }
-
-
-                const sku =
-                    helpers.getProductSKU(
-                        product
-                    );
-
-
-                if (sku) {
-
-                    const normalizedSKU =
-                        String(
-                            sku
-                        ).toLowerCase();
-
-
-                    if (
-                        skus.has(
-                            normalizedSKU
-                        )
-                    ) {
-
-                        warnings.push(
-                            "Duplicate SKU: " +
-                            sku
-                        );
-                    }
-
-
-                    skus.add(
-                        normalizedSKU
-                    );
-                }
-
-
-                const name =
-                    helpers.getProductName(
-                        product
-                    );
-
-
-                if (!name) {
-
-                    warnings.push(
-                        "Product " +
-                        (
-                            id ||
-                            "#" +
-                            (index + 1)
-                        ) +
-                        " has no product name."
-                    );
-                }
-
-
-                /*
-                 * Price validation.
-                 *
-                 * No price is automatically treated as an
-                 * error because NEXPAK products can legitimately
-                 * use request-price / quote pricing.
-                 */
-
-                if (
-                    product.price !== undefined &&
-                    product.price !== null &&
-                    product.price !== ""
-                ) {
-
-                    const price =
-                        Number(
-                            product.price
-                        );
-
-
-                    if (
-                        !Number.isFinite(
-                            price
-                        ) ||
-                        price < 0
-                    ) {
-
-                        errors.push(
-                            "Invalid price for product: " +
-                            (
-                                id ||
-                                name ||
-                                "unknown"
-                            )
-                        );
-                    }
-                }
-
-
-                /*
-                 * Confirm that request-price / quote products
-                 * do not accidentally contain a fake zero price.
-                 */
-
-                const pricingMode =
-                    String(
-                        product.pricingMode ||
-                        product.priceType ||
-                        product.pricing ||
-                        ""
-                    )
-                        .toLowerCase();
-
-
-                if (
-                    (
-                        pricingMode ===
-                        "request-price" ||
-                        pricingMode ===
-                        "request_price" ||
-                        pricingMode ===
-                        "quote"
-                    ) &&
-                    Number(
-                        product.price
-                    ) === 0
-                ) {
-
-                    warnings.push(
-                        "Quote/request-price product has price 0: " +
-                        (
-                            id ||
-                            name ||
-                            "unknown"
-                        )
-                    );
-                }
-            }
-        );
-
-
-        STORE.state.engine.databaseValidated =
-            errors.length === 0;
-
-
-        STORE.state.engine.errors =
-            errors;
-
-
-        STORE.state.engine.warnings =
-            warnings;
-
-
-        return {
-
-            valid:
-                errors.length === 0,
-
-            errors:
-                errors,
-
-            warnings:
-                warnings,
-
-            productCount:
-                products.length,
-
-            uniqueProductIDs:
-                productIDs.size,
-
-            uniqueSKUs:
-                skus.size
-        };
-    }
-
-
-    /*=====================================================
-      176. MODULE DETECTION
-    =====================================================*/
-
-    function detectModules() {
-
-        const moduleMap = {
-
-            cart:
-                "NEXPAK_ONLINE_CART",
-
-            checkout:
-                "NEXPAK_ONLINE_CHECKOUT",
-
-            configurator:
-                "configurator",
-
-            delivery:
-                "NEXPAK_ONLINE_DELIVERY",
-
-            script:
-                "NEXPAK_ONLINE_SCRIPT",
-
-            ui:
-                "NEXPAK_ONLINE_UI"
-        };
-
-
-        const detected = [];
-
-
-        const missing = [];
-
-
-        Object.keys(
-            moduleMap
-        ).forEach(
-            function (moduleName) {
-
-                const reference =
-                    moduleMap[
-                        moduleName
-                    ];
-
-
-                let available =
-                    false;
-
-
-                if (
-                    moduleName ===
-                    "configurator"
-                ) {
-
-                    available =
-                        !!STORE.configurator;
-
-                } else {
-
-                    available =
-                        !!window[
-                            reference
-                        ];
-                }
-
-
-                if (available) {
-
-                    detected.push(
-                        moduleName
-                    );
-
-                } else {
-
-                    missing.push(
-                        moduleName
-                    );
-                }
-            }
-        );
-
-
-        STORE.state.engine.modulesDetected =
-            detected;
-
-
-        STORE.state.engine.modulesMissing =
-            missing;
-
-
-        return {
-
-            detected:
-                detected,
-
-            missing:
-                missing
-        };
-    }
-
-
-    /*=====================================================
-      177. SAFE EVENT DISPATCH
-    =====================================================*/
-
-    function dispatchStoreEvent(
-        eventName,
-        detail
-    ) {
-
-        try {
-
-            document.dispatchEvent(
-                new CustomEvent(
-                    eventName,
-                    {
-                        detail:
-                            detail || {}
-                    }
-                )
-            );
-
-        } catch (error) {
-
-            /*
-             * Older browsers may not support CustomEvent
-             * in exactly the same way.
-             */
-
-            try {
-
-                const event =
-                    document.createEvent(
-                        "CustomEvent"
-                    );
-
-
-                event.initCustomEvent(
-                    eventName,
-                    false,
-                    false,
-                    detail || {}
-                );
-
-
-                document.dispatchEvent(
-                    event
-                );
-
-            } catch (fallbackError) {
-
-                console.warn(
-                    "[NEXPAK ONLINE] Event dispatch failed:",
-                    fallbackError
-                );
-            }
-        }
-    }
-
-
-    /*=====================================================
-      178. CART BRIDGE
-    =====================================================*/
-
-    function addToCart(
-        product,
-        quantity
-    ) {
-
-        let selected =
-            product;
-
-
-        if (
-            typeof selected !==
-            "object"
-        ) {
-
-            if (
-                STORE.details &&
-                typeof STORE.details.find ===
-                "function"
-            ) {
-
-                selected =
-                    STORE.details.find(
-                        product
-                    );
-            }
-        }
-
-
-        if (!selected) {
-
-            return {
-
-                success: false,
-
-                reason:
-                    "Product not found."
-            };
-        }
-
-
-        const qty =
-            Math.max(
-                1,
-                parseInt(
-                    quantity,
-                    10
-                ) || 1
-            );
-
-
-        /*
-         * Prefer the future dedicated onlinecart.js
-         * engine when it becomes available.
-         */
 
         const cart =
-            window.NEXPAK_ONLINE_CART;
+            JSON.parse(saved);
 
+        return Array.isArray(cart)
+            ? cart
+            : [];
 
-        if (
-            cart &&
-            typeof cart.add ===
-            "function"
-        ) {
+    } catch (error) {
 
-            return cart.add(
-                selected,
-                qty
-            );
-        }
-
-
-        /*
-         * If the cart engine is not loaded yet, do not
-         * create a second cart implementation here.
-         */
-
-        dispatchStoreEvent(
-            "nexpak:cart-add-request",
-            {
-
-                product:
-                    selected,
-
-                quantity:
-                    qty
-            }
+        console.error(
+            "NEXPAK Online Store: Unable to load cart.",
+            error
         );
 
+        return [];
+
+    }
+
+}
+
+
+/* =========================================================
+   37. SAVE CART
+========================================================= */
+
+function saveNexpakOnlineCart(cart) {
+
+    const safeCart =
+        Array.isArray(cart)
+            ? cart
+            : [];
+
+    NEXPAK_ONLINE_STATE.cart =
+        safeCart;
+
+    try {
+
+        localStorage.setItem(
+            NEXPAK_ONLINE_CONFIG.cartStorageKey,
+            JSON.stringify(safeCart)
+        );
+
+        updateNexpakOnlineCartCount();
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            "NEXPAK Online Store: Unable to save cart.",
+            error
+        );
+
+        return false;
+
+    }
+
+}
+
+
+/* =========================================================
+   38. LOAD CART
+========================================================= */
+
+function loadNexpakOnlineCart() {
+
+    NEXPAK_ONLINE_STATE.cart =
+        getNexpakOnlineCart();
+
+    updateNexpakOnlineCartCount();
+
+    return NEXPAK_ONLINE_STATE.cart;
+
+}
+
+
+/* =========================================================
+   39. GET CART COUNT
+========================================================= */
+
+function getNexpakOnlineCartCount() {
+
+    const cart =
+        NEXPAK_ONLINE_STATE.cart || [];
+
+    return cart.reduce(
+        (total, item) =>
+            total +
+            (
+                Number(item.quantity) || 0
+            ),
+        0
+    );
+
+}
+
+
+/* =========================================================
+   40. UPDATE CART COUNT
+========================================================= */
+
+function updateNexpakOnlineCartCount() {
+
+    const count =
+        getNexpakOnlineCartCount();
+
+    const selectors = [
+
+        "#onlineCartCount",
+
+        "#online-cart-count",
+
+        "#cartCount",
+
+        ".cart-count",
+
+        ".header-cart-count"
+
+    ];
+
+
+    selectors.forEach(
+        selector => {
+
+            document
+                .querySelectorAll(selector)
+                .forEach(element => {
+
+                    element.textContent =
+                        count;
+
+                    element.classList.toggle(
+                        "has-items",
+                        count > 0
+                    );
+
+                });
+
+        }
+    );
+
+
+    return count;
+
+}
+
+
+/* =========================================================
+   41. CREATE CART ITEM
+========================================================= */
+
+function createNexpakOnlineCartItem(
+    kit,
+    quantity,
+    options
+) {
+
+    const pricing =
+        calculateNexpakOnlineKitTotal(
+            kit,
+            quantity
+        );
+
+
+    return {
+
+        cartItemId:
+            createNexpakOnlineCartItemId(
+                kit,
+                options
+            ),
+
+        kitId:
+            kit.id,
+
+        sku:
+            kit.sku || "",
+
+        name:
+            kit.name || "",
+
+        brand:
+            kit.brand || "",
+
+        category:
+            kit.category || "",
+
+        image:
+            kit.image || "",
+
+        quantity:
+            pricing.quantity,
+
+        options:
+            {
+                ...options
+            },
+
+        contents:
+            Array.isArray(kit.contents)
+                ? [...kit.contents]
+                : [],
+
+        weight:
+            Number(kit.weight) || 0,
+
+        weightUnit:
+            kit.weightUnit || "kg",
+
+        unitPriceInclVat:
+            pricing.unitPriceInclVat,
+
+        priceExVat:
+            pricing.priceExVat,
+
+        vatAmount:
+            pricing.vatAmount,
+
+        totalInclVat:
+            pricing.totalInclVat,
+
+        addedAt:
+            new Date().toISOString()
+
+    };
+
+}
+
+
+/* =========================================================
+   42. CREATE UNIQUE CART ITEM ID
+========================================================= */
+
+function createNexpakOnlineCartItemId(
+    kit,
+    options
+) {
+
+    const optionString =
+        Object.keys(options || {})
+            .sort()
+            .map(
+                key =>
+                    key +
+                    ":" +
+                    options[key]
+            )
+            .join("|");
+
+
+    return (
+
+        String(
+            kit.id || "kit"
+        ) +
+
+        "::" +
+
+        optionString
+
+    );
+
+}
+
+
+/* =========================================================
+   43. CHECK IF SAME KIT EXISTS
+========================================================= */
+
+function findNexpakOnlineCartItem(
+    cart,
+    cartItemId
+) {
+
+    return cart.find(
+        item =>
+            item.cartItemId ===
+            cartItemId
+    ) || null;
+
+}
+
+
+/* =========================================================
+   44. ADD KIT TO CART
+========================================================= */
+
+function addNexpakOnlineKitToCart(
+    kitId,
+    quantity,
+    options
+) {
+
+    const kit =
+        getNexpakOnlineKit(
+            kitId
+        );
+
+
+    if (!kit) {
+
+        console.error(
+            "NEXPAK Online Store: Kit not found.",
+            kitId
+        );
 
         return {
 
             success: false,
 
-            pending: true,
+            message:
+                "Kit could not be found."
 
-            reason:
-                "Cart engine is not loaded yet.",
+        };
 
-            product:
-                selected,
+    }
 
-            quantity:
+
+    const qty =
+        Math.max(
+            1,
+            Number(quantity) || 1
+        );
+
+
+    const selectedOptions =
+        options || {};
+
+
+    const cart =
+        getNexpakOnlineCart();
+
+
+    const newItem =
+        createNexpakOnlineCartItem(
+            kit,
+            qty,
+            selectedOptions
+        );
+
+
+    const existing =
+        findNexpakOnlineCartItem(
+            cart,
+            newItem.cartItemId
+        );
+
+
+    if (existing) {
+
+        existing.quantity +=
+            newItem.quantity;
+
+
+        const pricing =
+            calculateNexpakOnlineKitTotal(
+                kit,
+                existing.quantity
+            );
+
+
+        existing.priceExVat =
+            pricing.priceExVat;
+
+        existing.vatAmount =
+            pricing.vatAmount;
+
+        existing.totalInclVat =
+            pricing.totalInclVat;
+
+    } else {
+
+        cart.push(
+            newItem
+        );
+
+    }
+
+
+    saveNexpakOnlineCart(
+        cart
+    );
+
+
+    return {
+
+        success: true,
+
+        item:
+            existing || newItem,
+
+        cart:
+            cart,
+
+        cartCount:
+            getNexpakOnlineCartCount(),
+
+        message:
+            `${kit.name} added to cart.`
+
+    };
+
+}
+
+
+/* =========================================================
+   45. HANDLE ADD TO CART BUTTON
+========================================================= */
+
+function handleNexpakOnlineAddToCart(
+    kitId,
+    button
+) {
+
+    const card =
+        document.querySelector(
+            `.online-kit-card[data-kit-id="${kitId}"]`
+        );
+
+
+    if (!card) {
+
+        console.error(
+            "NEXPAK Online Store: Kit card not found.",
+            kitId
+        );
+
+        return;
+
+    }
+
+
+    const quantityInput =
+        card.querySelector(
+            ".online-qty-input"
+        );
+
+
+    const quantity =
+        Math.max(
+            1,
+            Number(
+                quantityInput?.value
+            ) || 1
+        );
+
+
+    const options = {};
+
+
+    card
+        .querySelectorAll(
+            ".online-kit-option-select"
+        )
+        .forEach(select => {
+
+            if (
+                select.dataset.optionId
+            ) {
+
+                options[
+                    select.dataset.optionId
+                ] =
+                    select.value;
+
+            }
+
+        });
+
+
+    const result =
+        addNexpakOnlineKitToCart(
+            kitId,
+            quantity,
+            options
+        );
+
+
+    if (!result.success) {
+
+        showNexpakOnlineMessage(
+            result.message,
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if (button) {
+
+        const originalText =
+            button.textContent;
+
+        button.textContent =
+            "Added ✓";
+
+        button.disabled =
+            true;
+
+
+        setTimeout(
+            () => {
+
+                button.textContent =
+                    originalText;
+
+                button.disabled =
+                    false;
+
+            },
+            1200
+        );
+
+    }
+
+
+    showNexpakOnlineMessage(
+        result.message,
+        "success"
+    );
+
+
+    return result;
+
+}
+
+
+/* =========================================================
+   46. STORE MESSAGE
+========================================================= */
+
+function showNexpakOnlineMessage(
+    message,
+    type
+) {
+
+    let box =
+        document.getElementById(
+            "onlineStoreMessage"
+        );
+
+
+    if (!box) {
+
+        box =
+            document.createElement(
+                "div"
+            );
+
+        box.id =
+            "onlineStoreMessage";
+
+        box.className =
+            "online-store-message";
+
+        document.body.appendChild(
+            box
+        );
+
+    }
+
+
+    box.textContent =
+        message || "";
+
+
+    box.dataset.type =
+        type || "info";
+
+
+    box.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        box._nexpakTimer
+    );
+
+
+    box._nexpakTimer =
+        setTimeout(
+            () => {
+
+                box.classList.remove(
+                    "show"
+                );
+
+            },
+            2500
+        );
+
+
+    return box;
+
+}
+
+
+/* =========================================================
+   47. REMOVE CART ITEM
+========================================================= */
+
+function removeNexpakOnlineCartItem(
+    cartItemId
+) {
+
+    const cart =
+        getNexpakOnlineCart();
+
+
+    const newCart =
+        cart.filter(
+            item =>
+                item.cartItemId !==
+                cartItemId
+        );
+
+
+    saveNexpakOnlineCart(
+        newCart
+    );
+
+
+    return newCart;
+
+}
+
+
+/* =========================================================
+   48. CLEAR CART
+========================================================= */
+
+function clearNexpakOnlineCart() {
+
+    NEXPAK_ONLINE_STATE.cart =
+        [];
+
+
+    try {
+
+        localStorage.removeItem(
+            NEXPAK_ONLINE_CONFIG.cartStorageKey
+        );
+
+    } catch (error) {
+
+        console.error(
+            "NEXPAK Online Store: Unable to clear cart.",
+            error
+        );
+
+    }
+
+
+    updateNexpakOnlineCartCount();
+
+    return [];
+
+}
+
+
+/* =========================================================
+   49. INITIALISE CART
+========================================================= */
+
+function initialiseNexpakOnlineCart() {
+
+    loadNexpakOnlineCart();
+
+}
+
+
+/* =========================================================
+   50. START CART
+========================================================= */
+
+initialiseNexpakOnlineCart();
+
+
+/* =========================================================
+   END OF PART 3/8
+
+   NEXT:
+   PART 4/8
+
+   VIEW MORE + KIT BREAKDOWN
+
+   Will handle:
+   - View More button
+   - Full kit contents
+   - Selected options
+   - Ex VAT
+   - VAT
+   - Total Incl VAT
+   - PDF-ready quotation data
+
+   NO INDIVIDUAL COMPONENT PRICES.
+========================================================= */
+
+/* =========================================================
+   NEXPAK ONLINE STORE
+   online.js — PART 4/8
+
+   VIEW MORE + KIT BREAKDOWN
+
+   Handles:
+   - View More button
+   - Complete kit contents
+   - Selected options
+   - Ex VAT
+   - VAT
+   - Total Incl VAT
+   - Print / Save as PDF
+
+   IMPORTANT:
+   Components do NOT have individual prices.
+========================================================= */
+
+
+/* =========================================================
+   51. PREPARE KIT BREAKDOWN
+========================================================= */
+
+function prepareNexpakOnlineKitBreakdown(kitId) {
+
+    const kit =
+        getNexpakOnlineKit(kitId);
+
+    if (!kit) {
+
+        return null;
+
+    }
+
+
+    const card =
+        document.querySelector(
+            `.online-kit-card[data-kit-id="${kitId}"]`
+        );
+
+
+    const quantityInput =
+        card?.querySelector(
+            ".online-qty-input"
+        );
+
+
+    const quantity =
+        Math.max(
+            1,
+            Number(
+                quantityInput?.value
+            ) || 1
+        );
+
+
+    const options = {};
+
+
+    card
+        ?.querySelectorAll(
+            ".online-kit-option-select"
+        )
+        .forEach(select => {
+
+            if (
+                select.dataset.optionId
+            ) {
+
+                options[
+                    select.dataset.optionId
+                ] =
+                    select.value;
+
+            }
+
+        });
+
+
+    const pricing =
+        calculateNexpakOnlineKitTotal(
+            kit,
+            quantity
+        );
+
+
+    return {
+
+        kit: kit,
+
+        quantity:
+            quantity,
+
+        options:
+            options,
+
+        contents:
+            Array.isArray(kit.contents)
+                ? kit.contents
+                : [],
+
+        priceExVat:
+            pricing.priceExVat,
+
+        vatAmount:
+            pricing.vatAmount,
+
+        totalInclVat:
+            pricing.totalInclVat
+
+    };
+
+}
+
+
+/* =========================================================
+   52. GET OPTION DISPLAY NAME
+========================================================= */
+
+function getNexpakOnlineOptionDisplayName(
+    kit,
+    optionId,
+    valueId
+) {
+
+    const option =
+        Array.isArray(kit.options)
+            ? kit.options.find(
+                item =>
+                    item.id === optionId
+            )
+            : null;
+
+
+    if (!option) {
+
+        return valueId;
+
+    }
+
+
+    const value =
+        Array.isArray(option.values)
+            ? option.values.find(
+                item =>
+                    item.id === valueId
+            )
+            : null;
+
+
+    return value?.name ||
+        valueId;
+
+}
+
+
+/* =========================================================
+   53. CREATE OPTIONS BREAKDOWN
+========================================================= */
+
+function createNexpakOnlineOptionsBreakdown(
+    kit,
+    options
+) {
+
+    const entries =
+        Object.entries(
+            options || {}
+        );
+
+
+    if (!entries.length) {
+
+        return "";
+
+    }
+
+
+    return `
+
+        <div class="online-pdf-options">
+
+            <h3>Selected Options</h3>
+
+            <ul>
+
+                ${entries.map(
+                    ([optionId, valueId]) => `
+
+                        <li>
+
+                            <strong>
+                                ${escapeNexpakOnlineHTML(
+                                    optionId
+                                )}
+                            </strong>
+
+                            :
+                            
+                            ${escapeNexpakOnlineHTML(
+                                getNexpakOnlineOptionDisplayName(
+                                    kit,
+                                    optionId,
+                                    valueId
+                                )
+                            )}
+
+                        </li>
+
+                    `
+                ).join("")}
+
+            </ul>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   54. CREATE KIT CONTENTS HTML
+========================================================= */
+
+function createNexpakOnlineContentsHTML(
+    contents
+) {
+
+    if (
+        !Array.isArray(contents) ||
+        !contents.length
+    ) {
+
+        return `
+
+            <p>
+                No component breakdown available.
+            </p>
+
+        `;
+
+    }
+
+
+    return `
+
+        <table class="online-pdf-contents">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        Component
+                    </th>
+
+                    <th>
+                        Quantity
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                ${contents.map(
+                    item => `
+
+                        <tr>
+
+                            <td>
+                                ${escapeNexpakOnlineHTML(
+                                    item.name
+                                )}
+                            </td>
+
+                            <td>
+                                ${escapeNexpakOnlineHTML(
+                                    item.quantity
+                                )}
+                            </td>
+
+                        </tr>
+
+                    `
+                ).join("")}
+
+            </tbody>
+
+        </table>
+
+    `;
+
+}
+
+
+/* =========================================================
+   55. CREATE PRICE SUMMARY
+========================================================= */
+
+function createNexpakOnlinePriceSummary(
+    breakdown
+) {
+
+    return `
+
+        <div class="online-pdf-price-summary">
+
+            <div class="online-pdf-price-row">
+
+                <span>
+                    Price Ex VAT
+                </span>
+
+                <strong>
+                    ${formatNexpakOnlinePrice(
+                        breakdown.priceExVat
+                    )}
+                </strong>
+
+            </div>
+
+
+            <div class="online-pdf-price-row">
+
+                <span>
+                    VAT @ 15%
+                </span>
+
+                <strong>
+                    ${formatNexpakOnlinePrice(
+                        breakdown.vatAmount
+                    )}
+                </strong>
+
+            </div>
+
+
+            <div class="online-pdf-price-row online-pdf-total">
+
+                <span>
+                    Total Incl VAT
+                </span>
+
+                <strong>
+                    ${formatNexpakOnlinePrice(
+                        breakdown.totalInclVat
+                    )}
+                </strong>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   56. CREATE PDF / QUOTE DOCUMENT
+========================================================= */
+
+function createNexpakOnlineQuoteDocument(
+    breakdown
+) {
+
+    const kit =
+        breakdown.kit;
+
+
+    const optionsHTML =
+        createNexpakOnlineOptionsBreakdown(
+            kit,
+            breakdown.options
+        );
+
+
+    const contentsHTML =
+        createNexpakOnlineContentsHTML(
+            breakdown.contents
+        );
+
+
+    const priceHTML =
+        createNexpakOnlinePriceSummary(
+            breakdown
+        );
+
+
+    return `
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>
+        ${escapeNexpakOnlineHTML(
+            kit.name
+        )} — NEXPAK
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            margin: 0;
+
+            padding: 35px;
+
+            color: #111;
+
+            background: #fff;
+
+        }
+
+        .quote-header {
+
+            border-bottom:
+                3px solid #111;
+
+            padding-bottom: 20px;
+
+            margin-bottom: 25px;
+
+        }
+
+        .company {
+
+            font-size: 24px;
+
+            font-weight: 700;
+
+        }
+
+        .company-subtitle {
+
+            margin-top: 5px;
+
+            color: #555;
+
+        }
+
+        .quote-title {
+
+            font-size: 28px;
+
+            margin:
+                25px 0 8px;
+
+        }
+
+        .sku {
+
+            color: #555;
+
+            margin-bottom: 20px;
+
+        }
+
+        .kit-image {
+
+            max-width: 260px;
+
+            max-height: 180px;
+
+            object-fit: contain;
+
+            margin-bottom: 20px;
+
+        }
+
+        .section-title {
+
+            font-size: 18px;
+
+            margin:
+                25px 0 12px;
+
+        }
+
+        table {
+
+            width: 100%;
+
+            border-collapse:
+                collapse;
+
+        }
+
+        th,
+        td {
+
+            padding: 10px;
+
+            border:
+                1px solid #ccc;
+
+            text-align: left;
+
+        }
+
+        th {
+
+            background: #f2f2f2;
+
+        }
+
+        th:last-child,
+        td:last-child {
+
+            text-align: center;
+
+            width: 120px;
+
+        }
+
+        .options {
+
+            margin:
+                20px 0;
+
+            padding:
+                15px;
+
+            background: #f7f7f7;
+
+        }
+
+        .price-summary {
+
+            margin-top: 30px;
+
+            margin-left: auto;
+
+            max-width: 380px;
+
+        }
+
+        .price-row {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            padding: 10px 0;
+
+            border-bottom:
+                1px solid #ddd;
+
+        }
+
+        .total {
+
+            font-size: 20px;
+
+            font-weight: 700;
+
+            border-top:
+                2px solid #111;
+
+            margin-top: 8px;
+
+        }
+
+        .footer {
+
+            margin-top: 45px;
+
+            padding-top: 15px;
+
+            border-top:
+                1px solid #ccc;
+
+            color: #666;
+
+            font-size: 12px;
+
+        }
+
+        .print-button {
+
+            display: inline-block;
+
+            padding:
+                12px 20px;
+
+            margin-bottom: 25px;
+
+            background: #111;
+
+            color: #fff;
+
+            border: 0;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+        }
+
+        @media print {
+
+            .print-button {
+
+                display: none;
+
+            }
+
+            body {
+
+                padding: 15px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <button
+        class="print-button"
+        onclick="window.print()"
+    >
+        Print / Save as PDF
+    </button>
+
+
+    <div class="quote-header">
+
+        <div class="company">
+            NEXPAK Security Solutions
+        </div>
+
+        <div class="company-subtitle">
+            Security Equipment & Solutions
+        </div>
+
+    </div>
+
+
+    <h1 class="quote-title">
+
+        ${escapeNexpakOnlineHTML(
+            kit.name
+        )}
+
+    </h1>
+
+
+    <div class="sku">
+
+        SKU:
+        ${escapeNexpakOnlineHTML(
+            kit.sku
+        )}
+
+    </div>
+
+
+    ${
+        kit.image
+            ? `
+                <img
+                    class="kit-image"
+                    src="${escapeNexpakOnlineHTML(
+                        kit.image
+                    )}"
+                    alt=""
+                >
+              `
+            : ""
+    }
+
+
+    <h2 class="section-title">
+        Kit Quantity
+    </h2>
+
+    <p>
+        ${breakdown.quantity}
+    </p>
+
+
+    ${optionsHTML}
+
+
+    <h2 class="section-title">
+        Kit Contents
+    </h2>
+
+
+    ${contentsHTML}
+
+
+    ${priceHTML}
+
+
+    <div class="footer">
+
+        NEXPAK Security Solutions
+
+        <br>
+
+        All prices shown are in South African Rand.
+
+        <br>
+
+        VAT calculated at 15%.
+
+        <br>
+
+        Component prices are not shown because
+        this document represents the complete kit.
+
+    </div>
+
+
+</body>
+
+</html>
+
+    `;
+
+}
+
+
+/* =========================================================
+   57. OPEN QUOTE DOCUMENT
+========================================================= */
+
+function openNexpakOnlineQuoteDocument(
+    breakdown
+) {
+
+    const documentHTML =
+        createNexpakOnlineQuoteDocument(
+            breakdown
+        );
+
+
+    const quoteWindow =
+        window.open(
+            "",
+            "_blank"
+        );
+
+
+    if (!quoteWindow) {
+
+        showNexpakOnlineMessage(
+            "Please allow pop-ups to view the kit breakdown.",
+            "error"
+        );
+
+        return null;
+
+    }
+
+
+    quoteWindow.document.open();
+
+    quoteWindow.document.write(
+        documentHTML
+    );
+
+    quoteWindow.document.close();
+
+
+    return quoteWindow;
+
+}
+
+
+/* =========================================================
+   58. HANDLE VIEW MORE
+========================================================= */
+
+function handleNexpakOnlineViewMore(
+    kitId
+) {
+
+    const breakdown =
+        prepareNexpakOnlineKitBreakdown(
+            kitId
+        );
+
+
+    if (!breakdown) {
+
+        showNexpakOnlineMessage(
+            "Unable to load this kit.",
+            "error"
+        );
+
+        return null;
+
+    }
+
+
+    return openNexpakOnlineQuoteDocument(
+        breakdown
+    );
+
+}
+
+
+/* =========================================================
+   59. PDF DOWNLOAD HELPER
+========================================================= */
+
+function printNexpakOnlineKitPDF(
+    kitId
+) {
+
+    const breakdown =
+        prepareNexpakOnlineKitBreakdown(
+            kitId
+        );
+
+
+    if (!breakdown) {
+
+        showNexpakOnlineMessage(
+            "Unable to create the kit document.",
+            "error"
+        );
+
+        return null;
+
+    }
+
+
+    const quoteWindow =
+        openNexpakOnlineQuoteDocument(
+            breakdown
+        );
+
+
+    return quoteWindow;
+
+}
+
+
+/* =========================================================
+   END OF PART 4/8
+
+   NEXT:
+   PART 5/8
+
+   KIT PRICING + VAT ENGINE
+
+   Will handle:
+   - Market kit prices
+   - Ex VAT calculation
+   - VAT calculation
+   - Total calculation
+   - Quantity pricing
+   - Price validation
+========================================================= */
+
+
+/* =========================================================
+   NEXPAK ONLINE STORE
+   online.js — PART 5/8
+
+   PRICING + VAT ENGINE
+
+   Handles:
+   - Kit pricing
+   - VAT @ 15%
+   - Ex VAT
+   - Total Incl VAT
+   - Quantity calculations
+   - Price validation
+
+   IMPORTANT:
+   Kit prices are the only prices used.
+   Individual component prices are NOT used.
+========================================================= */
+
+
+/* =========================================================
+   60. VAT RATE
+========================================================= */
+
+function getNexpakOnlineVATRate() {
+
+    if (
+        typeof NEXPAK_VAT !== "undefined" &&
+        Number.isFinite(
+            Number(NEXPAK_VAT.rate)
+        )
+    ) {
+
+        return Number(
+            NEXPAK_VAT.rate
+        );
+
+    }
+
+
+    return (
+        NEXPAK_ONLINE_CONFIG.vatRate ||
+        0.15
+    );
+
+}
+
+
+/* =========================================================
+   61. CALCULATE VAT FROM INCLUSIVE PRICE
+========================================================= */
+
+function calculateNexpakOnlineVAT(
+    inclusiveAmount
+) {
+
+    const amount =
+        Number(inclusiveAmount) || 0;
+
+    const rate =
+        getNexpakOnlineVATRate();
+
+
+    if (
+        amount <= 0 ||
+        rate <= 0
+    ) {
+
+        return 0;
+
+    }
+
+
+    return Number(
+
+        (
+            amount -
+            (
+                amount /
+                (1 + rate)
+            )
+
+        ).toFixed(2)
+
+    );
+
+}
+
+
+/* =========================================================
+   62. CALCULATE EX VAT
+========================================================= */
+
+function calculateNexpakOnlineExVAT(
+    inclusiveAmount
+) {
+
+    const amount =
+        Number(inclusiveAmount) || 0;
+
+    const rate =
+        getNexpakOnlineVATRate();
+
+
+    if (
+        amount <= 0
+    ) {
+
+        return 0;
+
+    }
+
+
+    return Number(
+
+        (
+            amount /
+            (1 + rate)
+
+        ).toFixed(2)
+
+    );
+
+}
+
+
+/* =========================================================
+   63. CALCULATE INCLUSIVE PRICE
+========================================================= */
+
+function calculateNexpakOnlineInclusivePrice(
+    exVatAmount
+) {
+
+    const amount =
+        Number(exVatAmount) || 0;
+
+    const rate =
+        getNexpakOnlineVATRate();
+
+
+    if (
+        amount <= 0
+    ) {
+
+        return 0;
+
+    }
+
+
+    return Number(
+
+        (
+            amount *
+            (1 + rate)
+
+        ).toFixed(2)
+
+    );
+
+}
+
+
+/* =========================================================
+   64. CALCULATE COMPLETE PRICE
+========================================================= */
+
+function calculateNexpakOnlinePrice(
+    kit,
+    quantity = 1
+) {
+
+    if (!kit) {
+
+        return {
+
+            valid: false,
+
+            quantity: 0,
+
+            unitPriceExVat: 0,
+
+            unitVAT: 0,
+
+            unitPriceInclVat: 0,
+
+            priceExVat: 0,
+
+            vatAmount: 0,
+
+            totalInclVat: 0
+
+        };
+
+    }
+
+
+    const qty =
+        Math.max(
+            1,
+            Number(quantity) || 1
+        );
+
+
+    const unitInclVat =
+        Number(
+            kit.priceInclVat
+        ) || 0;
+
+
+    if (
+        unitInclVat <= 0
+    ) {
+
+        return {
+
+            valid: false,
+
+            quantity: qty,
+
+            unitPriceExVat: 0,
+
+            unitVAT: 0,
+
+            unitPriceInclVat: 0,
+
+            priceExVat: 0,
+
+            vatAmount: 0,
+
+            totalInclVat: 0,
+
+            message:
+                "This kit does not have a selling price yet."
+
+        };
+
+    }
+
+
+    const unitExVat =
+        calculateNexpakOnlineExVAT(
+            unitInclVat
+        );
+
+
+    const unitVAT =
+        Number(
+
+            (
+                unitInclVat -
+                unitExVat
+
+            ).toFixed(2)
+
+        );
+
+
+    const totalInclVat =
+        Number(
+
+            (
+                unitInclVat *
                 qty
+
+            ).toFixed(2)
+
+        );
+
+
+    const priceExVat =
+        calculateNexpakOnlineExVAT(
+            totalInclVat
+        );
+
+
+    const vatAmount =
+        Number(
+
+            (
+                totalInclVat -
+                priceExVat
+
+            ).toFixed(2)
+
+        );
+
+
+    return {
+
+        valid: true,
+
+        quantity: qty,
+
+        unitPriceExVat:
+            unitExVat,
+
+        unitVAT:
+            unitVAT,
+
+        unitPriceInclVat:
+            unitInclVat,
+
+        priceExVat:
+            priceExVat,
+
+        vatAmount:
+            vatAmount,
+
+        totalInclVat:
+            totalInclVat
+
+    };
+
+}
+
+
+/* =========================================================
+   65. VALIDATE KIT PRICE
+========================================================= */
+
+function validateNexpakOnlineKitPrice(
+    kit
+) {
+
+    if (!kit) {
+
+        return {
+
+            valid: false,
+
+            message:
+                "Kit not found."
+
         };
+
     }
 
 
-    /*=====================================================
-      179. REQUEST PRICE BRIDGE
-    =====================================================*/
+    const price =
+        Number(
+            kit.priceInclVat
+        );
 
-    function requestPrice(
-        product
+
+    if (
+        !Number.isFinite(price) ||
+        price <= 0
     ) {
 
-        let selected =
-            product;
+        return {
+
+            valid: false,
+
+            message:
+                `${kit.name} does not have a selling price yet.`
+
+        };
+
+    }
 
 
-        if (
-            typeof selected !==
-            "object"
-        ) {
+    return {
 
-            selected =
-                STORE.details &&
-                STORE.details.find
-                    ? STORE.details.find(
-                        selected
-                    )
-                    : null;
+        valid: true,
+
+        price:
+            price
+
+    };
+
+}
+
+
+/* =========================================================
+   66. GET KIT DISPLAY PRICES
+========================================================= */
+
+function getNexpakOnlineKitDisplayPrices(
+    kit
+) {
+
+    if (!kit) {
+
+        return {
+
+            exVat: 0,
+
+            vat: 0,
+
+            inclVat: 0
+
+        };
+
+    }
+
+
+    const pricing =
+        calculateNexpakOnlinePrice(
+            kit,
+            1
+        );
+
+
+    return {
+
+        exVat:
+            pricing.unitPriceExVat,
+
+        vat:
+            pricing.unitVAT,
+
+        inclVat:
+            pricing.unitPriceInclVat
+
+    };
+
+}
+
+
+/* =========================================================
+   67. UPDATE KIT PRICE DISPLAY
+========================================================= */
+
+function updateNexpakOnlinePriceDisplay(
+    kit
+) {
+
+    if (!kit) {
+
+        return;
+
+    }
+
+
+    const card =
+        document.querySelector(
+            `.online-kit-card[data-kit-id="${kit.id}"]`
+        );
+
+
+    if (!card) {
+
+        return;
+
+    }
+
+
+    const priceElement =
+        card.querySelector(
+            ".online-kit-price"
+        );
+
+
+    if (!priceElement) {
+
+        return;
+
+    }
+
+
+    const prices =
+        getNexpakOnlineKitDisplayPrices(
+            kit
+        );
+
+
+    if (
+        prices.inclVat <= 0
+    ) {
+
+        priceElement.innerHTML = `
+
+            <span class="online-price-unavailable">
+
+                Price coming soon
+
+            </span>
+
+        `;
+
+        return;
+
+    }
+
+
+    priceElement.innerHTML = `
+
+        ${formatNexpakOnlinePrice(
+            prices.inclVat
+        )}
+
+        <small>
+            incl. VAT
+        </small>
+
+    `;
+
+}
+
+
+/* =========================================================
+   68. UPDATE ALL PRICE DISPLAYS
+========================================================= */
+
+function updateAllNexpakOnlinePrices() {
+
+    const kits =
+        getAllNexpakOnlineKits();
+
+
+    kits.forEach(
+        kit => {
+
+            updateNexpakOnlinePriceDisplay(
+                kit
+            );
+
         }
+    );
+
+}
 
 
-        if (!selected) {
+/* =========================================================
+   69. VALIDATE CART PRICES
+========================================================= */
 
-            return {
+function validateNexpakOnlineCartPrices() {
 
-                success: false,
-
-                reason:
-                    "Product not found."
-            };
-        }
+    const cart =
+        getNexpakOnlineCart();
 
 
-        dispatchStoreEvent(
-            "nexpak:request-price",
-            {
-
-                product:
-                    selected,
-
-                productID:
-                    helpers.getProductID(
-                        selected
-                    ),
-
-                sku:
-                    helpers.getProductSKU(
-                        selected
-                    ),
-
-                name:
-                    helpers.getProductName(
-                        selected
+    const invalidItems =
+        cart.filter(
+            item =>
+                !Number.isFinite(
+                    Number(
+                        item.unitPriceInclVat
                     )
+                ) ||
+                Number(
+                    item.unitPriceInclVat
+                ) <= 0
+        );
+
+
+    return {
+
+        valid:
+            invalidItems.length === 0,
+
+        invalidItems:
+            invalidItems
+
+    };
+
+}
+
+
+/* =========================================================
+   70. CALCULATE CART TOTALS
+========================================================= */
+
+function calculateNexpakOnlineCartTotals() {
+
+    const cart =
+        getNexpakOnlineCart();
+
+
+    let subtotalExVat = 0;
+
+    let vatAmount = 0;
+
+    let totalInclVat = 0;
+
+
+    cart.forEach(
+        item => {
+
+            subtotalExVat +=
+                Number(
+                    item.priceExVat
+                ) || 0;
+
+            vatAmount +=
+                Number(
+                    item.vatAmount
+                ) || 0;
+
+            totalInclVat +=
+                Number(
+                    item.totalInclVat
+                ) || 0;
+
+        }
+    );
+
+
+    return {
+
+        subtotalExVat:
+            Number(
+                subtotalExVat.toFixed(2)
+            ),
+
+        vatAmount:
+            Number(
+                vatAmount.toFixed(2)
+            ),
+
+        totalInclVat:
+            Number(
+                totalInclVat.toFixed(2)
+            )
+
+    };
+
+}
+
+
+/* =========================================================
+   71. REFRESH CART PRICES
+========================================================= */
+
+function refreshNexpakOnlineCartPrices() {
+
+    const cart =
+        getNexpakOnlineCart();
+
+
+    const updatedCart =
+        cart.map(
+            item => {
+
+                const kit =
+                    getNexpakOnlineKit(
+                        item.kitId
+                    );
+
+
+                if (!kit) {
+
+                    return item;
+
+                }
+
+
+                const pricing =
+                    calculateNexpakOnlinePrice(
+                        kit,
+                        item.quantity
+                    );
+
+
+                return {
+
+                    ...item,
+
+                    unitPriceExVat:
+                        pricing.unitPriceExVat,
+
+                    unitVAT:
+                        pricing.unitVAT,
+
+                    unitPriceInclVat:
+                        pricing.unitPriceInclVat,
+
+                    priceExVat:
+                        pricing.priceExVat,
+
+                    vatAmount:
+                        pricing.vatAmount,
+
+                    totalInclVat:
+                        pricing.totalInclVat
+
+                };
+
             }
         );
 
 
-        return {
-
-            success: true,
-
-            product:
-                selected
-        };
-    }
+    saveNexpakOnlineCart(
+        updatedCart
+    );
 
 
-    /*=====================================================
-      180. REQUEST QUOTE BRIDGE
-    =====================================================*/
+    return updatedCart;
 
-    function requestQuote(
-        product
-    ) {
-
-        let selected =
-            product;
+}
 
 
-        if (
-            typeof selected !==
-            "object"
-        ) {
+/* =========================================================
+   72. FORMAT PRICE FOR PDF
+========================================================= */
 
-            selected =
-                STORE.details &&
-                STORE.details.find
-                    ? STORE.details.find(
-                        selected
-                    )
-                    : null;
-        }
+function getNexpakOnlinePDFPriceSummary(
+    kit,
+    quantity
+) {
 
-
-        if (!selected) {
-
-            return {
-
-                success: false,
-
-                reason:
-                    "Product not found."
-            };
-        }
-
-
-        dispatchStoreEvent(
-            "nexpak:request-quote",
-            {
-
-                product:
-                    selected,
-
-                productID:
-                    helpers.getProductID(
-                        selected
-                    ),
-
-                sku:
-                    helpers.getProductSKU(
-                        selected
-                    ),
-
-                name:
-                    helpers.getProductName(
-                        selected
-                    )
-            }
+    const pricing =
+        calculateNexpakOnlinePrice(
+            kit,
+            quantity
         );
 
 
-        return {
+    return {
 
-            success: true,
+        exVat:
+            formatNexpakOnlinePrice(
+                pricing.priceExVat
+            ),
 
-            product:
-                selected
-        };
-    }
+        vat:
+            formatNexpakOnlinePrice(
+                pricing.vatAmount
+            ),
+
+        total:
+            formatNexpakOnlinePrice(
+                pricing.totalInclVat
+            )
+
+    };
+
+}
 
 
-    /*=====================================================
-      181. PRODUCT SELECTION BRIDGE
-    =====================================================*/
+/* =========================================================
+   END OF PART 5/8
 
-    function selectProduct(
-        product
+   NEXT:
+   PART 6/8
+
+   STORE SEARCH + CATEGORY CONTROLS
+
+   Will handle:
+   - Category buttons
+   - Search
+   - Sorting
+   - Refreshing the kit display
+   - Empty results
+========================================================= */
+
+/* =========================================================
+   NEXPAK SECURITY SOLUTIONS
+   ONLINE STORE — DATA / ENGINE
+
+   online.js — PART 6/8
+
+   KIT SEARCH + CATEGORY + SORT ENGINE
+
+   IMPORTANT:
+   The Online Store uses PRE-BUILT KITS ONLY.
+
+   The separate configurator.js remains responsible
+   for the Build Your System page and individual products.
+========================================================= */
+
+
+/* =========================================================
+   73. GET ALL ONLINE KITS
+========================================================= */
+
+function getAllNexpakOnlineKits() {
+
+    if (
+        typeof NEXPAK_ONLINE_KITS === "undefined"
     ) {
-
-        if (
-            STORE.details &&
-            typeof STORE.details.select ===
-            "function"
-        ) {
-
-            return STORE.details.select(
-                product
-            );
-        }
-
-
-        return null;
-    }
-
-
-    /*=====================================================
-      182. SEARCH BRIDGE
-    =====================================================*/
-
-    function search(
-        query,
-        options
-    ) {
-
-        if (
-            STORE.search &&
-            typeof STORE.search.search ===
-            "function"
-        ) {
-
-            return STORE.search.search(
-                query,
-                options
-            );
-        }
-
-
-        if (
-            typeof STORE.searchProducts ===
-            "function"
-        ) {
-
-            return STORE.searchProducts(
-                query,
-                options
-            );
-        }
-
 
         return [];
+
     }
 
 
-    /*=====================================================
-      183. FILTER BRIDGE
-    =====================================================*/
+    return Array.isArray(
+        NEXPAK_ONLINE_KITS
+    )
+        ? NEXPAK_ONLINE_KITS
+        : [];
 
-    function filter(
-        options
-    ) {
-
-        if (
-            STORE.filters &&
-            typeof STORE.filters.apply ===
-            "function"
-        ) {
-
-            return STORE.filters.apply(
-                options
-            );
-        }
+}
 
 
-        if (
-            typeof STORE.applyFilters ===
-            "function"
-        ) {
+/* =========================================================
+   74. GET KIT BY ID
+========================================================= */
 
-            return STORE.applyFilters(
-                options
-            );
-        }
+function getNexpakOnlineKit(
+    kitId
+) {
 
-
-        return [];
-    }
+    const kits =
+        getAllNexpakOnlineKits();
 
 
-    /*=====================================================
-      184. SORT BRIDGE
-    =====================================================*/
+    return kits.find(
+        kit =>
+            kit.id === kitId
+    ) || null;
 
-    function sort(
-        products,
-        sortOption
-    ) {
-
-        if (
-            STORE.sorting &&
-            typeof STORE.sorting.sort ===
-            "function"
-        ) {
-
-            return STORE.sorting.sort(
-                products,
-                sortOption
-            );
-        }
+}
 
 
-        if (
-            typeof STORE.sortProducts ===
-            "function"
-        ) {
+/* =========================================================
+   75. GET KIT BY SKU
+========================================================= */
 
-            return STORE.sortProducts(
-                products,
-                sortOption
-            );
-        }
+function getNexpakOnlineKitBySKU(
+    sku
+) {
 
-
-        return products || [];
-    }
+    const kits =
+        getAllNexpakOnlineKits();
 
 
-    /*=====================================================
-      185. PRODUCT DETAILS BRIDGE
-    =====================================================*/
-
-    function openProduct(
-        product
-    ) {
-
-        if (
-            STORE.details &&
-            typeof STORE.details.select ===
-            "function"
-        ) {
-
-            return STORE.details.select(
-                product
-            );
-        }
-
+    if (!sku) {
 
         return null;
+
     }
 
 
-    /*=====================================================
-      186. STORE SNAPSHOT
-    =====================================================*/
+    return kits.find(
+        kit =>
+            String(
+                kit.sku || ""
+            ).toLowerCase() ===
+            String(sku).toLowerCase()
+    ) || null;
 
-    function getStoreSnapshot() {
+}
 
-        return {
 
-            version:
-                STORE.version,
+/* =========================================================
+   76. SEARCH KITS
+========================================================= */
 
-            state:
-                STORE.state,
+function searchNexpakOnlineKits(
+    searchTerm
+) {
 
-            productCount:
-                Array.isArray(
-                    STORE.state.allProducts
+    const kits =
+        getAllNexpakOnlineKits();
+
+
+    const term =
+        String(
+            searchTerm || ""
+        )
+        .trim()
+        .toLowerCase();
+
+
+    if (!term) {
+
+        return kits;
+
+    }
+
+
+    return kits.filter(
+        kit => {
+
+            const searchableText = [
+
+                kit.name,
+
+                kit.sku,
+
+                kit.brand,
+
+                kit.category,
+
+                kit.kitType,
+
+                kit.shortDescription,
+
+                kit.description,
+
+                ...(Array.isArray(
+                    kit.tags
                 )
-                    ? STORE.state.allProducts.length
-                    : 0,
+                    ? kit.tags
+                    : [])
 
-            filteredCount:
-                Array.isArray(
-                    STORE.state.filteredProducts
-                )
-                    ? STORE.state.filteredProducts.length
-                    : 0,
-
-            databaseConnected:
-                STORE.state.engine
-                    .databaseConnected,
-
-            databaseValidated:
-                STORE.state.engine
-                    .databaseValidated,
-
-            modulesDetected:
-                STORE.state.engine
-                    .modulesDetected.slice(),
-
-            modulesMissing:
-                STORE.state.engine
-                    .modulesMissing.slice(),
-
-            errors:
-                STORE.state.engine
-                    .errors.slice(),
-
-            warnings:
-                STORE.state.engine
-                    .warnings.slice()
-        };
-    }
+            ]
+            .filter(Boolean)
+            .join(" ")
+            .toLowerCase();
 
 
-    /*=====================================================
-      187. ENGINE HEALTH CHECK
-    =====================================================*/
+            return searchableText.includes(
+                term
+            );
 
-    function healthCheck() {
-
-        const database =
-            checkDatabaseConnection();
-
-
-        const validation =
-            validateDatabase();
-
-
-        const modules =
-            detectModules();
-
-
-        const healthy =
-            database &&
-            validation.valid;
-
-
-        return {
-
-            healthy:
-                healthy,
-
-            database:
-                {
-
-                    connected:
-                        database,
-
-                    validated:
-                        validation.valid,
-
-                    productCount:
-                        validation.productCount,
-
-                    errors:
-                        validation.errors,
-
-                    warnings:
-                        validation.warnings
-                },
-
-            modules:
-                modules,
-
-            engine:
-                {
-
-                    version:
-                        STORE.version,
-
-                    partsLoaded:
-                        8,
-
-                    initialized:
-                        STORE.state.engine
-                            .initialized,
-
-                    ready:
-                        STORE.state.engine
-                            .ready
-                }
-        };
-    }
-
-
-    /*=====================================================
-      188. INITIALIZE STORE ENGINE
-    =====================================================*/
-
-    function initializeStoreEngine() {
-
-        if (
-            STORE.state.engine.initialized
-        ) {
-
-            return healthCheck();
         }
+    );
+
+}
 
 
-        try {
+/* =========================================================
+   77. FILTER BY CATEGORY
+========================================================= */
 
-            /*
-             * Connect database.
-             */
+function filterNexpakOnlineKitsByCategory(
+    kits,
+    category
+) {
 
-            checkDatabaseConnection();
-
-
-            /*
-             * Validate database.
-             */
-
-            const validation =
-                validateDatabase();
+    const source =
+        Array.isArray(kits)
+            ? kits
+            : getAllNexpakOnlineKits();
 
 
-            /*
-             * Detect optional future modules.
-             */
+    if (
+        !category ||
+        category === "all"
+    ) {
 
-            detectModules();
+        return source;
 
-
-            /*
-             * Initialize default state.
-             */
-
-            if (
-                !Array.isArray(
-                    STORE.state.filteredProducts
-                )
-            ) {
-
-                STORE.state.filteredProducts =
-                    STORE.state.allProducts.slice();
-            }
-
-
-            if (
-                !STORE.state.currentView
-            ) {
-
-                STORE.state.currentView =
-                    "grid";
-            }
-
-
-            if (
-                !STORE.state.currentPage
-            ) {
-
-                STORE.state.currentPage =
-                    1;
-            }
-
-
-            /*
-             * Mark engine initialized.
-             */
-
-            STORE.state.engine.initialized =
-                true;
-
-
-            STORE.state.engine.initializedAt =
-                new Date().toISOString();
-
-
-            STORE.state.engine.ready =
-                validation.valid;
-
-
-            /*
-             * Dispatch readiness event.
-             */
-
-            dispatchStoreEvent(
-                "nexpak:online-store-ready",
-                {
-
-                    store:
-                        STORE,
-
-                    health:
-                        healthCheck()
-                }
-            );
-
-
-            helpers.log(
-                "NEXPAK Online Store engine initialized."
-            );
-
-
-            return healthCheck();
-
-        } catch (error) {
-
-            STORE.state.engine.errors.push(
-                error.message ||
-                String(error)
-            );
-
-
-            STORE.state.engine.ready =
-                false;
-
-
-            console.error(
-                "[NEXPAK ONLINE] Initialization error:",
-                error
-            );
-
-
-            dispatchStoreEvent(
-                "nexpak:online-store-error",
-                {
-
-                    error:
-                        error,
-
-                    store:
-                        STORE
-                }
-            );
-
-
-            return {
-
-                healthy: false,
-
-                error:
-                    error.message ||
-                    String(error)
-            };
-        }
     }
 
 
-    /*=====================================================
-      189. FINAL PUBLIC API
-    =====================================================*/
+    return source.filter(
+        kit =>
+            kit.category ===
+            category
+    );
 
-    STORE.api = {
-
-        /*
-         * Database
-         */
-
-        products:
-            function () {
-
-                return STORE.state.allProducts
-                    .slice();
-            },
+}
 
 
-        product:
-            function (id) {
+/* =========================================================
+   78. FILTER BY BRAND
+========================================================= */
 
-                return STORE.details &&
-                    STORE.details.find
-                        ? STORE.details.find(id)
-                        : null;
-            },
+function filterNexpakOnlineKitsByBrand(
+    kits,
+    brand
+) {
+
+    const source =
+        Array.isArray(kits)
+            ? kits
+            : getAllNexpakOnlineKits();
 
 
-        /*
-         * Browsing
-         */
+    if (!brand) {
+
+        return source;
+
+    }
+
+
+    const target =
+        String(
+            brand
+        ).toLowerCase();
+
+
+    return source.filter(
+        kit =>
+            String(
+                kit.brand || ""
+            ).toLowerCase() ===
+            target
+    );
+
+}
+
+
+/* =========================================================
+   79. FILTER FEATURED KITS
+========================================================= */
+
+function getNexpakFeaturedKits() {
+
+    return getAllNexpakOnlineKits()
+        .filter(
+            kit =>
+                kit.featured === true
+        );
+
+}
+
+
+/* =========================================================
+   80. FILTER POPULAR KITS
+========================================================= */
+
+function getNexpakPopularKits() {
+
+    return getAllNexpakOnlineKits()
+        .filter(
+            kit =>
+                kit.popular === true
+        );
+
+}
+
+
+/* =========================================================
+   81. FILTER SPECIAL ORDER KITS
+========================================================= */
+
+function getNexpakSpecialOrderKits() {
+
+    return getAllNexpakOnlineKits()
+        .filter(
+            kit =>
+                kit.stockStatus ===
+                "special-order"
+        );
+
+}
+
+
+/* =========================================================
+   82. SORT KITS
+========================================================= */
+
+function sortNexpakOnlineKits(
+    kits,
+    sortType
+) {
+
+    const source =
+        Array.isArray(kits)
+            ? [...kits]
+            : [];
+
+
+    switch (sortType) {
+
+
+        /* ---------------------------------------------
+           FEATURED
+        --------------------------------------------- */
+
+        case "featured":
+
+            return source.sort(
+                (a, b) => {
+
+                    const aFeatured =
+                        a.featured === true
+                            ? 1
+                            : 0;
+
+                    const bFeatured =
+                        b.featured === true
+                            ? 1
+                            : 0;
+
+
+                    if (
+                        aFeatured !==
+                        bFeatured
+                    ) {
+
+                        return (
+                            bFeatured -
+                            aFeatured
+                        );
+
+                    }
+
+
+                    const aPopular =
+                        a.popular === true
+                            ? 1
+                            : 0;
+
+                    const bPopular =
+                        b.popular === true
+                            ? 1
+                            : 0;
+
+
+                    return (
+                        bPopular -
+                        aPopular
+                    );
+
+                }
+            );
+
+
+        /* ---------------------------------------------
+           NAME A-Z
+        --------------------------------------------- */
+
+        case "name-asc":
+
+            return source.sort(
+                (a, b) =>
+                    String(
+                        a.name || ""
+                    ).localeCompare(
+                        String(
+                            b.name || ""
+                        )
+                    )
+            );
+
+
+        /* ---------------------------------------------
+           NAME Z-A
+        --------------------------------------------- */
+
+        case "name-desc":
+
+            return source.sort(
+                (a, b) =>
+                    String(
+                        b.name || ""
+                    ).localeCompare(
+                        String(
+                            a.name || ""
+                        )
+                    )
+            );
+
+
+        /* ---------------------------------------------
+           PRICE LOW TO HIGH
+        --------------------------------------------- */
+
+        case "price-low":
+
+            return source.sort(
+                (a, b) =>
+                    (
+                        Number(
+                            a.priceInclVat
+                        ) || 0
+                    ) -
+                    (
+                        Number(
+                            b.priceInclVat
+                        ) || 0
+                    )
+            );
+
+
+        /* ---------------------------------------------
+           PRICE HIGH TO LOW
+        --------------------------------------------- */
+
+        case "price-high":
+
+            return source.sort(
+                (a, b) =>
+                    (
+                        Number(
+                            b.priceInclVat
+                        ) || 0
+                    ) -
+                    (
+                        Number(
+                            a.priceInclVat
+                        ) || 0
+                    )
+            );
+
+
+        /* ---------------------------------------------
+           NEWEST
+        --------------------------------------------- */
+
+        case "newest":
+
+            return source.sort(
+                (a, b) => {
+
+                    const aDate =
+                        new Date(
+                            a.dateAdded || 0
+                        ).getTime();
+
+                    const bDate =
+                        new Date(
+                            b.dateAdded || 0
+                        ).getTime();
+
+
+                    return (
+                        bDate -
+                        aDate
+                    );
+
+                }
+            );
+
+
+        /* ---------------------------------------------
+           DEFAULT
+        --------------------------------------------- */
+
+        default:
+
+            return source;
+
+    }
+
+}
+
+
+/* =========================================================
+   83. COMPLETE KIT FILTER
+========================================================= */
+
+function filterNexpakOnlineKits(
+    settings = {}
+) {
+
+    let kits =
+        getAllNexpakOnlineKits();
+
+
+    /* ---------------------------------------------
+       SEARCH
+    --------------------------------------------- */
+
+    if (
+        settings.search
+    ) {
+
+        kits =
+            searchNexpakOnlineKits(
+                settings.search
+            );
+
+    }
+
+
+    /* ---------------------------------------------
+       CATEGORY
+    --------------------------------------------- */
+
+    kits =
+        filterNexpakOnlineKitsByCategory(
+            kits,
+            settings.category || "all"
+        );
+
+
+    /* ---------------------------------------------
+       BRAND
+    --------------------------------------------- */
+
+    kits =
+        filterNexpakOnlineKitsByBrand(
+            kits,
+            settings.brand
+        );
+
+
+    /* ---------------------------------------------
+       FEATURED ONLY
+    --------------------------------------------- */
+
+    if (
+        settings.featured === true
+    ) {
+
+        kits =
+            kits.filter(
+                kit =>
+                    kit.featured === true
+            );
+
+    }
+
+
+    /* ---------------------------------------------
+       POPULAR ONLY
+    --------------------------------------------- */
+
+    if (
+        settings.popular === true
+    ) {
+
+        kits =
+            kits.filter(
+                kit =>
+                    kit.popular === true
+            );
+
+    }
+
+
+    /* ---------------------------------------------
+       SORT
+    --------------------------------------------- */
+
+    kits =
+        sortNexpakOnlineKits(
+            kits,
+            settings.sort ||
+            "featured"
+        );
+
+
+    return kits;
+
+}
+
+
+/* =========================================================
+   84. UPDATE STORE STATE
+========================================================= */
+
+function updateNexpakOnlineStoreState(
+    settings = {}
+) {
+
+    NEXPAK_ONLINE_STATE.filters = {
 
         search:
-            search,
+            settings.search || "",
 
-        filter:
-            filter,
+        category:
+            settings.category ||
+            "all",
+
+        brand:
+            settings.brand ||
+            "",
 
         sort:
-            sort,
-
-        select:
-            selectProduct,
-
-        openProduct:
-            openProduct,
-
-
-        /*
-         * Recommendations
-         */
+            settings.sort ||
+            "featured",
 
         featured:
-            function (limit) {
-
-                return STORE.recommendations.featured(
-                    limit
-                );
-            },
-
+            settings.featured === true,
 
         popular:
-            function (limit) {
+            settings.popular === true
 
-                return STORE.recommendations.popular(
-                    limit
-                );
-            },
-
-
-        related:
-            function (
-                product,
-                limit
-            ) {
-
-                return STORE.recommendations.related(
-                    product,
-                    limit
-                );
-            },
-
-
-        similar:
-            function (
-                product,
-                limit
-            ) {
-
-                return STORE.recommendations.similar(
-                    product,
-                    limit
-                );
-            },
-
-
-        /*
-         * Compatibility
-         */
-
-        compatible:
-            function (
-                product,
-                options
-            ) {
-
-                return STORE.compatibility.find(
-                    product,
-                    options
-                );
-            },
-
-
-        checkCompatibility:
-            function (
-                productA,
-                productB
-            ) {
-
-                return STORE.compatibility.check(
-                    productA,
-                    productB
-                );
-            },
-
-
-        /*
-         * Configurator
-         */
-
-        startConfigurator:
-            function (
-                product,
-                options
-            ) {
-
-                return STORE.configurator.start(
-                    product,
-                    options
-                );
-            },
-
-
-        addConfiguratorProduct:
-            function (
-                product
-            ) {
-
-                return STORE.configurator.add(
-                    product
-                );
-            },
-
-
-        removeConfiguratorProduct:
-            function (
-                product
-            ) {
-
-                return STORE.configurator.remove(
-                    product
-                );
-            },
-
-
-        validateConfigurator:
-            function () {
-
-                return STORE.configurator.validate();
-            },
-
-
-        getConfigurator:
-            function () {
-
-                return STORE.configurator.get();
-            },
-
-
-        resetConfigurator:
-            function () {
-
-                return STORE.configurator.reset();
-            },
-
-
-        /*
-         * Cart
-         */
-
-        addToCart:
-            addToCart,
-
-
-        /*
-         * Pricing
-         */
-
-        requestPrice:
-            requestPrice,
-
-        requestQuote:
-            requestQuote,
-
-
-        /*
-         * Diagnostics
-         */
-
-        health:
-            healthCheck,
-
-        snapshot:
-            getStoreSnapshot,
-
-        validateDatabase:
-            validateDatabase,
-
-        detectModules:
-            detectModules,
-
-        initialize:
-            initializeStoreEngine
     };
 
 
-    /*=====================================================
-      190. GLOBAL SHORTCUT
-    =====================================================*/
+    return NEXPAK_ONLINE_STATE.filters;
+
+}
+
+
+/* =========================================================
+   85. RUN STORE FILTER
+========================================================= */
+
+function runNexpakOnlineStoreFilter(
+    settings = {}
+) {
+
+    updateNexpakOnlineStoreState(
+        settings
+    );
+
+
+    return filterNexpakOnlineKits(
+        settings
+    );
+
+}
+
+
+/* =========================================================
+   86. GET CATEGORY NAME
+========================================================= */
+
+function getNexpakOnlineCategoryName(
+    categoryId
+) {
+
+    if (
+        typeof NEXPAK_ONLINE_CATEGORIES ===
+        "undefined"
+    ) {
+
+        return categoryId;
+
+    }
+
+
+    const category =
+        NEXPAK_ONLINE_CATEGORIES.find(
+            item =>
+                item.id ===
+                categoryId
+        );
+
+
+    return category?.name ||
+        categoryId;
+
+}
+
+
+/* =========================================================
+   87. GET KIT COUNT
+========================================================= */
+
+function getNexpakOnlineKitCount(
+    kits
+) {
+
+    const source =
+        Array.isArray(kits)
+            ? kits
+            : getAllNexpakOnlineKits();
+
+
+    return source.length;
+
+}
+
+
+/* =========================================================
+   88. EMPTY SEARCH MESSAGE
+========================================================= */
+
+function createNexpakOnlineEmptyResultsHTML(
+    searchTerm,
+    category
+) {
+
+    let message =
+        "No kits found.";
+
+
+    if (
+        searchTerm
+    ) {
+
+        message =
+            `No kits found for "${escapeNexpakOnlineHTML(
+                searchTerm
+            )}".`;
+
+    }
+    else if (
+        category &&
+        category !== "all"
+    ) {
+
+        message =
+            `No kits are currently available in ${escapeNexpakOnlineHTML(
+                getNexpakOnlineCategoryName(
+                    category
+                )
+            )}.`;
+
+    }
+
+
+    return `
+
+        <div class="online-store-empty">
+
+            <div class="online-store-empty-icon">
+                🔍
+            </div>
+
+            <h3>
+                No Kits Found
+            </h3>
+
+            <p>
+                ${message}
+            </p>
+
+            <button
+                type="button"
+                class="online-clear-filters"
+                onclick="
+                    clearNexpakOnlineFilters()
+                "
+            >
+                View All Kits
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   89. CLEAR FILTERS
+========================================================= */
+
+function clearNexpakOnlineFilters() {
+
+    const searchInput =
+        document.querySelector(
+            "#onlineSearch"
+        );
+
+
+    const categorySelect =
+        document.querySelector(
+            "#onlineCategory"
+        );
+
+
+    const sortSelect =
+        document.querySelector(
+            "#onlineSort"
+        );
+
+
+    if (searchInput) {
+
+        searchInput.value = "";
+
+    }
+
+
+    if (categorySelect) {
+
+        categorySelect.value =
+            "all";
+
+    }
+
+
+    if (sortSelect) {
+
+        sortSelect.value =
+            "featured";
+
+    }
+
+
+    const settings = {
+
+        search: "",
+
+        category: "all",
+
+        brand: "",
+
+        sort: "featured",
+
+        featured: false,
+
+        popular: false
+
+    };
+
+
+    updateNexpakOnlineStoreState(
+        settings
+    );
+
+
+    if (
+        typeof renderNexpakOnlineKits ===
+        "function"
+    ) {
+
+        renderNexpakOnlineKits(
+            filterNexpakOnlineKits(
+                settings
+            )
+        );
+
+    }
+
+
+    return settings;
+
+}
+
+
+/* =========================================================
+   90. LIVE SEARCH HANDLER
+========================================================= */
+
+function handleNexpakOnlineSearch(
+    searchTerm
+) {
+
+    const settings = {
+
+        ...(
+            NEXPAK_ONLINE_STATE.filters ||
+            {}
+        ),
+
+        search:
+            searchTerm || ""
+
+    };
+
+
+    updateNexpakOnlineStoreState(
+        settings
+    );
+
+
+    const kits =
+        filterNexpakOnlineKits(
+            settings
+        );
+
+
+    if (
+        typeof renderNexpakOnlineKits ===
+        "function"
+    ) {
+
+        renderNexpakOnlineKits(
+            kits
+        );
+
+    }
+
+
+    return kits;
+
+}
+
+
+/* =========================================================
+   91. CATEGORY HANDLER
+========================================================= */
+
+function handleNexpakOnlineCategoryChange(
+    category
+) {
+
+    const settings = {
+
+        ...(
+            NEXPAK_ONLINE_STATE.filters ||
+            {}
+        ),
+
+        category:
+            category || "all"
+
+    };
+
+
+    updateNexpakOnlineStoreState(
+        settings
+    );
+
+
+    const kits =
+        filterNexpakOnlineKits(
+            settings
+        );
+
+
+    if (
+        typeof renderNexpakOnlineKits ===
+        "function"
+    ) {
+
+        renderNexpakOnlineKits(
+            kits
+        );
+
+    }
+
+
+    return kits;
+
+}
+
+
+/* =========================================================
+   92. SORT HANDLER
+========================================================= */
+
+function handleNexpakOnlineSortChange(
+    sortType
+) {
+
+    const settings = {
+
+        ...(
+            NEXPAK_ONLINE_STATE.filters ||
+            {}
+        ),
+
+        sort:
+            sortType || "featured"
+
+    };
+
+
+    updateNexpakOnlineStoreState(
+        settings
+    );
+
+
+    const kits =
+        filterNexpakOnlineKits(
+            settings
+        );
+
+
+    if (
+        typeof renderNexpakOnlineKits ===
+        "function"
+    ) {
+
+        renderNexpakOnlineKits(
+            kits
+        );
+
+    }
+
+
+    return kits;
+
+}
+
+
+/* =========================================================
+   93. CATEGORY KIT COUNTS
+========================================================= */
+
+function getNexpakOnlineCategoryCounts() {
+
+    const kits =
+        getAllNexpakOnlineKits();
+
+
+    const counts = {
+
+        all:
+            kits.length
+
+    };
+
+
+    kits.forEach(
+        kit => {
+
+            const category =
+                kit.category;
+
+
+            if (!category) {
+
+                return;
+
+            }
+
+
+            if (
+                !counts[category]
+            ) {
+
+                counts[category] =
+                    0;
+
+            }
+
+
+            counts[category]++;
+
+        }
+    );
+
+
+    return counts;
+
+}
+
+
+/* =========================================================
+   94. INITIALISE STORE FILTER STATE
+========================================================= */
+
+function initialiseNexpakOnlineFilterState() {
+
+    if (
+        !NEXPAK_ONLINE_STATE.filters
+    ) {
+
+        NEXPAK_ONLINE_STATE.filters = {
+
+            search: "",
+
+            category: "all",
+
+            brand: "",
+
+            sort: "featured",
+
+            featured: false,
+
+            popular: false
+
+        };
+
+    }
+
+}
+
+
+/* =========================================================
+   95. START FILTER ENGINE
+========================================================= */
+
+initialiseNexpakOnlineFilterState();
+
+
+/* =========================================================
+   END OF PART 6/8
+
+   NEXT:
+   PART 7/8
+
+   DELIVERY CALCULATOR
+
+   Will handle:
+
+   - Customer location
+   - Delivery distance
+   - Kit weight
+   - Delivery zones
+   - Delivery charge
+   - Cart delivery total
+   - Free / paid delivery rules
+========================================================= */
+
+/* =========================================================
+   NEXPAK SECURITY SOLUTIONS
+   ONLINE STORE — DELIVERY ENGINE
+
+   online.js — PART 7/8
+
+   HANDLES:
+   - Delivery distance
+   - Cart weight
+   - Delivery charge
+   - Weight calculation
+   - Distance calculation
+   - Delivery estimate
+   - Delivery summary
+
+   IMPORTANT:
+   This is for the ONLINE STORE only.
+
+   Build Your System uses its own configurator.js.
+========================================================= */
+
+
+/* =========================================================
+   96. DELIVERY CONFIGURATION
+========================================================= */
+
+const NEXPAK_ONLINE_DELIVERY = {
+
+    enabled: true,
+
+    currency: "ZAR",
+
+    freeDelivery: false,
+
+    freeDeliveryMinimum: 0,
+
+    baseFee: 80,
+
+    perKilometre: 4.50,
+
+    perKilogram: 1.50,
+
+    minimumFee: 80,
+
+    maximumFee: 5000,
+
+    minimumDistance: 0,
+
+    maximumDistance: 500,
+
+    minimumWeight: 0,
+
+    maximumWeight: 1000,
+
+    defaultDistance: 0,
+
+    defaultWeight: 0
+
+};
+
+
+/* =========================================================
+   97. GET CART TOTAL WEIGHT
+========================================================= */
+
+function getNexpakOnlineCartWeight() {
+
+    const cart =
+        getNexpakOnlineCart();
+
+
+    let totalWeight = 0;
+
+
+    cart.forEach(
+        item => {
+
+            const quantity =
+                Math.max(
+                    1,
+                    Number(
+                        item.quantity
+                    ) || 1
+                );
+
+
+            const weight =
+                Number(
+                    item.weight
+                ) || 0;
+
+
+            totalWeight +=
+                weight *
+                quantity;
+
+        }
+    );
+
+
+    return Number(
+        totalWeight.toFixed(2)
+    );
+
+}
+
+
+/* =========================================================
+   98. GET DELIVERY DISTANCE
+========================================================= */
+
+function getNexpakOnlineDeliveryDistance() {
+
+    const storedDistance =
+        localStorage.getItem(
+            "nexpak_online_delivery_distance"
+        );
+
+
+    const distance =
+        Number(
+            storedDistance
+        );
+
+
+    if (
+        Number.isFinite(distance) &&
+        distance >= 0
+    ) {
+
+        return distance;
+
+    }
+
+
+    return (
+        NEXPAK_ONLINE_DELIVERY.defaultDistance
+    );
+
+}
+
+
+/* =========================================================
+   99. SAVE DELIVERY DISTANCE
+========================================================= */
+
+function saveNexpakOnlineDeliveryDistance(
+    distance
+) {
+
+    const value =
+        Math.max(
+            0,
+            Number(distance) || 0
+        );
+
+
+    try {
+
+        localStorage.setItem(
+            "nexpak_online_delivery_distance",
+            value.toString()
+        );
+
+    } catch (error) {
+
+        console.error(
+            "NEXPAK Online Store: Could not save delivery distance.",
+            error
+        );
+
+    }
+
+
+    return value;
+
+}
+
+
+/* =========================================================
+   100. CALCULATE DELIVERY FROM DISTANCE + WEIGHT
+========================================================= */
+
+function calculateNexpakOnlineDelivery(
+    distance,
+    weight
+) {
+
+    const safeDistance =
+        Math.max(
+            0,
+            Number(distance) || 0
+        );
+
+
+    const safeWeight =
+        Math.max(
+            0,
+            Number(weight) || 0
+        );
+
+
+    if (
+        !NEXPAK_ONLINE_DELIVERY.enabled
+    ) {
+
+        return {
+
+            enabled: false,
+
+            distance:
+                safeDistance,
+
+            weight:
+                safeWeight,
+
+            deliveryFee: 0
+
+        };
+
+    }
+
 
     /*
-     * The complete online store can also be accessed as:
-     *
-     * window.NEXPAK_ONLINE_STORE
-     */
+       FREE DELIVERY
+    */
 
-    window.NEXPAK_ONLINE_STORE =
-        STORE.api;
+    const cartTotals =
+        calculateNexpakOnlineCartTotals();
 
 
-    /*=====================================================
-      191. GLOBAL EVENT HANDLERS
-    =====================================================*/
+    if (
+        NEXPAK_ONLINE_DELIVERY.freeDelivery &&
+        cartTotals.totalInclVat >=
+        NEXPAK_ONLINE_DELIVERY.freeDeliveryMinimum
+    ) {
 
-    document.addEventListener(
-        "nexpak:add-to-cart",
-        function (event) {
+        return {
 
-            if (
-                !event.detail
-            ) {
+            enabled: true,
 
-                return;
-            }
+            freeDelivery: true,
+
+            distance:
+                safeDistance,
+
+            weight:
+                safeWeight,
+
+            baseFee: 0,
+
+            distanceFee: 0,
+
+            weightFee: 0,
+
+            deliveryFee: 0
+
+        };
+
+    }
 
 
-            addToCart(
-                event.detail.product ||
-                event.detail.productID,
-                event.detail.quantity
-            );
-        }
+    /*
+       BASE DELIVERY FEE
+    */
+
+    const baseFee =
+        Number(
+            NEXPAK_ONLINE_DELIVERY.baseFee
+        ) || 0;
+
+
+    /*
+       DISTANCE CHARGE
+    */
+
+    const distanceFee =
+        safeDistance *
+        (
+            Number(
+                NEXPAK_ONLINE_DELIVERY.perKilometre
+            ) || 0
+        );
+
+
+    /*
+       WEIGHT CHARGE
+    */
+
+    const weightFee =
+        safeWeight *
+        (
+            Number(
+                NEXPAK_ONLINE_DELIVERY.perKilogram
+            ) || 0
+        );
+
+
+    let deliveryFee =
+        baseFee +
+        distanceFee +
+        weightFee;
+
+
+    /*
+       MINIMUM DELIVERY FEE
+    */
+
+    const minimumFee =
+        Number(
+            NEXPAK_ONLINE_DELIVERY.minimumFee
+        ) || 0;
+
+
+    if (
+        deliveryFee <
+        minimumFee
+    ) {
+
+        deliveryFee =
+            minimumFee;
+
+    }
+
+
+    /*
+       MAXIMUM DELIVERY FEE
+    */
+
+    const maximumFee =
+        Number(
+            NEXPAK_ONLINE_DELIVERY.maximumFee
+        ) || 0;
+
+
+    if (
+        maximumFee > 0 &&
+        deliveryFee >
+        maximumFee
+    ) {
+
+        deliveryFee =
+            maximumFee;
+
+    }
+
+
+    return {
+
+        enabled: true,
+
+        freeDelivery: false,
+
+        distance:
+            Number(
+                safeDistance.toFixed(2)
+            ),
+
+        weight:
+            Number(
+                safeWeight.toFixed(2)
+            ),
+
+        baseFee:
+            Number(
+                baseFee.toFixed(2)
+            ),
+
+        distanceFee:
+            Number(
+                distanceFee.toFixed(2)
+            ),
+
+        weightFee:
+            Number(
+                weightFee.toFixed(2)
+            ),
+
+        deliveryFee:
+            Number(
+                deliveryFee.toFixed(2)
+            )
+
+    };
+
+}
+
+
+/* =========================================================
+   101. CALCULATE CURRENT CART DELIVERY
+========================================================= */
+
+function calculateNexpakOnlineCartDelivery() {
+
+    const weight =
+        getNexpakOnlineCartWeight();
+
+
+    const distance =
+        getNexpakOnlineDeliveryDistance();
+
+
+    return calculateNexpakOnlineDelivery(
+        distance,
+        weight
     );
 
-
-    document.addEventListener(
-        "nexpak:request-price-product",
-        function (event) {
-
-            if (
-                !event.detail
-            ) {
-
-                return;
-            }
+}
 
 
-            requestPrice(
-                event.detail.product ||
-                event.detail.productID
-            );
-        }
-    );
+/* =========================================================
+   102. GET COMPLETE ORDER TOTAL
+========================================================= */
+
+function calculateNexpakOnlineOrderTotals() {
+
+    const cartTotals =
+        calculateNexpakOnlineCartTotals();
 
 
-    document.addEventListener(
-        "nexpak:request-quote-product",
-        function (event) {
-
-            if (
-                !event.detail
-            ) {
-
-                return;
-            }
+    const delivery =
+        calculateNexpakOnlineCartDelivery();
 
 
-            requestQuote(
-                event.detail.product ||
-                event.detail.productID
-            );
-        }
-    );
+    const deliveryFee =
+        Number(
+            delivery.deliveryFee
+        ) || 0;
 
 
-    /*=====================================================
-      192. DOM READY INITIALIZATION
-    =====================================================*/
+    const orderTotal =
+        Number(
 
-    function bootOnlineStore() {
+            (
+                cartTotals.totalInclVat +
+                deliveryFee
 
-        initializeStoreEngine();
+            ).toFixed(2)
+
+        );
+
+
+    return {
+
+        subtotalExVat:
+            cartTotals.subtotalExVat,
+
+        vatAmount:
+            cartTotals.vatAmount,
+
+        productsTotalInclVat:
+            cartTotals.totalInclVat,
+
+        deliveryFee:
+            deliveryFee,
+
+        orderTotal:
+            orderTotal,
+
+        cartWeight:
+            delivery.weight,
+
+        deliveryDistance:
+            delivery.distance
+
+    };
+
+}
+
+
+/* =========================================================
+   103. FORMAT DELIVERY SUMMARY
+========================================================= */
+
+function createNexpakOnlineDeliverySummaryHTML() {
+
+    const delivery =
+        calculateNexpakOnlineCartDelivery();
+
+
+    if (
+        !delivery.enabled
+    ) {
+
+        return `
+
+            <div class="online-delivery-summary">
+
+                <strong>
+                    Delivery
+                </strong>
+
+                <p>
+                    Delivery is currently unavailable.
+                </p>
+
+            </div>
+
+        `;
+
     }
 
 
     if (
-        document.readyState ===
-        "loading"
+        delivery.freeDelivery
     ) {
 
-        document.addEventListener(
-            "DOMContentLoaded",
-            bootOnlineStore,
-            {
-                once: true
-            }
-        );
+        return `
 
-    } else {
+            <div class="online-delivery-summary">
 
-        bootOnlineStore();
+                <strong>
+                    Delivery
+                </strong>
+
+                <p>
+                    Free Delivery
+                </p>
+
+            </div>
+
+        `;
+
     }
 
 
-    /*=====================================================
-      193. FINAL ENGINE MESSAGE
-    =====================================================*/
+    return `
 
-    helpers.log(
-        "NEXPAK ONLINE STORE — online.js Parts 1–8 loaded."
+        <div class="online-delivery-summary">
+
+            <div class="online-delivery-row">
+
+                <span>
+                    Distance
+                </span>
+
+                <strong>
+                    ${delivery.distance} km
+                </strong>
+
+            </div>
+
+
+            <div class="online-delivery-row">
+
+                <span>
+                    Cart Weight
+                </span>
+
+                <strong>
+                    ${delivery.weight} kg
+                </strong>
+
+            </div>
+
+
+            <div class="online-delivery-row">
+
+                <span>
+                    Delivery Fee
+                </span>
+
+                <strong>
+                    ${formatNexpakOnlinePrice(
+                        delivery.deliveryFee
+                    )}
+                </strong>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   104. UPDATE DELIVERY DISPLAY
+========================================================= */
+
+function updateNexpakOnlineDeliveryDisplay() {
+
+    const containers =
+        document.querySelectorAll(
+            ".online-delivery-summary-container"
+        );
+
+
+    const delivery =
+        calculateNexpakOnlineCartDelivery();
+
+
+    containers.forEach(
+        container => {
+
+            container.innerHTML =
+                createNexpakOnlineDeliverySummaryHTML();
+
+        }
     );
 
 
-})(window, document);
+    const deliveryElements =
+        document.querySelectorAll(
+            ".online-delivery-fee"
+        );
 
 
-/*=========================================================
- END OF NEXPAK ONLINE STORE — online.js — PART 8/8
-=========================================================*/
+    deliveryElements.forEach(
+        element => {
+
+            element.textContent =
+                formatNexpakOnlinePrice(
+                    delivery.deliveryFee
+                );
+
+        }
+    );
+
+
+    const distanceElements =
+        document.querySelectorAll(
+            ".online-delivery-distance"
+        );
+
+
+    distanceElements.forEach(
+        element => {
+
+            element.textContent =
+                `${delivery.distance} km`;
+
+        }
+    );
+
+
+    const weightElements =
+        document.querySelectorAll(
+            ".online-delivery-weight"
+        );
+
+
+    weightElements.forEach(
+        element => {
+
+            element.textContent =
+                `${delivery.weight} kg`;
+
+        }
+    );
+
+
+    return delivery;
+
+}
+
+
+/* =========================================================
+   105. HANDLE DISTANCE CHANGE
+========================================================= */
+
+function handleNexpakOnlineDeliveryDistanceChange(
+    distance
+) {
+
+    const value =
+        saveNexpakOnlineDeliveryDistance(
+            distance
+        );
+
+
+    updateNexpakOnlineDeliveryDisplay();
+
+
+    return value;
+
+}
+
+
+/* =========================================================
+   106. DELIVERY DISTANCE INPUT
+========================================================= */
+
+function initialiseNexpakOnlineDeliveryInput() {
+
+    const inputs =
+        document.querySelectorAll(
+            ".online-delivery-distance-input"
+        );
+
+
+    const savedDistance =
+        getNexpakOnlineDeliveryDistance();
+
+
+    inputs.forEach(
+        input => {
+
+            input.value =
+                savedDistance;
+
+
+            input.addEventListener(
+                "input",
+                event => {
+
+                    handleNexpakOnlineDeliveryDistanceChange(
+                        event.target.value
+                    );
+
+                }
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   107. VALIDATE DELIVERY DISTANCE
+========================================================= */
+
+function validateNexpakOnlineDeliveryDistance(
+    distance
+) {
+
+    const value =
+        Number(distance);
+
+
+    if (
+        !Number.isFinite(value)
+    ) {
+
+        return {
+
+            valid: false,
+
+            message:
+                "Please enter a valid delivery distance."
+
+        };
+
+    }
+
+
+    if (
+        value <
+        NEXPAK_ONLINE_DELIVERY.minimumDistance
+    ) {
+
+        return {
+
+            valid: false,
+
+            message:
+                "Delivery distance cannot be negative."
+
+        };
+
+    }
+
+
+    if (
+        NEXPAK_ONLINE_DELIVERY.maximumDistance > 0 &&
+        value >
+        NEXPAK_ONLINE_DELIVERY.maximumDistance
+    ) {
+
+        return {
+
+            valid: false,
+
+            message:
+                `Delivery distance exceeds the current ${NEXPAK_ONLINE_DELIVERY.maximumDistance} km delivery limit.`
+
+        };
+
+    }
+
+
+    return {
+
+        valid: true,
+
+        distance:
+            value
+
+    };
+
+}
+
+
+/* =========================================================
+   108. GET DELIVERY INFORMATION
+========================================================= */
+
+function getNexpakOnlineDeliveryInformation() {
+
+    const delivery =
+        calculateNexpakOnlineCartDelivery();
+
+
+    return {
+
+        distance:
+            delivery.distance,
+
+        weight:
+            delivery.weight,
+
+        fee:
+            delivery.deliveryFee,
+
+        freeDelivery:
+            delivery.freeDelivery === true
+
+    };
+
+}
+
+
+/* =========================================================
+   109. REFRESH ORDER TOTAL
+========================================================= */
+
+function refreshNexpakOnlineOrderTotal() {
+
+    const totals =
+        calculateNexpakOnlineOrderTotals();
+
+
+    const subtotalElements =
+        document.querySelectorAll(
+            ".online-order-subtotal"
+        );
+
+
+    subtotalElements.forEach(
+        element => {
+
+            element.textContent =
+                formatNexpakOnlinePrice(
+                    totals.productsTotalInclVat
+                );
+
+        }
+    );
+
+
+    const deliveryElements =
+        document.querySelectorAll(
+            ".online-order-delivery"
+        );
+
+
+    deliveryElements.forEach(
+        element => {
+
+            element.textContent =
+                formatNexpakOnlinePrice(
+                    totals.deliveryFee
+                );
+
+        }
+    );
+
+
+    const totalElements =
+        document.querySelectorAll(
+            ".online-order-total"
+        );
+
+
+    totalElements.forEach(
+        element => {
+
+            element.textContent =
+                formatNexpakOnlinePrice(
+                    totals.orderTotal
+                );
+
+        }
+    );
+
+
+    return totals;
+
+}
+
+
+/* =========================================================
+   110. REFRESH DELIVERY + ORDER TOTAL
+========================================================= */
+
+function refreshNexpakOnlineDeliveryAndTotals() {
+
+    updateNexpakOnlineDeliveryDisplay();
+
+    return refreshNexpakOnlineOrderTotal();
+
+}
+
+
+/* =========================================================
+   111. INITIALISE DELIVERY ENGINE
+========================================================= */
+
+function initialiseNexpakOnlineDelivery() {
+
+    initialiseNexpakOnlineDeliveryInput();
+
+    updateNexpakOnlineDeliveryDisplay();
+
+    refreshNexpakOnlineOrderTotal();
+
+}
+
+
+/* =========================================================
+   112. START DELIVERY ENGINE
+========================================================= */
+
+if (
+    document.readyState === "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initialiseNexpakOnlineDelivery
+    );
+
+} else {
+
+    initialiseNexpakOnlineDelivery();
+
+}
+
+
+/* =========================================================
+   END OF PART 7/8
+
+   NEXT:
+   PART 8/8
+
+   FINAL ONLINE STORE ENGINE
+
+   Will handle:
+   - Rendering kit cards
+   - Add to cart button
+   - View More button
+   - Quantity controls
+   - Kit option selectors
+   - Search/category/sort controls
+   - Cart updates
+   - Final store initialisation
+========================================================= */
+
+/* =========================================================
+   NEXPAK SECURITY SOLUTIONS
+   ONLINE STORE — FINAL ENGINE
+
+   File:
+   online.js
+
+   PART:
+   8/8
+
+   FINAL STORE UI ENGINE
+
+   Handles:
+   - Kit rendering
+   - Quantity controls
+   - Kit option selectors
+   - Add to Cart
+   - View More
+   - Search
+   - Categories
+   - Sorting
+   - Cart updates
+   - Store initialisation
+
+   IMPORTANT:
+   ONLINE STORE = PRE-BUILT KITS ONLY
+
+   BUILD YOUR SYSTEM = configurator.js
+========================================================= */
+
+
+/* =========================================================
+   113. ESCAPE HTML
+========================================================= */
+
+function escapeNexpakOnlineHTML(value) {
+
+    if (value === null || value === undefined) {
+
+        return "";
+
+    }
+
+
+    return String(value)
+
+        .replace(/&/g, "&amp;")
+
+        .replace(/</g, "&lt;")
+
+        .replace(/>/g, "&gt;")
+
+        .replace(/"/g, "&quot;")
+
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/* =========================================================
+   114. FORMAT PRICE
+========================================================= */
+
+function formatNexpakOnlinePrice(amount) {
+
+    const value =
+        Number(amount) || 0;
+
+
+    return new Intl.NumberFormat(
+        "en-ZA",
+        {
+            style: "currency",
+            currency: "ZAR",
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }
+    ).format(value);
+
+}
+
+
+/* =========================================================
+   115. GET KIT IMAGE
+========================================================= */
+
+function getNexpakOnlineKitImage(kit) {
+
+    if (
+        kit &&
+        kit.image
+    ) {
+
+        return kit.image;
+
+    }
+
+
+    return "images/placeholder.jpg";
+
+}
+
+
+/* =========================================================
+   116. CREATE OPTION SELECTORS
+========================================================= */
+
+function createNexpakOnlineKitOptionsHTML(
+    kit
+) {
+
+    if (
+        !Array.isArray(
+            kit.options
+        ) ||
+        kit.options.length === 0
+    ) {
+
+        return "";
+
+    }
+
+
+    return `
+
+        <div class="online-kit-options">
+
+            ${kit.options.map(
+                option => `
+
+                    <div
+                        class="online-kit-option"
+                    >
+
+                        <label>
+
+                            ${escapeNexpakOnlineHTML(
+                                option.name ||
+                                option.label ||
+                                option.id
+                            )}
+
+                        </label>
+
+
+                        <select
+
+                            class="
+                                online-kit-option-select
+                            "
+
+                            data-option-id="
+                                ${escapeNexpakOnlineHTML(
+                                    option.id
+                                )}
+                            "
+
+                        >
+
+                            ${
+                                Array.isArray(
+                                    option.values
+                                )
+                                ?
+                                option.values.map(
+                                    value => `
+
+                                        <option
+
+                                            value="
+                                                ${escapeNexpakOnlineHTML(
+                                                    value.id
+                                                )}
+                                            "
+
+                                        >
+
+                                            ${escapeNexpakOnlineHTML(
+                                                value.name
+                                            )}
+
+                                        </option>
+
+                                    `
+                                ).join("")
+                                :
+                                ""
+                            }
+
+                        </select>
+
+                    </div>
+
+                `
+            ).join("")}
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   117. CREATE QUANTITY CONTROL
+========================================================= */
+
+function createNexpakOnlineQuantityHTML(
+    kit
+) {
+
+    return `
+
+        <div class="online-kit-quantity">
+
+            <button
+
+                type="button"
+
+                class="online-qty-minus"
+
+                data-kit-id="
+                    ${escapeNexpakOnlineHTML(
+                        kit.id
+                    )}
+                "
+
+                aria-label="Decrease quantity"
+
+            >
+                −
+            </button>
+
+
+            <input
+
+                type="number"
+
+                class="online-qty-input"
+
+                value="1"
+
+                min="1"
+
+                step="1"
+
+                inputmode="numeric"
+
+                aria-label="Kit quantity"
+
+            >
+
+
+            <button
+
+                type="button"
+
+                class="online-qty-plus"
+
+                data-kit-id="
+                    ${escapeNexpakOnlineHTML(
+                        kit.id
+                    )}
+                "
+
+                aria-label="Increase quantity"
+
+            >
+                +
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   118. CREATE KIT CARD
+========================================================= */
+
+function createNexpakOnlineKitCard(
+    kit
+) {
+
+    const prices =
+        getNexpakOnlineKitDisplayPrices(
+            kit
+        );
+
+
+    const priceHTML =
+        prices.inclVat > 0
+
+            ? `
+
+                <div class="online-kit-price">
+
+                    ${formatNexpakOnlinePrice(
+                        prices.inclVat
+                    )}
+
+                    <small>
+                        incl. VAT
+                    </small>
+
+                </div>
+
+              `
+
+            : `
+
+                <div class="online-kit-price">
+
+                    <span
+                        class="online-price-unavailable"
+                    >
+                        Price coming soon
+                    </span>
+
+                </div>
+
+              `;
+
+
+    const optionsHTML =
+        createNexpakOnlineKitOptionsHTML(
+            kit
+        );
+
+
+    const quantityHTML =
+        createNexpakOnlineQuantityHTML(
+            kit
+        );
+
+
+    const stockText =
+        kit.stockStatus ===
+        "out-of-stock"
+
+            ? "Out of Stock"
+
+            : kit.stockStatus ===
+              "pre-order"
+
+                ? "Pre-Order"
+
+                : kit.stockStatus ===
+                  "special-order"
+
+                    ? "Special Order"
+
+                    : "Available";
+
+
+    return `
+
+        <article
+
+            class="online-kit-card"
+
+            data-kit-id="
+                ${escapeNexpakOnlineHTML(
+                    kit.id
+                )}
+            "
+
+        >
+
+
+            <div class="online-kit-image-wrapper">
+
+
+                <img
+
+                    class="online-kit-image"
+
+                    src="
+                        ${escapeNexpakOnlineHTML(
+                            getNexpakOnlineKitImage(
+                                kit
+                            )
+                        )}
+                    "
+
+                    alt="
+                        ${escapeNexpakOnlineHTML(
+                            kit.name
+                        )}
+                    "
+
+                    loading="lazy"
+
+                    onerror="
+                        this.onerror=null;
+                        this.src='images/placeholder.jpg';
+                    "
+
+                >
+
+
+                ${
+                    kit.featured
+
+                        ? `
+
+                            <span
+                                class="
+                                    online-kit-badge
+                                    online-kit-featured
+                                "
+                            >
+                                Featured
+                            </span>
+
+                          `
+
+                        : ""
+                }
+
+
+            </div>
+
+
+            <div class="online-kit-content">
+
+
+                <div class="online-kit-brand">
+
+                    ${escapeNexpakOnlineHTML(
+                        kit.brand || ""
+                    )}
+
+                </div>
+
+
+                <h3 class="online-kit-name">
+
+                    ${escapeNexpakOnlineHTML(
+                        kit.name
+                    )}
+
+                </h3>
+
+
+                <p class="online-kit-description">
+
+                    ${escapeNexpakOnlineHTML(
+                        kit.shortDescription ||
+                        ""
+                    )}
+
+                </p>
+
+
+                <div class="online-kit-stock">
+
+                    ${escapeNexpakOnlineHTML(
+                        stockText
+                    )}
+
+                </div>
+
+
+                ${optionsHTML}
+
+
+                ${quantityHTML}
+
+
+                ${priceHTML}
+
+
+                <div class="online-kit-actions">
+
+
+                    <button
+
+                        type="button"
+
+                        class="
+                            online-kit-button
+                            online-add-to-cart
+                        "
+
+                        data-kit-id="
+                            ${escapeNexpakOnlineHTML(
+                                kit.id
+                            )}
+                        "
+
+                    >
+
+                        Add to Cart
+
+                    </button>
+
+
+                    <button
+
+                        type="button"
+
+                        class="
+                            online-kit-button
+                            online-view-more
+                        "
+
+                        data-kit-id="
+                            ${escapeNexpakOnlineHTML(
+                                kit.id
+                            )}
+                        "
+
+                    >
+
+                        View More
+
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+        </article>
+
+    `;
+
+}
+
+
+/* =========================================================
+   119. FIND KIT GRID
+========================================================= */
+
+function getNexpakOnlineKitGrid() {
+
+    const selectors = [
+
+        "#onlineKitGrid",
+
+        "#online-kit-grid",
+
+        ".online-kit-grid",
+
+        ".online-products-grid",
+
+        ".shop-products-grid",
+
+        "#productsGrid"
+
+    ];
+
+
+    for (
+        const selector of selectors
+    ) {
+
+        const element =
+            document.querySelector(
+                selector
+            );
+
+
+        if (element) {
+
+            return element;
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =========================================================
+   120. RENDER KITS
+========================================================= */
+
+function renderNexpakOnlineKits(
+    kits
+) {
+
+    const grid =
+        getNexpakOnlineKitGrid();
+
+
+    if (!grid) {
+
+        console.warn(
+            "NEXPAK Online Store: Kit grid not found."
+        );
+
+        return;
+
+    }
+
+
+    const source =
+        Array.isArray(kits)
+            ? kits
+            : [];
+
+
+    if (
+        source.length === 0
+    ) {
+
+        const filters =
+            NEXPAK_ONLINE_STATE.filters ||
+            {};
+
+
+        grid.innerHTML =
+            createNexpakOnlineEmptyResultsHTML(
+                filters.search || "",
+                filters.category || "all"
+            );
+
+
+        updateNexpakOnlineResultsCount(
+            0
+        );
+
+        return;
+
+    }
+
+
+    grid.innerHTML =
+        source
+            .map(
+                kit =>
+                    createNexpakOnlineKitCard(
+                        kit
+                    )
+            )
+            .join("");
+
+
+    updateNexpakOnlineResultsCount(
+        source.length
+    );
+
+
+    bindNexpakOnlineKitButtons();
+
+}
+
+
+/* =========================================================
+   121. RESULTS COUNT
+========================================================= */
+
+function updateNexpakOnlineResultsCount(
+    count
+) {
+
+    const elements =
+        document.querySelectorAll(
+            ".online-results-count"
+        );
+
+
+    elements.forEach(
+        element => {
+
+            element.textContent =
+                `${count} kit${
+                    count === 1
+                        ? ""
+                        : "s"
+                }`;
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   122. BIND KIT BUTTONS
+========================================================= */
+
+function bindNexpakOnlineKitButtons() {
+
+    const addButtons =
+        document.querySelectorAll(
+            ".online-add-to-cart"
+        );
+
+
+    addButtons.forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const kitId =
+                        button.dataset.kitId;
+
+
+                    handleNexpakOnlineAddToCart(
+                        kitId,
+                        button
+                    );
+
+
+                    refreshNexpakOnlineDeliveryAndTotals();
+
+                }
+            );
+
+        }
+    );
+
+
+    const viewButtons =
+        document.querySelectorAll(
+            ".online-view-more"
+        );
+
+
+    viewButtons.forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const kitId =
+                        button.dataset.kitId;
+
+
+                    handleNexpakOnlineViewMore(
+                        kitId
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    bindNexpakOnlineQuantityButtons();
+
+}
+
+
+/* =========================================================
+   123. BIND QUANTITY BUTTONS
+========================================================= */
+
+function bindNexpakOnlineQuantityButtons() {
+
+    const minusButtons =
+        document.querySelectorAll(
+            ".online-qty-minus"
+        );
+
+
+    const plusButtons =
+        document.querySelectorAll(
+            ".online-qty-plus"
+        );
+
+
+    minusButtons.forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const card =
+                        button.closest(
+                            ".online-kit-card"
+                        );
+
+
+                    const input =
+                        card?.querySelector(
+                            ".online-qty-input"
+                        );
+
+
+                    if (!input) {
+
+                        return;
+
+                    }
+
+
+                    let value =
+                        Number(
+                            input.value
+                        ) || 1;
+
+
+                    value =
+                        Math.max(
+                            1,
+                            value - 1
+                        );
+
+
+                    input.value =
+                        value;
+
+                }
+            );
+
+        }
+    );
+
+
+    plusButtons.forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const card =
+                        button.closest(
+                            ".online-kit-card"
+                        );
+
+
+                    const input =
+                        card?.querySelector(
+                            ".online-qty-input"
+                        );
+
+
+                    if (!input) {
+
+                        return;
+
+                    }
+
+
+                    let value =
+                        Number(
+                            input.value
+                        ) || 1;
+
+
+                    value += 1;
+
+
+                    input.value =
+                        value;
+
+                }
+            );
+
+        }
+    );
+
+
+    const inputs =
+        document.querySelectorAll(
+            ".online-qty-input"
+        );
+
+
+    inputs.forEach(
+        input => {
+
+            input.addEventListener(
+                "change",
+                () => {
+
+                    let value =
+                        Number(
+                            input.value
+                        ) || 1;
+
+
+                    input.value =
+                        Math.max(
+                            1,
+                            Math.floor(
+                                value
+                            )
+                        );
+
+                }
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   124. SEARCH INPUT
+========================================================= */
+
+function bindNexpakOnlineSearch() {
+
+    const input =
+        document.querySelector(
+            "#onlineSearch"
+        );
+
+
+    if (!input) {
+
+        return;
+
+    }
+
+
+    input.addEventListener(
+        "input",
+        event => {
+
+            handleNexpakOnlineSearch(
+                event.target.value
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   125. CATEGORY SELECT
+========================================================= */
+
+function bindNexpakOnlineCategory() {
+
+    const select =
+        document.querySelector(
+            "#onlineCategory"
+        );
+
+
+    if (!select) {
+
+        return;
+
+    }
+
+
+    select.addEventListener(
+        "change",
+        event => {
+
+            handleNexpakOnlineCategoryChange(
+                event.target.value
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   126. SORT SELECT
+========================================================= */
+
+function bindNexpakOnlineSort() {
+
+    const select =
+        document.querySelector(
+            "#onlineSort"
+        );
+
+
+    if (!select) {
+
+        return;
+
+    }
+
+
+    select.addEventListener(
+        "change",
+        event => {
+
+            handleNexpakOnlineSortChange(
+                event.target.value
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   127. POPULATE CATEGORY SELECT
+========================================================= */
+
+function populateNexpakOnlineCategories() {
+
+    const select =
+        document.querySelector(
+            "#onlineCategory"
+        );
+
+
+    if (
+        !select ||
+        typeof NEXPAK_ONLINE_CATEGORIES ===
+        "undefined"
+    ) {
+
+        return;
+
+    }
+
+
+    const currentValue =
+        select.value ||
+        "all";
+
+
+    select.innerHTML = "";
+
+
+    NEXPAK_ONLINE_CATEGORIES
+        .forEach(
+            category => {
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+
+                option.value =
+                    category.id;
+
+
+                option.textContent =
+                    category.name;
+
+
+                select.appendChild(
+                    option
+                );
+
+            }
+        );
+
+
+    select.value =
+        currentValue;
+
+}
+
+
+/* =========================================================
+   128. STORE INITIALISATION
+========================================================= */
+
+function initialiseNexpakOnlineStore() {
+
+    console.log(
+        "NEXPAK Online Store: Initialising..."
+    );
+
+
+    /* -----------------------------------------
+       INITIALISE FILTER STATE
+    ----------------------------------------- */
+
+    if (
+        typeof initialiseNexpakOnlineFilterState ===
+        "function"
+    ) {
+
+        initialiseNexpakOnlineFilterState();
+
+    }
+
+
+    /* -----------------------------------------
+       LOAD CART
+    ----------------------------------------- */
+
+    if (
+        typeof loadNexpakOnlineCart ===
+        "function"
+    ) {
+
+        loadNexpakOnlineCart();
+
+    }
+
+
+    /* -----------------------------------------
+       POPULATE CATEGORIES
+    ----------------------------------------- */
+
+    populateNexpakOnlineCategories();
+
+
+    /* -----------------------------------------
+       BIND SEARCH
+    ----------------------------------------- */
+
+    bindNexpakOnlineSearch();
+
+
+    /* -----------------------------------------
+       BIND CATEGORY
+    ----------------------------------------- */
+
+    bindNexpakOnlineCategory();
+
+
+    /* -----------------------------------------
+       BIND SORT
+    ----------------------------------------- */
+
+    bindNexpakOnlineSort();
+
+
+    /* -----------------------------------------
+       UPDATE PRICES
+    ----------------------------------------- */
+
+    if (
+        typeof updateAllNexpakOnlinePrices ===
+        "function"
+    ) {
+
+        updateAllNexpakOnlinePrices();
+
+    }
+
+
+    /* -----------------------------------------
+       GET CURRENT FILTERS
+    ----------------------------------------- */
+
+    const settings =
+        (
+            typeof NEXPAK_ONLINE_STATE !==
+            "undefined" &&
+            NEXPAK_ONLINE_STATE.filters
+        )
+        ?
+        NEXPAK_ONLINE_STATE.filters
+        :
+        {
+
+            search: "",
+
+            category: "all",
+
+            brand: "",
+
+            sort: "featured"
+
+        };
+
+
+    /* -----------------------------------------
+       FILTER KITS
+    ----------------------------------------- */
+
+    let kits = [];
+
+
+    if (
+        typeof filterNexpakOnlineKits ===
+        "function"
+    ) {
+
+        kits =
+            filterNexpakOnlineKits(
+                settings
+            );
+
+    } else if (
+        typeof getAllNexpakOnlineKits ===
+        "function"
+    ) {
+
+        kits =
+            getAllNexpakOnlineKits();
+
+    }
+
+
+    /* -----------------------------------------
+       RENDER KITS
+    ----------------------------------------- */
+
+    renderNexpakOnlineKits(
+        kits
+    );
+
+
+    /* -----------------------------------------
+       CART COUNT
+    ----------------------------------------- */
+
+    if (
+        typeof updateNexpakOnlineCartCount ===
+        "function"
+    ) {
+
+        updateNexpakOnlineCartCount();
+
+    }
+
+
+    /* -----------------------------------------
+       DELIVERY
+    ----------------------------------------- */
+
+    if (
+        typeof updateNexpakOnlineDeliveryDisplay ===
+        "function"
+    ) {
+
+        updateNexpakOnlineDeliveryDisplay();
+
+    }
+
+
+    /* -----------------------------------------
+       ORDER TOTAL
+    ----------------------------------------- */
+
+    if (
+        typeof refreshNexpakOnlineOrderTotal ===
+        "function"
+    ) {
+
+        refreshNexpakOnlineOrderTotal();
+
+    }
+
+
+    console.log(
+        "NEXPAK Online Store: " +
+        kits.length +
+        " kits loaded."
+    );
+
+}
+
+
+/* =========================================================
+   129. START ONLINE STORE
+========================================================= */
+
+if (
+    document.readyState === "loading"
+) {
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        initialiseNexpakOnlineStore
+    );
+
+} else {
+
+    initialiseNexpakOnlineStore();
+
+}
+
+
+/* =========================================================
+   130. PUBLIC ONLINE STORE API
+========================================================= */
+
+window.NEXPAK_ONLINE_STORE = {
+
+    version: "1.0",
+
+    getKits:
+        function () {
+
+            return (
+                typeof getAllNexpakOnlineKits ===
+                "function"
+            )
+            ?
+            getAllNexpakOnlineKits()
+            :
+            [];
+
+        },
+
+
+    getKit:
+        function (kitId) {
+
+            return (
+                typeof getNexpakOnlineKit ===
+                "function"
+            )
+            ?
+            getNexpakOnlineKit(
+                kitId
+            )
+            :
+            null;
+
+        },
+
+
+    addToCart:
+        function (
+            kitId,
+            quantity
+        ) {
+
+            if (
+                typeof addNexpakOnlineKitToCart !==
+                "function"
+            ) {
+
+                return false;
+
+            }
+
+
+            return addNexpakOnlineKitToCart(
+                kitId,
+                quantity
+            );
+
+        },
+
+
+    removeFromCart:
+        function (cartItemId) {
+
+            if (
+                typeof removeNexpakOnlineCartItem !==
+                "function"
+            ) {
+
+                return false;
+
+            }
+
+
+            return removeNexpakOnlineCartItem(
+                cartItemId
+            );
+
+        },
+
+
+    clearCart:
+        function () {
+
+            if (
+                typeof clearNexpakOnlineCart !==
+                "function"
+            ) {
+
+                return false;
+
+            }
+
+
+            return clearNexpakOnlineCart();
+
+        },
+
+
+    getCart:
+        function () {
+
+            if (
+                typeof getNexpakOnlineCart !==
+                "function"
+            ) {
+
+                return [];
+
+            }
+
+
+            return getNexpakOnlineCart();
+
+        },
+
+
+    getCartCount:
+        function () {
+
+            if (
+                typeof getNexpakOnlineCartCount !==
+                "function"
+            ) {
+
+                return 0;
+
+            }
+
+
+            return getNexpakOnlineCartCount();
+
+        },
+
+
+    getCartWeight:
+        function () {
+
+            if (
+                typeof getNexpakOnlineCartWeight !==
+                "function"
+            ) {
+
+                return 0;
+
+            }
+
+
+            return getNexpakOnlineCartWeight();
+
+        },
+
+
+    calculateDelivery:
+        function () {
+
+            if (
+                typeof calculateNexpakOnlineCartDelivery !==
+                "function"
+            ) {
+
+                return {
+
+                    deliveryFee: 0,
+
+                    distance: 0,
+
+                    weight: 0
+
+                };
+
+            }
+
+
+            return calculateNexpakOnlineCartDelivery();
+
+        },
+
+
+    calculateOrder:
+        function () {
+
+            if (
+                typeof calculateNexpakOnlineOrderTotals !==
+                "function"
+            ) {
+
+                return {
+
+                    subtotalExVat: 0,
+
+                    vatAmount: 0,
+
+                    productsTotalInclVat: 0,
+
+                    deliveryFee: 0,
+
+                    orderTotal: 0
+
+                };
+
+            }
+
+
+            return calculateNexpakOnlineOrderTotals();
+
+        },
+
+
+    viewMore:
+        function (kitId) {
+
+            if (
+                typeof handleNexpakOnlineViewMore !==
+                "function"
+            ) {
+
+                return false;
+
+            }
+
+
+            return handleNexpakOnlineViewMore(
+                kitId
+            );
+
+        },
+
+
+    printPDF:
+        function (kitId) {
+
+            if (
+                typeof printNexpakOnlineKitPDF !==
+                "function"
+            ) {
+
+                return false;
+
+            }
+
+
+            return printNexpakOnlineKitPDF(
+                kitId
+            );
+
+        }
+
+};
+
+
+/* =========================================================
+   131. ONLINE STORE READY
+========================================================= */
+
+console.log(
+    "NEXPAK Online Store Engine loaded successfully."
+);
+
+
+/* =========================================================
+   END OF online.js — PART 8/8
+========================================================= */
+
