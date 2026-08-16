@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Build Your Security System | Nexpak Security Solutions</title>
-    <!-- Tailwind CSS for rapid, modern styling -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome for Icons -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script>
@@ -30,7 +30,6 @@
         @keyframes popIn { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); } 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); } }
 
-        /* Fake Electric Fence Outline */
         .ef-active {
             position: absolute; top: 15%; left: 10%; width: 80%; height: 75%;
             border: 2px dashed #fbbf24; border-radius: 10px;
@@ -41,16 +40,16 @@
 </head>
 <body class="text-slate-800">
 
-    <!-- Header / Nav (Mimicking Screenshot 2) -->
+    <!-- Header / Nav -->
     <header class="bg-nexpakBlue text-white p-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="font-bold text-xl tracking-wider uppercase"><i class="fa-solid fa-shield-halved text-nexpakAccent mr-2"></i>Nexpak Security Solutions</div>
-           <nav 
+            <nav class="hidden md:flex space-x-6 text-sm font-semibold">
                 <a href="#" class="index.html">Home</a>
-                <a href="#" class="aboutus">About</a>
+                <a href="#" class="aboutus.html">About</a>
                 <a href="#" class="hover:text-nexpakAccent transition">Products</a>
                 <a href="#" class="text-nexpakAccent border-b-2 border-nexpakAccent pb-1">Build Your System</a>
-                <a href="#" class="hover:text-nexpakAccent transition">Contact</a>
+                <a href="#" class="contact.html">Contact</a>
             </nav>
             <div class="relative">
                 <i class="fa-solid fa-cart-shopping text-xl"></i>
@@ -87,9 +86,7 @@
 
             <div id="product-form-container" class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hide">
                 <h2 class="text-xl font-bold mb-4 border-b pb-2">2. Configure Products</h2>
-                <div id="dynamic-form" class="space-y-4 max-h-[500px] overflow-y-auto pr-2">
-                    <!-- Form fields injected here via JS -->
-                </div>
+                <div id="dynamic-form" class="space-y-4 max-h-[500px] overflow-y-auto pr-2"></div>
                 <button onclick="addCurrentCategoryToCart()" class="mt-6 w-full bg-nexpakBlue hover:bg-slate-800 text-white font-bold py-3 px-4 rounded-lg transition shadow-lg">
                     Add Selection to Cart <i class="fa-solid fa-arrow-right ml-2"></i>
                 </button>
@@ -102,13 +99,9 @@
             <!-- 3D Visualizer -->
             <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200">
                 <h2 class="text-xl font-bold mb-4"><i class="fa-solid fa-map-location-dot text-nexpakAccent mr-2"></i>Property View (Live Layout)</h2>
-                <div class="relative w-full rounded-lg overflow-hidden border border-slate-800 bg-black" id="visualizer-box">
-                    <!-- Background Image Reference -->
-                    <img src="lay.png" alt="3D Property Layout" class="w-full object-contain opacity-90 block">
-                    <!-- Dynamic Overlay Layer -->
-                    <div id="visualizer-overlay" class="visualizer-overlay">
-                        <!-- Markers injected here via JS -->
-                    </div>
+                <div class="relative w-full rounded-lg overflow-hidden border border-slate-800 bg-black min-h-[350px]" id="visualizer-box">
+                    <img src="lay.png" alt="3D Property Layout" class="w-full object-contain opacity-90 block" onerror="this.src='https://via.placeholder.com/800x500/0f172a/3b82f6?text=Please+Save+1000116324.png+in+Same+Folder'">
+                    <div id="visualizer-overlay" class="visualizer-overlay"></div>
                 </div>
                 <p class="text-sm text-slate-500 mt-3"><i class="fa-solid fa-circle-info mr-1"></i> Add products to see them appear on your layout.</p>
             </div>
@@ -142,7 +135,7 @@
 
                 <!-- Checkout Actions -->
                 <div class="mt-6 space-y-3">
-                    <button class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition shadow flex justify-center items-center opacity-70 cursor-not-allowed" disabled>
+                    <button class="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg transition shadow flex justify-center items-center opacity-70 cursor-not-allowed" disabled>
                         <i class="fa-solid fa-credit-card mr-2"></i> PayFast (Coming Soon)
                     </button>
                     <button onclick="toggleEFT()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-4 rounded-lg transition shadow flex justify-center items-center">
@@ -150,25 +143,21 @@
                     </button>
                 </div>
 
-                <!-- Bank Details (Hidden by default) -->
+                <!-- Bank Details -->
                 <div id="eft-details" class="hide mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-sm">
                     <h4 class="font-bold mb-2">Bank Details for EFT:</h4>
                     <p><strong>Bank:</strong> FNB</p>
                     <p><strong>Account Name:</strong> Nexpak Security Solutions</p>
-                    <p><strong>Account No:</strong> 62000000000 <span class="text-xs text-slate-500">(Placeholder)</span></p>
+                    <p><strong>Account No:</strong> 62000000000</p>
                     <p><strong>Branch Code:</strong> 250655</p>
                     <p class="mt-2 text-red-600 text-xs italic">* Please use your name as reference and email proof of payment.</p>
                 </div>
-
             </div>
         </div>
     </main>
 
     <!-- JavaScript Data and Logic -->
     <script>
-        // --- PRODUCT DATABASE CONFIGURATION ---
-        // Note: Assigned placeholder prices (R100) and weights (1kg) to make the calculator logic work out of the box. 
-        // Adjust price and weight numbers below for your live system.
         const productDb = {
             electricFence: [
                 { id: 'ef_tube', name: 'Square Tube', variants: ['6 line', '8 line', '10 line', '12 line'], price: 150, weight: 2 },
@@ -231,8 +220,6 @@
         let cart = [];
         let currentCategory = "";
 
-        // UI COORDINATES FOR 3D IMAGE MARKERS
-        // Simulated mapping onto 1000116324.png background
         const markerPositions = {
             cameras: [
                 { top: '35%', left: '30%' }, { top: '35%', left: '60%' }, { top: '65%', left: '25%' }, { top: '65%', left: '75%' }, 
@@ -245,12 +232,10 @@
             gate: { top: '82%', left: '50%' }
         };
 
-        // DOM Elements
         const formContainer = document.getElementById('dynamic-form');
         const productFormBox = document.getElementById('product-form-container');
         const overlay = document.getElementById('visualizer-overlay');
 
-        // Render Dynamic Form based on Category
         function loadCategoryForm() {
             const select = document.getElementById('categorySelect');
             currentCategory = select.value;
@@ -269,7 +254,6 @@
                 let html = `<div class="p-3 bg-slate-50 border rounded flex flex-col md:flex-row md:items-center justify-between gap-3">
                                 <div class="font-semibold text-sm w-full md:w-1/3">${prod.name}</div>`;
                 
-                // Variant Dropdown if exists
                 if (prod.variants) {
                     html += `<select id="var_${prod.id}" class="p-2 text-sm border rounded outline-none focus:ring-1 focus:ring-blue-500 flex-1">`;
                     prod.variants.forEach(v => {
@@ -277,10 +261,9 @@
                     });
                     html += `</select>`;
                 } else {
-                    html += `<div class="flex-1"></div>`; // spacer
+                    html += `<div class="flex-1"></div>`;
                 }
 
-                // Quantity Input
                 html += `<div class="flex items-center space-x-2">
                             <label class="text-xs text-slate-500 font-bold">QTY:</label>
                             <input type="number" id="qty_${prod.id}" min="0" value="0" class="w-16 p-2 text-sm border rounded outline-none text-center">
@@ -291,7 +274,6 @@
             });
         }
 
-        // Add to Cart Logic
         function addCurrentCategoryToCart() {
             if (!currentCategory) return;
             const products = productDb[currentCategory];
@@ -301,14 +283,13 @@
                 const qtyInput = document.getElementById(`qty_${prod.id}`);
                 const qty = parseInt(qtyInput.value) || 0;
                 
-                if (qty > 0 || (prod.variants && !prod.price && qtyInput.value > 0)) { // handles pure specifiers if needed
+                if (qty > 0) {
                     let variant = "";
                     if (prod.variants) {
                         const varSelect = document.getElementById(`var_${prod.id}`);
                         variant = varSelect ? varSelect.value : "";
                     }
 
-                    // Check if exists in cart
                     const existingIdx = cart.findIndex(i => i.id === prod.id && i.variant === variant);
                     if (existingIdx > -1) {
                         cart[existingIdx].qty += qty;
@@ -324,16 +305,12 @@
                         });
                     }
                     
-                    qtyInput.value = 0; // reset
+                    qtyInput.value = 0;
                     addedCount++;
                 }
             });
 
             if (addedCount > 0) {
-                updateCartUI();
-                updateVisualizer();
-            } else {
-                alert("Please             if (addedCount > 0) {
                 updateCartUI();
                 updateVisualizer();
             } else {
@@ -347,7 +324,6 @@
             updateVisualizer();
         }
 
-        // Render Cart UI & Totals
         function updateCartUI() {
             const cartContainer = document.getElementById('cart-items');
             document.getElementById('cart-badge').innerText = cart.length;
@@ -373,7 +349,6 @@
             calculateTotals();
         }
 
-        // Calculation Math based on prompt constraints
         function calculateTotals() {
             let subtotal = 0;
             let totalWeight = 0;
@@ -386,13 +361,11 @@
             const distanceInput = document.getElementById('distance-km').value;
             const distance = parseFloat(distanceInput) || 0;
 
-            // Delivery logic: Base R90 + (R6.50 * km) + (R8 * kg)
             let delivery = 0;
             if (cart.length > 0) {
                 delivery = 90 + (distance * 6.50) + (totalWeight * 8.00);
             }
 
-            // VAT 15% 
             const vat = subtotal * 0.15;
             const totalPayable = subtotal + vat + delivery;
 
@@ -412,16 +385,14 @@
             }
         }
 
-        // Visualizer 3D Mapping Logic
         function updateVisualizer() {
-            overlay.innerHTML = ''; // Clear existing
+            overlay.innerHTML = '';
             
             let cameraCount = 0;
             let hasElectricFence = false;
             let hasGateMotor = false;
             let roboguardCount = 0;
 
-            // Analyze Cart
             cart.forEach(item => {
                 if (item.category === 'cctv' && item.id === 'cctv_cam') cameraCount += item.qty;
                 if (item.category === 'electricFence') hasElectricFence = true;
@@ -431,12 +402,10 @@
                 if (item.category === 'roboguard' && item.id === 'rg_beam') roboguardCount += item.qty;
             });
 
-            // 1. Render Electric Fence (Outline Base)
             if (hasElectricFence) {
                 overlay.innerHTML += `<div class="ef-active"></div>`;
             }
 
-            // 2. Render Gate Motor
             if (hasGateMotor) {
                 overlay.innerHTML += `
                     <div class="marker pulse" style="top: ${markerPositions.gate.top}; left: ${markerPositions.gate.left};">
@@ -444,7 +413,6 @@
                     </div>`;
             }
 
-            // 3. Render Cameras
             for (let i = 0; i < cameraCount; i++) {
                 if (i >= markerPositions.cameras.length) break; 
                 const pos = markerPositions.cameras[i];
@@ -454,7 +422,6 @@
                     </div>`;
             }
 
-            // 4. Render Roboguards
             for (let i = 0; i < roboguardCount; i++) {
                 if (i >= markerPositions.roboguards.length) break;
                 const pos = markerPositions.roboguards[i];
