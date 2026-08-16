@@ -329,97 +329,60 @@
     <h2 class="section-title">Security Kits</h2>
     <div class="category-title"><i class="fa-solid fa-bolt" style="color: #eab308;"></i> Electric Fencing Kits</div>
 
-    <!-- Product Card Grid -->
-    <div class="card-grid">
+            <!-- =====================================================
+             NEXPAK REAL KIT DATABASE
+             PRODUCTS ARE LOADED FROM online-data.js
+        ====================================================== -->
 
-      <!-- Card 1: Electric Fence Kit -->
-      <article class="product-card">
-        <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-        <div class="product-img-wrapper">
-          <img src="fence-kit.jpg" alt="Electric Fence Kit" onerror="this.src='https://via.placeholder.com/260x160?text=Electric+Fence+Kit'">
-        </div>
-        <div class="card-category">Electric Fencing</div>
-        <div class="product-name">Electric Fence 100m Round Tube 6 Line Kit</div>
-        <div class="product-desc">Complete 100m electric fence kit with round tube and 6 lines.</div>
-        
-        <div class="selector-container">
-          <label for="fence-bracket-1">Bracket Style:</label>
-          <select id="fence-bracket-1">
-            <option value="Round Tube (6 Line)">Round Tube (6 Line)</option>
-            <option value="Square Tube (6 Line)">Square Tube (6 Line)</option>
-            <option value="Flat Bar (6 Line)">Flat Bar (6 Line)</option>
-          </select>
-          <label for="qty-1">Quantity:</label>
-          <input type="number" id="qty-1" value="1" min="1">
-        </div>
+        <div
+            class="card-grid"
+            id="onlineProductGrid"
+        >
 
-        <div class="price-text">R3,450.00</div>
-        
-        <div class="card-actions">
-          <button class="btn-summary-quote" onclick="generateQuotePDF('Electric Fence 100m Round Tube 6 Line Kit', 3450.00, 'fence-bracket-1', 'qty-1')">Summary List</button>
-          <button class="btn-add-cart"><i class="fa-solid fa-cart-shopping"></i> Add To Cart</button>
-        </div>
-      </article>
+            <!--
+                online.js will populate the real NEXPAK
+                security kits here.
 
-      <!-- Card 2: Roboguard Kit -->
-      <article class="product-card">
-        <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-        <div class="product-img-wrapper">
-          <img src="roboguard-kit.jpg" alt="Roboguard Kit" onerror="this.src='https://via.placeholder.com/260x160?text=Roboguard+Outdoor+Kit'">
-        </div>
-        <div class="card-category">Roboguard</div>
-        <div class="product-name">Roboguard Dual Sensor Outdoor Kit</div>
-        <div class="product-desc">Wireless outdoor perimeter protection kit with master receiver.</div>
+                This is intentionally empty.
 
-        <div class="selector-container">
-          <label for="robo-color-1">Sensor Color:</label>
-          <select id="robo-color-1">
-            <option value="HQ Green">HQ Green</option>
-            <option value="Black">Black</option>
-            <option value="Grey">Grey</option>
-          </select>
-          <label for="qty-2">Quantity:</label>
-          <input type="number" id="qty-2" value="1" min="1">
+                Products come from:
+
+                    online-data.js
+                         ↓
+                    NEXPAK_PRODUCTS
+                         ↓
+                    online.js
+                         ↓
+                    #onlineProductGrid
+            -->
+
         </div>
 
-        <div class="price-text">R4,800.00</div>
-        
-        <div class="card-actions">
-          <button class="btn-summary-quote" onclick="generateQuotePDF('Roboguard Dual Sensor Outdoor Kit', 4800.00, 'robo-color-1', 'qty-2')">Summary List</button>
-          <button class="btn-add-cart"><i class="fa-solid fa-cart-shopping"></i> Add To Cart</button>
-        </div>
-      </article>
 
-      <!-- Card 3: CCTV Kit -->
-      <article class="product-card">
-        <button class="wishlist-btn"><i class="fa-regular fa-heart"></i></button>
-        <div class="product-img-wrapper">
-          <img src="cctv-kit.jpg" alt="HD CCTV Kit" onerror="this.src='https://via.placeholder.com/260x160?text=HD+CCTV+Kit'">
-        </div>
-        <div class="card-category">HD CCTV</div>
-        <div class="product-name">4-Channel 1080p HD CCTV Security Kit</div>
-        <div class="product-desc">Full surveillance kit including 4CH DVR and power supply.</div>
+        <!-- =====================================================
+             NO KITS MESSAGE
+        ====================================================== -->
 
-        <div class="selector-container">
-          <label for="cctv-type-1">Camera Style:</label>
-          <select id="cctv-type-1">
-            <option value="Dome Cameras">Dome Cameras</option>
-            <option value="Bullet Cameras">Bullet Cameras</option>
-            <option value="50/50 Dome & Bullet Mix">50/50 Dome & Bullet Mix</option>
-          </select>
-          <label for="qty-3">Quantity:</label>
-          <input type="number" id="qty-3" value="1" min="1">
-        </div>
+        <div
+            id="onlineNoProducts"
+            class="online-no-products"
+            hidden
+        >
 
-        <div class="price-text">R2,950.00</div>
-        
-        <div class="card-actions">
-          <button class="btn-summary-quote" onclick="generateQuotePDF('4-Channel 1080p HD CCTV Security Kit', 2950.00, 'cctv-type-1', 'qty-3')">Summary List</button>
-          <button class="btn-add-cart"><i class="fa-solid fa-cart-shopping"></i> Add To Cart</button>
-        </div>
-      </article>
+            <i
+                class="fa-solid fa-box-open"
+            ></i>
 
-    </div>
+            <h3>
+                No Security Kits Found
+            </h3>
+
+            <p>
+                Please try another category or search.
+            </p>
+
+        </div>
+    
   </main>
 
   <!-- Floating WhatsApp Button -->
