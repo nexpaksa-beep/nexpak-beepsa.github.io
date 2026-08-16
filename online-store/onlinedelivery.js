@@ -1,1972 +1,1456 @@
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE — DELIVERY ENGINE
- File: onlinedelivery.js
- Version: 1.0
- Part: 1/8
-=========================================================*/
+/* =========================================================
+   NEXPAK ONLINE STORE — DELIVERY ENGINE
+   FILE: onlinedelivery.js
+   PART 1
+   PURPOSE:
+   - Delivery configuration
+   - Delivery state
+   - Safe configuration access
+   - Distance / weight constants
+   ========================================================= */
 
-"use strict";
+(function () {
 
-/*=========================================================
- DELIVERY ENGINE
------------------------------------------------------------
- Responsibilities:
- - Delivery configuration
- - Delivery zones
- - Delivery methods
- - Delivery fee calculation foundation
- - Collection / delivery state
- - Integration hooks for checkout
-=========================================================*/
+    "use strict";
 
 
-/*=========================================================
- 1. GLOBAL DELIVERY CONFIGURATION
-=========================================================*/
+    /* =========================================================
+       1. DELIVERY CONFIGURATION
+       ========================================================= */
 
-const NEXPAK_DELIVERY_CONFIG = {
+    const NEXPAK_ONLINE_DELIVERY_CONFIG = {
 
-    /*---------------------------------------------
-     STORE INFORMATION
-    ---------------------------------------------*/
+        baseFee: 80,
 
-    storeName: "NEXPAK Security Solutions",
+        distanceRate: 4.50,
 
-    currency: "ZAR",
+        weightRate: 1.50,
 
-    currencySymbol: "R",
+        minimumFee: 80,
 
+        maximumFee: 5000,
 
-    /*---------------------------------------------
-     DEFAULT DELIVERY SETTINGS
-    ---------------------------------------------*/
+        maximumDistance: 500,
 
-    defaultMethod: "delivery",
+        currency: "ZAR"
 
-    defaultZone: "south-africa",
+    };
 
-    defaultDeliveryFee: 0,
 
-    freeDeliveryThreshold: 0,
+    /* =========================================================
+       2. DELIVERY STATE
+       ========================================================= */
 
+    const NEXPAK_ONLINE_DELIVERY_STATE = {
 
-    /*---------------------------------------------
-     COLLECTION SETTINGS
-    ---------------------------------------------*/
+        distance: 0,
 
-    collectionEnabled: true,
+        cartWeight: 0,
 
-    collectionMethod: "collection",
+        distanceCharge: 0,
 
-    collectionFee: 0,
+        weightCharge: 0,
 
+        calculatedFee: 0,
 
-    /*---------------------------------------------
-     DELIVERY SETTINGS
-    ---------------------------------------------*/
+        finalFee: 0,
 
-    deliveryEnabled: true,
+        isValid: true,
 
-    minimumOrderValue: 0,
+        error: "",
 
-    maximumDeliveryDistance: null,
+        lastUpdated: null
 
+    };
 
-    /*---------------------------------------------
-     ESTIMATED DELIVERY TIME
-    ---------------------------------------------*/
 
-    standardDeliveryDays: "2–5 business days",
+    /* =========================================================
+       3. GET DELIVERY CONFIGURATION
+       ========================================================= */
 
-    expressDeliveryDays: "1–2 business days",
+    function getNexpakOnlineDeliveryConfig() {
 
-
-    /*---------------------------------------------
-     STORAGE KEY
-    ---------------------------------------------*/
-
-    storageKey: "nexpakDelivery"
-};
-
-
-/*=========================================================
- 2. DELIVERY STATE
-=========================================================*/
-
-let nexpakDeliveryState = {
-
-    method: NEXPAK_DELIVERY_CONFIG.defaultMethod,
-
-    zone: NEXPAK_DELIVERY_CONFIG.defaultZone,
-
-    address: null,
-
-    province: "",
-
-    city: "",
-
-    suburb: "",
-
-    postalCode: "",
-
-    country: "South Africa",
-
-    deliveryFee: NEXPAK_DELIVERY_CONFIG.defaultDeliveryFee,
-
-    deliveryType: "standard",
-
-    estimatedDelivery: NEXPAK_DELIVERY_CONFIG.standardDeliveryDays,
-
-    valid: true,
-
-    message: ""
-};
-
-
-/*=========================================================
- 3. DELIVERY ZONES
-=========================================================*/
-
-const NEXPAK_DELIVERY_ZONES = {
-
-    /*---------------------------------------------
-     SOUTH AFRICA
-    ---------------------------------------------*/
-
-    "south-africa": {
-
-        id: "south-africa",
-
-        name: "South Africa",
-
-        country: "South Africa",
-
-        enabled: true,
-
-        standardFee: 0,
-
-        expressFee: 0,
-
-        standardDays: "2–5 business days",
-
-        expressDays: "1–2 business days"
-
-    },
-
-
-    /*---------------------------------------------
-     LOCAL / EAST RAND
-    ---------------------------------------------*/
-
-    "local": {
-
-        id: "local",
-
-        name: "Local Delivery",
-
-        country: "South Africa",
-
-        enabled: true,
-
-        standardFee: 0,
-
-        expressFee: 0,
-
-        standardDays: "1–2 business days",
-
-        expressDays: "Same day / next business day"
+        return {
+            ...NEXPAK_ONLINE_DELIVERY_CONFIG
+        };
 
     }
 
-};
 
+    /* =========================================================
+       4. RESET DELIVERY STATE
+       ========================================================= */
 
-/*=========================================================
- 4. DELIVERY METHODS
-=========================================================*/
+    function resetNexpakOnlineDeliveryState() {
 
-const NEXPAK_DELIVERY_METHODS = {
+        NEXPAK_ONLINE_DELIVERY_STATE.distance = 0;
 
-    /*---------------------------------------------
-     COLLECTION
-    ---------------------------------------------*/
+        NEXPAK_ONLINE_DELIVERY_STATE.cartWeight = 0;
 
-    collection: {
+        NEXPAK_ONLINE_DELIVERY_STATE.distanceCharge = 0;
 
-        id: "collection",
+        NEXPAK_ONLINE_DELIVERY_STATE.weightCharge = 0;
 
-        name: "Collection",
+        NEXPAK_ONLINE_DELIVERY_STATE.calculatedFee = 0;
 
-        description: "Collect your order from NEXPAK Security Solutions.",
+        NEXPAK_ONLINE_DELIVERY_STATE.finalFee = 0;
 
-        fee: 0,
+        NEXPAK_ONLINE_DELIVERY_STATE.isValid = true;
 
-        enabled: NEXPAK_DELIVERY_CONFIG.collectionEnabled,
+        NEXPAK_ONLINE_DELIVERY_STATE.error = "";
 
-        estimatedDelivery: "Ready for collection"
-
-    },
-
-
-    /*---------------------------------------------
-     STANDARD DELIVERY
-    ---------------------------------------------*/
-
-    delivery: {
-
-        id: "delivery",
-
-        name: "Standard Delivery",
-
-        description: "Reliable delivery to your selected address.",
-
-        fee: 0,
-
-        enabled: NEXPAK_DELIVERY_CONFIG.deliveryEnabled,
-
-        estimatedDelivery:
-            NEXPAK_DELIVERY_CONFIG.standardDeliveryDays
-
-    },
-
-
-    /*---------------------------------------------
-     EXPRESS DELIVERY
-    ---------------------------------------------*/
-
-    express: {
-
-        id: "express",
-
-        name: "Express Delivery",
-
-        description: "Priority delivery where available.",
-
-        fee: 0,
-
-        enabled: NEXPAK_DELIVERY_CONFIG.deliveryEnabled,
-
-        estimatedDelivery:
-            NEXPAK_DELIVERY_CONFIG.expressDeliveryDays
+        NEXPAK_ONLINE_DELIVERY_STATE.lastUpdated = new Date();
 
     }
 
-};
 
+    /* =========================================================
+       5. NORMALISE NUMBER
+       ========================================================= */
 
-/*=========================================================
- 5. STORAGE HELPERS
-=========================================================*/
+    function normaliseNexpakOnlineDeliveryNumber(value) {
 
-function saveNexpakDeliveryState() {
+        const number = Number(value);
 
-    try {
+        if (!Number.isFinite(number)) {
 
-        localStorage.setItem(
-            NEXPAK_DELIVERY_CONFIG.storageKey,
-            JSON.stringify(nexpakDeliveryState)
-        );
-
-        return true;
-
-    } catch (error) {
-
-        console.error(
-            "NEXPAK Delivery: Unable to save delivery state.",
-            error
-        );
-
-        return false;
-    }
-}
-
-
-/*=========================================================
- 6. LOAD DELIVERY STATE
-=========================================================*/
-
-function loadNexpakDeliveryState() {
-
-    try {
-
-        const savedDelivery =
-            localStorage.getItem(
-                NEXPAK_DELIVERY_CONFIG.storageKey
-            );
-
-
-        if (!savedDelivery) {
-
-            return nexpakDeliveryState;
+            return 0;
 
         }
 
+        return number;
 
-        const parsedDelivery =
-            JSON.parse(savedDelivery);
+    }
 
+
+    /* =========================================================
+       6. ROUND CURRENCY
+       ========================================================= */
+
+    function roundNexpakOnlineDeliveryCurrency(value) {
+
+        return Math.round(
+            normaliseNexpakOnlineDeliveryNumber(value) * 100
+        ) / 100;
+
+    }
+
+
+    /* =========================================================
+       7. SET DISTANCE
+       ========================================================= */
+
+    function setNexpakOnlineDeliveryDistance(distance) {
+
+        distance =
+            normaliseNexpakOnlineDeliveryNumber(distance);
+
+        if (distance < 0) {
+
+            distance = 0;
+
+        }
 
         if (
-            parsedDelivery &&
-            typeof parsedDelivery === "object"
+            distance >
+            NEXPAK_ONLINE_DELIVERY_CONFIG.maximumDistance
         ) {
 
-            nexpakDeliveryState = {
-
-                ...nexpakDeliveryState,
-
-                ...parsedDelivery
-
-            };
+            distance =
+                NEXPAK_ONLINE_DELIVERY_CONFIG.maximumDistance;
 
         }
 
-    } catch (error) {
+        NEXPAK_ONLINE_DELIVERY_STATE.distance = distance;
 
-        console.error(
-            "NEXPAK Delivery: Unable to load delivery state.",
-            error
-        );
+        NEXPAK_ONLINE_DELIVERY_STATE.lastUpdated =
+            new Date();
+
+        return distance;
 
     }
 
 
-    return nexpakDeliveryState;
-}
+    /* =========================================================
+       8. SET CART WEIGHT
+       ========================================================= */
+
+    function setNexpakOnlineDeliveryCartWeight(weight) {
+
+        weight =
+            normaliseNexpakOnlineDeliveryNumber(weight);
+
+        if (weight < 0) {
+
+            weight = 0;
+
+        }
+
+        NEXPAK_ONLINE_DELIVERY_STATE.cartWeight = weight;
+
+        NEXPAK_ONLINE_DELIVERY_STATE.lastUpdated =
+            new Date();
+
+        return weight;
+
+    }
 
 
-/*=========================================================
- 7. CLEAR DELIVERY STATE
-=========================================================*/
+    /* =========================================================
+       9. GET CURRENT DELIVERY STATE
+       ========================================================= */
 
-function clearNexpakDeliveryState() {
+    function getNexpakOnlineDeliveryState() {
 
-    nexpakDeliveryState = {
+        return {
+            ...NEXPAK_ONLINE_DELIVERY_STATE
+        };
 
-        method:
-            NEXPAK_DELIVERY_CONFIG.defaultMethod,
+    }
 
-        zone:
-            NEXPAK_DELIVERY_CONFIG.defaultZone,
 
-        address: null,
+    /* =========================================================
+       10. EXPOSE DELIVERY ENGINE
+       ========================================================= */
 
-        province: "",
+    window.NEXPAK_ONLINE_DELIVERY = {
 
-        city: "",
+        config:
+            NEXPAK_ONLINE_DELIVERY_CONFIG,
 
-        suburb: "",
+        state:
+            NEXPAK_ONLINE_DELIVERY_STATE,
 
-        postalCode: "",
+        getConfig:
+            getNexpakOnlineDeliveryConfig,
 
-        country: "South Africa",
+        getState:
+            getNexpakOnlineDeliveryState,
 
-        deliveryFee:
-            NEXPAK_DELIVERY_CONFIG.defaultDeliveryFee,
+        reset:
+            resetNexpakOnlineDeliveryState,
 
-        deliveryType: "standard",
+        normaliseNumber:
+            normaliseNexpakOnlineDeliveryNumber,
 
-        estimatedDelivery:
-            NEXPAK_DELIVERY_CONFIG.standardDeliveryDays,
+        roundCurrency:
+            roundNexpakOnlineDeliveryCurrency,
 
-        valid: true,
+        setDistance:
+            setNexpakOnlineDeliveryDistance,
 
-        message: ""
+        setCartWeight:
+            setNexpakOnlineDeliveryCartWeight
 
     };
 
 
-    try {
+})();
 
-        localStorage.removeItem(
-            NEXPAK_DELIVERY_CONFIG.storageKey
-        );
+/* =========================================================
+   NEXPAK ONLINE STORE — DELIVERY ENGINE
+   PART 2
+   CART WEIGHT + DISTANCE INPUT HANDLING
+   ========================================================= */
 
-    } catch (error) {
 
-        console.error(
-            "NEXPAK Delivery: Unable to clear storage.",
-            error
-        );
+/* =========================================================
+   11. GET ONLINE CART
+   ========================================================= */
+
+function getNexpakOnlineDeliveryCart() {
+
+    /*
+     * The Online Store cart is handled by onlinecart.js.
+     *
+     * We deliberately do not create another cart system here.
+     */
+
+    if (
+        window.NEXPAK_ONLINE_CART &&
+        typeof window.NEXPAK_ONLINE_CART === "object"
+    ) {
+
+        return window.NEXPAK_ONLINE_CART;
+
+    }
+
+    return null;
+
+}
+
+
+/* =========================================================
+   12. FIND CART ITEMS
+   ========================================================= */
+
+function getNexpakOnlineDeliveryCartItems() {
+
+    const cart =
+        getNexpakOnlineDeliveryCart();
+
+
+    if (!cart) {
+
+        return [];
 
     }
 
 
-    return nexpakDeliveryState;
+    /*
+     * Support the most common cart property names
+     * without modifying onlinecart.js.
+     */
+
+    if (Array.isArray(cart.items)) {
+
+        return cart.items;
+
+    }
+
+
+    if (Array.isArray(cart.cart)) {
+
+        return cart.cart;
+
+    }
+
+
+    if (Array.isArray(cart.products)) {
+
+        return cart.products;
+
+    }
+
+
+    return [];
+
 }
 
 
-/*=========================================================
- 8. GET DELIVERY STATE
-=========================================================*/
+/* =========================================================
+   13. GET KIT QUANTITY
+   ========================================================= */
 
-function getNexpakDeliveryState() {
+function getNexpakOnlineDeliveryKitQuantity(item) {
+
+    if (!item || typeof item !== "object") {
+
+        return 0;
+
+    }
+
+
+    const quantity =
+        Number(
+            item.quantity ??
+            item.qty ??
+            item.count ??
+            0
+        );
+
+
+    if (!Number.isFinite(quantity)) {
+
+        return 0;
+
+    }
+
+
+    return Math.max(0, quantity);
+
+}
+
+
+/* =========================================================
+   14. GET KIT WEIGHT
+   ========================================================= */
+
+function getNexpakOnlineDeliveryKitWeight(item) {
+
+    if (!item || typeof item !== "object") {
+
+        return 0;
+
+    }
+
+
+    const possibleWeight =
+        item.weight ??
+        item.kitWeight ??
+        item.shippingWeight ??
+        item.deliveryWeight ??
+        0;
+
+
+    const weight =
+        Number(possibleWeight);
+
+
+    if (!Number.isFinite(weight)) {
+
+        return 0;
+
+    }
+
+
+    return Math.max(0, weight);
+
+}
+
+
+/* =========================================================
+   15. CALCULATE CART WEIGHT
+   ========================================================= */
+
+function calculateNexpakOnlineDeliveryCartWeight() {
+
+    const items =
+        getNexpakOnlineDeliveryCartItems();
+
+
+    let totalWeight = 0;
+
+
+    items.forEach(function (item) {
+
+        const quantity =
+            getNexpakOnlineDeliveryKitQuantity(item);
+
+
+        const kitWeight =
+            getNexpakOnlineDeliveryKitWeight(item);
+
+
+        /*
+         * Weight is calculated per KIT.
+         *
+         * Example:
+         *
+         * Kit weight = 25 kg
+         * Quantity   = 2
+         *
+         * Total      = 50 kg
+         */
+
+        totalWeight +=
+            kitWeight * quantity;
+
+    });
+
+
+    totalWeight =
+        roundNexpakOnlineDeliveryCurrency(
+            totalWeight
+        );
+
+
+    setNexpakOnlineDeliveryCartWeight(
+        totalWeight
+    );
+
+
+    return totalWeight;
+
+}
+
+
+/* =========================================================
+   16. GET DELIVERY DISTANCE
+   ========================================================= */
+
+function getNexpakOnlineDeliveryDistance() {
+
+    return normaliseNexpakOnlineDeliveryNumber(
+        NEXPAK_ONLINE_DELIVERY_STATE.distance
+    );
+
+}
+
+
+/* =========================================================
+   17. UPDATE DELIVERY DISTANCE
+   ========================================================= */
+
+function updateNexpakOnlineDeliveryDistance(distance) {
+
+    const updatedDistance =
+        setNexpakOnlineDeliveryDistance(
+            distance
+        );
+
+
+    /*
+     * Recalculate cart weight whenever delivery
+     * information is refreshed.
+     */
+
+    calculateNexpakOnlineDeliveryCartWeight();
+
+
+    return updatedDistance;
+
+}
+
+
+/* =========================================================
+   18. UPDATE DELIVERY WEIGHT
+   ========================================================= */
+
+function updateNexpakOnlineDeliveryWeight() {
+
+    return calculateNexpakOnlineDeliveryCartWeight();
+
+}
+
+
+/* =========================================================
+   19. GET DELIVERY INPUT SUMMARY
+   ========================================================= */
+
+function getNexpakOnlineDeliveryInputSummary() {
+
+    const distance =
+        getNexpakOnlineDeliveryDistance();
+
+
+    const weight =
+        calculateNexpakOnlineDeliveryCartWeight();
+
 
     return {
-        ...nexpakDeliveryState
-    };
-}
 
+        distance: distance,
 
-/*=========================================================
- 9. SET DELIVERY METHOD
-=========================================================*/
+        weight: weight,
 
-function setNexpakDeliveryMethod(method) {
-
-    if (
-        !method ||
-        !NEXPAK_DELIVERY_METHODS[method]
-    ) {
-
-        console.warn(
-            "NEXPAK Delivery: Invalid delivery method.",
-            method
-        );
-
-        return false;
-    }
-
-
-    if (
-        !NEXPAK_DELIVERY_METHODS[method].enabled
-    ) {
-
-        console.warn(
-            "NEXPAK Delivery: Selected method is disabled.",
-            method
-        );
-
-        return false;
-    }
-
-
-    nexpakDeliveryState.method = method;
-
-
-    if (method === "collection") {
-
-        nexpakDeliveryState.deliveryFee = 0;
-
-        nexpakDeliveryState.deliveryType =
-            "collection";
-
-        nexpakDeliveryState.estimatedDelivery =
-            NEXPAK_DELIVERY_METHODS
-                .collection
-                .estimatedDelivery;
-
-    }
-
-
-    if (method === "delivery") {
-
-        nexpakDeliveryState.deliveryType =
-            "standard";
-
-        nexpakDeliveryState.estimatedDelivery =
-            NEXPAK_DELIVERY_METHODS
-                .delivery
-                .estimatedDelivery;
-
-    }
-
-
-    if (method === "express") {
-
-        nexpakDeliveryState.deliveryType =
-            "express";
-
-        nexpakDeliveryState.estimatedDelivery =
-            NEXPAK_DELIVERY_METHODS
-                .express
-                .estimatedDelivery;
-
-    }
-
-
-    saveNexpakDeliveryState();
-
-
-    return true;
-}
-
-
-/*=========================================================
- 10. SET DELIVERY ZONE
-=========================================================*/
-
-function setNexpakDeliveryZone(zone) {
-
-    if (
-        !zone ||
-        !NEXPAK_DELIVERY_ZONES[zone]
-    ) {
-
-        console.warn(
-            "NEXPAK Delivery: Invalid delivery zone.",
-            zone
-        );
-
-        return false;
-    }
-
-
-    if (
-        !NEXPAK_DELIVERY_ZONES[zone].enabled
-    ) {
-
-        console.warn(
-            "NEXPAK Delivery: Selected zone is disabled.",
-            zone
-        );
-
-        return false;
-    }
-
-
-    nexpakDeliveryState.zone = zone;
-
-
-    saveNexpakDeliveryState();
-
-
-    return true;
-}
-
-
-/*=========================================================
- 11. INITIALISE DELIVERY ENGINE
-=========================================================*/
-
-function initNexpakDelivery() {
-
-    loadNexpakDeliveryState();
-
-
-    /*
-     * Make sure an invalid saved method
-     * does not break checkout.
-     */
-
-    if (
-        !NEXPAK_DELIVERY_METHODS[
-            nexpakDeliveryState.method
-        ]
-    ) {
-
-        nexpakDeliveryState.method =
-            NEXPAK_DELIVERY_CONFIG.defaultMethod;
-
-    }
-
-
-    /*
-     * Make sure an invalid saved zone
-     * falls back to South Africa.
-     */
-
-    if (
-        !NEXPAK_DELIVERY_ZONES[
-            nexpakDeliveryState.zone
-        ]
-    ) {
-
-        nexpakDeliveryState.zone =
-            NEXPAK_DELIVERY_CONFIG.defaultZone;
-
-    }
-
-
-    saveNexpakDeliveryState();
-
-
-    return getNexpakDeliveryState();
-}
-
-
-/*=========================================================
- 12. GLOBAL ACCESS
-=========================================================*/
-
-window.NEXPAK_DELIVERY_CONFIG =
-    NEXPAK_DELIVERY_CONFIG;
-
-window.NEXPAK_DELIVERY_ZONES =
-    NEXPAK_DELIVERY_ZONES;
-
-window.NEXPAK_DELIVERY_METHODS =
-    NEXPAK_DELIVERY_METHODS;
-
-window.getNexpakDeliveryState =
-    getNexpakDeliveryState;
-
-window.setNexpakDeliveryMethod =
-    setNexpakDeliveryMethod;
-
-window.setNexpakDeliveryZone =
-    setNexpakDeliveryZone;
-
-window.clearNexpakDeliveryState =
-    clearNexpakDeliveryState;
-
-window.initNexpakDelivery =
-    initNexpakDelivery;
-
-
-/*=========================================================
- 13. AUTO INITIALISATION
-=========================================================*/
-
-if (document.readyState === "loading") {
-
-    document.addEventListener(
-        "DOMContentLoaded",
-        initNexpakDelivery
-    );
-
-} else {
-
-    initNexpakDelivery();
-
-}
-
-
-/*=========================================================
- END — onlinedelivery.js — PART 1/8
-=========================================================*/
-
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE — DELIVERY ENGINE
- File: onlinedelivery.js
- Version: 1.0
- Part: 2/8
-=========================================================*/
-
-
-/*=========================================================
- 14. SOUTH AFRICAN PROVINCES
-=========================================================*/
-
-const NEXPAK_SA_PROVINCES = {
-
-    "gauteng": {
-        id: "gauteng",
-        name: "Gauteng",
-        code: "GP"
-    },
-
-    "western-cape": {
-        id: "western-cape",
-        name: "Western Cape",
-        code: "WC"
-    },
-
-    "eastern-cape": {
-        id: "eastern-cape",
-        name: "Eastern Cape",
-        code: "EC"
-    },
-
-    "kwazulu-natal": {
-        id: "kwazulu-natal",
-        name: "KwaZulu-Natal",
-        code: "KZN"
-    },
-
-    "free-state": {
-        id: "free-state",
-        name: "Free State",
-        code: "FS"
-    },
-
-    "limpopo": {
-        id: "limpopo",
-        name: "Limpopo",
-        code: "LP"
-    },
-
-    "mpumalanga": {
-        id: "mpumalanga",
-        name: "Mpumalanga",
-        code: "MP"
-    },
-
-    "north-west": {
-        id: "north-west",
-        name: "North West",
-        code: "NW"
-    },
-
-    "northern-cape": {
-        id: "northern-cape",
-        name: "Northern Cape",
-        code: "NC"
-    }
-
-};
-
-
-/*=========================================================
- 15. DELIVERY RATE TABLE
-=========================================================*/
-
-const NEXPAK_DELIVERY_RATES = {
-
-    /*---------------------------------------------
-     GAUTENG
-    ---------------------------------------------*/
-
-    "gauteng": {
-
-        standard: 120,
-
-        express: 250
-
-    },
-
-
-    /*---------------------------------------------
-     KWAZULU-NATAL
-    ---------------------------------------------*/
-
-    "kwazulu-natal": {
-
-        standard: 180,
-
-        express: 320
-
-    },
-
-
-    /*---------------------------------------------
-     MPUMALANGA
-    ---------------------------------------------*/
-
-    "mpumalanga": {
-
-        standard: 180,
-
-        express: 320
-
-    },
-
-
-    /*---------------------------------------------
-     NORTH WEST
-    ---------------------------------------------*/
-
-    "north-west": {
-
-        standard: 180,
-
-        express: 320
-
-    },
-
-
-    /*---------------------------------------------
-     FREE STATE
-    ---------------------------------------------*/
-
-    "free-state": {
-
-        standard: 200,
-
-        express: 350
-
-    },
-
-
-    /*---------------------------------------------
-     LIMPOPO
-    ---------------------------------------------*/
-
-    "limpopo": {
-
-        standard: 200,
-
-        express: 350
-
-    },
-
-
-    /*---------------------------------------------
-     EASTERN CAPE
-    ---------------------------------------------*/
-
-    "eastern-cape": {
-
-        standard: 220,
-
-        express: 380
-
-    },
-
-
-    /*---------------------------------------------
-     WESTERN CAPE
-    ---------------------------------------------*/
-
-    "western-cape": {
-
-        standard: 220,
-
-        express: 380
-
-    },
-
-
-    /*---------------------------------------------
-     NORTHERN CAPE
-    ---------------------------------------------*/
-
-    "northern-cape": {
-
-        standard: 250,
-
-        express: 420
-
-    }
-
-};
-
-
-/*=========================================================
- 16. DELIVERY RATE HELPERS
-=========================================================*/
-
-
-/**
- * Get the delivery rates for a province.
- *
- * @param {string} province
- * @returns {object|null}
- */
-
-function getNexpakDeliveryRates(province) {
-
-    if (!province) {
-
-        return null;
-
-    }
-
-
-    const normalizedProvince =
-        String(province)
-            .toLowerCase()
-            .trim();
-
-
-    return (
-        NEXPAK_DELIVERY_RATES[
-            normalizedProvince
-        ] || null
-    );
-
-}
-
-
-/*=========================================================
- 17. NORMALISE PROVINCE
-=========================================================*/
-
-function normalizeNexpakProvince(province) {
-
-    if (!province) {
-
-        return "";
-
-    }
-
-
-    const value =
-        String(province)
-            .toLowerCase()
-            .trim();
-
-
-    const aliases = {
-
-        "gp": "gauteng",
-
-        "gauteng province": "gauteng",
-
-        "wc": "western-cape",
-
-        "western cape": "western-cape",
-
-        "ec": "eastern-cape",
-
-        "eastern cape": "eastern-cape",
-
-        "kzn": "kwazulu-natal",
-
-        "kwazulu natal": "kwazulu-natal",
-
-        "kwa zulu natal": "kwazulu-natal",
-
-        "fs": "free-state",
-
-        "free state": "free-state",
-
-        "lp": "limpopo",
-
-        "mp": "mpumalanga",
-
-        "nw": "north-west",
-
-        "north west": "north-west",
-
-        "nc": "northern-cape",
-
-        "northern cape": "northern-cape"
+        maximumDistance:
+            NEXPAK_ONLINE_DELIVERY_CONFIG
+                .maximumDistance
 
     };
 
-
-    return aliases[value] || value;
-
 }
 
 
-/*=========================================================
- 18. VALIDATE PROVINCE
-=========================================================*/
+/* =========================================================
+   20. EXTEND DELIVERY ENGINE API
+   ========================================================= */
 
-function isValidNexpakProvince(province) {
+if (
+    window.NEXPAK_ONLINE_DELIVERY
+) {
 
-    const normalized =
-        normalizeNexpakProvince(province);
+    window.NEXPAK_ONLINE_DELIVERY.getCart =
+        getNexpakOnlineDeliveryCart;
+
+    window.NEXPAK_ONLINE_DELIVERY.getCartItems =
+        getNexpakOnlineDeliveryCartItems;
+
+    window.NEXPAK_ONLINE_DELIVERY.getKitQuantity =
+        getNexpakOnlineDeliveryKitQuantity;
+
+    window.NEXPAK_ONLINE_DELIVERY.getKitWeight =
+        getNexpakOnlineDeliveryKitWeight;
+
+    window.NEXPAK_ONLINE_DELIVERY.calculateCartWeight =
+        calculateNexpakOnlineDeliveryCartWeight;
+
+    window.NEXPAK_ONLINE_DELIVERY.getDistance =
+        getNexpakOnlineDeliveryDistance;
+
+    window.NEXPAK_ONLINE_DELIVERY.updateDistance =
+        updateNexpakOnlineDeliveryDistance;
+
+    window.NEXPAK_ONLINE_DELIVERY.updateWeight =
+        updateNexpakOnlineDeliveryWeight;
+
+    window.NEXPAK_ONLINE_DELIVERY.getInputSummary =
+        getNexpakOnlineDeliveryInputSummary;
+
+     }
+
+/* =========================================================
+   NEXPAK ONLINE STORE — DELIVERY ENGINE
+   PART 3
+   DELIVERY FEE CALCULATION
+   ========================================================= */
 
 
-    return Boolean(
-        NEXPAK_SA_PROVINCES[normalized]
-    );
+/* =========================================================
+   21. VALIDATE DELIVERY DISTANCE
+   ========================================================= */
 
-}
+function validateNexpakOnlineDeliveryDistance(distance) {
 
-
-/*=========================================================
- 19. ADDRESS VALIDATION
-=========================================================*/
-
-function validateNexpakDeliveryAddress(address) {
-
-    const errors = [];
+    distance =
+        normaliseNexpakOnlineDeliveryNumber(
+            distance
+        );
 
 
-    if (!address || typeof address !== "object") {
+    if (distance < 0) {
 
         return {
 
             valid: false,
 
-            errors: [
-                "A delivery address is required."
-            ]
+            distance: 0,
+
+            error: "Delivery distance cannot be negative."
 
         };
 
     }
 
 
-    /*---------------------------------------------
-     FULL NAME
-    ---------------------------------------------*/
-
     if (
-        !address.fullName ||
-        String(address.fullName).trim().length < 2
+        distance >
+        NEXPAK_ONLINE_DELIVERY_CONFIG.maximumDistance
     ) {
 
-        errors.push(
-            "Please enter the recipient's full name."
-        );
+        return {
 
-    }
+            valid: false,
 
+            distance:
+                NEXPAK_ONLINE_DELIVERY_CONFIG
+                    .maximumDistance,
 
-    /*---------------------------------------------
-     ADDRESS LINE
-    ---------------------------------------------*/
+            error:
+                "Delivery distance exceeds the maximum allowed distance of " +
+                NEXPAK_ONLINE_DELIVERY_CONFIG.maximumDistance +
+                " km."
 
-    if (
-        !address.addressLine1 ||
-        String(address.addressLine1).trim().length < 3
-    ) {
-
-        errors.push(
-            "Please enter a valid street address."
-        );
-
-    }
-
-
-    /*---------------------------------------------
-     CITY
-    ---------------------------------------------*/
-
-    if (
-        !address.city ||
-        String(address.city).trim().length < 2
-    ) {
-
-        errors.push(
-            "Please enter a valid city or town."
-        );
-
-    }
-
-
-    /*---------------------------------------------
-     SUBURB
-    ---------------------------------------------*/
-
-    if (
-        !address.suburb ||
-        String(address.suburb).trim().length < 2
-    ) {
-
-        errors.push(
-            "Please enter a valid suburb."
-        );
-
-    }
-
-
-    /*---------------------------------------------
-     PROVINCE
-    ---------------------------------------------*/
-
-    if (
-        !isValidNexpakProvince(
-            address.province
-        )
-    ) {
-
-        errors.push(
-            "Please select a valid South African province."
-        );
-
-    }
-
-
-    /*---------------------------------------------
-     POSTAL CODE
-    ---------------------------------------------*/
-
-    const postalCode =
-        String(
-            address.postalCode || ""
-        ).trim();
-
-
-    if (
-        !/^\d{4}$/.test(postalCode)
-    ) {
-
-        errors.push(
-            "Please enter a valid 4-digit postal code."
-        );
-
-    }
-
-
-    /*---------------------------------------------
-     PHONE
-    ---------------------------------------------*/
-
-    if (
-        !address.phone ||
-        String(address.phone).trim().length < 8
-    ) {
-
-        errors.push(
-            "Please enter a valid contact number."
-        );
+        };
 
     }
 
 
     return {
 
-        valid: errors.length === 0,
+        valid: true,
 
-        errors: errors
+        distance: distance,
+
+        error: ""
 
     };
 
 }
 
 
-/*=========================================================
- 20. NORMALISE DELIVERY ADDRESS
-=========================================================*/
+/* =========================================================
+   22. CALCULATE DISTANCE CHARGE
+   ========================================================= */
 
-function normalizeNexpakDeliveryAddress(address) {
+function calculateNexpakOnlineDeliveryDistanceCharge(
+    distance
+) {
 
-    if (!address || typeof address !== "object") {
-
-        return null;
-
-    }
-
-
-    const province =
-        normalizeNexpakProvince(
-            address.province
+    distance =
+        normaliseNexpakOnlineDeliveryNumber(
+            distance
         );
 
 
-    return {
+    const charge =
+        distance *
+        NEXPAK_ONLINE_DELIVERY_CONFIG
+            .distanceRate;
 
-        fullName:
-            String(
-                address.fullName || ""
-            ).trim(),
 
-        company:
-            String(
-                address.company || ""
-            ).trim(),
-
-        phone:
-            String(
-                address.phone || ""
-            ).trim(),
-
-        email:
-            String(
-                address.email || ""
-            ).trim(),
-
-        addressLine1:
-            String(
-                address.addressLine1 || ""
-            ).trim(),
-
-        addressLine2:
-            String(
-                address.addressLine2 || ""
-            ).trim(),
-
-        suburb:
-            String(
-                address.suburb || ""
-            ).trim(),
-
-        city:
-            String(
-                address.city || ""
-            ).trim(),
-
-        province: province,
-
-        provinceName:
-            NEXPAK_SA_PROVINCES[province]
-                ? NEXPAK_SA_PROVINCES[province].name
-                : "",
-
-        postalCode:
-            String(
-                address.postalCode || ""
-            ).trim(),
-
-        country:
-            "South Africa"
-
-    };
+    return roundNexpakOnlineDeliveryCurrency(
+        charge
+    );
 
 }
 
 
-/*=========================================================
- 21. SAVE DELIVERY ADDRESS
-=========================================================*/
+/* =========================================================
+   23. CALCULATE WEIGHT CHARGE
+   ========================================================= */
 
-function setNexpakDeliveryAddress(address) {
+function calculateNexpakOnlineDeliveryWeightCharge(
+    weight
+) {
 
-    const normalizedAddress =
-        normalizeNexpakDeliveryAddress(address);
+    weight =
+        normaliseNexpakOnlineDeliveryNumber(
+            weight
+        );
 
+
+    const charge =
+        weight *
+        NEXPAK_ONLINE_DELIVERY_CONFIG
+            .weightRate;
+
+
+    return roundNexpakOnlineDeliveryCurrency(
+        charge
+    );
+
+}
+
+
+/* =========================================================
+   24. CALCULATE RAW DELIVERY FEE
+   ========================================================= */
+
+function calculateNexpakOnlineDeliveryRawFee(
+    distance,
+    weight
+) {
+
+    const baseFee =
+        NEXPAK_ONLINE_DELIVERY_CONFIG
+            .baseFee;
+
+
+    const distanceCharge =
+        calculateNexpakOnlineDeliveryDistanceCharge(
+            distance
+        );
+
+
+    const weightCharge =
+        calculateNexpakOnlineDeliveryWeightCharge(
+            weight
+        );
+
+
+    return roundNexpakOnlineDeliveryCurrency(
+
+        baseFee +
+        distanceCharge +
+        weightCharge
+
+    );
+
+}
+
+
+/* =========================================================
+   25. APPLY MINIMUM DELIVERY FEE
+   ========================================================= */
+
+function applyNexpakOnlineDeliveryMinimum(
+    fee
+) {
+
+    fee =
+        normaliseNexpakOnlineDeliveryNumber(
+            fee
+        );
+
+
+    const minimum =
+        NEXPAK_ONLINE_DELIVERY_CONFIG
+            .minimumFee;
+
+
+    return Math.max(
+        fee,
+        minimum
+    );
+
+}
+
+
+/* =========================================================
+   26. APPLY MAXIMUM DELIVERY FEE
+   ========================================================= */
+
+function applyNexpakOnlineDeliveryMaximum(
+    fee
+) {
+
+    fee =
+        normaliseNexpakOnlineDeliveryNumber(
+            fee
+        );
+
+
+    const maximum =
+        NEXPAK_ONLINE_DELIVERY_CONFIG
+            .maximumFee;
+
+
+    return Math.min(
+        fee,
+        maximum
+    );
+
+}
+
+
+/* =========================================================
+   27. CALCULATE FINAL DELIVERY FEE
+   ========================================================= */
+
+function calculateNexpakOnlineDeliveryFee(
+    distance,
+    weight
+) {
 
     const validation =
-        validateNexpakDeliveryAddress(
-            normalizedAddress
+        validateNexpakOnlineDeliveryDistance(
+            distance
         );
 
 
     if (!validation.valid) {
 
-        nexpakDeliveryState.address = null;
+        NEXPAK_ONLINE_DELIVERY_STATE.isValid =
+            false;
 
-        nexpakDeliveryState.valid = false;
+        NEXPAK_ONLINE_DELIVERY_STATE.error =
+            validation.error;
 
-        nexpakDeliveryState.message =
-            validation.errors.join(" ");
+        NEXPAK_ONLINE_DELIVERY_STATE.distance =
+            validation.distance;
 
-
-        saveNexpakDeliveryState();
-
+        NEXPAK_ONLINE_DELIVERY_STATE.finalFee =
+            0;
 
         return {
 
             success: false,
 
-            valid: false,
+            fee: 0,
 
-            errors: validation.errors
+            distance:
+                validation.distance,
+
+            weight:
+                normaliseNexpakOnlineDeliveryNumber(
+                    weight
+                ),
+
+            error:
+                validation.error
 
         };
 
     }
 
 
-    nexpakDeliveryState.address =
-        normalizedAddress;
+    weight =
+        normaliseNexpakOnlineDeliveryNumber(
+            weight
+        );
 
 
-    nexpakDeliveryState.province =
-        normalizedAddress.province;
+    if (weight < 0) {
+
+        weight = 0;
+
+    }
 
 
-    nexpakDeliveryState.city =
-        normalizedAddress.city;
+    const distanceCharge =
+        calculateNexpakOnlineDeliveryDistanceCharge(
+            validation.distance
+        );
 
 
-    nexpakDeliveryState.suburb =
-        normalizedAddress.suburb;
+    const weightCharge =
+        calculateNexpakOnlineDeliveryWeightCharge(
+            weight
+        );
 
 
-    nexpakDeliveryState.postalCode =
-        normalizedAddress.postalCode;
+    const rawFee =
+        calculateNexpakOnlineDeliveryRawFee(
+            validation.distance,
+            weight
+        );
 
 
-    nexpakDeliveryState.country =
-        normalizedAddress.country;
+    let finalFee =
+        applyNexpakOnlineDeliveryMinimum(
+            rawFee
+        );
 
 
-    nexpakDeliveryState.valid = true;
+    finalFee =
+        applyNexpakOnlineDeliveryMaximum(
+            finalFee
+        );
 
-    nexpakDeliveryState.message = "";
+
+    finalFee =
+        roundNexpakOnlineDeliveryCurrency(
+            finalFee
+        );
 
 
-    saveNexpakDeliveryState();
+    NEXPAK_ONLINE_DELIVERY_STATE.distance =
+        validation.distance;
+
+
+    NEXPAK_ONLINE_DELIVERY_STATE.cartWeight =
+        weight;
+
+
+    NEXPAK_ONLINE_DELIVERY_STATE.distanceCharge =
+        distanceCharge;
+
+
+    NEXPAK_ONLINE_DELIVERY_STATE.weightCharge =
+        weightCharge;
+
+
+    NEXPAK_ONLINE_DELIVERY_STATE.calculatedFee =
+        rawFee;
+
+
+    NEXPAK_ONLINE_DELIVERY_STATE.finalFee =
+        finalFee;
+
+
+    NEXPAK_ONLINE_DELIVERY_STATE.isValid =
+        true;
+
+
+    NEXPAK_ONLINE_DELIVERY_STATE.error =
+        "";
+
+
+    NEXPAK_ONLINE_DELIVERY_STATE.lastUpdated =
+        new Date();
 
 
     return {
 
         success: true,
 
-        valid: true,
+        fee: finalFee,
 
-        address: normalizedAddress,
+        rawFee: rawFee,
 
-        errors: []
+        baseFee:
+            NEXPAK_ONLINE_DELIVERY_CONFIG
+                .baseFee,
+
+        distance:
+            validation.distance,
+
+        distanceCharge:
+            distanceCharge,
+
+        weight:
+            weight,
+
+        weightCharge:
+            weightCharge,
+
+        minimumFee:
+            NEXPAK_ONLINE_DELIVERY_CONFIG
+                .minimumFee,
+
+        maximumFee:
+            NEXPAK_ONLINE_DELIVERY_CONFIG
+                .maximumFee,
+
+        error: ""
 
     };
 
 }
 
 
-/*=========================================================
- 22. CALCULATE DELIVERY FEE
-=========================================================*/
+/* =========================================================
+   28. CALCULATE USING CURRENT STATE
+   ========================================================= */
 
-function calculateNexpakDeliveryFee(
-    province,
-    deliveryType = "standard",
-    orderSubtotal = 0
+function calculateNexpakOnlineDeliveryFromState() {
+
+    const distance =
+        NEXPAK_ONLINE_DELIVERY_STATE.distance;
+
+
+    const weight =
+        calculateNexpakOnlineDeliveryCartWeight();
+
+
+    return calculateNexpakOnlineDeliveryFee(
+        distance,
+        weight
+    );
+
+}
+
+
+/* =========================================================
+   29. EXTEND DELIVERY ENGINE API
+   ========================================================= */
+
+if (
+    window.NEXPAK_ONLINE_DELIVERY
 ) {
 
-    /*---------------------------------------------
-     COLLECTION = FREE
-    ---------------------------------------------*/
-
-    if (
-        nexpakDeliveryState.method ===
-        "collection"
-    ) {
-
-        return 0;
-
-    }
+    window.NEXPAK_ONLINE_DELIVERY
+        .validateDistance =
+        validateNexpakOnlineDeliveryDistance;
 
 
-    const normalizedProvince =
-        normalizeNexpakProvince(province);
+    window.NEXPAK_ONLINE_DELIVERY
+        .calculateDistanceCharge =
+        calculateNexpakOnlineDeliveryDistanceCharge;
 
 
-    const rates =
-        getNexpakDeliveryRates(
-            normalizedProvince
+    window.NEXPAK_ONLINE_DELIVERY
+        .calculateWeightCharge =
+        calculateNexpakOnlineDeliveryWeightCharge;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .calculateRawFee =
+        calculateNexpakOnlineDeliveryRawFee;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .calculateFee =
+        calculateNexpakOnlineDeliveryFee;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .calculateFromState =
+        calculateNexpakOnlineDeliveryFromState;
+
+         }
+/* =========================================================
+   NEXPAK ONLINE STORE — DELIVERY ENGINE
+   PART 4
+   DELIVERY SUMMARY + CHECKOUT INTEGRATION
+   ========================================================= */
+
+
+/* =========================================================
+   30. SET DELIVERY DISTANCE FROM INPUT
+   ========================================================= */
+
+function setNexpakOnlineDeliveryDistanceFromInput(
+    value
+) {
+
+    const distance =
+        normaliseNexpakOnlineDeliveryNumber(
+            value
         );
 
 
-    if (!rates) {
-
-        return 0;
-
-    }
-
-
-    let fee = 0;
-
-
-    if (deliveryType === "express") {
-
-        fee = Number(rates.express || 0);
-
-    } else {
-
-        fee = Number(rates.standard || 0);
-
-    }
-
-
-    /*---------------------------------------------
-     FREE DELIVERY THRESHOLD
-    ---------------------------------------------*/
-
-    const threshold =
-        Number(
-            NEXPAK_DELIVERY_CONFIG
-                .freeDeliveryThreshold || 0
+    const validation =
+        validateNexpakOnlineDeliveryDistance(
+            distance
         );
 
 
-    const subtotal =
-        Number(orderSubtotal || 0);
+    if (!validation.valid) {
+
+        NEXPAK_ONLINE_DELIVERY_STATE.isValid =
+            false;
+
+        NEXPAK_ONLINE_DELIVERY_STATE.error =
+            validation.error;
+
+        NEXPAK_ONLINE_DELIVERY_STATE.distance =
+            validation.distance;
+
+        NEXPAK_ONLINE_DELIVERY_STATE.finalFee =
+            0;
 
 
-    if (
-        threshold > 0 &&
-        subtotal >= threshold
-    ) {
+        return {
 
-        fee = 0;
+            success: false,
+
+            distance:
+                validation.distance,
+
+            error:
+                validation.error
+
+        };
 
     }
 
 
-    return Math.max(
-        0,
-        fee
+    setNexpakOnlineDeliveryDistance(
+        validation.distance
     );
+
+
+    NEXPAK_ONLINE_DELIVERY_STATE.isValid =
+        true;
+
+    NEXPAK_ONLINE_DELIVERY_STATE.error =
+        "";
+
+
+    return {
+
+        success: true,
+
+        distance:
+            validation.distance,
+
+        error: ""
+
+    };
 
 }
 
 
-/*=========================================================
- 23. UPDATE DELIVERY FEE
-=========================================================*/
+/* =========================================================
+   31. REFRESH DELIVERY CALCULATION
+   ========================================================= */
 
-function updateNexpakDeliveryFee(
-    orderSubtotal = 0
-) {
+function refreshNexpakOnlineDelivery() {
 
-    const method =
-        nexpakDeliveryState.method;
+    const distance =
+        getNexpakOnlineDeliveryDistance();
 
 
-    if (method === "collection") {
-
-        nexpakDeliveryState.deliveryFee = 0;
-
-        nexpakDeliveryState.estimatedDelivery =
-            "Ready for collection";
+    const weight =
+        calculateNexpakOnlineDeliveryCartWeight();
 
 
-        saveNexpakDeliveryState();
-
-
-        return 0;
-
-    }
-
-
-    const province =
-        nexpakDeliveryState.province;
-
-
-    const deliveryType =
-        method === "express"
-            ? "express"
-            : "standard";
-
-
-    const fee =
-        calculateNexpakDeliveryFee(
-            province,
-            deliveryType,
-            orderSubtotal
+    const result =
+        calculateNexpakOnlineDeliveryFee(
+            distance,
+            weight
         );
 
 
-    nexpakDeliveryState.deliveryFee =
-        fee;
-
-
-    nexpakDeliveryState.deliveryType =
-        deliveryType;
-
-
-    if (deliveryType === "express") {
-
-        nexpakDeliveryState.estimatedDelivery =
-            "1–2 business days";
-
-    } else {
-
-        nexpakDeliveryState.estimatedDelivery =
-            "2–5 business days";
-
-    }
-
-
-    saveNexpakDeliveryState();
-
-
-    return fee;
+    return result;
 
 }
 
 
-/*=========================================================
- 24. GET CURRENT DELIVERY FEE
-=========================================================*/
+/* =========================================================
+   32. GET DELIVERY FEE
+   ========================================================= */
 
-function getNexpakDeliveryFee() {
+function getNexpakOnlineDeliveryFee() {
 
-    return Number(
-        nexpakDeliveryState.deliveryFee || 0
+    return roundNexpakOnlineDeliveryCurrency(
+
+        NEXPAK_ONLINE_DELIVERY_STATE.finalFee
+
     );
 
 }
 
 
-/*=========================================================
- 25. GET CURRENT DELIVERY METHOD
-=========================================================*/
+/* =========================================================
+   33. BUILD DELIVERY SUMMARY
+   ========================================================= */
 
-function getNexpakDeliveryMethod() {
+function getNexpakOnlineDeliverySummary() {
 
-    return (
-        NEXPAK_DELIVERY_METHODS[
-            nexpakDeliveryState.method
-        ] || null
-    );
-
-}
+    const state =
+        NEXPAK_ONLINE_DELIVERY_STATE;
 
 
-/*=========================================================
- 26. GET CURRENT DELIVERY ZONE
-=========================================================*/
-
-function getNexpakDeliveryZone() {
-
-    return (
-        NEXPAK_DELIVERY_ZONES[
-            nexpakDeliveryState.zone
-        ] || null
-    );
-
-}
+    const config =
+        NEXPAK_ONLINE_DELIVERY_CONFIG;
 
 
-/*=========================================================
- 27. GET AVAILABLE DELIVERY METHODS
-=========================================================*/
+    return {
 
-function getNexpakAvailableDeliveryMethods() {
+        success:
+            state.isValid,
 
-    return Object.values(
-        NEXPAK_DELIVERY_METHODS
-    ).filter(
-        method => method.enabled
-    );
+        distance:
+            roundNexpakOnlineDeliveryCurrency(
+                state.distance
+            ),
 
-}
+        weight:
+            roundNexpakOnlineDeliveryCurrency(
+                state.cartWeight
+            ),
 
+        baseFee:
+            roundNexpakOnlineDeliveryCurrency(
+                config.baseFee
+            ),
 
-/*=========================================================
- 28. EXPORT PART 2 FUNCTIONS
-=========================================================*/
+        distanceRate:
+            config.distanceRate,
 
-window.NEXPAK_SA_PROVINCES =
-    NEXPAK_SA_PROVINCES;
+        weightRate:
+            config.weightRate,
 
-window.NEXPAK_DELIVERY_RATES =
-    NEXPAK_DELIVERY_RATES;
+        distanceCharge:
+            roundNexpakOnlineDeliveryCurrency(
+                state.distanceCharge
+            ),
 
-window.getNexpakDeliveryRates =
-    getNexpakDeliveryRates;
+        weightCharge:
+            roundNexpakOnlineDeliveryCurrency(
+                state.weightCharge
+            ),
 
-window.normalizeNexpakProvince =
-    normalizeNexpakProvince;
+        calculatedFee:
+            roundNexpakOnlineDeliveryCurrency(
+                state.calculatedFee
+            ),
 
-window.isValidNexpakProvince =
-    isValidNexpakProvince;
+        deliveryFee:
+            roundNexpakOnlineDeliveryCurrency(
+                state.finalFee
+            ),
 
-window.validateNexpakDeliveryAddress =
-    validateNexpakDeliveryAddress;
+        minimumFee:
+            config.minimumFee,
 
-window.normalizeNexpakDeliveryAddress =
-    normalizeNexpakDeliveryAddress;
+        maximumFee:
+            config.maximumFee,
 
-window.setNexpakDeliveryAddress =
-    setNexpakDeliveryAddress;
+        maximumDistance:
+            config.maximumDistance,
 
-window.calculateNexpakDeliveryFee =
-    calculateNexpakDeliveryFee;
+        error:
+            state.error || ""
 
-window.updateNexpakDeliveryFee =
-    updateNexpakDeliveryFee;
-
-window.getNexpakDeliveryFee =
-    getNexpakDeliveryFee;
-
-window.getNexpakDeliveryMethod =
-    getNexpakDeliveryMethod;
-
-window.getNexpakDeliveryZone =
-    getNexpakDeliveryZone;
-
-window.getNexpakAvailableDeliveryMethods =
-    getNexpakAvailableDeliveryMethods;
-
-
-/*=========================================================
- END — onlinedelivery.js — PART 2/8
-=========================================================*/
-
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE — DELIVERY ENGINE
- File: onlinedelivery.js
- Version: 1.0
- Part: 3/8
-=========================================================*/
-
-
-/*=========================================================
- 29. DELIVERY UI CONFIGURATION
-=========================================================*/
-
-const NEXPAK_DELIVERY_UI = {
-
-    containerSelectors: [
-        "#delivery-section",
-        "#delivery-options",
-        "#delivery-container",
-        "[data-delivery-container]"
-    ],
-
-    methodSelectors: [
-        "[data-delivery-method]",
-        ".delivery-method",
-        ".delivery-option"
-    ],
-
-    addressSelectors: [
-        "#delivery-address",
-        "#deliveryAddress",
-        "[data-delivery-address]"
-    ],
-
-    feeSelectors: [
-        "#delivery-fee",
-        "#deliveryFee",
-        "[data-delivery-fee]"
-    ],
-
-    estimateSelectors: [
-        "#delivery-estimate",
-        "#deliveryEstimate",
-        "[data-delivery-estimate]"
-    ],
-
-    totalSelectors: [
-        "#order-total",
-        "#orderTotal",
-        "[data-order-total]"
-    ]
-
-};
-
-
-/*=========================================================
- 30. FORMAT CURRENCY
-=========================================================*/
-
-function formatNexpakDeliveryCurrency(amount) {
-
-    const value = Number(amount || 0);
-
-    return (
-        NEXPAK_DELIVERY_CONFIG.currencySymbol +
-        value.toFixed(2)
-    );
+    };
 
 }
 
 
-/*=========================================================
- 31. GET DELIVERY METHOD LABEL
-=========================================================*/
+/* =========================================================
+   34. GET CHECKOUT DELIVERY DATA
+   ========================================================= */
 
-function getNexpakDeliveryMethodLabel(method) {
+function getNexpakOnlineCheckoutDeliveryData() {
 
-    const deliveryMethod =
-        NEXPAK_DELIVERY_METHODS[method];
-
-    if (!deliveryMethod) {
-
-        return "";
-
-    }
-
-    return deliveryMethod.name;
-
-}
+    const summary =
+        getNexpakOnlineDeliverySummary();
 
 
-/*=========================================================
- 32. BUILD DELIVERY METHOD HTML
-=========================================================*/
+    return {
 
-function renderNexpakDeliveryMethods() {
+        deliveryDistance:
+            summary.distance,
 
-    const methods =
-        getNexpakAvailableDeliveryMethods();
+        deliveryWeight:
+            summary.weight,
 
-    if (!methods.length) {
+        deliveryFee:
+            summary.deliveryFee,
 
-        return "";
+        distanceCharge:
+            summary.distanceCharge,
 
-    }
+        weightCharge:
+            summary.weightCharge,
 
+        deliveryValid:
+            summary.success,
 
-    const currentMethod =
-        nexpakDeliveryState.method;
+        deliveryError:
+            summary.error
 
-
-    return methods.map(method => {
-
-        const checked =
-            method.id === currentMethod
-                ? "checked"
-                : "";
-
-
-        let feeText = "FREE";
-
-
-        if (method.id === "delivery") {
-
-            const fee =
-                calculateNexpakDeliveryFee(
-                    nexpakDeliveryState.province,
-                    "standard"
-                );
-
-            feeText =
-                formatNexpakDeliveryCurrency(fee);
-
-        }
-
-
-        if (method.id === "express") {
-
-            const fee =
-                calculateNexpakDeliveryFee(
-                    nexpakDeliveryState.province,
-                    "express"
-                );
-
-            feeText =
-                formatNexpakDeliveryCurrency(fee);
-
-        }
-
-
-        return `
-
-            <label
-                class="nexpak-delivery-option"
-                data-delivery-method="${method.id}"
-            >
-
-                <input
-                    type="radio"
-                    name="nexpakDeliveryMethod"
-                    value="${method.id}"
-                    ${checked}
-                >
-
-                <span class="delivery-option-content">
-
-                    <span class="delivery-option-title">
-                        ${method.name}
-                    </span>
-
-                    <span class="delivery-option-description">
-                        ${method.description}
-                    </span>
-
-                    <span class="delivery-option-estimate">
-                        ${method.estimatedDelivery}
-                    </span>
-
-                    <span class="delivery-option-fee">
-                        ${feeText}
-                    </span>
-
-                </span>
-
-            </label>
-
-        `;
-
-    }).join("");
+    };
 
 }
 
 
-/*=========================================================
- 33. RENDER DELIVERY METHODS INTO CONTAINER
-=========================================================*/
+/* =========================================================
+   35. UPDATE CHECKOUT DELIVERY DATA
+   ========================================================= */
 
-function renderNexpakDeliveryOptions(
-    container = null
-) {
+function updateNexpakOnlineCheckoutDeliveryData() {
 
-    let target = container;
-
-
-    if (!target) {
-
-        for (
-            const selector
-            of NEXPAK_DELIVERY_UI.containerSelectors
-        ) {
-
-            target =
-                document.querySelector(selector);
-
-            if (target) {
-
-                break;
-
-            }
-
-        }
-
-    }
+    const result =
+        refreshNexpakOnlineDelivery();
 
 
-    if (!target) {
-
-        return false;
-
-    }
-
-
-    target.innerHTML =
-        renderNexpakDeliveryMethods();
-
-
-    bindNexpakDeliveryMethodEvents();
-
-
-    return true;
-
-}
-
-
-/*=========================================================
- 34. DELIVERY METHOD EVENT HANDLER
-=========================================================*/
-
-function handleNexpakDeliveryMethodChange(
-    method
-) {
-
-    const changed =
-        setNexpakDeliveryMethod(method);
-
-
-    if (!changed) {
-
-        return false;
-
-    }
-
-
-    updateNexpakDeliveryInterface();
+    const deliveryData =
+        getNexpakOnlineCheckoutDeliveryData();
 
 
     /*
-     * Notify checkout and other store modules.
+     * Do not overwrite the checkout engine.
+     *
+     * We only expose the latest delivery information
+     * so onlinecheckout.js can consume it.
      */
 
-    dispatchNexpakDeliveryEvent(
-        "nexpak:delivery-method-changed",
-        {
-            method:
-                nexpakDeliveryState.method,
+    if (
+        window.NEXPAK_ONLINE_CHECKOUT &&
+        typeof window.NEXPAK_ONLINE_CHECKOUT === "object"
+    ) {
 
-            deliveryFee:
-                nexpakDeliveryState.deliveryFee,
+        window.NEXPAK_ONLINE_CHECKOUT.delivery =
+            deliveryData;
 
-            deliveryType:
-                nexpakDeliveryState.deliveryType
-        }
-    );
+    }
 
 
-    return true;
+    return {
+
+        result:
+            result,
+
+        delivery:
+            deliveryData
+
+    };
 
 }
 
 
-/*=========================================================
- 35. BIND DELIVERY METHOD EVENTS
-=========================================================*/
+/* =========================================================
+   36. DELIVERY DISPLAY DATA
+   ========================================================= */
 
-function bindNexpakDeliveryMethodEvents() {
+function getNexpakOnlineDeliveryDisplayData() {
 
-    const radios =
-        document.querySelectorAll(
-            'input[name="nexpakDeliveryMethod"]'
-        );
+    const summary =
+        getNexpakOnlineDeliverySummary();
 
 
-    radios.forEach(radio => {
+    return {
 
-        /*
-         * Prevent duplicate listeners.
-         */
+        distanceText:
+            summary.distance.toFixed(2) +
+            " km",
 
-        if (
-            radio.dataset.nexpakBound === "true"
-        ) {
+        weightText:
+            summary.weight.toFixed(2) +
+            " kg",
 
-            return;
+        distanceChargeText:
+            "R " +
+            summary.distanceCharge
+                .toFixed(2),
+
+        weightChargeText:
+            "R " +
+            summary.weightCharge
+                .toFixed(2),
+
+        deliveryFeeText:
+            "R " +
+            summary.deliveryFee
+                .toFixed(2),
+
+        errorText:
+            summary.error || ""
+
+    };
+
+}
+
+
+/* =========================================================
+   37. EXTEND DELIVERY ENGINE API
+   ========================================================= */
+
+if (
+    window.NEXPAK_ONLINE_DELIVERY
+) {
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .setDistanceFromInput =
+        setNexpakOnlineDeliveryDistanceFromInput;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .refresh =
+        refreshNexpakOnlineDelivery;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .getFee =
+        getNexpakOnlineDeliveryFee;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .getSummary =
+        getNexpakOnlineDeliverySummary;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .getCheckoutData =
+        getNexpakOnlineCheckoutDeliveryData;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .updateCheckout =
+        updateNexpakOnlineCheckoutDeliveryData;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .getDisplayData =
+        getNexpakOnlineDeliveryDisplayData;
+
+}
+
+/* =========================================================
+   NEXPAK ONLINE STORE — DELIVERY ENGINE
+   PART 5
+   DOM ELEMENTS + DELIVERY SUMMARY RENDERING
+   ========================================================= */
+
+
+/* =========================================================
+   38. FIND DELIVERY ELEMENT
+   ========================================================= */
+
+function findNexpakOnlineDeliveryElement(
+    selectors
+) {
+
+    if (!Array.isArray(selectors)) {
+
+        return null;
+
+    }
+
+
+    for (
+        let i = 0;
+        i < selectors.length;
+        i++
+    ) {
+
+        const selector =
+            selectors[i];
+
+
+        if (!selector) {
+
+            continue;
 
         }
 
 
-        radio.addEventListener(
-            "change",
-            function () {
+        try {
 
-                if (!this.checked) {
-
-                    return;
-
-                }
-
-
-                handleNexpakDeliveryMethodChange(
-                    this.value
+            const element =
+                document.querySelector(
+                    selector
                 );
 
-            }
-        );
 
+            if (element) {
 
-        radio.dataset.nexpakBound = "true";
-
-    });
-
-
-    /*
-     * Also support custom delivery buttons.
-     */
-
-    document
-        .querySelectorAll(
-            "[data-delivery-method]"
-        )
-        .forEach(element => {
-
-            if (
-                element.tagName === "INPUT"
-            ) {
-
-                return;
+                return element;
 
             }
 
+        } catch (error) {
 
-            if (
-                element.dataset.nexpakBound === "true"
-            ) {
-
-                return;
-
-            }
-
-
-            element.addEventListener(
-                "click",
-                function () {
-
-                    const method =
-                        this.dataset.deliveryMethod;
-
-
-                    handleNexpakDeliveryMethodChange(
-                        method
-                    );
-
-                }
+            console.warn(
+                "NEXPAK Online Delivery: Invalid selector:",
+                selector
             );
-
-
-            element.dataset.nexpakBound = "true";
-
-        });
-
-}
-
-
-/*=========================================================
- 36. DELIVERY ADDRESS FORM
-=========================================================*/
-
-function getNexpakDeliveryAddressForm() {
-
-    const selectors = [
-
-        "#delivery-form",
-
-        "#deliveryForm",
-
-        "#shipping-form",
-
-        "#shippingForm",
-
-        "[data-delivery-form]"
-
-    ];
-
-
-    for (const selector of selectors) {
-
-        const form =
-            document.querySelector(selector);
-
-
-        if (form) {
-
-            return form;
 
         }
 
@@ -1978,247 +1462,74 @@ function getNexpakDeliveryAddressForm() {
 }
 
 
-/*=========================================================
- 37. READ ADDRESS FROM FORM
-=========================================================*/
+/* =========================================================
+   39. DELIVERY DISTANCE INPUT
+   ========================================================= */
 
-function readNexpakDeliveryAddressForm(
-    form = null
-) {
+function getNexpakOnlineDeliveryDistanceInput() {
 
-    const target =
-        form || getNexpakDeliveryAddressForm();
+    return findNexpakOnlineDeliveryElement([
 
+        "#deliveryDistance",
 
-    if (!target) {
+        "#delivery-distance",
 
-        return null;
+        "[name='deliveryDistance']",
 
-    }
+        "[name='delivery-distance']",
 
+        ".delivery-distance-input"
 
-    const getValue = (
-        selectors
-    ) => {
-
-        for (
-            const selector
-            of selectors
-        ) {
-
-            const field =
-                target.querySelector(selector);
-
-
-            if (field) {
-
-                return String(
-                    field.value || ""
-                ).trim();
-
-            }
-
-        }
-
-
-        return "";
-
-    };
-
-
-    return {
-
-        fullName:
-            getValue([
-                '[name="fullName"]',
-                '[name="full_name"]',
-                "#fullName"
-            ]),
-
-        company:
-            getValue([
-                '[name="company"]',
-                "#company"
-            ]),
-
-        phone:
-            getValue([
-                '[name="phone"]',
-                '[name="telephone"]',
-                "#phone"
-            ]),
-
-        email:
-            getValue([
-                '[name="email"]',
-                "#email"
-            ]),
-
-        addressLine1:
-            getValue([
-                '[name="addressLine1"]',
-                '[name="address1"]',
-                '[name="street"]',
-                "#addressLine1"
-            ]),
-
-        addressLine2:
-            getValue([
-                '[name="addressLine2"]',
-                '[name="address2"]',
-                "#addressLine2"
-            ]),
-
-        suburb:
-            getValue([
-                '[name="suburb"]',
-                '[name="suburbTown"]',
-                "#suburb"
-            ]),
-
-        city:
-            getValue([
-                '[name="city"]',
-                '[name="town"]',
-                "#city"
-            ]),
-
-        province:
-            getValue([
-                '[name="province"]',
-                '[name="state"]',
-                "#province"
-            ]),
-
-        postalCode:
-            getValue([
-                '[name="postalCode"]',
-                '[name="postal_code"]',
-                '[name="zip"]',
-                "#postalCode"
-            ])
-
-    };
+    ]);
 
 }
 
 
-/*=========================================================
- 38. SAVE ADDRESS FROM FORM
-=========================================================*/
+/* =========================================================
+   40. DELIVERY SUMMARY CONTAINER
+   ========================================================= */
 
-function saveNexpakDeliveryAddressFromForm(
-    form = null
-) {
+function getNexpakOnlineDeliverySummaryContainer() {
 
-    const address =
-        readNexpakDeliveryAddressForm(form);
+    return findNexpakOnlineDeliveryElement([
 
+        "#deliverySummary",
 
-    if (!address) {
+        "#delivery-summary",
 
-        return {
+        ".delivery-summary",
 
-            success: false,
+        "[data-delivery-summary]"
 
-            valid: false,
-
-            errors: [
-                "Delivery address form could not be found."
-            ]
-
-        };
-
-    }
-
-
-    const result =
-        setNexpakDeliveryAddress(address);
-
-
-    if (!result.success) {
-
-        displayNexpakDeliveryErrors(
-            result.errors
-        );
-
-
-        return result;
-
-    }
-
-
-    clearNexpakDeliveryErrors();
-
-
-    updateNexpakDeliveryInterface();
-
-
-    dispatchNexpakDeliveryEvent(
-        "nexpak:delivery-address-saved",
-        {
-            address:
-                result.address
-        }
-    );
-
-
-    return result;
+    ]);
 
 }
 
 
-/*=========================================================
- 39. DISPLAY DELIVERY ERRORS
-=========================================================*/
+/* =========================================================
+   41. SET DELIVERY TEXT
+   ========================================================= */
 
-function displayNexpakDeliveryErrors(
-    errors = []
+function setNexpakOnlineDeliveryText(
+    selectors,
+    value
 ) {
 
-    let container =
-        document.querySelector(
-            "#delivery-errors"
+    const element =
+        findNexpakOnlineDeliveryElement(
+            selectors
         );
 
 
-    if (!container) {
-
-        container =
-            document.querySelector(
-                "[data-delivery-errors]"
-            );
-
-    }
-
-
-    if (!container) {
+    if (!element) {
 
         return false;
 
     }
 
 
-    if (!Array.isArray(errors)) {
-
-        errors = [String(errors)];
-
-    }
-
-
-    container.innerHTML =
-        errors
-            .filter(Boolean)
-            .map(error => `
-                <div class="delivery-error">
-                    ${escapeNexpakDeliveryHTML(error)}
-                </div>
-            `)
-            .join("");
-
-
-    container.hidden =
-        errors.length === 0;
+    element.textContent =
+        value;
 
 
     return true;
@@ -2226,359 +1537,472 @@ function displayNexpakDeliveryErrors(
 }
 
 
-/*=========================================================
- 40. CLEAR DELIVERY ERRORS
-=========================================================*/
+/* =========================================================
+   42. FORMAT RAND
+   ========================================================= */
 
-function clearNexpakDeliveryErrors() {
+function formatNexpakOnlineDeliveryRand(
+    value
+) {
 
-    const containers = [
-
-        document.querySelector(
-            "#delivery-errors"
-        ),
-
-        document.querySelector(
-            "[data-delivery-errors]"
-        )
-
-    ].filter(Boolean);
-
-
-    containers.forEach(container => {
-
-        container.innerHTML = "";
-
-        container.hidden = true;
-
-    });
-
-}
-
-
-/*=========================================================
- 41. ESCAPE HTML
-=========================================================*/
-
-function escapeNexpakDeliveryHTML(value) {
-
-    return String(value || "")
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
+    value =
+        normaliseNexpakOnlineDeliveryNumber(
+            value
         );
 
-}
 
-
-/*=========================================================
- 42. UPDATE DELIVERY FEE DISPLAY
-=========================================================*/
-
-function updateNexpakDeliveryFeeDisplay() {
-
-    const fee =
-        getNexpakDeliveryFee();
-
-
-    const formattedFee =
-        formatNexpakDeliveryCurrency(fee);
-
-
-    NEXPAK_DELIVERY_UI
-        .feeSelectors
-        .forEach(selector => {
-
-            document
-                .querySelectorAll(selector)
-                .forEach(element => {
-
-                    element.textContent =
-                        formattedFee;
-
-                });
-
-        });
-
-
-    return formattedFee;
+    return (
+        "R " +
+        value.toFixed(2)
+    );
 
 }
 
 
-/*=========================================================
- 43. UPDATE DELIVERY ESTIMATE DISPLAY
-=========================================================*/
+/* =========================================================
+   43. RENDER DELIVERY SUMMARY
+   ========================================================= */
 
-function updateNexpakDeliveryEstimateDisplay() {
+function renderNexpakOnlineDeliverySummary() {
 
-    const estimate =
-        nexpakDeliveryState
-            .estimatedDelivery;
-
-
-    NEXPAK_DELIVERY_UI
-        .estimateSelectors
-        .forEach(selector => {
-
-            document
-                .querySelectorAll(selector)
-                .forEach(element => {
-
-                    element.textContent =
-                        estimate;
-
-                });
-
-        });
+    const summary =
+        getNexpakOnlineDeliverySummary();
 
 
-    return estimate;
-
-}
-
-
-/*=========================================================
- 44. GET ORDER SUBTOTAL
-=========================================================*/
-
-function getNexpakOrderSubtotal() {
-
-    /*
-     * Try common cart/checkout values first.
-     */
-
-    const selectors = [
-
-        "#order-subtotal",
-
-        "#orderSubtotal",
-
-        "#cart-subtotal",
-
-        "#cartSubtotal",
-
-        "[data-order-subtotal]",
-
-        "[data-cart-subtotal]"
-
-    ];
-
-
-    for (const selector of selectors) {
-
-        const element =
-            document.querySelector(selector);
-
-
-        if (element) {
-
-            const raw =
-                element.dataset.value ||
-                element.value ||
-                element.textContent ||
-                "";
-
-
-            const numeric =
-                parseFloat(
-                    String(raw)
-                        .replace(
-                            /[^0-9.-]/g,
-                            ""
-                        )
-                );
-
-
-            if (!Number.isNaN(numeric)) {
-
-                return numeric;
-
-            }
-
-        }
-
-    }
+    const display =
+        getNexpakOnlineDeliveryDisplayData();
 
 
     /*
-     * Fall back to cart engine if available.
+     * Update individual fields when they exist.
+     * This makes the delivery engine tolerant of
+     * different checkout HTML layouts.
      */
 
-    try {
-
-        if (
-            typeof window.getCartSubtotal ===
-            "function"
-        ) {
-
-            return Number(
-                window.getCartSubtotal() || 0
-            );
-
-        }
-
-
-        if (
-            typeof window.getNexpakCartSubtotal ===
-            "function"
-        ) {
-
-            return Number(
-                window.getNexpakCartSubtotal() || 0
-            );
-
-        }
-
-    } catch (error) {
-
-        console.warn(
-            "NEXPAK Delivery: Unable to read cart subtotal.",
-            error
-        );
-
-    }
-
-
-    return 0;
-
-}
-
-
-/*=========================================================
- 45. UPDATE DELIVERY INTERFACE
-=========================================================*/
-
-function updateNexpakDeliveryInterface() {
-
-    const subtotal =
-        getNexpakOrderSubtotal();
-
-
-    updateNexpakDeliveryFee(
-        subtotal
+    setNexpakOnlineDeliveryText(
+        [
+            "#deliveryDistanceValue",
+            "#delivery-distance-value",
+            "[data-delivery-distance]"
+        ],
+        display.distanceText
     );
 
 
-    updateNexpakDeliveryFeeDisplay();
+    setNexpakOnlineDeliveryText(
+        [
+            "#deliveryWeightValue",
+            "#delivery-weight-value",
+            "[data-delivery-weight]"
+        ],
+        display.weightText
+    );
 
-    updateNexpakDeliveryEstimateDisplay();
+
+    setNexpakOnlineDeliveryText(
+        [
+            "#deliveryDistanceCharge",
+            "#delivery-distance-charge",
+            "[data-delivery-distance-charge]"
+        ],
+        display.distanceChargeText
+    );
+
+
+    setNexpakOnlineDeliveryText(
+        [
+            "#deliveryWeightCharge",
+            "#delivery-weight-charge",
+            "[data-delivery-weight-charge]"
+        ],
+        display.weightChargeText
+    );
+
+
+    setNexpakOnlineDeliveryText(
+        [
+            "#deliveryFee",
+            "#delivery-fee",
+            "#deliveryFeeValue",
+            "#delivery-fee-value",
+            "[data-delivery-fee]"
+        ],
+        display.deliveryFeeText
+    );
+
+
+    setNexpakOnlineDeliveryText(
+        [
+            "#deliveryError",
+            "#delivery-error",
+            "[data-delivery-error]"
+        ],
+        display.errorText
+    );
 
 
     /*
-     * Refresh method prices when province
-     * or delivery method changes.
+     * Optional summary container.
      */
 
     const container =
-        document.querySelector(
-            "#delivery-options"
-        );
+        getNexpakOnlineDeliverySummaryContainer();
 
 
     if (container) {
 
-        renderNexpakDeliveryOptions(
-            container
-        );
+        container.dataset.distance =
+            String(summary.distance);
+
+
+        container.dataset.weight =
+            String(summary.weight);
+
+
+        container.dataset.deliveryFee =
+            String(summary.deliveryFee);
+
+
+        container.dataset.valid =
+            String(summary.success);
+
+
+        if (summary.success) {
+
+            container.classList.remove(
+                "delivery-error"
+            );
+
+            container.classList.add(
+                "delivery-valid"
+            );
+
+        } else {
+
+            container.classList.remove(
+                "delivery-valid"
+            );
+
+            container.classList.add(
+                "delivery-error"
+            );
+
+        }
 
     }
 
 
-    return {
-
-        method:
-            nexpakDeliveryState.method,
-
-        deliveryFee:
-            nexpakDeliveryState.deliveryFee,
-
-        deliveryType:
-            nexpakDeliveryState.deliveryType,
-
-        estimatedDelivery:
-            nexpakDeliveryState.estimatedDelivery
-
-    };
+    return summary;
 
 }
 
 
-/*=========================================================
- 46. CUSTOM DELIVERY EVENT DISPATCHER
-=========================================================*/
+/* =========================================================
+   44. RENDER DELIVERY ERROR
+   ========================================================= */
 
-function dispatchNexpakDeliveryEvent(
-    eventName,
-    detail = {}
+function renderNexpakOnlineDeliveryError(
+    message
 ) {
+
+    const errorElement =
+        findNexpakOnlineDeliveryElement([
+
+            "#deliveryError",
+
+            "#delivery-error",
+
+            "[data-delivery-error]"
+
+        ]);
+
+
+    if (!errorElement) {
+
+        return false;
+
+    }
+
+
+    errorElement.textContent =
+        message || "";
+
+
+    if (message) {
+
+        errorElement.hidden =
+            false;
+
+    } else {
+
+        errorElement.hidden =
+            true;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   45. CLEAR DELIVERY ERROR
+   ========================================================= */
+
+function clearNexpakOnlineDeliveryError() {
+
+    return renderNexpakOnlineDeliveryError(
+        ""
+    );
+
+}
+
+
+/* =========================================================
+   46. RENDER DELIVERY FEE ONLY
+   ========================================================= */
+
+function renderNexpakOnlineDeliveryFee() {
+
+    const fee =
+        getNexpakOnlineDeliveryFee();
+
+
+    const formattedFee =
+        formatNexpakOnlineDeliveryRand(
+            fee
+        );
+
+
+    setNexpakOnlineDeliveryText(
+
+        [
+            "#deliveryFee",
+            "#delivery-fee",
+            "#deliveryFeeValue",
+            "#delivery-fee-value",
+            "[data-delivery-fee]"
+        ],
+
+        formattedFee
+
+    );
+
+
+    return fee;
+
+}
+
+
+/* =========================================================
+   47. REFRESH DELIVERY DISPLAY
+   ========================================================= */
+
+function refreshNexpakOnlineDeliveryDisplay() {
+
+    const result =
+        refreshNexpakOnlineDelivery();
+
+
+    renderNexpakOnlineDeliverySummary();
+
+
+    if (!result.success) {
+
+        renderNexpakOnlineDeliveryError(
+            result.error
+        );
+
+    } else {
+
+        clearNexpakOnlineDeliveryError();
+
+    }
+
+
+    return result;
+
+}
+
+
+/* =========================================================
+   48. EXTEND DELIVERY ENGINE API
+   ========================================================= */
+
+if (
+    window.NEXPAK_ONLINE_DELIVERY
+) {
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .findElement =
+        findNexpakOnlineDeliveryElement;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .getDistanceInput =
+        getNexpakOnlineDeliveryDistanceInput;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .getSummaryContainer =
+        getNexpakOnlineDeliverySummaryContainer;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .formatRand =
+        formatNexpakOnlineDeliveryRand;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .renderSummary =
+        renderNexpakOnlineDeliverySummary;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .renderError =
+        renderNexpakOnlineDeliveryError;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .clearError =
+        clearNexpakOnlineDeliveryError;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .renderFee =
+        renderNexpakOnlineDeliveryFee;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .refreshDisplay =
+        refreshNexpakOnlineDeliveryDisplay;
+
+}
+
+/* =========================================================
+   NEXPAK ONLINE STORE — DELIVERY ENGINE
+   PART 6
+   DISTANCE INPUT + AUTO RECALCULATION
+   + CHECKOUT TOTAL INTEGRATION
+   ========================================================= */
+
+
+/* =========================================================
+   49. HANDLE DISTANCE INPUT
+   ========================================================= */
+
+function handleNexpakOnlineDeliveryDistanceInput(
+    event
+) {
+
+    if (!event || !event.target) {
+
+        return;
+
+    }
+
+
+    const value =
+        event.target.value;
+
+
+    const result =
+        setNexpakOnlineDeliveryDistanceFromInput(
+            value
+        );
+
+
+    if (!result.success) {
+
+        renderNexpakOnlineDeliveryError(
+            result.error
+        );
+
+    } else {
+
+        clearNexpakOnlineDeliveryError();
+
+    }
+
+
+    refreshNexpakOnlineDeliveryDisplay();
+
+
+    updateNexpakOnlineCheckoutDeliveryData();
+
+
+    /*
+     * Notify any other Online Store engine that
+     * delivery information has changed.
+     */
 
     try {
 
-        const event =
+        window.dispatchEvent(
             new CustomEvent(
-                eventName,
+                "nexpak:online-delivery-updated",
                 {
-                    detail: detail
+                    detail:
+                        getNexpakOnlineDeliverySummary()
                 }
-            );
-
-
-        document.dispatchEvent(event);
-
-
-        return true;
+            )
+        );
 
     } catch (error) {
 
         console.warn(
-            "NEXPAK Delivery: Event dispatch failed.",
+            "NEXPAK Online Delivery: Could not dispatch update event.",
             error
         );
-
-
-        return false;
 
     }
 
 }
 
 
-/*=========================================================
- 47. DELIVERY FORM SUBMISSION
-=========================================================*/
+/* =========================================================
+   50. HANDLE DISTANCE CHANGE
+   ========================================================= */
 
-function bindNexpakDeliveryForm() {
+function handleNexpakOnlineDeliveryDistanceChange(
+    event
+) {
 
-    const form =
-        getNexpakDeliveryAddressForm();
+    handleNexpakOnlineDeliveryDistanceInput(
+        event
+    );
+
+}
 
 
-    if (!form) {
+/* =========================================================
+   51. BIND DISTANCE INPUT
+   ========================================================= */
+
+function bindNexpakOnlineDeliveryDistanceInput() {
+
+    const input =
+        getNexpakOnlineDeliveryDistanceInput();
+
+
+    if (!input) {
+
+        console.warn(
+            "NEXPAK Online Delivery: Distance input not found."
+        );
 
         return false;
 
     }
 
 
+    /*
+     * Prevent duplicate event bindings.
+     */
+
     if (
-        form.dataset.nexpakDeliveryBound ===
+        input.dataset.nexpakDeliveryBound ===
         "true"
     ) {
 
@@ -2587,39 +2011,19 @@ function bindNexpakDeliveryForm() {
     }
 
 
-    form.addEventListener(
-        "submit",
-        function(event) {
-
-            event.preventDefault();
-
-
-            const result =
-                saveNexpakDeliveryAddressFromForm(
-                    form
-                );
-
-
-            if (!result.success) {
-
-                return;
-
-            }
-
-
-            dispatchNexpakDeliveryEvent(
-                "nexpak:delivery-form-complete",
-                {
-                    address:
-                        result.address
-                }
-            );
-
-        }
+    input.addEventListener(
+        "input",
+        handleNexpakOnlineDeliveryDistanceInput
     );
 
 
-    form.dataset.nexpakDeliveryBound =
+    input.addEventListener(
+        "change",
+        handleNexpakOnlineDeliveryDistanceChange
+    );
+
+
+    input.dataset.nexpakDeliveryBound =
         "true";
 
 
@@ -2628,1577 +2032,87 @@ function bindNexpakDeliveryForm() {
 }
 
 
-/*=========================================================
- 48. EXPORT PART 3 FUNCTIONS
-=========================================================*/
+/* =========================================================
+   52. SET INITIAL DISTANCE
+   ========================================================= */
 
-window.NEXPAK_DELIVERY_UI =
-    NEXPAK_DELIVERY_UI;
+function initialiseNexpakOnlineDeliveryDistance() {
 
-window.formatNexpakDeliveryCurrency =
-    formatNexpakDeliveryCurrency;
-
-window.getNexpakDeliveryMethodLabel =
-    getNexpakDeliveryMethodLabel;
-
-window.renderNexpakDeliveryMethods =
-    renderNexpakDeliveryMethods;
-
-window.renderNexpakDeliveryOptions =
-    renderNexpakDeliveryOptions;
-
-window.handleNexpakDeliveryMethodChange =
-    handleNexpakDeliveryMethodChange;
-
-window.bindNexpakDeliveryMethodEvents =
-    bindNexpakDeliveryMethodEvents;
-
-window.getNexpakDeliveryAddressForm =
-    getNexpakDeliveryAddressForm;
-
-window.readNexpakDeliveryAddressForm =
-    readNexpakDeliveryAddressForm;
-
-window.saveNexpakDeliveryAddressFromForm =
-    saveNexpakDeliveryAddressFromForm;
-
-window.displayNexpakDeliveryErrors =
-    displayNexpakDeliveryErrors;
-
-window.clearNexpakDeliveryErrors =
-    clearNexpakDeliveryErrors;
-
-window.updateNexpakDeliveryFeeDisplay =
-    updateNexpakDeliveryFeeDisplay;
-
-window.updateNexpakDeliveryEstimateDisplay =
-    updateNexpakDeliveryEstimateDisplay;
-
-window.getNexpakOrderSubtotal =
-    getNexpakOrderSubtotal;
-
-window.updateNexpakDeliveryInterface =
-    updateNexpakDeliveryInterface;
-
-window.dispatchNexpakDeliveryEvent =
-    dispatchNexpakDeliveryEvent;
-
-window.bindNexpakDeliveryForm =
-    bindNexpakDeliveryForm;
+    const input =
+        getNexpakOnlineDeliveryDistanceInput();
 
 
-/*=========================================================
- END — onlinedelivery.js — PART 3/8
-=========================================================*/
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE — DELIVERY ENGINE
- File: onlinedelivery.js
- Version: 1.0
- Part: 4/8
-=========================================================*/
+    if (!input) {
 
-
-/*=========================================================
- 49. CHECKOUT INTEGRATION CONFIGURATION
-=========================================================*/
-
-const NEXPAK_DELIVERY_CHECKOUT = {
-
-    checkoutSelectors: [
-        "#checkout",
-        "#checkout-form",
-        "#checkoutForm",
-        "[data-checkout]"
-    ],
-
-    subtotalSelectors: [
-        "#subtotal",
-        "#order-subtotal",
-        "#orderSubtotal",
-        "[data-subtotal]"
-    ],
-
-    deliverySelectors: [
-        "#delivery-fee",
-        "#deliveryFee",
-        "[data-delivery-fee]"
-    ],
-
-    totalSelectors: [
-        "#total",
-        "#order-total",
-        "#orderTotal",
-        "[data-order-total]"
-    ],
-
-    methodSelectors: [
-        "#delivery-method",
-        "#deliveryMethod",
-        "[data-delivery-method]"
-    ]
-
-};
-
-
-/*=========================================================
- 50. GET CHECKOUT CART DATA
-=========================================================*/
-
-function getNexpakCheckoutCart() {
-
-    const possibleFunctions = [
-
-        "getCart",
-
-        "getCartItems",
-
-        "getNexpakCart",
-
-        "getNexpakCartItems",
-
-        "getCheckoutCart",
-
-        "getNexpakCheckoutCart"
-
-    ];
-
-
-    for (
-        const functionName
-        of possibleFunctions
-    ) {
-
-        try {
-
-            if (
-                typeof window[functionName] ===
-                "function"
-            ) {
-
-                const result =
-                    window[functionName]();
-
-
-                if (Array.isArray(result)) {
-
-                    return result;
-
-                }
-
-
-                if (
-                    result &&
-                    Array.isArray(result.items)
-                ) {
-
-                    return result.items;
-
-                }
-
-            }
-
-        } catch (error) {
-
-            console.warn(
-                "NEXPAK Delivery: Cart lookup failed:",
-                functionName,
-                error
-            );
-
-        }
+        return false;
 
     }
 
 
-    return [];
-
-}
-
-
-/*=========================================================
- 51. CALCULATE CART SUBTOTAL
-=========================================================*/
-
-function calculateNexpakCheckoutSubtotal(
-    items = null
-) {
-
-    const cartItems =
-        items || getNexpakCheckoutCart();
-
-
-    if (!Array.isArray(cartItems)) {
-
-        return 0;
-
-    }
-
-
-    let subtotal = 0;
-
-
-    cartItems.forEach(item => {
-
-        if (!item) {
-
-            return;
-
-        }
-
-
-        const quantity =
-            Number(
-                item.quantity ||
-                item.qty ||
-                1
-            );
-
-
-        const price =
-            Number(
-                item.price ||
-                item.salePrice ||
-                item.unitPrice ||
-                0
-            );
-
-
-        if (
-            Number.isFinite(quantity) &&
-            Number.isFinite(price)
-        ) {
-
-            subtotal +=
-                price *
-                Math.max(
-                    0,
-                    quantity
-                );
-
-        }
-
-    });
-
-
-    return Number(
-        subtotal.toFixed(2)
-    );
-
-}
-
-
-/*=========================================================
- 52. GET ACTIVE SUBTOTAL
-=========================================================*/
-
-function getNexpakActiveCheckoutSubtotal() {
-
-    const calculated =
-        calculateNexpakCheckoutSubtotal();
-
-
-    if (calculated > 0) {
-
-        return calculated;
-
-    }
-
-
-    return getNexpakOrderSubtotal();
-
-}
-
-
-/*=========================================================
- 53. CALCULATE CHECKOUT TOTAL
-=========================================================*/
-
-function calculateNexpakCheckoutTotal(
-    subtotal = null
-) {
-
-    const orderSubtotal =
-        subtotal === null
-            ? getNexpakActiveCheckoutSubtotal()
-            : Number(subtotal || 0);
-
-
-    const deliveryFee =
-        Number(
-            nexpakDeliveryState.deliveryFee ||
-            0
-        );
-
-
-    return Number(
-        (
-            orderSubtotal +
-            deliveryFee
-        ).toFixed(2)
-    );
-
-}
-
-
-/*=========================================================
- 54. UPDATE CHECKOUT TOTAL DISPLAY
-=========================================================*/
-
-function updateNexpakCheckoutTotalDisplay() {
-
-    const subtotal =
-        getNexpakActiveCheckoutSubtotal();
-
-
-    const deliveryFee =
-        updateNexpakDeliveryFee(
-            subtotal
-        );
-
-
-    const total =
-        calculateNexpakCheckoutTotal(
-            subtotal
-        );
-
-
-    /*
-     * Update subtotal displays.
-     */
-
-    NEXPAK_DELIVERY_CHECKOUT
-        .subtotalSelectors
-        .forEach(selector => {
-
-            document
-                .querySelectorAll(selector)
-                .forEach(element => {
-
-                    element.textContent =
-                        formatNexpakDeliveryCurrency(
-                            subtotal
-                        );
-
-                });
-
-        });
-
-
-    /*
-     * Update delivery displays.
-     */
-
-    NEXPAK_DELIVERY_CHECKOUT
-        .deliverySelectors
-        .forEach(selector => {
-
-            document
-                .querySelectorAll(selector)
-                .forEach(element => {
-
-                    element.textContent =
-                        formatNexpakDeliveryCurrency(
-                            deliveryFee
-                        );
-
-                });
-
-        });
-
-
-    /*
-     * Update total displays.
-     */
-
-    NEXPAK_DELIVERY_CHECKOUT
-        .totalSelectors
-        .forEach(selector => {
-
-            document
-                .querySelectorAll(selector)
-                .forEach(element => {
-
-                    element.textContent =
-                        formatNexpakDeliveryCurrency(
-                            total
-                        );
-
-                    /*
-                     * Keep raw value available
-                     * for checkout scripts.
-                     */
-
-                    element.dataset.value =
-                        total.toFixed(2);
-
-                });
-
-        });
-
-
-    return {
-
-        subtotal: subtotal,
-
-        deliveryFee: deliveryFee,
-
-        total: total
-
-    };
-
-}
-
-
-/*=========================================================
- 55. DELIVERY / COLLECTION SWITCH
-=========================================================*/
-
-function switchNexpakFulfilmentMethod(
-    method
-) {
-
-    const validMethods = [
-
-        "delivery",
-
-        "express",
-
-        "collection"
-
-    ];
+    let distance =
+        input.value;
 
 
     if (
-        !validMethods.includes(method)
+        distance ===
+        ""
     ) {
 
-        return {
-
-            success: false,
-
-            message:
-                "Invalid fulfilment method."
-
-        };
+        distance = 0;
 
     }
 
-
-    const success =
-        setNexpakDeliveryMethod(method);
-
-
-    if (!success) {
-
-        return {
-
-            success: false,
-
-            message:
-                "Unable to select the requested fulfilment method."
-
-        };
-
-    }
-
-
-    /*
-     * Collection does not require a
-     * delivery address.
-     */
-
-    if (method === "collection") {
-
-        nexpakDeliveryState.deliveryFee = 0;
-
-        nexpakDeliveryState.valid = true;
-
-        nexpakDeliveryState.message = "";
-
-    }
-
-
-    /*
-     * Delivery requires an address.
-     */
-
-    if (
-        method === "delivery" ||
-        method === "express"
-    ) {
-
-        /*
-         * Do not automatically invalidate
-         * a previously valid address.
-         */
-
-        if (
-            !nexpakDeliveryState.address
-        ) {
-
-            nexpakDeliveryState.valid =
-                false;
-
-            nexpakDeliveryState.message =
-                "A delivery address is required.";
-
-        }
-
-    }
-
-
-    saveNexpakDeliveryState();
-
-
-    updateNexpakCheckoutTotalDisplay();
-
-
-    updateNexpakFulfilmentUI();
-
-
-    dispatchNexpakDeliveryEvent(
-        "nexpak:fulfilment-changed",
-        {
-            method: method,
-
-            deliveryFee:
-                nexpakDeliveryState.deliveryFee,
-
-            address:
-                nexpakDeliveryState.address,
-
-            valid:
-                nexpakDeliveryState.valid
-        }
-    );
-
-
-    return {
-
-        success: true,
-
-        method: method,
-
-        deliveryFee:
-            nexpakDeliveryState.deliveryFee,
-
-        valid:
-            nexpakDeliveryState.valid
-
-    };
-
-}
-
-
-/*=========================================================
- 56. SHOW / HIDE ADDRESS SECTION
-=========================================================*/
-
-function updateNexpakAddressVisibility() {
-
-    const addressContainers = [
-
-        document.querySelector(
-            "#delivery-address-section"
-        ),
-
-        document.querySelector(
-            "#deliveryAddressSection"
-        ),
-
-        document.querySelector(
-            "[data-delivery-address-section]"
-        ),
-
-        document.querySelector(
-            "#shipping-address"
-        ),
-
-        document.querySelector(
-            "#shippingAddress"
-        )
-
-    ].filter(Boolean);
-
-
-    const requiresAddress =
-        nexpakDeliveryState.method ===
-            "delivery" ||
-        nexpakDeliveryState.method ===
-            "express";
-
-
-    addressContainers.forEach(container => {
-
-        container.hidden =
-            !requiresAddress;
-
-
-        container.style.display =
-            requiresAddress
-                ? ""
-                : "none";
-
-    });
-
-
-    return requiresAddress;
-
-}
-
-
-/*=========================================================
- 57. UPDATE COLLECTION INFORMATION
-=========================================================*/
-
-function updateNexpakCollectionInformation() {
-
-    const containers = [
-
-        document.querySelector(
-            "#collection-info"
-        ),
-
-        document.querySelector(
-            "#collectionInfo"
-        ),
-
-        document.querySelector(
-            "[data-collection-info]"
-        )
-
-    ].filter(Boolean);
-
-
-    const isCollection =
-        nexpakDeliveryState.method ===
-        "collection";
-
-
-    containers.forEach(container => {
-
-        container.hidden =
-            !isCollection;
-
-
-        container.style.display =
-            isCollection
-                ? ""
-                : "none";
-
-
-        if (isCollection) {
-
-            container.innerHTML = `
-
-                <div class="nexpak-collection-message">
-
-                    <strong>
-                        Collection selected
-                    </strong>
-
-                    <p>
-                        Your order will be prepared
-                        for collection from NEXPAK
-                        Security Solutions.
-                    </p>
-
-                    <span>
-                        No delivery fee
-                    </span>
-
-                </div>
-
-            `;
-
-        }
-
-    });
-
-
-    return isCollection;
-
-}
-
-
-/*=========================================================
- 58. UPDATE FULFILMENT UI
-=========================================================*/
-
-function updateNexpakFulfilmentUI() {
-
-    updateNexpakAddressVisibility();
-
-    updateNexpakCollectionInformation();
-
-    updateNexpakDeliveryFeeDisplay();
-
-    updateNexpakDeliveryEstimateDisplay();
-
-
-    /*
-     * Mark selected delivery option.
-     */
-
-    document
-        .querySelectorAll(
-            "[data-delivery-method]"
-        )
-        .forEach(element => {
-
-            const method =
-                element.dataset.deliveryMethod;
-
-
-            const selected =
-                method ===
-                nexpakDeliveryState.method;
-
-
-            element.classList.toggle(
-                "selected",
-                selected
-            );
-
-
-            element.setAttribute(
-                "aria-selected",
-                selected
-                    ? "true"
-                    : "false"
-            );
-
-        });
-
-
-    return {
-
-        method:
-            nexpakDeliveryState.method,
-
-        addressRequired:
-            nexpakDeliveryState.method !==
-            "collection"
-
-    };
-
-}
-
-
-/*=========================================================
- 59. SELECT DELIVERY METHOD FROM CHECKOUT
-=========================================================*/
-
-function selectNexpakCheckoutDeliveryMethod(
-    method
-) {
 
     const result =
-        switchNexpakFulfilmentMethod(
-            method
+        setNexpakOnlineDeliveryDistanceFromInput(
+            distance
         );
 
 
     if (!result.success) {
 
-        return false;
-
-    }
-
-
-    /*
-     * Synchronise radio inputs.
-     */
-
-    document
-        .querySelectorAll(
-            'input[name="nexpakDeliveryMethod"]'
-        )
-        .forEach(input => {
-
-            input.checked =
-                input.value === method;
-
-        });
-
-
-    return true;
-
-}
-
-
-/*=========================================================
- 60. READ CHECKOUT DELIVERY METHOD
-=========================================================*/
-
-function readNexpakCheckoutDeliveryMethod() {
-
-    const checked =
-        document.querySelector(
-            'input[name="nexpakDeliveryMethod"]:checked'
-        );
-
-
-    if (checked) {
-
-        return checked.value;
-
-    }
-
-
-    return nexpakDeliveryState.method;
-
-}
-
-
-/*=========================================================
- 61. SYNCHRONISE CHECKOUT DELIVERY
-=========================================================*/
-
-function syncNexpakCheckoutDelivery() {
-
-    const method =
-        readNexpakCheckoutDeliveryMethod();
-
-
-    if (
-        method &&
-        method !==
-            nexpakDeliveryState.method
-    ) {
-
-        setNexpakDeliveryMethod(
-            method
+        renderNexpakOnlineDeliveryError(
+            result.error
         );
 
     }
 
 
-    const subtotal =
-        getNexpakActiveCheckoutSubtotal();
-
-
-    updateNexpakDeliveryFee(
-        subtotal
-    );
-
-
-    updateNexpakFulfilmentUI();
-
-    updateNexpakCheckoutTotalDisplay();
-
-
-    return {
-
-        method:
-            nexpakDeliveryState.method,
-
-        subtotal: subtotal,
-
-        deliveryFee:
-            nexpakDeliveryState.deliveryFee,
-
-        total:
-            calculateNexpakCheckoutTotal(
-                subtotal
-            )
-
-    };
+    return result.success;
 
 }
 
 
-/*=========================================================
- 62. CHECK DELIVERY REQUIREMENTS
-=========================================================*/
+/* =========================================================
+   53. REFRESH DELIVERY FROM CART
+   ========================================================= */
 
-function validateNexpakFulfilment() {
+function refreshNexpakOnlineDeliveryFromCart() {
 
-    const errors = [];
+    /*
+     * Recalculate the total kit weight.
+     */
 
-
-    const method =
-        nexpakDeliveryState.method;
-
-
-    if (!method) {
-
-        errors.push(
-            "Please select a delivery method."
-        );
-
-    }
+    const weight =
+        calculateNexpakOnlineDeliveryCartWeight();
 
 
     /*
-     * Collection validation.
+     * Use the current delivery distance.
      */
 
-    if (method === "collection") {
+    const distance =
+        getNexpakOnlineDeliveryDistance();
 
-        return {
-
-            valid: true,
-
-            errors: []
-
-        };
-
-    }
-
-
-    /*
-     * Delivery validation.
-     */
-
-    if (
-        method === "delivery" ||
-        method === "express"
-    ) {
-
-        if (
-            !nexpakDeliveryState.address
-        ) {
-
-            errors.push(
-                "Please enter your delivery address."
-            );
-
-        } else {
-
-            const validation =
-                validateNexpakDeliveryAddress(
-                    nexpakDeliveryState.address
-                );
-
-
-            if (!validation.valid) {
-
-                errors.push(
-                    ...validation.errors
-                );
-
-            }
-
-        }
-
-    }
-
-
-    return {
-
-        valid:
-            errors.length === 0,
-
-        errors: errors
-
-    };
-
-}
-
-
-/*=========================================================
- 63. GET CHECKOUT DELIVERY DATA
-=========================================================*/
-
-function getNexpakCheckoutDeliveryData() {
-
-    const subtotal =
-        getNexpakActiveCheckoutSubtotal();
-
-
-    const deliveryFee =
-        calculateNexpakDeliveryFee(
-            nexpakDeliveryState.province,
-            nexpakDeliveryState.deliveryType,
-            subtotal
-        );
-
-
-    return {
-
-        method:
-            nexpakDeliveryState.method,
-
-        deliveryType:
-            nexpakDeliveryState.deliveryType,
-
-        zone:
-            nexpakDeliveryState.zone,
-
-        address:
-            nexpakDeliveryState.address,
-
-        province:
-            nexpakDeliveryState.province,
-
-        city:
-            nexpakDeliveryState.city,
-
-        suburb:
-            nexpakDeliveryState.suburb,
-
-        postalCode:
-            nexpakDeliveryState.postalCode,
-
-        country:
-            nexpakDeliveryState.country,
-
-        deliveryFee:
-            deliveryFee,
-
-        estimatedDelivery:
-            nexpakDeliveryState
-                .estimatedDelivery,
-
-        subtotal:
-            subtotal,
-
-        total:
-            Number(
-                (
-                    subtotal +
-                    deliveryFee
-                ).toFixed(2)
-            )
-
-    };
-
-}
-
-
-/*=========================================================
- 64. PREPARE DELIVERY FOR CHECKOUT
-=========================================================*/
-
-function prepareNexpakDeliveryForCheckout() {
-
-    const sync =
-        syncNexpakCheckoutDelivery();
-
-
-    const validation =
-        validateNexpakFulfilment();
-
-
-    if (!validation.valid) {
-
-        displayNexpakDeliveryErrors(
-            validation.errors
-        );
-
-
-        return {
-
-            success: false,
-
-            valid: false,
-
-            errors:
-                validation.errors,
-
-            data:
-                getNexpakCheckoutDeliveryData()
-
-        };
-
-    }
-
-
-    clearNexpakDeliveryErrors();
-
-
-    const data =
-        getNexpakCheckoutDeliveryData();
-
-
-    saveNexpakDeliveryState();
-
-
-    dispatchNexpakDeliveryEvent(
-        "nexpak:delivery-ready",
-        data
-    );
-
-
-    return {
-
-        success: true,
-
-        valid: true,
-
-        errors: [],
-
-        data: data,
-
-        sync: sync
-
-    };
-
-}
-
-
-/*=========================================================
- 65. CHECKOUT EVENT LISTENERS
-=========================================================*/
-
-function bindNexpakCheckoutDeliveryEvents() {
-
-    /*
-     * Delivery method changes.
-     */
-
-    document.addEventListener(
-        "change",
-        function(event) {
-
-            const target =
-                event.target;
-
-
-            if (
-                !target ||
-                target.name !==
-                    "nexpakDeliveryMethod"
-            ) {
-
-                return;
-
-            }
-
-
-            selectNexpakCheckoutDeliveryMethod(
-                target.value
-            );
-
-        }
-    );
-
-
-    /*
-     * Cart updates.
-     */
-
-    document.addEventListener(
-        "nexpak:cart-updated",
-        function() {
-
-            updateNexpakCheckoutTotalDisplay();
-
-        }
-    );
-
-
-    /*
-     * Checkout updates.
-     */
-
-    document.addEventListener(
-        "nexpak:checkout-updated",
-        function() {
-
-            syncNexpakCheckoutDelivery();
-
-        }
-    );
-
-
-    /*
-     * Generic cart changes.
-     */
-
-    document.addEventListener(
-        "cartUpdated",
-        function() {
-
-            updateNexpakCheckoutTotalDisplay();
-
-        }
-    );
-
-
-    return true;
-
-}
-
-
-/*=========================================================
- 66. INITIALISE CHECKOUT DELIVERY
-=========================================================*/
-
-function initNexpakCheckoutDelivery() {
-
-    bindNexpakCheckoutDeliveryEvents();
-
-    bindNexpakDeliveryForm();
-
-    bindNexpakDeliveryMethodEvents();
-
-
-    /*
-     * Render methods only when a delivery
-     * container exists and is empty.
-     */
-
-    const container =
-        document.querySelector(
-            "#delivery-options"
-        );
-
-
-    if (
-        container &&
-        !container.innerHTML.trim()
-    ) {
-
-        renderNexpakDeliveryOptions(
-            container
-        );
-
-    }
-
-
-    syncNexpakCheckoutDelivery();
-
-    updateNexpakFulfilmentUI();
-
-
-    return getNexpakCheckoutDeliveryData();
-
-}
-
-
-/*=========================================================
- 67. EXPORT PART 4 FUNCTIONS
-=========================================================*/
-
-window.NEXPAK_DELIVERY_CHECKOUT =
-    NEXPAK_DELIVERY_CHECKOUT;
-
-window.getNexpakCheckoutCart =
-    getNexpakCheckoutCart;
-
-window.calculateNexpakCheckoutSubtotal =
-    calculateNexpakCheckoutSubtotal;
-
-window.getNexpakActiveCheckoutSubtotal =
-    getNexpakActiveCheckoutSubtotal;
-
-window.calculateNexpakCheckoutTotal =
-    calculateNexpakCheckoutTotal;
-
-window.updateNexpakCheckoutTotalDisplay =
-    updateNexpakCheckoutTotalDisplay;
-
-window.switchNexpakFulfilmentMethod =
-    switchNexpakFulfilmentMethod;
-
-window.updateNexpakAddressVisibility =
-    updateNexpakAddressVisibility;
-
-window.updateNexpakCollectionInformation =
-    updateNexpakCollectionInformation;
-
-window.updateNexpakFulfilmentUI =
-    updateNexpakFulfilmentUI;
-
-window.selectNexpakCheckoutDeliveryMethod =
-    selectNexpakCheckoutDeliveryMethod;
-
-window.readNexpakCheckoutDeliveryMethod =
-    readNexpakCheckoutDeliveryMethod;
-
-window.syncNexpakCheckoutDelivery =
-    syncNexpakCheckoutDelivery;
-
-window.validateNexpakFulfilment =
-    validateNexpakFulfilment;
-
-window.getNexpakCheckoutDeliveryData =
-    getNexpakCheckoutDeliveryData;
-
-window.prepareNexpakDeliveryForCheckout =
-    prepareNexpakDeliveryForCheckout;
-
-window.bindNexpakCheckoutDeliveryEvents =
-    bindNexpakCheckoutDeliveryEvents;
-
-window.initNexpakCheckoutDelivery =
-    initNexpakCheckoutDelivery;
-
-
-/*=========================================================
- END — onlinedelivery.js — PART 4/8
-=========================================================*/
-
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE — DELIVERY ENGINE
- File: onlinedelivery.js
- Version: 1.0
- Part: 5/8
-=========================================================*/
-
-
-/*=========================================================
- 68. DELIVERY SCHEDULING CONFIGURATION
-=========================================================*/
-
-const NEXPAK_DELIVERY_SCHEDULE = {
-
-    /*---------------------------------------------
-     STANDARD DELIVERY
-    ---------------------------------------------*/
-
-    standardMinDays: 2,
-
-    standardMaxDays: 5,
-
-
-    /*---------------------------------------------
-     EXPRESS DELIVERY
-    ---------------------------------------------*/
-
-    expressMinDays: 1,
-
-    expressMaxDays: 2,
-
-
-    /*---------------------------------------------
-     ORDER CUT-OFF
-    ---------------------------------------------*/
-
-    cutoffHour: 14,
-
-    cutoffMinute: 0,
-
-
-    /*---------------------------------------------
-     BUSINESS DAYS
-    ---------------------------------------------*/
-
-    workingDays: [
-        1, // Monday
-        2, // Tuesday
-        3, // Wednesday
-        4, // Thursday
-        5  // Friday
-    ],
-
-
-    /*---------------------------------------------
-     WEEKENDS
-    ---------------------------------------------*/
-
-    weekendsExcluded: true,
-
-
-    /*---------------------------------------------
-     PUBLIC HOLIDAYS
-    ---------------------------------------------*/
-
-    publicHolidaysExcluded: true
-
-};
-
-
-/*=========================================================
- 69. SOUTH AFRICAN PUBLIC HOLIDAYS
-=========================================================*/
-
-const NEXPAK_PUBLIC_HOLIDAYS = {
-
-    2026: [
-        "2026-01-01",
-        "2026-03-21",
-        "2026-04-03",
-        "2026-04-06",
-        "2026-04-27",
-        "2026-05-01",
-        "2026-06-16",
-        "2026-08-09",
-        "2026-08-10",
-        "2026-09-24",
-        "2026-12-16",
-        "2026-12-25",
-        "2026-12-26"
-    ],
-
-    2027: [
-        "2027-01-01",
-        "2027-03-21",
-        "2027-03-22",
-        "2027-03-26",
-        "2027-03-29",
-        "2027-04-27",
-        "2027-05-01",
-        "2027-06-16",
-        "2027-08-09",
-        "2027-09-24",
-        "2027-12-16",
-        "2027-12-25",
-        "2027-12-26"
-    ]
-
-};
-
-
-/*=========================================================
- 70. FORMAT DATE AS YYYY-MM-DD
-=========================================================*/
-
-function formatNexpakDeliveryDate(date) {
-
-    if (!(date instanceof Date)) {
-
-        date = new Date(date);
-
-    }
-
-
-    if (Number.isNaN(date.getTime())) {
-
-        return "";
-
-    }
-
-
-    const year =
-        date.getFullYear();
-
-
-    const month =
-        String(
-            date.getMonth() + 1
-        ).padStart(2, "0");
-
-
-    const day =
-        String(
-            date.getDate()
-        ).padStart(2, "0");
-
-
-    return `${year}-${month}-${day}`;
-
-}
-
-
-/*=========================================================
- 71. CHECK PUBLIC HOLIDAY
-=========================================================*/
-
-function isNexpakPublicHoliday(date) {
-
-    if (
-        !NEXPAK_DELIVERY_SCHEDULE
-            .publicHolidaysExcluded
-    ) {
-
-        return false;
-
-    }
-
-
-    const dateString =
-        formatNexpakDeliveryDate(date);
-
-
-    const year =
-        date.getFullYear();
-
-
-    const holidays =
-        NEXPAK_PUBLIC_HOLIDAYS[year] || [];
-
-
-    return holidays.includes(
-        dateString
-    );
-
-}
-
-
-/*=========================================================
- 72. CHECK BUSINESS DAY
-=========================================================*/
-
-function isNexpakBusinessDay(date) {
-
-    if (!(date instanceof Date)) {
-
-        date = new Date(date);
-
-    }
-
-
-    if (Number.isNaN(date.getTime())) {
-
-        return false;
-
-    }
-
-
-    const day =
-        date.getDay();
-
-
-    /*
-     * Sunday = 0
-     * Monday = 1
-     * ...
-     * Saturday = 6
-     */
-
-    if (
-        NEXPAK_DELIVERY_SCHEDULE
-            .weekendsExcluded &&
-        !NEXPAK_DELIVERY_SCHEDULE
-            .workingDays
-            .includes(day)
-    ) {
-
-        return false;
-
-    }
-
-
-    if (
-        isNexpakPublicHoliday(date)
-    ) {
-
-        return false;
-
-    }
-
-
-    return true;
-
-}
-
-
-/*=========================================================
- 73. MOVE TO NEXT BUSINESS DAY
-=========================================================*/
-
-function getNexpakNextBusinessDay(
-    date
-) {
 
     const result =
-        new Date(date);
-
-
-    do {
-
-        result.setDate(
-            result.getDate() + 1
+        calculateNexpakOnlineDeliveryFee(
+            distance,
+            weight
         );
 
-    } while (
-        !isNexpakBusinessDay(result)
-    );
+
+    renderNexpakOnlineDeliverySummary();
 
 
     return result;
@@ -4206,38 +2120,40 @@ function getNexpakNextBusinessDay(
 }
 
 
-/*=========================================================
- 74. ADD BUSINESS DAYS
-=========================================================*/
+/* =========================================================
+   54. HANDLE CART UPDATE
+   ========================================================= */
 
-function addNexpakBusinessDays(
-    startDate,
-    businessDays
-) {
+function handleNexpakOnlineDeliveryCartUpdate() {
 
     const result =
-        new Date(startDate);
+        refreshNexpakOnlineDeliveryFromCart();
 
 
-    let daysAdded = 0;
+    updateNexpakOnlineCheckoutDeliveryData();
 
 
-    while (
-        daysAdded < businessDays
-    ) {
+    renderNexpakOnlineDeliverySummary();
 
-        result.setDate(
-            result.getDate() + 1
+
+    try {
+
+        window.dispatchEvent(
+            new CustomEvent(
+                "nexpak:online-delivery-updated",
+                {
+                    detail:
+                        getNexpakOnlineDeliverySummary()
+                }
+            )
         );
 
+    } catch (error) {
 
-        if (
-            isNexpakBusinessDay(result)
-        ) {
-
-            daysAdded++;
-
-        }
+        console.warn(
+            "NEXPAK Online Delivery: Cart update event failed.",
+            error
+        );
 
     }
 
@@ -4247,34 +2163,261 @@ function addNexpakBusinessDays(
 }
 
 
-/*=========================================================
- 75. CHECK ORDER CUT-OFF
-=========================================================*/
+/* =========================================================
+   55. BIND CART UPDATE EVENTS
+   ========================================================= */
 
-function isNexpakAfterCutoff(
-    date = new Date()
+function bindNexpakOnlineDeliveryCartEvents() {
+
+    /*
+     * Listen for common custom events that the
+     * Online Cart engine may dispatch.
+     *
+     * We do not modify onlinecart.js here.
+     */
+
+    const events = [
+
+        "nexpak:online-cart-updated",
+
+        "nexpak:online-cart-changed",
+
+        "nexpak:online-cart-rendered",
+
+        "online-cart-updated",
+
+        "cart-updated"
+
+    ];
+
+
+    events.forEach(
+        function (eventName) {
+
+            window.addEventListener(
+                eventName,
+                handleNexpakOnlineDeliveryCartUpdate
+            );
+
+        }
+    );
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   56. UPDATE CHECKOUT TOTALS EVENT
+   ========================================================= */
+
+function dispatchNexpakOnlineCheckoutDeliveryUpdate() {
+
+    const delivery =
+        getNexpakOnlineCheckoutDeliveryData();
+
+
+    try {
+
+        window.dispatchEvent(
+            new CustomEvent(
+                "nexpak:checkout-delivery-updated",
+                {
+                    detail: delivery
+                }
+            )
+        );
+
+
+        return true;
+
+    } catch (error) {
+
+        console.warn(
+            "NEXPAK Online Delivery: Checkout update event failed.",
+            error
+        );
+
+
+        return false;
+
+    }
+
+}
+
+
+/* =========================================================
+   57. REFRESH EVERYTHING
+   ========================================================= */
+
+function refreshNexpakOnlineDeliveryEverything() {
+
+    const result =
+        refreshNexpakOnlineDeliveryFromCart();
+
+
+    renderNexpakOnlineDeliverySummary();
+
+
+    updateNexpakOnlineCheckoutDeliveryData();
+
+
+    dispatchNexpakOnlineCheckoutDeliveryUpdate();
+
+
+    return result;
+
+}
+
+
+/* =========================================================
+   58. EXTEND DELIVERY ENGINE API
+   ========================================================= */
+
+if (
+    window.NEXPAK_ONLINE_DELIVERY
 ) {
 
-    const hour =
-        date.getHours();
+    window.NEXPAK_ONLINE_DELIVERY
+        .handleDistanceInput =
+        handleNexpakOnlineDeliveryDistanceInput;
 
 
-    const minute =
-        date.getMinutes();
+    window.NEXPAK_ONLINE_DELIVERY
+        .handleDistanceChange =
+        handleNexpakOnlineDeliveryDistanceChange;
 
 
-    const cutoffHour =
-        NEXPAK_DELIVERY_SCHEDULE
-            .cutoffHour;
+    window.NEXPAK_ONLINE_DELIVERY
+        .bindDistanceInput =
+        bindNexpakOnlineDeliveryDistanceInput;
 
 
-    const cutoffMinute =
-        NEXPAK_DELIVERY_SCHEDULE
-            .cutoffMinute;
+    window.NEXPAK_ONLINE_DELIVERY
+        .initialiseDistance =
+        initialiseNexpakOnlineDeliveryDistance;
 
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .refreshFromCart =
+        refreshNexpakOnlineDeliveryFromCart;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .handleCartUpdate =
+        handleNexpakOnlineDeliveryCartUpdate;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .bindCartEvents =
+        bindNexpakOnlineDeliveryCartEvents;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .dispatchCheckoutUpdate =
+        dispatchNexpakOnlineCheckoutDeliveryUpdate;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .refreshEverything =
+        refreshNexpakOnlineDeliveryEverything;
+
+}
+
+/* =========================================================
+   NEXPAK ONLINE STORE — DELIVERY ENGINE
+   PART 7
+   INITIALISATION + STORE INTEGRATION
+   ========================================================= */
+
+
+/* =========================================================
+   59. CHECK DOM READY
+   ========================================================= */
+
+function isNexpakOnlineDeliveryDOMReady() {
+
+    return (
+        document.readyState === "interactive" ||
+        document.readyState === "complete"
+    );
+
+}
+
+
+/* =========================================================
+   60. INITIALISE DELIVERY STATE
+   ========================================================= */
+
+function initialiseNexpakOnlineDeliveryState() {
+
+    resetNexpakOnlineDeliveryState();
+
+
+    /*
+     * Calculate the current cart weight.
+     * An empty cart safely returns 0 kg.
+     */
+
+    calculateNexpakOnlineDeliveryCartWeight();
+
+
+    /*
+     * Start with zero distance until the customer
+     * supplies a delivery distance.
+     */
+
+    setNexpakOnlineDeliveryDistance(0);
+
+
+    calculateNexpakOnlineDeliveryFee(
+        0,
+        NEXPAK_ONLINE_DELIVERY_STATE.cartWeight
+    );
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   61. INITIALISE DELIVERY DOM
+   ========================================================= */
+
+function initialiseNexpakOnlineDeliveryDOM() {
+
+    bindNexpakOnlineDeliveryDistanceInput();
+
+
+    bindNexpakOnlineDeliveryCartEvents();
+
+
+    initialiseNexpakOnlineDeliveryDistance();
+
+
+    renderNexpakOnlineDeliverySummary();
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   62. INITIALISE DELIVERY ENGINE
+   ========================================================= */
+
+function initialiseNexpakOnlineDelivery() {
+
+    /*
+     * Prevent accidental duplicate initialisation.
+     */
 
     if (
-        hour > cutoffHour
+        window.NEXPAK_ONLINE_DELIVERY &&
+        window.NEXPAK_ONLINE_DELIVERY.initialised === true
     ) {
 
         return true;
@@ -4282,10 +2425,66 @@ function isNexpakAfterCutoff(
     }
 
 
+    initialiseNexpakOnlineDeliveryState();
+
+
     if (
-        hour === cutoffHour &&
-        minute >= cutoffMinute
+        isNexpakOnlineDeliveryDOMReady()
     ) {
+
+        initialiseNexpakOnlineDeliveryDOM();
+
+    }
+
+
+    /*
+     * Mark the engine as initialised.
+     */
+
+    if (
+        window.NEXPAK_ONLINE_DELIVERY
+    ) {
+
+        window.NEXPAK_ONLINE_DELIVERY.initialised =
+            true;
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   63. DOM READY INITIALISATION
+   ========================================================= */
+
+function handleNexpakOnlineDeliveryDOMReady() {
+
+    initialiseNexpakOnlineDelivery();
+
+}
+
+
+/* =========================================================
+   64. WAIT FOR ONLINE CART
+   ========================================================= */
+
+function waitForNexpakOnlineDeliveryCart() {
+
+    /*
+     * onlinecart.js may load before or after this engine.
+     *
+     * We therefore do not assume that the cart object
+     * already exists at script execution time.
+     */
+
+    if (
+        window.NEXPAK_ONLINE_CART
+    ) {
+
+        handleNexpakOnlineDeliveryCartUpdate();
 
         return true;
 
@@ -4297,3678 +2496,107 @@ function isNexpakAfterCutoff(
 }
 
 
-/*=========================================================
- 76. GET DELIVERY START DATE
-=========================================================*/
+/* =========================================================
+   65. WAIT FOR ONLINE STORE
+   ========================================================= */
 
-function getNexpakDeliveryStartDate(
-    date = new Date()
-) {
-
-    let startDate =
-        new Date(date);
-
+function waitForNexpakOnlineDeliveryStore() {
 
     /*
-     * Orders placed after the cut-off
-     * begin processing on the next
-     * business day.
+     * The Online Store engine may already exist.
+     *
+     * We only refresh delivery information.
+     * We do NOT replace or initialise the store engine.
      */
 
     if (
-        isNexpakAfterCutoff(startDate)
+        window.NEXPAK_ONLINE_STORE
     ) {
 
-        startDate =
-            getNexpakNextBusinessDay(
-                startDate
-            );
-
-    }
-
-
-    /*
-     * Orders placed on weekends or
-     * public holidays begin on the
-     * next business day.
-     */
-
-    if (
-        !isNexpakBusinessDay(startDate)
-    ) {
-
-        startDate =
-            getNexpakNextBusinessDay(
-                startDate
-            );
-
-    }
-
-
-    return startDate;
-
-}
-
-
-/*=========================================================
- 77. GET DELIVERY DATE RANGE
-=========================================================*/
-
-function calculateNexpakDeliveryDateRange(
-    deliveryType = "standard",
-    orderDate = new Date()
-) {
-
-    const startDate =
-        getNexpakDeliveryStartDate(
-            orderDate
-        );
-
-
-    let minDays =
-        NEXPAK_DELIVERY_SCHEDULE
-            .standardMinDays;
-
-
-    let maxDays =
-        NEXPAK_DELIVERY_SCHEDULE
-            .standardMaxDays;
-
-
-    if (
-        deliveryType === "express"
-    ) {
-
-        minDays =
-            NEXPAK_DELIVERY_SCHEDULE
-                .expressMinDays;
-
-        maxDays =
-            NEXPAK_DELIVERY_SCHEDULE
-                .expressMaxDays;
-
-    }
-
-
-    const earliestDate =
-        addNexpakBusinessDays(
-            startDate,
-            minDays
-        );
-
-
-    const latestDate =
-        addNexpakBusinessDays(
-            startDate,
-            maxDays
-        );
-
-
-    return {
-
-        startDate:
-            startDate,
-
-        earliestDate:
-            earliestDate,
-
-        latestDate:
-            latestDate,
-
-        startDateFormatted:
-            formatNexpakDeliveryDate(
-                startDate
-            ),
-
-        earliestDateFormatted:
-            formatNexpakDeliveryDate(
-                earliestDate
-            ),
-
-        latestDateFormatted:
-            formatNexpakDeliveryDate(
-                latestDate
-            ),
-
-        deliveryType:
-            deliveryType
-
-    };
-
-}
-
-
-/*=========================================================
- 78. FORMAT FRIENDLY DATE
-=========================================================*/
-
-function formatNexpakFriendlyDate(
-    date
-) {
-
-    if (!(date instanceof Date)) {
-
-        date =
-            new Date(date);
-
-    }
-
-
-    if (
-        Number.isNaN(
-            date.getTime()
-        )
-    ) {
-
-        return "";
-
-    }
-
-
-    return date.toLocaleDateString(
-        "en-ZA",
-        {
-            weekday: "short",
-            day: "numeric",
-            month: "short",
-            year: "numeric"
-        }
-    );
-
-}
-
-
-/*=========================================================
- 79. GET FRIENDLY DELIVERY ESTIMATE
-=========================================================*/
-
-function getNexpakFriendlyDeliveryEstimate(
-    deliveryType = "standard"
-) {
-
-    if (
-        deliveryType === "collection"
-    ) {
-
-        return "Ready for collection";
-
-    }
-
-
-    const range =
-        calculateNexpakDeliveryDateRange(
-            deliveryType
-        );
-
-
-    return (
-        `${formatNexpakFriendlyDate(
-            range.earliestDate
-        )} – ` +
-        `${formatNexpakFriendlyDate(
-            range.latestDate
-        )}`
-    );
-
-}
-
-
-/*=========================================================
- 80. UPDATE ESTIMATED DELIVERY DATE
-=========================================================*/
-
-function updateNexpakEstimatedDeliveryDate() {
-
-    const method =
-        nexpakDeliveryState.method;
-
-
-    if (method === "collection") {
-
-        nexpakDeliveryState
-            .estimatedDelivery =
-            "Ready for collection";
-
-    } else {
-
-        const deliveryType =
-            method === "express"
-                ? "express"
-                : "standard";
-
-
-        nexpakDeliveryState
-            .estimatedDelivery =
-            getNexpakFriendlyDeliveryEstimate(
-                deliveryType
-            );
-
-    }
-
-
-    saveNexpakDeliveryState();
-
-
-    updateNexpakDeliveryEstimateDisplay();
-
-
-    return (
-        nexpakDeliveryState
-            .estimatedDelivery
-    );
-
-}
-
-
-/*=========================================================
- 81. GET DELIVERY DATE RANGE FOR CURRENT ORDER
-=========================================================*/
-
-function getNexpakCurrentDeliveryDateRange() {
-
-    if (
-        nexpakDeliveryState.method ===
-        "collection"
-    ) {
-
-        return {
-
-            deliveryType:
-                "collection",
-
-            message:
-                "Ready for collection",
-
-            earliestDate: null,
-
-            latestDate: null
-
-        };
-
-    }
-
-
-    const deliveryType =
-        nexpakDeliveryState.method ===
-        "express"
-            ? "express"
-            : "standard";
-
-
-    return calculateNexpakDeliveryDateRange(
-        deliveryType
-    );
-
-}
-
-
-/*=========================================================
- 82. UPDATE DELIVERY SCHEDULE DISPLAY
-=========================================================*/
-
-function updateNexpakDeliveryScheduleDisplay() {
-
-    const range =
-        getNexpakCurrentDeliveryDateRange();
-
-
-    const containers = [
-
-        document.querySelector(
-            "#delivery-date-range"
-        ),
-
-        document.querySelector(
-            "#deliveryDateRange"
-        ),
-
-        document.querySelector(
-            "[data-delivery-date-range]"
-        )
-
-    ].filter(Boolean);
-
-
-    containers.forEach(container => {
-
-        if (
-            range.deliveryType ===
-            "collection"
-        ) {
-
-            container.textContent =
-                range.message;
-
-            return;
-
-        }
-
-
-        container.textContent =
-            `${formatNexpakFriendlyDate(
-                range.earliestDate
-            )} – ${formatNexpakFriendlyDate(
-                range.latestDate
-            )}`;
-
-    });
-
-
-    return range;
-
-}
-
-
-/*=========================================================
- 83. GET DELIVERY CUTOFF INFORMATION
-=========================================================*/
-
-function getNexpakDeliveryCutoffInfo() {
-
-    const now =
-        new Date();
-
-
-    const afterCutoff =
-        isNexpakAfterCutoff(now);
-
-
-    const cutoffHour =
-        String(
-            NEXPAK_DELIVERY_SCHEDULE
-                .cutoffHour
-        ).padStart(2, "0");
-
-
-    const cutoffMinute =
-        String(
-            NEXPAK_DELIVERY_SCHEDULE
-                .cutoffMinute
-        ).padStart(2, "0");
-
-
-    return {
-
-        afterCutoff:
-            afterCutoff,
-
-        cutoffTime:
-            `${cutoffHour}:${cutoffMinute}`,
-
-        message:
-            afterCutoff
-                ? "Orders placed after the cut-off are processed on the next business day."
-                : `Orders placed before ${cutoffHour}:${cutoffMinute} are processed today.`
-
-    };
-
-}
-
-
-/*=========================================================
- 84. DELIVERY BUSINESS-DAY SUMMARY
-=========================================================*/
-
-function getNexpakDeliveryBusinessDaySummary() {
-
-    return {
-
-        workingDays:
-            [
-                ...NEXPAK_DELIVERY_SCHEDULE
-                    .workingDays
-            ],
-
-        weekendsExcluded:
-            NEXPAK_DELIVERY_SCHEDULE
-                .weekendsExcluded,
-
-        publicHolidaysExcluded:
-            NEXPAK_DELIVERY_SCHEDULE
-                .publicHolidaysExcluded,
-
-        cutoffTime:
-            getNexpakDeliveryCutoffInfo()
-                .cutoffTime
-
-    };
-
-}
-
-
-/*=========================================================
- 85. REFRESH DELIVERY SCHEDULE
-=========================================================*/
-
-function refreshNexpakDeliverySchedule() {
-
-    updateNexpakEstimatedDeliveryDate();
-
-    updateNexpakDeliveryScheduleDisplay();
-
-
-    dispatchNexpakDeliveryEvent(
-        "nexpak:delivery-schedule-updated",
-        {
-            estimatedDelivery:
-                nexpakDeliveryState
-                    .estimatedDelivery,
-
-            dateRange:
-                getNexpakCurrentDeliveryDateRange()
-        }
-    );
-
-
-    return {
-
-        estimatedDelivery:
-            nexpakDeliveryState
-                .estimatedDelivery,
-
-        dateRange:
-            getNexpakCurrentDeliveryDateRange()
-
-    };
-
-}
-
-
-/*=========================================================
- 86. EXPORT PART 5 FUNCTIONS
-=========================================================*/
-
-window.NEXPAK_DELIVERY_SCHEDULE =
-    NEXPAK_DELIVERY_SCHEDULE;
-
-window.NEXPAK_PUBLIC_HOLIDAYS =
-    NEXPAK_PUBLIC_HOLIDAYS;
-
-window.formatNexpakDeliveryDate =
-    formatNexpakDeliveryDate;
-
-window.isNexpakPublicHoliday =
-    isNexpakPublicHoliday;
-
-window.isNexpakBusinessDay =
-    isNexpakBusinessDay;
-
-window.getNexpakNextBusinessDay =
-    getNexpakNextBusinessDay;
-
-window.addNexpakBusinessDays =
-    addNexpakBusinessDays;
-
-window.isNexpakAfterCutoff =
-    isNexpakAfterCutoff;
-
-window.getNexpakDeliveryStartDate =
-    getNexpakDeliveryStartDate;
-
-window.calculateNexpakDeliveryDateRange =
-    calculateNexpakDeliveryDateRange;
-
-window.formatNexpakFriendlyDate =
-    formatNexpakFriendlyDate;
-
-window.getNexpakFriendlyDeliveryEstimate =
-    getNexpakFriendlyDeliveryEstimate;
-
-window.updateNexpakEstimatedDeliveryDate =
-    updateNexpakEstimatedDeliveryDate;
-
-window.getNexpakCurrentDeliveryDateRange =
-    getNexpakCurrentDeliveryDateRange;
-
-window.updateNexpakDeliveryScheduleDisplay =
-    updateNexpakDeliveryScheduleDisplay;
-
-window.getNexpakDeliveryCutoffInfo =
-    getNexpakDeliveryCutoffInfo;
-
-window.getNexpakDeliveryBusinessDaySummary =
-    getNexpakDeliveryBusinessDaySummary;
-
-window.refreshNexpakDeliverySchedule =
-    refreshNexpakDeliverySchedule;
-
-
-/*=========================================================
- END — onlinedelivery.js — PART 5/8
-=========================================================*/
-
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE — DELIVERY ENGINE
- File: onlinedelivery.js
- Version: 1.0
- Part: 6/8
-=========================================================*/
-
-
-/*=========================================================
- 87. DELIVERY TRACKING CONFIGURATION
-=========================================================*/
-
-const NEXPAK_TRACKING_CONFIG = {
-
-    enabled: true,
-
-    trackingPrefix: "NEX",
-
-    referenceLength: 10,
-
-    defaultStatus: "pending",
-
-    trackingStorageKey:
-        "nexpakDeliveryTracking",
-
-    customerStatuses: [
-
-        "pending",
-
-        "processing",
-
-        "ready",
-
-        "dispatched",
-
-        "in-transit",
-
-        "out-for-delivery",
-
-        "delivered",
-
-        "collected",
-
-        "cancelled",
-
-        "exception"
-
-    ]
-
-};
-
-
-/*=========================================================
- 88. DELIVERY STATUS DEFINITIONS
-=========================================================*/
-
-const NEXPAK_DELIVERY_STATUSES = {
-
-    pending: {
-
-        id: "pending",
-
-        label: "Order Received",
-
-        description:
-            "Your order has been received and is awaiting processing.",
-
-        icon: "fa-clock",
-
-        progress: 10
-
-    },
-
-
-    processing: {
-
-        id: "processing",
-
-        label: "Processing",
-
-        description:
-            "Your order is being prepared.",
-
-        icon: "fa-box-open",
-
-        progress: 25
-
-    },
-
-
-    ready: {
-
-        id: "ready",
-
-        label: "Ready",
-
-        description:
-            "Your order is ready for dispatch or collection.",
-
-        icon: "fa-box",
-
-        progress: 40
-
-    },
-
-
-    dispatched: {
-
-        id: "dispatched",
-
-        label: "Dispatched",
-
-        description:
-            "Your order has left NEXPAK and is on its way.",
-
-        icon: "fa-truck",
-
-        progress: 55
-
-    },
-
-
-    "in-transit": {
-
-        id: "in-transit",
-
-        label: "In Transit",
-
-        description:
-            "Your order is currently in transit.",
-
-        icon: "fa-truck-fast",
-
-        progress: 70
-
-    },
-
-
-    "out-for-delivery": {
-
-        id: "out-for-delivery",
-
-        label: "Out for Delivery",
-
-        description:
-            "Your order is with the delivery driver.",
-
-        icon: "fa-location-dot",
-
-        progress: 85
-
-    },
-
-
-    delivered: {
-
-        id: "delivered",
-
-        label: "Delivered",
-
-        description:
-            "Your order has been delivered.",
-
-        icon: "fa-circle-check",
-
-        progress: 100
-
-    },
-
-
-    collected: {
-
-        id: "collected",
-
-        label: "Collected",
-
-        description:
-            "Your order has been collected.",
-
-        icon: "fa-circle-check",
-
-        progress: 100
-
-    },
-
-
-    cancelled: {
-
-        id: "cancelled",
-
-        label: "Cancelled",
-
-        description:
-            "This delivery has been cancelled.",
-
-        icon: "fa-circle-xmark",
-
-        progress: 0
-
-    },
-
-
-    exception: {
-
-        id: "exception",
-
-        label: "Delivery Exception",
-
-        description:
-            "There is an issue affecting this delivery.",
-
-        icon: "fa-triangle-exclamation",
-
-        progress: 50
-
-    }
-
-};
-
-
-/*=========================================================
- 89. DELIVERY TRACKING STATE
-=========================================================*/
-
-let nexpakTrackingState = {
-
-    trackingNumber: "",
-
-    orderReference: "",
-
-    status:
-        NEXPAK_TRACKING_CONFIG.defaultStatus,
-
-    method:
-        "delivery",
-
-    carrier: "",
-
-    trackingUrl: "",
-
-    dispatchedAt: null,
-
-    deliveredAt: null,
-
-    collectedAt: null,
-
-    lastUpdated: null,
-
-    notes: ""
-
-};
-
-
-/*=========================================================
- 90. GENERATE TRACKING NUMBER
-=========================================================*/
-
-function generateNexpakTrackingNumber(
-    orderReference = ""
-) {
-
-    const prefix =
-        NEXPAK_TRACKING_CONFIG
-            .trackingPrefix;
-
-
-    const reference =
-        String(orderReference || "")
-            .replace(
-                /[^A-Za-z0-9]/g,
-                ""
-            )
-            .toUpperCase();
-
-
-    const timestamp =
-        Date.now()
-            .toString(36)
-            .toUpperCase();
-
-
-    let tracking =
-        `${prefix}-${timestamp}`;
-
-
-    if (reference) {
-
-        tracking =
-            `${prefix}-${reference.slice(-6)}-${timestamp.slice(-4)}`;
-
-    }
-
-
-    return tracking;
-
-}
-
-
-/*=========================================================
- 91. NORMALISE TRACKING NUMBER
-=========================================================*/
-
-function normalizeNexpakTrackingNumber(
-    trackingNumber
-) {
-
-    if (!trackingNumber) {
-
-        return "";
-
-    }
-
-
-    return String(
-        trackingNumber
-    )
-        .trim()
-        .toUpperCase();
-
-}
-
-
-/*=========================================================
- 92. VALIDATE TRACKING NUMBER
-=========================================================*/
-
-function isValidNexpakTrackingNumber(
-    trackingNumber
-) {
-
-    const value =
-        normalizeNexpakTrackingNumber(
-            trackingNumber
-        );
-
-
-    if (!value) {
-
-        return false;
-
-    }
-
-
-    return value.startsWith(
-        NEXPAK_TRACKING_CONFIG
-            .trackingPrefix + "-"
-    );
-
-}
-
-
-/*=========================================================
- 93. GET DELIVERY STATUS
-=========================================================*/
-
-function getNexpakDeliveryStatus(
-    status
-) {
-
-    const normalized =
-        String(
-            status ||
-            NEXPAK_TRACKING_CONFIG
-                .defaultStatus
-        )
-            .toLowerCase()
-            .trim();
-
-
-    return (
-        NEXPAK_DELIVERY_STATUSES[
-            normalized
-        ] ||
-        NEXPAK_DELIVERY_STATUSES.pending
-    );
-
-}
-
-
-/*=========================================================
- 94. SET DELIVERY STATUS
-=========================================================*/
-
-function setNexpakDeliveryStatus(
-    status,
-    options = {}
-) {
-
-    const normalized =
-        String(status || "")
-            .toLowerCase()
-            .trim();
-
-
-    if (
-        !NEXPAK_DELIVERY_STATUSES[
-            normalized
-        ]
-    ) {
-
-        return {
-
-            success: false,
-
-            message:
-                "Invalid delivery status."
-
-        };
-
-    }
-
-
-    nexpakTrackingState.status =
-        normalized;
-
-
-    nexpakTrackingState.lastUpdated =
-        new Date().toISOString();
-
-
-    if (
-        normalized ===
-        "dispatched"
-    ) {
-
-        nexpakTrackingState.dispatchedAt =
-            options.dispatchedAt ||
-            new Date().toISOString();
-
-    }
-
-
-    if (
-        normalized ===
-        "delivered"
-    ) {
-
-        nexpakTrackingState.deliveredAt =
-            options.deliveredAt ||
-            new Date().toISOString();
-
-    }
-
-
-    if (
-        normalized ===
-        "collected"
-    ) {
-
-        nexpakTrackingState.collectedAt =
-            options.collectedAt ||
-            new Date().toISOString();
-
-    }
-
-
-    if (options.notes !== undefined) {
-
-        nexpakTrackingState.notes =
-            String(
-                options.notes || ""
-            );
-
-    }
-
-
-    saveNexpakTrackingState();
-
-
-    dispatchNexpakDeliveryEvent(
-        "nexpak:delivery-status-changed",
-        {
-            ...nexpakTrackingState
-        }
-    );
-
-
-    updateNexpakTrackingInterface();
-
-
-    return {
-
-        success: true,
-
-        status:
-            getNexpakDeliveryStatus(
-                normalized
-            ),
-
-        tracking:
-            {
-                ...nexpakTrackingState
-            }
-
-    };
-
-}
-
-
-/*=========================================================
- 95. INITIALISE TRACKING
-=========================================================*/
-
-function initNexpakTracking(
-    orderReference = "",
-    method = "delivery",
-    options = {}
-) {
-
-    const trackingNumber =
-        normalizeNexpakTrackingNumber(
-            options.trackingNumber
-        ) ||
-        generateNexpakTrackingNumber(
-            orderReference
-        );
-
-
-    nexpakTrackingState = {
-
-        trackingNumber:
-            trackingNumber,
-
-        orderReference:
-            String(
-                orderReference || ""
-            ),
-
-        status:
-            options.status ||
-            NEXPAK_TRACKING_CONFIG
-                .defaultStatus,
-
-        method:
-            method,
-
-        carrier:
-            String(
-                options.carrier || ""
-            ),
-
-        trackingUrl:
-            String(
-                options.trackingUrl || ""
-            ),
-
-        dispatchedAt:
-            options.dispatchedAt ||
-            null,
-
-        deliveredAt:
-            options.deliveredAt ||
-            null,
-
-        collectedAt:
-            options.collectedAt ||
-            null,
-
-        lastUpdated:
-            new Date().toISOString(),
-
-        notes:
-            String(
-                options.notes || ""
-            )
-
-    };
-
-
-    saveNexpakTrackingState();
-
-
-    return {
-
-        ...nexpakTrackingState
-
-    };
-
-}
-
-
-/*=========================================================
- 96. SAVE TRACKING STATE
-=========================================================*/
-
-function saveNexpakTrackingState() {
-
-    try {
-
-        localStorage.setItem(
-            NEXPAK_TRACKING_CONFIG
-                .trackingStorageKey,
-
-            JSON.stringify(
-                nexpakTrackingState
-            )
-        );
-
+        handleNexpakOnlineDeliveryCartUpdate();
 
         return true;
 
-    } catch (error) {
-
-        console.error(
-            "NEXPAK Delivery: Unable to save tracking state.",
-            error
-        );
-
-
-        return false;
-
-    }
-
-}
-
-
-/*=========================================================
- 97. LOAD TRACKING STATE
-=========================================================*/
-
-function loadNexpakTrackingState() {
-
-    try {
-
-        const saved =
-            localStorage.getItem(
-                NEXPAK_TRACKING_CONFIG
-                    .trackingStorageKey
-            );
-
-
-        if (!saved) {
-
-            return nexpakTrackingState;
-
-        }
-
-
-        const parsed =
-            JSON.parse(saved);
-
-
-        if (
-            parsed &&
-            typeof parsed === "object"
-        ) {
-
-            nexpakTrackingState = {
-
-                ...nexpakTrackingState,
-
-                ...parsed
-
-            };
-
-        }
-
-    } catch (error) {
-
-        console.error(
-            "NEXPAK Delivery: Unable to load tracking state.",
-            error
-        );
-
     }
 
 
-    return {
-
-        ...nexpakTrackingState
-
-    };
+    return false;
 
 }
 
 
-/*=========================================================
- 98. GET TRACKING STATE
-=========================================================*/
+/* =========================================================
+   66. STORE READY HANDLER
+   ========================================================= */
 
-function getNexpakTrackingState() {
+function handleNexpakOnlineDeliveryStoreReady() {
 
-    return {
+    waitForNexpakOnlineDeliveryStore();
 
-        ...nexpakTrackingState
-
-    };
-
-}
+    waitForNexpakOnlineDeliveryCart();
 
 
-/*=========================================================
- 99. CLEAR TRACKING STATE
-=========================================================*/
-
-function clearNexpakTrackingState() {
-
-    nexpakTrackingState = {
-
-        trackingNumber: "",
-
-        orderReference: "",
-
-        status:
-            NEXPAK_TRACKING_CONFIG
-                .defaultStatus,
-
-        method: "delivery",
-
-        carrier: "",
-
-        trackingUrl: "",
-
-        dispatchedAt: null,
-
-        deliveredAt: null,
-
-        collectedAt: null,
-
-        lastUpdated: null,
-
-        notes: ""
-
-    };
-
-
-    try {
-
-        localStorage.removeItem(
-            NEXPAK_TRACKING_CONFIG
-                .trackingStorageKey
-        );
-
-    } catch (error) {
-
-        console.error(
-            "NEXPAK Delivery: Unable to clear tracking state.",
-            error
-        );
-
-    }
-
-
-    return getNexpakTrackingState();
+    refreshNexpakOnlineDeliveryEverything();
 
 }
 
 
-/*=========================================================
- 100. GET STATUS PROGRESS
-=========================================================*/
-
-function getNexpakDeliveryProgress(
-    status = null
-) {
-
-    const activeStatus =
-        status ||
-        nexpakTrackingState.status;
-
-
-    return Number(
-        getNexpakDeliveryStatus(
-            activeStatus
-        ).progress || 0
-    );
-
-}
-
-
-/*=========================================================
- 101. BUILD TRACKING TIMELINE
-=========================================================*/
-
-function buildNexpakTrackingTimeline() {
-
-    const currentStatus =
-        nexpakTrackingState.status;
-
-
-    const statusOrder = [
-
-        "pending",
-
-        "processing",
-
-        "ready",
-
-        "dispatched",
-
-        "in-transit",
-
-        "out-for-delivery",
-
-        "delivered"
-
-    ];
-
-
-    const currentIndex =
-        statusOrder.indexOf(
-            currentStatus
-        );
-
-
-    return statusOrder.map(
-        (status, index) => {
-
-            const definition =
-                getNexpakDeliveryStatus(
-                    status
-                );
-
-
-            return {
-
-                ...definition,
-
-                completed:
-                    currentIndex >= index,
-
-                current:
-                    currentStatus === status,
-
-                upcoming:
-                    currentIndex < index
-
-            };
-
-        }
-    );
-
-}
-
-
-/*=========================================================
- 102. GET CUSTOMER TRACKING SUMMARY
-=========================================================*/
-
-function getNexpakTrackingSummary() {
-
-    const status =
-        getNexpakDeliveryStatus(
-            nexpakTrackingState.status
-        );
-
-
-    return {
-
-        trackingNumber:
-            nexpakTrackingState
-                .trackingNumber,
-
-        orderReference:
-            nexpakTrackingState
-                .orderReference,
-
-        status:
-            status.id,
-
-        statusLabel:
-            status.label,
-
-        description:
-            status.description,
-
-        progress:
-            status.progress,
-
-        carrier:
-            nexpakTrackingState
-                .carrier,
-
-        trackingUrl:
-            nexpakTrackingState
-                .trackingUrl,
-
-        estimatedDelivery:
-            nexpakDeliveryState
-                .estimatedDelivery,
-
-        lastUpdated:
-            nexpakTrackingState
-                .lastUpdated
-
-    };
-
-}
-
-
-/*=========================================================
- 103. UPDATE TRACKING INTERFACE
-=========================================================*/
-
-function updateNexpakTrackingInterface() {
-
-    const summary =
-        getNexpakTrackingSummary();
-
-
-    const statusElements =
-        document.querySelectorAll(
-            "[data-delivery-status]"
-        );
-
-
-    statusElements.forEach(
-        element => {
-
-            element.textContent =
-                summary.statusLabel;
-
-        }
-    );
-
-
-    const trackingElements =
-        document.querySelectorAll(
-            "[data-tracking-number]"
-        );
-
-
-    trackingElements.forEach(
-        element => {
-
-            element.textContent =
-                summary.trackingNumber || "—";
-
-        }
-    );
-
-
-    const progressElements =
-        document.querySelectorAll(
-            "[data-delivery-progress]"
-        );
-
-
-    progressElements.forEach(
-        element => {
-
-            element.style.width =
-                `${summary.progress}%`;
-
-            element.setAttribute(
-                "aria-valuenow",
-                String(
-                    summary.progress
-                )
-            );
-
-        }
-    );
-
-
-    const descriptionElements =
-        document.querySelectorAll(
-            "[data-delivery-status-description]"
-        );
-
-
-    descriptionElements.forEach(
-        element => {
-
-            element.textContent =
-                summary.description;
-
-        }
-    );
-
-
-    return summary;
-
-}
-
-
-/*=========================================================
- 104. GET CUSTOMER TRACKING URL
-=========================================================*/
-
-function getNexpakTrackingUrl() {
-
-    return (
-        nexpakTrackingState
-            .trackingUrl || ""
-    );
-
-}
-
-
-/*=========================================================
- 105. SET TRACKING URL
-=========================================================*/
-
-function setNexpakTrackingUrl(url) {
-
-    if (!url) {
-
-        nexpakTrackingState.trackingUrl =
-            "";
-
-    } else {
-
-        try {
-
-            const parsed =
-                new URL(url);
-
-
-            if (
-                parsed.protocol !==
-                    "http:" &&
-                parsed.protocol !==
-                    "https:"
-            ) {
-
-                return false;
-
-            }
-
-
-            nexpakTrackingState
-                .trackingUrl =
-                parsed.href;
-
-        } catch (error) {
-
-            return false;
-
-        }
-
-    }
-
-
-    nexpakTrackingState.lastUpdated =
-        new Date().toISOString();
-
-
-    saveNexpakTrackingState();
-
-
-    return true;
-
-}
-
-
-/*=========================================================
- 106. EXPORT PART 6 FUNCTIONS
-=========================================================*/
-
-window.NEXPAK_TRACKING_CONFIG =
-    NEXPAK_TRACKING_CONFIG;
-
-window.NEXPAK_DELIVERY_STATUSES =
-    NEXPAK_DELIVERY_STATUSES;
-
-window.generateNexpakTrackingNumber =
-    generateNexpakTrackingNumber;
-
-window.normalizeNexpakTrackingNumber =
-    normalizeNexpakTrackingNumber;
-
-window.isValidNexpakTrackingNumber =
-    isValidNexpakTrackingNumber;
-
-window.getNexpakDeliveryStatus =
-    getNexpakDeliveryStatus;
-
-window.setNexpakDeliveryStatus =
-    setNexpakDeliveryStatus;
-
-window.initNexpakTracking =
-    initNexpakTracking;
-
-window.saveNexpakTrackingState =
-    saveNexpakTrackingState;
-
-window.loadNexpakTrackingState =
-    loadNexpakTrackingState;
-
-window.getNexpakTrackingState =
-    getNexpakTrackingState;
-
-window.clearNexpakTrackingState =
-    clearNexpakTrackingState;
-
-window.getNexpakDeliveryProgress =
-    getNexpakDeliveryProgress;
-
-window.buildNexpakTrackingTimeline =
-    buildNexpakTrackingTimeline;
-
-window.getNexpakTrackingSummary =
-    getNexpakTrackingSummary;
-
-window.updateNexpakTrackingInterface =
-    updateNexpakTrackingInterface;
-
-window.getNexpakTrackingUrl =
-    getNexpakTrackingUrl;
-
-window.setNexpakTrackingUrl =
-    setNexpakTrackingUrl;
-
-
-/*=========================================================
- END — onlinedelivery.js — PART 6/8
-=========================================================*/
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE — DELIVERY ENGINE
- File: onlinedelivery.js
- Version: 1.0
- Part: 7/8
-=========================================================*/
-
-
-/*=========================================================
- 107. CUSTOMER DELIVERY UI CONFIGURATION
-=========================================================*/
-
-const NEXPAK_DELIVERY_DISPLAY = {
-
-    trackingContainerSelectors: [
-        "#delivery-tracking",
-        "#deliveryTracking",
-        "[data-delivery-tracking]"
-    ],
-
-    timelineSelectors: [
-        "#delivery-timeline",
-        "#deliveryTimeline",
-        "[data-delivery-timeline]"
-    ],
-
-    statusSelectors: [
-        "#delivery-status",
-        "#deliveryStatus",
-        "[data-delivery-status]"
-    ],
-
-    trackingNumberSelectors: [
-        "#tracking-number",
-        "#trackingNumber",
-        "[data-tracking-number]"
-    ],
-
-    carrierSelectors: [
-        "#delivery-carrier",
-        "#deliveryCarrier",
-        "[data-delivery-carrier]"
-    ],
-
-    estimateSelectors: [
-        "#delivery-estimate",
-        "#deliveryEstimate",
-        "[data-delivery-estimate]"
-    ],
-
-    addressSelectors: [
-        "#delivery-address-summary",
-        "#deliveryAddressSummary",
-        "[data-delivery-address-summary]"
-    ],
-
-    progressSelectors: [
-        "#delivery-progress",
-        "#deliveryProgress",
-        "[data-delivery-progress]"
-    ]
-
-};
-
-
-/*=========================================================
- 108. FORMAT DELIVERY ADDRESS
-=========================================================*/
-
-function formatNexpakDeliveryAddress(
-    address = null
-) {
-
-    if (!address) {
-
-        return "";
-
-    }
-
-
-    const lines = [
-
-        address.fullName,
-
-        address.company,
-
-        address.addressLine1,
-
-        address.addressLine2,
-
-        address.suburb,
-
-        address.city,
-
-        address.provinceName ||
-            address.province,
-
-        address.postalCode,
-
-        address.country
-
-    ];
-
-
-    return lines
-        .filter(
-            value =>
-                value &&
-                String(value).trim()
-        )
-        .map(
-            value =>
-                String(value).trim()
-        )
-        .join(", ");
-
-}
-
-
-/*=========================================================
- 109. UPDATE DELIVERY ADDRESS DISPLAY
-=========================================================*/
-
-function updateNexpakDeliveryAddressDisplay() {
-
-    const address =
-        nexpakDeliveryState.address;
-
-
-    const formatted =
-        formatNexpakDeliveryAddress(
-            address
-        );
-
-
-    NEXPAK_DELIVERY_DISPLAY
-        .addressSelectors
-        .forEach(selector => {
-
-            document
-                .querySelectorAll(selector)
-                .forEach(element => {
-
-                    element.textContent =
-                        formatted ||
-                        "No delivery address selected.";
-
-                });
-
-        });
-
-
-    return formatted;
-
-}
-
-
-/*=========================================================
- 110. BUILD TRACKING TIMELINE HTML
-=========================================================*/
-
-function renderNexpakTrackingTimeline() {
-
-    const timeline =
-        buildNexpakTrackingTimeline();
-
-
-    if (!timeline.length) {
-
-        return "";
-
-    }
-
-
-    return timeline.map(
-        item => {
-
-            const stateClass =
-                item.current
-                    ? "current"
-                    : item.completed
-                        ? "completed"
-                        : "upcoming";
-
-
-            return `
-
-                <div
-                    class="
-                        nexpak-tracking-step
-                        ${stateClass}
-                    "
-                    data-status="${escapeNexpakDeliveryHTML(
-                        item.id
-                    )}"
-                >
-
-                    <div class="tracking-step-icon">
-
-                        <i
-                            class="fa-solid ${escapeNexpakDeliveryHTML(
-                                item.icon
-                            )}"
-                        ></i>
-
-                    </div>
-
-
-                    <div class="tracking-step-content">
-
-                        <strong>
-                            ${escapeNexpakDeliveryHTML(
-                                item.label
-                            )}
-                        </strong>
-
-                        <span>
-                            ${escapeNexpakDeliveryHTML(
-                                item.description
-                            )}
-                        </span>
-
-                    </div>
-
-                </div>
-
-            `;
-
-        }
-    ).join("");
-
-}
-
-
-/*=========================================================
- 111. RENDER TRACKING TIMELINE
-=========================================================*/
-
-function renderNexpakTrackingInterface(
-    container = null
-) {
-
-    let target =
-        container;
-
-
-    if (!target) {
-
-        for (
-            const selector
-            of NEXPAK_DELIVERY_DISPLAY
-                .timelineSelectors
-        ) {
-
-            target =
-                document.querySelector(
-                    selector
-                );
-
-
-            if (target) {
-
-                break;
-
-            }
-
-        }
-
-    }
-
-
-    if (!target) {
-
-        return false;
-
-    }
-
-
-    target.innerHTML =
-        renderNexpakTrackingTimeline();
-
-
-    updateNexpakTrackingInterface();
-
-
-    return true;
-
-}
-
-
-/*=========================================================
- 112. UPDATE TRACKING NUMBER DISPLAY
-=========================================================*/
-
-function updateNexpakTrackingNumberDisplay() {
-
-    const trackingNumber =
-        nexpakTrackingState
-            .trackingNumber ||
-        "Not yet assigned";
-
-
-    NEXPAK_DELIVERY_DISPLAY
-        .trackingNumberSelectors
-        .forEach(selector => {
-
-            document
-                .querySelectorAll(selector)
-                .forEach(element => {
-
-                    element.textContent =
-                        trackingNumber;
-
-                });
-
-        });
-
-
-    return trackingNumber;
-
-}
-
-
-/*=========================================================
- 113. UPDATE DELIVERY STATUS DISPLAY
-=========================================================*/
-
-function updateNexpakDeliveryStatusDisplay() {
-
-    const status =
-        getNexpakDeliveryStatus(
-            nexpakTrackingState.status
-        );
-
-
-    NEXPAK_DELIVERY_DISPLAY
-        .statusSelectors
-        .forEach(selector => {
-
-            document
-                .querySelectorAll(selector)
-                .forEach(element => {
-
-                    element.textContent =
-                        status.label;
-
-                    element.dataset.status =
-                        status.id;
-
-                });
-
-        });
-
-
-    return status;
-
-}
-
-
-/*=========================================================
- 114. UPDATE CARRIER DISPLAY
-=========================================================*/
-
-function updateNexpakCarrierDisplay() {
-
-    const carrier =
-        nexpakTrackingState.carrier ||
-        "NEXPAK Delivery";
-
-
-    NEXPAK_DELIVERY_DISPLAY
-        .carrierSelectors
-        .forEach(selector => {
-
-            document
-                .querySelectorAll(selector)
-                .forEach(element => {
-
-                    element.textContent =
-                        carrier;
-
-                });
-
-        });
-
-
-    return carrier;
-
-}
-
-
-/*=========================================================
- 115. UPDATE PROGRESS DISPLAY
-=========================================================*/
-
-function updateNexpakDeliveryProgressDisplay() {
-
-    const progress =
-        getNexpakDeliveryProgress();
-
-
-    NEXPAK_DELIVERY_DISPLAY
-        .progressSelectors
-        .forEach(selector => {
-
-            document
-                .querySelectorAll(selector)
-                .forEach(element => {
-
-                    element.style.width =
-                        `${progress}%`;
-
-                    element.dataset.progress =
-                        progress;
-
-                    element.setAttribute(
-                        "aria-valuenow",
-                        String(progress)
-                    );
-
-                });
-
-        });
-
-
-    return progress;
-
-}
-
-
-/*=========================================================
- 116. UPDATE COMPLETE CUSTOMER TRACKING UI
-=========================================================*/
-
-function updateNexpakCustomerTrackingUI() {
-
-    const summary =
-        getNexpakTrackingSummary();
-
-
-    updateNexpakTrackingNumberDisplay();
-
-    updateNexpakDeliveryStatusDisplay();
-
-    updateNexpakCarrierDisplay();
-
-    updateNexpakDeliveryProgressDisplay();
-
-    updateNexpakDeliveryAddressDisplay();
-
-    updateNexpakDeliveryEstimateDisplay();
-
-
-    /*
-     * Update tracking URL buttons.
-     */
-
-    const trackingUrl =
-        getNexpakTrackingUrl();
-
-
-    document
-        .querySelectorAll(
-            "[data-tracking-link]"
-        )
-        .forEach(element => {
-
-            if (trackingUrl) {
-
-                element.href =
-                    trackingUrl;
-
-                element.hidden =
-                    false;
-
-                element.target =
-                    "_blank";
-
-                element.rel =
-                    "noopener noreferrer";
-
-            } else {
-
-                element.removeAttribute(
-                    "href"
-                );
-
-                element.hidden =
-                    true;
-
-            }
-
-        });
-
-
-    /*
-     * Update tracking container state.
-     */
-
-    NEXPAK_DELIVERY_DISPLAY
-        .trackingContainerSelectors
-        .forEach(selector => {
-
-            document
-                .querySelectorAll(selector)
-                .forEach(element => {
-
-                    element.dataset.status =
-                        summary.status;
-
-                    element.dataset.progress =
-                        summary.progress;
-
-                });
-
-        });
-
-
-    return summary;
-
-}
-
-
-/*=========================================================
- 117. DELIVERY STATUS MESSAGE
-=========================================================*/
-
-function getNexpakDeliveryStatusMessage(
-    status = null
-) {
-
-    const definition =
-        getNexpakDeliveryStatus(
-            status ||
-            nexpakTrackingState.status
-        );
-
-
-    return definition.description;
-
-}
-
-
-/*=========================================================
- 118. SHOW DELIVERY NOTIFICATION
-=========================================================*/
-
-function showNexpakDeliveryNotification(
-    message,
-    type = "info"
-) {
-
-    if (!message) {
-
-        return false;
-
-    }
-
-
-    let notification =
-        document.querySelector(
-            "#delivery-notification"
-        );
-
-
-    if (!notification) {
-
-        notification =
-            document.querySelector(
-                "[data-delivery-notification]"
-            );
-
-    }
-
-
-    if (!notification) {
-
-        return false;
-
-    }
-
-
-    notification.className =
-        `nexpak-delivery-notification ${type}`;
-
-
-    notification.textContent =
-        String(message);
-
-
-    notification.hidden =
-        false;
-
-
-    return true;
-
-}
-
-
-/*=========================================================
- 119. HIDE DELIVERY NOTIFICATION
-=========================================================*/
-
-function hideNexpakDeliveryNotification() {
-
-    const notification =
-        document.querySelector(
-            "#delivery-notification"
-        ) ||
-        document.querySelector(
-            "[data-delivery-notification]"
-        );
-
-
-    if (!notification) {
-
-        return false;
-
-    }
-
-
-    notification.hidden =
-        true;
-
-
-    return true;
-
-}
-
-
-/*=========================================================
- 120. DELIVERY STATUS NOTIFICATION
-=========================================================*/
-
-function notifyNexpakDeliveryStatusChange() {
-
-    const status =
-        getNexpakDeliveryStatus(
-            nexpakTrackingState.status
-        );
-
-
-    let type =
-        "info";
-
-
-    if (
-        status.id ===
-        "delivered" ||
-        status.id ===
-        "collected"
-    ) {
-
-        type =
-            "success";
-
-    }
-
-
-    if (
-        status.id ===
-        "exception" ||
-        status.id ===
-        "cancelled"
-    ) {
-
-        type =
-            "warning";
-
-    }
-
-
-    showNexpakDeliveryNotification(
-        status.description,
-        type
-    );
-
-
-    return {
-
-        status:
-            status.id,
-
-        message:
-            status.description,
-
-        type:
-            type
-
-    };
-
-}
-
-
-/*=========================================================
- 121. DELIVERY TRACKING SEARCH
-=========================================================*/
-
-function findNexpakTrackingNumber(
-    trackingNumber
-) {
-
-    const requested =
-        normalizeNexpakTrackingNumber(
-            trackingNumber
-        );
-
-
-    if (!requested) {
-
-        return {
-
-            found: false,
-
-            message:
-                "Please enter a tracking number."
-
-        };
-
-    }
-
-
-    if (
-        !isValidNexpakTrackingNumber(
-            requested
-        )
-    ) {
-
-        return {
-
-            found: false,
-
-            message:
-                "Invalid NEXPAK tracking number."
-
-        };
-
-    }
-
-
-    /*
-     * Current browser session/local state.
-     *
-     * A production backend can replace this
-     * lookup later without changing the
-     * customer-facing API.
-     */
-
-    if (
-        normalizeNexpakTrackingNumber(
-            nexpakTrackingState
-                .trackingNumber
-        ) === requested
-    ) {
-
-        return {
-
-            found: true,
-
-            tracking:
-                getNexpakTrackingState(),
-
-            summary:
-                getNexpakTrackingSummary()
-
-        };
-
-    }
-
-
-    return {
-
-        found: false,
-
-        message:
-            "Tracking information could not be found."
-
-    };
-
-}
-
-
-/*=========================================================
- 122. TRACKING SEARCH FORM
-=========================================================*/
-
-function bindNexpakTrackingSearch() {
-
-    const forms =
-        document.querySelectorAll(
-            "#tracking-search-form, " +
-            "#trackingSearchForm, " +
-            "[data-tracking-search-form]"
-        );
-
-
-    forms.forEach(form => {
-
-        if (
-            form.dataset.nexpakBound ===
-            "true"
-        ) {
-
-            return;
-
-        }
-
-
-        form.addEventListener(
-            "submit",
-            function(event) {
-
-                event.preventDefault();
-
-
-                const input =
-                    form.querySelector(
-                        'input[name="trackingNumber"], ' +
-                        "#trackingNumberInput, " +
-                        "[data-tracking-input]"
-                    );
-
-
-                if (!input) {
-
-                    return;
-
-                }
-
-
-                const result =
-                    findNexpakTrackingNumber(
-                        input.value
-                    );
-
-
-                if (!result.found) {
-
-                    showNexpakDeliveryNotification(
-                        result.message,
-                        "warning"
-                    );
-
-
-                    return;
-
-                }
-
-
-                hideNexpakDeliveryNotification();
-
-
-                updateNexpakCustomerTrackingUI();
-
-                renderNexpakTrackingInterface();
-
-            }
-        );
-
-
-        form.dataset.nexpakBound =
-            "true";
-
-    });
-
-
-    return true;
-
-}
-
-
-/*=========================================================
- 123. BUILD DELIVERY ORDER METADATA
-=========================================================*/
-
-function buildNexpakDeliveryOrderMetadata() {
-
-    const deliveryData =
-        getNexpakCheckoutDeliveryData();
-
-
-    const tracking =
-        getNexpakTrackingState();
-
-
-    return {
-
-        fulfilmentMethod:
-            deliveryData.method,
-
-        deliveryType:
-            deliveryData.deliveryType,
-
-        deliveryZone:
-            deliveryData.zone,
-
-        deliveryAddress:
-            deliveryData.address,
-
-        deliveryProvince:
-            deliveryData.province,
-
-        deliveryCity:
-            deliveryData.city,
-
-        deliverySuburb:
-            deliveryData.suburb,
-
-        deliveryPostalCode:
-            deliveryData.postalCode,
-
-        deliveryCountry:
-            deliveryData.country,
-
-        deliveryFee:
-            deliveryData.deliveryFee,
-
-        estimatedDelivery:
-            deliveryData.estimatedDelivery,
-
-        deliveryTrackingNumber:
-            tracking.trackingNumber,
-
-        deliveryStatus:
-            tracking.status,
-
-        deliveryCarrier:
-            tracking.carrier,
-
-        deliveryTrackingUrl:
-            tracking.trackingUrl,
-
-        deliveryLastUpdated:
-            tracking.lastUpdated
-
-    };
-
-}
-
-
-/*=========================================================
- 124. ATTACH DELIVERY DATA TO ORDER
-=========================================================*/
-
-function attachNexpakDeliveryToOrder(
-    order = {}
-) {
-
-    if (
-        !order ||
-        typeof order !== "object"
-    ) {
-
-        order = {};
-
-    }
-
-
-    const metadata =
-        buildNexpakDeliveryOrderMetadata();
-
-
-    order.delivery =
-        metadata;
-
-
-    /*
-     * Also expose commonly-used fields
-     * at order level for compatibility.
-     */
-
-    order.deliveryMethod =
-        metadata.fulfilmentMethod;
-
-    order.deliveryFee =
-        metadata.deliveryFee;
-
-    order.deliveryAddress =
-        metadata.deliveryAddress;
-
-    order.deliveryStatus =
-        metadata.deliveryStatus;
-
-    order.trackingNumber =
-        metadata.deliveryTrackingNumber;
-
-    order.estimatedDelivery =
-        metadata.estimatedDelivery;
-
-
-    return order;
-
-}
-
-
-/*=========================================================
- 125. DELIVERY CHECKOUT SUMMARY
-=========================================================*/
-
-function getNexpakDeliveryCheckoutSummary() {
-
-    const data =
-        getNexpakCheckoutDeliveryData();
-
-
-    const tracking =
-        getNexpakTrackingSummary();
-
-
-    return {
-
-        fulfilmentMethod:
-            data.method,
-
-        fulfilmentLabel:
-            getNexpakDeliveryMethodLabel(
-                data.method
-            ),
-
-        deliveryFee:
-            data.deliveryFee,
-
-        deliveryFeeFormatted:
-            formatNexpakDeliveryCurrency(
-                data.deliveryFee
-            ),
-
-        estimatedDelivery:
-            data.estimatedDelivery,
-
-        address:
-            data.address,
-
-        addressFormatted:
-            formatNexpakDeliveryAddress(
-                data.address
-            ),
-
-        trackingNumber:
-            tracking.trackingNumber,
-
-        status:
-            tracking.status,
-
-        statusLabel:
-            tracking.statusLabel
-
-    };
-
-}
-
-
-/*=========================================================
- 126. EXPORT PART 7 FUNCTIONS
-=========================================================*/
-
-window.NEXPAK_DELIVERY_DISPLAY =
-    NEXPAK_DELIVERY_DISPLAY;
-
-window.formatNexpakDeliveryAddress =
-    formatNexpakDeliveryAddress;
-
-window.updateNexpakDeliveryAddressDisplay =
-    updateNexpakDeliveryAddressDisplay;
-
-window.renderNexpakTrackingTimeline =
-    renderNexpakTrackingTimeline;
-
-window.renderNexpakTrackingInterface =
-    renderNexpakTrackingInterface;
-
-window.updateNexpakTrackingNumberDisplay =
-    updateNexpakTrackingNumberDisplay;
-
-window.updateNexpakDeliveryStatusDisplay =
-    updateNexpakDeliveryStatusDisplay;
-
-window.updateNexpakCarrierDisplay =
-    updateNexpakCarrierDisplay;
-
-window.updateNexpakDeliveryProgressDisplay =
-    updateNexpakDeliveryProgressDisplay;
-
-window.updateNexpakCustomerTrackingUI =
-    updateNexpakCustomerTrackingUI;
-
-window.getNexpakDeliveryStatusMessage =
-    getNexpakDeliveryStatusMessage;
-
-window.showNexpakDeliveryNotification =
-    showNexpakDeliveryNotification;
-
-window.hideNexpakDeliveryNotification =
-    hideNexpakDeliveryNotification;
-
-window.notifyNexpakDeliveryStatusChange =
-    notifyNexpakDeliveryStatusChange;
-
-window.findNexpakTrackingNumber =
-    findNexpakTrackingNumber;
-
-window.bindNexpakTrackingSearch =
-    bindNexpakTrackingSearch;
-
-window.buildNexpakDeliveryOrderMetadata =
-    buildNexpakDeliveryOrderMetadata;
-
-window.attachNexpakDeliveryToOrder =
-    attachNexpakDeliveryToOrder;
-
-window.getNexpakDeliveryCheckoutSummary =
-    getNexpakDeliveryCheckoutSummary;
-
-
-/*=========================================================
- END — onlinedelivery.js — PART 7/8
-=========================================================*/
-
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE — DELIVERY ENGINE
- File: onlinedelivery.js
- Version: 1.0
- Part: 8/8 — FINAL
-=========================================================*/
-
-
-/*=========================================================
- 127. DELIVERY ENGINE FINAL CONFIGURATION
-=========================================================*/
-
-const NEXPAK_DELIVERY_ENGINE = {
-
-    version: "1.0",
-
-    file: "onlinedelivery.js",
-
-    status: "production-ready",
-
-    initialized: false,
-
-    initializedAt: null,
-
-    storageVersion: "1.0",
-
-    country: "South Africa",
-
-    currency: "ZAR"
-
-};
-
-
-/*=========================================================
- 128. FINAL DELIVERY VALIDATION
-=========================================================*/
-
-function validateNexpakDeliveryEngine() {
-
-    const errors = [];
-
-
-    /*---------------------------------------------
-     DELIVERY METHOD
-    ---------------------------------------------*/
-
-    if (
-        !nexpakDeliveryState.method
-    ) {
-
-        errors.push(
-            "Delivery method has not been selected."
-        );
-
-    }
-
-
-    if (
-        nexpakDeliveryState.method &&
-        !NEXPAK_DELIVERY_METHODS[
-            nexpakDeliveryState.method
-        ]
-    ) {
-
-        errors.push(
-            "Selected delivery method is invalid."
-        );
-
-    }
-
-
-    /*---------------------------------------------
-     COLLECTION
-    ---------------------------------------------*/
-
-    if (
-        nexpakDeliveryState.method ===
-        "collection"
-    ) {
-
-        return {
-
-            valid:
-                errors.length === 0,
-
-            errors: errors
-
-        };
-
-    }
-
-
-    /*---------------------------------------------
-     DELIVERY ADDRESS
-    ---------------------------------------------*/
-
-    if (
-        nexpakDeliveryState.method ===
-            "delivery" ||
-        nexpakDeliveryState.method ===
-            "express"
-    ) {
-
-        const validation =
-            validateNexpakFulfilment();
-
-
-        if (!validation.valid) {
-
-            errors.push(
-                ...validation.errors
-            );
-
-        }
-
-    }
-
-
-    /*---------------------------------------------
-     DELIVERY ZONE
-    ---------------------------------------------*/
-
-    if (
-        nexpakDeliveryState.zone &&
-        !NEXPAK_DELIVERY_ZONES[
-            nexpakDeliveryState.zone
-        ]
-    ) {
-
-        errors.push(
-            "Delivery zone is invalid."
-        );
-
-    }
-
-
-    return {
-
-        valid:
-            errors.length === 0,
-
-        errors:
-            [
-                ...new Set(errors)
-            ]
-
-    };
-
-}
-
-
-/*=========================================================
- 129. FINALISE DELIVERY DATA
-=========================================================*/
-
-function finalizeNexpakDeliveryData() {
-
-    const validation =
-        validateNexpakDeliveryEngine();
-
-
-    if (!validation.valid) {
-
-        return {
-
-            success: false,
-
-            valid: false,
-
-            errors:
-                validation.errors,
-
-            data:
-                getNexpakCheckoutDeliveryData()
-
-        };
-
-    }
-
-
-    /*
-     * Make sure delivery fee is current.
-     */
-
-    const subtotal =
-        getNexpakActiveCheckoutSubtotal();
-
-
-    updateNexpakDeliveryFee(
-        subtotal
-    );
-
-
-    /*
-     * Update delivery dates.
-     */
-
-    updateNexpakEstimatedDeliveryDate();
-
-
-    /*
-     * Create tracking state if required.
-     */
-
-    if (
-        !nexpakTrackingState
-            .trackingNumber
-    ) {
-
-        initNexpakTracking(
-
-            "",
-
-            nexpakDeliveryState.method
-
-        );
-
-    }
-
-
-    const data =
-        getNexpakCheckoutDeliveryData();
-
-
-    saveNexpakDeliveryState();
-
-    saveNexpakTrackingState();
-
-
-    return {
-
-        success: true,
-
-        valid: true,
-
-        errors: [],
-
-        data: data,
-
-        tracking:
-            getNexpakTrackingState()
-
-    };
-
-}
-
-
-/*=========================================================
- 130. PREPARE ORDER DELIVERY
-=========================================================*/
-
-function prepareNexpakOrderDelivery(
-    order = {}
-) {
-
-    const finalized =
-        finalizeNexpakDeliveryData();
-
-
-    if (!finalized.success) {
-
-        return {
-
-            success: false,
-
-            valid: false,
-
-            errors:
-                finalized.errors,
-
-            order: order
-
-        };
-
-    }
-
-
-    const updatedOrder =
-        attachNexpakDeliveryToOrder(
-            order
-        );
-
-
-    return {
-
-        success: true,
-
-        valid: true,
-
-        errors: [],
-
-        order:
-            updatedOrder,
-
-        delivery:
-            finalized.data,
-
-        tracking:
-            finalized.tracking
-
-    };
-
-}
-
-
-/*=========================================================
- 131. DELIVERY CHECKOUT HOOK
-=========================================================*/
-
-function nexpakDeliveryCheckoutHook(
-    order = {}
-) {
-
-    const prepared =
-        prepareNexpakOrderDelivery(
-            order
-        );
-
-
-    if (!prepared.success) {
-
-        return {
-
-            success: false,
-
-            order: order,
-
-            errors:
-                prepared.errors
-
-        };
-
-    }
-
-
-    dispatchNexpakDeliveryEvent(
-        "nexpak:order-delivery-prepared",
-        {
-            order:
-                prepared.order,
-
-            delivery:
-                prepared.delivery,
-
-            tracking:
-                prepared.tracking
-
-        }
-    );
-
-
-    return prepared;
-
-}
-
-
-/*=========================================================
- 132. LISTEN FOR CHECKOUT COMPLETION
-=========================================================*/
-
-function bindNexpakDeliveryCheckoutHook() {
-
-    const checkoutEvents = [
-
-        "nexpak:checkout-complete",
-
-        "nexpak:order-created",
-
-        "checkoutComplete",
-
-        "orderCreated"
-
-    ];
-
-
-    checkoutEvents.forEach(
-        eventName => {
-
-            document.addEventListener(
-                eventName,
-                function(event) {
-
-                    const detail =
-                        event.detail || {};
-
-
-                    const order =
-                        detail.order ||
-                        detail;
-
-
-                    /*
-                     * Do not block the checkout
-                     * event itself. Prepare the
-                     * delivery metadata separately.
-                     */
-
-                    const result =
-                        prepareNexpakOrderDelivery(
-                            order
-                        );
-
-
-                    if (
-                        result.success
-                    ) {
-
-                        dispatchNexpakDeliveryEvent(
-                            "nexpak:delivery-attached",
-                            {
-                                order:
-                                    result.order,
-
-                                delivery:
-                                    result.delivery,
-
-                                tracking:
-                                    result.tracking
-                            }
-                        );
-
-                    }
-
-                }
-            );
-
-        }
-    );
-
-
-    return true;
-
-}
-
-
-/*=========================================================
- 133. DELIVERY STATE SYNCHRONISATION
-=========================================================*/
-
-function syncNexpakDeliveryState() {
-
-    /*
-     * Reload saved delivery information.
-     */
-
-    loadNexpakDeliveryState();
-
-
-    /*
-     * Reload tracking information.
-     */
-
-    loadNexpakTrackingState();
-
-
-    /*
-     * Validate method.
-     */
-
-    if (
-        !NEXPAK_DELIVERY_METHODS[
-            nexpakDeliveryState.method
-        ]
-    ) {
-
-        nexpakDeliveryState.method =
-            NEXPAK_DELIVERY_CONFIG
-                .defaultMethod;
-
-    }
-
-
-    /*
-     * Validate zone.
-     */
-
-    if (
-        !NEXPAK_DELIVERY_ZONES[
-            nexpakDeliveryState.zone
-        ]
-    ) {
-
-        nexpakDeliveryState.zone =
-            NEXPAK_DELIVERY_CONFIG
-                .defaultZone;
-
-    }
-
-
-    /*
-     * Recalculate fee.
-     */
-
-    const subtotal =
-        getNexpakActiveCheckoutSubtotal();
-
-
-    updateNexpakDeliveryFee(
-        subtotal
-    );
-
-
-    /*
-     * Refresh estimated delivery.
-     */
-
-    updateNexpakEstimatedDeliveryDate();
-
-
-    return {
-
-        delivery:
-            getNexpakDeliveryState(),
-
-        tracking:
-            getNexpakTrackingState()
-
-    };
-
-}
-
-
-/*=========================================================
- 134. DELIVERY STORAGE CLEANUP
-=========================================================*/
-
-function cleanupNexpakDeliveryStorage() {
-
-    /*
-     * Keep active delivery information,
-     * but remove invalid/empty tracking data.
-     */
-
-    loadNexpakTrackingState();
-
-
-    if (
-        !nexpakTrackingState
-            .trackingNumber
-    ) {
-
-        nexpakTrackingState = {
-
-            trackingNumber: "",
-
-            orderReference: "",
-
-            status:
-                NEXPAK_TRACKING_CONFIG
-                    .defaultStatus,
-
-            method:
-                nexpakDeliveryState.method,
-
-            carrier: "",
-
-            trackingUrl: "",
-
-            dispatchedAt: null,
-
-            deliveredAt: null,
-
-            collectedAt: null,
-
-            lastUpdated: null,
-
-            notes: ""
-
-        };
-
-
-        saveNexpakTrackingState();
-
-    }
-
-
-    return true;
-
-}
-
-
-/*=========================================================
- 135. FINAL DELIVERY UI REFRESH
-=========================================================*/
-
-function refreshNexpakDeliveryUI() {
-
-    /*
-     * Checkout
-     */
-
-    updateNexpakCheckoutTotalDisplay();
-
-
-    /*
-     * Fulfilment
-     */
-
-    updateNexpakFulfilmentUI();
-
-
-    /*
-     * Scheduling
-     */
-
-    refreshNexpakDeliverySchedule();
-
-
-    /*
-     * Tracking
-     */
-
-    updateNexpakCustomerTrackingUI();
-
-
-    /*
-     * Timeline
-     */
-
-    renderNexpakTrackingInterface();
-
-
-    /*
-     * Tracking search
-     */
-
-    bindNexpakTrackingSearch();
-
-
-    /*
-     * Delivery methods
-     */
-
-    bindNexpakDeliveryMethodEvents();
-
-
-    return true;
-
-}
-
-
-/*=========================================================
- 136. FINAL DELIVERY ENGINE INITIALISATION
-=========================================================*/
-
-function initNexpakDeliveryEngine() {
-
-    /*
-     * Prevent duplicate initialisation.
-     */
-
-    if (
-        NEXPAK_DELIVERY_ENGINE
-            .initialized
-    ) {
-
-        return {
-
-            initialized: true,
-
-            alreadyInitialized: true
-
-        };
-
-    }
-
-
-    /*---------------------------------------------
-     STEP 1 — DELIVERY STATE
-    ---------------------------------------------*/
-
-    initNexpakDelivery();
-
-
-    /*---------------------------------------------
-     STEP 2 — TRACKING STATE
-    ---------------------------------------------*/
-
-    loadNexpakTrackingState();
-
-
-    /*---------------------------------------------
-     STEP 3 — CLEAN STORAGE
-    ---------------------------------------------*/
-
-    cleanupNexpakDeliveryStorage();
-
-
-    /*---------------------------------------------
-     STEP 4 — CHECKOUT
-    ---------------------------------------------*/
-
-    initNexpakCheckoutDelivery();
-
-
-    /*---------------------------------------------
-     STEP 5 — CHECKOUT HOOK
-    ---------------------------------------------*/
-
-    bindNexpakDeliveryCheckoutHook();
-
-
-    /*---------------------------------------------
-     STEP 6 — TRACKING
-    ---------------------------------------------*/
-
-    bindNexpakTrackingSearch();
-
-
-    /*---------------------------------------------
-     STEP 7 — SYNCHRONISE
-    ---------------------------------------------*/
-
-    syncNexpakDeliveryState();
-
-
-    /*---------------------------------------------
-     STEP 8 — UI
-    ---------------------------------------------*/
-
-    refreshNexpakDeliveryUI();
-
-
-    /*---------------------------------------------
-     FINAL STATE
-    ---------------------------------------------*/
-
-    NEXPAK_DELIVERY_ENGINE
-        .initialized = true;
-
-
-    NEXPAK_DELIVERY_ENGINE
-        .initializedAt =
-        new Date().toISOString();
-
-
-    return {
-
-        initialized: true,
-
-        alreadyInitialized: false,
-
-        initializedAt:
-            NEXPAK_DELIVERY_ENGINE
-                .initializedAt,
-
-        delivery:
-            getNexpakDeliveryState(),
-
-        tracking:
-            getNexpakTrackingState()
-
-    };
-
-}
-
-
-/*=========================================================
- 137. RESET DELIVERY ENGINE
-=========================================================*/
-
-function resetNexpakDeliveryEngine() {
-
-    clearNexpakDeliveryState();
-
-    clearNexpakTrackingState();
-
-
-    NEXPAK_DELIVERY_ENGINE
-        .initialized = false;
-
-
-    NEXPAK_DELIVERY_ENGINE
-        .initializedAt = null;
-
-
-    return true;
-
-}
-
-
-/*=========================================================
- 138. GET COMPLETE DELIVERY SNAPSHOT
-=========================================================*/
-
-function getNexpakDeliverySnapshot() {
-
-    return {
-
-        engine: {
-            ...NEXPAK_DELIVERY_ENGINE
-        },
-
-        delivery: {
-            ...getNexpakDeliveryState()
-        },
-
-        checkout:
-            getNexpakCheckoutDeliveryData(),
-
-        tracking: {
-            ...getNexpakTrackingState()
-        },
-
-        trackingSummary:
-            getNexpakTrackingSummary(),
-
-        schedule:
-            getNexpakCurrentDeliveryDateRange(),
-
-        validation:
-            validateNexpakDeliveryEngine()
-
-    };
-
-}
-
-
-/*=========================================================
- 139. FINAL GLOBAL API
-=========================================================*/
-
-window.NEXPAK_DELIVERY_ENGINE =
-    NEXPAK_DELIVERY_ENGINE;
-
-window.validateNexpakDeliveryEngine =
-    validateNexpakDeliveryEngine;
-
-window.finalizeNexpakDeliveryData =
-    finalizeNexpakDeliveryData;
-
-window.prepareNexpakOrderDelivery =
-    prepareNexpakOrderDelivery;
-
-window.nexpakDeliveryCheckoutHook =
-    nexpakDeliveryCheckoutHook;
-
-window.bindNexpakDeliveryCheckoutHook =
-    bindNexpakDeliveryCheckoutHook;
-
-window.syncNexpakDeliveryState =
-    syncNexpakDeliveryState;
-
-window.cleanupNexpakDeliveryStorage =
-    cleanupNexpakDeliveryStorage;
-
-window.refreshNexpakDeliveryUI =
-    refreshNexpakDeliveryUI;
-
-window.initNexpakDeliveryEngine =
-    initNexpakDeliveryEngine;
-
-window.resetNexpakDeliveryEngine =
-    resetNexpakDeliveryEngine;
-
-window.getNexpakDeliverySnapshot =
-    getNexpakDeliverySnapshot;
-
-
-/*=========================================================
- 140. FINAL AUTO INITIALISATION
-=========================================================*/
-
-function startNexpakDeliveryEngine() {
-
-    try {
-
-        initNexpakDeliveryEngine();
-
-    } catch (error) {
-
-        console.error(
-            "NEXPAK Delivery Engine initialization failed:",
-            error
-        );
-
-
-        dispatchNexpakDeliveryEvent(
-            "nexpak:delivery-engine-error",
-            {
-                error:
-                    error.message ||
-                    String(error)
-            }
-        );
-
-    }
-
-}
-
-
-/*=========================================================
- DOM READY
-=========================================================*/
+/* =========================================================
+   67. EXTEND DELIVERY ENGINE API
+   ========================================================= */
 
 if (
-    document.readyState ===
-    "loading"
+    window.NEXPAK_ONLINE_DELIVERY
+) {
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .isDOMReady =
+        isNexpakOnlineDeliveryDOMReady;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .initialiseState =
+        initialiseNexpakOnlineDeliveryState;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .initialiseDOM =
+        initialiseNexpakOnlineDeliveryDOM;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .initialise =
+        initialiseNexpakOnlineDelivery;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .waitForCart =
+        waitForNexpakOnlineDeliveryCart;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .waitForStore =
+        waitForNexpakOnlineDeliveryStore;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .storeReady =
+        handleNexpakOnlineDeliveryStoreReady;
+
+}
+
+
+/* =========================================================
+   68. REGISTER DOM READY EVENT
+   ========================================================= */
+
+if (
+    document.readyState === "loading"
 ) {
 
     document.addEventListener(
         "DOMContentLoaded",
-        startNexpakDeliveryEngine,
+        handleNexpakOnlineDeliveryDOMReady,
         {
             once: true
         }
@@ -7976,17 +2604,232 @@ if (
 
 } else {
 
-    startNexpakDeliveryEngine();
+    handleNexpakOnlineDeliveryDOMReady();
 
 }
 
 
-/*=========================================================
- END — onlinedelivery.js — PART 8/8
-=========================================================*/
+/* =========================================================
+   69. LISTEN FOR ONLINE STORE READY
+   ========================================================= */
+
+window.addEventListener(
+    "nexpak:online-store-ready",
+    handleNexpakOnlineDeliveryStoreReady
+);
 
 
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- DELIVERY ENGINE — FILE COMPLETE
-=========================================================*/
+/* =========================================================
+   70. LISTEN FOR ONLINE CART READY
+   ========================================================= */
+
+window.addEventListener(
+    "nexpak:online-cart-ready",
+    handleNexpakOnlineDeliveryStoreReady
+);
+
+/* =========================================================
+   NEXPAK ONLINE STORE — DELIVERY ENGINE
+   PART 8
+   PUBLIC API + FINAL ENGINE STATUS
+   ========================================================= */
+
+
+/* =========================================================
+   71. FINAL DELIVERY API
+   ========================================================= */
+
+if (
+    window.NEXPAK_ONLINE_DELIVERY
+) {
+
+    window.NEXPAK_ONLINE_DELIVERY.version =
+        "1.0.0";
+
+
+    window.NEXPAK_ONLINE_DELIVERY.engine =
+        "NEXPAK Online Store Delivery Engine";
+
+
+    window.NEXPAK_ONLINE_DELIVERY.mode =
+        "KIT_ONLY";
+
+
+    window.NEXPAK_ONLINE_DELIVERY.currency =
+        "ZAR";
+
+
+    window.NEXPAK_ONLINE_DELIVERY.status =
+        "READY";
+
+
+    window.NEXPAK_ONLINE_DELIVERY.getDeliveryFee =
+        getNexpakOnlineDeliveryFee;
+
+
+    window.NEXPAK_ONLINE_DELIVERY.getDeliverySummary =
+        getNexpakOnlineDeliverySummary;
+
+
+    window.NEXPAK_ONLINE_DELIVERY.getCheckoutDelivery =
+        getNexpakOnlineCheckoutDeliveryData;
+
+
+    window.NEXPAK_ONLINE_DELIVERY.calculateDelivery =
+        calculateNexpakOnlineDeliveryFee;
+
+
+    window.NEXPAK_ONLINE_DELIVERY.refreshDelivery =
+        refreshNexpakOnlineDelivery;
+
+
+    window.NEXPAK_ONLINE_DELIVERY.refreshAll =
+        refreshNexpakOnlineDeliveryEverything;
+
+}
+
+
+/* =========================================================
+   72. FINAL DELIVERY CONFIGURATION CHECK
+   ========================================================= */
+
+function validateNexpakOnlineDeliveryConfiguration() {
+
+    const config =
+        NEXPAK_ONLINE_DELIVERY_CONFIG;
+
+
+    const requiredValues = [
+
+        config.baseFee,
+
+        config.distanceRate,
+
+        config.weightRate,
+
+        config.minimumFee,
+
+        config.maximumFee,
+
+        config.maximumDistance
+
+    ];
+
+
+    const valid =
+        requiredValues.every(
+            function (value) {
+
+                return (
+                    Number.isFinite(
+                        Number(value)
+                    ) &&
+                    Number(value) >= 0
+                );
+
+            }
+        );
+
+
+    if (!valid) {
+
+        console.error(
+            "NEXPAK Online Delivery: Invalid delivery configuration."
+        );
+
+    }
+
+
+    return valid;
+
+}
+
+
+/* =========================================================
+   73. FINAL DELIVERY ENGINE CHECK
+   ========================================================= */
+
+function runNexpakOnlineDeliveryEngineCheck() {
+
+    const configurationValid =
+        validateNexpakOnlineDeliveryConfiguration();
+
+
+    const testResult =
+        calculateNexpakOnlineDeliveryFee(
+            0,
+            0
+        );
+
+
+    const engineReady =
+        configurationValid &&
+        testResult.success &&
+        testResult.fee >=
+            NEXPAK_ONLINE_DELIVERY_CONFIG.minimumFee &&
+        testResult.fee <=
+            NEXPAK_ONLINE_DELIVERY_CONFIG.maximumFee;
+
+
+    if (engineReady) {
+
+        console.log(
+            "NEXPAK Online Store Delivery Engine: READY"
+        );
+
+    } else {
+
+        console.error(
+            "NEXPAK Online Store Delivery Engine: CHECK FAILED"
+        );
+
+    }
+
+
+    return engineReady;
+
+}
+
+
+/* =========================================================
+   74. FINAL PUBLIC STATUS
+   ========================================================= */
+
+if (
+    window.NEXPAK_ONLINE_DELIVERY
+) {
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .validateConfiguration =
+        validateNexpakOnlineDeliveryConfiguration;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .engineCheck =
+        runNexpakOnlineDeliveryEngineCheck;
+
+
+    window.NEXPAK_ONLINE_DELIVERY
+        .status =
+        runNexpakOnlineDeliveryEngineCheck()
+            ? "READY"
+            : "ERROR";
+
+}
+
+
+/* =========================================================
+   75. FINAL ENGINE MESSAGE
+   ========================================================= */
+
+console.log(
+    "NEXPAK Online Store Delivery Engine: " +
+    "Initialised successfully."
+);
+
+
+/* =========================================================
+   76. FINAL IIFE CLOSURE
+   ========================================================= */
+
+})();
