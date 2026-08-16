@@ -1,5548 +1,159 @@
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE — CHECKOUT ENGINE
-=========================================================
- File: onlinecheckout.js
- Version: 1.0
- Part: 1/8
-
- PURPOSE:
- - Checkout engine foundation
- - Read cart data
- - Maintain checkout state
- - Customer information state
- - Order validation foundation
- - Prepare checkout flow
- - Compatible with onlinecart.js
-=========================================================*/
-
-(function () {
-    "use strict";
-
-    /*=====================================================
-      CHECKOUT CONFIGURATION
-    =====================================================*/
-
-    const CHECKOUT_CONFIG = {
-        version: "1.0",
-
-        storageKey: "nexpak_checkout_v1",
-
-        cartStorageKeys: [
-            "nexpak_cart_v1",
-            "nexpak_cart",
-            "online_cart",
-            "nexpak_online_cart"
-        ],
-
-        currency: "ZAR",
-
-        country: "South Africa",
-
-        minimumOrderValue: 0
-    };
-
-
-    /*=====================================================
-      CHECKOUT STATE
-    =====================================================*/
-
-    const checkoutState = {
-        step: 1,
-
-        customer: {
-            firstName: "",
-            lastName: "",
-            email: "",
-            phone: "",
-            company: ""
-        },
-
-        billing: {
-            address1: "",
-            address2: "",
-            suburb: "",
-            city: "",
-            province: "",
-            postalCode: "",
-            country: "South Africa"
-        },
-
-        delivery: {
-            method: "",
-            address1: "",
-            address2: "",
-            suburb: "",
-            city: "",
-            province: "",
-            postalCode: "",
-            instructions: ""
-        },
-
-        payment: {
-            method: "",
-            status: "pending",
-            reference: ""
-        },
-
-        notes: "",
-
-        cart: [],
-
-        totals: {
-            subtotal: 0,
-            delivery: 0,
-            discount: 0,
-            tax: 0,
-            total: 0
-        },
-
-        order: {
-            orderNumber: "",
-            createdAt: "",
-            status: "draft"
-        }
-    };
-
-
-    /*=====================================================
-      UTILITY — SAFE NUMBER
-    =====================================================*/
-
-    function safeNumber(value) {
-
-        const number = Number(value);
-
-        return Number.isFinite(number) ? number : 0;
-    }
-
-
-    /*=====================================================
-      UTILITY — SAFE STORAGE READ
-    =====================================================*/
-
-    function readStorage(key) {
-
-        try {
-
-            const data = localStorage.getItem(key);
-
-            if (!data) {
-                return null;
-            }
-
-            return JSON.parse(data);
-
-        } catch (error) {
-
-            console.warn(
-                "[NEXPAK CHECKOUT] Storage read failed:",
-                key,
-                error
-            );
-
-            return null;
-        }
-    }
-
-
-    /*=====================================================
-      UTILITY — SAFE STORAGE WRITE
-    =====================================================*/
-
-    function writeStorage(key, data) {
-
-        try {
-
-            localStorage.setItem(
-                key,
-                JSON.stringify(data)
-            );
-
-            return true;
-
-        } catch (error) {
-
-            console.warn(
-                "[NEXPAK CHECKOUT] Storage write failed:",
-                error
-            );
-
-            return false;
-        }
-    }
-
-
-    /*=====================================================
-      FIND EXISTING CART
-    =====================================================*/
-
-    function findCart() {
-
-        for (
-            let i = 0;
-            i < CHECKOUT_CONFIG.cartStorageKeys.length;
-            i++
-        ) {
-
-            const key =
-                CHECKOUT_CONFIG.cartStorageKeys[i];
-
-            const cart = readStorage(key);
-
-            if (Array.isArray(cart)) {
-
-                return cart;
-            }
-
-            /*
-             * Some cart engines may store an object
-             * containing an items array.
-             */
-
-            if (
-                cart &&
-                Array.isArray(cart.items)
-            ) {
-
-                return cart.items;
-            }
-        }
-
-        return [];
-    }
-
-
-    /*=====================================================
-      NORMALISE CART ITEM
-    =====================================================*/
-
-    function normaliseCartItem(item) {
-
-        if (!item || typeof item !== "object") {
-            return null;
-        }
-
-        const quantity = Math.max(
-            1,
-            safeNumber(
-                item.quantity ||
-                item.qty ||
-                1
-            )
-        );
-
-        const price = safeNumber(
-            item.price ||
-            item.salePrice ||
-            item.unitPrice ||
-            0
-        );
-
-        return {
-
-            id:
-                item.id ||
-                item.productId ||
-                item.sku ||
-                "",
-
-            sku:
-                item.sku ||
-                item.id ||
-                "",
-
-            name:
-                item.name ||
-                item.title ||
-                "Product",
-
-            price: price,
-
-            quantity: quantity,
-
-            image:
-                item.image ||
-                item.img ||
-                item.thumbnail ||
-                "",
-
-            category:
-                item.category ||
-                "",
-
-            subtotal:
-                price * quantity,
-
-            raw: item
-        };
-    }
-
-
-    /*=====================================================
-      LOAD CART
-    =====================================================*/
-
-    function loadCart() {
-
-        const sourceCart = findCart();
-
-        checkoutState.cart = sourceCart
-            .map(normaliseCartItem)
-            .filter(Boolean);
-
-        calculateTotals();
-
-        return checkoutState.cart;
-    }
-
-
-    /*=====================================================
-      CALCULATE CHECKOUT TOTALS
-    =====================================================*/
-
-    function calculateTotals() {
-
-        let subtotal = 0;
-
-        checkoutState.cart.forEach(function (item) {
-
-            subtotal += safeNumber(item.subtotal);
-
-        });
-
-        const delivery =
-            safeNumber(
-                checkoutState.totals.delivery
-            );
-
-        const discount =
-            safeNumber(
-                checkoutState.totals.discount
-            );
-
-        const tax =
-            safeNumber(
-                checkoutState.totals.tax
-            );
-
-        const total =
-            subtotal +
-            delivery +
-            tax -
-            discount;
-
-        checkoutState.totals.subtotal =
-            Math.max(0, subtotal);
-
-        checkoutState.totals.total =
-            Math.max(0, total);
-
-        return checkoutState.totals;
-    }
-
-
-    /*=====================================================
-      SAVE CHECKOUT STATE
-    =====================================================*/
-
-    function saveCheckoutState() {
-
-        return writeStorage(
-            CHECKOUT_CONFIG.storageKey,
-            checkoutState
-        );
-    }
-
-
-    /*=====================================================
-      LOAD SAVED CHECKOUT STATE
-    =====================================================*/
-
-    function loadCheckoutState() {
-
-        const saved =
-            readStorage(
-                CHECKOUT_CONFIG.storageKey
-            );
-
-        if (
-            !saved ||
-            typeof saved !== "object"
-        ) {
-
-            return checkoutState;
-        }
-
-
-        /*
-         * Merge saved customer information
-         */
-
-        if (saved.customer) {
-
-            checkoutState.customer =
-                Object.assign(
-                    {},
-                    checkoutState.customer,
-                    saved.customer
-                );
-        }
-
-
-        /*
-         * Merge saved billing information
-         */
-
-        if (saved.billing) {
-
-            checkoutState.billing =
-                Object.assign(
-                    {},
-                    checkoutState.billing,
-                    saved.billing
-                );
-        }
-
-
-        /*
-         * Merge saved delivery information
-         */
-
-        if (saved.delivery) {
-
-            checkoutState.delivery =
-                Object.assign(
-                    {},
-                    checkoutState.delivery,
-                    saved.delivery
-                );
-        }
-
-
-        /*
-         * Merge saved payment information
-         */
-
-        if (saved.payment) {
-
-            checkoutState.payment =
-                Object.assign(
-                    {},
-                    checkoutState.payment,
-                    saved.payment
-                );
-        }
-
-
-        if (typeof saved.notes === "string") {
-
-            checkoutState.notes =
-                saved.notes;
-        }
-
-
-        if (
-            Number.isFinite(
-                Number(saved.step)
-            )
-        ) {
-
-            checkoutState.step =
-                Number(saved.step);
-        }
-
-        return checkoutState;
-    }
-
-
-    /*=====================================================
-      GET CART COUNT
-    =====================================================*/
-
-    function getCartCount() {
-
-        return checkoutState.cart.reduce(
-            function (total, item) {
-
-                return total +
-                    safeNumber(item.quantity);
-
-            },
-            0
-        );
-    }
-
-
-    /*=====================================================
-      CHECK CART
-    =====================================================*/
-
-    function hasItems() {
-
-        return checkoutState.cart.length > 0;
-    }
-
-
-    /*=====================================================
-      CHECKOUT VALIDATION FOUNDATION
-    =====================================================*/
-
-    function validateCart() {
-
-        loadCart();
-
-        if (!hasItems()) {
-
-            return {
-                valid: false,
-                message:
-                    "Your cart is empty."
-            };
-        }
-
-
-        if (
-            checkoutState.totals.total <
-            CHECKOUT_CONFIG.minimumOrderValue
-        ) {
-
-            return {
-                valid: false,
-                message:
-                    "The order value is below the minimum required."
-            };
-        }
-
-
-        return {
-            valid: true,
-            message: "Cart ready for checkout."
-        };
-    }
-
-
-    /*=====================================================
-      UPDATE CUSTOMER INFORMATION
-    =====================================================*/
-
-    function updateCustomer(data) {
-
-        if (
-            !data ||
-            typeof data !== "object"
-        ) {
-            return checkoutState.customer;
-        }
-
-        checkoutState.customer =
-            Object.assign(
-                {},
-                checkoutState.customer,
-                data
-            );
-
-        saveCheckoutState();
-
-        return checkoutState.customer;
-    }
-
-
-    /*=====================================================
-      UPDATE BILLING INFORMATION
-    =====================================================*/
-
-    function updateBilling(data) {
-
-        if (
-            !data ||
-            typeof data !== "object"
-        ) {
-            return checkoutState.billing;
-        }
-
-        checkoutState.billing =
-            Object.assign(
-                {},
-                checkoutState.billing,
-                data
-            );
-
-        saveCheckoutState();
-
-        return checkoutState.billing;
-    }
-
-
-    /*=====================================================
-      UPDATE DELIVERY INFORMATION
-    =====================================================*/
-
-    function updateDelivery(data) {
-
-        if (
-            !data ||
-            typeof data !== "object"
-        ) {
-            return checkoutState.delivery;
-        }
-
-        checkoutState.delivery =
-            Object.assign(
-                {},
-                checkoutState.delivery,
-                data
-            );
-
-        saveCheckoutState();
-
-        return checkoutState.delivery;
-    }
-
-
-    /*=====================================================
-      SET PAYMENT METHOD
-    =====================================================*/
-
-    function setPaymentMethod(method) {
-
-        checkoutState.payment.method =
-            String(method || "");
-
-        checkoutState.payment.status =
-            "pending";
-
-        saveCheckoutState();
-
-        return checkoutState.payment;
-    }
-
-
-    /*=====================================================
-      SET CHECKOUT STEP
-    =====================================================*/
-
-    function setStep(step) {
-
-        const newStep =
-            Math.max(
-                1,
-                safeNumber(step)
-            );
-
-        checkoutState.step =
-            newStep;
-
-        saveCheckoutState();
-
-        return checkoutState.step;
-    }
-
-
-    /*=====================================================
-      GET CHECKOUT STATE
-    =====================================================*/
-
-    function getState() {
-
-        return checkoutState;
-    }
-
-
-    /*=====================================================
-      INITIALISE CHECKOUT ENGINE
-    =====================================================*/
-
-    function init() {
-
-        loadCheckoutState();
-
-        loadCart();
-
-        console.log(
-            "%c[NEXPAK CHECKOUT] Part 1/8 loaded",
-            "font-weight:bold;"
-        );
-
-        console.log(
-            "[NEXPAK CHECKOUT] Cart items:",
-            getCartCount()
-        );
-
-        return checkoutState;
-    }
-
-
-    /*=====================================================
-      PUBLIC CHECKOUT API
-    =====================================================*/
-
-    window.NEXPAKCheckout = {
-
-        config:
-            CHECKOUT_CONFIG,
-
-        state:
-            checkoutState,
-
-        init:
-            init,
-
-        loadCart:
-            loadCart,
-
-        getState:
-            getState,
-
-        getCartCount:
-            getCartCount,
-
-        hasItems:
-            hasItems,
-
-        calculateTotals:
-            calculateTotals,
-
-        validateCart:
-            validateCart,
-
-        save:
-            saveCheckoutState,
-
-        updateCustomer:
-            updateCustomer,
-
-        updateBilling:
-            updateBilling,
-
-        updateDelivery:
-            updateDelivery,
-
-        setPaymentMethod:
-            setPaymentMethod,
-
-        setStep:
-            setStep
-    };
-
-
-    /*=====================================================
-      AUTO INITIALISE
-    =====================================================*/
-
-    if (
-        document.readyState ===
-        "loading"
-    ) {
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            init
-        );
-
-    } else {
-
-        init();
-    }
-
-})();
-
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE — CHECKOUT ENGINE
-=========================================================
- File: onlinecheckout.js
- Version: 1.0
- Part: 2/8
-
- PART 2:
- - Customer form handling
- - Field validation
- - Error handling
- - Customer data collection
- - Billing form handling
- - Delivery address preparation
-=========================================================*/
-
-(function () {
-    "use strict";
-
-    /*=====================================================
-      SAFETY CHECK
-    =====================================================*/
-
-    if (!window.NEXPAKCheckout) {
-        console.error(
-            "[NEXPAK CHECKOUT] Part 1 is required before Part 2."
-        );
-        return;
-    }
-
-
-    /*=====================================================
-      SHORTCUTS
-    =====================================================*/
-
-    const checkout = window.NEXPAKCheckout;
-
-    const state = checkout.state;
-
-
-    /*=====================================================
-      FIELD SELECTORS
-    =====================================================*/
-
-    const FIELD_SELECTORS = {
-
-        firstName: [
-            "#firstName",
-            "#checkoutFirstName",
-            "[name='firstName']",
-            "[name='first_name']"
-        ],
-
-        lastName: [
-            "#lastName",
-            "#checkoutLastName",
-            "[name='lastName']",
-            "[name='last_name']"
-        ],
-
-        email: [
-            "#email",
-            "#checkoutEmail",
-            "[name='email']"
-        ],
-
-        phone: [
-            "#phone",
-            "#checkoutPhone",
-            "[name='phone']",
-            "[name='telephone']"
-        ],
-
-        company: [
-            "#company",
-            "#checkoutCompany",
-            "[name='company']",
-            "[name='companyName']"
-        ],
-
-        address1: [
-            "#address1",
-            "#checkoutAddress",
-            "[name='address1']",
-            "[name='address']",
-            "[name='street']"
-        ],
-
-        address2: [
-            "#address2",
-            "#checkoutAddress2",
-            "[name='address2']"
-        ],
-
-        suburb: [
-            "#suburb",
-            "#checkoutSuburb",
-            "[name='suburb']"
-        ],
-
-        city: [
-            "#city",
-            "#checkoutCity",
-            "[name='city']"
-        ],
-
-        province: [
-            "#province",
-            "#checkoutProvince",
-            "[name='province']"
-        ],
-
-        postalCode: [
-            "#postalCode",
-            "#checkoutPostalCode",
-            "[name='postalCode']",
-            "[name='postal_code']",
-            "[name='postcode']"
-        ],
-
-        country: [
-            "#country",
-            "#checkoutCountry",
-            "[name='country']"
-        ],
-
-        notes: [
-            "#orderNotes",
-            "#checkoutNotes",
-            "[name='orderNotes']",
-            "[name='notes']"
-        ]
-    };
-
-
-    /*=====================================================
-      UTILITY — FIND FIELD
-    =====================================================*/
-
-    function findField(selectors) {
-
-        if (!Array.isArray(selectors)) {
-            return null;
-        }
-
-        for (let i = 0; i < selectors.length; i++) {
-
-            const element =
-                document.querySelector(selectors[i]);
-
-            if (element) {
-                return element;
-            }
-        }
-
-        return null;
-    }
-
-
-    /*=====================================================
-      UTILITY — GET FIELD VALUE
-    =====================================================*/
-
-    function getFieldValue(name) {
-
-        const field =
-            findField(
-                FIELD_SELECTORS[name]
-            );
-
-        if (!field) {
-            return "";
-        }
-
-        return String(
-            field.value || ""
-        ).trim();
-    }
-
-
-    /*=====================================================
-      UTILITY — SET FIELD VALUE
-    =====================================================*/
-
-    function setFieldValue(name, value) {
-
-        const field =
-            findField(
-                FIELD_SELECTORS[name]
-            );
-
-        if (!field) {
-            return false;
-        }
-
-        field.value =
-            value == null
-                ? ""
-                : String(value);
-
-        return true;
-    }
-
-
-    /*=====================================================
-      EMAIL VALIDATION
-    =====================================================*/
-
-    function isValidEmail(email) {
-
-        if (!email) {
-            return false;
-        }
-
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-            .test(email);
-    }
-
-
-    /*=====================================================
-      SOUTH AFRICAN PHONE VALIDATION
-    =====================================================*/
-
-    function isValidPhone(phone) {
-
-        if (!phone) {
-            return false;
-        }
-
-        const cleaned =
-            String(phone)
-                .replace(/[\s\-().]/g, "");
-
-        /*
-         * Accept:
-         * 0821234567
-         * +27821234567
-         * 27821234567
-         */
-
-        return (
-            /^0\d{9}$/.test(cleaned) ||
-            /^\+27\d{9}$/.test(cleaned) ||
-            /^27\d{9}$/.test(cleaned)
-        );
-    }
-
-
-    /*=====================================================
-      POSTAL CODE VALIDATION
-    =====================================================*/
-
-    function isValidPostalCode(code) {
-
-        if (!code) {
-            return false;
-        }
-
-        return /^\d{4}$/.test(
-            String(code).trim()
-        );
-    }
-
-
-    /*=====================================================
-      REQUIRED FIELD CHECK
-    =====================================================*/
-
-    function requiredField(
-        value,
-        fieldName
-    ) {
-
-        if (!value) {
-
-            return {
-                valid: false,
-                field: fieldName,
-                message:
-                    fieldName +
-                    " is required."
-            };
-        }
-
-        return {
-            valid: true,
-            field: fieldName,
-            message: ""
-        };
-    }
-
-
-    /*=====================================================
-      CUSTOMER VALIDATION
-    =====================================================*/
-
-    function validateCustomer(data) {
-
-        const errors = [];
-
-
-        if (!data.firstName) {
-
-            errors.push({
-                field: "firstName",
-                message:
-                    "First name is required."
-            });
-        }
-
-
-        if (!data.lastName) {
-
-            errors.push({
-                field: "lastName",
-                message:
-                    "Last name is required."
-            });
-        }
-
-
-        if (!data.email) {
-
-            errors.push({
-                field: "email",
-                message:
-                    "Email address is required."
-            });
-
-        } else if (
-            !isValidEmail(data.email)
-        ) {
-
-            errors.push({
-                field: "email",
-                message:
-                    "Please enter a valid email address."
-            });
-        }
-
-
-        if (!data.phone) {
-
-            errors.push({
-                field: "phone",
-                message:
-                    "Phone number is required."
-            });
-
-        } else if (
-            !isValidPhone(data.phone)
-        ) {
-
-            errors.push({
-                field: "phone",
-                message:
-                    "Please enter a valid South African phone number."
-            });
-        }
-
-
-        return {
-            valid:
-                errors.length === 0,
-
-            errors:
-                errors
-        };
-    }
-
-
-    /*=====================================================
-      BILLING VALIDATION
-    =====================================================*/
-
-    function validateBilling(data) {
-
-        const errors = [];
-
-
-        if (!data.address1) {
-
-            errors.push({
-                field: "address1",
-                message:
-                    "Street address is required."
-            });
-        }
-
-
-        if (!data.suburb) {
-
-            errors.push({
-                field: "suburb",
-                message:
-                    "Suburb is required."
-            });
-        }
-
-
-        if (!data.city) {
-
-            errors.push({
-                field: "city",
-                message:
-                    "City is required."
-            });
-        }
-
-
-        if (!data.province) {
-
-            errors.push({
-                field: "province",
-                message:
-                    "Province is required."
-            });
-        }
-
-
-        if (!data.postalCode) {
-
-            errors.push({
-                field: "postalCode",
-                message:
-                    "Postal code is required."
-            });
-
-        } else if (
-            !isValidPostalCode(
-                data.postalCode
-            )
-        ) {
-
-            errors.push({
-                field: "postalCode",
-                message:
-                    "Postal code must contain 4 digits."
-            });
-        }
-
-
-        return {
-            valid:
-                errors.length === 0,
-
-            errors:
-                errors
-        };
-    }
-
-
-    /*=====================================================
-      COLLECT CUSTOMER FORM
-    =====================================================*/
-
-    function collectCustomerForm() {
-
-        return {
-
-            firstName:
-                getFieldValue("firstName"),
-
-            lastName:
-                getFieldValue("lastName"),
-
-            email:
-                getFieldValue("email"),
-
-            phone:
-                getFieldValue("phone"),
-
-            company:
-                getFieldValue("company")
-        };
-    }
-
-
-    /*=====================================================
-      COLLECT BILLING FORM
-    =====================================================*/
-
-    function collectBillingForm() {
-
-        return {
-
-            address1:
-                getFieldValue("address1"),
-
-            address2:
-                getFieldValue("address2"),
-
-            suburb:
-                getFieldValue("suburb"),
-
-            city:
-                getFieldValue("city"),
-
-            province:
-                getFieldValue("province"),
-
-            postalCode:
-                getFieldValue("postalCode"),
-
-            country:
-                getFieldValue("country") ||
-                "South Africa"
-        };
-    }
-
-
-    /*=====================================================
-      COLLECT ORDER NOTES
-    =====================================================*/
-
-    function collectOrderNotes() {
-
-        return getFieldValue("notes");
-    }
-
-
-    /*=====================================================
-      APPLY CUSTOMER DATA TO STATE
-    =====================================================*/
-
-    function saveCustomerForm() {
-
-        const customer =
-            collectCustomerForm();
-
-        const validation =
-            validateCustomer(customer);
-
-        if (!validation.valid) {
-
-            return validation;
-        }
-
-        checkout.updateCustomer(
-            customer
-        );
-
-        return {
-            valid: true,
-            customer: customer,
-            errors: []
-        };
-    }
-
-
-    /*=====================================================
-      APPLY BILLING DATA TO STATE
-    =====================================================*/
-
-    function saveBillingForm() {
-
-        const billing =
-            collectBillingForm();
-
-        const validation =
-            validateBilling(billing);
-
-        if (!validation.valid) {
-
-            return validation;
-        }
-
-        checkout.updateBilling(
-            billing
-        );
-
-        state.delivery =
-            Object.assign(
-                {},
-                state.delivery,
-                billing
-            );
-
-        state.notes =
-            collectOrderNotes();
-
-        checkout.save();
-
-        return {
-            valid: true,
-            billing: billing,
-            errors: []
-        };
-    }
-
-
-    /*=====================================================
-      CLEAR FIELD ERROR
-    =====================================================*/
-
-    function clearFieldError(fieldName) {
-
-        const field =
-            findField(
-                FIELD_SELECTORS[fieldName]
-            );
-
-        if (!field) {
-            return;
-        }
-
-        field.classList.remove(
-            "checkout-error",
-            "error",
-            "is-invalid"
-        );
-
-        field.removeAttribute(
-            "aria-invalid"
-        );
-
-        const wrapper =
-            field.closest(
-                ".form-group, .field, .checkout-field"
-            );
-
-        if (wrapper) {
-
-            wrapper.classList.remove(
-                "checkout-field-error",
-                "has-error"
-            );
-        }
-    }
-
-
-    /*=====================================================
-      DISPLAY FIELD ERROR
-    =====================================================*/
-
-    function displayFieldError(
-        fieldName,
-        message
-    ) {
-
-        const field =
-            findField(
-                FIELD_SELECTORS[fieldName]
-            );
-
-        if (!field) {
-            return;
-        }
-
-        field.classList.add(
-            "checkout-error",
-            "error",
-            "is-invalid"
-        );
-
-        field.setAttribute(
-            "aria-invalid",
-            "true"
-        );
-
-
-        const wrapper =
-            field.closest(
-                ".form-group, .field, .checkout-field"
-            );
-
-
-        if (wrapper) {
-
-            wrapper.classList.add(
-                "checkout-field-error",
-                "has-error"
-            );
-
-
-            let errorElement =
-                wrapper.querySelector(
-                    ".checkout-error-message"
-                );
-
-
-            if (!errorElement) {
-
-                errorElement =
-                    document.createElement(
-                        "small"
-                    );
-
-                errorElement.className =
-                    "checkout-error-message";
-
-                wrapper.appendChild(
-                    errorElement
-                );
-            }
-
-
-            errorElement.textContent =
-                message;
-        }
-    }
-
-
-    /*=====================================================
-      DISPLAY VALIDATION ERRORS
-    =====================================================*/
-
-    function displayValidationErrors(
-        errors
-    ) {
-
-        if (!Array.isArray(errors)) {
-            return;
-        }
-
-
-        errors.forEach(function (error) {
-
-            if (
-                error &&
-                error.field
-            ) {
-
-                displayFieldError(
-                    error.field,
-                    error.message
-                );
-            }
-        });
-    }
-
-
-    /*=====================================================
-      CLEAR ALL VALIDATION ERRORS
-    =====================================================*/
-
-    function clearValidationErrors() {
-
-        Object.keys(
-            FIELD_SELECTORS
-        ).forEach(function (fieldName) {
-
-            clearFieldError(
-                fieldName
-            );
-        });
-    }
-
-
-    /*=====================================================
-      VALIDATE CUSTOMER FORM
-    =====================================================*/
-
-    function validateCustomerForm() {
-
-        clearValidationErrors();
-
-        const customer =
-            collectCustomerForm();
-
-        const result =
-            validateCustomer(
-                customer
-            );
-
-
-        if (!result.valid) {
-
-            displayValidationErrors(
-                result.errors
-            );
-
-            return result;
-        }
-
-
-        return {
-            valid: true,
-            errors: []
-        };
-    }
-
-
-    /*=====================================================
-      VALIDATE BILLING FORM
-    =====================================================*/
-
-    function validateBillingForm() {
-
-        const billing =
-            collectBillingForm();
-
-
-        const result =
-            validateBilling(
-                billing
-            );
-
-
-        if (!result.valid) {
-
-            displayValidationErrors(
-                result.errors
-            );
-
-            return result;
-        }
-
-
-        return {
-            valid: true,
-            errors: []
-        };
-    }
-
-
-    /*=====================================================
-      POPULATE FORM FROM SAVED STATE
-    =====================================================*/
-
-    function populateCustomerForm() {
-
-        const customer =
-            state.customer || {};
-
-
-        setFieldValue(
-            "firstName",
-            customer.firstName
-        );
-
-        setFieldValue(
-            "lastName",
-            customer.lastName
-        );
-
-        setFieldValue(
-            "email",
-            customer.email
-        );
-
-        setFieldValue(
-            "phone",
-            customer.phone
-        );
-
-        setFieldValue(
-            "company",
-            customer.company
-        );
-    }
-
-
-    /*=====================================================
-      POPULATE BILLING FORM
-    =====================================================*/
-
-    function populateBillingForm() {
-
-        const billing =
-            state.billing || {};
-
-
-        setFieldValue(
-            "address1",
-            billing.address1
-        );
-
-        setFieldValue(
-            "address2",
-            billing.address2
-        );
-
-        setFieldValue(
-            "suburb",
-            billing.suburb
-        );
-
-        setFieldValue(
-            "city",
-            billing.city
-        );
-
-        setFieldValue(
-            "province",
-            billing.province
-        );
-
-        setFieldValue(
-            "postalCode",
-            billing.postalCode
-        );
-
-        setFieldValue(
-            "country",
-            billing.country ||
-            "South Africa"
-        );
-
-        setFieldValue(
-            "notes",
-            state.notes || ""
-        );
-    }
-
-
-    /*=====================================================
-      AUTO-SAVE FORM DATA
-    =====================================================*/
-
-    function autoSaveForms() {
-
-        const customer =
-            collectCustomerForm();
-
-        const billing =
-            collectBillingForm();
-
-        const notes =
-            collectOrderNotes();
-
-
-        /*
-         * Save even partially completed data.
-         * This allows the customer to return
-         * to checkout without losing progress.
-         */
-
-        state.customer =
-            Object.assign(
-                {},
-                state.customer,
-                customer
-            );
-
-
-        state.billing =
-            Object.assign(
-                {},
-                state.billing,
-                billing
-            );
-
-
-        state.delivery =
-            Object.assign(
-                {},
-                state.delivery,
-                billing
-            );
-
-
-        state.notes =
-            notes;
-
-
-        checkout.save();
-    }
-
-
-    /*=====================================================
-      ATTACH AUTO-SAVE LISTENERS
-    =====================================================*/
-
-    function attachFormListeners() {
-
-        const fields =
-            document.querySelectorAll(
-                "input, select, textarea"
-            );
-
-
-        fields.forEach(function (field) {
-
-            field.addEventListener(
-                "input",
-                function () {
-
-                    autoSaveForms();
-
-                    /*
-                     * Remove visual error as soon
-                     * as the customer starts correcting
-                     * the field.
-                     */
-
-                    field.classList.remove(
-                        "checkout-error",
-                        "error",
-                        "is-invalid"
-                    );
-
-                    field.removeAttribute(
-                        "aria-invalid"
-                    );
-                }
-            );
-
-
-            field.addEventListener(
-                "change",
-                function () {
-
-                    autoSaveForms();
-
-                }
-            );
-
-        });
-    }
-
-
-    /*=====================================================
-      SUBMIT CUSTOMER STEP
-    =====================================================*/
-
-    function submitCustomerStep() {
-
-        const result =
-            validateCustomerForm();
-
-
-        if (!result.valid) {
-
-            return result;
-        }
-
-
-        saveCustomerForm();
-
-        checkout.setStep(2);
-
-
-        return {
-            valid: true,
-            step: 2,
-            customer:
-                state.customer
-        };
-    }
-
-
-    /*=====================================================
-      SUBMIT BILLING STEP
-    =====================================================*/
-
-    function submitBillingStep() {
-
-        const result =
-            validateBillingForm();
-
-
-        if (!result.valid) {
-
-            return result;
-        }
-
-
-        saveBillingForm();
-
-        checkout.setStep(3);
-
-
-        return {
-            valid: true,
-            step: 3,
-            billing:
-                state.billing
-        };
-    }
-
-
-    /*=====================================================
-      PUBLIC API EXTENSION
-    =====================================================*/
-
-    checkout.form = {
-
-        fields:
-            FIELD_SELECTORS,
-
-        getFieldValue:
-            getFieldValue,
-
-        setFieldValue:
-            setFieldValue,
-
-        collectCustomer:
-            collectCustomerForm,
-
-        collectBilling:
-            collectBillingForm,
-
-        collectNotes:
-            collectOrderNotes,
-
-        validateCustomer:
-            validateCustomer,
-
-        validateBilling:
-            validateBilling,
-
-        validateCustomerForm:
-            validateCustomerForm,
-
-        validateBillingForm:
-            validateBillingForm,
-
-        saveCustomer:
-            saveCustomerForm,
-
-        saveBilling:
-            saveBillingForm,
-
-        populateCustomer:
-            populateCustomerForm,
-
-        populateBilling:
-            populateBillingForm,
-
-        clearErrors:
-            clearValidationErrors,
-
-        displayErrors:
-            displayValidationErrors,
-
-        autoSave:
-            autoSaveForms,
-
-        submitCustomer:
-            submitCustomerStep,
-
-        submitBilling:
-            submitBillingStep
-    };
-
-
-    /*=====================================================
-      INITIALISE PART 2
-    =====================================================*/
-
-    function initPart2() {
-
-        /*
-         * Load existing checkout state.
-         */
-
-        checkout.init();
-
-
-        /*
-         * Populate any fields already present
-         * on the page.
-         */
-
-        populateCustomerForm();
-
-        populateBillingForm();
-
-
-        /*
-         * Enable automatic saving.
-         */
-
-        attachFormListeners();
-
-
-        console.log(
-            "%c[NEXPAK CHECKOUT] Part 2/8 loaded",
-            "font-weight:bold;"
-        );
-    }
-
-
-    /*=====================================================
-      START
-    =====================================================*/
-
-    if (
-        document.readyState ===
-        "loading"
-    ) {
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            initPart2
-        );
-
-    } else {
-
-        initPart2();
-    }
-
-})();
-
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE — CHECKOUT ENGINE
-=========================================================
- File: onlinecheckout.js
- Version: 1.0
- Part: 3/8
-
- PART 3:
- - Delivery method handling
- - Delivery address handling
- - Delivery option selection
- - Delivery cost integration
- - Checkout step progression
- - Delivery validation
- - Delivery summary
-=========================================================*/
+/* =========================================================
+   NEXPAK ONLINE STORE — CHECKOUT ENGINE
+   onlinecheckout.js
+   PART 1 — CHECKOUT CORE + ORDER STATE
+   ========================================================= */
 
 (function () {
 
     "use strict";
 
 
-    /*=====================================================
-      SAFETY CHECK
-    =====================================================*/
+    /* =====================================================
+       1. CHECKOUT CONFIGURATION
+       ===================================================== */
 
-    if (!window.NEXPAKCheckout) {
+    const NEXPAK_CHECKOUT_STORAGE_KEY =
+        "NEXPAK_ONLINE_CHECKOUT";
 
-        console.error(
-            "[NEXPAK CHECKOUT] Part 1 is required before Part 3."
-        );
 
-        return;
-    }
+    const NEXPAK_ORDER_PREFIX =
+        "NEX";
 
 
-    /*=====================================================
-      SHORTCUTS
-    =====================================================*/
+    const NEXPAK_CHECKOUT_VERSION =
+        1;
 
-    const checkout =
-        window.NEXPAKCheckout;
 
-    const state =
-        checkout.state;
+    /* =====================================================
+       2. CHECKOUT STATE
+       ===================================================== */
 
-
-    /*=====================================================
-      DEFAULT DELIVERY METHODS
-    =====================================================*/
-
-    const DEFAULT_DELIVERY_METHODS = [
-
-        {
-            id: "standard",
-            name: "Standard Delivery",
-            description:
-                "Standard delivery to your address.",
-            price: 0,
-            available: true
-        },
-
-        {
-            id: "express",
-            name: "Express Delivery",
-            description:
-                "Faster delivery where available.",
-            price: 0,
-            available: true
-        },
-
-        {
-            id: "collection",
-            name: "Customer Collection",
-            description:
-                "Collect your order from NEXPAK.",
-            price: 0,
-            available: true
-        }
-
-    ];
-
-
-    /*=====================================================
-      DELIVERY CONFIGURATION
-    =====================================================*/
-
-    const DELIVERY_CONFIG = {
-
-        defaultMethod:
-            "standard",
-
-        methods:
-            DEFAULT_DELIVERY_METHODS,
-
-        requireAddress:
-            true,
-
-        collectionRequiresAddress:
-            false,
-
-        deliveryEngine:
-            "onlinedelivery.js"
-    };
-
-
-    /*=====================================================
-      DELIVERY SELECTORS
-    =====================================================*/
-
-    const DELIVERY_SELECTORS = {
-
-        method: [
-            "#deliveryMethod",
-            "#shippingMethod",
-            "[name='deliveryMethod']",
-            "[name='shippingMethod']"
-        ],
-
-        address1: [
-            "#deliveryAddress1",
-            "#shippingAddress1",
-            "[name='deliveryAddress1']",
-            "[name='shippingAddress1']"
-        ],
-
-        address2: [
-            "#deliveryAddress2",
-            "#shippingAddress2",
-            "[name='deliveryAddress2']",
-            "[name='shippingAddress2']"
-        ],
-
-        suburb: [
-            "#deliverySuburb",
-            "#shippingSuburb",
-            "[name='deliverySuburb']",
-            "[name='shippingSuburb']"
-        ],
-
-        city: [
-            "#deliveryCity",
-            "#shippingCity",
-            "[name='deliveryCity']",
-            "[name='shippingCity']"
-        ],
-
-        province: [
-            "#deliveryProvince",
-            "#shippingProvince",
-            "[name='deliveryProvince']"
-        ],
-
-        postalCode: [
-            "#deliveryPostalCode",
-            "#shippingPostalCode",
-            "[name='deliveryPostalCode']",
-            "[name='shippingPostalCode']"
-        ],
-
-        instructions: [
-            "#deliveryInstructions",
-            "#shippingInstructions",
-            "[name='deliveryInstructions']",
-            "[name='shippingInstructions']"
-        ]
-    };
-
-
-    /*=====================================================
-      UTILITY — SAFE NUMBER
-    =====================================================*/
-
-    function safeNumber(value) {
-
-        const number =
-            Number(value);
-
-        return Number.isFinite(number)
-            ? number
-            : 0;
-    }
-
-
-    /*=====================================================
-      FIND FIELD
-    =====================================================*/
-
-    function findField(selectors) {
-
-        if (!Array.isArray(selectors)) {
-            return null;
-        }
-
-        for (
-            let i = 0;
-            i < selectors.length;
-            i++
-        ) {
-
-            const element =
-                document.querySelector(
-                    selectors[i]
-                );
-
-            if (element) {
-                return element;
-            }
-        }
-
-        return null;
-    }
-
-
-    /*=====================================================
-      GET FIELD VALUE
-    =====================================================*/
-
-    function getFieldValue(name) {
-
-        const field =
-            findField(
-                DELIVERY_SELECTORS[name]
-            );
-
-        if (!field) {
-            return "";
-        }
-
-        return String(
-            field.value || ""
-        ).trim();
-    }
-
-
-    /*=====================================================
-      SET FIELD VALUE
-    =====================================================*/
-
-    function setFieldValue(
-        name,
-        value
-    ) {
-
-        const field =
-            findField(
-                DELIVERY_SELECTORS[name]
-            );
-
-        if (!field) {
-            return false;
-        }
-
-        field.value =
-            value == null
-                ? ""
-                : String(value);
-
-        return true;
-    }
-
-
-    /*=====================================================
-      FIND DELIVERY METHOD
-    =====================================================*/
-
-    function getDeliveryMethod(
-        methodId
-    ) {
-
-        const methods =
-            getDeliveryMethods();
-
-        return methods.find(
-            function (method) {
-
-                return String(method.id) ===
-                    String(methodId);
-
-            }
-        ) || null;
-    }
-
-
-    /*=====================================================
-      GET DELIVERY METHODS
-    =====================================================*/
-
-    function getDeliveryMethods() {
-
-        /*
-         * Future onlinedelivery.js can provide
-         * its own delivery methods.
-         */
-
-        if (
-            window.NEXPAKDelivery &&
-            typeof
-            window.NEXPAKDelivery
-                .getMethods ===
-                "function"
-        ) {
-
-            try {
-
-                const methods =
-                    window.NEXPAKDelivery
-                        .getMethods();
-
-                if (
-                    Array.isArray(methods) &&
-                    methods.length
-                ) {
-
-                    return methods;
-                }
-
-            } catch (error) {
-
-                console.warn(
-                    "[NEXPAK CHECKOUT] Delivery engine unavailable:",
-                    error
-                );
-            }
-        }
-
-
-        return DELIVERY_CONFIG.methods;
-    }
-
-
-    /*=====================================================
-      SET DELIVERY METHOD
-    =====================================================*/
-
-    function setDeliveryMethod(
-        methodId
-    ) {
-
-        const method =
-            getDeliveryMethod(
-                methodId
-            );
-
-
-        if (!method) {
-
-            return {
-
-                valid: false,
-
-                message:
-                    "The selected delivery method is unavailable."
-            };
-        }
-
-
-        if (method.available === false) {
-
-            return {
-
-                valid: false,
-
-                message:
-                    "The selected delivery method is currently unavailable."
-            };
-        }
-
-
-        state.delivery.method =
-            method.id;
-
-
-        /*
-         * If the future delivery engine exists,
-         * allow it to calculate the actual cost.
-         */
-
-        let deliveryCost =
-            safeNumber(method.price);
-
-
-        if (
-            window.NEXPAKDelivery &&
-            typeof
-            window.NEXPAKDelivery
-                .calculateCost ===
-                "function"
-        ) {
-
-            try {
-
-                const result =
-                    window.NEXPAKDelivery
-                        .calculateCost(
-                            state.cart,
-                            state.delivery
-                        );
-
-
-                if (
-                    result &&
-                    Number.isFinite(
-                        Number(result.cost)
-                    )
-                ) {
-
-                    deliveryCost =
-                        Number(result.cost);
-                }
-
-            } catch (error) {
-
-                console.warn(
-                    "[NEXPAK CHECKOUT] Delivery cost calculation deferred.",
-                    error
-                );
-            }
-        }
-
-
-        state.totals.delivery =
-            Math.max(
-                0,
-                deliveryCost
-            );
-
-
-        checkout.calculateTotals();
-
-        checkout.save();
-
-
-        updateDeliveryMethodUI(
-            method.id
-        );
-
-
-        return {
-
-            valid: true,
-
-            method: method,
-
-            cost:
-                state.totals.delivery,
-
-            total:
-                state.totals.total
-        };
-    }
-
-
-    /*=====================================================
-      COLLECT DELIVERY ADDRESS
-    =====================================================*/
-
-    function collectDeliveryAddress() {
-
-        return {
-
-            address1:
-                getFieldValue("address1"),
-
-            address2:
-                getFieldValue("address2"),
-
-            suburb:
-                getFieldValue("suburb"),
-
-            city:
-                getFieldValue("city"),
-
-            province:
-                getFieldValue("province"),
-
-            postalCode:
-                getFieldValue("postalCode"),
-
-            instructions:
-                getFieldValue("instructions")
-        };
-    }
-
-
-    /*=====================================================
-      SAVE DELIVERY ADDRESS
-    =====================================================*/
-
-    function saveDeliveryAddress() {
-
-        const address =
-            collectDeliveryAddress();
-
-
-        state.delivery =
-            Object.assign(
-                {},
-                state.delivery,
-                address
-            );
-
-
-        /*
-         * Keep billing and delivery separate.
-         * This prevents changing delivery information
-         * from accidentally overwriting billing data.
-         */
-
-        checkout.save();
-
-
-        return state.delivery;
-    }
-
-
-    /*=====================================================
-      COPY BILLING TO DELIVERY
-    =====================================================*/
-
-    function copyBillingToDelivery() {
-
-        const billing =
-            state.billing || {};
-
-
-        state.delivery.address1 =
-            billing.address1 || "";
-
-        state.delivery.address2 =
-            billing.address2 || "";
-
-        state.delivery.suburb =
-            billing.suburb || "";
-
-        state.delivery.city =
-            billing.city || "";
-
-        state.delivery.province =
-            billing.province || "";
-
-        state.delivery.postalCode =
-            billing.postalCode || "";
-
-
-        populateDeliveryForm();
-
-        checkout.save();
-
-
-        return state.delivery;
-    }
-
-
-    /*=====================================================
-      VALIDATE DELIVERY ADDRESS
-    =====================================================*/
-
-    function validateDeliveryAddress() {
-
-        const method =
-            getDeliveryMethod(
-                state.delivery.method
-            );
-
-
-        /*
-         * Collection does not require
-         * a delivery address.
-         */
-
-        if (
-            method &&
-            method.id === "collection" &&
-            !DELIVERY_CONFIG.collectionRequiresAddress
-        ) {
-
-            return {
-
-                valid: true,
-
-                errors: []
-            };
-        }
-
-
-        const address =
-            collectDeliveryAddress();
-
-        const errors = [];
-
-
-        if (!address.address1) {
-
-            errors.push({
-
-                field: "address1",
-
-                message:
-                    "Delivery address is required."
-            });
-        }
-
-
-        if (!address.suburb) {
-
-            errors.push({
-
-                field: "suburb",
-
-                message:
-                    "Delivery suburb is required."
-            });
-        }
-
-
-        if (!address.city) {
-
-            errors.push({
-
-                field: "city",
-
-                message:
-                    "Delivery city is required."
-            });
-        }
-
-
-        if (!address.province) {
-
-            errors.push({
-
-                field: "province",
-
-                message:
-                    "Delivery province is required."
-            });
-        }
-
-
-        if (!address.postalCode) {
-
-            errors.push({
-
-                field: "postalCode",
-
-                message:
-                    "Delivery postal code is required."
-            });
-
-        } else if (
-            !/^\d{4}$/.test(
-                address.postalCode
-            )
-        ) {
-
-            errors.push({
-
-                field: "postalCode",
-
-                message:
-                    "Postal code must contain 4 digits."
-            });
-        }
-
-
-        return {
-
-            valid:
-                errors.length === 0,
-
-            errors:
-                errors
-        };
-    }
-
-
-    /*=====================================================
-      VALIDATE DELIVERY STEP
-    =====================================================*/
-
-    function validateDelivery() {
-
-        const errors = [];
-
-
-        if (!state.delivery.method) {
-
-            errors.push({
-
-                field: "method",
-
-                message:
-                    "Please select a delivery method."
-            });
-        }
-
-
-        const addressResult =
-            validateDeliveryAddress();
-
-
-        if (!addressResult.valid) {
-
-            addressResult.errors.forEach(
-                function (error) {
-
-                    errors.push(error);
-
-                }
-            );
-        }
-
-
-        return {
-
-            valid:
-                errors.length === 0,
-
-            errors:
-                errors
-        };
-    }
-
-
-    /*=====================================================
-      POPULATE DELIVERY FORM
-    =====================================================*/
-
-    function populateDeliveryForm() {
-
-        const delivery =
-            state.delivery || {};
-
-
-        setFieldValue(
-            "address1",
-            delivery.address1
-        );
-
-        setFieldValue(
-            "address2",
-            delivery.address2
-        );
-
-        setFieldValue(
-            "suburb",
-            delivery.suburb
-        );
-
-        setFieldValue(
-            "city",
-            delivery.city
-        );
-
-        setFieldValue(
-            "province",
-            delivery.province
-        );
-
-        setFieldValue(
-            "postalCode",
-            delivery.postalCode
-        );
-
-        setFieldValue(
-            "instructions",
-            delivery.instructions
-        );
-
-
-        if (delivery.method) {
-
-            setFieldValue(
-                "method",
-                delivery.method
-            );
-
-            updateDeliveryMethodUI(
-                delivery.method
-            );
-        }
-    }
-
-
-    /*=====================================================
-      UPDATE DELIVERY METHOD UI
-    =====================================================*/
-
-    function updateDeliveryMethodUI(
-        methodId
-    ) {
-
-        const method =
-            getDeliveryMethod(
-                methodId
-            );
-
-
-        if (!method) {
-            return;
-        }
-
-
-        /*
-         * Radio buttons
-         */
-
-        document
-            .querySelectorAll(
-                "input[type='radio'][name='deliveryMethod'], " +
-                "input[type='radio'][name='shippingMethod']"
-            )
-            .forEach(
-                function (radio) {
-
-                    radio.checked =
-                        String(
-                            radio.value
-                        ) ===
-                        String(methodId);
-
-                }
-            );
-
-
-        /*
-         * Select element
-         */
-
-        const select =
-            findField(
-                DELIVERY_SELECTORS.method
-            );
-
-
-        if (select) {
-
-            select.value =
-                methodId;
-        }
-
-
-        /*
-         * Update delivery price elements.
-         */
-
-        document
-            .querySelectorAll(
-                "[data-delivery-price]"
-            )
-            .forEach(
-                function (element) {
-
-                    element.textContent =
-                        formatCurrency(
-                            state.totals.delivery
-                        );
-
-                }
-            );
-
-
-        /*
-         * Update delivery name elements.
-         */
-
-        document
-            .querySelectorAll(
-                "[data-delivery-method]"
-            )
-            .forEach(
-                function (element) {
-
-                    element.textContent =
-                        method.name;
-
-                }
-            );
-    }
-
-
-    /*=====================================================
-      FORMAT CURRENCY
-    =====================================================*/
-
-    function formatCurrency(
-        amount
-    ) {
-
-        const value =
-            safeNumber(amount);
-
-
-        try {
-
-            return new Intl.NumberFormat(
-                "en-ZA",
-                {
-                    style: "currency",
-                    currency: "ZAR"
-                }
-            ).format(value);
-
-        } catch (error) {
-
-            return "R " +
-                value.toFixed(2);
-        }
-    }
-
-
-    /*=====================================================
-      UPDATE TOTAL DISPLAY
-    =====================================================*/
-
-    function updateTotalDisplay() {
-
-        checkout.calculateTotals();
-
-
-        document
-            .querySelectorAll(
-                "[data-checkout-subtotal]"
-            )
-            .forEach(
-                function (element) {
-
-                    element.textContent =
-                        formatCurrency(
-                            state.totals.subtotal
-                        );
-
-                }
-            );
-
-
-        document
-            .querySelectorAll(
-                "[data-checkout-delivery]"
-            )
-            .forEach(
-                function (element) {
-
-                    element.textContent =
-                        formatCurrency(
-                            state.totals.delivery
-                        );
-
-                }
-            );
-
-
-        document
-            .querySelectorAll(
-                "[data-checkout-discount]"
-            )
-            .forEach(
-                function (element) {
-
-                    element.textContent =
-                        formatCurrency(
-                            state.totals.discount
-                        );
-
-                }
-            );
-
-
-        document
-            .querySelectorAll(
-                "[data-checkout-tax]"
-            )
-            .forEach(
-                function (element) {
-
-                    element.textContent =
-                        formatCurrency(
-                            state.totals.tax
-                        );
-
-                }
-            );
-
-
-        document
-            .querySelectorAll(
-                "[data-checkout-total]"
-            )
-            .forEach(
-                function (element) {
-
-                    element.textContent =
-                        formatCurrency(
-                            state.totals.total
-                        );
-
-                }
-            );
-    }
-
-
-    /*=====================================================
-      DELIVERY METHOD LIST RENDERING
-    =====================================================*/
-
-    function renderDeliveryMethods(
-        container
-    ) {
-
-        if (!container) {
-            return;
-        }
-
-
-        const methods =
-            getDeliveryMethods();
-
-
-        container.innerHTML = "";
-
-
-        methods.forEach(
-            function (method) {
-
-                if (
-                    method.available === false
-                ) {
-                    return;
-                }
-
-
-                const wrapper =
-                    document.createElement(
-                        "label"
-                    );
-
-
-                wrapper.className =
-                    "checkout-delivery-option";
-
-
-                const radio =
-                    document.createElement(
-                        "input"
-                    );
-
-
-                radio.type =
-                    "radio";
-
-                radio.name =
-                    "deliveryMethod";
-
-                radio.value =
-                    method.id;
-
-                radio.checked =
-                    state.delivery.method ===
-                    method.id;
-
-
-                const content =
-                    document.createElement(
-                        "span"
-                    );
-
-
-                content.className =
-                    "checkout-delivery-option-content";
-
-
-                const title =
-                    document.createElement(
-                        "strong"
-                    );
-
-
-                title.textContent =
-                    method.name;
-
-
-                const description =
-                    document.createElement(
-                        "small"
-                    );
-
-
-                description.textContent =
-                    method.description || "";
-
-
-                const price =
-                    document.createElement(
-                        "span"
-                    );
-
-
-                price.className =
-                    "checkout-delivery-price";
-
-
-                price.textContent =
-                    formatCurrency(
-                        method.price
-                    );
-
-
-                content.appendChild(
-                    title
-                );
-
-                content.appendChild(
-                    description
-                );
-
-                content.appendChild(
-                    price
-                );
-
-
-                wrapper.appendChild(
-                    radio
-                );
-
-                wrapper.appendChild(
-                    content
-                );
-
-
-                radio.addEventListener(
-                    "change",
-                    function () {
-
-                        setDeliveryMethod(
-                            radio.value
-                        );
-
-                        updateTotalDisplay();
-
-                    }
-                );
-
-
-                container.appendChild(
-                    wrapper
-                );
-            }
-        );
-    }
-
-
-    /*=====================================================
-      HANDLE DELIVERY METHOD CHANGE
-    =====================================================*/
-
-    function attachDeliveryMethodListeners() {
-
-        document
-            .querySelectorAll(
-                "input[type='radio'][name='deliveryMethod'], " +
-                "input[type='radio'][name='shippingMethod']"
-            )
-            .forEach(
-                function (radio) {
-
-                    radio.addEventListener(
-                        "change",
-                        function () {
-
-                            setDeliveryMethod(
-                                radio.value
-                            );
-
-                            updateTotalDisplay();
-
-                        }
-                    );
-                }
-            );
-
-
-        const select =
-            findField(
-                DELIVERY_SELECTORS.method
-            );
-
-
-        if (select) {
-
-            select.addEventListener(
-                "change",
-                function () {
-
-                    setDeliveryMethod(
-                        select.value
-                    );
-
-                    updateTotalDisplay();
-
-                }
-            );
-        }
-    }
-
-
-    /*=====================================================
-      DELIVERY STEP SUBMISSION
-    =====================================================*/
-
-    function submitDeliveryStep() {
-
-        const validation =
-            validateDelivery();
-
-
-        if (!validation.valid) {
-
-            return validation;
-        }
-
-
-        saveDeliveryAddress();
-
-        checkout.calculateTotals();
-
-        checkout.setStep(4);
-
-
-        updateTotalDisplay();
-
-
-        return {
-
-            valid: true,
-
-            step: 4,
-
-            delivery:
-                state.delivery,
-
-            totals:
-                state.totals
-        };
-    }
-
-
-    /*=====================================================
-      GET DELIVERY SUMMARY
-    =====================================================*/
-
-    function getDeliverySummary() {
-
-        const method =
-            getDeliveryMethod(
-                state.delivery.method
-            );
-
-
-        return {
-
-            method:
-                method
-                    ? method.name
-                    : "Not selected",
-
-            address:
-                state.delivery.address1 || "",
-
-            suburb:
-                state.delivery.suburb || "",
-
-            city:
-                state.delivery.city || "",
-
-            province:
-                state.delivery.province || "",
-
-            postalCode:
-                state.delivery.postalCode || "",
-
-            instructions:
-                state.delivery.instructions || "",
-
-            cost:
-                state.totals.delivery,
-
-            formattedCost:
-                formatCurrency(
-                    state.totals.delivery
-                )
-        };
-    }
-
-
-    /*=====================================================
-      GET CHECKOUT PROGRESS
-    =====================================================*/
-
-    function getProgress() {
-
-        const totalSteps = 5;
-
-        const currentStep =
-            Math.min(
-                totalSteps,
-                Math.max(
-                    1,
-                    safeNumber(
-                        state.step
-                    )
-                )
-            );
-
-
-        return {
-
-            current:
-                currentStep,
-
-            total:
-                totalSteps,
-
-            percentage:
-                Math.round(
-                    (
-                        currentStep /
-                        totalSteps
-                    ) * 100
-                )
-        };
-    }
-
-
-    /*=====================================================
-      EXTEND CHECKOUT API
-    =====================================================*/
-
-    checkout.delivery = {
-
-        config:
-            DELIVERY_CONFIG,
-
-        selectors:
-            DELIVERY_SELECTORS,
-
-        getMethods:
-            getDeliveryMethods,
-
-        getMethod:
-            getDeliveryMethod,
-
-        setMethod:
-            setDeliveryMethod,
-
-        collectAddress:
-            collectDeliveryAddress,
-
-        saveAddress:
-            saveDeliveryAddress,
-
-        copyBilling:
-            copyBillingToDelivery,
-
-        validateAddress:
-            validateDeliveryAddress,
-
-        validate:
-            validateDelivery,
-
-        populate:
-            populateDeliveryForm,
-
-        renderMethods:
-            renderDeliveryMethods,
-
-        updateTotals:
-            updateTotalDisplay,
-
-        getSummary:
-            getDeliverySummary,
-
-        getProgress:
-            getProgress,
-
-        submit:
-            submitDeliveryStep
-    };
-
-
-    /*=====================================================
-      INITIALISE PART 3
-    =====================================================*/
-
-    function initPart3() {
-
-        checkout.init();
-
-
-        /*
-         * Set default delivery method when none exists.
-         */
-
-        if (
-            !state.delivery.method
-        ) {
-
-            const defaultMethod =
-                getDeliveryMethod(
-                    DELIVERY_CONFIG.defaultMethod
-                );
-
-
-            if (defaultMethod) {
-
-                state.delivery.method =
-                    defaultMethod.id;
-            }
-        }
-
-
-        populateDeliveryForm();
-
-
-        attachDeliveryMethodListeners();
-
-
-        /*
-         * Render dynamic delivery options when
-         * a dedicated container exists.
-         */
-
-        const container =
-            document.querySelector(
-                "[data-delivery-methods]"
-            );
-
-
-        if (container) {
-
-            renderDeliveryMethods(
-                container
-            );
-        }
-
-
-        updateTotalDisplay();
-
-
-        console.log(
-            "%c[NEXPAK CHECKOUT] Part 3/8 loaded",
-            "font-weight:bold;"
-        );
-    }
-
-
-    /*=====================================================
-      START
-    =====================================================*/
-
-    if (
-        document.readyState ===
-        "loading"
-    ) {
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            initPart3
-        );
-
-    } else {
-
-        initPart3();
-    }
-
-})();
-
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE — CHECKOUT ENGINE
-=========================================================
- File: onlinecheckout.js
- Version: 1.0
- Part: 4/8
-
- PART 4:
- - Payment method selection
- - Payment validation
- - Order review
- - Order summary
- - Customer summary
- - Delivery summary
- - Final checkout validation
- - Pre-order validation
-=========================================================*/
-
-(function () {
-
-    "use strict";
-
-
-    /*=====================================================
-      SAFETY CHECK
-    =====================================================*/
-
-    if (!window.NEXPAKCheckout) {
-
-        console.error(
-            "[NEXPAK CHECKOUT] Part 1 is required before Part 4."
-        );
-
-        return;
-    }
-
-
-    /*=====================================================
-      SHORTCUTS
-    =====================================================*/
-
-    const checkout =
-        window.NEXPAKCheckout;
-
-    const state =
-        checkout.state;
-
-
-    /*=====================================================
-      PAYMENT METHODS
-    =====================================================*/
-
-    const DEFAULT_PAYMENT_METHODS = [
-
-        {
-            id: "eft",
-            name: "EFT / Bank Transfer",
-            description:
-                "Pay by electronic funds transfer.",
-            available: true
-        },
-
-        {
-            id: "card",
-            name: "Credit / Debit Card",
-            description:
-                "Secure card payment.",
-            available: true
-        },
-
-        {
-            id: "payfast",
-            name: "PayFast",
-            description:
-                "Pay securely using PayFast.",
-            available: true
-        },
-
-        {
-            id: "yoco",
-            name: "Yoco",
-            description:
-                "Secure online payment through Yoco.",
-            available: true
-        },
-
-        {
-            id: "paypal",
-            name: "PayPal",
-            description:
-                "Pay using your PayPal account.",
-            available: true
-        },
-
-        {
-            id: "quote",
-            name: "Request Invoice / Quote",
-            description:
-                "Submit the order for NEXPAK confirmation.",
-            available: true
-        }
-
-    ];
-
-
-    /*=====================================================
-      PAYMENT CONFIGURATION
-    =====================================================*/
-
-    const PAYMENT_CONFIG = {
-
-        defaultMethod:
-            "eft",
-
-        methods:
-            DEFAULT_PAYMENT_METHODS,
-
-        requirePaymentMethod:
-            true,
-
-        integrationEngine:
-            "onlineintegration.js"
-    };
-
-
-    /*=====================================================
-      PAYMENT SELECTORS
-    =====================================================*/
-
-    const PAYMENT_SELECTORS = {
-
-        method: [
-            "#paymentMethod",
-            "#checkoutPaymentMethod",
-            "[name='paymentMethod']",
-            "[name='payment']"
-        ],
-
-        reference: [
-            "#paymentReference",
-            "#checkoutPaymentReference",
-            "[name='paymentReference']"
-        ],
-
-        notes: [
-            "#orderNotes",
-            "#checkoutNotes",
-            "[name='orderNotes']",
-            "[name='notes']"
-        ]
-    };
-
-
-    /*=====================================================
-      FIND FIELD
-    =====================================================*/
-
-    function findField(selectors) {
-
-        if (!Array.isArray(selectors)) {
-            return null;
-        }
-
-
-        for (
-            let i = 0;
-            i < selectors.length;
-            i++
-        ) {
-
-            const element =
-                document.querySelector(
-                    selectors[i]
-                );
-
-
-            if (element) {
-                return element;
-            }
-        }
-
-
-        return null;
-    }
-
-
-    /*=====================================================
-      GET FIELD VALUE
-    =====================================================*/
-
-    function getFieldValue(name) {
-
-        const field =
-            findField(
-                PAYMENT_SELECTORS[name]
-            );
-
-
-        if (!field) {
-            return "";
-        }
-
-
-        return String(
-            field.value || ""
-        ).trim();
-    }
-
-
-    /*=====================================================
-      SET FIELD VALUE
-    =====================================================*/
-
-    function setFieldValue(
-        name,
-        value
-    ) {
-
-        const field =
-            findField(
-                PAYMENT_SELECTORS[name]
-            );
-
-
-        if (!field) {
-            return false;
-        }
-
-
-        field.value =
-            value == null
-                ? ""
-                : String(value);
-
-
-        return true;
-    }
-
-
-    /*=====================================================
-      GET PAYMENT METHODS
-    =====================================================*/
-
-    function getPaymentMethods() {
-
-        /*
-         * Future integration engine can provide
-         * its own payment methods.
-         */
-
-        if (
-            window.NEXPAKIntegration &&
-            typeof
-            window.NEXPAKIntegration
-                .getPaymentMethods ===
-                "function"
-        ) {
-
-            try {
-
-                const methods =
-                    window.NEXPAKIntegration
-                        .getPaymentMethods();
-
-
-                if (
-                    Array.isArray(methods) &&
-                    methods.length
-                ) {
-
-                    return methods;
-                }
-
-            } catch (error) {
-
-                console.warn(
-                    "[NEXPAK CHECKOUT] Payment integration unavailable:",
-                    error
-                );
-            }
-        }
-
-
-        return PAYMENT_CONFIG.methods;
-    }
-
-
-    /*=====================================================
-      GET PAYMENT METHOD
-    =====================================================*/
-
-    function getPaymentMethod(
-        methodId
-    ) {
-
-        const methods =
-            getPaymentMethods();
-
-
-        return methods.find(
-            function (method) {
-
-                return String(method.id) ===
-                    String(methodId);
-
-            }
-        ) || null;
-    }
-
-
-    /*=====================================================
-      SET PAYMENT METHOD
-    =====================================================*/
-
-    function setPaymentMethod(
-        methodId
-    ) {
-
-        const method =
-            getPaymentMethod(
-                methodId
-            );
-
-
-        if (!method) {
-
-            return {
-
-                valid: false,
-
-                message:
-                    "The selected payment method is unavailable."
-            };
-        }
-
-
-        if (
-            method.available === false
-        ) {
-
-            return {
-
-                valid: false,
-
-                message:
-                    "The selected payment method is currently unavailable."
-            };
-        }
-
-
-        state.payment.method =
-            method.id;
-
-
-        state.payment.status =
-            "pending";
-
-
-        /*
-         * Allow future integration engine
-         * to react to the selected method.
-         */
-
-        if (
-            window.NEXPAKIntegration &&
-            typeof
-            window.NEXPAKIntegration
-                .onPaymentMethodSelected ===
-                "function"
-        ) {
-
-            try {
-
-                window.NEXPAKIntegration
-                    .onPaymentMethodSelected(
-                        method
-                    );
-
-            } catch (error) {
-
-                console.warn(
-                    "[NEXPAK CHECKOUT] Payment integration callback failed:",
-                    error
-                );
-            }
-        }
-
-
-        checkout.save();
-
-
-        updatePaymentMethodUI(
-            method.id
-        );
-
-
-        return {
-
-            valid: true,
-
-            method: method,
-
-            status:
-                state.payment.status
-        };
-    }
-
-
-    /*=====================================================
-      VALIDATE PAYMENT
-    =====================================================*/
-
-    function validatePayment() {
-
-        const errors = [];
-
-
-        if (
-            !PAYMENT_CONFIG.requirePaymentMethod
-        ) {
-
-            return {
-
-                valid: true,
-
-                errors: []
-            };
-        }
-
-
-        if (
-            !state.payment.method
-        ) {
-
-            errors.push({
-
-                field: "method",
-
-                message:
-                    "Please select a payment method."
-            });
-
-
-            return {
-
-                valid: false,
-
-                errors: errors
-            };
-        }
-
-
-        const method =
-            getPaymentMethod(
-                state.payment.method
-            );
-
-
-        if (!method) {
-
-            errors.push({
-
-                field: "method",
-
-                message:
-                    "The selected payment method is invalid."
-            });
-
-        } else if (
-            method.available === false
-        ) {
-
-            errors.push({
-
-                field: "method",
-
-                message:
-                    "The selected payment method is currently unavailable."
-            });
-        }
-
-
-        return {
-
-            valid:
-                errors.length === 0,
-
-            errors:
-                errors
-        };
-    }
-
-
-    /*=====================================================
-      COLLECT PAYMENT FORM
-    =====================================================*/
-
-    function collectPaymentForm() {
-
-        return {
-
-            method:
-                getFieldValue("method"),
-
-            reference:
-                getFieldValue("reference")
-        };
-    }
-
-
-    /*=====================================================
-      SAVE PAYMENT FORM
-    =====================================================*/
-
-    function savePaymentForm() {
-
-        const payment =
-            collectPaymentForm();
-
-
-        if (payment.method) {
-
-            setPaymentMethod(
-                payment.method
-            );
-        }
-
-
-        if (payment.reference) {
-
-            state.payment.reference =
-                payment.reference;
-        }
-
-
-        state.notes =
-            getFieldValue("notes");
-
-
-        checkout.save();
-
-
-        return state.payment;
-    }
-
-
-    /*=====================================================
-      UPDATE PAYMENT UI
-    =====================================================*/
-
-    function updatePaymentMethodUI(
-        methodId
-    ) {
-
-        /*
-         * Radio buttons
-         */
-
-        document
-            .querySelectorAll(
-                "input[type='radio'][name='paymentMethod'], " +
-                "input[type='radio'][name='payment']"
-            )
-            .forEach(
-                function (radio) {
-
-                    radio.checked =
-                        String(
-                            radio.value
-                        ) ===
-                        String(methodId);
-
-                }
-            );
-
-
-        /*
-         * Select element
-         */
-
-        const select =
-            findField(
-                PAYMENT_SELECTORS.method
-            );
-
-
-        if (select) {
-
-            select.value =
-                methodId;
-        }
-
-
-        /*
-         * Update selected payment labels.
-         */
-
-        const method =
-            getPaymentMethod(
-                methodId
-            );
-
-
-        if (!method) {
-            return;
-        }
-
-
-        document
-            .querySelectorAll(
-                "[data-payment-method]"
-            )
-            .forEach(
-                function (element) {
-
-                    element.textContent =
-                        method.name;
-
-                }
-            );
-    }
-
-
-    /*=====================================================
-      RENDER PAYMENT METHODS
-    =====================================================*/
-
-    function renderPaymentMethods(
-        container
-    ) {
-
-        if (!container) {
-            return;
-        }
-
-
-        const methods =
-            getPaymentMethods();
-
-
-        container.innerHTML = "";
-
-
-        methods.forEach(
-            function (method) {
-
-                if (
-                    method.available === false
-                ) {
-                    return;
-                }
-
-
-                const wrapper =
-                    document.createElement(
-                        "label"
-                    );
-
-
-                wrapper.className =
-                    "checkout-payment-option";
-
-
-                const radio =
-                    document.createElement(
-                        "input"
-                    );
-
-
-                radio.type =
-                    "radio";
-
-                radio.name =
-                    "paymentMethod";
-
-                radio.value =
-                    method.id;
-
-                radio.checked =
-                    state.payment.method ===
-                    method.id;
-
-
-                const content =
-                    document.createElement(
-                        "span"
-                    );
-
-
-                content.className =
-                    "checkout-payment-option-content";
-
-
-                const title =
-                    document.createElement(
-                        "strong"
-                    );
-
-
-                title.textContent =
-                    method.name;
-
-
-                const description =
-                    document.createElement(
-                        "small"
-                    );
-
-
-                description.textContent =
-                    method.description || "";
-
-
-                content.appendChild(
-                    title
-                );
-
-                content.appendChild(
-                    description
-                );
-
-
-                wrapper.appendChild(
-                    radio
-                );
-
-                wrapper.appendChild(
-                    content
-                );
-
-
-                radio.addEventListener(
-                    "change",
-                    function () {
-
-                        setPaymentMethod(
-                            radio.value
-                        );
-
-                    }
-                );
-
-
-                container.appendChild(
-                    wrapper
-                );
-            }
-        );
-    }
-
-
-    /*=====================================================
-      ATTACH PAYMENT LISTENERS
-    =====================================================*/
-
-    function attachPaymentListeners() {
-
-        document
-            .querySelectorAll(
-                "input[type='radio'][name='paymentMethod'], " +
-                "input[type='radio'][name='payment']"
-            )
-            .forEach(
-                function (radio) {
-
-                    radio.addEventListener(
-                        "change",
-                        function () {
-
-                            setPaymentMethod(
-                                radio.value
-                            );
-
-                        }
-                    );
-                }
-            );
-
-
-        const select =
-            findField(
-                PAYMENT_SELECTORS.method
-            );
-
-
-        if (select) {
-
-            select.addEventListener(
-                "change",
-                function () {
-
-                    setPaymentMethod(
-                        select.value
-                    );
-
-                }
-            );
-        }
-    }
-
-
-    /*=====================================================
-      ORDER NUMBER GENERATOR
-    =====================================================*/
-
-    function generateOrderNumber() {
-
-        const now =
-            new Date();
-
-
-        const year =
-            now.getFullYear();
-
-
-        const month =
-            String(
-                now.getMonth() + 1
-            ).padStart(2, "0");
-
-
-        const day =
-            String(
-                now.getDate()
-            ).padStart(2, "0");
-
-
-        const random =
-            Math.floor(
-                100000 +
-                Math.random() * 900000
-            );
-
-
-        return (
-            "NEX-" +
-            year +
-            month +
-            day +
-            "-" +
-            random
-        );
-    }
-
-
-    /*=====================================================
-      CREATE DRAFT ORDER NUMBER
-    =====================================================*/
-
-    function createDraftOrder() {
-
-        if (
-            !state.order.orderNumber
-        ) {
-
-            state.order.orderNumber =
-                generateOrderNumber();
-        }
-
-
-        if (
-            !state.order.createdAt
-        ) {
-
-            state.order.createdAt =
-                new Date().toISOString();
-        }
-
-
-        state.order.status =
-            "draft";
-
-
-        checkout.save();
-
-
-        return state.order;
-    }
-
-
-    /*=====================================================
-      CUSTOMER SUMMARY
-    =====================================================*/
-
-    function getCustomerSummary() {
-
-        const customer =
-            state.customer || {};
-
-
-        return {
-
-            name:
-                (
-                    customer.firstName +
-                    " " +
-                    customer.lastName
-                ).trim(),
-
-            firstName:
-                customer.firstName || "",
-
-            lastName:
-                customer.lastName || "",
-
-            email:
-                customer.email || "",
-
-            phone:
-                customer.phone || "",
-
-            company:
-                customer.company || ""
-        };
-    }
-
-
-    /*=====================================================
-      BILLING SUMMARY
-    =====================================================*/
-
-    function getBillingSummary() {
-
-        const billing =
-            state.billing || {};
-
-
-        return {
-
-            address1:
-                billing.address1 || "",
-
-            address2:
-                billing.address2 || "",
-
-            suburb:
-                billing.suburb || "",
-
-            city:
-                billing.city || "",
-
-            province:
-                billing.province || "",
-
-            postalCode:
-                billing.postalCode || "",
-
-            country:
-                billing.country ||
-                "South Africa"
-        };
-    }
-
-
-    /*=====================================================
-      DELIVERY SUMMARY
-    =====================================================*/
-
-    function getDeliverySummary() {
-
-        if (
-            checkout.delivery &&
-            typeof
-            checkout.delivery.getSummary ===
-            "function"
-        ) {
-
-            return checkout.delivery
-                .getSummary();
-        }
-
-
-        const method =
-            getDeliveryMethodFallback();
-
-
-        return {
-
-            method:
-                method,
-
-            address1:
-                state.delivery.address1 || "",
-
-            address2:
-                state.delivery.address2 || "",
-
-            suburb:
-                state.delivery.suburb || "",
-
-            city:
-                state.delivery.city || "",
-
-            province:
-                state.delivery.province || "",
-
-            postalCode:
-                state.delivery.postalCode || "",
-
-            instructions:
-                state.delivery.instructions || "",
-
-            cost:
-                state.totals.delivery || 0
-        };
-    }
-
-
-    /*=====================================================
-      DELIVERY FALLBACK
-    =====================================================*/
-
-    function getDeliveryMethodFallback() {
-
-        if (
-            !state.delivery.method
-        ) {
-
-            return "Not selected";
-        }
-
-
-        return state.delivery.method;
-    }
-
-
-    /*=====================================================
-      PAYMENT SUMMARY
-    =====================================================*/
-
-    function getPaymentSummary() {
-
-        const method =
-            getPaymentMethod(
-                state.payment.method
-            );
-
-
-        return {
-
-            method:
-                method
-                    ? method.name
-                    : "Not selected",
-
-            methodId:
-                state.payment.method || "",
-
-            status:
-                state.payment.status ||
-                "pending",
-
-            reference:
-                state.payment.reference || ""
-        };
-    }
-
-
-    /*=====================================================
-      CART SUMMARY
-    =====================================================*/
-
-    function getCartSummary() {
-
-        checkout.loadCart();
-
-
-        return state.cart.map(
-            function (item) {
-
-                return {
-
-                    id:
-                        item.id,
-
-                    sku:
-                        item.sku,
-
-                    name:
-                        item.name,
-
-                    price:
-                        item.price,
-
-                    quantity:
-                        item.quantity,
-
-                    subtotal:
-                        item.subtotal,
-
-                    image:
-                        item.image,
-
-                    category:
-                        item.category
-                };
-            }
-        );
-    }
-
-
-    /*=====================================================
-      TOTALS SUMMARY
-    =====================================================*/
-
-    function getTotalsSummary() {
-
-        checkout.calculateTotals();
-
-
-        return {
-
-            subtotal:
-                state.totals.subtotal,
-
-            delivery:
-                state.totals.delivery,
-
-            discount:
-                state.totals.discount,
-
-            tax:
-                state.totals.tax,
-
-            total:
-                state.totals.total
-        };
-    }
-
-
-    /*=====================================================
-      COMPLETE ORDER REVIEW
-    =====================================================*/
-
-    function getOrderReview() {
-
-        checkout.loadCart();
-
-
-        return {
-
-            order:
-                state.order,
-
-            customer:
-                getCustomerSummary(),
-
-            billing:
-                getBillingSummary(),
-
-            delivery:
-                getDeliverySummary(),
-
-            payment:
-                getPaymentSummary(),
-
-            items:
-                getCartSummary(),
-
-            totals:
-                getTotalsSummary(),
-
-            notes:
-                state.notes || ""
-        };
-    }
-
-
-    /*=====================================================
-      VALIDATE ORDER REVIEW
-    =====================================================*/
-
-    function validateOrderReview() {
-
-        const errors = [];
-
-
-        /*
-         * Cart
-         */
-
-        const cartResult =
-            checkout.validateCart();
-
-
-        if (
-            !cartResult.valid
-        ) {
-
-            errors.push({
-
-                section: "cart",
-
-                message:
-                    cartResult.message
-            });
-        }
-
-
-        /*
-         * Customer
-         */
-
-        if (
-            checkout.form &&
-            typeof
-            checkout.form.validateCustomer ===
-            "function"
-        ) {
-
-            const customer =
-                checkout.form
-                    .collectCustomer();
-
-
-            const result =
-                checkout.form
-                    .validateCustomer(
-                        customer
-                    );
-
-
-            if (!result.valid) {
-
-                result.errors.forEach(
-                    function (error) {
-
-                        errors.push({
-
-                            section:
-                                "customer",
-
-                            field:
-                                error.field,
-
-                            message:
-                                error.message
-                        });
-
-                    }
-                );
-            }
-        }
-
-
-        /*
-         * Billing
-         */
-
-        if (
-            checkout.form &&
-            typeof
-            checkout.form.validateBilling ===
-            "function"
-        ) {
-
-            const billing =
-                checkout.form
-                    .collectBilling();
-
-
-            const result =
-                checkout.form
-                    .validateBilling(
-                        billing
-                    );
-
-
-            if (!result.valid) {
-
-                result.errors.forEach(
-                    function (error) {
-
-                        errors.push({
-
-                            section:
-                                "billing",
-
-                            field:
-                                error.field,
-
-                            message:
-                                error.message
-                        });
-
-                    }
-                );
-            }
-        }
-
-
-        /*
-         * Delivery
-         */
-
-        if (
-            checkout.delivery &&
-            typeof
-            checkout.delivery.validate ===
-            "function"
-        ) {
-
-            const result =
-                checkout.delivery
-                    .validate();
-
-
-            if (!result.valid) {
-
-                result.errors.forEach(
-                    function (error) {
-
-                        errors.push({
-
-                            section:
-                                "delivery",
-
-                            field:
-                                error.field,
-
-                            message:
-                                error.message
-                        });
-
-                    }
-                );
-            }
-        }
-
-
-        /*
-         * Payment
-         */
-
-        const paymentResult =
-            validatePayment();
-
-
-        if (
-            !paymentResult.valid
-        ) {
-
-            paymentResult.errors.forEach(
-                function (error) {
-
-                    errors.push({
-
-                        section:
-                            "payment",
-
-                        field:
-                            error.field,
-
-                        message:
-                            error.message
-                    });
-
-                }
-            );
-        }
-
-
-        return {
-
-            valid:
-                errors.length === 0,
-
-            errors:
-                errors
-        };
-    }
-
-
-    /*=====================================================
-      PREPARE ORDER FOR SUBMISSION
-    =====================================================*/
-
-    function prepareOrder() {
-
-        const validation =
-            validateOrderReview();
-
-
-        if (!validation.valid) {
-
-            return {
-
-                valid: false,
-
-                errors:
-                    validation.errors
-            };
-        }
-
-
-        createDraftOrder();
-
-
-        const review =
-            getOrderReview();
-
-
-        state.order.status =
-            "ready";
-
-
-        checkout.save();
-
-
-        return {
-
-            valid: true,
-
-            order:
-                review
-        };
-    }
-
-
-    /*=====================================================
-      PAYMENT STEP SUBMISSION
-    =====================================================*/
-
-    function submitPaymentStep() {
-
-        savePaymentForm();
-
-
-        const validation =
-            validatePayment();
-
-
-        if (!validation.valid) {
-
-            return validation;
-        }
-
-
-        checkout.setStep(5);
-
-
-        const review =
-            getOrderReview();
-
-
-        return {
-
-            valid: true,
-
-            step: 5,
-
-            review:
-                review
-        };
-    }
-
-
-    /*=====================================================
-      FORMAT CURRENCY
-    =====================================================*/
-
-    function formatCurrency(
-        amount
-    ) {
-
-        const value =
-            Number(amount) || 0;
-
-
-        try {
-
-            return new Intl.NumberFormat(
-                "en-ZA",
-                {
-                    style: "currency",
-                    currency: "ZAR"
-                }
-            ).format(value);
-
-        } catch (error) {
-
-            return (
-                "R " +
-                value.toFixed(2)
-            );
-        }
-    }
-
-
-    /*=====================================================
-      RENDER ORDER REVIEW
-    =====================================================*/
-
-    function renderOrderReview(
-        container
-    ) {
-
-        if (!container) {
-            return;
-        }
-
-
-        const review =
-            getOrderReview();
-
-
-        container.innerHTML = "";
-
-
-        /*
-         * Customer section
-         */
-
-        const customerSection =
-            document.createElement(
-                "section"
-            );
-
-
-        customerSection.className =
-            "checkout-review-section";
-
-
-        customerSection.innerHTML =
-            `
-            <h3>Customer</h3>
-
-            <p>
-                <strong>${escapeHTML(
-                    review.customer.name
-                )}</strong>
-            </p>
-
-            <p>
-                ${escapeHTML(
-                    review.customer.email
-                )}
-            </p>
-
-            <p>
-                ${escapeHTML(
-                    review.customer.phone
-                )}
-            </p>
-
-            ${
-                review.customer.company
-                    ? `
-                        <p>
-                            ${escapeHTML(
-                                review.customer.company
-                            )}
-                        </p>
-                      `
-                    : ""
-            }
-            `;
-
-
-        container.appendChild(
-            customerSection
-        );
-
-
-        /*
-         * Delivery section
-         */
-
-        const deliverySection =
-            document.createElement(
-                "section"
-            );
-
-
-        deliverySection.className =
-            "checkout-review-section";
-
-
-        deliverySection.innerHTML =
-            `
-            <h3>Delivery</h3>
-
-            <p>
-                <strong>
-                    ${escapeHTML(
-                        review.delivery.method ||
-                        "Not selected"
-                    )}
-                </strong>
-            </p>
-
-            <p>
-                ${escapeHTML(
-                    review.delivery.address1 ||
-                    ""
-                )}
-            </p>
-
-            <p>
-                ${escapeHTML(
-                    review.delivery.suburb ||
-                    ""
-                )}
-            </p>
-
-            <p>
-                ${escapeHTML(
-                    review.delivery.city ||
-                    ""
-                )}
-                ${
-                    review.delivery.province
-                        ? ", " +
-                          escapeHTML(
-                              review.delivery.province
-                          )
-                        : ""
-                }
-            </p>
-
-            <p>
-                ${escapeHTML(
-                    review.delivery.postalCode ||
-                    ""
-                )}
-            </p>
-            `;
-
-
-        container.appendChild(
-            deliverySection
-        );
-
-
-        /*
-         * Payment section
-         */
-
-        const paymentSection =
-            document.createElement(
-                "section"
-            );
-
-
-        paymentSection.className =
-            "checkout-review-section";
-
-
-        paymentSection.innerHTML =
-            `
-            <h3>Payment</h3>
-
-            <p>
-                ${escapeHTML(
-                    review.payment.method
-                )}
-            </p>
-            `;
-
-
-        container.appendChild(
-            paymentSection
-        );
-
-
-        /*
-         * Totals section
-         */
-
-        const totalsSection =
-            document.createElement(
-                "section"
-            );
-
-
-        totalsSection.className =
-            "checkout-review-section checkout-review-totals";
-
-
-        totalsSection.innerHTML =
-            `
-            <h3>Order Total</h3>
-
-            <p>
-                Subtotal:
-                <strong>
-                    ${formatCurrency(
-                        review.totals.subtotal
-                    )}
-                </strong>
-            </p>
-
-            <p>
-                Delivery:
-                <strong>
-                    ${formatCurrency(
-                        review.totals.delivery
-                    )}
-                </strong>
-            </p>
-
-            <p>
-                Discount:
-                <strong>
-                    ${formatCurrency(
-                        review.totals.discount
-                    )}
-                </strong>
-            </p>
-
-            <p>
-                Tax:
-                <strong>
-                    ${formatCurrency(
-                        review.totals.tax
-                    )}
-                </strong>
-            </p>
-
-            <p class="checkout-final-total">
-                Total:
-                <strong>
-                    ${formatCurrency(
-                        review.totals.total
-                    )}
-                </strong>
-            </p>
-            `;
-
-
-        container.appendChild(
-            totalsSection
-        );
-    }
-
-
-    /*=====================================================
-      ESCAPE HTML
-    =====================================================*/
-
-    function escapeHTML(
-        value
-    ) {
-
-        return String(
-            value == null
-                ? ""
-                : value
-        )
-            .replace(
-                /&/g,
-                "&amp;"
-            )
-            .replace(
-                /</g,
-                "&lt;"
-            )
-            .replace(
-                />/g,
-                "&gt;"
-            )
-            .replace(
-                /"/g,
-                "&quot;"
-            )
-            .replace(
-                /'/g,
-                "&#039;"
-            );
-    }
-
-
-    /*=====================================================
-      FINAL CHECKOUT VALIDATION
-    =====================================================*/
-
-    function validateBeforeOrder() {
-
-        const result =
-            validateOrderReview();
-
-
-        if (!result.valid) {
-
-            console.warn(
-                "[NEXPAK CHECKOUT] Order validation failed:",
-                result.errors
-            );
-
-            return result;
-        }
-
-
-        return {
-
-            valid: true,
-
-            message:
-                "Order is ready for submission."
-        };
-    }
-
-
-    /*=====================================================
-      EXTEND CHECKOUT API
-    =====================================================*/
-
-    checkout.payment = {
-
-        config:
-            PAYMENT_CONFIG,
-
-        selectors:
-            PAYMENT_SELECTORS,
-
-        getMethods:
-            getPaymentMethods,
-
-        getMethod:
-            getPaymentMethod,
-
-        setMethod:
-            setPaymentMethod,
-
-        collect:
-            collectPaymentForm,
-
-        save:
-            savePaymentForm,
-
-        validate:
-            validatePayment,
-
-        render:
-            renderPaymentMethods,
-
-        submit:
-            submitPaymentStep
-    };
-
-
-    checkout.review = {
-
-        get:
-            getOrderReview,
-
-        validate:
-            validateOrderReview,
-
-        prepare:
-            prepareOrder,
-
-        validateBeforeOrder:
-            validateBeforeOrder,
-
-        render:
-            renderOrderReview,
-
-        customer:
-            getCustomerSummary,
-
-        billing:
-            getBillingSummary,
-
-        delivery:
-            getDeliverySummary,
-
-        payment:
-            getPaymentSummary,
-
-        cart:
-            getCartSummary,
-
-        totals:
-            getTotalsSummary
-    };
-
-
-    /*=====================================================
-      INITIALISE PART 4
-    =====================================================*/
-
-    function initPart4() {
-
-        checkout.init();
-
-
-        /*
-         * Default payment method.
-         */
-
-        if (
-            !state.payment.method
-        ) {
-
-            const defaultMethod =
-                getPaymentMethod(
-                    PAYMENT_CONFIG.defaultMethod
-                );
-
-
-            if (defaultMethod) {
-
-                state.payment.method =
-                    defaultMethod.id;
-            }
-        }
-
-
-        updatePaymentMethodUI(
-            state.payment.method
-        );
-
-
-        attachPaymentListeners();
-
-
-        /*
-         * Render dynamic payment options
-         * when the checkout page provides
-         * a dedicated container.
-         */
-
-        const container =
-            document.querySelector(
-                "[data-payment-methods]"
-            );
-
-
-        if (container) {
-
-            renderPaymentMethods(
-                container
-            );
-        }
-
-
-        console.log(
-            "%c[NEXPAK CHECKOUT] Part 4/8 loaded",
-            "font-weight:bold;"
-        );
-    }
-
-
-    /*=====================================================
-      START
-    =====================================================*/
-
-    if (
-        document.readyState ===
-        "loading"
-    ) {
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            initPart4
-        );
-
-    } else {
-
-        initPart4();
-    }
-
-})();
-
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE — CHECKOUT ENGINE
-=========================================================
- File: onlinecheckout.js
- Version: 1.0
- Part: 5/8
-
- PART 5:
- - Order payload generation
- - Order item normalization
- - Customer payload
- - Billing payload
- - Delivery payload
- - Payment payload
- - Order metadata
- - Order submission preparation
- - Confirmation data
- - Checkout event hooks
-=========================================================*/
-
-(function () {
-
-    "use strict";
-
-
-    /*=====================================================
-      SAFETY CHECK
-    =====================================================*/
-
-    if (!window.NEXPAKCheckout) {
-
-        console.error(
-            "[NEXPAK CHECKOUT] Checkout engine is required."
-        );
-
-        return;
-    }
-
-
-    /*=====================================================
-      SHORTCUTS
-    =====================================================*/
-
-    const checkout =
-        window.NEXPAKCheckout;
-
-    const state =
-        checkout.state;
-
-
-    /*=====================================================
-      ORDER CONFIGURATION
-    =====================================================*/
-
-    const ORDER_CONFIG = {
+    let nexpakOnlineCheckout = {
 
         version:
-            "1.0",
+            NEXPAK_CHECKOUT_VERSION,
 
-        country:
-            "South Africa",
+        orderReference:
+            "",
 
-        currency:
-            "ZAR",
+        customer:
+            {
 
-        orderPrefix:
-            "NEX",
+                name: "",
 
-        defaultStatus:
-            "pending",
+                email: "",
 
-        defaultPaymentStatus:
-            "pending",
+                phone: ""
 
-        source:
-            "NEXPAK Online Store",
+            },
 
-        platform:
-            "web"
+        delivery:
+            {
+
+                address: "",
+
+                suburb: "",
+
+                city: "",
+
+                province: "",
+
+                postalCode: "",
+
+                distanceKm: 0,
+
+                fee: 0
+
+            },
+
+        payment:
+            {
+
+                method: "",
+
+                status: "pending"
+
+            },
+
+        cart:
+            [],
+
+        totals:
+            {
+
+                subtotalExVat: 0,
+
+                vatRate: 0.15,
+
+                vatAmount: 0,
+
+                totalInclVat: 0,
+
+                deliveryFee: 0,
+
+                grandTotal: 0
+
+            },
+
+        createdAt:
+            "",
+
+        updatedAt:
+            ""
+
     };
 
 
-    /*=====================================================
-      ORDER STATUS
-    =====================================================*/
+    /* =====================================================
+       3. SAFE STRING
+       ===================================================== */
 
-    const ORDER_STATUS = {
-
-        DRAFT:
-            "draft",
-
-        READY:
-            "ready",
-
-        PENDING:
-            "pending",
-
-        PROCESSING:
-            "processing",
-
-        PAID:
-            "paid",
-
-        CONFIRMED:
-            "confirmed",
-
-        COMPLETED:
-            "completed",
-
-        CANCELLED:
-            "cancelled",
-
-        FAILED:
-            "failed"
-    };
-
-
-    /*=====================================================
-      UTILITY — SAFE NUMBER
-    =====================================================*/
-
-    function safeNumber(value) {
-
-        const number =
-            Number(value);
-
-        return Number.isFinite(number)
-            ? number
-            : 0;
-    }
-
-
-    /*=====================================================
-      UTILITY — SAFE STRING
-    =====================================================*/
-
-    function safeString(value) {
+    function safeCheckoutString(
+        value,
+        fallback = ""
+    ) {
 
         if (
             value === null ||
             value === undefined
         ) {
 
-            return "";
+            return fallback;
+
         }
 
+
         return String(value).trim();
+
     }
 
 
-    /*=====================================================
-      GENERATE ORDER NUMBER
-    =====================================================*/
+    /* =====================================================
+       4. SAFE NUMBER
+       ===================================================== */
 
-    function generateOrderNumber() {
+    function safeCheckoutNumber(
+        value,
+        fallback = 0
+    ) {
+
+        const number =
+            Number(value);
+
+
+        return Number.isFinite(number)
+            ? number
+            : fallback;
+
+    }
+
+
+    /* =====================================================
+       5. CREATE ORDER REFERENCE
+       ===================================================== */
+
+    function createNexpakOnlineOrderReference() {
 
         const now =
             new Date();
@@ -5555,28 +166,22 @@
         const month =
             String(
                 now.getMonth() + 1
-            ).padStart(2, "0");
+            ).padStart(
+                2,
+                "0"
+            );
 
 
         const day =
             String(
                 now.getDate()
-            ).padStart(2, "0");
+            ).padStart(
+                2,
+                "0"
+            );
 
 
-        const hours =
-            String(
-                now.getHours()
-            ).padStart(2, "0");
-
-
-        const minutes =
-            String(
-                now.getMinutes()
-            ).padStart(2, "0");
-
-
-        const random =
+        const randomNumber =
             Math.floor(
                 1000 +
                 Math.random() * 9000
@@ -5584,845 +189,66 @@
 
 
         return (
-            ORDER_CONFIG.orderPrefix +
+
+            NEXPAK_ORDER_PREFIX +
+
             "-" +
+
             year +
+
             month +
+
             day +
+
             "-" +
-            hours +
-            minutes +
-            "-" +
-            random
+
+            randomNumber
+
         );
+
     }
 
 
-    /*=====================================================
-      ENSURE ORDER IDENTIFIER
-    =====================================================*/
+    /* =====================================================
+       6. GET CART ENGINE
+       ===================================================== */
 
-    function ensureOrderIdentifier() {
+    function getNexpakOnlineCheckoutCart() {
 
         if (
-            !state.order.orderNumber
-        ) {
-
-            state.order.orderNumber =
-                generateOrderNumber();
-        }
-
-
-        if (
-            !state.order.createdAt
-        ) {
-
-            state.order.createdAt =
-                new Date().toISOString();
-        }
-
-
-        return state.order;
-    }
-
-
-    /*=====================================================
-      NORMALISE ORDER ITEM
-    =====================================================*/
-
-    function normalizeOrderItem(
-        item,
-        index
-    ) {
-
-        if (
-            !item ||
-            typeof item !== "object"
-        ) {
-
-            return null;
-        }
-
-
-        const quantity =
-            Math.max(
-                1,
-                safeNumber(
-                    item.quantity ||
-                    item.qty ||
-                    1
-                )
-            );
-
-
-        const price =
-            safeNumber(
-                item.price ||
-                item.unitPrice ||
-                item.salePrice ||
-                0
-            );
-
-
-        return {
-
-            lineNumber:
-                index + 1,
-
-            productId:
-                safeString(
-                    item.id ||
-                    item.productId
-                ),
-
-            sku:
-                safeString(
-                    item.sku ||
-                    item.id
-                ),
-
-            name:
-                safeString(
-                    item.name ||
-                    item.title ||
-                    "Product"
-                ),
-
-            category:
-                safeString(
-                    item.category
-                ),
-
-            quantity:
-                quantity,
-
-            unitPrice:
-                price,
-
-            lineTotal:
-                price * quantity,
-
-            image:
-                safeString(
-                    item.image
-                ),
-
-            /*
-             * Preserve product options/configuration
-             * when available.
-             */
-
-            options:
-                item.options ||
-                item.variant ||
-                item.configuration ||
-                null
-        };
-    }
-
-
-    /*=====================================================
-      BUILD ORDER ITEMS
-    =====================================================*/
-
-    function buildOrderItems() {
-
-        checkout.loadCart();
-
-
-        return state.cart
-            .map(
-                normalizeOrderItem
-            )
-            .filter(
-                function (item) {
-
-                    return item !== null;
-                }
-            );
-    }
-
-
-    /*=====================================================
-      BUILD CUSTOMER PAYLOAD
-    =====================================================*/
-
-    function buildCustomerPayload() {
-
-        const customer =
-            state.customer || {};
-
-
-        return {
-
-            firstName:
-                safeString(
-                    customer.firstName
-                ),
-
-            lastName:
-                safeString(
-                    customer.lastName
-                ),
-
-            fullName:
-                (
-                    safeString(
-                        customer.firstName
-                    ) +
-                    " " +
-                    safeString(
-                        customer.lastName
-                    )
-                ).trim(),
-
-            email:
-                safeString(
-                    customer.email
-                ),
-
-            phone:
-                safeString(
-                    customer.phone
-                ),
-
-            company:
-                safeString(
-                    customer.company
-                )
-        };
-    }
-
-
-    /*=====================================================
-      BUILD BILLING PAYLOAD
-    =====================================================*/
-
-    function buildBillingPayload() {
-
-        const billing =
-            state.billing || {};
-
-
-        return {
-
-            address1:
-                safeString(
-                    billing.address1
-                ),
-
-            address2:
-                safeString(
-                    billing.address2
-                ),
-
-            suburb:
-                safeString(
-                    billing.suburb
-                ),
-
-            city:
-                safeString(
-                    billing.city
-                ),
-
-            province:
-                safeString(
-                    billing.province
-                ),
-
-            postalCode:
-                safeString(
-                    billing.postalCode
-                ),
-
-            country:
-                safeString(
-                    billing.country
-                ) ||
-                ORDER_CONFIG.country
-        };
-    }
-
-
-    /*=====================================================
-      BUILD DELIVERY PAYLOAD
-    =====================================================*/
-
-    function buildDeliveryPayload() {
-
-        const delivery =
-            state.delivery || {};
-
-
-        let method =
-            delivery.method || "";
-
-
-        let methodName =
-            "";
-
-
-        /*
-         * Get friendly delivery name
-         * from the delivery engine where available.
-         */
-
-        if (
-            checkout.delivery &&
+            window.NEXPAK_ONLINE_CART &&
             typeof
-            checkout.delivery.getMethod ===
+            window.NEXPAK_ONLINE_CART.get ===
             "function"
         ) {
 
-            const methodObject =
-                checkout.delivery
-                    .getMethod(
-                        method
-                    );
-
-
-            if (methodObject) {
-
-                methodName =
-                    safeString(
-                        methodObject.name
-                    );
-            }
-        }
-
-
-        return {
-
-            method:
-                safeString(
-                    method
-                ),
-
-            methodName:
-                methodName,
-
-            address1:
-                safeString(
-                    delivery.address1
-                ),
-
-            address2:
-                safeString(
-                    delivery.address2
-                ),
-
-            suburb:
-                safeString(
-                    delivery.suburb
-                ),
-
-            city:
-                safeString(
-                    delivery.city
-                ),
-
-            province:
-                safeString(
-                    delivery.province
-                ),
-
-            postalCode:
-                safeString(
-                    delivery.postalCode
-                ),
-
-            country:
-                ORDER_CONFIG.country,
-
-            instructions:
-                safeString(
-                    delivery.instructions
-                ),
-
-            cost:
-                safeNumber(
-                    state.totals.delivery
-                )
-        };
-    }
-
-
-    /*=====================================================
-      BUILD PAYMENT PAYLOAD
-    =====================================================*/
-
-    function buildPaymentPayload() {
-
-        const payment =
-            state.payment || {};
-
-
-        let methodName =
-            "";
-
-
-        if (
-            checkout.payment &&
-            typeof
-            checkout.payment.getMethod ===
-            "function"
-        ) {
-
-            const method =
-                checkout.payment
-                    .getMethod(
-                        payment.method
-                    );
-
-
-            if (method) {
-
-                methodName =
-                    safeString(
-                        method.name
-                    );
-            }
-        }
-
-
-        return {
-
-            method:
-                safeString(
-                    payment.method
-                ),
-
-            methodName:
-                methodName,
-
-            status:
-                safeString(
-                    payment.status
-                ) ||
-                ORDER_CONFIG.defaultPaymentStatus,
-
-            reference:
-                safeString(
-                    payment.reference
-                )
-        };
-    }
-
-
-    /*=====================================================
-      BUILD TOTALS PAYLOAD
-    =====================================================*/
-
-    function buildTotalsPayload() {
-
-        checkout.calculateTotals();
-
-
-        return {
-
-            subtotal:
-                safeNumber(
-                    state.totals.subtotal
-                ),
-
-            delivery:
-                safeNumber(
-                    state.totals.delivery
-                ),
-
-            discount:
-                safeNumber(
-                    state.totals.discount
-                ),
-
-            tax:
-                safeNumber(
-                    state.totals.tax
-                ),
-
-            total:
-                safeNumber(
-                    state.totals.total
-                ),
-
-            currency:
-                ORDER_CONFIG.currency
-        };
-    }
-
-
-    /*=====================================================
-      BUILD ORDER METADATA
-    =====================================================*/
-
-    function buildOrderMetadata() {
-
-        return {
-
-            source:
-                ORDER_CONFIG.source,
-
-            platform:
-                ORDER_CONFIG.platform,
-
-            checkoutVersion:
-                ORDER_CONFIG.version,
-
-            createdAt:
-                state.order.createdAt ||
-                new Date().toISOString(),
-
-            userAgent:
-                safeString(
-                    navigator.userAgent
-                ),
-
-            language:
-                safeString(
-                    navigator.language
-                ),
-
-            timezone:
-                safeString(
-                    Intl.DateTimeFormat()
-                        .resolvedOptions()
-                        .timeZone
-                )
-        };
-    }
-
-
-    /*=====================================================
-      BUILD ORDER PAYLOAD
-    =====================================================*/
-
-    function buildOrderPayload() {
-
-        ensureOrderIdentifier();
-
-        checkout.loadCart();
-
-        checkout.calculateTotals();
-
-
-        const items =
-            buildOrderItems();
-
-
-        const payload = {
-
-            orderNumber:
-                state.order.orderNumber,
-
-            status:
-                state.order.status ||
-                ORDER_STATUS.DRAFT,
-
-            customer:
-                buildCustomerPayload(),
-
-            billing:
-                buildBillingPayload(),
-
-            delivery:
-                buildDeliveryPayload(),
-
-            payment:
-                buildPaymentPayload(),
-
-            items:
-                items,
-
-            totals:
-                buildTotalsPayload(),
-
-            notes:
-                safeString(
-                    state.notes
-                ),
-
-            metadata:
-                buildOrderMetadata()
-        };
-
-
-        return payload;
-    }
-
-
-    /*=====================================================
-      VALIDATE ORDER PAYLOAD
-    =====================================================*/
-
-    function validateOrderPayload(
-        payload
-    ) {
-
-        const errors = [];
-
-
-        if (
-            !payload ||
-            typeof payload !== "object"
-        ) {
-
-            return {
-
-                valid: false,
-
-                errors: [
-                    "Order payload is invalid."
-                ]
-            };
-        }
-
-
-        if (
-            !payload.orderNumber
-        ) {
-
-            errors.push(
-                "Order number is missing."
-            );
-        }
-
-
-        if (
-            !payload.customer.firstName
-        ) {
-
-            errors.push(
-                "Customer first name is missing."
-            );
-        }
-
-
-        if (
-            !payload.customer.lastName
-        ) {
-
-            errors.push(
-                "Customer last name is missing."
-            );
-        }
-
-
-        if (
-            !payload.customer.email
-        ) {
-
-            errors.push(
-                "Customer email is missing."
-            );
-        }
-
-
-        if (
-            !Array.isArray(
-                payload.items
-            ) ||
-            payload.items.length === 0
-        ) {
-
-            errors.push(
-                "Order contains no products."
-            );
-        }
-
-
-        if (
-            payload.totals.total <= 0
-        ) {
-
-            errors.push(
-                "Order total must be greater than zero."
-            );
-        }
-
-
-        if (
-            !payload.payment.method
-        ) {
-
-            errors.push(
-                "Payment method is missing."
-            );
-        }
-
-
-        return {
-
-            valid:
-                errors.length === 0,
-
-            errors:
-                errors
-        };
-    }
-
-
-    /*=====================================================
-      PREPARE ORDER
-    =====================================================*/
-
-    function prepareOrderSubmission() {
-
-        /*
-         * Run the complete checkout validation
-         * before creating the final payload.
-         */
-
-        if (
-            checkout.review &&
-            typeof
-            checkout.review.validateBeforeOrder ===
-            "function"
-        ) {
-
-            const validation =
-                checkout.review
-                    .validateBeforeOrder();
-
-
-            if (
-                !validation.valid
-            ) {
-
-                return {
-
-                    valid: false,
-
-                    errors:
-                        validation.errors || []
-                };
-            }
-        }
-
-
-        ensureOrderIdentifier();
-
-
-        const payload =
-            buildOrderPayload();
-
-
-        const validation =
-            validateOrderPayload(
-                payload
+            return (
+                window
+                    .NEXPAK_ONLINE_CART
+                    .get()
             );
 
-
-        if (!validation.valid) {
-
-            return {
-
-                valid: false,
-
-                errors:
-                    validation.errors
-            };
         }
 
 
-        /*
-         * Mark order as ready.
-         */
+        return [];
 
-        state.order.status =
-            ORDER_STATUS.READY;
-
-
-        checkout.save();
-
-
-        return {
-
-            valid: true,
-
-            order:
-                payload
-        };
     }
 
 
-    /*=====================================================
-      LOCK ORDER FOR SUBMISSION
-    =====================================================*/
+    /* =====================================================
+       7. CHECK CART
+       ===================================================== */
 
-    function lockOrder() {
+    function validateNexpakOnlineCheckoutCart() {
 
-        state.order.status =
-            ORDER_STATUS.PROCESSING;
-
-
-        state.order.lockedAt =
-            new Date().toISOString();
-
-
-        checkout.save();
-
-
-        return state.order;
-    }
-
-
-    /*=====================================================
-      UNLOCK ORDER AFTER FAILURE
-    =====================================================*/
-
-    function unlockOrder() {
-
-        if (
-            state.order.status ===
-            ORDER_STATUS.PROCESSING
-        ) {
-
-            state.order.status =
-                ORDER_STATUS.READY;
-        }
-
-
-        checkout.save();
-
-
-        return state.order;
-    }
-
-
-    /*=====================================================
-      SET ORDER STATUS
-    =====================================================*/
-
-    function setOrderStatus(
-        status
-    ) {
-
-        const allowed = [
-
-            ORDER_STATUS.DRAFT,
-
-            ORDER_STATUS.READY,
-
-            ORDER_STATUS.PENDING,
-
-            ORDER_STATUS.PROCESSING,
-
-            ORDER_STATUS.PAID,
-
-            ORDER_STATUS.CONFIRMED,
-
-            ORDER_STATUS.COMPLETED,
-
-            ORDER_STATUS.CANCELLED,
-
-            ORDER_STATUS.FAILED
-
-        ];
+        const cart =
+            getNexpakOnlineCheckoutCart();
 
 
         if (
-            allowed.indexOf(status) === -1
+            !Array.isArray(cart) ||
+            cart.length === 0
         ) {
 
             return {
@@ -6430,168 +256,10 @@
                 valid: false,
 
                 message:
-                    "Invalid order status."
+                    "Your cart is empty."
+
             };
-        }
 
-
-        state.order.status =
-            status;
-
-
-        checkout.save();
-
-
-        return {
-
-            valid: true,
-
-            status:
-                status
-        };
-    }
-
-
-    /*=====================================================
-      BUILD CONFIRMATION DATA
-    =====================================================*/
-
-    function buildConfirmationData(
-        response
-    ) {
-
-        const payload =
-            buildOrderPayload();
-
-
-        return {
-
-            orderNumber:
-                payload.orderNumber,
-
-            status:
-                state.order.status,
-
-            customer:
-                payload.customer,
-
-            items:
-                payload.items,
-
-            totals:
-                payload.totals,
-
-            payment:
-                payload.payment,
-
-            delivery:
-                payload.delivery,
-
-            response:
-                response || null,
-
-            confirmedAt:
-                new Date().toISOString()
-        };
-    }
-
-
-    /*=====================================================
-      SAVE CONFIRMATION DATA
-    =====================================================*/
-
-    function saveConfirmationData(
-        response
-    ) {
-
-        const confirmation =
-            buildConfirmationData(
-                response
-            );
-
-
-        try {
-
-            localStorage.setItem(
-                "nexpak_order_confirmation",
-                JSON.stringify(
-                    confirmation
-                )
-            );
-
-        } catch (error) {
-
-            console.warn(
-                "[NEXPAK CHECKOUT] Could not save confirmation:",
-                error
-            );
-        }
-
-
-        return confirmation;
-    }
-
-
-    /*=====================================================
-      CHECK ORDER LOCK
-    =====================================================*/
-
-    function isOrderLocked() {
-
-        return (
-            state.order.status ===
-            ORDER_STATUS.PROCESSING
-        );
-    }
-
-
-    /*=====================================================
-      PREVENT DUPLICATE SUBMISSION
-    =====================================================*/
-
-    function canSubmitOrder() {
-
-        if (
-            isOrderLocked()
-        ) {
-
-            return {
-
-                valid: false,
-
-                message:
-                    "This order is already being processed."
-            };
-        }
-
-
-        if (
-            state.order.status ===
-            ORDER_STATUS.CONFIRMED
-        ) {
-
-            return {
-
-                valid: false,
-
-                message:
-                    "This order has already been confirmed."
-            };
-        }
-
-
-        if (
-            state.order.status ===
-            ORDER_STATUS.COMPLETED
-        ) {
-
-            return {
-
-                valid: false,
-
-                message:
-                    "This order has already been completed."
-            };
         }
 
 
@@ -6600,5950 +268,6502 @@
             valid: true,
 
             message:
-                "Order can be submitted."
+                "Cart is ready for checkout."
+
         };
+
     }
 
 
-    /*=====================================================
-      CHECKOUT EVENT SYSTEM
-    =====================================================*/
+    /* =====================================================
+       8. COPY CART INTO CHECKOUT
+       ===================================================== */
 
-    const checkoutEvents = {};
+    function copyNexpakOnlineCartToCheckout() {
 
-
-    function on(
-        eventName,
-        callback
-    ) {
-
-        if (
-            typeof callback !==
-            "function"
-        ) {
-
-            return;
-        }
-
-
-        if (
-            !checkoutEvents[eventName]
-        ) {
-
-            checkoutEvents[eventName] =
-                [];
-        }
-
-
-        checkoutEvents[eventName]
-            .push(callback);
-    }
-
-
-    function emit(
-        eventName,
-        data
-    ) {
-
-        const listeners =
-            checkoutEvents[eventName];
-
-
-        if (
-            !Array.isArray(listeners)
-        ) {
-
-            return;
-        }
-
-
-        listeners.forEach(
-            function (callback) {
-
-                try {
-
-                    callback(data);
-
-                } catch (error) {
-
-                    console.error(
-                        "[NEXPAK CHECKOUT] Event error:",
-                        eventName,
-                        error
-                    );
-                }
-
-            }
-        );
-    }
-
-
-    /*=====================================================
-      SUBMISSION START EVENT
-    =====================================================*/
-
-    function beginOrderSubmission() {
-
-        const permission =
-            canSubmitOrder();
-
-
-        if (!permission.valid) {
-
-            return permission;
-        }
-
-
-        const prepared =
-            prepareOrderSubmission();
-
-
-        if (!prepared.valid) {
-
-            return prepared;
-        }
-
-
-        lockOrder();
-
-
-        emit(
-            "order:submitting",
-            prepared.order
-        );
-
-
-        return {
-
-            valid: true,
-
-            order:
-                prepared.order
-        };
-    }
-
-
-    /*=====================================================
-      ORDER SUCCESS
-    =====================================================*/
-
-    function completeOrder(
-        response
-    ) {
-
-        state.order.status =
-            ORDER_STATUS.CONFIRMED;
-
-
-        state.order.confirmedAt =
-            new Date().toISOString();
-
-
-        state.payment.status =
-            "paid";
-
-
-        checkout.save();
-
-
-        const confirmation =
-            saveConfirmationData(
-                response
-            );
-
-
-        emit(
-            "order:confirmed",
-            confirmation
-        );
-
-
-        return confirmation;
-    }
-
-
-    /*=====================================================
-      ORDER FAILURE
-    =====================================================*/
-
-    function failOrder(
-        error
-    ) {
-
-        state.order.status =
-            ORDER_STATUS.FAILED;
-
-
-        state.order.failedAt =
-            new Date().toISOString();
-
-
-        state.order.error =
-            safeString(
-                error &&
-                (
-                    error.message ||
-                    error
-                )
-            );
-
-
-        checkout.save();
-
-
-        emit(
-            "order:failed",
-            {
-
-                orderNumber:
-                    state.order.orderNumber,
-
-                error:
-                    state.order.error
-            }
-        );
-
-
-        return {
-
-            valid: false,
-
-            orderNumber:
-                state.order.orderNumber,
-
-            error:
-                state.order.error
-        };
-    }
-
-
-    /*=====================================================
-      CANCEL ORDER
-    =====================================================*/
-
-    function cancelOrder(
-        reason
-    ) {
-
-        state.order.status =
-            ORDER_STATUS.CANCELLED;
-
-
-        state.order.cancelledAt =
-            new Date().toISOString();
-
-
-        state.order.cancelReason =
-            safeString(
-                reason
-            );
-
-
-        checkout.save();
-
-
-        emit(
-            "order:cancelled",
-            {
-
-                orderNumber:
-                    state.order.orderNumber,
-
-                reason:
-                    state.order.cancelReason
-            }
-        );
-
-
-        return state.order;
-    }
-
-
-    /*=====================================================
-      EXTEND CHECKOUT API
-    =====================================================*/
-
-    checkout.order = {
-
-        config:
-            ORDER_CONFIG,
-
-        status:
-            ORDER_STATUS,
-
-        generateNumber:
-            generateOrderNumber,
-
-        ensureIdentifier:
-            ensureOrderIdentifier,
-
-        buildItems:
-            buildOrderItems,
-
-        buildCustomer:
-            buildCustomerPayload,
-
-        buildBilling:
-            buildBillingPayload,
-
-        buildDelivery:
-            buildDeliveryPayload,
-
-        buildPayment:
-            buildPaymentPayload,
-
-        buildTotals:
-            buildTotalsPayload,
-
-        buildMetadata:
-            buildOrderMetadata,
-
-        build:
-            buildOrderPayload,
-
-        validate:
-            validateOrderPayload,
-
-        prepare:
-            prepareOrderSubmission,
-
-        lock:
-            lockOrder,
-
-        unlock:
-            unlockOrder,
-
-        setStatus:
-            setOrderStatus,
-
-        canSubmit:
-            canSubmitOrder,
-
-        begin:
-            beginOrderSubmission,
-
-        complete:
-            completeOrder,
-
-        fail:
-            failOrder,
-
-        cancel:
-            cancelOrder,
-
-        confirmation:
-            buildConfirmationData,
-
-        saveConfirmation:
-            saveConfirmationData,
-
-        isLocked:
-            isOrderLocked,
-
-        on:
-            on,
-
-        emit:
-            emit
-    };
-
-
-    /*=====================================================
-      INITIALISE PART 5
-    =====================================================*/
-
-    function initPart5() {
-
-        checkout.init();
-
-
-        ensureOrderIdentifier();
-
-
-        /*
-         * Do not automatically lock or submit
-         * an order during page initialization.
-         */
-
-        if (
-            state.order.status ===
-            ORDER_STATUS.PROCESSING
-        ) {
-
-            console.warn(
-                "[NEXPAK CHECKOUT] Previous checkout was interrupted while processing."
-            );
-
-            /*
-             * Return it to READY so the customer
-             * can safely attempt checkout again.
-             */
-
-            state.order.status =
-                ORDER_STATUS.READY;
-
-            checkout.save();
-        }
-
-
-        console.log(
-            "%c[NEXPAK CHECKOUT] Part 5/8 loaded",
-            "font-weight:bold;"
-        );
-    }
-
-
-    /*=====================================================
-      START
-    =====================================================*/
-
-    if (
-        document.readyState ===
-        "loading"
-    ) {
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            initPart5
-        );
-
-    } else {
-
-        initPart5();
-    }
-
-})();
-
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE — CHECKOUT ENGINE
-=========================================================
- File: onlinecheckout.js
- Version: 1.0
- Part: 6/8
-
- PART 6:
- - Checkout controller
- - Step navigation
- - Next / Back buttons
- - Checkout form handling
- - Review screen
- - Confirmation screen
- - Checkout UI state
- - Button state management
- - Checkout event handling
-=========================================================*/
-
-(function () {
-
-    "use strict";
-
-
-    /*=====================================================
-      SAFETY CHECK
-    =====================================================*/
-
-    if (!window.NEXPAKCheckout) {
-
-        console.error(
-            "[NEXPAK CHECKOUT] Checkout engine is required."
-        );
-
-        return;
-    }
-
-
-    /*=====================================================
-      SHORTCUTS
-    =====================================================*/
-
-    const checkout =
-        window.NEXPAKCheckout;
-
-    const state =
-        checkout.state;
-
-
-    /*=====================================================
-      CONTROLLER CONFIGURATION
-    =====================================================*/
-
-    const CONTROLLER_CONFIG = {
-
-        firstStep:
-            1,
-
-        customerStep:
-            1,
-
-        billingStep:
-            2,
-
-        deliveryStep:
-            3,
-
-        paymentStep:
-            4,
-
-        reviewStep:
-            5,
-
-        totalSteps:
-            5
-    };
-
-
-    /*=====================================================
-      CHECKOUT SELECTORS
-    =====================================================*/
-
-    const UI_SELECTORS = {
-
-        checkout:
-            "[data-checkout]",
-
-        step:
-            "[data-checkout-step]",
-
-        stepContent:
-            "[data-checkout-content]",
-
-        next:
-            "[data-checkout-next]",
-
-        back:
-            "[data-checkout-back]",
-
-        submit:
-            "[data-checkout-submit]",
-
-        review:
-            "[data-checkout-review]",
-
-        confirmation:
-            "[data-checkout-confirmation]",
-
-        error:
-            "[data-checkout-error]",
-
-        loading:
-            "[data-checkout-loading]",
-
-        progress:
-            "[data-checkout-progress]"
-    };
-
-
-    /*=====================================================
-      INTERNAL CONTROLLER STATE
-    =====================================================*/
-
-    const controllerState = {
-
-        initialized:
-            false,
-
-        submitting:
-            false,
-
-        confirmed:
-            false,
-
-        errors:
-            [],
-
-        lastStep:
-            null
-    };
-
-
-    /*=====================================================
-      SAFE NUMBER
-    =====================================================*/
-
-    function safeNumber(value) {
-
-        const number =
-            Number(value);
-
-        return Number.isFinite(number)
-            ? number
-            : 0;
-    }
-
-
-    /*=====================================================
-      GET CURRENT STEP
-    =====================================================*/
-
-    function getCurrentStep() {
-
-        return Math.max(
-            CONTROLLER_CONFIG.firstStep,
-            Math.min(
-                CONTROLLER_CONFIG.totalSteps,
-                safeNumber(
-                    state.step
-                )
-            )
-        );
-    }
-
-
-    /*=====================================================
-      SET CURRENT STEP
-    =====================================================*/
-
-    function setCurrentStep(
-        step
-    ) {
-
-        const target =
-            Math.max(
-                CONTROLLER_CONFIG.firstStep,
-                Math.min(
-                    CONTROLLER_CONFIG.totalSteps,
-                    safeNumber(step)
-                )
-            );
-
-
-        controllerState.lastStep =
-            getCurrentStep();
-
-
-        state.step =
-            target;
-
-
-        checkout.save();
-
-
-        renderStep();
-
-
-        return target;
-    }
-
-
-    /*=====================================================
-      STEP VALIDATION
-    =====================================================*/
-
-    function validateStep(
-        step
-    ) {
-
-        switch (Number(step)) {
-
-            case CONTROLLER_CONFIG.customerStep:
-
-                if (
-                    checkout.form &&
-                    typeof
-                    checkout.form
-                        .validateCustomerForm ===
-                    "function"
-                ) {
-
-                    return checkout.form
-                        .validateCustomerForm();
-                }
-
-                return {
-                    valid: true,
-                    errors: []
-                };
-
-
-            case CONTROLLER_CONFIG.billingStep:
-
-                if (
-                    checkout.form &&
-                    typeof
-                    checkout.form
-                        .validateBillingForm ===
-                    "function"
-                ) {
-
-                    return checkout.form
-                        .validateBillingForm();
-                }
-
-                return {
-                    valid: true,
-                    errors: []
-                };
-
-
-            case CONTROLLER_CONFIG.deliveryStep:
-
-                if (
-                    checkout.delivery &&
-                    typeof
-                    checkout.delivery
-                        .validate ===
-                    "function"
-                ) {
-
-                    return checkout.delivery
-                        .validate();
-                }
-
-                return {
-                    valid: true,
-                    errors: []
-                };
-
-
-            case CONTROLLER_CONFIG.paymentStep:
-
-                if (
-                    checkout.payment &&
-                    typeof
-                    checkout.payment
-                        .validate ===
-                    "function"
-                ) {
-
-                    return checkout.payment
-                        .validate();
-                }
-
-                return {
-                    valid: true,
-                    errors: []
-                };
-
-
-            case CONTROLLER_CONFIG.reviewStep:
-
-                if (
-                    checkout.review &&
-                    typeof
-                    checkout.review
-                        .validate ===
-                    "function"
-                ) {
-
-                    return checkout.review
-                        .validate();
-                }
-
-                return {
-                    valid: true,
-                    errors: []
-                };
-
-
-            default:
-
-                return {
-                    valid: false,
-                    errors: [
-                        {
-                            message:
-                                "Invalid checkout step."
-                        }
-                    ]
-                };
-        }
-    }
-
-
-    /*=====================================================
-      SAVE CURRENT STEP DATA
-    =====================================================*/
-
-    function saveCurrentStep() {
-
-        const step =
-            getCurrentStep();
+        const cart =
+            getNexpakOnlineCheckoutCart();
 
 
         try {
 
-            switch (step) {
-
-                case CONTROLLER_CONFIG.customerStep:
-
-                    if (
-                        checkout.form &&
-                        typeof
-                        checkout.form
-                            .saveCustomer ===
-                        "function"
-                    ) {
-
-                        checkout.form
-                            .saveCustomer();
-                    }
-
-                    break;
-
-
-                case CONTROLLER_CONFIG.billingStep:
-
-                    if (
-                        checkout.form &&
-                        typeof
-                        checkout.form
-                            .saveBilling ===
-                        "function"
-                    ) {
-
-                        checkout.form
-                            .saveBilling();
-                    }
-
-                    break;
-
-
-                case CONTROLLER_CONFIG.deliveryStep:
-
-                    if (
-                        checkout.delivery &&
-                        typeof
-                        checkout.delivery
-                            .saveAddress ===
-                        "function"
-                    ) {
-
-                        checkout.delivery
-                            .saveAddress();
-                    }
-
-                    break;
-
-
-                case CONTROLLER_CONFIG.paymentStep:
-
-                    if (
-                        checkout.payment &&
-                        typeof
-                        checkout.payment
-                            .save ===
-                        "function"
-                    ) {
-
-                        checkout.payment
-                            .save();
-                    }
-
-                    break;
-            }
+            nexpakOnlineCheckout.cart =
+                JSON.parse(
+                    JSON.stringify(
+                        cart
+                    )
+                );
 
         } catch (error) {
 
-            console.warn(
-                "[NEXPAK CHECKOUT] Could not save current step:",
+            console.error(
+                "NEXPAK Checkout: Could not copy cart.",
                 error
             );
+
+
+            nexpakOnlineCheckout.cart =
+                [];
+
         }
 
 
-        checkout.save();
+        return nexpakOnlineCheckout.cart;
+
     }
 
 
-    /*=====================================================
-      GO TO NEXT STEP
-    =====================================================*/
+    /* =====================================================
+       9. CALCULATE CHECKOUT TOTALS
+       ===================================================== */
 
-    function nextStep() {
+    function calculateNexpakOnlineCheckoutTotals() {
 
-        const current =
-            getCurrentStep();
+        if (
+            window.NEXPAK_ONLINE_CART &&
+            typeof
+            window.NEXPAK_ONLINE_CART.getTotals ===
+            "function"
+        ) {
 
+            const deliveryFee =
+                safeCheckoutNumber(
+                    nexpakOnlineCheckout
+                        .delivery
+                        .fee,
+                    0
+                );
+
+
+            const totals =
+                window
+                    .NEXPAK_ONLINE_CART
+                    .getTotals(
+                        deliveryFee
+                    );
+
+
+            nexpakOnlineCheckout.totals = {
+
+                subtotalExVat:
+                    safeCheckoutNumber(
+                        totals.subtotalExVat,
+                        0
+                    ),
+
+                vatRate:
+                    safeCheckoutNumber(
+                        totals.vatRate,
+                        0.15
+                    ),
+
+                vatAmount:
+                    safeCheckoutNumber(
+                        totals.vatAmount,
+                        0
+                    ),
+
+                totalInclVat:
+                    safeCheckoutNumber(
+                        totals.totalInclVat,
+                        0
+                    ),
+
+                deliveryFee:
+                    safeCheckoutNumber(
+                        totals.deliveryFee,
+                        0
+                    ),
+
+                grandTotal:
+                    safeCheckoutNumber(
+                        totals.grandTotal,
+                        0
+                    )
+
+            };
+
+
+            return nexpakOnlineCheckout.totals;
+
+        }
+
+
+        return nexpakOnlineCheckout.totals;
+
+    }
+
+
+    /* =====================================================
+       10. SAVE CHECKOUT STATE
+       ===================================================== */
+
+    function saveNexpakOnlineCheckout() {
+
+        try {
+
+            nexpakOnlineCheckout.updatedAt =
+                new Date().toISOString();
+
+
+            localStorage.setItem(
+
+                NEXPAK_CHECKOUT_STORAGE_KEY,
+
+                JSON.stringify(
+                    nexpakOnlineCheckout
+                )
+
+            );
+
+
+            return true;
+
+        } catch (error) {
+
+            console.error(
+                "NEXPAK Checkout: Failed to save checkout.",
+                error
+            );
+
+
+            return false;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       11. LOAD CHECKOUT STATE
+       ===================================================== */
+
+    function loadNexpakOnlineCheckout() {
+
+        try {
+
+            const stored =
+                localStorage.getItem(
+                    NEXPAK_CHECKOUT_STORAGE_KEY
+                );
+
+
+            if (!stored) {
+
+                return nexpakOnlineCheckout;
+
+            }
+
+
+            const parsed =
+                JSON.parse(
+                    stored
+                );
+
+
+            if (
+                parsed &&
+                typeof parsed ===
+                "object"
+            ) {
+
+                nexpakOnlineCheckout = {
+
+                    ...nexpakOnlineCheckout,
+
+                    ...parsed,
+
+                    customer: {
+
+                        ...nexpakOnlineCheckout.customer,
+
+                        ...(parsed.customer || {})
+
+                    },
+
+                    delivery: {
+
+                        ...nexpakOnlineCheckout.delivery,
+
+                        ...(parsed.delivery || {})
+
+                    },
+
+                    payment: {
+
+                        ...nexpakOnlineCheckout.payment,
+
+                        ...(parsed.payment || {})
+
+                    },
+
+                    totals: {
+
+                        ...nexpakOnlineCheckout.totals,
+
+                        ...(parsed.totals || {})
+
+                    }
+
+                };
+
+            }
+
+
+            return nexpakOnlineCheckout;
+
+        } catch (error) {
+
+            console.error(
+                "NEXPAK Checkout: Failed to load checkout.",
+                error
+            );
+
+
+            return nexpakOnlineCheckout;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       12. START CHECKOUT
+       ===================================================== */
+
+    function startNexpakOnlineCheckout() {
 
         const validation =
-            validateStep(
-                current
-            );
+            validateNexpakOnlineCheckoutCart();
 
 
         if (
             !validation.valid
         ) {
 
-            controllerState.errors =
-                validation.errors || [];
-
-
-            displayErrors(
-                controllerState.errors
-            );
-
-
             return {
 
-                valid: false,
-
-                step:
-                    current,
-
-                errors:
-                    controllerState.errors
-            };
-        }
-
-
-        saveCurrentStep();
-
-
-        /*
-         * Step-specific submission hooks.
-         */
-
-        let result = {
-            valid: true
-        };
-
-
-        if (
-            current ===
-            CONTROLLER_CONFIG.customerStep &&
-            checkout.form &&
-            typeof
-            checkout.form.submitCustomer ===
-            "function"
-        ) {
-
-            result =
-                checkout.form
-                    .submitCustomer();
-        }
-
-
-        if (
-            current ===
-            CONTROLLER_CONFIG.billingStep &&
-            checkout.form &&
-            typeof
-            checkout.form.submitBilling ===
-            "function"
-        ) {
-
-            result =
-                checkout.form
-                    .submitBilling();
-        }
-
-
-        if (
-            current ===
-            CONTROLLER_CONFIG.deliveryStep &&
-            checkout.delivery &&
-            typeof
-            checkout.delivery.submit ===
-            "function"
-        ) {
-
-            result =
-                checkout.delivery
-                    .submit();
-        }
-
-
-        if (
-            current ===
-            CONTROLLER_CONFIG.paymentStep &&
-            checkout.payment &&
-            typeof
-            checkout.payment.submit ===
-            "function"
-        ) {
-
-            result =
-                checkout.payment
-                    .submit();
-        }
-
-
-        if (
-            !result.valid
-        ) {
-
-            controllerState.errors =
-                result.errors || [];
-
-
-            displayErrors(
-                controllerState.errors
-            );
-
-
-            return result;
-        }
-
-
-        const next =
-            Math.min(
-                CONTROLLER_CONFIG.totalSteps,
-                current + 1
-            );
-
-
-        setCurrentStep(
-            next
-        );
-
-
-        clearErrors();
-
-
-        return {
-
-            valid: true,
-
-            previousStep:
-                current,
-
-            step:
-                next
-        };
-    }
-
-
-    /*=====================================================
-      GO TO PREVIOUS STEP
-    =====================================================*/
-
-    function previousStep() {
-
-        const current =
-            getCurrentStep();
-
-
-        if (
-            current <=
-            CONTROLLER_CONFIG.firstStep
-        ) {
-
-            return {
-
-                valid: false,
-
-                step:
-                    current,
+                success: false,
 
                 message:
-                    "Already at the first checkout step."
+                    validation.message
+
             };
+
         }
 
 
-        saveCurrentStep();
+        /*
+         * Generate a fresh order reference.
+         */
+
+        nexpakOnlineCheckout.orderReference =
+            createNexpakOnlineOrderReference();
 
 
-        const previous =
-            current - 1;
+        /*
+         * Copy current cart.
+         */
+
+        copyNexpakOnlineCartToCheckout();
 
 
-        setCurrentStep(
-            previous
-        );
+        /*
+         * Calculate current totals.
+         */
+
+        calculateNexpakOnlineCheckoutTotals();
 
 
-        clearErrors();
+        /*
+         * Timestamp.
+         */
+
+        nexpakOnlineCheckout.createdAt =
+            new Date().toISOString();
+
+
+        nexpakOnlineCheckout.updatedAt =
+            nexpakOnlineCheckout.createdAt;
+
+
+        /*
+         * Payment remains pending until
+         * the customer selects a method.
+         */
+
+        nexpakOnlineCheckout.payment = {
+
+            method: "",
+
+            status: "pending"
+
+        };
+
+
+        saveNexpakOnlineCheckout();
 
 
         return {
 
-            valid: true,
+            success: true,
 
-            previousStep:
-                current,
+            orderReference:
+                nexpakOnlineCheckout
+                    .orderReference,
 
-            step:
-                previous
+            cart:
+                nexpakOnlineCheckout.cart,
+
+            totals:
+                nexpakOnlineCheckout.totals
+
         };
+
     }
 
 
-    /*=====================================================
-      GO DIRECTLY TO STEP
-    =====================================================*/
+    /* =====================================================
+       13. GET CHECKOUT STATE
+       ===================================================== */
 
-    function goToStep(
-        targetStep
+    function getNexpakOnlineCheckoutState() {
+
+        return nexpakOnlineCheckout;
+
+    }
+
+
+    /* =====================================================
+       14. EXTEND PUBLIC CHECKOUT API
+       ===================================================== */
+
+    window.NEXPAK_ONLINE_CHECKOUT = {
+
+        version:
+            NEXPAK_CHECKOUT_VERSION,
+
+        start:
+            startNexpakOnlineCheckout,
+
+        get:
+            getNexpakOnlineCheckoutState,
+
+        save:
+            saveNexpakOnlineCheckout,
+
+        load:
+            loadNexpakOnlineCheckout,
+
+        validateCart:
+            validateNexpakOnlineCheckoutCart,
+
+        getCart:
+            getNexpakOnlineCheckoutCart,
+
+        getTotals:
+            calculateNexpakOnlineCheckoutTotals,
+
+        createOrderReference:
+            createNexpakOnlineOrderReference
+
+    };
+
+
+    /* =====================================================
+       15. INITIAL CHECKOUT LOAD
+       ===================================================== */
+
+    loadNexpakOnlineCheckout();
+
+
+    console.log(
+        "NEXPAK Online Store: Checkout engine loaded."
+    );
+
+
+    /* =====================================================
+       PART 1 END
+       ===================================================== */
+
+ /* =========================================================
+   NEXPAK ONLINE STORE — CHECKOUT ENGINE
+   PART 2 — CUSTOMER + DELIVERY DETAILS
+   ========================================================= */
+
+
+/* =====================================================
+   16. UPDATE CUSTOMER DETAILS
+   ===================================================== */
+
+function updateNexpakOnlineCheckoutCustomer(
+    details = {}
+) {
+
+    if (
+        !details ||
+        typeof details !== "object"
     ) {
-
-        const target =
-            safeNumber(
-                targetStep
-            );
-
-
-        const current =
-            getCurrentStep();
-
-
-        /*
-         * Never allow a customer to jump
-         * forward over incomplete steps.
-         */
-
-        if (
-            target >
-            current
-        ) {
-
-            for (
-                let step = current;
-                step < target;
-                step++
-            ) {
-
-                const validation =
-                    validateStep(
-                        step
-                    );
-
-
-                if (
-                    !validation.valid
-                ) {
-
-                    displayErrors(
-                        validation.errors || []
-                    );
-
-
-                    return {
-
-                        valid: false,
-
-                        step:
-                            step,
-
-                        errors:
-                            validation.errors
-                    };
-                }
-            }
-        }
-
-
-        setCurrentStep(
-            target
-        );
-
 
         return {
 
-            valid: true,
+            success: false,
 
-            step:
-                target
+            message:
+                "Invalid customer details."
+
         };
+
     }
 
 
-    /*=====================================================
-      RENDER STEP
-    =====================================================*/
+    nexpakOnlineCheckout.customer = {
 
-    function renderStep() {
+        ...nexpakOnlineCheckout.customer,
 
-        const current =
-            getCurrentStep();
+        name:
+            safeCheckoutString(
+                details.name,
+                nexpakOnlineCheckout.customer.name
+            ),
 
+        email:
+            safeCheckoutString(
+                details.email,
+                nexpakOnlineCheckout.customer.email
+            ),
 
-        /*
-         * Step containers.
-         */
-
-        document
-            .querySelectorAll(
-                UI_SELECTORS.step
+        phone:
+            safeCheckoutString(
+                details.phone,
+                nexpakOnlineCheckout.customer.phone
             )
-            .forEach(
-                function (element) {
 
-                    const elementStep =
-                        safeNumber(
-                            element.dataset
-                                .checkoutStep
-                        );
+    };
 
 
-                    const active =
-                        elementStep ===
-                        current;
+    saveNexpakOnlineCheckout();
 
 
-                    element.hidden =
-                        !active;
+    return {
 
+        success: true,
 
-                    element.classList.toggle(
-                        "active",
-                        active
-                    );
+        customer:
+            nexpakOnlineCheckout.customer
 
+    };
 
-                    element.classList.toggle(
-                        "is-active",
-                        active
-                    );
-                }
-            );
+}
 
 
-        /*
-         * Step content containers.
-         */
+/* =====================================================
+   17. UPDATE DELIVERY DETAILS
+   ===================================================== */
 
-        document
-            .querySelectorAll(
-                UI_SELECTORS.stepContent
-            )
-            .forEach(
-                function (element) {
+function updateNexpakOnlineCheckoutDelivery(
+    details = {}
+) {
 
-                    const elementStep =
-                        safeNumber(
-                            element.dataset
-                                .checkoutContent
-                        );
-
-
-                    element.hidden =
-                        elementStep !==
-                        current;
-                }
-            );
-
-
-        updateProgress();
-
-
-        updateNavigation();
-
-
-        /*
-         * Refresh review whenever the
-         * review step becomes active.
-         */
-
-        if (
-            current ===
-            CONTROLLER_CONFIG.reviewStep
-        ) {
-
-            renderReview();
-        }
-    }
-
-
-    /*=====================================================
-      UPDATE PROGRESS
-    =====================================================*/
-
-    function updateProgress() {
-
-        const current =
-            getCurrentStep();
-
-
-        const percentage =
-            Math.round(
-                (
-                    current /
-                    CONTROLLER_CONFIG.totalSteps
-                ) * 100
-            );
-
-
-        document
-            .querySelectorAll(
-                UI_SELECTORS.progress
-            )
-            .forEach(
-                function (element) {
-
-                    element.style.width =
-                        percentage + "%";
-
-
-                    element.setAttribute(
-                        "aria-valuenow",
-                        String(
-                            percentage
-                        )
-                    );
-
-
-                    element.textContent =
-                        percentage + "%";
-                }
-            );
-
-
-        document
-            .querySelectorAll(
-                "[data-checkout-current-step]"
-            )
-            .forEach(
-                function (element) {
-
-                    element.textContent =
-                        String(
-                            current
-                        );
-                }
-            );
-
-
-        document
-            .querySelectorAll(
-                "[data-checkout-total-steps]"
-            )
-            .forEach(
-                function (element) {
-
-                    element.textContent =
-                        String(
-                            CONTROLLER_CONFIG
-                                .totalSteps
-                        );
-                }
-            );
-    }
-
-
-    /*=====================================================
-      UPDATE NAVIGATION
-    =====================================================*/
-
-    function updateNavigation() {
-
-        const current =
-            getCurrentStep();
-
-
-        document
-            .querySelectorAll(
-                UI_SELECTORS.back
-            )
-            .forEach(
-                function (button) {
-
-                    button.disabled =
-                        current <=
-                        CONTROLLER_CONFIG.firstStep;
-                }
-            );
-
-
-        document
-            .querySelectorAll(
-                UI_SELECTORS.next
-            )
-            .forEach(
-                function (button) {
-
-                    const isReview =
-                        current ===
-                        CONTROLLER_CONFIG.reviewStep;
-
-
-                    button.hidden =
-                        isReview;
-
-
-                    button.disabled =
-                        controllerState.submitting;
-                }
-            );
-
-
-        document
-            .querySelectorAll(
-                UI_SELECTORS.submit
-            )
-            .forEach(
-                function (button) {
-
-                    const isReview =
-                        current ===
-                        CONTROLLER_CONFIG.reviewStep;
-
-
-                    button.hidden =
-                        !isReview;
-
-
-                    button.disabled =
-                        controllerState.submitting;
-                }
-            );
-    }
-
-
-    /*=====================================================
-      DISPLAY ERRORS
-    =====================================================*/
-
-    function displayErrors(
-        errors
+    if (
+        !details ||
+        typeof details !== "object"
     ) {
 
-        if (
-            !Array.isArray(errors)
-        ) {
-            return;
-        }
+        return {
+
+            success: false,
+
+            message:
+                "Invalid delivery details."
+
+        };
+
+    }
 
 
-        const messages =
-            errors.map(
-                function (error) {
+    nexpakOnlineCheckout.delivery = {
 
-                    if (
-                        typeof error ===
-                        "string"
-                    ) {
+        ...nexpakOnlineCheckout.delivery,
 
-                        return error;
-                    }
+        address:
+            safeCheckoutString(
+                details.address,
+                nexpakOnlineCheckout.delivery.address
+            ),
 
+        suburb:
+            safeCheckoutString(
+                details.suburb,
+                nexpakOnlineCheckout.delivery.suburb
+            ),
 
-                    return error.message ||
-                        "Please check your information.";
-                }
-            );
+        city:
+            safeCheckoutString(
+                details.city,
+                nexpakOnlineCheckout.delivery.city
+            ),
 
+        province:
+            safeCheckoutString(
+                details.province,
+                nexpakOnlineCheckout.delivery.province
+            ),
 
-        const uniqueMessages =
-            Array.from(
-                new Set(
-                    messages
+        postalCode:
+            safeCheckoutString(
+                details.postalCode,
+                nexpakOnlineCheckout.delivery.postalCode
+            ),
+
+        distanceKm:
+            Math.max(
+                0,
+                safeCheckoutNumber(
+                    details.distanceKm,
+                    nexpakOnlineCheckout
+                        .delivery
+                        .distanceKm
                 )
-            );
+            ),
 
-
-        document
-            .querySelectorAll(
-                UI_SELECTORS.error
+        fee:
+            Math.max(
+                0,
+                safeCheckoutNumber(
+                    details.fee,
+                    nexpakOnlineCheckout
+                        .delivery
+                        .fee
+                )
             )
-            .forEach(
-                function (element) {
 
-                    element.innerHTML = "";
+    };
 
 
-                    uniqueMessages.forEach(
-                        function (message) {
-
-                            const item =
-                                document.createElement(
-                                    "div"
-                                );
+    calculateNexpakOnlineCheckoutTotals();
 
 
-                            item.className =
-                                "checkout-error-item";
+    saveNexpakOnlineCheckout();
 
 
-                            item.textContent =
-                                message;
+    return {
+
+        success: true,
+
+        delivery:
+            nexpakOnlineCheckout.delivery,
+
+        totals:
+            nexpakOnlineCheckout.totals
+
+    };
+
+}
 
 
-                            element.appendChild(
-                                item
-                            );
-                        }
-                    );
+/* =====================================================
+   18. GET CUSTOMER DETAILS
+   ===================================================== */
+
+function getNexpakOnlineCheckoutCustomer() {
+
+    return {
+
+        ...nexpakOnlineCheckout.customer
+
+    };
+
+}
 
 
-                    element.hidden =
-                        uniqueMessages.length === 0;
-                }
-            );
+/* =====================================================
+   19. GET DELIVERY DETAILS
+   ===================================================== */
+
+function getNexpakOnlineCheckoutDelivery() {
+
+    return {
+
+        ...nexpakOnlineCheckout.delivery
+
+    };
+
+}
 
 
-        /*
-         * Scroll to the first error container.
-         */
+/* =====================================================
+   20. VALIDATE CUSTOMER NAME
+   ===================================================== */
 
-        if (
-            uniqueMessages.length
-        ) {
+function validateNexpakOnlineCheckoutName(
+    name
+) {
 
-            const errorElement =
-                document.querySelector(
-                    UI_SELECTORS.error
-                );
+    const value =
+        safeCheckoutString(
+            name
+        );
 
 
-            if (errorElement) {
+    if (!value) {
 
-                try {
+        return {
 
-                    errorElement.scrollIntoView(
-                        {
-                            behavior:
-                                "smooth",
+            valid: false,
 
-                            block:
-                                "center"
-                        }
-                    );
+            message:
+                "Please enter your full name."
 
-                } catch (error) {
+        };
 
-                    errorElement.scrollIntoView();
-                }
-            }
-        }
     }
 
 
-    /*=====================================================
-      CLEAR ERRORS
-    =====================================================*/
+    if (
+        value.length < 2
+    ) {
 
-    function clearErrors() {
+        return {
 
-        controllerState.errors =
-            [];
+            valid: false,
 
+            message:
+                "Please enter a valid name."
 
-        document
-            .querySelectorAll(
-                UI_SELECTORS.error
-            )
-            .forEach(
-                function (element) {
+        };
 
-                    element.innerHTML =
-                        "";
-
-                    element.hidden =
-                        true;
-                }
-            );
     }
 
 
-    /*=====================================================
-      RENDER REVIEW
-    =====================================================*/
+    return {
 
-    function renderReview() {
+        valid: true,
 
-        const container =
+        message: ""
+
+    };
+
+}
+
+
+/* =====================================================
+   21. VALIDATE EMAIL
+   ===================================================== */
+
+function validateNexpakOnlineCheckoutEmail(
+    email
+) {
+
+    const value =
+        safeCheckoutString(
+            email
+        );
+
+
+    if (!value) {
+
+        return {
+
+            valid: false,
+
+            message:
+                "Please enter your email address."
+
+        };
+
+    }
+
+
+    const emailPattern =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+    if (
+        !emailPattern.test(
+            value
+        )
+    ) {
+
+        return {
+
+            valid: false,
+
+            message:
+                "Please enter a valid email address."
+
+        };
+
+    }
+
+
+    return {
+
+        valid: true,
+
+        message: ""
+
+    };
+
+}
+
+
+/* =====================================================
+   22. VALIDATE PHONE
+   ===================================================== */
+
+function validateNexpakOnlineCheckoutPhone(
+    phone
+) {
+
+    const value =
+        safeCheckoutString(
+            phone
+        );
+
+
+    if (!value) {
+
+        return {
+
+            valid: false,
+
+            message:
+                "Please enter your phone number."
+
+        };
+
+    }
+
+
+    const digits =
+        value.replace(
+            /\D/g,
+            ""
+        );
+
+
+    if (
+        digits.length < 9
+    ) {
+
+        return {
+
+            valid: false,
+
+            message:
+                "Please enter a valid phone number."
+
+        };
+
+    }
+
+
+    return {
+
+        valid: true,
+
+        message: ""
+
+    };
+
+}
+
+
+/* =====================================================
+   23. VALIDATE DELIVERY ADDRESS
+   ===================================================== */
+
+function validateNexpakOnlineCheckoutAddress(
+    details
+) {
+
+    const data =
+        details || {};
+
+
+    const address =
+        safeCheckoutString(
+            data.address
+        );
+
+
+    const city =
+        safeCheckoutString(
+            data.city
+        );
+
+
+    const province =
+        safeCheckoutString(
+            data.province
+        );
+
+
+    const postalCode =
+        safeCheckoutString(
+            data.postalCode
+        );
+
+
+    if (!address) {
+
+        return {
+
+            valid: false,
+
+            message:
+                "Please enter your delivery address."
+
+        };
+
+    }
+
+
+    if (!city) {
+
+        return {
+
+            valid: false,
+
+            message:
+                "Please enter your city."
+
+        };
+
+    }
+
+
+    if (!province) {
+
+        return {
+
+            valid: false,
+
+            message:
+                "Please select your province."
+
+        };
+
+    }
+
+
+    if (!postalCode) {
+
+        return {
+
+            valid: false,
+
+            message:
+                "Please enter your postal code."
+
+        };
+
+    }
+
+
+    return {
+
+        valid: true,
+
+        message: ""
+
+    };
+
+}
+
+
+/* =====================================================
+   24. VALIDATE COMPLETE CUSTOMER INFORMATION
+   ===================================================== */
+
+function validateNexpakOnlineCheckoutCustomer() {
+
+    const customer =
+        nexpakOnlineCheckout.customer;
+
+
+    const nameResult =
+        validateNexpakOnlineCheckoutName(
+            customer.name
+        );
+
+
+    if (
+        !nameResult.valid
+    ) {
+
+        return nameResult;
+
+    }
+
+
+    const emailResult =
+        validateNexpakOnlineCheckoutEmail(
+            customer.email
+        );
+
+
+    if (
+        !emailResult.valid
+    ) {
+
+        return emailResult;
+
+    }
+
+
+    const phoneResult =
+        validateNexpakOnlineCheckoutPhone(
+            customer.phone
+        );
+
+
+    if (
+        !phoneResult.valid
+    ) {
+
+        return phoneResult;
+
+    }
+
+
+    return {
+
+        valid: true,
+
+        message: ""
+
+    };
+
+}
+
+
+/* =====================================================
+   25. VALIDATE COMPLETE DELIVERY INFORMATION
+   ===================================================== */
+
+function validateNexpakOnlineCheckoutDeliveryDetails() {
+
+    return validateNexpakOnlineCheckoutAddress(
+
+        nexpakOnlineCheckout.delivery
+
+    );
+
+}
+
+
+/* =====================================================
+   26. VALIDATE COMPLETE CHECKOUT
+   ===================================================== */
+
+function validateNexpakOnlineCheckout() {
+
+    const cartResult =
+        validateNexpakOnlineCheckoutCart();
+
+
+    if (
+        !cartResult.valid
+    ) {
+
+        return cartResult;
+
+    }
+
+
+    const customerResult =
+        validateNexpakOnlineCheckoutCustomer();
+
+
+    if (
+        !customerResult.valid
+    ) {
+
+        return customerResult;
+
+    }
+
+
+    const deliveryResult =
+        validateNexpakOnlineCheckoutDeliveryDetails();
+
+
+    if (
+        !deliveryResult.valid
+    ) {
+
+        return deliveryResult;
+
+    }
+
+
+    return {
+
+        valid: true,
+
+        message:
+            "Checkout information is valid."
+
+    };
+
+}
+
+
+/* =====================================================
+   27. CLEAR CUSTOMER DETAILS
+   ===================================================== */
+
+function clearNexpakOnlineCheckoutCustomer() {
+
+    nexpakOnlineCheckout.customer = {
+
+        name: "",
+
+        email: "",
+
+        phone: ""
+
+    };
+
+
+    saveNexpakOnlineCheckout();
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   28. CLEAR DELIVERY DETAILS
+   ===================================================== */
+
+function clearNexpakOnlineCheckoutDelivery() {
+
+    nexpakOnlineCheckout.delivery = {
+
+        address: "",
+
+        suburb: "",
+
+        city: "",
+
+        province: "",
+
+        postalCode: "",
+
+        distanceKm: 0,
+
+        fee: 0
+
+    };
+
+
+    calculateNexpakOnlineCheckoutTotals();
+
+
+    saveNexpakOnlineCheckout();
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   29. EXTEND PUBLIC CHECKOUT API
+   ===================================================== */
+
+if (
+    window.NEXPAK_ONLINE_CHECKOUT
+) {
+
+    window.NEXPAK_ONLINE_CHECKOUT.updateCustomer =
+        updateNexpakOnlineCheckoutCustomer;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.updateDelivery =
+        updateNexpakOnlineCheckoutDelivery;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.getCustomer =
+        getNexpakOnlineCheckoutCustomer;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.getDelivery =
+        getNexpakOnlineCheckoutDelivery;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.validateCustomer =
+        validateNexpakOnlineCheckoutCustomer;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.validateDelivery =
+        validateNexpakOnlineCheckoutDeliveryDetails;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.validate =
+        validateNexpakOnlineCheckout;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.clearCustomer =
+        clearNexpakOnlineCheckoutCustomer;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.clearDelivery =
+        clearNexpakOnlineCheckoutDelivery;
+
+}
+
+
+/* =====================================================
+   PART 2 END
+   ========================================================= */
+
+ /* =========================================================
+   NEXPAK ONLINE STORE — CHECKOUT ENGINE
+   PART 3 — CHECKOUT FORM BINDING
+   ========================================================= */
+
+
+/* =====================================================
+   30. FIND CHECKOUT FORM
+   ===================================================== */
+
+function findNexpakOnlineCheckoutForm() {
+
+    const selectors = [
+
+        "#onlineCheckoutForm",
+
+        "#checkoutForm",
+
+        ".online-checkout-form",
+
+        "[data-online-checkout-form]",
+
+        "form[data-checkout-form]"
+
+    ];
+
+
+    for (
+        let i = 0;
+        i < selectors.length;
+        i++
+    ) {
+
+        const form =
             document.querySelector(
-                UI_SELECTORS.review
+                selectors[i]
             );
 
 
-        if (
-            !container
-        ) {
-            return;
+        if (form) {
+
+            return form;
+
         }
 
-
-        if (
-            checkout.review &&
-            typeof
-            checkout.review.render ===
-            "function"
-        ) {
-
-            checkout.review.render(
-                container
-            );
-
-            return;
-        }
-
-
-        container.textContent =
-            "Order review unavailable.";
     }
 
 
-    /*=====================================================
-      SUBMIT ORDER
-    =====================================================*/
+    return null;
 
-    function submitOrder() {
+}
 
-        if (
-            controllerState.submitting
-        ) {
 
-            return {
+/* =====================================================
+   31. GET FORM FIELD
+   ===================================================== */
 
-                valid: false,
+function getNexpakOnlineCheckoutField(
+    form,
+    names
+) {
 
-                message:
-                    "Order submission is already in progress."
-            };
-        }
+    if (!form) {
 
+        return null;
 
-        controllerState.submitting =
-            true;
-
-
-        updateNavigation();
-
-        showLoading(
-            true
-        );
-
-
-        try {
-
-            /*
-             * Validate entire order.
-             */
-
-            const validation =
-                checkout.order &&
-                typeof
-                checkout.order.begin ===
-                "function"
-                    ? checkout.order.begin()
-                    : {
-                        valid: false,
-                        errors: [
-                            "Order engine unavailable."
-                        ]
-                    };
-
-
-            if (
-                !validation.valid
-            ) {
-
-                controllerState.submitting =
-                    false;
-
-
-                showLoading(
-                    false
-                );
-
-
-                displayErrors(
-                    validation.errors || []
-                );
-
-
-                updateNavigation();
-
-
-                return validation;
-            }
-
-
-            /*
-             * Real payment/order processing is
-             * intentionally delegated to the future
-             * integration engine.
-             */
-
-            if (
-                window.NEXPAKIntegration &&
-                typeof
-                window.NEXPAKIntegration
-                    .submitOrder ===
-                "function"
-            ) {
-
-                const result =
-                    window.NEXPAKIntegration
-                        .submitOrder(
-                            validation.order
-                        );
-
-
-                /*
-                 * Support synchronous results.
-                 */
-
-                if (
-                    result &&
-                    typeof
-                    result.then ===
-                    "function"
-                ) {
-
-                    result
-                        .then(
-                            handleSubmissionSuccess
-                        )
-                        .catch(
-                            handleSubmissionFailure
-                        );
-
-
-                    return {
-
-                        valid: true,
-
-                        pending: true
-                    };
-                }
-
-
-                handleSubmissionSuccess(
-                    result
-                );
-
-
-                return {
-
-                    valid: true,
-
-                    result:
-                        result
-                };
-            }
-
-
-            /*
-             * Integration engine does not exist yet.
-             * Keep the order ready instead of pretending
-             * payment succeeded.
-             */
-
-            checkout.order.unlock();
-
-
-            controllerState.submitting =
-                false;
-
-
-            showLoading(
-                false
-            );
-
-
-            updateNavigation();
-
-
-            return {
-
-                valid: false,
-
-                pending: false,
-
-                integrationRequired:
-                    true,
-
-                message:
-                    "Order is ready, but payment integration has not been connected yet."
-            };
-
-        } catch (error) {
-
-            handleSubmissionFailure(
-                error
-            );
-
-
-            return {
-
-                valid: false,
-
-                error:
-                    error
-            };
-        }
     }
 
 
-    /*=====================================================
-      SUBMISSION SUCCESS
-    =====================================================*/
+    if (!Array.isArray(names)) {
 
-    function handleSubmissionSuccess(
-        response
+        names = [names];
+
+    }
+
+
+    for (
+        let i = 0;
+        i < names.length;
+        i++
     ) {
 
-        controllerState.submitting =
-            false;
+        const name =
+            names[i];
 
 
-        showLoading(
-            false
-        );
-
-
-        controllerState.confirmed =
-            true;
-
-
-        if (
-            checkout.order &&
-            typeof
-            checkout.order.complete ===
-            "function"
-        ) {
-
-            checkout.order.complete(
-                response
+        const field =
+            form.querySelector(
+                `[name="${name}"]`
             );
+
+
+        if (field) {
+
+            return field;
+
         }
 
 
-        renderConfirmation(
-            response
-        );
+        const idField =
+            form.querySelector(
+                `#${name}`
+            );
 
 
-        emitControllerEvent(
-            "confirmed",
-            response
-        );
+        if (idField) {
+
+            return idField;
+
+        }
 
 
-        updateNavigation();
+        const dataField =
+            form.querySelector(
+                `[data-checkout-field="${name}"]`
+            );
+
+
+        if (dataField) {
+
+            return dataField;
+
+        }
+
     }
 
 
-    /*=====================================================
-      SUBMISSION FAILURE
-    =====================================================*/
+    return null;
 
-    function handleSubmissionFailure(
-        error
-    ) {
-
-        controllerState.submitting =
-            false;
+}
 
 
-        showLoading(
-            false
-        );
+/* =====================================================
+   32. READ CHECKOUT FORM
+   ===================================================== */
+
+function readNexpakOnlineCheckoutForm(
+    form = null
+) {
+
+    if (!form) {
+
+        form =
+            findNexpakOnlineCheckoutForm();
+
+    }
 
 
-        if (
-            checkout.order &&
-            typeof
-            checkout.order.fail ===
-            "function"
-        ) {
+    if (!form) {
 
-            checkout.order.fail(
-                error
-            );
-        }
+        return {
+
+            success: false,
+
+            message:
+                "Checkout form not found."
+
+        };
+
+    }
 
 
-        displayErrors(
+    const nameField =
+        getNexpakOnlineCheckoutField(
+            form,
             [
-                {
-                    message:
-                        error &&
-                        (
-                            error.message ||
-                            error
-                        )
-                        ||
-                        "Order submission failed. Please try again."
-                }
+                "name",
+                "fullName",
+                "customerName"
             ]
         );
 
 
-        emitControllerEvent(
-            "failed",
-            error
+    const emailField =
+        getNexpakOnlineCheckoutField(
+            form,
+            [
+                "email",
+                "customerEmail"
+            ]
         );
 
 
-        updateNavigation();
+    const phoneField =
+        getNexpakOnlineCheckoutField(
+            form,
+            [
+                "phone",
+                "telephone",
+                "mobile",
+                "customerPhone"
+            ]
+        );
+
+
+    const addressField =
+        getNexpakOnlineCheckoutField(
+            form,
+            [
+                "address",
+                "streetAddress",
+                "deliveryAddress"
+            ]
+        );
+
+
+    const suburbField =
+        getNexpakOnlineCheckoutField(
+            form,
+            [
+                "suburb",
+                "deliverySuburb"
+            ]
+        );
+
+
+    const cityField =
+        getNexpakOnlineCheckoutField(
+            form,
+            [
+                "city",
+                "town",
+                "deliveryCity"
+            ]
+        );
+
+
+    const provinceField =
+        getNexpakOnlineCheckoutField(
+            form,
+            [
+                "province",
+                "state",
+                "deliveryProvince"
+            ]
+        );
+
+
+    const postalCodeField =
+        getNexpakOnlineCheckoutField(
+            form,
+            [
+                "postalCode",
+                "postcode",
+                "zip",
+                "deliveryPostalCode"
+            ]
+        );
+
+
+    const customer = {
+
+        name:
+            nameField
+                ? nameField.value
+                : "",
+
+        email:
+            emailField
+                ? emailField.value
+                : "",
+
+        phone:
+            phoneField
+                ? phoneField.value
+                : ""
+
+    };
+
+
+    const delivery = {
+
+        address:
+            addressField
+                ? addressField.value
+                : "",
+
+        suburb:
+            suburbField
+                ? suburbField.value
+                : "",
+
+        city:
+            cityField
+                ? cityField.value
+                : "",
+
+        province:
+            provinceField
+                ? provinceField.value
+                : "",
+
+        postalCode:
+            postalCodeField
+                ? postalCodeField.value
+                : ""
+
+    };
+
+
+    return {
+
+        success: true,
+
+        customer: customer,
+
+        delivery: delivery
+
+    };
+
+}
+
+
+/* =====================================================
+   33. SAVE CHECKOUT FORM
+   ===================================================== */
+
+function saveNexpakOnlineCheckoutForm(
+    form = null
+) {
+
+    const result =
+        readNexpakOnlineCheckoutForm(
+            form
+        );
+
+
+    if (
+        !result.success
+    ) {
+
+        return result;
+
     }
 
 
-    /*=====================================================
-      SHOW LOADING
-    =====================================================*/
-
-    function showLoading(
-        show
-    ) {
-
-        document
-            .querySelectorAll(
-                UI_SELECTORS.loading
-            )
-            .forEach(
-                function (element) {
-
-                    element.hidden =
-                        !show;
-                }
-            );
+    updateNexpakOnlineCheckoutCustomer(
+        result.customer
+    );
 
 
-        document
-            .querySelectorAll(
-                UI_SELECTORS.submit
-            )
-            .forEach(
-                function (button) {
+    updateNexpakOnlineCheckoutDelivery(
+        result.delivery
+    );
 
-                    button.disabled =
-                        show;
 
-                }
-            );
+    return {
+
+        success: true,
+
+        customer:
+            nexpakOnlineCheckout.customer,
+
+        delivery:
+            nexpakOnlineCheckout.delivery
+
+    };
+
+}
+
+
+/* =====================================================
+   34. SET FIELD ERROR
+   ===================================================== */
+
+function setNexpakOnlineCheckoutFieldError(
+    field,
+    message
+) {
+
+    if (!field) {
+
+        return;
+
     }
 
 
-    /*=====================================================
-      RENDER CONFIRMATION
-    =====================================================*/
+    field.classList.add(
+        "is-invalid"
+    );
 
-    function renderConfirmation(
-        response
-    ) {
 
-        const container =
-            document.querySelector(
-                UI_SELECTORS.confirmation
+    field.setAttribute(
+        "aria-invalid",
+        "true"
+    );
+
+
+    let errorElement =
+        field.parentElement
+            ? field.parentElement.querySelector(
+                ".checkout-field-error"
+            )
+            : null;
+
+
+    if (!errorElement) {
+
+        errorElement =
+            document.createElement(
+                "div"
             );
 
 
-        if (
-            !container
-        ) {
-            return;
-        }
+        errorElement.className =
+            "checkout-field-error";
 
 
-        let confirmation = null;
-
-
-        if (
-            checkout.order &&
-            typeof
-            checkout.order.confirmation ===
-            "function"
-        ) {
-
-            confirmation =
-                checkout.order.confirmation(
-                    response
-                );
-        }
+        errorElement.setAttribute(
+            "role",
+            "alert"
+        );
 
 
         if (
-            !confirmation
+            field.parentElement
         ) {
 
-            confirmation = {
+            field.parentElement.appendChild(
+                errorElement
+            );
 
-                orderNumber:
-                    state.order.orderNumber,
-
-                status:
-                    state.order.status,
-
-                total:
-                    state.totals.total
-            };
         }
 
-
-        container.hidden =
-            false;
+    }
 
 
-        container.innerHTML =
+    errorElement.textContent =
+        message || "";
+
+}
+
+
+/* =====================================================
+   35. CLEAR FIELD ERROR
+   ===================================================== */
+
+function clearNexpakOnlineCheckoutFieldError(
+    field
+) {
+
+    if (!field) {
+
+        return;
+
+    }
+
+
+    field.classList.remove(
+        "is-invalid"
+    );
+
+
+    field.removeAttribute(
+        "aria-invalid"
+    );
+
+
+    const errorElement =
+        field.parentElement
+            ? field.parentElement.querySelector(
+                ".checkout-field-error"
+            )
+            : null;
+
+
+    if (errorElement) {
+
+        errorElement.textContent =
             "";
 
+    }
 
-        const heading =
-            document.createElement(
-                "h2"
-            );
+}
 
 
-        heading.textContent =
-            "Order Confirmed";
+/* =====================================================
+   36. VALIDATE CHECKOUT FORM
+   ===================================================== */
+
+function validateNexpakOnlineCheckoutForm(
+    form = null
+) {
+
+    if (!form) {
+
+        form =
+            findNexpakOnlineCheckoutForm();
+
+    }
 
 
-        const orderNumber =
-            document.createElement(
-                "p"
-            );
+    if (!form) {
+
+        return {
+
+            valid: false,
+
+            message:
+                "Checkout form not found."
+
+        };
+
+    }
 
 
-        orderNumber.textContent =
-            "Order Number: " +
-            (
-                confirmation.orderNumber ||
-                state.order.orderNumber
-            );
-
-
-        const status =
-            document.createElement(
-                "p"
-            );
-
-
-        status.textContent =
-            "Status: " +
-            (
-                confirmation.status ||
-                "Confirmed"
-            );
-
-
-        container.appendChild(
-            heading
+    const data =
+        readNexpakOnlineCheckoutForm(
+            form
         );
 
 
-        container.appendChild(
-            orderNumber
-        );
-
-
-        container.appendChild(
-            status
-        );
-
-
-        /*
-         * Hide checkout form after confirmation.
-         */
-
-        document
-            .querySelectorAll(
-                UI_SELECTORS.checkout
-            )
-            .forEach(
-                function (element) {
-
-                    element.classList.add(
-                        "checkout-complete"
-                    );
-                }
-            );
-    }
-
-
-    /*=====================================================
-      ATTACH NAVIGATION EVENTS
-    =====================================================*/
-
-    function attachNavigationListeners() {
-
-        document
-            .querySelectorAll(
-                UI_SELECTORS.next
-            )
-            .forEach(
-                function (button) {
-
-                    button.addEventListener(
-                        "click",
-                        function (event) {
-
-                            event.preventDefault();
-
-                            nextStep();
-
-                        }
-                    );
-                }
-            );
-
-
-        document
-            .querySelectorAll(
-                UI_SELECTORS.back
-            )
-            .forEach(
-                function (button) {
-
-                    button.addEventListener(
-                        "click",
-                        function (event) {
-
-                            event.preventDefault();
-
-                            previousStep();
-
-                        }
-                    );
-                }
-            );
-
-
-        document
-            .querySelectorAll(
-                UI_SELECTORS.submit
-            )
-            .forEach(
-                function (button) {
-
-                    button.addEventListener(
-                        "click",
-                        function (event) {
-
-                            event.preventDefault();
-
-                            submitOrder();
-
-                        }
-                    );
-                }
-            );
-    }
-
-
-    /*=====================================================
-      ATTACH CHECKOUT FORM EVENTS
-    =====================================================*/
-
-    function attachFormListeners() {
-
-        document
-            .querySelectorAll(
-                "form[data-checkout-form]"
-            )
-            .forEach(
-                function (form) {
-
-                    form.addEventListener(
-                        "submit",
-                        function (event) {
-
-                            event.preventDefault();
-
-
-                            const current =
-                                getCurrentStep();
-
-
-                            if (
-                                current <
-                                CONTROLLER_CONFIG
-                                    .reviewStep
-                            ) {
-
-                                nextStep();
-
-                            } else {
-
-                                submitOrder();
-                            }
-
-                        }
-                    );
-                }
-            );
-    }
-
-
-    /*=====================================================
-      ATTACH STEP CLICK EVENTS
-    =====================================================*/
-
-    function attachStepListeners() {
-
-        document
-            .querySelectorAll(
-                "[data-checkout-go-step]"
-            )
-            .forEach(
-                function (element) {
-
-                    element.addEventListener(
-                        "click",
-                        function (event) {
-
-                            event.preventDefault();
-
-
-                            const target =
-                                safeNumber(
-                                    element.dataset
-                                        .checkoutGoStep
-                                );
-
-
-                            goToStep(
-                                target
-                            );
-
-                        }
-                    );
-                }
-            );
-    }
-
-
-    /*=====================================================
-      CONTROLLER EVENTS
-    =====================================================*/
-
-    const controllerEvents = {};
-
-
-    function onControllerEvent(
-        eventName,
-        callback
+    if (
+        !data.success
     ) {
 
-        if (
-            typeof callback !==
-            "function"
-        ) {
-            return;
-        }
+        return {
 
+            valid: false,
 
-        if (
-            !controllerEvents[eventName]
-        ) {
+            message:
+                data.message
 
-            controllerEvents[eventName] =
-                [];
-        }
+        };
 
-
-        controllerEvents[eventName]
-            .push(callback);
     }
 
 
-    function emitControllerEvent(
-        eventName,
-        data
+    /*
+     * Clear old errors first.
+     */
+
+    form
+        .querySelectorAll(
+            ".is-invalid"
+        )
+        .forEach(
+
+            field => {
+
+                clearNexpakOnlineCheckoutFieldError(
+                    field
+                );
+
+            }
+
+        );
+
+
+    /*
+     * Customer name.
+     */
+
+    const nameResult =
+        validateNexpakOnlineCheckoutName(
+            data.customer.name
+        );
+
+
+    if (
+        !nameResult.valid
     ) {
 
-        const listeners =
-            controllerEvents[eventName];
+        const field =
+            getNexpakOnlineCheckoutField(
+                form,
+                [
+                    "name",
+                    "fullName",
+                    "customerName"
+                ]
+            );
 
 
-        if (
-            !Array.isArray(
-                listeners
+        setNexpakOnlineCheckoutFieldError(
+            field,
+            nameResult.message
+        );
+
+
+        return nameResult;
+
+    }
+
+
+    /*
+     * Email.
+     */
+
+    const emailResult =
+        validateNexpakOnlineCheckoutEmail(
+            data.customer.email
+        );
+
+
+    if (
+        !emailResult.valid
+    ) {
+
+        const field =
+            getNexpakOnlineCheckoutField(
+                form,
+                [
+                    "email",
+                    "customerEmail"
+                ]
+            );
+
+
+        setNexpakOnlineCheckoutFieldError(
+            field,
+            emailResult.message
+        );
+
+
+        return emailResult;
+
+    }
+
+
+    /*
+     * Phone.
+     */
+
+    const phoneResult =
+        validateNexpakOnlineCheckoutPhone(
+            data.customer.phone
+        );
+
+
+    if (
+        !phoneResult.valid
+    ) {
+
+        const field =
+            getNexpakOnlineCheckoutField(
+                form,
+                [
+                    "phone",
+                    "telephone",
+                    "mobile",
+                    "customerPhone"
+                ]
+            );
+
+
+        setNexpakOnlineCheckoutFieldError(
+            field,
+            phoneResult.message
+        );
+
+
+        return phoneResult;
+
+    }
+
+
+    /*
+     * Delivery address.
+     */
+
+    const addressResult =
+        validateNexpakOnlineCheckoutAddress(
+            data.delivery
+        );
+
+
+    if (
+        !addressResult.valid
+    ) {
+
+        const field =
+            getNexpakOnlineCheckoutField(
+                form,
+                [
+                    "address",
+                    "streetAddress",
+                    "deliveryAddress"
+                ]
+            );
+
+
+        setNexpakOnlineCheckoutFieldError(
+            field,
+            addressResult.message
+        );
+
+
+        return addressResult;
+
+    }
+
+
+    return {
+
+        valid: true,
+
+        message:
+            "Checkout form is valid."
+
+    };
+
+}
+
+
+/* =====================================================
+   37. CHECKOUT SUBMIT HANDLER
+   ===================================================== */
+
+function handleNexpakOnlineCheckoutSubmit(
+    event
+) {
+
+    const form =
+        event.target;
+
+
+    if (!form) {
+
+        return;
+
+    }
+
+
+    /*
+     * Only handle the Online Store
+     * checkout form.
+     */
+
+    const recognisedForm =
+        (
+            form.matches &&
+            (
+                form.matches(
+                    "#onlineCheckoutForm"
+                ) ||
+
+                form.matches(
+                    "#checkoutForm"
+                ) ||
+
+                form.matches(
+                    ".online-checkout-form"
+                ) ||
+
+                form.matches(
+                    "[data-online-checkout-form]"
+                ) ||
+
+                form.matches(
+                    "form[data-checkout-form]"
+                )
             )
-        ) {
-            return;
-        }
+        );
 
 
-        listeners.forEach(
-            function (callback) {
+    if (!recognisedForm) {
 
-                try {
+        return;
 
-                    callback(data);
+    }
 
-                } catch (error) {
 
-                    console.error(
-                        "[NEXPAK CHECKOUT] Controller event error:",
-                        error
-                    );
+    event.preventDefault();
+
+
+    const validation =
+        validateNexpakOnlineCheckoutForm(
+            form
+        );
+
+
+    if (
+        !validation.valid
+    ) {
+
+        return;
+
+    }
+
+
+    const saved =
+        saveNexpakOnlineCheckoutForm(
+            form
+        );
+
+
+    if (
+        !saved.success
+    ) {
+
+        console.error(
+            "NEXPAK Checkout: Could not save form.",
+            saved
+        );
+
+
+        return;
+
+    }
+
+
+    /*
+     * Do not process payment here.
+     *
+     * Part 4+ will handle payment-method
+     * selection and the final checkout flow.
+     */
+
+    document.dispatchEvent(
+
+        new CustomEvent(
+            "nexpak:checkout-form-valid",
+            {
+
+                detail: {
+
+                    checkout:
+                        getNexpakOnlineCheckoutState()
+
                 }
 
             }
-        );
+
+        )
+
+    );
+
+}
+
+
+/* =====================================================
+   38. BIND CHECKOUT FORM
+   ===================================================== */
+
+function bindNexpakOnlineCheckoutForm() {
+
+    document.removeEventListener(
+        "submit",
+        handleNexpakOnlineCheckoutSubmit
+    );
+
+
+    document.addEventListener(
+        "submit",
+        handleNexpakOnlineCheckoutSubmit
+    );
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   39. AUTO-SAVE FORM FIELDS
+   ===================================================== */
+
+function bindNexpakOnlineCheckoutAutoSave() {
+
+    const form =
+        findNexpakOnlineCheckoutForm();
+
+
+    if (!form) {
+
+        return false;
+
     }
 
-
-    /*=====================================================
-      RESET CHECKOUT
-    =====================================================*/
-
-    function resetCheckout() {
-
-        state.step =
-            CONTROLLER_CONFIG.firstStep;
-
-
-        state.payment.method =
-            "";
-
-
-        state.payment.status =
-            "pending";
-
-
-        state.payment.reference =
-            "";
-
-
-        state.order = {
-
-            orderNumber:
-                "",
-
-            createdAt:
-                "",
-
-            status:
-                "draft"
-        };
-
-
-        controllerState.submitting =
-            false;
-
-
-        controllerState.confirmed =
-            false;
-
-
-        controllerState.errors =
-            [];
-
-
-        checkout.save();
-
-
-        clearErrors();
-
-
-        setCurrentStep(
-            CONTROLLER_CONFIG.firstStep
-        );
-
-
-        emitControllerEvent(
-            "reset",
-            state
-        );
-
-
-        return state;
-    }
-
-
-    /*=====================================================
-      EXTEND CHECKOUT API
-    =====================================================*/
-
-    checkout.controller = {
-
-        config:
-            CONTROLLER_CONFIG,
-
-        state:
-            controllerState,
-
-        selectors:
-            UI_SELECTORS,
-
-        getStep:
-            getCurrentStep,
-
-        setStep:
-            setCurrentStep,
-
-        validateStep:
-            validateStep,
-
-        saveStep:
-            saveCurrentStep,
-
-        next:
-            nextStep,
-
-        back:
-            previousStep,
-
-        goTo:
-            goToStep,
-
-        render:
-            renderStep,
-
-        review:
-            renderReview,
-
-        submit:
-            submitOrder,
-
-        confirmation:
-            renderConfirmation,
-
-        loading:
-            showLoading,
-
-        clearErrors:
-            clearErrors,
-
-        displayErrors:
-            displayErrors,
-
-        reset:
-            resetCheckout,
-
-        on:
-            onControllerEvent,
-
-        emit:
-            emitControllerEvent
-    };
-
-
-    /*=====================================================
-      INITIALISE PART 6
-    =====================================================*/
-
-    function initPart6() {
-
-        checkout.init();
-
-
-        /*
-         * Attach checkout controls.
-         */
-
-        attachNavigationListeners();
-
-        attachFormListeners();
-
-        attachStepListeners();
-
-
-        /*
-         * Render current checkout step.
-         */
-
-        renderStep();
-
-
-        controllerState.initialized =
-            true;
-
-
-        console.log(
-            "%c[NEXPAK CHECKOUT] Part 6/8 loaded",
-            "font-weight:bold;"
-        );
-    }
-
-
-    /*=====================================================
-      START
-    =====================================================*/
 
     if (
-        document.readyState ===
-        "loading"
+        form.dataset
+            .nexpakCheckoutAutosave ===
+        "true"
     ) {
 
-        document.addEventListener(
-            "DOMContentLoaded",
-            initPart6
-        );
+        return true;
 
-    } else {
-
-        initPart6();
-    }
-
-})();
-
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE — CHECKOUT ENGINE
-=========================================================
- File: onlinecheckout.js
- Version: 1.0
- Part: 7/8
-
- PART 7:
- - Review engine
- - Checkout data binding
- - Customer summary
- - Billing summary
- - Delivery summary
- - Payment summary
- - Product summary
- - Totals summary
- - Edit checkout sections
- - Dynamic review refresh
- - Currency formatting
-=========================================================*/
-
-(function () {
-
-    "use strict";
-
-
-    /*=====================================================
-      SAFETY CHECK
-    =====================================================*/
-
-    if (!window.NEXPAKCheckout) {
-
-        console.error(
-            "[NEXPAK CHECKOUT] Checkout engine is required."
-        );
-
-        return;
     }
 
 
-    /*=====================================================
-      SHORTCUTS
-    =====================================================*/
+    form.addEventListener(
 
-    const checkout =
-        window.NEXPAKCheckout;
+        "input",
 
-    const state =
-        checkout.state;
+        function () {
+
+            const data =
+                readNexpakOnlineCheckoutForm(
+                    form
+                );
 
 
-    /*=====================================================
-      REVIEW CONFIGURATION
-    =====================================================*/
+            if (
+                !data.success
+            ) {
 
-    const REVIEW_CONFIG = {
+                return;
 
-        currency:
-            "ZAR",
+            }
 
-        locale:
-            "en-ZA",
 
-        emptyValue:
-            "Not provided"
+            updateNexpakOnlineCheckoutCustomer(
+                data.customer
+            );
+
+
+            updateNexpakOnlineCheckoutDelivery(
+                data.delivery
+            );
+
+        }
+
+    );
+
+
+    form.dataset
+        .nexpakCheckoutAutosave =
+        "true";
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   40. INITIALISE CHECKOUT FORM
+   ===================================================== */
+
+function initialiseNexpakOnlineCheckoutForm() {
+
+    bindNexpakOnlineCheckoutForm();
+
+
+    bindNexpakOnlineCheckoutAutoSave();
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   41. EXTEND PUBLIC CHECKOUT API
+   ===================================================== */
+
+if (
+    window.NEXPAK_ONLINE_CHECKOUT
+) {
+
+    window.NEXPAK_ONLINE_CHECKOUT.findForm =
+        findNexpakOnlineCheckoutForm;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.readForm =
+        readNexpakOnlineCheckoutForm;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.saveForm =
+        saveNexpakOnlineCheckoutForm;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.validateForm =
+        validateNexpakOnlineCheckoutForm;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.bindForm =
+        bindNexpakOnlineCheckoutForm;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.initialiseForm =
+        initialiseNexpakOnlineCheckoutForm;
+
+}
+
+
+/* =====================================================
+   PART 3 END
+   ========================================================= */
+
+ /* =========================================================
+   NEXPAK ONLINE STORE — CHECKOUT ENGINE
+   PART 4 — ORDER SUMMARY + PAYMENT METHOD
+   ========================================================= */
+
+
+/* =====================================================
+   42. PAYMENT METHODS
+   ===================================================== */
+
+const NEXPAK_ONLINE_PAYMENT_METHODS = {
+
+    EFT: {
+
+        id: "eft",
+
+        name: "Instant EFT / Bank Transfer",
+
+        available: true,
+
+        status: "available"
+
+    },
+
+    PAYFAST: {
+
+        id: "payfast",
+
+        name: "PayFast",
+
+        available: false,
+
+        status: "coming-soon"
+
+    }
+
+};
+
+
+/* =====================================================
+   43. SELECT PAYMENT METHOD
+   ===================================================== */
+
+function selectNexpakOnlinePaymentMethod(
+    method
+) {
+
+    const selected =
+        safeCheckoutString(
+            method
+        ).toLowerCase();
+
+
+    if (
+        selected === "eft" ||
+        selected === "instant-eft" ||
+        selected === "bank-transfer"
+    ) {
+
+        nexpakOnlineCheckout.payment = {
+
+            method: "eft",
+
+            status: "pending"
+
+        };
+
+
+        saveNexpakOnlineCheckout();
+
+
+        return {
+
+            success: true,
+
+            method: "eft",
+
+            status: "pending"
+
+        };
+
+    }
+
+
+    if (
+        selected === "payfast"
+    ) {
+
+        /*
+         * PayFast is deliberately NOT processed
+         * until the NEXPAK PayFast account is ready.
+         */
+
+        nexpakOnlineCheckout.payment = {
+
+            method: "payfast",
+
+            status: "coming-soon"
+
+        };
+
+
+        saveNexpakOnlineCheckout();
+
+
+        return {
+
+            success: false,
+
+            method: "payfast",
+
+            status: "coming-soon",
+
+            message:
+                "PayFast payment is not available yet. Please use Instant EFT."
+
+        };
+
+    }
+
+
+    return {
+
+        success: false,
+
+        method: "",
+
+        status: "invalid",
+
+        message:
+            "Please select a valid payment method."
+
     };
 
-
-    /*=====================================================
-      SAFE STRING
-    =====================================================*/
-
-    function safeString(value) {
-
-        if (
-            value === null ||
-            value === undefined ||
-            value === ""
-        ) {
-
-            return REVIEW_CONFIG.emptyValue;
-        }
+}
 
 
-        return String(value).trim() ||
-            REVIEW_CONFIG.emptyValue;
-    }
+/* =====================================================
+   44. GET SELECTED PAYMENT METHOD
+   ===================================================== */
+
+function getNexpakOnlinePaymentMethod() {
+
+    return {
+
+        ...nexpakOnlineCheckout.payment
+
+    };
+
+}
 
 
-    /*=====================================================
-      SAFE NUMBER
-    =====================================================*/
+/* =====================================================
+   45. GET ORDER SUMMARY
+   ===================================================== */
 
-    function safeNumber(value) {
+function getNexpakOnlineCheckoutSummary() {
 
-        const number =
-            Number(value);
-
-
-        return Number.isFinite(number)
-            ? number
-            : 0;
-    }
+    calculateNexpakOnlineCheckoutTotals();
 
 
-    /*=====================================================
-      CURRENCY FORMATTER
-    =====================================================*/
+    return {
 
-    function formatCurrency(
-        amount
+        orderReference:
+            nexpakOnlineCheckout.orderReference,
+
+        items:
+            nexpakOnlineCheckout.cart,
+
+        customer:
+            {
+                ...nexpakOnlineCheckout.customer
+            },
+
+        delivery:
+            {
+                ...nexpakOnlineCheckout.delivery
+            },
+
+        payment:
+            {
+                ...nexpakOnlineCheckout.payment
+            },
+
+        totals:
+            {
+                ...nexpakOnlineCheckout.totals
+            },
+
+        createdAt:
+            nexpakOnlineCheckout.createdAt
+
+    };
+
+}
+
+
+/* =====================================================
+   46. FORMAT CHECKOUT MONEY
+   ===================================================== */
+
+function formatNexpakOnlineCheckoutMoney(
+    value
+) {
+
+    const amount =
+        safeCheckoutNumber(
+            value,
+            0
+        );
+
+
+    return (
+
+        "R " +
+
+        amount.toLocaleString(
+            "en-ZA",
+            {
+
+                minimumFractionDigits: 2,
+
+                maximumFractionDigits: 2
+
+            }
+
+        )
+
+    );
+
+}
+
+
+/* =====================================================
+   47. FIND ORDER SUMMARY CONTAINER
+   ===================================================== */
+
+function findNexpakOnlineCheckoutSummaryContainer() {
+
+    const selectors = [
+
+        "#onlineCheckoutSummary",
+
+        "#checkoutSummary",
+
+        ".online-checkout-summary",
+
+        "[data-online-checkout-summary]"
+
+    ];
+
+
+    for (
+        let i = 0;
+        i < selectors.length;
+        i++
     ) {
 
-        const value =
-            safeNumber(amount);
+        const element =
+            document.querySelector(
+                selectors[i]
+            );
 
 
-        try {
+        if (element) {
 
-            return new Intl.NumberFormat(
-                REVIEW_CONFIG.locale,
-                {
+            return element;
 
-                    style:
-                        "currency",
-
-                    currency:
-                        REVIEW_CONFIG.currency,
-
-                    minimumFractionDigits:
-                        2,
-
-                    maximumFractionDigits:
-                        2
-                }
-            ).format(value);
-
-        } catch (error) {
-
-            return "R " +
-                value.toFixed(2);
         }
+
     }
 
 
-    /*=====================================================
-      GET CUSTOMER
-    =====================================================*/
+    return null;
 
-    function getCustomer() {
+}
 
-        return state.customer || {};
+
+/* =====================================================
+   48. RENDER ORDER SUMMARY
+   ===================================================== */
+
+function renderNexpakOnlineCheckoutSummary(
+    container = null
+) {
+
+    if (!container) {
+
+        container =
+            findNexpakOnlineCheckoutSummaryContainer();
+
     }
 
 
-    /*=====================================================
-      GET BILLING
-    =====================================================*/
+    if (!container) {
 
-    function getBilling() {
+        return false;
 
-        return state.billing || {};
     }
 
 
-    /*=====================================================
-      GET DELIVERY
-    =====================================================*/
-
-    function getDelivery() {
-
-        return state.delivery || {};
-    }
+    const summary =
+        getNexpakOnlineCheckoutSummary();
 
 
-    /*=====================================================
-      GET PAYMENT
-    =====================================================*/
-
-    function getPayment() {
-
-        return state.payment || {};
-    }
+    let itemsHtml = "";
 
 
-    /*=====================================================
-      BUILD FULL NAME
-    =====================================================*/
-
-    function getCustomerName() {
-
-        const customer =
-            getCustomer();
-
-
-        const first =
-            String(
-                customer.firstName || ""
-            ).trim();
-
-
-        const last =
-            String(
-                customer.lastName || ""
-            ).trim();
-
-
-        return (
-            first +
-            " " +
-            last
-        ).trim() ||
-        REVIEW_CONFIG.emptyValue;
-    }
-
-
-    /*=====================================================
-      BUILD ADDRESS
-    =====================================================*/
-
-    function buildAddress(
-        address
+    if (
+        !Array.isArray(
+            summary.items
+        ) ||
+        !summary.items.length
     ) {
 
-        if (
-            !address
-        ) {
+        itemsHtml =
 
-            return REVIEW_CONFIG.emptyValue;
-        }
+            '<div class="online-checkout-empty">' +
 
+                'Your cart is empty.' +
 
-        const lines = [
+            '</div>';
 
-            address.address1,
-
-            address.address2,
-
-            address.suburb,
-
-            address.city,
-
-            address.province,
-
-            address.postalCode,
-
-            address.country
-
-        ];
-
-
-        return lines
-            .map(
-                function (line) {
-
-                    return String(
-                        line || ""
-                    ).trim();
-
-                }
-            )
-            .filter(
-                function (line) {
-
-                    return line.length > 0;
-                }
-            )
-            .join(", ") ||
-            REVIEW_CONFIG.emptyValue;
     }
 
+    else {
 
-    /*=====================================================
-      CUSTOMER REVIEW DATA
-    =====================================================*/
+        summary.items.forEach(
 
-    function buildCustomerReview() {
-
-        const customer =
-            getCustomer();
-
-
-        return {
-
-            name:
-                getCustomerName(),
-
-            firstName:
-                safeString(
-                    customer.firstName
-                ),
-
-            lastName:
-                safeString(
-                    customer.lastName
-                ),
-
-            email:
-                safeString(
-                    customer.email
-                ),
-
-            phone:
-                safeString(
-                    customer.phone
-                ),
-
-            company:
-                safeString(
-                    customer.company
-                )
-        };
-    }
-
-
-    /*=====================================================
-      BILLING REVIEW DATA
-    =====================================================*/
-
-    function buildBillingReview() {
-
-        const billing =
-            getBilling();
-
-
-        return {
-
-            address:
-                buildAddress(
-                    billing
-                ),
-
-            city:
-                safeString(
-                    billing.city
-                ),
-
-            province:
-                safeString(
-                    billing.province
-                ),
-
-            postalCode:
-                safeString(
-                    billing.postalCode
-                ),
-
-            country:
-                safeString(
-                    billing.country
-                )
-        };
-    }
-
-
-    /*=====================================================
-      DELIVERY REVIEW DATA
-    =====================================================*/
-
-    function buildDeliveryReview() {
-
-        const delivery =
-            getDelivery();
-
-
-        return {
-
-            method:
-                safeString(
-                    delivery.method
-                ),
-
-            methodName:
-                safeString(
-                    delivery.methodName ||
-                    delivery.name
-                ),
-
-            address:
-                buildAddress(
-                    delivery
-                ),
-
-            city:
-                safeString(
-                    delivery.city
-                ),
-
-            province:
-                safeString(
-                    delivery.province
-                ),
-
-            postalCode:
-                safeString(
-                    delivery.postalCode
-                ),
-
-            instructions:
-                safeString(
-                    delivery.instructions
-                ),
-
-            cost:
-                safeNumber(
-                    delivery.cost
-                )
-        };
-    }
-
-
-    /*=====================================================
-      PAYMENT REVIEW DATA
-    =====================================================*/
-
-    function buildPaymentReview() {
-
-        const payment =
-            getPayment();
-
-
-        return {
-
-            method:
-                safeString(
-                    payment.method
-                ),
-
-            methodName:
-                safeString(
-                    payment.methodName ||
-                    payment.name
-                ),
-
-            status:
-                safeString(
-                    payment.status
-                ),
-
-            reference:
-                safeString(
-                    payment.reference
-                )
-        };
-    }
-
-
-    /*=====================================================
-      PRODUCT REVIEW DATA
-    =====================================================*/
-
-    function buildProductReview() {
-
-        const cart =
-            Array.isArray(
-                state.cart
-            )
-                ? state.cart
-                : [];
-
-
-        return cart.map(
-            function (item, index) {
+            item => {
 
                 const quantity =
                     Math.max(
                         1,
-                        safeNumber(
-                            item.quantity ||
-                            item.qty ||
+                        safeCheckoutNumber(
+                            item.quantity,
                             1
                         )
                     );
 
 
-                const price =
-                    safeNumber(
-                        item.price ||
-                        item.unitPrice ||
-                        item.salePrice ||
-                        0
+                const unitPrice =
+                    Math.max(
+                        0,
+                        safeCheckoutNumber(
+                            item.priceExVat,
+                            0
+                        )
                     );
 
 
-                return {
-
-                    index:
-                        index,
-
-                    id:
-                        safeString(
-                            item.id ||
-                            item.productId
-                        ),
-
-                    sku:
-                        safeString(
-                            item.sku ||
-                            item.id
-                        ),
-
-                    name:
-                        safeString(
-                            item.name ||
-                            item.title ||
-                            "Product"
-                        ),
-
-                    image:
-                        safeString(
-                            item.image
-                        ),
-
-                    quantity:
-                        quantity,
-
-                    unitPrice:
-                        price,
-
-                    total:
-                        price * quantity,
-
-                    options:
-                        item.options ||
-                        item.variant ||
-                        item.configuration ||
-                        null
-                };
-            }
-        );
-    }
+                const lineTotal =
+                    unitPrice *
+                    quantity;
 
 
-    /*=====================================================
-      TOTALS REVIEW DATA
-    =====================================================*/
+                itemsHtml +=
 
-    function buildTotalsReview() {
+                    '<div class="online-checkout-item">' +
 
-        if (
-            typeof checkout.calculateTotals ===
-            "function"
-        ) {
+                        '<div class="online-checkout-item-name">' +
 
-            checkout.calculateTotals();
-        }
+                            escapeNexpakOnlineCheckoutHtml(
+                                item.name ||
+                                "Security Kit"
+                            ) +
 
+                        '</div>' +
 
-        const totals =
-            state.totals || {};
+                        '<div class="online-checkout-item-quantity">' +
 
+                            'Qty: ' +
 
-        return {
+                            quantity +
 
-            subtotal:
-                safeNumber(
-                    totals.subtotal
-                ),
+                        '</div>' +
 
-            delivery:
-                safeNumber(
-                    totals.delivery
-                ),
+                        '<div class="online-checkout-item-price">' +
 
-            discount:
-                safeNumber(
-                    totals.discount
-                ),
+                            formatNexpakOnlineCheckoutMoney(
+                                lineTotal
+                            ) +
 
-            tax:
-                safeNumber(
-                    totals.tax
-                ),
+                        '</div>' +
 
-            total:
-                safeNumber(
-                    totals.total
-                ),
-
-            formattedSubtotal:
-                formatCurrency(
-                    totals.subtotal
-                ),
-
-            formattedDelivery:
-                formatCurrency(
-                    totals.delivery
-                ),
-
-            formattedDiscount:
-                formatCurrency(
-                    totals.discount
-                ),
-
-            formattedTax:
-                formatCurrency(
-                    totals.tax
-                ),
-
-            formattedTotal:
-                formatCurrency(
-                    totals.total
-                )
-        };
-    }
-
-
-    /*=====================================================
-      BUILD COMPLETE REVIEW MODEL
-    =====================================================*/
-
-    function buildReviewModel() {
-
-        return {
-
-            orderNumber:
-                safeString(
-                    state.order &&
-                    state.order.orderNumber
-                ),
-
-            status:
-                safeString(
-                    state.order &&
-                    state.order.status
-                ),
-
-            customer:
-                buildCustomerReview(),
-
-            billing:
-                buildBillingReview(),
-
-            delivery:
-                buildDeliveryReview(),
-
-            payment:
-                buildPaymentReview(),
-
-            products:
-                buildProductReview(),
-
-            totals:
-                buildTotalsReview(),
-
-            notes:
-                safeString(
-                    state.notes
-                )
-        };
-    }
-
-
-    /*=====================================================
-      SET ELEMENT TEXT
-    =====================================================*/
-
-    function setText(
-        element,
-        value
-    ) {
-
-        if (
-            !element
-        ) {
-            return;
-        }
-
-
-        element.textContent =
-            value === undefined ||
-            value === null ||
-            value === ""
-                ? REVIEW_CONFIG.emptyValue
-                : String(value);
-    }
-
-
-    /*=====================================================
-      BIND DATA ATTRIBUTE
-    =====================================================*/
-
-    function bindReviewElement(
-        element,
-        model
-    ) {
-
-        const path =
-            element.dataset.checkoutBind;
-
-
-        if (
-            !path
-        ) {
-            return;
-        }
-
-
-        const parts =
-            path.split(".");
-
-
-        let value =
-            model;
-
-
-        parts.forEach(
-            function (part) {
-
-                if (
-                    value !== null &&
-                    value !== undefined
-                ) {
-
-                    value =
-                        value[part];
-                }
+                    '</div>';
 
             }
+
         );
 
-
-        setText(
-            element,
-            value
-        );
     }
 
 
-    /*=====================================================
-      BIND ALL REVIEW DATA
-    =====================================================*/
+    container.innerHTML =
 
-    function bindReviewData(
-        container,
-        model
+        '<div class="online-checkout-summary-header">' +
+
+            '<h3>Order Summary</h3>' +
+
+            (
+                summary.orderReference
+
+                    ?
+
+                '<span class="online-checkout-order-reference">' +
+
+                    'Order: ' +
+
+                    escapeNexpakOnlineCheckoutHtml(
+                        summary.orderReference
+                    ) +
+
+                '</span>'
+
+                    :
+
+                ''
+
+            ) +
+
+        '</div>' +
+
+
+        '<div class="online-checkout-items">' +
+
+            itemsHtml +
+
+        '</div>' +
+
+
+        '<div class="online-checkout-totals">' +
+
+            '<div class="online-checkout-total-row">' +
+
+                '<span>Subtotal EX VAT</span>' +
+
+                '<strong>' +
+
+                    formatNexpakOnlineCheckoutMoney(
+                        summary.totals.subtotalExVat
+                    ) +
+
+                '</strong>' +
+
+            '</div>' +
+
+
+            '<div class="online-checkout-total-row">' +
+
+                '<span>VAT @ 15%</span>' +
+
+                '<strong>' +
+
+                    formatNexpakOnlineCheckoutMoney(
+                        summary.totals.vatAmount
+                    ) +
+
+                '</strong>' +
+
+            '</div>' +
+
+
+            '<div class="online-checkout-total-row">' +
+
+                '<span>Delivery</span>' +
+
+                '<strong>' +
+
+                    formatNexpakOnlineCheckoutMoney(
+                        summary.totals.deliveryFee
+                    ) +
+
+                '</strong>' +
+
+            '</div>' +
+
+
+            '<div class="online-checkout-total-row online-checkout-grand-total">' +
+
+                '<span>Total</span>' +
+
+                '<strong>' +
+
+                    formatNexpakOnlineCheckoutMoney(
+                        summary.totals.grandTotal
+                    ) +
+
+                '</strong>' +
+
+            '</div>' +
+
+        '</div>';
+
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   49. ESCAPE CHECKOUT HTML
+   ===================================================== */
+
+function escapeNexpakOnlineCheckoutHtml(
+    value
+) {
+
+    if (
+        value === null ||
+        value === undefined
     ) {
 
-        if (
-            !container
-        ) {
-            return;
-        }
+        return "";
 
-
-        container
-            .querySelectorAll(
-                "[data-checkout-bind]"
-            )
-            .forEach(
-                function (element) {
-
-                    bindReviewElement(
-                        element,
-                        model
-                    );
-                }
-            );
     }
 
 
-    /*=====================================================
-      RENDER PRODUCT ROW
-    =====================================================*/
+    return String(value)
 
-    function renderProductRow(
-        item
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =====================================================
+   50. FIND PAYMENT CONTAINER
+   ===================================================== */
+
+function findNexpakOnlinePaymentContainer() {
+
+    const selectors = [
+
+        "#onlinePaymentMethods",
+
+        "#paymentMethods",
+
+        ".online-payment-methods",
+
+        ".checkout-payment-methods",
+
+        "[data-online-payment-methods]"
+
+    ];
+
+
+    for (
+        let i = 0;
+        i < selectors.length;
+        i++
     ) {
 
-        const row =
-            document.createElement(
-                "div"
-            );
-
-
-        row.className =
-            "checkout-review-product";
-
-
-        row.dataset.productId =
-            item.id;
-
-
-        /*
-         * Product image.
-         */
-
-        if (
-            item.image &&
-            item.image !==
-            REVIEW_CONFIG.emptyValue
-        ) {
-
-            const image =
-                document.createElement(
-                    "img"
-                );
-
-
-            image.src =
-                item.image;
-
-
-            image.alt =
-                item.name;
-
-
-            image.loading =
-                "lazy";
-
-
-            image.className =
-                "checkout-review-product-image";
-
-
-            row.appendChild(
-                image
-            );
-        }
-
-
-        const details =
-            document.createElement(
-                "div"
-            );
-
-
-        details.className =
-            "checkout-review-product-details";
-
-
-        const name =
-            document.createElement(
-                "div"
-            );
-
-
-        name.className =
-            "checkout-review-product-name";
-
-
-        name.textContent =
-            item.name;
-
-
-        details.appendChild(
-            name
-        );
-
-
-        /*
-         * SKU.
-         */
-
-        if (
-            item.sku &&
-            item.sku !==
-            REVIEW_CONFIG.emptyValue
-        ) {
-
-            const sku =
-                document.createElement(
-                    "div"
-                );
-
-
-            sku.className =
-                "checkout-review-product-sku";
-
-
-            sku.textContent =
-                "SKU: " +
-                item.sku;
-
-
-            details.appendChild(
-                sku
-            );
-        }
-
-
-        /*
-         * Quantity.
-         */
-
-        const quantity =
-            document.createElement(
-                "div"
-            );
-
-
-        quantity.className =
-            "checkout-review-product-quantity";
-
-
-        quantity.textContent =
-            "Qty: " +
-            item.quantity;
-
-
-        details.appendChild(
-            quantity
-        );
-
-
-        /*
-         * Options.
-         */
-
-        if (
-            item.options
-        ) {
-
-            const options =
-                document.createElement(
-                    "div"
-                );
-
-
-            options.className =
-                "checkout-review-product-options";
-
-
-            if (
-                typeof item.options ===
-                "object"
-            ) {
-
-                options.textContent =
-                    Object.entries(
-                        item.options
-                    )
-                    .map(
-                        function (entry) {
-
-                            return (
-                                entry[0] +
-                                ": " +
-                                entry[1]
-                            );
-
-                        }
-                    )
-                    .join(" • ");
-
-            } else {
-
-                options.textContent =
-                    String(
-                        item.options
-                    );
-            }
-
-
-            details.appendChild(
-                options
-            );
-        }
-
-
-        row.appendChild(
-            details
-        );
-
-
-        /*
-         * Price.
-         */
-
-        const price =
-            document.createElement(
-                "div"
-            );
-
-
-        price.className =
-            "checkout-review-product-price";
-
-
-        price.textContent =
-            formatCurrency(
-                item.total
-            );
-
-
-        row.appendChild(
-            price
-        );
-
-
-        return row;
-    }
-
-
-    /*=====================================================
-      RENDER PRODUCTS
-    =====================================================*/
-
-    function renderProducts(
-        container,
-        products
-    ) {
-
-        if (
-            !container
-        ) {
-            return;
-        }
-
-
-        container.innerHTML =
-            "";
-
-
-        if (
-            !products.length
-        ) {
-
-            const empty =
-                document.createElement(
-                    "div"
-                );
-
-
-            empty.className =
-                "checkout-review-empty";
-
-
-            empty.textContent =
-                "Your cart is empty.";
-
-
-            container.appendChild(
-                empty
-            );
-
-
-            return;
-        }
-
-
-        products.forEach(
-            function (product) {
-
-                container.appendChild(
-                    renderProductRow(
-                        product
-                    )
-                );
-            }
-        );
-    }
-
-
-    /*=====================================================
-      RENDER TOTALS
-    =====================================================*/
-
-    function renderTotals(
-        container,
-        totals
-    ) {
-
-        if (
-            !container
-        ) {
-            return;
-        }
-
-
-        const mappings = {
-
-            subtotal:
-                totals.formattedSubtotal,
-
-            delivery:
-                totals.formattedDelivery,
-
-            discount:
-                totals.formattedDiscount,
-
-            tax:
-                totals.formattedTax,
-
-            total:
-                totals.formattedTotal
-        };
-
-
-        Object.keys(
-            mappings
-        ).forEach(
-            function (key) {
-
-                container
-                    .querySelectorAll(
-                        "[data-checkout-total='" +
-                        key +
-                        "']"
-                    )
-                    .forEach(
-                        function (element) {
-
-                            setText(
-                                element,
-                                mappings[key]
-                            );
-                        }
-                    );
-            }
-        );
-    }
-
-
-    /*=====================================================
-      RENDER REVIEW
-    =====================================================*/
-
-    function renderReview(
-        container
-    ) {
-
-        const target =
-            container ||
+        const element =
             document.querySelector(
-                "[data-checkout-review]"
+                selectors[i]
             );
 
 
-        if (
-            !target
-        ) {
+        if (element) {
 
-            return {
+            return element;
 
-                valid: false,
-
-                message:
-                    "Review container not found."
-            };
         }
 
-
-        const model =
-            buildReviewModel();
-
-
-        /*
-         * Bind normal data attributes.
-         */
-
-        bindReviewData(
-            target,
-            model
-        );
-
-
-        /*
-         * Render products.
-         */
-
-        renderProducts(
-
-            target.querySelector(
-                "[data-checkout-products]"
-            ),
-
-            model.products
-        );
-
-
-        /*
-         * Render totals.
-         */
-
-        renderTotals(
-
-            target,
-
-            model.totals
-        );
-
-
-        /*
-         * Render order number.
-         */
-
-        target
-            .querySelectorAll(
-                "[data-checkout-order-number]"
-            )
-            .forEach(
-                function (element) {
-
-                    setText(
-                        element,
-                        model.orderNumber
-                    );
-                }
-            );
-
-
-        /*
-         * Customer name.
-         */
-
-        target
-            .querySelectorAll(
-                "[data-checkout-customer-name]"
-            )
-            .forEach(
-                function (element) {
-
-                    setText(
-                        element,
-                        model.customer.name
-                    );
-                }
-            );
-
-
-        /*
-         * Customer email.
-         */
-
-        target
-            .querySelectorAll(
-                "[data-checkout-customer-email]"
-            )
-            .forEach(
-                function (element) {
-
-                    setText(
-                        element,
-                        model.customer.email
-                    );
-                }
-            );
-
-
-        /*
-         * Customer phone.
-         */
-
-        target
-            .querySelectorAll(
-                "[data-checkout-customer-phone]"
-            )
-            .forEach(
-                function (element) {
-
-                    setText(
-                        element,
-                        model.customer.phone
-                    );
-                }
-            );
-
-
-        /*
-         * Billing address.
-         */
-
-        target
-            .querySelectorAll(
-                "[data-checkout-billing-address]"
-            )
-            .forEach(
-                function (element) {
-
-                    setText(
-                        element,
-                        model.billing.address
-                    );
-                }
-            );
-
-
-        /*
-         * Delivery address.
-         */
-
-        target
-            .querySelectorAll(
-                "[data-checkout-delivery-address]"
-            )
-            .forEach(
-                function (element) {
-
-                    setText(
-                        element,
-                        model.delivery.address
-                    );
-                }
-            );
-
-
-        /*
-         * Delivery method.
-         */
-
-        target
-            .querySelectorAll(
-                "[data-checkout-delivery-method]"
-            )
-            .forEach(
-                function (element) {
-
-                    setText(
-                        element,
-                        model.delivery.methodName
-                    );
-                }
-            );
-
-
-        /*
-         * Payment method.
-         */
-
-        target
-            .querySelectorAll(
-                "[data-checkout-payment-method]"
-            )
-            .forEach(
-                function (element) {
-
-                    setText(
-                        element,
-                        model.payment.methodName
-                    );
-                }
-            );
-
-
-        /*
-         * Notes.
-         */
-
-        target
-            .querySelectorAll(
-                "[data-checkout-notes]"
-            )
-            .forEach(
-                function (element) {
-
-                    setText(
-                        element,
-                        model.notes
-                    );
-                }
-            );
-
-
-        return {
-
-            valid: true,
-
-            model:
-                model
-        };
     }
 
 
-    /*=====================================================
-      REVIEW VALIDATION
-    =====================================================*/
+    return null;
 
-    function validateReview() {
-
-        const errors = [];
+}
 
 
-        const model =
-            buildReviewModel();
+/* =====================================================
+   51. RENDER PAYMENT METHODS
+   ===================================================== */
 
+function renderNexpakOnlinePaymentMethods(
+    container = null
+) {
 
-        if (
-            !model.products.length
-        ) {
+    if (!container) {
 
-            errors.push(
-                "Your cart is empty."
-            );
-        }
+        container =
+            findNexpakOnlinePaymentContainer();
 
-
-        if (
-            !model.customer.email ||
-            model.customer.email ===
-            REVIEW_CONFIG.emptyValue
-        ) {
-
-            errors.push(
-                "Customer email is required."
-            );
-        }
-
-
-        if (
-            !model.payment.method ||
-            model.payment.method ===
-            REVIEW_CONFIG.emptyValue
-        ) {
-
-            errors.push(
-                "Please select a payment method."
-            );
-        }
-
-
-        if (
-            model.totals.total <= 0
-        ) {
-
-            errors.push(
-                "The order total must be greater than zero."
-            );
-        }
-
-
-        return {
-
-            valid:
-                errors.length === 0,
-
-            errors:
-                errors,
-
-            model:
-                model
-        };
     }
 
 
-    /*=====================================================
-      REFRESH REVIEW
-    =====================================================*/
+    if (!container) {
 
-    function refreshReview() {
+        return false;
 
-        const container =
-            document.querySelector(
-                "[data-checkout-review]"
-            );
-
-
-        return renderReview(
-            container
-        );
     }
 
 
-    /*=====================================================
-      EDIT SECTION
-    =====================================================*/
+    const selected =
+        nexpakOnlineCheckout
+            .payment
+            .method;
 
-    function editSection(
-        section
+
+    container.innerHTML =
+
+        '<div class="online-payment-method">' +
+
+            '<label class="online-payment-option">' +
+
+                '<input ' +
+
+                    'type="radio" ' +
+
+                    'name="onlinePaymentMethod" ' +
+
+                    'value="eft" ' +
+
+                    'data-payment-method="eft" ' +
+
+                    (
+                        selected === "eft"
+                            ? "checked"
+                            : ""
+                    ) +
+
+                '>' +
+
+                '<span class="online-payment-option-content">' +
+
+                    '<strong>' +
+
+                        'Instant EFT / Bank Transfer' +
+
+                    '</strong>' +
+
+                    '<small>' +
+
+                        'Pay directly into the NEXPAK bank account.' +
+
+                    '</small>' +
+
+                '</span>' +
+
+            '</label>' +
+
+        '</div>' +
+
+
+        '<div class="online-payment-method online-payment-disabled">' +
+
+            '<label class="online-payment-option">' +
+
+                '<input ' +
+
+                    'type="radio" ' +
+
+                    'name="onlinePaymentMethod" ' +
+
+                    'value="payfast" ' +
+
+                    'data-payment-method="payfast" ' +
+
+                'disabled' +
+
+                '>' +
+
+                '<span class="online-payment-option-content">' +
+
+                    '<strong>' +
+
+                        'PayFast' +
+
+                    '</strong>' +
+
+                    '<small>' +
+
+                        'Coming soon — PayFast account setup pending.' +
+
+                    '</small>' +
+
+                '</span>' +
+
+            '</label>' +
+
+        '</div>';
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   52. PAYMENT METHOD CHANGE HANDLER
+   ===================================================== */
+
+function handleNexpakOnlinePaymentMethodChange(
+    event
+) {
+
+    const target =
+        event.target;
+
+
+    if (!target) {
+
+        return;
+
+    }
+
+
+    if (
+        target.getAttribute(
+            "data-payment-method"
+        ) === null
     ) {
 
-        const sectionMap = {
+        return;
 
-            customer:
-                1,
-
-            billing:
-                2,
-
-            delivery:
-                3,
-
-            payment:
-                4,
-
-            review:
-                5
-        };
+    }
 
 
-        const target =
-            sectionMap[
-                String(section)
-                    .toLowerCase()
-            ];
+    const method =
+        target.value;
 
 
-        if (
-            !target
-        ) {
+    const result =
+        selectNexpakOnlinePaymentMethod(
+            method
+        );
 
-            return {
 
-                valid: false,
+    if (
+        !result.success
+    ) {
 
-                message:
-                    "Unknown checkout section."
-            };
+        console.warn(
+            "NEXPAK Checkout:",
+            result.message
+        );
+
+
+        return;
+
+    }
+
+
+    document.dispatchEvent(
+
+        new CustomEvent(
+            "nexpak:payment-method-changed",
+            {
+
+                detail: {
+
+                    method:
+                        result.method,
+
+                    status:
+                        result.status
+
+                }
+
+            }
+
+        )
+
+    );
+
+}
+
+
+/* =====================================================
+   53. BIND PAYMENT METHODS
+   ===================================================== */
+
+function bindNexpakOnlinePaymentMethods() {
+
+    document.removeEventListener(
+        "change",
+        handleNexpakOnlinePaymentMethodChange
+    );
+
+
+    document.addEventListener(
+        "change",
+        handleNexpakOnlinePaymentMethodChange
+    );
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   54. RENDER COMPLETE CHECKOUT SUMMARY
+   ===================================================== */
+
+function renderNexpakOnlineCheckoutOverview() {
+
+    renderNexpakOnlineCheckoutSummary();
+
+
+    renderNexpakOnlinePaymentMethods();
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   55. EXTEND PUBLIC CHECKOUT API
+   ===================================================== */
+
+if (
+    window.NEXPAK_ONLINE_CHECKOUT
+) {
+
+    window.NEXPAK_ONLINE_CHECKOUT.paymentMethods =
+        NEXPAK_ONLINE_PAYMENT_METHODS;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.selectPayment =
+        selectNexpakOnlinePaymentMethod;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.getPayment =
+        getNexpakOnlinePaymentMethod;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.getSummary =
+        getNexpakOnlineCheckoutSummary;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.renderSummary =
+        renderNexpakOnlineCheckoutSummary;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.renderPayment =
+        renderNexpakOnlinePaymentMethods;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.renderOverview =
+        renderNexpakOnlineCheckoutOverview;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.bindPayment =
+        bindNexpakOnlinePaymentMethods;
+
+}
+
+
+/* =====================================================
+   PART 4 END
+   ========================================================= */
+
+ /* =========================================================
+   NEXPAK ONLINE STORE — CHECKOUT ENGINE
+   PART 5 — INSTANT EFT + PAYMENT SUBMISSION
+   ========================================================= */
+
+
+/* =====================================================
+   56. INSTANT EFT CONFIGURATION
+   ===================================================== */
+
+const NEXPAK_ONLINE_EFT_CONFIG = {
+
+    available: true,
+
+    accountName:
+        "TO BE CONFIGURED",
+
+    bankName:
+        "TO BE CONFIGURED",
+
+    accountNumber:
+        "TO BE CONFIGURED",
+
+    branchCode:
+        "TO BE CONFIGURED",
+
+    accountType:
+        "TO BE CONFIGURED",
+
+    instructions:
+        "Use your NEXPAK order number as the payment reference."
+
+};
+
+
+/* =====================================================
+   57. GET EFT CONFIGURATION
+   ===================================================== */
+
+function getNexpakOnlineEftConfiguration() {
+
+    return {
+
+        ...NEXPAK_ONLINE_EFT_CONFIG
+
+    };
+
+}
+
+
+/* =====================================================
+   58. FIND EFT CONTAINER
+   ===================================================== */
+
+function findNexpakOnlineEftContainer() {
+
+    const selectors = [
+
+        "#onlineEftDetails",
+
+        "#eftDetails",
+
+        ".online-eft-details",
+
+        ".checkout-eft-details",
+
+        "[data-online-eft-details]"
+
+    ];
+
+
+    for (
+        let i = 0;
+        i < selectors.length;
+        i++
+    ) {
+
+        const element =
+            document.querySelector(
+                selectors[i]
+            );
+
+
+        if (element) {
+
+            return element;
+
         }
 
+    }
 
-        if (
-            checkout.controller &&
-            typeof
-            checkout.controller.goTo ===
-            "function"
-        ) {
 
-            return checkout.controller
-                .goTo(
-                    target
-                );
-        }
+    return null;
 
+}
+
+
+/* =====================================================
+   59. RENDER EFT DETAILS
+   ===================================================== */
+
+function renderNexpakOnlineEftDetails(
+    container = null
+) {
+
+    if (!container) {
+
+        container =
+            findNexpakOnlineEftContainer();
+
+    }
+
+
+    if (!container) {
+
+        return false;
+
+    }
+
+
+    const reference =
+        nexpakOnlineCheckout
+            .orderReference ||
+        "YOUR ORDER NUMBER";
+
+
+    const config =
+        NEXPAK_ONLINE_EFT_CONFIG;
+
+
+    container.innerHTML =
+
+        '<div class="online-eft-panel">' +
+
+            '<div class="online-eft-header">' +
+
+                '<h3>Instant EFT / Bank Transfer</h3>' +
+
+                '<p>' +
+
+                    'Please use the order number below as your payment reference.' +
+
+                '</p>' +
+
+            '</div>' +
+
+
+            '<div class="online-eft-order-reference">' +
+
+                '<span>Payment Reference</span>' +
+
+                '<strong>' +
+
+                    escapeNexpakOnlineCheckoutHtml(
+                        reference
+                    ) +
+
+                '</strong>' +
+
+            '</div>' +
+
+
+            '<div class="online-eft-bank-details">' +
+
+                '<div class="online-eft-detail-row">' +
+
+                    '<span>Account Name</span>' +
+
+                    '<strong>' +
+
+                        escapeNexpakOnlineCheckoutHtml(
+                            config.accountName
+                        ) +
+
+                    '</strong>' +
+
+                '</div>' +
+
+
+                '<div class="online-eft-detail-row">' +
+
+                    '<span>Bank</span>' +
+
+                    '<strong>' +
+
+                        escapeNexpakOnlineCheckoutHtml(
+                            config.bankName
+                        ) +
+
+                    '</strong>' +
+
+                '</div>' +
+
+
+                '<div class="online-eft-detail-row">' +
+
+                    '<span>Account Number</span>' +
+
+                    '<strong>' +
+
+                        escapeNexpakOnlineCheckoutHtml(
+                            config.accountNumber
+                        ) +
+
+                    '</strong>' +
+
+                '</div>' +
+
+
+                '<div class="online-eft-detail-row">' +
+
+                    '<span>Branch Code</span>' +
+
+                    '<strong>' +
+
+                        escapeNexpakOnlineCheckoutHtml(
+                            config.branchCode
+                        ) +
+
+                    '</strong>' +
+
+                '</div>' +
+
+
+                '<div class="online-eft-detail-row">' +
+
+                    '<span>Account Type</span>' +
+
+                    '<strong>' +
+
+                        escapeNexpakOnlineCheckoutHtml(
+                            config.accountType
+                        ) +
+
+                    '</strong>' +
+
+                '</div>' +
+
+            '</div>' +
+
+
+            '<div class="online-eft-instructions">' +
+
+                escapeNexpakOnlineCheckoutHtml(
+                    config.instructions
+                ) +
+
+            '</div>' +
+
+
+            '<label class="online-eft-confirmation">' +
+
+                '<input ' +
+
+                    'type="checkbox" ' +
+
+                    'id="eftPaymentConfirmation" ' +
+
+                    'data-eft-payment-confirmation' +
+
+                '>' +
+
+                '<span>' +
+
+                    'I have made the EFT payment using the reference above.' +
+
+                '</span>' +
+
+            '</label>' +
+
+
+            '<button ' +
+
+                'type="button" ' +
+
+                'class="online-eft-submit-button" ' +
+
+                'data-submit-eft-payment' +
+
+            '>' +
+
+                'I've Made Payment' +
+
+            '</button>' +
+
+        '</div>';
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   60. CHECK EFT SELECTION
+   ===================================================== */
+
+function isNexpakOnlineEftSelected() {
+
+    return (
+
+        nexpakOnlineCheckout
+            .payment
+            .method ===
+        "eft"
+
+    );
+
+}
+
+
+/* =====================================================
+   61. VALIDATE EFT SUBMISSION
+   ===================================================== */
+
+function validateNexpakOnlineEftSubmission() {
+
+    if (
+        !isNexpakOnlineEftSelected()
+    ) {
 
         return {
 
             valid: false,
 
             message:
-                "Checkout controller unavailable."
+                "Please select Instant EFT first."
+
         };
+
     }
 
-
-    /*=====================================================
-      ATTACH EDIT BUTTONS
-    =====================================================*/
-
-    function attachEditListeners() {
-
-        document
-            .querySelectorAll(
-                "[data-checkout-edit]"
-            )
-            .forEach(
-                function (button) {
-
-                    button.addEventListener(
-                        "click",
-                        function (event) {
-
-                            event.preventDefault();
-
-
-                            editSection(
-                                button.dataset
-                                    .checkoutEdit
-                            );
-
-                        }
-                    );
-                }
-            );
-    }
-
-
-    /*=====================================================
-      REVIEW EVENTS
-    =====================================================*/
-
-    function attachReviewEvents() {
-
-        document.addEventListener(
-            "nexpak:checkout:updated",
-            function () {
-
-                refreshReview();
-
-            }
-        );
-
-
-        document.addEventListener(
-            "nexpak:cart:updated",
-            function () {
-
-                refreshReview();
-
-            }
-        );
-    }
-
-
-    /*=====================================================
-      EXPOSE REVIEW ENGINE
-    =====================================================*/
-
-    checkout.review = {
-
-        config:
-            REVIEW_CONFIG,
-
-        formatCurrency:
-            formatCurrency,
-
-        customer:
-            buildCustomerReview,
-
-        billing:
-            buildBillingReview,
-
-        delivery:
-            buildDeliveryReview,
-
-        payment:
-            buildPaymentReview,
-
-        products:
-            buildProductReview,
-
-        totals:
-            buildTotalsReview,
-
-        model:
-            buildReviewModel,
-
-        bind:
-            bindReviewData,
-
-        renderProducts:
-            renderProducts,
-
-        renderTotals:
-            renderTotals,
-
-        render:
-            renderReview,
-
-        refresh:
-            refreshReview,
-
-        validate:
-            validateReview,
-
-        edit:
-            editSection
-    };
-
-
-    /*=====================================================
-      INITIALISE PART 7
-    =====================================================*/
-
-    function initPart7() {
-
-        checkout.init();
-
-
-        attachEditListeners();
-
-
-        attachReviewEvents();
-
-
-        /*
-         * Render the review if the page already
-         * contains a review section.
-         */
-
-        const reviewContainer =
-            document.querySelector(
-                "[data-checkout-review]"
-            );
-
-
-        if (
-            reviewContainer
-        ) {
-
-            renderReview(
-                reviewContainer
-            );
-        }
-
-
-        console.log(
-            "%c[NEXPAK CHECKOUT] Part 7/8 loaded",
-            "font-weight:bold;"
-        );
-    }
-
-
-    /*=====================================================
-      START
-    =====================================================*/
 
     if (
-        document.readyState ===
-        "loading"
+        !nexpakOnlineCheckout.orderReference
     ) {
 
-        document.addEventListener(
-            "DOMContentLoaded",
-            initPart7
-        );
+        return {
 
-    } else {
+            valid: false,
 
-        initPart7();
+            message:
+                "Your order reference has not been created yet."
+
+        };
+
     }
 
-})();
 
-/*=========================================================
- NEXPAK SECURITY SOLUTIONS
- ONLINE STORE — CHECKOUT ENGINE
-=========================================================
- File: onlinecheckout.js
- Version: 1.0
- Part: 8/8
-
- PART 8:
- - Persistence recovery
- - Cart synchronization
- - Checkout guards
- - State normalization
- - Final validation
- - Event system
- - Public API consolidation
- - Cleanup helpers
- - Final initialization
-=========================================================*/
-
-(function () {
-
-    "use strict";
-
-
-    /*=====================================================
-      SAFETY CHECK
-    =====================================================*/
-
-    if (!window.NEXPAKCheckout) {
-
-        console.error(
-            "[NEXPAK CHECKOUT] Checkout engine not found."
+    const confirmation =
+        document.querySelector(
+            "#eftPaymentConfirmation"
         );
+
+
+    if (
+        confirmation &&
+        !confirmation.checked
+    ) {
+
+        return {
+
+            valid: false,
+
+            message:
+                "Please confirm that you have made the EFT payment."
+
+        };
+
+    }
+
+
+    return {
+
+        valid: true,
+
+        message:
+            "EFT payment submission is ready."
+
+    };
+
+}
+
+
+/* =====================================================
+   62. MARK EFT AS SUBMITTED
+   ===================================================== */
+
+function submitNexpakOnlineEftPayment() {
+
+    const validation =
+        validateNexpakOnlineEftSubmission();
+
+
+    if (
+        !validation.valid
+    ) {
+
+        return {
+
+            success: false,
+
+            message:
+                validation.message
+
+        };
+
+    }
+
+
+    /*
+     * IMPORTANT:
+     *
+     * This does NOT mark the order as PAID.
+     *
+     * The payment still requires manual
+     * verification against the bank account.
+     */
+
+    nexpakOnlineCheckout.payment = {
+
+        method: "eft",
+
+        status: "submitted",
+
+        submittedAt:
+            new Date().toISOString()
+
+    };
+
+
+    saveNexpakOnlineCheckout();
+
+
+    document.dispatchEvent(
+
+        new CustomEvent(
+            "nexpak:eft-payment-submitted",
+            {
+
+                detail: {
+
+                    orderReference:
+                        nexpakOnlineCheckout
+                            .orderReference,
+
+                    status:
+                        "submitted",
+
+                    checkout:
+                        getNexpakOnlineCheckoutState()
+
+                }
+
+            }
+
+        )
+
+    );
+
+
+    return {
+
+        success: true,
+
+        orderReference:
+            nexpakOnlineCheckout
+                .orderReference,
+
+        status:
+            "submitted"
+
+    };
+
+}
+
+
+/* =====================================================
+   63. EFT SUBMISSION BUTTON HANDLER
+   ===================================================== */
+
+function handleNexpakOnlineEftSubmit(
+    event
+) {
+
+    const button =
+        event.target.closest(
+            "[data-submit-eft-payment]"
+        );
+
+
+    if (!button) {
 
         return;
+
     }
 
 
-    /*=====================================================
-      SHORTCUTS
-    =====================================================*/
-
-    const checkout =
-        window.NEXPAKCheckout;
-
-    const state =
-        checkout.state;
+    event.preventDefault();
 
 
-    /*=====================================================
-      PART 8 CONFIG
-    =====================================================*/
-
-    const FINAL_CONFIG = {
-
-        storageKey:
-            "nexpak_checkout_state",
-
-        version:
-            "1.0",
-
-        maxAge:
-            86400000,
-
-        currency:
-            "ZAR",
-
-        defaultStep:
-            1,
-
-        totalSteps:
-            5
-    };
+    const result =
+        submitNexpakOnlineEftPayment();
 
 
-    /*=====================================================
-      INTERNAL STATE
-    =====================================================*/
-
-    const finalState = {
-
-        initialized:
-            false,
-
-        restored:
-            false,
-
-        dirty:
-            false,
-
-        syncing:
-            false,
-
-        validationErrors:
-            [],
-
-        listeners:
-            {}
-    };
-
-
-    /*=====================================================
-      SAFE NUMBER
-    =====================================================*/
-
-    function safeNumber(value) {
-
-        const number =
-            Number(value);
-
-
-        return Number.isFinite(number)
-            ? number
-            : 0;
-    }
-
-
-    /*=====================================================
-      SAFE OBJECT
-    =====================================================*/
-
-    function safeObject(value) {
-
-        return (
-            value &&
-            typeof value === "object" &&
-            !Array.isArray(value)
-        )
-            ? value
-            : {};
-    }
-
-
-    /*=====================================================
-      SAFE ARRAY
-    =====================================================*/
-
-    function safeArray(value) {
-
-        return Array.isArray(value)
-            ? value
-            : [];
-    }
-
-
-    /*=====================================================
-      NORMALIZE STEP
-    =====================================================*/
-
-    function normalizeStep(
-        step
+    if (
+        !result.success
     ) {
 
-        return Math.max(
-            FINAL_CONFIG.defaultStep,
-            Math.min(
-                FINAL_CONFIG.totalSteps,
-                safeNumber(step) || 1
-            )
-        );
-    }
-
-
-    /*=====================================================
-      NORMALIZE CART
-    =====================================================*/
-
-    function normalizeCart() {
-
-        const cart =
-            safeArray(
-                state.cart
-            );
-
-
-        state.cart =
-            cart.map(
-                function (item) {
-
-                    const product =
-                        safeObject(item);
-
-
-                    const quantity =
-                        Math.max(
-                            1,
-                            safeNumber(
-                                product.quantity ||
-                                product.qty ||
-                                1
-                            )
-                        );
-
-
-                    return {
-
-                        ...product,
-
-                        quantity:
-                            quantity,
-
-                        qty:
-                            quantity,
-
-                        price:
-                            safeNumber(
-                                product.price ||
-                                product.unitPrice ||
-                                product.salePrice ||
-                                0
-                            )
-                    };
-
-                }
-            );
-    }
-
-
-    /*=====================================================
-      NORMALIZE CUSTOMER
-    =====================================================*/
-
-    function normalizeCustomer() {
-
-        state.customer =
-            safeObject(
-                state.customer
-            );
-
-
-        state.customer.firstName =
-            String(
-                state.customer.firstName ||
-                ""
-            ).trim();
-
-
-        state.customer.lastName =
-            String(
-                state.customer.lastName ||
-                ""
-            ).trim();
-
-
-        state.customer.email =
-            String(
-                state.customer.email ||
-                ""
-            ).trim();
-
-
-        state.customer.phone =
-            String(
-                state.customer.phone ||
-                ""
-            ).trim();
-
-
-        state.customer.company =
-            String(
-                state.customer.company ||
-                ""
-            ).trim();
-    }
-
-
-    /*=====================================================
-      NORMALIZE BILLING
-    =====================================================*/
-
-    function normalizeBilling() {
-
-        state.billing =
-            safeObject(
-                state.billing
-            );
-
-
-        const fields = [
-
-            "address1",
-            "address2",
-            "suburb",
-            "city",
-            "province",
-            "postalCode",
-            "country"
-
-        ];
-
-
-        fields.forEach(
-            function (field) {
-
-                state.billing[field] =
-                    String(
-                        state.billing[field] ||
-                        ""
-                    ).trim();
-
-            }
-        );
-    }
-
-
-    /*=====================================================
-      NORMALIZE DELIVERY
-    =====================================================*/
-
-    function normalizeDelivery() {
-
-        state.delivery =
-            safeObject(
-                state.delivery
-            );
-
-
-        state.delivery.method =
-            String(
-                state.delivery.method ||
-                ""
-            ).trim();
-
-
-        state.delivery.methodName =
-            String(
-                state.delivery.methodName ||
-                ""
-            ).trim();
-
-
-        state.delivery.cost =
-            Math.max(
-                0,
-                safeNumber(
-                    state.delivery.cost
-                )
-            );
-    }
-
-
-    /*=====================================================
-      NORMALIZE PAYMENT
-    =====================================================*/
-
-    function normalizePayment() {
-
-        state.payment =
-            safeObject(
-                state.payment
-            );
-
-
-        state.payment.method =
-            String(
-                state.payment.method ||
-                ""
-            ).trim();
-
-
-        state.payment.status =
-            String(
-                state.payment.status ||
-                "pending"
-            ).trim();
-
-
-        state.payment.reference =
-            String(
-                state.payment.reference ||
-                ""
-            ).trim();
-    }
-
-
-    /*=====================================================
-      NORMALIZE TOTALS
-    =====================================================*/
-
-    function normalizeTotals() {
-
-        state.totals =
-            safeObject(
-                state.totals
-            );
-
-
-        const fields = [
-
-            "subtotal",
-            "delivery",
-            "discount",
-            "tax",
-            "total"
-
-        ];
-
-
-        fields.forEach(
-            function (field) {
-
-                state.totals[field] =
-                    Math.max(
-                        0,
-                        safeNumber(
-                            state.totals[field]
-                        )
-                    );
-            }
-        );
-    }
-
-
-    /*=====================================================
-      NORMALIZE ORDER
-    =====================================================*/
-
-    function normalizeOrder() {
-
-        state.order =
-            safeObject(
-                state.order
-            );
-
-
-        state.order.orderNumber =
-            String(
-                state.order.orderNumber ||
-                ""
-            ).trim();
-
-
-        state.order.status =
-            String(
-                state.order.status ||
-                "draft"
-            ).trim();
-
-
-        state.order.createdAt =
-            String(
-                state.order.createdAt ||
-                ""
-            ).trim();
-    }
-
-
-    /*=====================================================
-      NORMALIZE ENTIRE CHECKOUT
-    =====================================================*/
-
-    function normalizeState() {
-
-        state.step =
-            normalizeStep(
-                state.step
-            );
-
-
-        normalizeCart();
-
-        normalizeCustomer();
-
-        normalizeBilling();
-
-        normalizeDelivery();
-
-        normalizePayment();
-
-        normalizeTotals();
-
-        normalizeOrder();
-
-
-        if (
-            typeof state.notes !==
-            "string"
-        ) {
-
-            state.notes =
-                "";
-        }
-
-
-        return state;
-    }
-
-
-    /*=====================================================
-      MARK DIRTY
-    =====================================================*/
-
-    function markDirty() {
-
-        finalState.dirty =
-            true;
-
-
-        emit(
-            "dirty",
-            state
-        );
-    }
-
-
-    /*=====================================================
-      MARK CLEAN
-    =====================================================*/
-
-    function markClean() {
-
-        finalState.dirty =
-            false;
-
-
-        emit(
-            "clean",
-            state
-        );
-    }
-
-
-    /*=====================================================
-      PERSIST CHECKOUT
-    =====================================================*/
-
-    function persistCheckout() {
-
-        normalizeState();
-
-
-        try {
-
-            if (
-                typeof checkout.save ===
-                "function"
-            ) {
-
-                checkout.save();
-
-            } else {
-
-                const payload = {
-
-                    version:
-                        FINAL_CONFIG.version,
-
-                    timestamp:
-                        Date.now(),
-
-                    state:
-                        JSON.parse(
-                            JSON.stringify(
-                                state
-                            )
-                        )
-                };
-
-
-                localStorage.setItem(
-                    FINAL_CONFIG.storageKey,
-                    JSON.stringify(
-                        payload
-                    )
-                );
-            }
-
-
-            markClean();
-
-
-            return true;
-
-        } catch (error) {
-
-            console.warn(
-                "[NEXPAK CHECKOUT] Persistence failed:",
-                error
-            );
-
-
-            return false;
-        }
-    }
-
-
-    /*=====================================================
-      RESTORE CHECKOUT
-    =====================================================*/
-
-    function restoreCheckout() {
-
-        try {
-
-            if (
-                typeof checkout.load ===
-                "function"
-            ) {
-
-                checkout.load();
-
-                normalizeState();
-
-
-                finalState.restored =
-                    true;
-
-
-                emit(
-                    "restored",
-                    state
-                );
-
-
-                return true;
-            }
-
-
-            const raw =
-                localStorage.getItem(
-                    FINAL_CONFIG.storageKey
-                );
-
-
-            if (
-                !raw
-            ) {
-
-                return false;
-            }
-
-
-            const saved =
-                JSON.parse(
-                    raw
-                );
-
-
-            if (
-                !saved ||
-                !saved.state
-            ) {
-
-                return false;
-            }
-
-
-            /*
-             * Ignore very old checkout sessions.
-             */
-
-            if (
-                saved.timestamp &&
-                Date.now() -
-                saved.timestamp >
-                FINAL_CONFIG.maxAge
-            ) {
-
-                localStorage.removeItem(
-                    FINAL_CONFIG.storageKey
-                );
-
-
-                return false;
-            }
-
-
-            Object.assign(
-                state,
-                saved.state
-            );
-
-
-            normalizeState();
-
-
-            finalState.restored =
-                true;
-
-
-            emit(
-                "restored",
-                state
-            );
-
-
-            return true;
-
-        } catch (error) {
-
-            console.warn(
-                "[NEXPAK CHECKOUT] Could not restore checkout:",
-                error
-            );
-
-
-            return false;
-        }
-    }
-
-
-    /*=====================================================
-      SYNC CART
-    =====================================================*/
-
-    function syncCart() {
-
-        if (
-            finalState.syncing
-        ) {
-            return;
-        }
-
-
-        finalState.syncing =
-            true;
-
-
-        try {
-
-            /*
-             * Prefer the live cart engine.
-             */
-
-            if (
-                window.NEXPAKCart
-            ) {
-
-                const cartEngine =
-                    window.NEXPAKCart;
-
-
-                if (
-                    typeof
-                    cartEngine.getCart ===
-                    "function"
-                ) {
-
-                    state.cart =
-                        safeArray(
-                            cartEngine.getCart()
-                        );
-                }
-
-                else if (
-                    typeof
-                    cartEngine.getItems ===
-                    "function"
-                ) {
-
-                    state.cart =
-                        safeArray(
-                            cartEngine.getItems()
-                        );
-                }
-            }
-
-
-            normalizeCart();
-
-
-            if (
-                typeof checkout.calculateTotals ===
-                "function"
-            ) {
-
-                checkout.calculateTotals();
-            }
-
-
-            markDirty();
-
-
-            emit(
-                "cartSynced",
-                state.cart
-            );
-
-
-        } catch (error) {
-
-            console.warn(
-                "[NEXPAK CHECKOUT] Cart sync failed:",
-                error
-            );
-
-        } finally {
-
-            finalState.syncing =
-                false;
-        }
-    }
-
-
-    /*=====================================================
-      CHECK CART AVAILABILITY
-    =====================================================*/
-
-    function hasItems() {
-
-        normalizeCart();
-
-
-        return (
-            state.cart.length >
-            0
-        );
-    }
-
-
-    /*=====================================================
-      CHECKOUT GUARD
-    =====================================================*/
-
-    function checkoutGuard() {
-
-        const errors = [];
-
-
-        normalizeState();
-
-
-        if (
-            !hasItems()
-        ) {
-
-            errors.push(
-                "Your cart is empty."
-            );
-        }
-
-
-        if (
-            state.order.status ===
-            "completed"
-        ) {
-
-            errors.push(
-                "This order has already been completed."
-            );
-        }
-
-
-        finalState.validationErrors =
-            errors;
-
-
-        return {
-
-            valid:
-                errors.length === 0,
-
-            errors:
-                errors
-        };
-    }
-
-
-    /*=====================================================
-      FULL CHECKOUT VALIDATION
-    =====================================================*/
-
-    function validateCheckout() {
-
-        const errors = [];
-
-
-        const guard =
-            checkoutGuard();
-
-
-        if (
-            !guard.valid
-        ) {
-
-            errors.push(
-                ...guard.errors
-            );
-        }
-
-
-        /*
-         * Customer validation.
-         */
-
-        if (
-            checkout.form &&
-            typeof
-            checkout.form
-                .validateCustomerForm ===
-            "function"
-        ) {
-
-            const result =
-                checkout.form
-                    .validateCustomerForm();
-
-
-            if (
-                result &&
-                !result.valid
-            ) {
-
-                errors.push(
-                    ...(result.errors || [])
-                );
-            }
-        }
-
-
-        /*
-         * Billing validation.
-         */
-
-        if (
-            checkout.form &&
-            typeof
-            checkout.form
-                .validateBillingForm ===
-            "function"
-        ) {
-
-            const result =
-                checkout.form
-                    .validateBillingForm();
-
-
-            if (
-                result &&
-                !result.valid
-            ) {
-
-                errors.push(
-                    ...(result.errors || [])
-                );
-            }
-        }
-
-
-        /*
-         * Delivery validation.
-         */
-
-        if (
-            checkout.delivery &&
-            typeof
-            checkout.delivery.validate ===
-            "function"
-        ) {
-
-            const result =
-                checkout.delivery
-                    .validate();
-
-
-            if (
-                result &&
-                !result.valid
-            ) {
-
-                errors.push(
-                    ...(result.errors || [])
-                );
-            }
-        }
-
-
-        /*
-         * Payment validation.
-         */
-
-        if (
-            checkout.payment &&
-            typeof
-            checkout.payment.validate ===
-            "function"
-        ) {
-
-            const result =
-                checkout.payment
-                    .validate();
-
-
-            if (
-                result &&
-                !result.valid
-            ) {
-
-                errors.push(
-                    ...(result.errors || [])
-                );
-            }
-        }
-
-
-        /*
-         * Remove duplicate errors.
-         */
-
-        const uniqueErrors =
-            Array.from(
-                new Set(
-                    errors.map(
-                        function (error) {
-
-                            return typeof error ===
-                                "string"
-                                ? error
-                                : (
-                                    error.message ||
-                                    "Checkout validation error."
-                                );
-
-                        }
-                    )
-                )
-            );
-
-
-        finalState.validationErrors =
-            uniqueErrors;
-
-
-        return {
-
-            valid:
-                uniqueErrors.length === 0,
-
-            errors:
-                uniqueErrors,
-
-            state:
-                state
-        };
-    }
-
-
-    /*=====================================================
-      GENERATE ORDER NUMBER
-    =====================================================*/
-
-    function generateOrderNumber() {
-
-        const timestamp =
-            Date.now()
-                .toString()
-                .slice(-8);
-
-
-        const random =
-            Math.floor(
-                100 +
-                Math.random() *
-                900
-            );
-
-
-        return (
-            "NEX-" +
-            timestamp +
-            "-" +
-            random
-        );
-    }
-
-
-    /*=====================================================
-      PREPARE ORDER
-    =====================================================*/
-
-    function prepareOrder() {
-
-        normalizeState();
-
-
-        const validation =
-            validateCheckout();
-
-
-        if (
-            !validation.valid
-        ) {
-
-            return validation;
-        }
-
-
-        if (
-            !state.order.orderNumber
-        ) {
-
-            state.order.orderNumber =
-                generateOrderNumber();
-        }
-
-
-        if (
-            !state.order.createdAt
-        ) {
-
-            state.order.createdAt =
-                new Date()
-                    .toISOString();
-        }
-
-
-        state.order.status =
-            "ready";
-
-
-        state.order.currency =
-            FINAL_CONFIG.currency;
-
-
-        if (
-            typeof checkout.calculateTotals ===
-            "function"
-        ) {
-
-            checkout.calculateTotals();
-        }
-
-
-        persistCheckout();
-
-
-        emit(
-            "orderPrepared",
-            state
+        console.warn(
+            "NEXPAK Checkout:",
+            result.message
         );
 
 
-        return {
+        return;
 
-            valid:
-                true,
-
-            order:
-                state
-        };
     }
 
 
-    /*=====================================================
-      EVENT REGISTRATION
-    =====================================================*/
+    /*
+     * The order is now waiting for
+     * payment verification.
+     */
 
-    function on(
-        eventName,
-        callback
+    showNexpakOnlineEftSubmissionMessage(
+        result.orderReference
+    );
+
+}
+
+
+/* =====================================================
+   64. SHOW EFT SUBMISSION MESSAGE
+   ===================================================== */
+
+function showNexpakOnlineEftSubmissionMessage(
+    orderReference
+) {
+
+    const selectors = [
+
+        "#onlineEftMessage",
+
+        "#eftPaymentMessage",
+
+        ".online-eft-message",
+
+        "[data-online-eft-message]"
+
+    ];
+
+
+    let element = null;
+
+
+    for (
+        let i = 0;
+        i < selectors.length;
+        i++
     ) {
 
-        if (
-            typeof callback !==
-            "function"
-        ) {
-            return;
-        }
-
-
-        if (
-            !finalState.listeners[eventName]
-        ) {
-
-            finalState.listeners[eventName] =
-                [];
-        }
-
-
-        finalState.listeners[eventName]
-            .push(
-                callback
+        element =
+            document.querySelector(
+                selectors[i]
             );
+
+
+        if (element) {
+
+            break;
+
+        }
+
     }
 
 
-    /*=====================================================
-      EVENT EMITTER
-    =====================================================*/
+    if (!element) {
 
-    function emit(
-        eventName,
-        data
+        element =
+            document.createElement(
+                "div"
+            );
+
+
+        element.className =
+            "online-eft-message";
+
+
+        const container =
+            findNexpakOnlineEftContainer();
+
+
+        if (container) {
+
+            container.appendChild(
+                element
+            );
+
+        }
+
+    }
+
+
+    if (!element) {
+
+        return;
+
+    }
+
+
+    element.innerHTML =
+
+        '<strong>' +
+
+            'Payment submitted for verification.' +
+
+        '</strong>' +
+
+        '<p>' +
+
+            'Your order reference is ' +
+
+            '<strong>' +
+
+                escapeNexpakOnlineCheckoutHtml(
+                    orderReference
+                ) +
+
+            '</strong>.' +
+
+        '</p>' +
+
+        '<p>' +
+
+            'Your order will remain payment-pending until the EFT is verified.' +
+
+        '</p>';
+
+
+    element.classList.add(
+        "is-visible"
+    );
+
+}
+
+
+/* =====================================================
+   65. BIND EFT SUBMISSION
+   ===================================================== */
+
+function bindNexpakOnlineEftSubmission() {
+
+    document.removeEventListener(
+        "click",
+        handleNexpakOnlineEftSubmit
+    );
+
+
+    document.addEventListener(
+        "click",
+        handleNexpakOnlineEftSubmit
+    );
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   66. PAYMENT METHOD DISPLAY HANDLER
+   ===================================================== */
+
+function handleNexpakOnlinePaymentDisplay() {
+
+    const eftContainer =
+        findNexpakOnlineEftContainer();
+
+
+    if (!eftContainer) {
+
+        return;
+
+    }
+
+
+    if (
+        isNexpakOnlineEftSelected()
     ) {
 
-        const listeners =
-            finalState.listeners[
-                eventName
-            ];
+        renderNexpakOnlineEftDetails(
+            eftContainer
+        );
+
+    }
+
+    else {
+
+        eftContainer.innerHTML =
+            "";
+
+    }
+
+}
+
+
+/* =====================================================
+   67. BIND PAYMENT DISPLAY EVENT
+   ===================================================== */
+
+function bindNexpakOnlinePaymentDisplay() {
+
+    document.addEventListener(
+
+        "nexpak:payment-method-changed",
+
+        function () {
+
+            handleNexpakOnlinePaymentDisplay();
+
+        }
+
+    );
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   68. EXTEND PUBLIC CHECKOUT API
+   ===================================================== */
+
+if (
+    window.NEXPAK_ONLINE_CHECKOUT
+) {
+
+    window.NEXPAK_ONLINE_CHECKOUT.eft =
+        NEXPAK_ONLINE_EFT_CONFIG;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.getEft =
+        getNexpakOnlineEftConfiguration;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.renderEft =
+        renderNexpakOnlineEftDetails;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.validateEft =
+        validateNexpakOnlineEftSubmission;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.submitEft =
+        submitNexpakOnlineEftPayment;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.bindEft =
+        bindNexpakOnlineEftSubmission;
+
+}
+
+
+/* =====================================================
+   69. INITIALISE EFT HANDLERS
+   ===================================================== */
+
+bindNexpakOnlineEftSubmission();
+
+
+bindNexpakOnlinePaymentDisplay();
+
+
+/* =====================================================
+   PART 5 END
+   ========================================================= */
+
+ /* =========================================================
+   NEXPAK ONLINE STORE — CHECKOUT ENGINE
+   PART 6 — ORDER CREATION + FINAL SUBMISSION
+   ========================================================= */
+
+
+/* =====================================================
+   70. ORDER STORAGE KEY
+   ===================================================== */
+
+const NEXPAK_ONLINE_ORDERS_STORAGE_KEY =
+    "NEXPAK_ONLINE_ORDERS";
+
+
+/* =====================================================
+   71. LOAD SAVED ORDERS
+   ===================================================== */
+
+function loadNexpakOnlineOrders() {
+
+    try {
+
+        const saved =
+            localStorage.getItem(
+                NEXPAK_ONLINE_ORDERS_STORAGE_KEY
+            );
+
+
+        if (!saved) {
+
+            return [];
+
+        }
+
+
+        const orders =
+            JSON.parse(
+                saved
+            );
 
 
         if (
             !Array.isArray(
-                listeners
+                orders
             )
         ) {
-            return;
+
+            return [];
+
         }
 
 
-        listeners.forEach(
-            function (callback) {
+        return orders;
 
-                try {
+    }
 
-                    callback(
-                        data
-                    );
+    catch (error) {
 
-                } catch (error) {
-
-                    console.error(
-                        "[NEXPAK CHECKOUT] Event error:",
-                        error
-                    );
-                }
-            }
+        console.error(
+            "NEXPAK Online Store: Could not load orders.",
+            error
         );
+
+
+        return [];
+
+    }
+
+}
+
+
+/* =====================================================
+   72. SAVE ORDERS
+   ===================================================== */
+
+function saveNexpakOnlineOrders(
+    orders
+) {
+
+    try {
+
+        localStorage.setItem(
+
+            NEXPAK_ONLINE_ORDERS_STORAGE_KEY,
+
+            JSON.stringify(
+                orders
+            )
+
+        );
+
+
+        return true;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "NEXPAK Online Store: Could not save orders.",
+            error
+        );
+
+
+        return false;
+
+    }
+
+}
+
+
+/* =====================================================
+   73. GENERATE ORDER NUMBER
+   ===================================================== */
+
+function generateNexpakOnlineOrderNumber() {
+
+    const now =
+        new Date();
+
+
+    const year =
+        now.getFullYear();
+
+
+    const month =
+        String(
+            now.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    const day =
+        String(
+            now.getDate()
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    const randomPart =
+        Math.random()
+            .toString(36)
+            .substring(
+                2,
+                6
+            )
+            .toUpperCase();
+
+
+    return (
+
+        "NEX-" +
+
+        year +
+
+        month +
+
+        day +
+
+        "-" +
+
+        randomPart
+
+    );
+
+}
+
+
+/* =====================================================
+   74. ENSURE ORDER REFERENCE
+   ===================================================== */
+
+function ensureNexpakOnlineOrderReference() {
+
+    if (
+        !nexpakOnlineCheckout.orderReference
+    ) {
+
+        nexpakOnlineCheckout.orderReference =
+            generateNexpakOnlineOrderNumber();
+
+
+        saveNexpakOnlineCheckout();
+
     }
 
 
-    /*=====================================================
-      CART EVENT LISTENERS
-    =====================================================*/
+    return nexpakOnlineCheckout
+        .orderReference;
 
-    function attachCartEvents() {
-
-        document.addEventListener(
-            "nexpak:cart:updated",
-            function () {
-
-                syncCart();
+}
 
 
-                if (
-                    checkout.review &&
-                    typeof
-                    checkout.review.refresh ===
-                    "function"
-                ) {
+/* =====================================================
+   75. CREATE ORDER ITEMS
+   ===================================================== */
 
-                    checkout.review.refresh();
-                }
-            }
-        );
+function createNexpakOnlineOrderItems() {
 
+    if (
+        !Array.isArray(
+            nexpakOnlineCheckout.cart
+        )
+    ) {
 
-        document.addEventListener(
-            "cartUpdated",
-            function () {
+        return [];
 
-                syncCart();
-
-            }
-        );
     }
 
 
-    /*=====================================================
-      CHECKOUT STATE EVENTS
-    =====================================================*/
+    return nexpakOnlineCheckout.cart.map(
 
-    function attachStateEvents() {
+        item => {
 
-        document.addEventListener(
-            "input",
-            function (event) {
+            return {
 
-                if (
-                    event.target.closest(
-                        "[data-checkout]"
-                    )
-                ) {
+                kitId:
+                    item.kitId ||
+                    item.id ||
+                    "",
 
-                    markDirty();
-                }
-            }
-        );
+                name:
+                    item.name ||
+                    "Security Kit",
 
+                quantity:
+                    Math.max(
+                        1,
+                        safeCheckoutNumber(
+                            item.quantity,
+                            1
+                        )
+                    ),
 
-        document.addEventListener(
-            "change",
-            function (event) {
+                priceExVat:
+                    Math.max(
+                        0,
+                        safeCheckoutNumber(
+                            item.priceExVat,
+                            0
+                        )
+                    ),
 
-                if (
-                    event.target.closest(
-                        "[data-checkout]"
-                    )
-                ) {
+                weight:
+                    Math.max(
+                        0,
+                        safeCheckoutNumber(
+                            item.weight,
+                            0
+                        )
+                    ),
 
-                    markDirty();
-                }
-            }
-        );
-    }
+                options:
+                    item.options
+                        ? JSON.parse(
+                            JSON.stringify(
+                                item.options
+                            )
+                        )
+                        : {}
 
+            };
 
-    /*=====================================================
-      BEFORE PAGE LEAVE
-    =====================================================*/
-
-    function attachPersistenceGuard() {
-
-        window.addEventListener(
-            "beforeunload",
-            function () {
-
-                if (
-                    finalState.dirty
-                ) {
-
-                    persistCheckout();
-                }
-            }
-        );
-    }
-
-
-    /*=====================================================
-      CLEAR CHECKOUT STORAGE
-    =====================================================*/
-
-    function clearStorage() {
-
-        try {
-
-            if (
-                typeof checkout.clear ===
-                "function"
-            ) {
-
-                checkout.clear();
-
-            }
-
-
-            localStorage.removeItem(
-                FINAL_CONFIG.storageKey
-            );
-
-
-            return true;
-
-        } catch (error) {
-
-            console.warn(
-                "[NEXPAK CHECKOUT] Storage cleanup failed:",
-                error
-            );
-
-
-            return false;
         }
-    }
+
+    );
+
+}
 
 
-    /*=====================================================
-      RESET EVERYTHING
-    =====================================================*/
+/* =====================================================
+   76. CREATE ORDER OBJECT
+   ===================================================== */
 
-    function resetAll() {
+function createNexpakOnlineOrder() {
 
-        if (
-            checkout.controller &&
-            typeof checkout.controller.reset ===
-            "function"
-        ) {
-
-            checkout.controller.reset();
-
-        } else {
-
-            state.step =
-                FINAL_CONFIG.defaultStep;
-
-            state.cart =
-                [];
-
-            state.customer =
-                {};
-
-            state.billing =
-                {};
-
-            state.delivery =
-                {};
-
-            state.payment =
-                {};
-
-            state.totals =
-                {};
-
-            state.order =
-                {
-
-                    orderNumber:
-                        "",
-
-                    status:
-                        "draft",
-
-                    createdAt:
-                        ""
-                };
-        }
+    const validation =
+        validateNexpakOnlineCheckout();
 
 
-        clearStorage();
-
-
-        finalState.dirty =
-            false;
-
-
-        finalState.restored =
-            false;
-
-
-        finalState.validationErrors =
-            [];
-
-
-        emit(
-            "reset",
-            state
-        );
-
-
-        return state;
-    }
-
-
-    /*=====================================================
-      PUBLIC CHECKOUT STATUS
-    =====================================================*/
-
-    function getStatus() {
+    if (
+        !validation.valid
+    ) {
 
         return {
 
-            initialized:
-                finalState.initialized,
+            success: false,
 
-            restored:
-                finalState.restored,
+            message:
+                validation.message
 
-            dirty:
-                finalState.dirty,
-
-            syncing:
-                finalState.syncing,
-
-            step:
-                normalizeStep(
-                    state.step
-                ),
-
-            hasItems:
-                hasItems(),
-
-            orderStatus:
-                state.order &&
-                state.order.status,
-
-            paymentStatus:
-                state.payment &&
-                state.payment.status,
-
-            total:
-                state.totals &&
-                safeNumber(
-                    state.totals.total
-                )
         };
+
     }
 
 
-    /*=====================================================
-      FINAL PUBLIC API
-    =====================================================*/
+    ensureNexpakOnlineOrderReference();
 
-    checkout.final = {
 
-        config:
-            FINAL_CONFIG,
+    calculateNexpakOnlineCheckoutTotals();
 
-        state:
-            finalState,
 
-        normalize:
-            normalizeState,
+    const order = {
 
-        save:
-            persistCheckout,
-
-        restore:
-            restoreCheckout,
-
-        syncCart:
-            syncCart,
-
-        guard:
-            checkoutGuard,
-
-        validate:
-            validateCheckout,
-
-        prepareOrder:
-            prepareOrder,
-
-        generateOrderNumber:
-            generateOrderNumber,
-
-        hasItems:
-            hasItems,
+        orderReference:
+            nexpakOnlineCheckout
+                .orderReference,
 
         status:
-            getStatus,
+            "payment_pending",
 
-        dirty:
-            markDirty,
+        paymentStatus:
+            "awaiting_verification",
 
-        clean:
-            markClean,
+        paymentMethod:
+            nexpakOnlineCheckout
+                .payment
+                .method ||
+            "eft",
 
-        clearStorage:
-            clearStorage,
+        createdAt:
+            new Date().toISOString(),
 
-        reset:
-            resetAll,
+        updatedAt:
+            new Date().toISOString(),
 
-        on:
-            on,
 
-        emit:
-            emit
+        customer: {
+
+            ...nexpakOnlineCheckout.customer
+
+        },
+
+
+        delivery: {
+
+            ...nexpakOnlineCheckout.delivery
+
+        },
+
+
+        items:
+            createNexpakOnlineOrderItems(),
+
+
+        totals: {
+
+            ...nexpakOnlineCheckout.totals
+
+        }
+
     };
 
 
-    /*=====================================================
-      COMPLETE CHECKOUT API
-    =====================================================*/
+    return {
 
-    checkout.api = {
+        success: true,
 
-        /*
-         * State
-         */
+        order: order
 
-        state:
-            state,
-
-        status:
-            getStatus,
-
-
-        /*
-         * Navigation
-         */
-
-        next:
-            checkout.controller &&
-            checkout.controller.next,
-
-        back:
-            checkout.controller &&
-            checkout.controller.back,
-
-        goTo:
-            checkout.controller &&
-            checkout.controller.goTo,
-
-
-        /*
-         * Review
-         */
-
-        review:
-            checkout.review &&
-            checkout.review.render,
-
-        refreshReview:
-            checkout.review &&
-            checkout.review.refresh,
-
-
-        /*
-         * Validation
-         */
-
-        validate:
-            validateCheckout,
-
-        guard:
-            checkoutGuard,
-
-
-        /*
-         * Order
-         */
-
-        prepareOrder:
-            prepareOrder,
-
-        submit:
-            checkout.controller &&
-            checkout.controller.submit,
-
-
-        /*
-         * Persistence
-         */
-
-        save:
-            persistCheckout,
-
-        restore:
-            restoreCheckout,
-
-
-        /*
-         * Cart
-         */
-
-        syncCart:
-            syncCart,
-
-
-        /*
-         * Reset
-         */
-
-        reset:
-            resetAll,
-
-
-        /*
-         * Events
-         */
-
-        on:
-            on,
-
-        emit:
-            emit
     };
 
-
-    /*=====================================================
-      FINAL INITIALIZATION
-    =====================================================*/
-
-    function initializeFinalLayer() {
-
-        /*
-         * Initialize the base checkout engine.
-         */
-
-        if (
-            typeof checkout.init ===
-            "function"
-        ) {
-
-            checkout.init();
-        }
+}
 
 
-        /*
-         * Restore saved checkout.
-         */
+/* =====================================================
+   77. STORE ORDER
+   ===================================================== */
 
-        restoreCheckout();
-
-
-        /*
-         * Normalize restored/current data.
-         */
-
-        normalizeState();
-
-
-        /*
-         * Synchronize live cart.
-         */
-
-        syncCart();
-
-
-        /*
-         * Attach listeners.
-         */
-
-        attachCartEvents();
-
-        attachStateEvents();
-
-        attachPersistenceGuard();
-
-
-        /*
-         * Calculate totals.
-         */
-
-        if (
-            typeof checkout.calculateTotals ===
-            "function"
-        ) {
-
-            checkout.calculateTotals();
-        }
-
-
-        /*
-         * Refresh review UI.
-         */
-
-        if (
-            checkout.review &&
-            typeof checkout.review.refresh ===
-            "function"
-        ) {
-
-            checkout.review.refresh();
-        }
-
-
-        /*
-         * Render checkout navigation.
-         */
-
-        if (
-            checkout.controller &&
-            typeof checkout.controller.render ===
-            "function"
-        ) {
-
-            checkout.controller.render();
-        }
-
-
-        /*
-         * Persist normalized state.
-         */
-
-        persistCheckout();
-
-
-        finalState.initialized =
-            true;
-
-
-        emit(
-            "initialized",
-            getStatus()
-        );
-
-
-        console.log(
-            "%c[NEXPAK CHECKOUT] Part 8/8 loaded — CHECKOUT ENGINE COMPLETE",
-            "font-weight:bold;"
-        );
-    }
-
-
-    /*=====================================================
-      START
-    =====================================================*/
+function storeNexpakOnlineOrder(
+    order
+) {
 
     if (
-        document.readyState ===
-        "loading"
+        !order ||
+        !order.orderReference
     ) {
 
-        document.addEventListener(
-            "DOMContentLoaded",
-            initializeFinalLayer
-        );
+        return {
 
-    } else {
+            success: false,
 
-        initializeFinalLayer();
+            message:
+                "Invalid order."
+
+        };
+
     }
 
-})();
+
+    const orders =
+        loadNexpakOnlineOrders();
+
+
+    /*
+     * Prevent duplicate order references.
+     */
+
+    const existingIndex =
+        orders.findIndex(
+
+            existingOrder =>
+
+                existingOrder.orderReference ===
+                order.orderReference
+
+        );
+
+
+    if (
+        existingIndex >= 0
+    ) {
+
+        orders[
+            existingIndex
+        ] = order;
+
+    }
+
+    else {
+
+        orders.push(
+            order
+        );
+
+    }
+
+
+    const saved =
+        saveNexpakOnlineOrders(
+            orders
+        );
+
+
+    if (!saved) {
+
+        return {
+
+            success: false,
+
+            message:
+                "Could not save the order."
+
+        };
+
+    }
+
+
+    return {
+
+        success: true,
+
+        order: order
+
+    };
+
+}
+
+
+/* =====================================================
+   78. FINALISE ONLINE ORDER
+   ===================================================== */
+
+function finaliseNexpakOnlineOrder() {
+
+    /*
+     * First validate the checkout.
+     */
+
+    const validation =
+        validateNexpakOnlineCheckout();
+
+
+    if (
+        !validation.valid
+    ) {
+
+        return {
+
+            success: false,
+
+            stage: "validation",
+
+            message:
+                validation.message
+
+        };
+
+    }
+
+
+    /*
+     * Ensure EFT is selected.
+     */
+
+    if (
+        !isNexpakOnlineEftSelected()
+    ) {
+
+        return {
+
+            success: false,
+
+            stage: "payment",
+
+            message:
+                "Please select Instant EFT."
+
+        };
+
+    }
+
+
+    /*
+     * Create order.
+     */
+
+    const created =
+        createNexpakOnlineOrder();
+
+
+    if (
+        !created.success
+    ) {
+
+        return created;
+
+    }
+
+
+    /*
+     * Store order.
+     */
+
+    const stored =
+        storeNexpakOnlineOrder(
+            created.order
+        );
+
+
+    if (
+        !stored.success
+    ) {
+
+        return {
+
+            success: false,
+
+            stage: "storage",
+
+            message:
+                stored.message
+
+        };
+
+    }
+
+
+    nexpakOnlineCheckout.order =
+        created.order;
+
+
+    nexpakOnlineCheckout.orderStatus =
+        "payment_pending";
+
+
+    saveNexpakOnlineCheckout();
+
+
+    return {
+
+        success: true,
+
+        order:
+            created.order,
+
+        orderReference:
+            created.order.orderReference,
+
+        status:
+            "payment_pending"
+
+    };
+
+}
+
+
+/* =====================================================
+   79. FIND ORDER BY REFERENCE
+   ===================================================== */
+
+function findNexpakOnlineOrder(
+    orderReference
+) {
+
+    const reference =
+        safeCheckoutString(
+            orderReference
+        );
+
+
+    if (!reference) {
+
+        return null;
+
+    }
+
+
+    const orders =
+        loadNexpakOnlineOrders();
+
+
+    return (
+
+        orders.find(
+
+            order =>
+
+                order.orderReference ===
+                reference
+
+        ) ||
+
+        null
+
+    );
+
+}
+
+
+/* =====================================================
+   80. UPDATE ORDER STATUS
+   ===================================================== */
+
+function updateNexpakOnlineOrderStatus(
+    orderReference,
+    status,
+    paymentStatus = null
+) {
+
+    const order =
+        findNexpakOnlineOrder(
+            orderReference
+        );
+
+
+    if (!order) {
+
+        return {
+
+            success: false,
+
+            message:
+                "Order not found."
+
+        };
+
+    }
+
+
+    order.status =
+        status;
+
+
+    order.updatedAt =
+        new Date().toISOString();
+
+
+    if (
+        paymentStatus
+    ) {
+
+        order.paymentStatus =
+            paymentStatus;
+
+    }
+
+
+    const orders =
+        loadNexpakOnlineOrders();
+
+
+    const index =
+        orders.findIndex(
+
+            item =>
+
+                item.orderReference ===
+                orderReference
+
+        );
+
+
+    if (
+        index < 0
+    ) {
+
+        return {
+
+            success: false,
+
+            message:
+                "Could not locate order."
+
+        };
+
+    }
+
+
+    orders[index] =
+        order;
+
+
+    saveNexpakOnlineOrders(
+        orders
+    );
+
+
+    return {
+
+        success: true,
+
+        order: order
+
+    };
+
+}
+
+
+/* =====================================================
+   81. CONFIRM EFT PAYMENT SUBMISSION
+   ===================================================== */
+
+function confirmNexpakOnlineEftSubmission() {
+
+    const reference =
+        ensureNexpakOnlineOrderReference();
+
+
+    /*
+     * The order must first be created.
+     */
+
+    let order =
+        findNexpakOnlineOrder(
+            reference
+        );
+
+
+    if (!order) {
+
+        const finalised =
+            finaliseNexpakOnlineOrder();
+
+
+        if (
+            !finalised.success
+        ) {
+
+            return finalised;
+
+        }
+
+
+        order =
+            finalised.order;
+
+    }
+
+
+    /*
+     * Payment remains UNVERIFIED.
+     */
+
+    const updated =
+        updateNexpakOnlineOrderStatus(
+
+            reference,
+
+            "payment_pending",
+
+            "awaiting_verification"
+
+        );
+
+
+    if (
+        !updated.success
+    ) {
+
+        return updated;
+
+    }
+
+
+    nexpakOnlineCheckout.payment = {
+
+        method: "eft",
+
+        status: "submitted",
+
+        submittedAt:
+            new Date().toISOString()
+
+    };
+
+
+    nexpakOnlineCheckout.orderStatus =
+        "payment_pending";
+
+
+    saveNexpakOnlineCheckout();
+
+
+    document.dispatchEvent(
+
+        new CustomEvent(
+            "nexpak:order-submitted",
+            {
+
+                detail: {
+
+                    order:
+                        updated.order,
+
+                    status:
+                        "payment_pending"
+
+                }
+
+            }
+
+        )
+
+    );
+
+
+    return {
+
+        success: true,
+
+        order:
+            updated.order,
+
+        orderReference:
+            reference,
+
+        status:
+            "payment_pending"
+
+    };
+
+}
+
+
+/* =====================================================
+   82. CLEAR CHECKOUT AFTER ORDER
+   ===================================================== */
+
+function clearNexpakOnlineCheckoutAfterOrder() {
+
+    /*
+     * Keep the order reference and customer details
+     * available for the confirmation screen.
+     *
+     * The cart itself should only be cleared after
+     * successful order submission.
+     */
+
+    nexpakOnlineCheckout.cart = [];
+
+
+    if (
+        typeof saveNexpakOnlineCheckout ===
+        "function"
+    ) {
+
+        saveNexpakOnlineCheckout();
+
+    }
+
+
+    /*
+     * Also attempt to clear the Online Store cart
+     * if onlinecart.js exposes its API.
+     */
+
+    try {
+
+        if (
+            window.NEXPAK_ONLINE_CART &&
+            typeof
+            window.NEXPAK_ONLINE_CART.clearCart ===
+            "function"
+        ) {
+
+            window.NEXPAK_ONLINE_CART.clearCart();
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            "NEXPAK Checkout: Cart could not be cleared through cart API.",
+            error
+        );
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   83. GET ORDER STATUS LABEL
+   ===================================================== */
+
+function getNexpakOnlineOrderStatusLabel(
+    status
+) {
+
+    const labels = {
+
+        payment_pending:
+            "Payment Pending",
+
+        awaiting_verification:
+            "Awaiting Payment Verification",
+
+        paid:
+            "Payment Confirmed",
+
+        processing:
+            "Order Processing",
+
+        dispatched:
+            "Order Dispatched",
+
+        completed:
+            "Order Completed",
+
+        cancelled:
+            "Order Cancelled"
+
+    };
+
+
+    return (
+
+        labels[
+            status
+        ] ||
+
+        "Order Received"
+
+    );
+
+}
+
+
+/* =====================================================
+   84. GET CURRENT ORDER
+   ===================================================== */
+
+function getNexpakOnlineCurrentOrder() {
+
+    if (
+        nexpakOnlineCheckout.order
+    ) {
+
+        return {
+
+            ...nexpakOnlineCheckout.order
+
+        };
+
+    }
+
+
+    if (
+        nexpakOnlineCheckout.orderReference
+    ) {
+
+        return findNexpakOnlineOrder(
+
+            nexpakOnlineCheckout
+                .orderReference
+
+        );
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =====================================================
+   85. EXTEND PUBLIC CHECKOUT API
+   ===================================================== */
+
+if (
+    window.NEXPAK_ONLINE_CHECKOUT
+) {
+
+    window.NEXPAK_ONLINE_CHECKOUT.createOrder =
+        createNexpakOnlineOrder;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.finaliseOrder =
+        finaliseNexpakOnlineOrder;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.submitOrder =
+        confirmNexpakOnlineEftSubmission;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.findOrder =
+        findNexpakOnlineOrder;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.updateOrderStatus =
+        updateNexpakOnlineOrderStatus;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.getCurrentOrder =
+        getNexpakOnlineCurrentOrder;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.getStatusLabel =
+        getNexpakOnlineOrderStatusLabel;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.clearAfterOrder =
+        clearNexpakOnlineCheckoutAfterOrder;
+
+}
+
+
+/* =====================================================
+   PART 6 END
+   ========================================================= */
+
+ /* =========================================================
+   NEXPAK ONLINE STORE — CHECKOUT ENGINE
+   PART 7 — ORDER CONFIRMATION + RECEIPT DATA
+   ========================================================= */
+
+
+/* =====================================================
+   86. FIND CONFIRMATION CONTAINER
+   ===================================================== */
+
+function findNexpakOnlineConfirmationContainer() {
+
+    const selectors = [
+
+        "#onlineOrderConfirmation",
+
+        "#orderConfirmation",
+
+        ".online-order-confirmation",
+
+        ".checkout-confirmation",
+
+        "[data-online-order-confirmation]"
+
+    ];
+
+
+    for (
+        let i = 0;
+        i < selectors.length;
+        i++
+    ) {
+
+        const element =
+            document.querySelector(
+                selectors[i]
+            );
+
+
+        if (element) {
+
+            return element;
+
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =====================================================
+   87. BUILD CONFIRMATION DATA
+   ===================================================== */
+
+function getNexpakOnlineConfirmationData() {
+
+    const order =
+        getNexpakOnlineCurrentOrder();
+
+
+    if (!order) {
+
+        return {
+
+            success: false,
+
+            message:
+                "No current order was found."
+
+        };
+
+    }
+
+
+    return {
+
+        success: true,
+
+        orderReference:
+            order.orderReference,
+
+        status:
+            order.status,
+
+        statusLabel:
+            getNexpakOnlineOrderStatusLabel(
+                order.status
+            ),
+
+        paymentStatus:
+            order.paymentStatus,
+
+        paymentMethod:
+            order.paymentMethod,
+
+        customer:
+            {
+                ...order.customer
+            },
+
+        delivery:
+            {
+                ...order.delivery
+            },
+
+        items:
+            Array.isArray(
+                order.items
+            )
+                ? order.items
+                : [],
+
+        totals:
+            {
+                ...order.totals
+            },
+
+        createdAt:
+            order.createdAt
+
+    };
+
+}
+
+
+/* =====================================================
+   88. FORMAT CONFIRMATION DATE
+   ===================================================== */
+
+function formatNexpakOnlineConfirmationDate(
+    dateValue
+) {
+
+    if (!dateValue) {
+
+        return "";
+
+    }
+
+
+    const date =
+        new Date(
+            dateValue
+        );
+
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return "";
+
+    }
+
+
+    return date.toLocaleString(
+
+        "en-ZA",
+
+        {
+
+            dateStyle: "medium",
+
+            timeStyle: "short"
+
+        }
+
+    );
+
+}
+
+
+/* =====================================================
+   89. RENDER ORDER CONFIRMATION
+   ===================================================== */
+
+function renderNexpakOnlineOrderConfirmation(
+    container = null
+) {
+
+    if (!container) {
+
+        container =
+            findNexpakOnlineConfirmationContainer();
+
+    }
+
+
+    if (!container) {
+
+        return false;
+
+    }
+
+
+    const data =
+        getNexpakOnlineConfirmationData();
+
+
+    if (
+        !data.success
+    ) {
+
+        container.innerHTML =
+
+            '<div class="online-confirmation-error">' +
+
+                '<h2>Order Confirmation</h2>' +
+
+                '<p>' +
+
+                    escapeNexpakOnlineCheckoutHtml(
+                        data.message
+                    ) +
+
+                '</p>' +
+
+            '</div>';
+
+
+        return false;
+
+    }
+
+
+    let itemsHtml = "";
+
+
+    data.items.forEach(
+
+        item => {
+
+            const quantity =
+                Math.max(
+                    1,
+                    safeCheckoutNumber(
+                        item.quantity,
+                        1
+                    )
+                );
+
+
+            itemsHtml +=
+
+                '<div class="online-confirmation-item">' +
+
+                    '<div>' +
+
+                        '<strong>' +
+
+                            escapeNexpakOnlineCheckoutHtml(
+                                item.name ||
+                                "Security Kit"
+                            ) +
+
+                        '</strong>' +
+
+                        '<span>' +
+
+                            'Qty: ' +
+
+                            quantity +
+
+                        '</span>' +
+
+                    '</div>' +
+
+                '</div>';
+
+        }
+
+    );
+
+
+    container.innerHTML =
+
+        '<div class="online-order-confirmation-card">' +
+
+            '<div class="online-confirmation-success">' +
+
+                '<div class="online-confirmation-icon">' +
+
+                    '✓' +
+
+                '</div>' +
+
+                '<h2>Order Received</h2>' +
+
+                '<p>' +
+
+                    'Thank you. Your NEXPAK order has been received.' +
+
+                '</p>' +
+
+            '</div>' +
+
+
+            '<div class="online-confirmation-reference">' +
+
+                '<span>Order Number</span>' +
+
+                '<strong>' +
+
+                    escapeNexpakOnlineCheckoutHtml(
+                        data.orderReference
+                    ) +
+
+                '</strong>' +
+
+            '</div>' +
+
+
+            '<div class="online-confirmation-payment-status">' +
+
+                '<strong>' +
+
+                    escapeNexpakOnlineCheckoutHtml(
+                        data.statusLabel
+                    ) +
+
+                '</strong>' +
+
+                '<p>' +
+
+                    'Your EFT payment is awaiting verification.' +
+
+                '</p>' +
+
+            '</div>' +
+
+
+            '<div class="online-confirmation-section">' +
+
+                '<h3>Order Items</h3>' +
+
+                '<div class="online-confirmation-items">' +
+
+                    itemsHtml +
+
+                '</div>' +
+
+            '</div>' +
+
+
+            '<div class="online-confirmation-section">' +
+
+                '<h3>Order Total</h3>' +
+
+                '<div class="online-confirmation-total-row">' +
+
+                    '<span>Subtotal EX VAT</span>' +
+
+                    '<strong>' +
+
+                        formatNexpakOnlineCheckoutMoney(
+                            data.totals.subtotalExVat
+                        ) +
+
+                    '</strong>' +
+
+                '</div>' +
+
+
+                '<div class="online-confirmation-total-row">' +
+
+                    '<span>VAT @ 15%</span>' +
+
+                    '<strong>' +
+
+                        formatNexpakOnlineCheckoutMoney(
+                            data.totals.vatAmount
+                        ) +
+
+                    '</strong>' +
+
+                '</div>' +
+
+
+                '<div class="online-confirmation-total-row">' +
+
+                    '<span>Delivery</span>' +
+
+                    '<strong>' +
+
+                        formatNexpakOnlineCheckoutMoney(
+                            data.totals.deliveryFee
+                        ) +
+
+                    '</strong>' +
+
+                '</div>' +
+
+
+                '<div class="online-confirmation-total-row online-confirmation-grand-total">' +
+
+                    '<span>Total</span>' +
+
+                    '<strong>' +
+
+                        formatNexpakOnlineCheckoutMoney(
+                            data.totals.grandTotal
+                        ) +
+
+                    '</strong>' +
+
+                '</div>' +
+
+            '</div>' +
+
+
+            '<div class="online-confirmation-section">' +
+
+                '<h3>Payment</h3>' +
+
+                '<p>' +
+
+                    'Method: ' +
+
+                    '<strong>Instant EFT / Bank Transfer</strong>' +
+
+                '</p>' +
+
+                '<p>' +
+
+                    'Payment status: ' +
+
+                    '<strong>Awaiting Verification</strong>' +
+
+                '</p>' +
+
+            '</div>' +
+
+
+            '<div class="online-confirmation-date">' +
+
+                'Order placed: ' +
+
+                escapeNexpakOnlineCheckoutHtml(
+
+                    formatNexpakOnlineConfirmationDate(
+                        data.createdAt
+                    )
+
+                ) +
+
+            '</div>' +
+
+        '</div>';
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   90. SHOW CONFIRMATION
+   ===================================================== */
+
+function showNexpakOnlineOrderConfirmation() {
+
+    const container =
+        findNexpakOnlineConfirmationContainer();
+
+
+    if (!container) {
+
+        return false;
+
+    }
+
+
+    container.hidden =
+        false;
+
+
+    container.style.display =
+        "";
+
+
+    return renderNexpakOnlineOrderConfirmation(
+        container
+    );
+
+}
+
+
+/* =====================================================
+   91. HIDE CONFIRMATION
+   ===================================================== */
+
+function hideNexpakOnlineOrderConfirmation() {
+
+    const container =
+        findNexpakOnlineConfirmationContainer();
+
+
+    if (!container) {
+
+        return false;
+
+    }
+
+
+    container.hidden =
+        true;
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   92. GET RECEIPT DATA
+   ===================================================== */
+
+function getNexpakOnlineReceiptData() {
+
+    const data =
+        getNexpakOnlineConfirmationData();
+
+
+    if (
+        !data.success
+    ) {
+
+        return data;
+
+    }
+
+
+    return {
+
+        company: {
+
+            name:
+                "NEXPAK Security Solutions"
+
+        },
+
+
+        order: {
+
+            number:
+                data.orderReference,
+
+            date:
+                data.createdAt,
+
+            status:
+                data.status,
+
+            paymentStatus:
+                data.paymentStatus,
+
+            paymentMethod:
+                data.paymentMethod
+
+        },
+
+
+        customer:
+            {
+                ...data.customer
+            },
+
+
+        delivery:
+            {
+                ...data.delivery
+            },
+
+
+        items:
+            data.items.map(
+
+                item => ({
+
+                    kitId:
+                        item.kitId,
+
+                    name:
+                        item.name,
+
+                    quantity:
+                        item.quantity,
+
+                    options:
+                        item.options || {}
+
+                })
+
+            ),
+
+
+        totals: {
+
+            subtotalExVat:
+                safeCheckoutNumber(
+                    data.totals.subtotalExVat,
+                    0
+                ),
+
+            vatAmount:
+                safeCheckoutNumber(
+                    data.totals.vatAmount,
+                    0
+                ),
+
+            deliveryFee:
+                safeCheckoutNumber(
+                    data.totals.deliveryFee,
+                    0
+                ),
+
+            grandTotal:
+                safeCheckoutNumber(
+                    data.totals.grandTotal,
+                    0
+                )
+
+        }
+
+    };
+
+}
+
+
+/* =====================================================
+   93. PRINT ORDER CONFIRMATION
+   ===================================================== */
+
+function printNexpakOnlineOrderConfirmation() {
+
+    const container =
+        findNexpakOnlineConfirmationContainer();
+
+
+    if (!container) {
+
+        return false;
+
+    }
+
+
+    const printWindow =
+        window.open(
+            "",
+            "_blank",
+            "width=900,height=700"
+        );
+
+
+    if (!printWindow) {
+
+        console.warn(
+            "NEXPAK Checkout: Pop-up blocked."
+        );
+
+
+        return false;
+
+    }
+
+
+    printWindow.document.write(
+
+        '<!DOCTYPE html>' +
+
+        '<html>' +
+
+        '<head>' +
+
+            '<title>NEXPAK Order Confirmation</title>' +
+
+            '<meta charset="UTF-8">' +
+
+            '<style>' +
+
+                'body{' +
+
+                    'font-family:Arial,sans-serif;' +
+
+                    'padding:30px;' +
+
+                    'color:#222;' +
+
+                '}' +
+
+                'h1,h2,h3{' +
+
+                    'margin-top:0;' +
+
+                '}' +
+
+                '.online-confirmation-item{' +
+
+                    'padding:10px 0;' +
+
+                    'border-bottom:1px solid #ddd;' +
+
+                '}' +
+
+                '.online-confirmation-total-row{' +
+
+                    'display:flex;' +
+
+                    'justify-content:space-between;' +
+
+                    'padding:7px 0;' +
+
+                '}' +
+
+                '.online-confirmation-grand-total{' +
+
+                    'font-size:20px;' +
+
+                    'font-weight:bold;' +
+
+                    'border-top:2px solid #222;' +
+
+                    'margin-top:10px;' +
+
+                    'padding-top:12px;' +
+
+                '}' +
+
+            '</style>' +
+
+        '</head>' +
+
+        '<body>' +
+
+            container.innerHTML +
+
+        '</body>' +
+
+        '</html>'
+
+    );
+
+
+    printWindow.document.close();
+
+
+    printWindow.focus();
+
+
+    printWindow.print();
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   94. HANDLE ORDER SUBMITTED EVENT
+   ===================================================== */
+
+function handleNexpakOnlineOrderSubmitted(
+    event
+) {
+
+    if (
+        !event ||
+        !event.detail
+    ) {
+
+        return;
+
+    }
+
+
+    const order =
+        event.detail.order;
+
+
+    if (!order) {
+
+        return;
+
+    }
+
+
+    /*
+     * The cart can now be cleared because
+     * the order has been stored locally.
+     */
+
+    clearNexpakOnlineCheckoutAfterOrder();
+
+
+    showNexpakOnlineOrderConfirmation();
+
+}
+
+
+/* =====================================================
+   95. BIND ORDER CONFIRMATION
+   ===================================================== */
+
+function bindNexpakOnlineOrderConfirmation() {
+
+    document.removeEventListener(
+        "nexpak:order-submitted",
+        handleNexpakOnlineOrderSubmitted
+    );
+
+
+    document.addEventListener(
+        "nexpak:order-submitted",
+        handleNexpakOnlineOrderSubmitted
+    );
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   96. EXTEND PUBLIC CHECKOUT API
+   ===================================================== */
+
+if (
+    window.NEXPAK_ONLINE_CHECKOUT
+) {
+
+    window.NEXPAK_ONLINE_CHECKOUT.getConfirmation =
+        getNexpakOnlineConfirmationData;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.renderConfirmation =
+        renderNexpakOnlineOrderConfirmation;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.showConfirmation =
+        showNexpakOnlineOrderConfirmation;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.hideConfirmation =
+        hideNexpakOnlineOrderConfirmation;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.getReceipt =
+        getNexpakOnlineReceiptData;
+
+
+    window.NEXPAK_ONLINE_CHECKOUT.printConfirmation =
+        printNexpakOnlineOrderConfirmation;
+
+}
+
+
+/* =====================================================
+   97. INITIALISE CONFIRMATION HANDLER
+   ===================================================== */
+
+bindNexpakOnlineOrderConfirmation();
+
+
+/* =====================================================
+   PART 7 END
+   ========================================================= */
+
+ /* =========================================================
+   NEXPAK ONLINE STORE — CHECKOUT ENGINE
+   PART 8 — FINAL INTEGRATION + INITIALISATION
+   ========================================================= */
+
+
+/* =====================================================
+   98. CHECKOUT INITIALISATION
+   ===================================================== */
+
+function initialiseNexpakOnlineCheckout() {
+
+    console.log(
+        "NEXPAK Online Checkout: Initialising..."
+    );
+
+
+    /*
+     * Make sure checkout state exists.
+     */
+
+    if (
+        typeof loadNexpakOnlineCheckout ===
+        "function"
+    ) {
+
+        loadNexpakOnlineCheckout();
+
+    }
+
+
+    /*
+     * Make sure an order reference exists
+     * when checkout reaches the order stage.
+     */
+
+    if (
+        typeof ensureNexpakOnlineOrderReference ===
+        "function"
+    ) {
+
+        ensureNexpakOnlineOrderReference();
+
+    }
+
+
+    /*
+     * Bind payment handlers.
+     */
+
+    if (
+        typeof bindNexpakOnlinePaymentMethods ===
+        "function"
+    ) {
+
+        bindNexpakOnlinePaymentMethods();
+
+    }
+
+
+    if (
+        typeof bindNexpakOnlineEftSubmission ===
+        "function"
+    ) {
+
+        bindNexpakOnlineEftSubmission();
+
+    }
+
+
+    /*
+     * Bind order confirmation.
+     */
+
+    if (
+        typeof bindNexpakOnlineOrderConfirmation ===
+        "function"
+    ) {
+
+        bindNexpakOnlineOrderConfirmation();
+
+    }
+
+
+    /*
+     * Render checkout overview if the
+     * required containers exist.
+     */
+
+    if (
+        typeof renderNexpakOnlineCheckoutOverview ===
+        "function"
+    ) {
+
+        renderNexpakOnlineCheckoutOverview();
+
+    }
+
+
+    /*
+     * Render EFT information if EFT
+     * is already selected.
+     */
+
+    if (
+        typeof handleNexpakOnlinePaymentDisplay ===
+        "function"
+    ) {
+
+        handleNexpakOnlinePaymentDisplay();
+
+    }
+
+
+    console.log(
+        "NEXPAK Online Checkout: Ready."
+    );
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   99. CHECKOUT PAGE DETECTION
+   ===================================================== */
+
+function isNexpakOnlineCheckoutPage() {
+
+    const checkoutPage =
+        document.querySelector(
+            "[data-online-checkout-page]"
+        );
+
+
+    if (checkoutPage) {
+
+        return true;
+
+    }
+
+
+    const path =
+        window.location.pathname
+            .toLowerCase();
+
+
+    return (
+
+        path.includes(
+            "onlinecheckout"
+        ) ||
+
+        path.includes(
+            "online-checkout"
+        ) ||
+
+        path.endsWith(
+            "/checkout.html"
+        )
+
+    );
+
+}
+
+
+/* =====================================================
+   100. REFRESH CHECKOUT DISPLAY
+   ===================================================== */
+
+function refreshNexpakOnlineCheckoutDisplay() {
+
+    if (
+        typeof renderNexpakOnlineCheckoutSummary ===
+        "function"
+    ) {
+
+        renderNexpakOnlineCheckoutSummary();
+
+    }
+
+
+    if (
+        typeof renderNexpakOnlinePaymentMethods ===
+        "function"
+    ) {
+
+        renderNexpakOnlinePaymentMethods();
+
+    }
+
+
+    if (
+        typeof handleNexpakOnlinePaymentDisplay ===
+        "function"
+    ) {
+
+        handleNexpakOnlinePaymentDisplay();
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   101. CHECKOUT CART SYNC
+   ===================================================== */
+
+function syncNexpakOnlineCheckoutWithCart() {
+
+    try {
+
+        /*
+         * Prefer the Online Cart public API.
+         */
+
+        if (
+
+            window.NEXPAK_ONLINE_CART &&
+
+            typeof
+            window.NEXPAK_ONLINE_CART.getCart ===
+            "function"
+
+        ) {
+
+            const cart =
+                window.NEXPAK_ONLINE_CART.getCart();
+
+
+            if (
+                Array.isArray(
+                    cart
+                )
+            ) {
+
+                nexpakOnlineCheckout.cart =
+                    cart.map(
+
+                        item => ({
+
+                            ...item,
+
+                            quantity:
+                                Math.max(
+                                    1,
+                                    safeCheckoutNumber(
+                                        item.quantity,
+                                        1
+                                    )
+                                )
+
+                        })
+
+                    );
+
+
+                saveNexpakOnlineCheckout();
+
+            }
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            "NEXPAK Checkout: Cart synchronisation failed.",
+            error
+        );
+
+    }
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   102. CART UPDATED HANDLER
+   ===================================================== */
+
+function handleNexpakOnlineCartUpdated() {
+
+    syncNexpakOnlineCheckoutWithCart();
+
+
+    refreshNexpakOnlineCheckoutDisplay();
+
+}
+
+
+/* =====================================================
+   103. BIND CART SYNCHRONISATION
+   ===================================================== */
+
+function bindNexpakOnlineCartSynchronisation() {
+
+    document.removeEventListener(
+        "nexpak:cart-updated",
+        handleNexpakOnlineCartUpdated
+    );
+
+
+    document.addEventListener(
+        "nexpak:cart-updated",
+        handleNexpakOnlineCartUpdated
+    );
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   104. CHECKOUT SUBMIT HANDLER
+   ===================================================== */
+
+function handleNexpakOnlineCheckoutSubmit(
+    event
+) {
+
+    const submitButton =
+        event.target.closest(
+            "[data-online-checkout-submit]"
+        );
+
+
+    if (!submitButton) {
+
+        return;
+
+    }
+
+
+    event.preventDefault();
+
+
+    /*
+     * Sync cart before creating order.
+     */
+
+    syncNexpakOnlineCheckoutWithCart();
+
+
+    /*
+     * Final validation.
+     */
+
+    const validation =
+        validateNexpakOnlineCheckout();
+
+
+    if (
+        !validation.valid
+    ) {
+
+        console.warn(
+            "NEXPAK Checkout:",
+            validation.message
+        );
+
+
+        return;
+
+    }
+
+
+    /*
+     * EFT must be selected.
+     */
+
+    if (
+        !isNexpakOnlineEftSelected()
+    ) {
+
+        console.warn(
+            "NEXPAK Checkout: Instant EFT must be selected."
+        );
+
+
+        return;
+
+    }
+
+
+    /*
+     * Submit the EFT order.
+     */
+
+    const result =
+        confirmNexpakOnlineEftSubmission();
+
+
+    if (
+        !result.success
+    ) {
+
+        console.warn(
+            "NEXPAK Checkout:",
+            result.message
+        );
+
+
+        return;
+
+    }
+
+
+    console.log(
+        "NEXPAK Checkout: Order submitted.",
+        result.orderReference
+    );
+
+}
+
+
+/* =====================================================
+   105. BIND CHECKOUT SUBMISSION
+   ===================================================== */
+
+function bindNexpakOnlineCheckoutSubmission() {
+
+    document.removeEventListener(
+        "click",
+        handleNexpakOnlineCheckoutSubmit
+    );
+
+
+    document.addEventListener(
+        "click",
+        handleNexpakOnlineCheckoutSubmit
+    );
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   106. CHECKOUT RESET
+   ===================================================== */
+
+function resetNexpakOnlineCheckout() {
+
+    nexpakOnlineCheckout.customer = {
+
+        firstName: "",
+
+        lastName: "",
+
+        company: "",
+
+        email: "",
+
+        phone: ""
+
+    };
+
+
+    nexpakOnlineCheckout.delivery = {
+
+        address1: "",
+
+        address2: "",
+
+        suburb: "",
+
+        city: "",
+
+        province: "",
+
+        postalCode: "",
+
+        distanceKm: 0,
+
+        fee: 0
+
+    };
+
+
+    nexpakOnlineCheckout.payment = {
+
+        method: "eft",
+
+        status: "pending"
+
+    };
+
+
+    nexpakOnlineCheckout.totals = {
+
+        subtotalExVat: 0,
+
+        vatAmount: 0,
+
+        deliveryFee: 0,
+
+        grandTotal: 0
+
+    };
+
+
+    nexpakOnlineCheckout.order = null;
+
+
+    nexpakOnlineCheckout.orderStatus =
+        "draft";
+
+
+    nexpakOnlineCheckout.orderReference =
+        "";
+
+
+    saveNexpakOnlineCheckout();
+
+
+    return true;
+
+}
+
+
+/* =====================================================
+   107. GET FINAL CHECKOUT STATE
+   ===================================================== */
+
+function getNexpakOnlineFinalCheckoutState() {
+
+    return {
+
+        cart:
+            Array.isArray(
+                nexpakOnlineCheckout.cart
+            )
+
+                ?
+
+            JSON.parse(
+                JSON.stringify(
+                    nexpakOnlineCheckout.cart
+                )
+            )
+
+                :
+
+            [],
+
+
+        customer:
+            {
+                ...nexpakOnlineCheckout.customer
+            },
+
+
+        delivery:
+            {
+                ...nexpakOnlineCheckout.delivery
+            },
+
+
+        payment:
+            {
+                ...nexpakOnlineCheckout.payment
+            },
+
+
+        totals:
+            {
+                ...nexpakOnlineCheckout.totals
+            },
+
+
+        orderReference:
+            nexpakOnlineCheckout
+                .orderReference,
+
+
+        orderStatus:
+            nexpakOnlineCheckout
+                .orderStatus
+
+    };
+
+}
+
+
+/* =====================================================
+   108. PUBLIC CHECKOUT API
+   ===================================================== */
+
+window.NEXPAK_ONLINE_CHECKOUT = {
+
+    version:
+        "1.0.0",
+
+
+    /*
+     * State
+     */
+
+    getState:
+        getNexpakOnlineFinalCheckoutState,
+
+
+    reset:
+        resetNexpakOnlineCheckout,
+
+
+    refresh:
+        refreshNexpakOnlineCheckoutDisplay,
+
+
+    /*
+     * Payment
+     */
+
+    paymentMethods:
+        NEXPAK_ONLINE_PAYMENT_METHODS,
+
+
+    selectPayment:
+        selectNexpakOnlinePaymentMethod,
+
+
+    getPayment:
+        getNexpakOnlinePaymentMethod,
+
+
+    /*
+     * EFT
+     */
+
+    eft:
+        NEXPAK_ONLINE_EFT_CONFIG,
+
+
+    getEft:
+        getNexpakOnlineEftConfiguration,
+
+
+    submitEft:
+        confirmNexpakOnlineEftSubmission,
+
+
+    /*
+     * Orders
+     */
+
+    createOrder:
+        createNexpakOnlineOrder,
+
+
+    finaliseOrder:
+        finaliseNexpakOnlineOrder,
+
+
+    findOrder:
+        findNexpakOnlineOrder,
+
+
+    updateOrderStatus:
+        updateNexpakOnlineOrderStatus,
+
+
+    getCurrentOrder:
+        getNexpakOnlineCurrentOrder,
+
+
+    /*
+     * Confirmation
+     */
+
+    getConfirmation:
+        getNexpakOnlineConfirmationData,
+
+
+    renderConfirmation:
+        renderNexpakOnlineOrderConfirmation,
+
+
+    showConfirmation:
+        showNexpakOnlineOrderConfirmation,
+
+
+    printConfirmation:
+        printNexpakOnlineOrderConfirmation,
+
+
+    /*
+     * Initialisation
+     */
+
+    initialise:
+        initialiseNexpakOnlineCheckout
+
+};
+
+
+/* =====================================================
+   109. BIND GLOBAL CHECKOUT EVENTS
+   ===================================================== */
+
+bindNexpakOnlineCartSynchronisation();
+
+
+bindNexpakOnlineCheckoutSubmission();
+
+
+/* =====================================================
+   110. DOM READY INITIALISATION
+   ===================================================== */
+
+function startNexpakOnlineCheckout() {
+
+    if (
+        !isNexpakOnlineCheckoutPage()
+    ) {
+
+        return;
+
+    }
+
+
+    initialiseNexpakOnlineCheckout();
+
+}
+
+
+/* =====================================================
+   111. START CHECKOUT
+   ===================================================== */
+
+if (
+    document.readyState ===
+    "loading"
+) {
+
+    document.addEventListener(
+
+        "DOMContentLoaded",
+
+        startNexpakOnlineCheckout,
+
+        {
+            once: true
+        }
+
+    );
+
+}
+
+else {
+
+    startNexpakOnlineCheckout();
+
+}
+
+
+/* =====================================================
+   112. FINAL ENGINE STATUS
+   ===================================================== */
+
+console.log(
+    "NEXPAK Online Checkout Engine: Loaded."
+);
+
+
+/* =====================================================
+   ONLINECHECKOUT.JS — PART 8 END
+   ========================================================= */
+
+ })();
