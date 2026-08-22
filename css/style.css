@@ -471,6 +471,7 @@ gap:32px;
 
 }
 
+
 nav a{
 
 position:relative;
@@ -799,6 +800,18 @@ background-image:url("images/hero.png");
 .hero-bg2{
 
 background-image:url("images/hero2.png");
+
+}
+
+.hero-bg3{
+
+ background-image:url("images/hero3.png")
+
+}
+
+.hero-bg4{
+
+ background-image:url("images/hero4.png")
 
 }
 /*==============================
