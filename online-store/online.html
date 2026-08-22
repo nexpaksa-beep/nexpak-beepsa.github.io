@@ -3,384 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexPak Security Solutions Store</title>
+    <title>NexPak Security Solutions - Kit Catalogue & Quote Generator</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         :root {
             --primary-navy: #0b1329;
-            --accent-blue: #0066ff;
+            --accent-gold: #f59e0b;
             --bg-light: #f8fafc;
-            --border-color: #e2e8f0;
+            --text-dark: #1e293b;
+            --border-color: #cbd5e1;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: var(--bg-light); color: #334155; }
+        body { background-color: var(--bg-light); color: var(--text-dark); display: flex; flex-direction: column; min-height: 100vh; }
+        
+        header { background: var(--primary-navy); color: white; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .logo-area { display: flex; align-items: center; gap: 15px; }
+        .logo-area h1 { font-size: 20px; letter-spacing: 0.5px; }
+        
+        .header-nav { display: flex; gap: 15px; align-items: center; }
+        .nav-home-btn { background: var(--accent-gold); color: var(--primary-navy); padding: 8px 15px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 14px; display: flex; align-items: center; gap: 6px; transition: opacity 0.2s; }
+        .nav-home-btn:hover { opacity: 0.9; }
+        
+        .cart-btn { background: transparent; border: 2px solid white; color: white; padding: 6px 12px; border-radius: 4px; cursor: pointer; position: relative; font-size: 14px; display: flex; align-items: center; gap: 5px; }
+        .cart-badge { background: var(--accent-gold); color: var(--primary-navy); border-radius: 50%; padding: 2px 6px; font-size: 11px; font-weight: bold; }
 
-        /* --- EXACT HEADER & NAV BAR STYLING --- */
-        .main-header {
-            background: #ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 20px;
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        .logo-area {
-            font-weight: 800;
-            font-size: 20px;
-            color: var(--primary-navy);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-        }
-        .logo-area img {
-            height: 32px;
-            object-fit: contain;
-        }
-        .search-bar-container {
-            display: flex;
-            flex: 1;
-            max-width: 480px;
-            margin: 0 20px;
-        }
-        .search-bar-container input {
-            width: 100%;
-            padding: 9px 14px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px 0 0 6px;
-            outline: none;
-            font-size: 13px;
-            background: #f8fafc;
-        }
-        .search-bar-container button {
-            background: var(--accent-blue);
-            color: white;
-            border: none;
-            padding: 0 18px;
-            border-radius: 0 6px 6px 0;
-            cursor: pointer;
-            font-size: 15px;
-        }
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .header-btn {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            padding: 7px 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 12px;
-            color: #334155;
-            text-decoration: none;
-        }
-        .header-btn:hover { background: #f1f5f9; }
-        .badge {
-            background: var(--accent-blue);
-            color: white;
-            font-size: 9px;
-            padding: 2px 5px;
-            border-radius: 10px;
-            font-weight: bold;
-        }
+        .main-container { max-width: 1200px; margin: 20px auto; padding: 0 15px; width: 100%; flex: 1; }
+        
+        .controls-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+        .search-box { padding: 8px 12px; border: 1px solid var(--border-color); border-radius: 4px; width: 250px; font-size: 14px; }
+        .category-filters { display: flex; gap: 8px; flex-wrap: wrap; }
+        .nav-link { background: #e2e8f0; border: none; padding: 8px 14px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--text-dark); transition: background 0.2s; }
+        .nav-link.active, .nav-link:hover { background: var(--primary-navy); color: white; }
 
-        /* Category Navigation Bar (Dark Navy) */
-        .nav-bar {
-            background: #091224;
-            display: flex;
-            overflow-x: auto;
-            padding: 0 10px;
-            gap: 2px;
-            white-space: nowrap;
-            scrollbar-width: none;
-        }
-        .nav-bar::-webkit-scrollbar { display: none; }
-        .nav-link {
-            color: #cbd5e1;
-            background: transparent;
-            border: none;
-            padding: 12px 14px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
-        .nav-link i { color: #94a3b8; font-size: 13px; }
-        .nav-link:hover, .nav-link.active {
-            color: #ffffff;
-            background: rgba(255, 255, 255, 0.08);
-        }
-        .nav-link:hover i, .nav-link.active i { color: #ffffff; }
+        .catalogue-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .product-card { background: white; border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        
+        .product-image-container { width: 100%; height: 160px; background: #f1f5f9; border-radius: 6px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; overflow: hidden; }
+        .product-image-container img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        
+        .product-name { font-size: 16px; font-weight: bold; color: var(--primary-navy); margin-bottom: 6px; }
+        .product-desc { font-size: 12px; color: #64748b; margin-bottom: 12px; line-height: 1.4; }
+        
+        .selector-container { margin-bottom: 10px; }
+        .selector-container label { display: block; font-size: 11px; font-weight: bold; color: #475569; margin-bottom: 3px; }
+        .selector-container select, .selector-container input { width: 100%; padding: 6px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 12px; }
 
-        /* --- HERO BANNER --- */
-        .hero-banner {
-            background: linear-gradient(135deg, #071022 0%, #0c2347 50%, #0052cc 100%);
-            color: white;
-            padding: 40px 20px;
-            text-align: left;
-        }
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .hero-sub {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #93c5fd;
-            margin-bottom: 8px;
-        }
-        .hero-banner h1 {
-            font-size: 28px;
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 12px;
-        }
-        .hero-banner p {
-            font-size: 13px;
-            color: #cbd5e1;
-            max-width: 500px;
-            margin-bottom: 20px;
-        }
-        .hero-btn {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 10px 18px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-        }
-        .hero-btn:hover { background: rgba(255, 255, 255, 0.25); }
+        .price-text { font-size: 18px; font-weight: bold; color: var(--primary-navy); margin: 10px 0; }
+        
+        .card-actions { display: flex; gap: 8px; }
+        .card-actions button { flex: 1; padding: 8px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 12px; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .btn-summary-quote { background: #e2e8f0; color: var(--primary-navy); }
+        .btn-add-cart { background: var(--primary-navy); color: white; }
 
-        /* --- MAIN LAYOUT & CATALOGUE --- */
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 15px;
-        }
-        .section-title-bar {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--primary-navy);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 15px;
-        }
-        .product-card {
-            background: white;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
-        }
-        .product-image-container {
-            width: 100%;
-            height: 140px;
-            background: #f1f5f9;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
-        .product-image-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .product-name {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--primary-navy);
-            margin-bottom: 5px;
-        }
-        .product-desc {
-            font-size: 11px;
-            color: #64748b;
-            margin-bottom: 10px;
-            min-height: 28px;
-        }
-        .selector-container {
-            margin-bottom: 8px;
-        }
-        .selector-container label {
-            font-size: 10px;
-            font-weight: 600;
-            color: #475569;
-            display: block;
-            margin-bottom: 2px;
-        }
-        .selector-container select, .selector-container input {
-            width: 100%;
-            padding: 6px;
-            font-size: 11px;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            outline: none;
-        }
-        .price-text {
-            font-size: 15px;
-            font-weight: 800;
-            color: var(--primary-navy);
-            margin: 10px 0;
-        }
-        .card-actions {
-            display: flex;
-            gap: 6px;
-        }
-        .card-actions button {
-            flex: 1;
-            padding: 8px;
-            font-size: 11px;
-            font-weight: 600;
-            border-radius: 4px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 4px;
-            border: 1px solid var(--border-color);
-        }
-        .btn-summary-quote { background: white; color: #334155; }
-        .btn-add-cart { background: var(--accent-blue); color: white; border-color: var(--accent-blue) !important; }
-
-        /* --- CART SIDEBAR DRAWER --- */
-        .cart-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); display: none; z-index: 2000;
-        }
+        /* Cart Drawer */
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; z-index: 1000; }
         .cart-overlay.open { display: block; }
-        .cart-drawer {
-            position: fixed; top: 0; right: -350px; width: 350px; height: 100%;
-            background: white; z-index: 2001; transition: right 0.3s ease;
-            display: flex; flex-direction: column; box-shadow: -2px 0 10px rgba(0,0,0,0.1);
-        }
+        .cart-drawer { position: fixed; top: 0; right: -400px; width: 400px; height: 100%; background: white; z-index: 1001; transition: right 0.3s ease; display: flex; flex-direction: column; box-shadow: -2px 0 10px rgba(0,0,0,0.1); }
         .cart-drawer.open { right: 0; }
-        .cart-header { padding: 15px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
-        .cart-items { flex: 1; overflow-y: auto; padding: 15px; }
+        .cart-header { padding: 15px 20px; background: var(--primary-navy); color: white; display: flex; justify-content: space-between; align-items: center; }
+        .cart-body { flex: 1; padding: 20px; overflow-y: auto; }
+        .cart-footer { padding: 20px; background: #f8fafc; border-top: 1px solid var(--border-color); }
         .cart-item { display: flex; gap: 10px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #f1f5f9; }
-        .cart-item-img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; background: #f1f5f9; }
-        .cart-item-details { flex: 1; }
-        .cart-item-details h4 { font-size: 12px; font-weight: 600; color: var(--primary-navy); }
-        .cart-footer { padding: 15px; border-top: 1px solid var(--border-color); background: #f8fafc; }
-        .checkout-btn { width: 100%; background: var(--accent-blue); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: 600; cursor: pointer; margin-top: 10px; }
+        .cart-item-img { width: 50px; height: 50px; object-fit: contain; background: #f1f5f9; border-radius: 4px; }
+        .cart-item-details { flex: 1; font-size: 12px; }
+        
+        .btn-checkout { width: 100%; background: var(--accent-gold); color: var(--primary-navy); border: none; padding: 12px; border-radius: 4px; font-weight: bold; font-size: 14px; cursor: pointer; margin-top: 10px; }
 
-        /* --- CHECKOUT MODAL --- */
-        .checkout-modal {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 3000;
-        }
-        .checkout-modal.open { display: flex; }
-        .checkout-content { background: white; width: 90%; max-width: 450px; border-radius: 8px; padding: 20px; max-height: 90vh; overflow-y: auto; }
+        /* Checkout Modal */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 2000; }
+        .modal.open { display: flex; }
+        .modal-content { background: white; padding: 25px; border-radius: 8px; width: 450px; max-width: 90%; max-height: 90vh; overflow-y: auto; }
     </style>
 </head>
 <body>
 
-    <!-- MAIN HEADER -->
-    <header class="main-header">
-        <a href="#" class="logo-area">
-            <span style="color:var(--primary-navy);">NEX</span><span style="color:var(--accent-blue);">PAK</span>
-        </a>
-        <div class="search-bar-container">
-            <input type="text" id="storeSearch" placeholder="Search security kits..." onkeyup="searchStore()">
-            <button onclick="searchStore()"><i class="fa-solid fa-search"></i></button>
+    <header>
+        <div class="logo-area">
+            <i class="fa-solid fa-shield-halved fa-lg" style="color: var(--accent-gold);"></i>
+            <h1>NEXPAK SECURITY SOLUTIONS</h1>
         </div>
-        <div class="header-actions">
-            <button class="header-btn"><i class="fa-solid fa-user"></i> Account</button>
-            <button class="header-btn"><i class="fa-solid fa-heart"></i> Wishlist <span class="badge">0</span></button>
-            <button class="header-btn" onclick="openCart()"><i class="fa-solid fa-cart-shopping"></i> Cart <span class="badge" id="cartCount">0</span></button>
+        <div class="header-nav">
+            <a href="index.html" class="nav-home-btn"><i class="fa-solid fa-house"></i> Home</a>
+            <button class="cart-btn" onclick="openCart()">
+                <i class="fa-solid fa-shopping-cart"></i> Cart <span class="cart-badge" id="cartCount">0</span>
+            </button>
         </div>
     </header>
 
-    <!-- CATEGORY NAVIGATION BAR -->
-    <nav class="nav-bar">
-        <button class="nav-link active" data-category="all" onclick="filterCategory('all')"><i class="fa-solid fa-th-large"></i> All Kits</button>
-        <button class="nav-link" data-category="electric-fencing" onclick="filterCategory('electric-fencing')"><i class="fa-solid fa-bolt"></i> Electric Fencing</button>
-        <button class="nav-link" data-category="roboguard" onclick="filterCategory('roboguard')"><i class="fa-solid fa-shield-halved"></i> Roboguard</button>
-        <button class="nav-link" data-category="cctv" onclick="filterCategory('cctv')"><i class="fa-solid fa-video"></i> HD CCTV</button>
-        <button class="nav-link" data-category="ip-cctv" onclick="filterCategory('ip-cctv')"><i class="fa-solid fa-network-wired"></i> IP CCTV</button>
-        <button class="nav-link" data-category="alarms" onclick="filterCategory('alarms')"><i class="fa-solid fa-bell"></i> Alarms</button>
-        <button class="nav-link" data-category="gate-automation" onclick="filterCategory('gate-automation')"><i class="fa-solid fa-door-closed"></i> Gate Automation</button>
-    </nav>
-
-    <!-- HERO BANNER -->
-    <section class="hero-banner">
-        <div class="hero-content">
-            <div class="hero-sub">NexPak Security Store</div>
-            <h1>Professional Security.<br>Delivered To Your Door.</h1>
-            <p>Complete security kits for homes, businesses, estates, farms and other properties.</p>
-            <button class="hero-btn" onclick="filterCategory('all')"><i class="fa-solid fa-box"></i> Shop Security Kits</button>
+    <div class="main-container">
+        <div class="controls-bar">
+            <div class="category-filters">
+                <button class="nav-link active" data-category="all" onclick="filterCategory('all')">All Kits</button>
+                <button class="nav-link" data-category="cctv" onclick="filterCategory('cctv')">Analogue CCTV</button>
+                <button class="nav-link" data-category="ip-cctv" onclick="filterCategory('ip-cctv')">IP CCTV</button>
+                <button class="nav-link" data-category="fencing" onclick="filterCategory('fencing')">Electric Fencing</button>
+                <button class="nav-link" data-category="agricultural" onclick="filterCategory('agricultural')">Agricultural</button>
+            </div>
+            <input type="text" id="storeSearch" class="search-box" placeholder="Search kits & solutions..." onkeyup="searchStore()">
         </div>
-    </section>
 
-    <!-- CATALOGUE CONTAINER -->
-    <main class="container">
-        <div class="section-title-bar" id="catalogueCategoryTitle"><i class="fa-solid fa-shield"></i> Security Kits</div>
-        <section class="product-grid" id="onlineProductGrid">
-            <!-- Rendered dynamically -->
-        </section>
-    </main>
+        <h2 id="catalogueCategoryTitle" style="margin-bottom: 15px; font-size: 18px; color: var(--primary-navy);">All Security Kits</h2>
+        
+        <div class="catalogue-grid" id="onlineProductGrid"></div>
+    </div>
 
-    <!-- CART SIDEBAR DRAWER -->
+    <!-- Cart Drawer -->
     <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
     <div class="cart-drawer" id="cartDrawer">
         <div class="cart-header">
             <h3>Your Shopping Cart</h3>
-            <button onclick="closeCart()" style="background:none;border:none;font-size:16px;cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+            <button onclick="closeCart()" style="background:transparent; border:none; color:white; font-size:16px; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
         </div>
-        <div class="cart-items" id="cartItems">
+        <div class="cart-body" id="cartItems">
             <p>Your cart is empty.</p>
         </div>
         <div class="cart-footer">
-            <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:5px;"><span>Subtotal:</span><strong id="cartSubtotal">R 0.00</strong></div>
-            <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:5px;"><span>VAT (15%):</span><strong id="cartVat">R 0.00</strong></div>
-            <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:bold; margin-top:8px; color:var(--primary-navy);"><span>Total:</span><span id="cartTotal">R 0.00</span></div>
-            <button class="checkout-btn" onclick="openCheckout()">Proceed to Checkout</button>
-            <button onclick="generateNexpakQuotation()" style="width:100%; margin-top:8px; background:#e2e8f0; border:none; padding:10px; border-radius:6px; font-size:12px; font-weight:600; cursor:pointer;"><i class="fa-solid fa-file-pdf"></i> Download PDF Quotation</button>
+            <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:5px;"><span>Subtotal:</span><span id="cartSubtotal">R 0.00</span></div>
+            <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:10px;"><span>VAT (15%):</span><span id="cartVat">R 0.00</span></div>
+            <div style="display:flex; justify-content:space-between; font-size:16px; font-weight:bold; color:var(--primary-navy); margin-bottom:15px;"><span>Total:</span><span id="cartTotal">R 0.00</span></div>
+            <button class="btn-checkout" onclick="openCheckout()">Proceed to Checkout</button>
+            <button onclick="generateNexpakQuotation()" style="width:100%; background:#e2e8f0; border:none; padding:10px; border-radius:4px; font-weight:bold; font-size:12px; margin-top:8px; cursor:pointer;"><i class="fa-solid fa-file-pdf"></i> Download Official Quote</button>
         </div>
     </div>
 
-    <!-- CHECKOUT MODAL -->
-    <div class="checkout-modal" id="checkoutModal">
-        <div class="checkout-content">
-            <h3>Checkout Details</h3>
-            <div style="margin-top:15px;">
-                <label style="font-size:11px;font-weight:600;">Full Name</label>
-                <input type="text" id="custName" style="width:100%;padding:8px;margin-top:3px;margin-bottom:10px;border:1px solid var(--border-color);border-radius:4px;">
-                
-                <label style="font-size:11px;font-weight:600;">Email Address</label>
-                <input type="email" id="custEmail" style="width:100%;padding:8px;margin-top:3px;margin-bottom:10px;border:1px solid var(--border-color);border-radius:4px;">
-                
-                <label style="font-size:11px;font-weight:600;">Province</label>
-                <select id="checkoutProvince" onchange="calculateDelivery()" style="width:100%;padding:8px;margin-top:3px;margin-bottom:15px;border:1px solid var(--border-color);border-radius:4px;">
+    <!-- Checkout Modal -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content">
+            <h3 style="margin-bottom: 15px; color: var(--primary-navy);">Checkout Details</h3>
+            <div class="selector-container"><label>Full Name</label><input type="text" id="custName"></div>
+            <div class="selector-container"><label>Email Address</label><input type="email" id="custEmail"></div>
+            <div class="selector-container"><label>Province</label>
+                <select id="checkoutProvince" onchange="calculateDelivery()">
                     <option value="">Select Province...</option>
                     <option value="Gauteng">Gauteng</option>
                     <option value="Mpumalanga">Mpumalanga</option>
@@ -392,54 +146,39 @@
                     <option value="Western Cape">Western Cape</option>
                     <option value="Northern Cape">Northern Cape</option>
                 </select>
-
-                <div style="background:#f1f5f9; padding:10px; border-radius:6px; font-size:12px; margin-bottom:15px;">
-                    <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span>Subtotal:</span> <span id="chkSubtotal">R 0.00</span></div>
-                    <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span>VAT (15%):</span> <span id="chkVat">R 0.00</span></div>
-                    <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span>Delivery Fee:</span> <span id="chkDelivery">R 0.00</span></div>
-                    <hr style="border:0; border-top:1px solid #cbd5e1; margin:6px 0;">
-                    <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:14px; color:var(--primary-navy);"><span>Grand Total:</span> <span id="chkTotal">R 0.00</span></div>
-                </div>
-
-                <form id="payfastForm" action="https://www.payfast.co.za/eng/process" method="POST">
-                    <input type="hidden" name="merchant_id" value="10000100">
-                    <input type="hidden" name="merchant_key" value="48fhd73ccsd7">
-                    <input type="hidden" name="amount" id="pfAmount" value="0.00">
-                    <input type="hidden" name="item_name" value="NexPak Security Order">
-                    <button type="button" class="checkout-btn" onclick="submitOrder()">Pay via PayFast</button>
-                </form>
-                <button onclick="closeCheckout()" style="width:100%; margin-top:8px; background:transparent; border:none; color:#64748b; cursor:pointer; font-size:12px;">Cancel</button>
             </div>
+            <div style="background:#f1f5f9; padding:10px; border-radius:4px; font-size:13px; margin:15px 0;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span>Subtotal:</span><span id="chkSubtotal">R 0.00</span></div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span>VAT:</span><span id="chkVat">R 0.00</span></div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span>Delivery Fee:</span><span id="chkDelivery">Select province</span></div>
+                <hr style="margin:6px 0; border:0; border-top:1px solid #cbd5e1;">
+                <div style="display:flex; justify-content:space-between; font-weight:bold; color:var(--primary-navy);"><span>Grand Total:</span><span id="chkTotal">R 0.00</span></div>
+            </div>
+            <form id="payfastForm" action="https://www.payfast.co.za/eng/process" method="POST">
+                <input type="hidden" name="merchant_id" value="10000100">
+                <input type="hidden" name="merchant_key" value="48fhd7ccvskh9">
+                <input type="hidden" name="amount" id="pfAmount" value="0.00">
+                <input type="hidden" name="item_name" value="NexPak Security Order">
+                <div style="display: flex; gap: 10px;">
+                    <button type="button" onclick="submitOrder()" class="btn-checkout" style="margin-top:0;">Pay with PayFast</button>
+                    <button type="button" onclick="closeCheckout()" style="background:#e2e8f0; border:none; padding:10px; border-radius:4px; cursor:pointer; font-weight:bold;">Cancel</button>
+                </div>
+            </form>
         </div>
     </div>
 
-    <script>
-        const NEXPAK_KIT_DATABASE = [
-            {
-                id: "CENT-RDO", category: "gate-automation", name: "Centurion RDO Kit",
-                description: "Roll-up garage door operator.", price: 2899.00,
-                image: "../images/centurion.png",
-                contents: ["RDO Kit", "2 x Blue Nova Remotes"]
-            },
-            {
-                id: "CENT-SWING", category: "gate-automation", name: "Centurion Swing Gate Kit",
-                description: "Double swing gate automation.", price: 12999.00,
-                image: "../images/centurion.png",
-                options: { model: [{value: "400", label: "Vantage 400", extra: 0}, {value: "500", label: "Vantage 500", extra: 1500}] },
-                contents: ["vantage controller", "2 x vantage motors", "2 x Blue Nova remotes", "25 meter vector cable"]
-            },
-            {
-                id: "CCTV-HD", category: "cctv", name: "CCTV HD KIT Dahua",
-                description: "Professional Analog HD surveillance.", price: 7999.00,
-                image: "../images/8ch.png",
-                options: {
-                    channels: [{value: "8", label: "8 Channel", extra: 0}, {value: "16", label: "16 Channel", extra: 6999}, {value: "32", label: "32 Channel", extra: 15000}],
-                    style: [{value: "bullet", label: "Bullet Cameras", extra: 0}, {value: "dome", label: "Dome Cameras", extra: 0}],
-                    lens: [{value: "fixed", label: "Fixed Lens", extra: 0}, {value: "vari", label: "Vari Focal", extra: 1000}]
-                },
-                dynamicContents: {
-                    "8": ["8 channel DVR", "1 TB hard drive", "8 cameras", "1 roll poax", "16 x BNC crimp on", "8 x DC leads", "1 x CCTV 9 way PSU", "8 x 100x100 enclosures"],
-                    "16": ["16 channel DVR", "2tb hard drive", "16 cameras", "2 x 9 way PSU", "3 x poax 100m", "32bnc", "16 DC leads", "16 enclosures"],
+<script>
+const NEXPAK_KIT_DATABASE = [
+    {
+        id: "CCTV-ANALOGUE", category: "cctv", name: "Analogue CCTV KIT",
+        description: "Reliable coaxial high-definition security camera surveillance system.", price: 3499.00,
+        image: "../images/dahua.png",
+        options: {
+            channels: [{value: "8", label: "8 Channel", extra: 0}, {value: "16", label: "16 Channel", extra: 2500}, {value: "32", label: "32 Channel", extra: 6000}]
+        },
+        dynamicContents: {
+            "8": ["8 channel DVR", "1 TB hard drive", "8 cameras", "1 roll poax", "16 x BNC crimp on", "8 x DC leads", "1 x CCTV 9 way PSU", "8 x 100x100 enclosures"],
+            "16": ["16 channel DVR", "2tb hard drive", "16 cameras", "2 x 9 way PSU", "3 x poax 100m", "32 x BNC", "16 DC leads", "16 enclosures"],
             "32": ["32 channel DVR", "4tb hard drive", "32 cameras", "CCTV 18 way x 3", "poax 300m x 2", "64 x BNC", "32 x DC leads", "32 enclosures"]
         }
     },
@@ -457,6 +196,24 @@
             "16": ["NVR 16", "16 Poe", "2tb", "16 cameras", "300m cat 5", "RJ45/boots x 32", "16 enclosures"],
             "32": ["32 NVR", "16 Poe x 2", "hard drive 4 TB", "32 cameras", "2 x 300m Cat5", "RJ45 and boots", "enclosures"]
         }
+    },
+    {
+        id: "FENCE-WALL", category: "fencing", name: "Wall-Top Electric Fence Kit",
+        description: "Complete perimeter wall-top security electric fencing kit.", price: 4299.00,
+        image: "../images/dahua.png",
+        contents: ["1 x Electric Fence Energizer", "100m Galvanized Solid Wire", "Wall-Top Brackets (6-Line)", "Compression Springs", "Warning Signs", "Hardware & Fasteners"]
+    },
+    {
+        id: "AGRI-STRIP", category: "agricultural", name: "Strip Grazing Kit 100m",
+        description: "Portable electric fencing kit designed for rotational strip grazing.", price: 2499.00,
+        image: "../images/dahua.png",
+        contents: ["1 x Portable Battery Energizer", "100m Polywire / Polytape", "10 x Spring Gate / Treadin Posts", "1 x Gate Handle Kit", "Warning Sign"]
+    },
+    {
+        id: "AGRI-EQUESTRIAN", category: "agricultural", name: "Equestrian Fencing Kit 100m",
+        description: "Safe, highly visible electric fencing tailored for horses and livestock.", price: 3899.00,
+        image: "../images/dahua.png",
+        contents: ["1 x High-Power Energizer", "100m Wide Horse Polytape", "Sturdy Corner and Line Posts", "Insulators & Tensioners", "1 x Complete Equestrian Gate Handle Set"]
     }
 ];
 
@@ -490,7 +247,7 @@ function renderNexpakKitCatalogue(category = "all", searchTerm = "") {
     if (category !== "all") kits = kits.filter(k => k.category === category);
     if (searchTerm) kits = kits.filter(k => k.name.toLowerCase().includes(searchTerm.toLowerCase()) || k.description.toLowerCase().includes(searchTerm.toLowerCase()));
     
-    document.getElementById("catalogueCategoryTitle").innerHTML = `<i class="fa-solid fa-shield"></i> ` + (category === "all" && !searchTerm ? "All Security Kits" : `${kits.length} Kits Found`);
+    document.getElementById("catalogueCategoryTitle").innerHTML = `<i class="fa-solid fa-shield"></i> ` + (category === "all" && !searchTerm ? "All Security & Agricultural Kits" : `${kits.length} Kits Found`);
 
     grid.innerHTML = kits.map(kit => {
         let defaultOpts = {};
@@ -553,7 +310,7 @@ function addNexpakKitToCart(kitId) {
     try {
         const kit = NEXPAK_KIT_DATABASE.find(k => k.id === kitId);
         const card = document.getElementById(`card-${kitId}`);
-        const qty = parseInt(document.getElementById(`qty-${kitId}`).value) || 1;
+        const qty = parseInt(document.getElementBId(`qty-${kitId}`).value) || 1;
         
         let textOptions = {};
         let valueOptions = {};
@@ -786,4 +543,3 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
-    
