@@ -1,174 +1,386 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NexPak Solutions - Security Store</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexPak Security Solutions Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        :root {
+            --primary-navy: #0b1329;
+            --accent-blue: #0066ff;
+            --bg-light: #f8fafc;
+            --border-color: #e2e8f0;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg-light); color: #334155; }
 
-<!-- jsPDF -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        /* --- EXACT HEADER & NAV BAR STYLING --- */
+        .main-header {
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo-area {
+            font-weight: 800;
+            font-size: 20px;
+            color: var(--primary-navy);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        .logo-area img {
+            height: 32px;
+            object-fit: contain;
+        }
+        .search-bar-container {
+            display: flex;
+            flex: 1;
+            max-width: 480px;
+            margin: 0 20px;
+        }
+        .search-bar-container input {
+            width: 100%;
+            padding: 9px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px 0 0 6px;
+            outline: none;
+            font-size: 13px;
+            background: #f8fafc;
+        }
+        .search-bar-container button {
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 0 18px;
+            border-radius: 0 6px 6px 0;
+            cursor: pointer;
+            font-size: 15px;
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .header-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            padding: 7px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            color: #334155;
+            text-decoration: none;
+        }
+        .header-btn:hover { background: #f1f5f9; }
+        .badge {
+            background: var(--accent-blue);
+            color: white;
+            font-size: 9px;
+            padding: 2px 5px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
 
-<style>
-:root {
-    --primary-navy: #000080; 
-    --hero-blue-start: #000080;
-    --hero-blue-end: #003399;
-    --accent-blue: #0044cc;
-    --bg-light: #f4f6f9;
-    --card-bg: #ffffff;
-    --border-color: #e2e8f0;
-    --text-dark: #0f172a;
-    --text-muted: #64748b;
-    --danger: #dc2626;
-}
+        /* Category Navigation Bar (Dark Navy) */
+        .nav-bar {
+            background: #091224;
+            display: flex;
+            overflow-x: auto;
+            padding: 0 10px;
+            gap: 2px;
+            white-space: nowrap;
+            scrollbar-width: none;
+        }
+        .nav-bar::-webkit-scrollbar { display: none; }
+        .nav-link {
+            color: #cbd5e1;
+            background: transparent;
+            border: none;
+            padding: 12px 14px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .nav-link i { color: #94a3b8; font-size: 13px; }
+        .nav-link:hover, .nav-link.active {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .nav-link:hover i, .nav-link.active i { color: #ffffff; }
 
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
-body { background: var(--bg-light); color: var(--text-dark); }
-button, input, select { font-family: inherit; outline: none; }
-button { cursor: pointer; }
+        /* --- HERO BANNER --- */
+        .hero-banner {
+            background: linear-gradient(135deg, #071022 0%, #0c2347 50%, #0052cc 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: left;
+        }
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .hero-sub {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #93c5fd;
+            margin-bottom: 8px;
+        }
+        .hero-banner h1 {
+            font-size: 28px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+        .hero-banner p {
+            font-size: 13px;
+            color: #cbd5e1;
+            max-width: 500px;
+            margin-bottom: 20px;
+        }
+        .hero-btn {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .hero-btn:hover { background: rgba(255, 255, 255, 0.25); }
 
-/* Header & Nav */
-.top-header { background: #ffffff; border-bottom: 1px solid var(--border-color); padding: 10px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-.logo-container { display: flex; align-items: center; gap: 10px; font-weight: bold; font-size: 18px; color: var(--primary-navy); }
-.logo-container img { height: 42px; width: auto; object-fit: contain; }
-.search-bar { flex: 1; max-width: 500px; display: flex; border: 1px solid var(--border-color); border-radius: 4px; overflow: hidden; }
-.search-bar input { width: 100%; padding: 8px 14px; border: none; font-size: 13px; }
-.search-bar button { background: var(--primary-navy); color: #ffffff; border: none; padding: 0 16px; }
-.header-actions { display: flex; align-items: center; gap: 16px; font-size: 13px; }
-.header-action-item { display: flex; align-items: center; gap: 6px; color: var(--text-dark); text-decoration: none; font-weight: 500; }
-.badge-icon { position: relative; }
-.badge { position: absolute; top: -8px; right: -10px; background: var(--danger); color: #ffffff; font-size: 10px; font-weight: bold; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; }
-.nav-bar { background: var(--primary-navy); display: flex; gap: 20px; padding: 0 24px; overflow-x: auto; white-space: nowrap; }
-.nav-link { color: #ffffff; text-decoration: none; padding: 12px 0; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 6px; opacity: 0.8; }
-.nav-link.active, .nav-link:hover { opacity: 1; border-bottom: 3px solid #ffffff; }
+        /* --- MAIN LAYOUT & CATALOGUE --- */
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+        .section-title-bar {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary-navy);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 15px;
+        }
+        .product-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        }
+        .product-image-container {
+            width: 100%;
+            height: 140px;
+            background: #f1f5f9;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        .product-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .product-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary-navy);
+            margin-bottom: 5px;
+        }
+        .product-desc {
+            font-size: 11px;
+            color: #64748b;
+            margin-bottom: 10px;
+            min-height: 28px;
+        }
+        .selector-container {
+            margin-bottom: 8px;
+        }
+        .selector-container label {
+            font-size: 10px;
+            font-weight: 600;
+            color: #475569;
+            display: block;
+            margin-bottom: 2px;
+        }
+        .selector-container select, .selector-container input {
+            width: 100%;
+            padding: 6px;
+            font-size: 11px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            outline: none;
+        }
+        .price-text {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--primary-navy);
+            margin: 10px 0;
+        }
+        .card-actions {
+            display: flex;
+            gap: 6px;
+        }
+        .card-actions button {
+            flex: 1;
+            padding: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            border: 1px solid var(--border-color);
+        }
+        .btn-summary-quote { background: white; color: #334155; }
+        .btn-add-cart { background: var(--accent-blue); color: white; border-color: var(--accent-blue) !important; }
 
-/* Hero */
-.hero-banner { background: linear-gradient(110deg, var(--hero-blue-start) 40%, var(--hero-blue-end) 100%); color: #ffffff; padding: 48px 32px; text-align: center; }
-.hero-title { font-size: 32px; font-weight: 800; margin-bottom: 12px; }
+        /* --- CART SIDEBAR DRAWER --- */
+        .cart-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); display: none; z-index: 2000;
+        }
+        .cart-overlay.open { display: block; }
+        .cart-drawer {
+            position: fixed; top: 0; right: -350px; width: 350px; height: 100%;
+            background: white; z-index: 2001; transition: right 0.3s ease;
+            display: flex; flex-direction: column; box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+        }
+        .cart-drawer.open { right: 0; }
+        .cart-header { padding: 15px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+        .cart-items { flex: 1; overflow-y: auto; padding: 15px; }
+        .cart-item { display: flex; gap: 10px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #f1f5f9; }
+        .cart-item-img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; background: #f1f5f9; }
+        .cart-item-details { flex: 1; }
+        .cart-item-details h4 { font-size: 12px; font-weight: 600; color: var(--primary-navy); }
+        .cart-footer { padding: 15px; border-top: 1px solid var(--border-color); background: #f8fafc; }
+        .checkout-btn { width: 100%; background: var(--accent-blue); color: white; border: none; padding: 12px; border-radius: 6px; font-weight: 600; cursor: pointer; margin-top: 10px; }
 
-/* Catalogue Grid & Product Cards */
-.container { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
-.section-title { color: var(--primary-navy); margin-bottom: 20px; }
-.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-.product-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; display: flex; flex-direction: column; transition: box-shadow 0.2s ease; }
-.product-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-.product-image-container { width: 100%; height: 160px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; background: #ffffff; border-radius: 4px; overflow: hidden; padding: 10px; }
-.product-image-container img { max-width: 100%; max-height: 100%; object-fit: contain; }
-.product-name { font-weight: 700; font-size: 16px; margin-bottom: 5px; color: var(--primary-navy); }
-.product-desc { font-size: 12px; color: var(--text-muted); margin-bottom: 15px; flex-grow: 1; }
-.price-text { font-size: 18px; font-weight: 800; color: var(--primary-navy); margin: 10px 0; }
-.selector-container { margin-bottom: 10px; }
-.selector-container label { font-size: 11px; font-weight: 600; display: block; margin-bottom: 4px; color: var(--primary-navy); }
-.selector-container select, .selector-container input { width: 100%; padding: 6px; font-size: 12px; border: 1px solid var(--border-color); border-radius: 4px; }
-.card-actions { display: flex; gap: 10px; margin-top: 15px; }
-.btn-summary-quote { flex: 1; padding: 8px; background: #f1f5f9; border: 1px solid var(--border-color); border-radius: 4px; font-weight: 600; font-size: 12px; color: var(--primary-navy); }
-.btn-add-cart { flex: 1; padding: 8px; background: var(--primary-navy); border: none; border-radius: 4px; font-weight: 600; font-size: 12px; color: #fff; }
-
-/* Cart Drawer */
-.cart-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9998; display: none; }
-.cart-overlay.open { display: block; }
-.cart-drawer { position: fixed; top: 0; right: -400px; width: 400px; max-width: 100%; height: 100vh; background: #fff; z-index: 9999; display: flex; flex-direction: column; transition: right 0.3s ease; box-shadow: -5px 0 15px rgba(0,0,0,0.1); }
-.cart-drawer.open { right: 0; }
-.cart-header { padding: 20px; background: var(--primary-navy); color: #fff; display: flex; justify-content: space-between; align-items: center; }
-.cart-items { flex: 1; overflow-y: auto; padding: 20px; }
-.cart-item { display: flex; gap: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 15px; align-items: center; }
-.cart-item-img { width: 50px; height: 50px; object-fit: contain; border: 1px solid var(--border-color); border-radius: 4px; padding: 4px; }
-.cart-item-details { flex: 1; }
-.cart-item-details h4 { font-size: 14px; margin-bottom: 5px; color: var(--primary-navy); }
-.cart-summary { padding: 20px; border-top: 1px solid var(--border-color); background: #f8fafc; }
-.cart-checkout-button { width: 100%; padding: 12px; background: var(--primary-navy); color: #fff; border: none; border-radius: 4px; font-weight: 600; margin-top: 10px; }
-
-/* Checkout Modal */
-.checkout-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 10000; display: none; justify-content: center; align-items: center; }
-.checkout-modal.open { display: flex; }
-.checkout-window { background: #fff; width: 500px; max-width: 90%; border-radius: 8px; overflow: hidden; }
-.checkout-header { background: var(--primary-navy); color: #fff; padding: 15px 20px; display: flex; justify-content: space-between; }
-.checkout-body { padding: 20px; max-height: 80vh; overflow-y: auto; }
-.checkout-field { margin-bottom: 15px; }
-.checkout-field label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px; color: var(--primary-navy); }
-.checkout-field input, .checkout-field select { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 4px; }
-.checkout-totals { background: #f1f5f9; padding: 15px; border-radius: 4px; margin-top: 15px; }
-.checkout-totals div { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 14px; }
-.checkout-totals .grand-total { font-size: 18px; font-weight: bold; color: var(--primary-navy); border-top: 1px solid #cbd5e1; padding-top: 10px; margin-top: 10px; }
-.payfast-btn { width: 100%; padding: 15px; background: #dc2626; color: white; border: none; border-radius: 4px; font-weight: bold; font-size: 16px; margin-top: 15px; }
-</style>
+        /* --- CHECKOUT MODAL --- */
+        .checkout-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 3000;
+        }
+        .checkout-modal.open { display: flex; }
+        .checkout-content { background: white; width: 90%; max-width: 450px; border-radius: 8px; padding: 20px; max-height: 90vh; overflow-y: auto; }
+    </style>
 </head>
 <body>
 
-<header class="top-header">
-    <div class="logo-container">
-        <img src="logo.png" alt="NexPak Logo">
-        <span>NexPak Solutions</span>
-    </div>
-    <div class="search-bar">
-        <input id="storeSearch" type="text" placeholder="Search kits..." onkeyup="if(event.key === 'Enter') searchStore()">
-        <button type="button" onclick="searchStore()"><i class="fa-solid fa-magnifying-glass"></i></button>
-    </div>
-    <div class="header-actions">
-        <a href="#" class="header-action-item" onclick="filterCategory('all'); return false;"><i class="fa-solid fa-house"></i> Home</a>
-        <a href="#" class="header-action-item" onclick="openCart(); return false;">
-            <span class="badge-icon"><i class="fa-solid fa-cart-shopping"></i><span class="badge" id="cartCount">0</span></span> Cart
+    <!-- MAIN HEADER -->
+    <header class="main-header">
+        <a href="#" class="logo-area">
+            <span style="color:var(--primary-navy);">NEX</span><span style="color:var(--accent-blue);">PAK</span>
         </a>
-    </div>
-</header>
-
-<nav class="nav-bar">
-    <a href="#" class="nav-link active" data-category="all" onclick="filterCategory('all'); return false;"><i class="fa-solid fa-layer-group"></i> All Kits</a>
-    <a href="#" class="nav-link" data-category="electric-fencing" onclick="filterCategory('electric-fencing'); return false;"><i class="fa-solid fa-bolt"></i> Electric Fencing</a>
-    <a href="#" class="nav-link" data-category="roboguard" onclick="filterCategory('roboguard'); return false;"><i class="fa-solid fa-shield-halved"></i> Roboguard</a>
-    <a href="#" class="nav-link" data-category="alarms" onclick="filterCategory('alarms'); return false;"><i class="fa-solid fa-bell"></i> Alarms & Ajax</a>
-    <a href="#" class="nav-link" data-category="gate-automation" onclick="filterCategory('gate-automation'); return false;"><i class="fa-solid fa-warehouse"></i> Gate & Garage</a>
-    <a href="#" class="nav-link" data-category="cctv" onclick="filterCategory('cctv'); return false;"><i class="fa-solid fa-video"></i> CCTV (HD & IP)</a>
-</nav>
-
-<section class="hero-banner">
-    <h1 class="hero-title">Professional Security Solutions.</h1>
-    <p>Complete installer kits delivered to your door.</p>
-</section>
-
-<main class="container">
-    <h2 class="section-title" id="catalogueCategoryTitle">All Security Kits</h2>
-    <div class="card-grid" id="onlineProductGrid"></div>
-</main>
-
-<!-- Cart Drawer -->
-<div id="cartOverlay" class="cart-overlay" onclick="closeCart()"></div>
-<aside id="cartDrawer" class="cart-drawer">
-    <div class="cart-header">
-        <span style="font-weight:bold; font-size:16px;"><i class="fa-solid fa-cart-shopping"></i> Your Cart</span>
-        <button onclick="closeCart()" style="background:transparent; border:none; color:#fff; font-size:18px;"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div id="cartItems" class="cart-items"></div>
-    <div class="cart-summary">
-        <div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>Subtotal:</span><strong id="cartSubtotal">R 0.00</strong></div>
-        <div style="display:flex; justify-content:space-between; margin-bottom:10px;"><span>VAT (15%):</span><strong id="cartVat">R 0.00</strong></div>
-        <div style="display:flex; justify-content:space-between; font-size:18px; border-top:1px solid #ccc; padding-top:10px; font-weight:bold; color:var(--primary-navy);"><span>Total:</span><strong id="cartTotal">R 0.00</strong></div>
-        <button class="cart-checkout-button" onclick="generateNexpakQuotation()"><i class="fa-solid fa-file-pdf"></i> Download Cart Quote</button>
-        <button class="cart-checkout-button" onclick="openCheckout()" style="background:#16a34a;"><i class="fa-solid fa-lock"></i> Proceed To Checkout</button>
-    </div>
-</aside>
-
-<!-- Checkout Modal -->
-<div id="checkoutModal" class="checkout-modal">
-    <div class="checkout-window">
-        <div class="checkout-header">
-            <span style="font-weight:bold; font-size:16px;"><i class="fa-solid fa-lock"></i> Secure Checkout</span>
-            <button onclick="closeCheckout()" style="background:transparent; border:none; color:#fff; font-size:18px;"><i class="fa-solid fa-xmark"></i></button>
+        <div class="search-bar-container">
+            <input type="text" id="storeSearch" placeholder="Search security kits..." onkeyup="searchStore()">
+            <button onclick="searchStore()"><i class="fa-solid fa-search"></i></button>
         </div>
-        <div class="checkout-body">
-            <div class="checkout-field">
-                <label>Full Name</label>
-                <input type="text" id="custName" placeholder="Enter your name" required>
-            </div>
-            <div class="checkout-field">
-                <label>Email Address</label>
-                <input type="email" id="custEmail" placeholder="email@example.com" required>
-            </div>
-            <div class="checkout-field">
-                <label>Delivery Province</label>
-                <select id="checkoutProvince" onchange="calculateDelivery()">
+        <div class="header-actions">
+            <button class="header-btn"><i class="fa-solid fa-user"></i> Account</button>
+            <button class="header-btn"><i class="fa-solid fa-heart"></i> Wishlist <span class="badge">0</span></button>
+            <button class="header-btn" onclick="openCart()"><i class="fa-solid fa-cart-shopping"></i> Cart <span class="badge" id="cartCount">0</span></button>
+        </div>
+    </header>
+
+    <!-- CATEGORY NAVIGATION BAR -->
+    <nav class="nav-bar">
+        <button class="nav-link active" data-category="all" onclick="filterCategory('all')"><i class="fa-solid fa-th-large"></i> All Kits</button>
+        <button class="nav-link" data-category="electric-fencing" onclick="filterCategory('electric-fencing')"><i class="fa-solid fa-bolt"></i> Electric Fencing</button>
+        <button class="nav-link" data-category="roboguard" onclick="filterCategory('roboguard')"><i class="fa-solid fa-shield-halved"></i> Roboguard</button>
+        <button class="nav-link" data-category="cctv" onclick="filterCategory('cctv')"><i class="fa-solid fa-video"></i> HD CCTV</button>
+        <button class="nav-link" data-category="ip-cctv" onclick="filterCategory('ip-cctv')"><i class="fa-solid fa-network-wired"></i> IP CCTV</button>
+        <button class="nav-link" data-category="alarms" onclick="filterCategory('alarms')"><i class="fa-solid fa-bell"></i> Alarms</button>
+        <button class="nav-link" data-category="gate-automation" onclick="filterCategory('gate-automation')"><i class="fa-solid fa-door-closed"></i> Gate Automation</button>
+    </nav>
+
+    <!-- HERO BANNER -->
+    <section class="hero-banner">
+        <div class="hero-content">
+            <div class="hero-sub">NexPak Security Store</div>
+            <h1>Professional Security.<br>Delivered To Your Door.</h1>
+            <p>Complete security kits for homes, businesses, estates, farms and other properties.</p>
+            <button class="hero-btn" onclick="filterCategory('all')"><i class="fa-solid fa-box"></i> Shop Security Kits</button>
+        </div>
+    </section>
+
+    <!-- CATALOGUE CONTAINER -->
+    <main class="container">
+        <div class="section-title-bar" id="catalogueCategoryTitle"><i class="fa-solid fa-shield"></i> Security Kits</div>
+        <section class="product-grid" id="onlineProductGrid">
+            <!-- Rendered dynamically -->
+        </section>
+    </main>
+
+    <!-- CART SIDEBAR DRAWER -->
+    <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+    <div class="cart-drawer" id="cartDrawer">
+        <div class="cart-header">
+            <h3>Your Shopping Cart</h3>
+            <button onclick="closeCart()" style="background:none;border:none;font-size:16px;cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p>Your cart is empty.</p>
+        </div>
+        <div class="cart-footer">
+            <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:5px;"><span>Subtotal:</span><strong id="cartSubtotal">R 0.00</strong></div>
+            <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:5px;"><span>VAT (15%):</span><strong id="cartVat">R 0.00</strong></div>
+            <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:bold; margin-top:8px; color:var(--primary-navy);"><span>Total:</span><span id="cartTotal">R 0.00</span></div>
+            <button class="checkout-btn" onclick="openCheckout()">Proceed to Checkout</button>
+            <button onclick="generateNexpakQuotation()" style="width:100%; margin-top:8px; background:#e2e8f0; border:none; padding:10px; border-radius:6px; font-size:12px; font-weight:600; cursor:pointer;"><i class="fa-solid fa-file-pdf"></i> Download PDF Quotation</button>
+        </div>
+    </div>
+
+    <!-- CHECKOUT MODAL -->
+    <div class="checkout-modal" id="checkoutModal">
+        <div class="checkout-content">
+            <h3>Checkout Details</h3>
+            <div style="margin-top:15px;">
+                <label style="font-size:11px;font-weight:600;">Full Name</label>
+                <input type="text" id="custName" style="width:100%;padding:8px;margin-top:3px;margin-bottom:10px;border:1px solid var(--border-color);border-radius:4px;">
+                
+                <label style="font-size:11px;font-weight:600;">Email Address</label>
+                <input type="email" id="custEmail" style="width:100%;padding:8px;margin-top:3px;margin-bottom:10px;border:1px solid var(--border-color);border-radius:4px;">
+                
+                <label style="font-size:11px;font-weight:600;">Province</label>
+                <select id="checkoutProvince" onchange="calculateDelivery()" style="width:100%;padding:8px;margin-top:3px;margin-bottom:15px;border:1px solid var(--border-color);border-radius:4px;">
                     <option value="">Select Province...</option>
                     <option value="Gauteng">Gauteng</option>
                     <option value="Mpumalanga">Mpumalanga</option>
@@ -180,150 +392,59 @@ button { cursor: pointer; }
                     <option value="Western Cape">Western Cape</option>
                     <option value="Northern Cape">Northern Cape</option>
                 </select>
+
+                <div style="background:#f1f5f9; padding:10px; border-radius:6px; font-size:12px; margin-bottom:15px;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span>Subtotal:</span> <span id="chkSubtotal">R 0.00</span></div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span>VAT (15%):</span> <span id="chkVat">R 0.00</span></div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:4px;"><span>Delivery Fee:</span> <span id="chkDelivery">R 0.00</span></div>
+                    <hr style="border:0; border-top:1px solid #cbd5e1; margin:6px 0;">
+                    <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:14px; color:var(--primary-navy);"><span>Grand Total:</span> <span id="chkTotal">R 0.00</span></div>
+                </div>
+
+                <form id="payfastForm" action="https://www.payfast.co.za/eng/process" method="POST">
+                    <input type="hidden" name="merchant_id" value="10000100">
+                    <input type="hidden" name="merchant_key" value="48fhd73ccsd7">
+                    <input type="hidden" name="amount" id="pfAmount" value="0.00">
+                    <input type="hidden" name="item_name" value="NexPak Security Order">
+                    <button type="button" class="checkout-btn" onclick="submitOrder()">Pay via PayFast</button>
+                </form>
+                <button onclick="closeCheckout()" style="width:100%; margin-top:8px; background:transparent; border:none; color:#64748b; cursor:pointer; font-size:12px;">Cancel</button>
             </div>
-            <div class="checkout-totals">
-                <div><span>Subtotal:</span> <span id="chkSubtotal">R 0.00</span></div>
-                <div><span>VAT (15%):</span> <span id="chkVat">R 0.00</span></div>
-                <div><span>Delivery:</span> <span id="chkDelivery">Select province</span></div>
-                <div class="grand-total"><span>Total to Pay:</span> <span id="chkTotal">R 0.00</span></div>
-            </div>
-            
-            <form action="https://sandbox.payfast.co.za/eng/process" method="POST" id="payfastForm">
-                <input type="hidden" name="merchant_id" value="10000100">
-                <input type="hidden" name="merchant_key" value="46f0cd694581a">
-                <input type="hidden" name="return_url" value="https://yourwebsite.co.za/success">
-                <input type="hidden" name="cancel_url" value="https://yourwebsite.co.za/cancel">
-                <input type="hidden" name="item_name" value="NexPak Solutions Order">
-                <input type="hidden" id="pfAmount" name="amount" value="0.00">
-                <button type="button" class="payfast-btn" onclick="submitOrder()">Pay via PayFast / Instant EFT</button>
-            </form>
         </div>
     </div>
-</div>
 
-<script>
-/* --- DATABASE --- */
-const NEXPAK_KIT_DATABASE = [
-    {
-        id: "EF-6L-01", category: "electric-fencing", name: "Electric Fence Kit 6 line square tube",
-        description: "Complete 6 line perimeter wall top solution.", price: 8899.00,
-        image: "../images/ef6.png",
-        options: {
-            length: [{value: "100m", label: "100m", extra: 0}, {value: "200m", label: "200m", extra: 4200}],
-            bracketType: [{value: "angle", label: "Angle", extra: 0}, {value: "straight", label: "Straight", extra: 0}],
-            color: [{value: "black", label: "Black", extra: 0}, {value: "white", label: "White", extra: 0}, {value: "galvanized", label: "Galvanized", extra: 150}]
-        },
-        contents: ["brackets", "stays", "lugs", "tensioners", "hooks", "ferrules", "galvanised braided wire", "nail in anchors 8x80mm", "warning signs", "HT cable soft", "earth spikes copper plated", "gate contact", "nite light", "Silver JVA Z11 Energizer", "battery", "PSU", "dual lightning divertor", "siren", "strobe"]
-    },
-    {
-        id: "EF-8L-01", category: "electric-fencing", name: "Electric Fence Kit 8 line square tube",
-        description: "Complete 8 line high-security perimeter solution.", price: 9999.00,
-        image: "../images/ef6.png",
-        options: {
-            length: [{value: "100m", label: "100m", extra: 0}, {value: "200m", label: "200m", extra: 5000}],
-            bracketType: [{value: "angle", label: "Angle", extra: 0}, {value: "straight", label: "Straight", extra: 0}],
-            color: [{value: "black", label: "Black", extra: 0}, {value: "white", label: "White", extra: 0}, {value: "galvanized", label: "Galvanized", extra: 200}]
-        },
-        contents: ["brackets", "stays", "lugs", "tensioners", "hooks", "ferrules", "galvanised braided wire", "nail in anchors 8x80mm", "warning signs", "HT cable soft", "earth spikes copper plated", "gate contact", "nite light", "Silver JVA Z11 Energizer", "battery", "PSU", "dual lightning divertor", "siren", "strobe"]
-    },
-    {
-        id: "RG-KIT-01", category: "roboguard", name: "Roboguard Beam Kit",
-        description: "Wireless outdoor early warning beams.", price: 5999.00,
-        image: "../images/Rob.png",
-        options: {
-            beams: [{value: "2", label: "2 Beams", extra: 0}, {value: "4", label: "4 Beams", extra: 3000}, {value: "6", label: "6 Beams", extra: 4000}, {value: "8", label: "8 Beams", extra: 3000}],
-            color: [{value: "black", label: "Black", extra: 0}, {value: "green", label: "Green", extra: 0}, {value: "white", label: "White", extra: 0}]
-        },
-        contents: ["Roboguard beam", "HQ Unit", "Powerpack", "Roboguard 4 button Blue Nova remotes", "siren"]
-    },
-    {
-        id: "IDS-806", category: "alarms", name: "IDS 806 KIT",
-        description: "Reliable 8-zone wired alarm system.", price: 2199.00,
-        image: "../images/806.png",
-        contents: ["panel", "keypad", "battery", "PSU", "siren", "2 x PIR", "2 x door magnets", "2 x panic", "1 x 4 core comms cable"]
-    },
-    {
-        id: "IDS-X64", category: "alarms", name: "IDS X64 KIT",
-        description: "Advanced expandable alarm system.", price: 3899.00,
-        image: "../images/X64.png",
-        contents: ["IDS X64 panel", "keypad", "battery PSU", "siren", "4 x pir", "2 door contacts", "2 panics", "1 x 6 core comms", "1 x 4 core comms"]
-    },
-    {
-        id: "AJAX-WL", category: "alarms", name: "Ajax Wireless Kit",
-        description: "Premium wireless smart alarm system.", price: 8499.00,
-        image: "../images/ajax.png",
-        contents: ["Ajax hub", "ajax keypad", "Ajax indoor siren", "2 x indoor PIR", "2 x indoor door magnets"]
-    },
-    {
-        id: "CENT-D5EVO", category: "gate-automation", name: "Centurion D3 SmartKit",
-        description: "Proven 300kg sliding gate motor kit.", price: 4999.00,
-        image: "../images/centurion.png",
-        contents: ["D5 motor", "7 amp battery", "2 x 2m nylon rack", "2 x 4 button Blue Nova remotes"]
-    },
-    {
-        id: "CENT-D5SMART", category: "gate-automation", name: "Centurion D5 Smart Kit",
-        description: "Intelligent, fast 500kg sliding gate motor.", price: 5999.00,
-        image: "../images/centurion.png",
-        contents: ["D5 smart motors", "2 x battery", "2 x 2m nylon rack", "2 x 4 button Blue Nova remotes"]
-    },
-    {
-        id: "CENT-D10SMART", category: "gate-automation", name: "Centurion D10 Smart Kit",
-        description: "Heavy duty 1000kg industrial sliding gate motor.", price: 12999.00,
-        image: "../images/D10.png",
-        contents: ["d10 smart motors", "2 x battery", "3 x 2m steel rack", "2 x 4 button Blue Nova remotes"]
-    },
-    {
-        id: "CENT-D10TURBO", category: "gate-automation", name: "Centurion D10 Smart Turbo Kit",
-        description: "High-speed 1000kg industrial sliding motor.", price: 12999.00,
-        image: "../images/centurion.png",
-        contents: ["d10 turbo smart motors", "2 x battery", "3 x 2m steel rack", "2 x 4 button Blue Nova remotes"]
-    },
-    {
-        id: "CENT-D6SMART", category: "gate-automation", name: "Centurion D6 Smart Kit",
-        description: "High-volume 600kg sliding gate motor.", price: 7999.00,
-        image: "../images/centurion.png",
-        contents: ["motor", "battery X2", "4m nylon rack", "2 x Blue Nova remotes"]
-    },
-    {
-        id: "CENT-SDO", category: "gate-automation", name: "Centurion SDO Smart Kit",
-        description: "Sectional / Tip-up garage door operator.", price: 2999.00,
-        image: "../images/centurion.png",
-        options: { doorType: [{value: "tip up", label: "Tip Up", extra: 0}, {value: "tilt", label: "Tilt", extra: 1500}] },
-        contents: ["SDO Smart Kit", "Extrusion Rail", "2 x Blue Nova Remotes"]
-    },
-    {
-        id: "CENT-RDO", category: "gate-automation", name: "Centurion RDO Kit",
-        description: "Roll-up garage door operator.", price: 2899.00,
-        image: "../images/centurion.png",
-        contents: ["RDO Kit", "2 x Blue Nova Remotes"]
-    },
-    // 14. Centurion Swing
-    {
-        id: "CENT-SWING", category: "gate-automation", name: "Centurion Swing Gate Kit",
-        description: "Double swing gate automation.", price: 12999.00,
-        image: "../images/centurion.png",
-        options: { model: [{value: "400", label: "Vantage 400", extra: 0}, {value: "500", label: "Vantage 500", extra: 1500}] },
-        contents: ["vantage controller", "2 x vantage motors", "2 x Blue Nova remotes", "25 meter vector cable"]
-    },
-    // 15. Dahua HD CCTV
-    {
-        id: "CCTV-HD", category: "cctv", name: "CCTV HD KIT Dahua",
-        description: "Professional Analog HD surveillance.", price: 7999.00,
-        image: "../images/8ch.png",
-        options: {
-            channels: [{value: "8", label: "8 Channel", extra: 0}, {value: "16", label: "16 Channel", extra: 6999}, {value: "32", label: "32 Channel", extra: 15000}],
-            style: [{value: "bullet", label: "Bullet Cameras", extra: 0}, {value: "dome", label: "Dome Cameras", extra: 0}],
-            lens: [{value: "fixed", label: "Fixed Lens", extra: 0}, {value: "vari", label: "Vari Focal", extra: 1000}]
-        },
-        dynamicContents: {
-            "8": ["8 channel DVR", "1 TB hard drive", "8 cameras", "1 roll poax", "16 x BNC crimp on", "8 x DC leads", "1 x CCTV 9 way PSU", "8 x 100x100 enclosures"],
-            "16": ["16 channel DVR", "2tb hard drive", "16 cameras", "2 x 9 way PSU", "3 x poax 100m", "32 bnc", "16 DC leads", "16 enclosures"],
+    <script>
+        const NEXPAK_KIT_DATABASE = [
+            {
+                id: "CENT-RDO", category: "gate-automation", name: "Centurion RDO Kit",
+                description: "Roll-up garage door operator.", price: 2899.00,
+                image: "../images/centurion.png",
+                contents: ["RDO Kit", "2 x Blue Nova Remotes"]
+            },
+            {
+                id: "CENT-SWING", category: "gate-automation", name: "Centurion Swing Gate Kit",
+                description: "Double swing gate automation.", price: 12999.00,
+                image: "../images/centurion.png",
+                options: { model: [{value: "400", label: "Vantage 400", extra: 0}, {value: "500", label: "Vantage 500", extra: 1500}] },
+                contents: ["vantage controller", "2 x vantage motors", "2 x Blue Nova remotes", "25 meter vector cable"]
+            },
+            {
+                id: "CCTV-HD", category: "cctv", name: "CCTV HD KIT Dahua",
+                description: "Professional Analog HD surveillance.", price: 7999.00,
+                image: "../images/8ch.png",
+                options: {
+                    channels: [{value: "8", label: "8 Channel", extra: 0}, {value: "16", label: "16 Channel", extra: 6999}, {value: "32", label: "32 Channel", extra: 15000}],
+                    style: [{value: "bullet", label: "Bullet Cameras", extra: 0}, {value: "dome", label: "Dome Cameras", extra: 0}],
+                    lens: [{value: "fixed", label: "Fixed Lens", extra: 0}, {value: "vari", label: "Vari Focal", extra: 1000}]
+                },
+                dynamicContents: {
+                    "8": ["8 channel DVR", "1 TB hard drive", "8 cameras", "1 roll poax", "16 x BNC crimp on", "8 x DC leads", "1 x CCTV 9 way PSU", "8 x 100x100 enclosures"],
+                    "16": ["16 channel DVR", "2tb hard drive", "16 cameras", "2 x 9 way PSU", "3 x poax 100m", "32bnc", "16 DC leads", "16 enclosures"],
             "32": ["32 channel DVR", "4tb hard drive", "32 cameras", "CCTV 18 way x 3", "poax 300m x 2", "64 x BNC", "32 x DC leads", "32 enclosures"]
         }
     },
-    // 16. IP CCTV
     {
-        id: "CCTV-IP", category: "cctv", name: "IP CCTV KIT",
+        id: "CCTV-IP", category: "ip-cctv", name: "IP CCTV KIT",
         description: "Networked PoE digital surveillance.", price: 15999.00,
         image: "../images/dahua.png",
         options: {
@@ -339,7 +460,6 @@ const NEXPAK_KIT_DATABASE = [
     }
 ];
 
-/* --- CORE FUNCTIONS --- */
 function formatMoney(amount) { return "R " + Number(amount).toFixed(2); }
 
 function getKitPrice(kit, optionsObj) {
@@ -363,7 +483,6 @@ function getKitContents(kit, optionsObj) {
     return kit.contents || [];
 }
 
-/* --- RENDER CATALOGUE --- */
 function renderNexpakKitCatalogue(category = "all", searchTerm = "") {
     const grid = document.getElementById("onlineProductGrid");
     let kits = NEXPAK_KIT_DATABASE;
@@ -371,7 +490,7 @@ function renderNexpakKitCatalogue(category = "all", searchTerm = "") {
     if (category !== "all") kits = kits.filter(k => k.category === category);
     if (searchTerm) kits = kits.filter(k => k.name.toLowerCase().includes(searchTerm.toLowerCase()) || k.description.toLowerCase().includes(searchTerm.toLowerCase()));
     
-    document.getElementById("catalogueCategoryTitle").innerHTML = category === "all" && !searchTerm ? "All Security Kits" : `${kits.length} Kits Found`;
+    document.getElementById("catalogueCategoryTitle").innerHTML = `<i class="fa-solid fa-shield"></i> ` + (category === "all" && !searchTerm ? "All Security Kits" : `${kits.length} Kits Found`);
 
     grid.innerHTML = kits.map(kit => {
         let defaultOpts = {};
@@ -387,19 +506,23 @@ function renderNexpakKitCatalogue(category = "all", searchTerm = "") {
         
         return `
         <article class="product-card" id="card-${kit.id}">
-            <div class="product-image-container">
-                <img src="${kit.image}" alt="${kit.name}" loading="lazy">
+            <div>
+                <div class="product-image-container">
+                    <img src="${kit.image}" alt="${kit.name}" loading="lazy">
+                </div>
+                <div class="product-name">${kit.name}</div>
+                <div class="product-desc">${kit.description}</div>
+                ${optHTML}
             </div>
-            <div class="product-name">${kit.name}</div>
-            <div class="product-desc">${kit.description}</div>
-            ${optHTML}
-            <div class="price-text" id="price-${kit.id}">${formatMoney(getKitPrice(kit, defaultOpts))}</div>
-            <div class="selector-container"><label>Quantity</label>
-                <input type="number" min="1" value="1" id="qty-${kit.id}">
-            </div>
-            <div class="card-actions">
-                <button class="btn-summary-quote" onclick="generateNexpakKitQuote('${kit.id}')"><i class="fa-solid fa-file-pdf"></i> Quote</button>
-                <button class="btn-add-cart" onclick="addNexpakKitToCart('${kit.id}')"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+            <div>
+                <div class="price-text" id="price-${kit.id}">${formatMoney(getKitPrice(kit, defaultOpts))}</div>
+                <div class="selector-container"><label>Quantity</label>
+                    <input type="number" min="1" value="1" id="qty-${kit.id}">
+                </div>
+                <div class="card-actions">
+                    <button class="btn-summary-quote" onclick="generateNexpakKitQuote('${kit.id}')"><i class="fa-solid fa-file-pdf"></i> Quote</button>
+                    <button class="btn-add-cart" onclick="addNexpakKitToCart('${kit.id}')"><i class="fa-solid fa-cart-plus"></i> Add</button>
+                </div>
             </div>
         </article>`;
     }).join("");
@@ -424,7 +547,6 @@ function searchStore() {
     renderNexpakKitCatalogue('all', term);
 }
 
-/* --- CART FUNCTIONS --- */
 let cart = JSON.parse(localStorage.getItem('nexpak_cart')) || [];
 
 function addNexpakKitToCart(kitId) {
@@ -477,9 +599,9 @@ function renderCart() {
                 <img src="${item.image}" alt="${item.name}" class="cart-item-img">
                 <div class="cart-item-details">
                     <h4>${item.name}</h4>
-                    <p style="font-size:11px; color:#64748b;">${Object.values(item.optionsText || {}).join(' | ')}</p>
-                    <p style="font-weight:bold; color:var(--primary-navy); margin-top:5px;">${formatMoney(item.unitPrice)} x ${item.qty}</p>
-                    <button onclick="removeFromCart('${item.id}')" style="margin-top:5px; color:#dc2626; border:none; background:transparent; font-size:12px; font-weight:bold;">Remove</button>
+                    <p style="font-size:10px; color:#64748b;">${Object.values(item.optionsText || {}).join(' | ')}</p>
+                    <p style="font-weight:bold; color:var(--primary-navy); margin-top:3px;">${formatMoney(item.unitPrice)} x ${item.qty}</p>
+                    <button onclick="removeFromCart('${item.id}')" style="margin-top:3px; color:#dc2626; border:none; background:transparent; font-size:11px; font-weight:bold; cursor:pointer;">Remove</button>
                 </div>
             </div>`).join("");
     }
@@ -497,7 +619,6 @@ function removeFromCart(id) { cart = cart.filter(i => i.id !== id); saveCart(); 
 function openCart() { renderCart(); document.getElementById('cartOverlay').classList.add('open'); document.getElementById('cartDrawer').classList.add('open'); }
 function closeCart() { document.getElementById('cartOverlay').classList.remove('open'); document.getElementById('cartDrawer').classList.remove('open'); }
 
-/* --- CHECKOUT & PAYFAST --- */
 function openCheckout() {
     if(cart.length === 0) return alert("Cart is empty.");
     closeCart();
@@ -530,7 +651,6 @@ function submitOrder() {
     document.getElementById('payfastForm').submit();
 }
 
-/* --- PDF GENERATION --- */
 function generateNexpakKitQuote(kitId) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -552,7 +672,7 @@ function generateNexpakKitQuote(kitId) {
     const vat = total * 0.15;
     const grandTotal = total + vat;
 
-    doc.setTextColor(0, 0, 128); // Navy Blue
+    doc.setTextColor(11, 19, 41);
     doc.setFontSize(22);
     doc.text("NEXPAK SOLUTIONS", 20, 20);
     doc.setFontSize(10);
@@ -560,10 +680,10 @@ function generateNexpakKitQuote(kitId) {
     doc.text("Official Quotation", 20, 28);
     doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 34);
     
-    doc.setDrawColor(0, 0, 128);
+    doc.setDrawColor(11, 19, 41);
     doc.line(20, 40, 190, 40);
 
-    doc.setTextColor(0, 0, 128);
+    doc.setTextColor(11, 19, 41);
     doc.setFontSize(14);
     doc.text("Kit Details:", 20, 50);
     
@@ -575,7 +695,7 @@ function generateNexpakKitQuote(kitId) {
     
     let yPos = 80;
     doc.setFontSize(11);
-    doc.setTextColor(0, 0, 128);
+    doc.setTextColor(11, 19, 41);
     doc.text("Contents:", 20, yPos);
     doc.setTextColor(0);
     activeContents.forEach(item => {
@@ -593,7 +713,7 @@ function generateNexpakKitQuote(kitId) {
     doc.text(`VAT (15%): R ${vat.toFixed(2)}`, 25, yPos + 26);
     
     doc.setFontSize(14);
-    doc.setTextColor(0, 0, 128);
+    doc.setTextColor(11, 19, 41);
     doc.text(`Total Due: R ${grandTotal.toFixed(2)}`, 25, yPos + 36);
 
     doc.save(`NexPak_Quote_${kit.id}.pdf`);
@@ -604,7 +724,7 @@ function generateNexpakQuotation() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
     
-    doc.setTextColor(0, 0, 128); // Navy Blue
+    doc.setTextColor(11, 19, 41);
     doc.setFontSize(22);
     doc.text("NEXPAK SOLUTIONS", 20, 20);
     doc.setFontSize(10);
@@ -612,12 +732,12 @@ function generateNexpakQuotation() {
     doc.text("Cart Quotation", 20, 28);
     doc.text(`Date: ${new Date().toLocaleDateString()}`, 20, 34);
     
-    doc.setDrawColor(0, 0, 128);
+    doc.setDrawColor(11, 19, 41);
     doc.line(20, 40, 190, 40);
 
     let yPos = 50;
     doc.setFontSize(10);
-    doc.setTextColor(0, 0, 128);
+    doc.setTextColor(11, 19, 41);
     doc.text("Description", 20, yPos);
     doc.text("Qty", 140, yPos);
     doc.text("Total", 170, yPos);
@@ -653,7 +773,7 @@ function generateNexpakQuotation() {
     doc.text("VAT (15%):", 130, yPos); doc.text(`R ${vat.toFixed(2)}`, 170, yPos);
     yPos += 10;
     doc.setFontSize(12);
-    doc.setTextColor(0, 0, 128);
+    doc.setTextColor(11, 19, 41);
     doc.text("Total:", 130, yPos); doc.text(`R ${finalTotal.toFixed(2)}`, 170, yPos);
 
     doc.save("NexPak_Full_Quotation.pdf");
@@ -664,7 +784,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('cartCount').innerText = cart.reduce((sum, item) => sum + item.qty, 0);
 });
 </script>
-
 </body>
 </html>
     
