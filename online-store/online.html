@@ -32,7 +32,7 @@ button { cursor: pointer; }
 /* Header & Nav */
 .top-header { background: #ffffff; border-bottom: 1px solid var(--border-color); padding: 10px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .logo-container { display: flex; align-items: center; gap: 10px; font-weight: bold; font-size: 18px; color: var(--primary-navy); }
-.logo-container img { height: 45px; width: auto; object-fit: contain; }
+.logo-container img { height: 42px; width: auto; object-fit: contain; }
 .search-bar { flex: 1; max-width: 500px; display: flex; border: 1px solid var(--border-color); border-radius: 4px; overflow: hidden; }
 .search-bar input { width: 100%; padding: 8px 14px; border: none; font-size: 13px; }
 .search-bar button { background: var(--primary-navy); color: #ffffff; border: none; padding: 0 16px; }
@@ -98,7 +98,10 @@ button { cursor: pointer; }
 <body>
 
 <header class="top-header">
-    <div class="logo-container"><span>NexPak Solutions</span></div>
+    <div class="logo-container">
+        <img src="logo.png" alt="NexPak Logo">
+        <span>NexPak Solutions</span>
+    </div>
     <div class="search-bar">
         <input id="storeSearch" type="text" placeholder="Search kits..." onkeyup="if(event.key === 'Enter') searchStore()">
         <button type="button" onclick="searchStore()"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -201,7 +204,6 @@ button { cursor: pointer; }
 <script>
 /* --- DATABASE --- */
 const NEXPAK_KIT_DATABASE = [
-    // 1. Electric Fencing 6 Line
     {
         id: "EF-6L-01", category: "electric-fencing", name: "Electric Fence Kit 6 line square tube",
         description: "Complete 6 line perimeter wall top solution.", price: 8899.00,
@@ -213,7 +215,6 @@ const NEXPAK_KIT_DATABASE = [
         },
         contents: ["brackets", "stays", "lugs", "tensioners", "hooks", "ferrules", "galvanised braided wire", "nail in anchors 8x80mm", "warning signs", "HT cable soft", "earth spikes copper plated", "gate contact", "nite light", "Silver JVA Z11 Energizer", "battery", "PSU", "dual lightning divertor", "siren", "strobe"]
     },
-    // 2. Electric Fencing 8 Line
     {
         id: "EF-8L-01", category: "electric-fencing", name: "Electric Fence Kit 8 line square tube",
         description: "Complete 8 line high-security perimeter solution.", price: 9999.00,
@@ -225,7 +226,6 @@ const NEXPAK_KIT_DATABASE = [
         },
         contents: ["brackets", "stays", "lugs", "tensioners", "hooks", "ferrules", "galvanised braided wire", "nail in anchors 8x80mm", "warning signs", "HT cable soft", "earth spikes copper plated", "gate contact", "nite light", "Silver JVA Z11 Energizer", "battery", "PSU", "dual lightning divertor", "siren", "strobe"]
     },
-    // 3. Roboguard
     {
         id: "RG-KIT-01", category: "roboguard", name: "Roboguard Beam Kit",
         description: "Wireless outdoor early warning beams.", price: 5999.00,
@@ -236,63 +236,54 @@ const NEXPAK_KIT_DATABASE = [
         },
         contents: ["Roboguard beam", "HQ Unit", "Powerpack", "Roboguard 4 button Blue Nova remotes", "siren"]
     },
-    // 4. IDS 806
     {
         id: "IDS-806", category: "alarms", name: "IDS 806 KIT",
         description: "Reliable 8-zone wired alarm system.", price: 2199.00,
         image: "../images/806.png",
         contents: ["panel", "keypad", "battery", "PSU", "siren", "2 x PIR", "2 x door magnets", "2 x panic", "1 x 4 core comms cable"]
     },
-    // 5. IDS X64
     {
         id: "IDS-X64", category: "alarms", name: "IDS X64 KIT",
         description: "Advanced expandable alarm system.", price: 3899.00,
         image: "../images/X64.png",
         contents: ["IDS X64 panel", "keypad", "battery PSU", "siren", "4 x pir", "2 door contacts", "2 panics", "1 x 6 core comms", "1 x 4 core comms"]
     },
-    // 6. Ajax
     {
         id: "AJAX-WL", category: "alarms", name: "Ajax Wireless Kit",
         description: "Premium wireless smart alarm system.", price: 8499.00,
         image: "../images/ajax.png",
         contents: ["Ajax hub", "ajax keypad", "Ajax indoor siren", "2 x indoor PIR", "2 x indoor door magnets"]
     },
-    // 7. Centurion D3 Smart
     {
         id: "CENT-D5EVO", category: "gate-automation", name: "Centurion D3 SmartKit",
         description: "Proven 300kg sliding gate motor kit.", price: 4999.00,
         image: "../images/centurion.png",
         contents: ["D5 motor", "7 amp battery", "2 x 2m nylon rack", "2 x 4 button Blue Nova remotes"]
     },
-    // 8. Centurion D5 Smart
     {
         id: "CENT-D5SMART", category: "gate-automation", name: "Centurion D5 Smart Kit",
         description: "Intelligent, fast 500kg sliding gate motor.", price: 5999.00,
         image: "../images/centurion.png",
         contents: ["D5 smart motors", "2 x battery", "2 x 2m nylon rack", "2 x 4 button Blue Nova remotes"]
     },
-    // 9. Centurion D10 Smart
     {
         id: "CENT-D10SMART", category: "gate-automation", name: "Centurion D10 Smart Kit",
         description: "Heavy duty 1000kg industrial sliding gate motor.", price: 12999.00,
         image: "../images/D10.png",
         contents: ["d10 smart motors", "2 x battery", "3 x 2m steel rack", "2 x 4 button Blue Nova remotes"]
     },
-    // 10. Centurion D10 Turbo Smart
     {
         id: "CENT-D10TURBO", category: "gate-automation", name: "Centurion D10 Smart Turbo Kit",
         description: "High-speed 1000kg industrial sliding motor.", price: 12999.00,
         image: "../images/centurion.png",
         contents: ["d10 turbo smart motors", "2 x battery", "3 x 2m steel rack", "2 x 4 button Blue Nova remotes"]
     },
-    // 11. Centurion D6 Smart
     {
         id: "CENT-D6SMART", category: "gate-automation", name: "Centurion D6 Smart Kit",
         description: "High-volume 600kg sliding gate motor.", price: 7999.00,
         image: "../images/centurion.png",
         contents: ["motor", "battery X2", "4m nylon rack", "2 x Blue Nova remotes"]
     },
-    // 12. Centurion SDO
     {
         id: "CENT-SDO", category: "gate-automation", name: "Centurion SDO Smart Kit",
         description: "Sectional / Tip-up garage door operator.", price: 2999.00,
@@ -300,7 +291,6 @@ const NEXPAK_KIT_DATABASE = [
         options: { doorType: [{value: "tip up", label: "Tip Up", extra: 0}, {value: "tilt", label: "Tilt", extra: 1500}] },
         contents: ["SDO Smart Kit", "Extrusion Rail", "2 x Blue Nova Remotes"]
     },
-    // 13. Centurion RDO
     {
         id: "CENT-RDO", category: "gate-automation", name: "Centurion RDO Kit",
         description: "Roll-up garage door operator.", price: 2899.00,
@@ -677,3 +667,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </body>
 </html>
+    
