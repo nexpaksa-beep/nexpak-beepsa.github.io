@@ -432,6 +432,376 @@ button { cursor: pointer; }
         }
     });
 </script>
+<script>
+/* --- DATABASE --- */
+const NEXPAK_KIT_DATABASE = [
+    {
+        id: "STRIP-GRAZE-01", category: "strip-grazing", name: "Strip Grazing Kit",
+        description: "Complete portable strip grazing fencing solution.", price: 1899.00,
+        image: "../images/strip.png",
+        contents: ["Energizer", "Polywire", "Tread-in posts", "Gate handle", "Earth peg", "Warning signs"]
+    },
+    {
+        id: "EQUESTRIAN-01", category: "equestrian", name: "Equestrian Fencing Kit",
+        description: "Safe and visible electric fencing for horses.", price: 4299.00,
+        image: "../images/horse.png",
+        options: {
+            tapeColor: [{value: "white", label: "White Tape", extra: 0}, {value: "brown", label: "Brown Tape", extra: 0}]
+        },
+        contents: ["Equestrian energizer", "40mm Electric tape", "Wood post insulators", "Gate handles", "Warning signs", "Earth spikes"]
+    },
+    {
+        id: "EF-6L-01", category: "electric-fencing", name: "Electric Fence Kit 6 line square tube",
+        description: "Complete 6 line perimeter wall top solution.", price: 8899.00,
+        image: "../images/ef6.png",
+        options: {
+            length: [{value: "100m", label: "100m", extra: 0}, {value: "200m", label: "200m", extra: 4200}],
+            bracketType: [{value: "angle", label: "Angle", extra: 0}, {value: "straight", label: "Straight", extra: 0}],
+            color: [{value: "black", label: "Black", extra: 0}, {value: "white", label: "White", extra: 0}, {value: "galvanized", label: "Galvanized", extra: 150}]
+        },
+        contents: ["brackets", "stays", "lugs", "tensioners", "hooks", "ferrules", "galvanised braided wire", "nail in anchors 8x80mm", "warning signs", "HT cable soft", "earth spikes copper plated", "gate contact", "nite light", "Silver JVA Z11 Energizer", "battery", "PSU", "dual lightning divertor", "siren", "strobe"]
+    },
+    {
+        id: "EF-8L-01", category: "electric-fencing", name: "Electric Fence Kit 8 line square tube",
+        description: "Complete 8 line high-security perimeter solution.", price: 9999.00,
+        image: "../images/ef6.png",
+        options: {
+            length: [{value: "100m", label: "100m", extra: 0}, {value: "200m", label: "200m", extra: 5000}],
+            bracketType: [{value: "angle", label: "Angle", extra: 0}, {value: "straight", label: "Straight", extra: 0}],
+            color: [{value: "black", label: "Black", extra: 0}, {value: "white", label: "White", extra: 0}, {value: "galvanized", label: "Galvanized", extra: 200}]
+        },
+        contents: ["brackets", "stays", "lugs", "tensioners", "hooks", "ferrules", "galvanised braided wire", "nail in anchors 8x80mm", "warning signs", "HT cable soft", "earth spikes copper plated", "gate contact", "nite light", "Silver JVA Z11 Energizer", "battery", "PSU", "dual lightning divertor", "siren", "strobe"]
+    },
+    {
+        id: "RG-KIT-01", category: "roboguard", name: "Roboguard Beam Kit",
+        description: "Wireless outdoor early warning beams.", price: 5999.00,
+        image: "../images/Rob.png",
+        options: {
+            beams: [{value: "2", label: "2 Beams", extra: 0}, {value: "4", label: "4 Beams", extra: 3000}, {value: "6", label: "6 Beams", extra: 4000}, {value: "8", label: "8 Beams", extra: 3000}],
+            color: [{value: "black", label: "Black", extra: 0}, {value: "green", label: "Green", extra: 0}, {value: "white", label: "White", extra: 0}]
+        },
+        contents: ["Roboguard beam", "HQ Unit", "Powerpack", "Roboguard 4 button Blue Nova remotes", "siren"]
+    },
+    {
+        id: "IDS-806", category: "alarms", name: "IDS 806 KIT",
+        description: "Reliable 8-zone wired alarm system.", price: 2199.00,
+        image: "../images/806.png",
+        contents: ["panel", "keypad", "battery", "PSU", "siren", "2 x PIR", "2 x door magnets", "2 x panic", "1 x 4 core comms cable"]
+    },
+    {
+        id: "IDS-X64", category: "alarms", name: "IDS X64 KIT",
+        description: "Advanced expandable alarm system.", price: 3899.00,
+        image: "../images/X64.png",
+        contents: ["IDS X64 panel", "keypad", "battery PSU", "siren", "4 x pir", "2 door contacts", "2 panics", "1 x 6 core comms", "1 x 4 core comms"]
+    },
+    {
+        id: "AJAX-WL", category: "alarms", name: "Ajax Wireless Kit",
+        description: "Premium wireless smart alarm system.", price: 8499.00,
+        image: "../images/ajax.png",
+        contents: ["Ajax hub", "ajax keypad", "Ajax indoor siren", "2 x indoor PIR", "2 x indoor door magnets"]
+    },
+    {
+        id: "CENT-D5EVO", category: "gate-automation", name: "Centurion D3 SmartKit",
+        description: "Proven 300kg sliding gate motor kit.", price: 4999.00,
+        image: "../images/centurion.png",
+        contents: ["D5 motor", "7 amp battery", "2 x 2m nylon rack", "2 x 4 button Blue Nova remotes"]
+    },
+    {
+        id: "CENT-D5SMART", category: "gate-automation", name: "Centurion D5 Smart Kit",
+        description: "Intelligent, fast 500kg sliding gate motor.", price: 5999.00,
+        image: "../images/centurion.png",
+        contents: ["D5 smart motors", "2 x battery", "2 x 2m nylon rack", "2 x 4 button Blue Nova remotes"]
+    },
+    {
+        id: "CENT-D10SMART", category: "gate-automation", name: "Centurion D10 Smart Kit",
+        description: "Heavy duty 1000kg industrial sliding gate motor.", price: 12999.00,
+        image: "../images/D10.png",
+        contents: ["d10 smart motors", "2 x battery", "3 x 2m steel rack", "2 x 4 button Blue Nova remotes"]
+    },
+    {
+        id: "CENT-D10TURBO", category: "gate-automation", name: "Centurion D10 Smart Turbo Kit",
+        description: "High-speed 1000kg industrial sliding motor.", price: 12999.00,
+        image: "../images/centurion.png",
+        contents: ["d10 turbo smart motors", "2 x battery", "3 x 2m steel rack", "2 x 4 button Blue Nova remotes"]
+    },
+    {
+        id: "CENT-D6SMART", category: "gate-automation", name: "Centurion D6 Smart Kit",
+        description: "High-volume 600kg sliding gate motor.", price: 7999.00,
+        image: "../images/centurion.png",
+        contents: ["motor", "battery X2", "4m nylon rack", "2 x Blue Nova remotes"]
+    },
+    {
+        id: "CENT-SDO", category: "gate-automation", name: "Centurion SDO Smart Kit",
+        description: "Sectional / Tip-up garage door operator.", price: 2999.00,
+        image: "../images/centurion.png",
+        options: { doorType: [{value: "tip up", label: "Tip Up", extra: 0}, {value: "tilt", label: "Tilt", extra: 1500}] },
+        contents: ["SDO Smart Kit", "Extrusion Rail", "2 x Blue Nova Remotes"]
+    },
+    {
+        id: "CENT-RDO", category: "gate-automation", name: "Centurion RDO Kit",
+        description: "Roll-up garage door operator.", price: 2899.00,
+        image: "../images/centurion.png",
+        contents: ["RDO Kit", "2 x Blue Nova Remotes"]
+    },
+    {
+        id: "CENT-SWING", category: "gate-automation", name: "Centurion Swing Gate Kit",
+        description: "Double swing gate automation.", price: 12999.00,
+        image: "../images/centurion.png",
+        options: { model: [{value: "400", label: "Vantage 400", extra: 0}, {value: "500", label: "Vantage 500", extra: 1500}] },
+        contents: ["vantage controller", "2 x vantage motors", "2 x Blue Nova remotes", "25 meter vector cable"]
+    },
+    {
+        id: "CCTV-HD", category: "cctv", name: "CCTV HD KIT Dahua",
+        description: "Professional Analog HD surveillance.", price: 7999.00,
+        image: "../images/8ch.png",
+        options: {
+            channels: [{value: "8", label: "8 Channel", extra: 0}, {value: "16", label: "16 Channel", extra: 6999}, {value: "32", label: "32 Channel", extra: 15000}],
+            style: [{value: "bullet", label: "Bullet Cameras", extra: 0}, {value: "dome", label: "Dome Cameras", extra: 0}],
+            lens: [{value: "fixed", label: "Fixed Lens", extra: 0}, {value: "vari", label: "Vari Focal", extra: 1000}]
+        },
+        dynamicContents: {
+            "8": ["8 channel DVR", "1 TB hard drive", "8 cameras", "1 roll poax", "16 x BNC crimp on", "8 x DC leads", "1 x CCTV 9 way PSU", "8 x 100x100 enclosures"],
+            "16": ["16 channel DVR", "2tb hard drive", "16 cameras", "2 x 9 way PSU", "3 x poax 100m", "32 bnc", "16 DC leads", "16 enclosures"],
+            "32": ["32 channel DVR", "4tb hard drive", "32 cameras", "CCTV 18 way x 3", "poax 300m x 2", "64 x BNC", "32 x DC leads", "32 enclosures"]
+        }
+    },
+    {
+        id: "CCTV-IP", category: "cctv", name: "IP CCTV KIT",
+        description: "Networked PoE digital surveillance.", price: 15999.00,
+        image: "../images/dahua.png",
+        options: {
+            channels: [{value: "8", label: "8 Channel", extra: 0}, {value: "16", label: "16 Channel", extra: 14999}, {value: "32", label: "32 Channel", extra: 25000}],
+            style: [{value: "bullet", label: "Bullet", extra: 0}, {value: "dome", label: "Dome", extra: 0}],
+            lens: [{value: "fixed", label: "Fixed", extra: 0}, {value: "vari", label: "Vari Focal", extra: 1500}]
+        },
+        dynamicContents: {
+            "8": ["8 channel NVR", "8 port Poe", "1tb hard drive", "8 cameras", "16 RJ45/boots", "100 meter cat 5", "8 enclosures"],
+            "16": ["NVR 16", "16 Poe", "2tb", "16 cameras", "300m cat 5", "RJ45/boots x 32", "16 enclosures"],
+            "32": ["32 NVR", "16 Poe x 2", "hard drive 4 TB", "32 cameras", "2 x 300m Cat5", "RJ45 and boots", "enclosures"]
+        }
+    }
+];
 
+/* --- CORE FUNCTIONS --- */
+function formatMoney(amount) { return "R " + Number(amount).toFixed(2); }
+
+function getKitPrice(kit, optionsObj) {
+    let total = Number(kit.price);
+    if (!kit.options) return total;
+    Object.keys(optionsObj).forEach(key => {
+        const selectedVal = optionsObj[key];
+        const optList = kit.options[key];
+        if (optList) {
+            const match = optList.find(o => o.value === selectedVal);
+            if (match) total += Number(match.extra);
+        }
+    });
+    return total;
+}
+
+function getKitContents(kit, optionsObj) {
+    if (kit.dynamicContents && optionsObj && optionsObj.channels) {
+        return kit.dynamicContents[optionsObj.channels] || [];
+    }
+    return kit.contents || [];
+}
+
+/* --- RENDER CATALOGUE --- */
+function renderNexpakKitCatalogue(category = "all", searchTerm = "") {
+    const grid = document.getElementById("onlineProductGrid");
+    if(!grid) return;
+    
+    let kits = NEXPAK_KIT_DATABASE;
+    if (category !== "all") kits = kits.filter(k => k.category === category);
+    if (searchTerm) kits = kits.filter(k => k.name.toLowerCase().includes(searchTerm.toLowerCase()) || k.description.toLowerCase().includes(searchTerm.toLowerCase()));
+    
+    document.getElementById("catalogueCategoryTitle").innerHTML = category === "all" && !searchTerm ? `<i class="fa-solid fa-boxes-stacked"></i> All Security Kits` : `<i class="fa-solid fa-boxes-stacked"></i> ${kits.length} Kits Found`;
+
+    grid.innerHTML = kits.map(kit => {
+        let defaultOpts = {};
+        let optHTML = "";
+        if(kit.options) {
+            Object.keys(kit.options).forEach(key => {
+                defaultOpts[key] = kit.options[key][0].value;
+                optHTML += `<div class="selector-container"><label>${key.toUpperCase()}</label><select class="kit-option" data-kit-id="${kit.id}" data-option="${key}" onchange="updateLivePrice('${kit.id}')">` +
+                    kit.options[key].map(o => `<option value="${o.value}">${o.label} ${o.extra > 0 ? '(+R'+o.extra+')' : ''}</option>`).join('') +
+                    `</select></div>`;
+            });
+        }
+        
+        return `
+        <article class="product-card" id="card-${kit.id}">
+            <div class="product-image-container">
+                <img src="${kit.image}" alt="${kit.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/200x150?text=Security+Product'">
+            </div>
+            <div class="product-name">${kit.name}</div>
+            <div class="product-desc">${kit.description}</div>
+            ${optHTML}
+            <div class="price-text" id="price-${kit.id}">${formatMoney(getKitPrice(kit, defaultOpts))}</div>
+            <div class="selector-container"><label>QUANTITY</label>
+                <input type="number" min="1" value="1" id="qty-${kit.id}">
+            </div>
+            <div class="card-actions">
+                <button class="btn-glass btn-info-glass" onclick="openInfoModal('${kit.id}')"><i class="fa-solid fa-circle-info"></i> Info</button>
+                <button class="btn-glass btn-summary-quote" onclick="generateNexpakKitQuote('${kit.id}')"><i class="fa-solid fa-file-pdf"></i> Quote</button>
+                <button class="btn-glass btn-add-cart" onclick="addNexpakKitToCart('${kit.id}')"><i class="fa-solid fa-cart-plus"></i> Add</button>
+            </div>
+        </article>`;
+    }).join("");
+}
+
+function updateLivePrice(kitId) {
+    const kit = NEXPAK_KIT_DATABASE.find(k => k.id === kitId);
+    const card = document.getElementById(`card-${kitId}`);
+    let selectedOpts = {};
+    card.querySelectorAll('.kit-option').forEach(sel => { selectedOpts[sel.getAttribute('data-option')] = sel.value; });
+    document.getElementById(`price-${kitId}`).innerHTML = formatMoney(getKitPrice(kit, selectedOpts));
+}
+
+function filterCategory(cat) {
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+    document.querySelector(`.nav-link[data-category="${cat}"]`)?.classList.add('active');
+    renderNexpakKitCatalogue(cat);
+}
+
+function searchStore() {
+    const term = document.getElementById('storeSearch').value;
+    renderNexpakKitCatalogue('all', term);
+}
+
+/* --- CART MANAGEMENT --- */
+let cart = JSON.parse(localStorage.getItem('nexpak_cart')) || [];
+
+function addNexpakKitToCart(kitId) {
+    try {
+        const kit = NEXPAK_KIT_DATABASE.find(k => k.id === kitId);
+        const card = document.getElementById(`card-${kitId}`);
+        const qty = parseInt(document.getElementById(`qty-${kitId}`).value) || 1;
+        
+        let textOptions = {};
+        let valueOptions = {};
+        
+        card.querySelectorAll('.kit-option').forEach(sel => {
+            textOptions[sel.getAttribute('data-option')] = sel.options[sel.selectedIndex].text;
+            valueOptions[sel.getAttribute('data-option')] = sel.value;
+        });
+        
+        const unitPrice = getKitPrice(kit, valueOptions);
+
+        cart.push({ 
+            id: kit.id + '-' + Date.now(), 
+            kitId: kit.id, 
+            name: kit.name, 
+            image: kit.image,
+            qty: qty, 
+            unitPrice: unitPrice, 
+            optionsText: textOptions,
+            optionsValues: valueOptions
+        });
+        
+        saveCart();
+        alert(`${kit.name} added to cart!`);
+    } catch(e) {
+        console.error("Cart Error:", e);
+    }
+}
+
+function saveCart() {
+    localStorage.setItem('nexpak_cart', JSON.stringify(cart));
+    const cartCount = document.getElementById('cartCount');
+    if(cartCount) cartCount.innerText = cart.reduce((sum, item) => sum + item.qty, 0);
+    renderCart();
+}
+
+function renderCart() {
+    const container = document.getElementById("cartItems");
+    if(!container) return;
+    
+    if(cart.length === 0) { container.innerHTML = "<p style='text-align:center; padding:20px; color:#64748b;'>Your cart is empty.</p>"; }
+    else {
+        container.innerHTML = cart.map(item => `
+            <div class="cart-item">
+                <img src="${item.image}" alt="${item.name}" class="cart-item-img" onerror="this.src='https://via.placeholder.com/55?text=Item'">
+                <div class="cart-item-details">
+                    <h4>${item.name}</h4>
+                    <p style="font-size:11px; color:#64748b;">${Object.values(item.optionsText || {}).join(' | ')}</p>
+                    <p style="font-weight:bold; color:var(--primary-navy); margin-top:5px;">${formatMoney(item.unitPrice)} x ${item.qty}</p>
+                    <button onclick="removeFromCart('${item.id}')" style="margin-top:5px; color:#dc2626; border:none; background:transparent; font-size:12px; font-weight:bold; cursor:pointer;"><i class="fa-solid fa-trash"></i> Remove</button>
+                </div>
+            </div>`).join("");
+    }
+    
+    const subtotal = cart.reduce((sum, item) => sum + (item.unitPrice * item.qty), 0);
+    const vat = subtotal * 0.15;
+    const total = subtotal + vat;
+    
+    if(document.getElementById("cartSubtotal")) document.getElementById("cartSubtotal").innerText = formatMoney(subtotal);
+    if(document.getElementById("cartVat")) document.getElementById("cartVat").innerText = formatMoney(vat);
+    if(document.getElementById("cartTotal")) document.getElementById("cartTotal").innerText = formatMoney(total);
+}
+
+function removeFromCart(id) { cart = cart.filter(i => i.id !== id); saveCart(); }
+function openCart() { renderCart(); document.getElementById('cartOverlay').classList.add('open'); document.getElementById('cartDrawer').classList.add('open'); }
+function closeCart() { document.getElementById('cartOverlay').classList.remove('open'); document.getElementById('cartDrawer').classList.remove('open'); }
+
+/* --- MODALS & CHECKOUT --- */
+function openInfoModal(kitId) {
+    const kit = NEXPAK_KIT_DATABASE.find(k => k.id === kitId);
+    const card = document.getElementById(`card-${kitId}`);
+    let selectedOpts = {};
+    if (card) {
+        card.querySelectorAll('.kit-option').forEach(sel => { selectedOpts[sel.getAttribute('data-option')] = sel.value; });
+    }
+    const contents = getKitContents(kit, selectedOpts);
+    
+    document.getElementById('infoTitle').innerHTML = `<i class="fa-solid fa-circle-info"></i> ${kit.name}`;
+    document.getElementById('infoBody').innerHTML = `
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:15px;">${kit.description}</p>
+        <h4 style="font-size:13px; font-weight:800; color:var(--primary-navy);">Package Includes:</h4>
+        <ul class="spec-list">
+            ${contents.map(i => `<li><i class="fa-solid fa-check"></i> ${i}</li>`).join('')}
+        </ul>
+    `;
+    document.getElementById('infoModal').classList.add('open');
+}
+
+function closeInfoModal() { document.getElementById('infoModal').classList.remove('open'); }
+
+function openCheckout() {
+    if(cart.length === 0) return alert("Cart is empty.");
+    closeCart();
+    
+    const checkoutItems = document.getElementById('checkoutItemsList');
+    if(checkoutItems) {
+        checkoutItems.innerHTML = cart.map(item => `
+            <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:6px;">
+                <span>${item.qty}x ${item.name}</span>
+                <strong>${formatMoney(item.unitPrice * item.qty)}</strong>
+            </div>
+        `).join('');
+    }
+    
+    const subtotal = cart.reduce((sum, item) => sum + (item.unitPrice * item.qty), 0);
+    const vat = subtotal * 0.15;
+    const delivery = 150.00;
+    
+    if(document.getElementById('checkoutSubtotal')) document.getElementById('checkoutSubtotal').innerText = formatMoney(subtotal);
+    if(document.getElementById('checkoutDelivery')) document.getElementById('checkoutDelivery').innerText = formatMoney(delivery);
+    if(document.getElementById('checkoutVat')) document.getElementById('checkoutVat').innerText = formatMoney(vat);
+    if(document.getElementById('checkoutTotal')) document.getElementById('checkoutTotal').innerText = formatMoney(subtotal + vat + delivery);
+
+    document.getElementById('checkoutModal').classList.add('open');
+}
+
+function closeCheckout() { document.getElementById('checkoutModal').classList.remove('open'); }
+
+function handleCheckoutSubmit(event) {
+    event.preventDefault();
+    const name = document.getElementById('custName').value;
+    const email = document.getElementById('custEmail').value;
+    const paymentMethod = document.getElementById('paymentMethod').value;
+
+    if (paymentMethod === 'quote') {
+        alert(`Thank you, ${name}! Your offici
 </body>
 </html>
