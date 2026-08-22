@@ -3988,3 +3988,369 @@
         /* =================================================
            END OF EQUESTRIAN STORE SCRIPT
            ================================================= */
+        /* =================================================
+           FINAL INITIALISATION
+           ================================================= */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                /*
+                 * Make sure cart and wishlist
+                 * counters are correct.
+                 */
+
+                updateEquestrianCartCount();
+
+                updateEquestrianWishlistCount();
+
+
+                /*
+                 * Render products.
+                 */
+
+                refreshEquestrianProducts();
+
+
+                /*
+                 * Activate search.
+                 */
+
+                setupEquestrianSearch();
+
+
+                /*
+                 * Activate category filters.
+                 */
+
+                setupEquestrianCategoryFilters();
+
+
+                /*
+                 * Activate sorting.
+                 */
+
+                setupEquestrianSort();
+
+
+                /*
+                 * Activate cart button.
+                 */
+
+                setupEquestrianCartButton();
+
+
+                /*
+                 * Activate wishlist button.
+                 */
+
+                setupEquestrianWishlistButton();
+
+            }
+        );
+
+
+
+        /* =================================================
+           STORAGE EVENT
+           ================================================= */
+
+        window.addEventListener(
+            "storage",
+            function (event) {
+
+                if (
+                    event.key ===
+                    "nexpak-equestrian-cart"
+                ) {
+
+                    try {
+
+                        equestrianCart =
+                            JSON.parse(
+                                event.newValue ||
+                                "[]"
+                            );
+
+                    } catch (error) {
+
+                        equestrianCart = [];
+
+                    }
+
+
+                    updateEquestrianCartCount();
+
+                }
+
+
+
+                if (
+                    event.key ===
+                    "nexpak-equestrian-wishlist"
+                ) {
+
+                    try {
+
+                        equestrianWishlist =
+                            JSON.parse(
+                                event.newValue ||
+                                "[]"
+                            );
+
+                    } catch (error) {
+
+                        equestrianWishlist = [];
+
+                    }
+
+
+                    updateEquestrianWishlistCount();
+
+                    refreshEquestrianProducts();
+
+                }
+
+            }
+        );
+
+
+
+        /* =================================================
+           PROTECT AGAINST INVALID CART DATA
+           ================================================= */
+
+        function validateEquestrianCart() {
+
+            if (
+                !Array.isArray(
+                    equestrianCart
+                )
+            ) {
+
+                equestrianCart = [];
+
+            }
+
+
+            equestrianCart =
+                equestrianCart.filter(
+                    function (item) {
+
+                        if (!item) {
+                            return false;
+                        }
+
+
+                        if (
+                            !item.productId
+                        ) {
+
+                            return false;
+
+                        }
+
+
+                        const product =
+                            getEquestrianProduct(
+                                item.productId
+                            );
+
+
+                        if (!product) {
+
+                            return false;
+
+                        }
+
+
+                        item.quantity =
+                            Math.max(
+                                1,
+                                Math.floor(
+                                    Number(
+                                        item.quantity ||
+                                        1
+                                    )
+                                )
+                            );
+
+
+                        if (
+                            typeof item.variant !==
+                            "string"
+                        ) {
+
+                            item.variant = "";
+
+                        }
+
+
+                        return true;
+
+                    }
+                );
+
+
+            saveEquestrianStorage();
+
+        }
+
+
+
+        /* =================================================
+           PROTECT AGAINST INVALID WISHLIST DATA
+           ================================================= */
+
+        function validateEquestrianWishlist() {
+
+            if (
+                !Array.isArray(
+                    equestrianWishlist
+                )
+            ) {
+
+                equestrianWishlist = [];
+
+            }
+
+
+            equestrianWishlist =
+                equestrianWishlist.filter(
+                    function (productId) {
+
+                        return Boolean(
+                            getEquestrianProduct(
+                                productId
+                            )
+                        );
+
+                    }
+                );
+
+
+            /*
+             * Remove duplicate wishlist items.
+             */
+
+            equestrianWishlist =
+                [
+                    ...new Set(
+                        equestrianWishlist
+                    )
+                ];
+
+
+            saveEquestrianStorage();
+
+        }
+
+
+
+        /* =================================================
+           RUN DATA VALIDATION
+           ================================================= */
+
+        validateEquestrianCart();
+
+        validateEquestrianWishlist();
+
+
+        updateEquestrianCartCount();
+
+        updateEquestrianWishlistCount();
+
+
+
+        /* =================================================
+           GLOBAL DEBUG HELPERS
+           ================================================= */
+
+        /*
+         * These are useful while testing the store.
+         * You can remove this section later if desired.
+         */
+
+        window.equestrianStore = {
+
+            products:
+                function () {
+
+                    return equestrianProducts;
+
+                },
+
+
+            cart:
+                function () {
+
+                    return equestrianCart;
+
+                },
+
+
+            wishlist:
+                function () {
+
+                    return equestrianWishlist;
+
+                },
+
+
+            cartTotalExVAT:
+                function () {
+
+                    return getEquestrianCartTotalExVAT();
+
+                },
+
+
+            cartTotalIncVAT:
+                function () {
+
+                    return getEquestrianCartTotalIncVAT();
+
+                },
+
+
+            refresh:
+                function () {
+
+                    refreshEquestrianStore();
+
+                }
+
+        };
+
+
+
+        /* =================================================
+           EQUESTRIAN STORE READY
+           ================================================= */
+
+        console.log(
+            "Nexpak Equestrian Store loaded successfully."
+        );
+
+        console.log(
+            "Products:",
+            equestrianProducts.length
+        );
+
+        console.log(
+            "Cart items:",
+            equestrianCart.length
+        );
+
+        console.log(
+            "Wishlist items:",
+            equestrianWishlist.length
+        );
+
+
+    </script>
+
+</body>
+
+</html>
