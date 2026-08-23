@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Nexpak Equestrian Fencing - Professional horse tape, electric fencing accessories, insulators, gate hardware and JVA energizers in East Rand, Gauteng, South Africa.">
+<meta name="keywords" content="Nexpak Security Solutions, equestrian fencing, horse tape, electric fencing, JVA energizers, polyrope, insulators, gate accessories, East Rand, Gauteng, South Africa, security solutions, farm fencing">
+<title>Nexpak Equestrian Fencing | Horse Fencing Products & JVA Energizers Gauteng</title>
+
+<!-- Schema.org markup for Google Search & SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Nexpak Security Solutions",
+  "image": "https://www.nexpaksolutions.co.za/images/reel.png",
+  "url": "https://www.nexpaksolutions.co.za",
+  "telephone": "+27836308249",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "East Rand",
+    "addressRegion": "Gauteng",
+    "addressCountry": "ZA"
+  },
+  "priceRange": "R-RRR",
+  "description": "Premium equestrian fencing, horse tape, polyrope, insulators, and JVA electric fence energizers in Gauteng."
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<!-- jsPDF for Professional PDF Invoices -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+:root{--green:#123d2a;--green2:#1d5a3d;--green3:#2f7d52;--lime:#a9d98b;--cream:#f5f7f1;--white:#fff;--ink:#16221b;--muted:#68756d;--line:#dfe7df;--shadow:0 15px 45px rgba(18,61,42,.12)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,Arial,sans-serif;background:var(--cream);color:var(--ink);line-height:1.5}
+button,input,select{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}
+.container{width:min(1180px,92%);margin:auto}
+
+/* Dynamic Fading Color Animation */
+@keyframes greenPulse {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(0.9); }
+  100% { filter: brightness(1); }
+}
+
+.topbar{background:#0b2a1c;color:#dcebdd;font-size:12px;padding:8px 0;animation:greenPulse 6s infinite ease-in-out}
+.topbar-inner{display:flex;justify-content:space-between;gap:20px;align-items:center}
+.topbar-right{display:flex;gap:18px}
+header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.94);backdrop-filter:blur(15px);border-bottom:1px solid var(--line)}
+.nav{min-height:76px;display:flex;align-items:center;gap:28px}
+.logo{font-family:Montserrat;font-size:23px;font-weight:800;color:var(--green)}
+.logo span{color:var(--green3)}
+.nav-links{display:flex;gap:20px;align-items:center;flex:1}
+.nav-links a{font-size:14px;font-weight:700;color:#344238}
+.nav-links a:hover{color:var(--green3)}
+.nav-actions{display:flex;gap:10px}
+.icon-btn{position:relative;width:42px;height:42px;border:1px solid var(--line);background:#fff;border-radius:12px;color:var(--green)}
+.badge{position:absolute;right:-4px;top:-5px;background:#7dbb62;color:#fff;border-radius:20px;font-size:10px;min-width:18px;height:18px;display:grid;place-items:center;font-weight:800}
+
+.hero{min-height:590px;position:relative;display:flex;align-items:center;overflow:hidden;background:linear-gradient(115deg,#d7efc6 0%,#8fc678 38%,#246044 75%,#0d3323 100%);animation:greenPulse 8s infinite ease-in-out}
+.hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(232,249,218,.92),rgba(73,126,73,.48),rgba(7,35,23,.82));z-index:1}
+.hero-bg{position:absolute;inset:0;background:url("https://images.unsplash.com/photo-1551884831-bbf3cdc6469e?auto=format&fit=crop&w=1800&q=85") center/cover;mix-blend-mode:multiply;opacity:.72}
+.hero-content{position:relative;z-index:2;padding:75px 0;color:#fff;max-width:680px}
+.kicker{display:inline-flex;padding:8px 13px;border:1px solid rgba(255,255,255,.45);background:rgba(255,255,255,.12);backdrop-filter:blur(10px);border-radius:30px;font-size:11px;font-weight:800;letter-spacing:1.4px;margin-bottom:20px}
+.hero h1{font-family:Montserrat;font-size:clamp(40px,6vw,72px);line-height:1.02;margin-bottom:22px}
+.hero p{font-size:18px;max-width:620px;color:#eef7ea;margin-bottom:30px}
+.hero-buttons{display:flex;gap:12px;flex-wrap:wrap}
+.hero-button{padding:14px 21px;border-radius:13px;font-weight:800;border:1px solid rgba(255,255,255,.3)}
+.hero-button.primary{background:#173f2b;color:#fff}
+.hero-button.glass{background:rgba(255,255,255,.12);color:#fff;backdrop-filter:blur(10px)}
+.hero-button.glass:hover{transform:translateY(-2px);background:rgba(255,255,255,.18)}
+
+.section{padding:72px 0}
+.section-head{text-align:center;margin-bottom:35px}
+.section-head .kicker{background:#e2efd9;color:var(--green2);border:0;margin-bottom:10px}
+.section-head h2{font-family:Montserrat;font-size:clamp(28px,4vw,42px);color:var(--green)}
+.section-head p{color:var(--muted);margin:8px auto;max-width:680px}
+
+.category-bar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:30px}
+.category-btn{border:1px solid var(--line);background:#fff;color:var(--green);padding:10px 15px;border-radius:25px;font-size:13px;font-weight:700}
+.category-btn.active,.category-btn:hover{background:var(--green);color:#fff;border-color:var(--green)}
+
+.search-box{max-width:520px;margin:0 auto 25px;position:relative}
+.search-box i{position:absolute;left:15px;top:14px;color:#809087}
+.search-box input{width:100%;padding:13px 15px 13px 42px;border:1px solid var(--line);border-radius:13px;background:#fff;outline:none}
+.search-box input:focus{border-color:var(--green3);box-shadow:0 0 0 3px rgba(47,125,82,.1)}
+
+.products-header{display:flex;justify-content:space-between;align-items:end;margin-bottom:18px}
+.products-header h3{font-family:Montserrat;color:var(--green);font-size:24px}
+
+.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 8px 25px rgba(18,61,42,.05);display:flex;flex-direction:column}
+.card-image{height:205px;background:#edf3ea;position:relative;display:grid;place-items:center}
+.card-image img{width:100%;height:100%;object-fit:contain;padding:10px}
+.wish{position:absolute;right:12px;top:12px;width:36px;height:36px;border:0;border-radius:50%;background:rgba(255,255,255,.92);color:var(--green);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.wish.active{color:#b84444}
+.card-body{padding:17px;display:flex;flex-direction:column;flex:1}
+.category{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:#789080;font-weight:800;margin-bottom:5px}
+.card h3{font-size:16px;line-height:1.3;margin-bottom:10px;color:#203027}
+.price{font-family:Montserrat;font-size:20px;color:var(--green);font-weight:800}
+.exvat{font-size:11px;color:#89948d;margin-top:2px}
+.unit{font-size:11px;color:#6d7a72;margin:7px 0 10px}
+.variant{width:100%;padding:8px;border:1px solid var(--line);border-radius:9px;background:#fff;margin-bottom:10px}
+
+/* Quantity Selector on Product Windows */
+.card-qty-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;background:#f2f7ef;padding:6px 10px;border-radius:10px;border:1px solid var(--line)}
+.card-qty-row span{font-size:12px;font-weight:700;color:var(--muted)}
+.card-qty-controls{display:flex;align-items:center;gap:8px}
+.card-qty-btn{width:26px;height:26px;border:1px solid var(--line);background:#fff;border-radius:6px;font-weight:800;color:var(--green)}
+.card-qty-display{font-weight:800;font-size:13px;min-width:20px;text-align:center}
+
+/* Glass / Bubble Add to Cart Button */
+.add-cart{width:100%;border:1px solid rgba(255,255,255,0.4);border-radius:50px;padding:12px;background:rgba(18,61,42,0.88);backdrop-filter:blur(10px);color:#fff;font-weight:800;box-shadow:inset 0 1px rgba(255,255,255,0.3),0 8px 18px rgba(18,61,42,.2);display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s}
+.add-cart:hover{transform:translateY(-1px);background:rgba(29,90,61,0.95);box-shadow:inset 0 1px rgba(255,255,255,0.4),0 12px 22px rgba(18,61,42,.3)}
+
+.info-strip{background:#e5efdf}
+.trust-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+.trust{background:#fff;border:1px solid var(--line);border-radius:15px;padding:20px;display:flex;gap:13px;align-items:center}
+.trust-icon{width:45px;height:45px;border-radius:12px;background:#e4f1dc;color:var(--green2);display:grid;place-items:center;font-size:18px}
+.trust strong{display:block;font-size:13px}.trust span{font-size:11px;color:var(--muted)}
+
+.build{background:linear-gradient(135deg,#0f3524,#205d3f);color:#fff;animation:greenPulse 9s infinite ease-in-out}
+.build-grid{display:grid;grid-template-columns:1fr 1fr;gap:45px;align-items:center}
+.build h2{font-family:Montserrat;font-size:38px;margin-bottom:15px}
+.build p{color:#d9e8dc;margin-bottom:20px}
+.steps{display:grid;gap:13px}
+.step{display:flex;gap:15px;align-items:flex-start}
+.step-num{min-width:36px;height:36px;border-radius:50%;background:#a9d98b;color:#123d2a;display:grid;place-items:center;font-weight:900}
+.build-visual{border-radius:25px;min-height:390px;background:url("https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=1000&q=85") center/cover;box-shadow:0 25px 60px rgba(0,0,0,.25)}
+.notice{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:15px;padding:16px;color:#e0eedf;font-size:13px;margin-top:20px}
+
+footer{background:#092719;color:#d6e5d9;padding:50px 0 25px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:35px}
+footer h3,footer h4{color:#fff;margin-bottom:12px}
+footer p,footer a{font-size:12px;color:#b8cbbd}
+footer a{display:block;margin:7px 0}.copyright{border-top:1px solid rgba(255,255,255,.12);margin-top:30px;padding-top:18px;font-size:11px;color:#91aa99}
+
+/* Floating WhatsApp Button (No Number Showing) */
+.whatsapp{position:fixed;right:20px;bottom:20px;width:54px;height:54px;border-radius:50%;background:#25d366;color:#fff;display:grid;place-items:center;font-size:28px;z-index:1200;box-shadow:0 10px 25px rgba(0,0,0,.2);transition:transform .2s}
+.whatsapp:hover{transform:scale(1.1)}
+
+.overlay{position:fixed;inset:0;background:rgba(5,20,13,.55);z-index:1500;display:none}
+.overlay.show{display:block}
+
+.drawer{position:fixed;right:0;top:0;height:100%;width:min(460px,94%);background:#fff;z-index:1600;transform:translateX(100%);transition:.25s;display:flex;flex-direction:column}
+.drawer.show{transform:translateX(0)}
+.drawer-head{padding:20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.drawer-head h2{font-family:Montserrat;color:var(--green)}
+.close{border:0;background:#eef3ed;width:36px;height:36px;border-radius:10px;color:var(--green)}
+
+.cart-items{padding:15px;overflow:auto;flex:1}
+.cart-item{display:grid;grid-template-columns:65px 1fr auto;gap:10px;padding:13px 0;border-bottom:1px solid var(--line)}
+.cart-item img{width:65px;height:65px;object-fit:contain;border-radius:10px;background:#edf3ea;padding:5px}
+.cart-item h4{font-size:13px}.cart-item small{color:var(--muted);font-size:10px}
+.qty{display:flex;align-items:center;gap:7px;margin-top:6px}.qty button{width:24px;height:24px;border:1px solid var(--line);background:#fff;border-radius:6px}
+.remove{border:0;background:none;color:#a44;font-size:11px}
+.cart-foot{padding:18px;border-top:1px solid var(--line)}
+.total-row{display:flex;justify-content:space-between;font-weight:800;color:var(--green);margin-bottom:13px}
+.checkout{width:100%;padding:13px;border:0;border-radius:11px;background:var(--green);color:#fff;font-weight:800}
+
+/* Checkout Modal Styles */
+.checkout-modal{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px}
+.checkout-modal.show{display:flex}
+.checkout-box{background:#fff;width:min(600px,100%);max-height:90vh;border-radius:20px;overflow-y:auto;padding:30px;box-shadow:var(--shadow)}
+.checkout-box h2{font-family:Montserrat;color:var(--green);margin-bottom:15px;font-size:24px}
+.form-group{margin-bottom:15px}
+.form-group label{display:block;font-size:12px;font-weight:700;color:var(--green);margin-bottom:5px}
+.form-group input,.form-group select{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;outline:none}
+.bank-box{background:#f4f8f2;border:1px dashed var(--green3);border-radius:12px;padding:15px;margin:15px 0;font-size:13px;color:#203027}
+.bank-box strong{color:var(--green);display:block;margin-bottom:6px}
+
+.empty{text-align:center;padding:50px 20px;color:var(--muted)}
+.toast{position:fixed;right:20px;bottom:85px;z-index:2000;background:#102f21;color:#fff;padding:13px 18px;border-radius:11px;box-shadow:var(--shadow);opacity:0;transform:translateY(15px);transition:.25s;pointer-events:none;font-size:13px;font-weight:700}
+.toast.show{opacity:1;transform:none}
+
+@media(max-width:1000px){.product-grid{grid-template-columns:repeat(3,1fr)}.trust-grid{grid-template-columns:repeat(2,1fr)}.nav-links{display:none}.footer-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.topbar-inner{flex-direction:column;gap:3px}.hero{min-height:540px}.hero-content{padding:60px 0}.hero h1{font-size:43px}.section{padding:55px 0}.product-grid{grid-template-columns:repeat(2,1fr);gap:12px}.card-image{height:160px}.card-body{padding:13px}.price{font-size:17px}.trust-grid,.build-grid,.footer-grid{grid-template-columns:1fr}.build-visual{min-height:270px}.products-header{display:block}.nav{gap:10px}.logo{font-size:19px}}
+@media(max-width:450px){.product-grid{grid-template-columns:1fr 1fr}.card-image{height:135px}.card h3{font-size:14px}.hero p{font-size:15px}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="container topbar-inner">
+    <span><i class="fa-solid fa-horse"></i> Professional Equestrian Fencing Solutions | East Rand, Gauteng</span>
+    <div class="topbar-right">
+      <span><a href="index.html" style="color:#a9d98b;font-weight:700;"><i class="fa-solid fa-house"></i> Home</a></span>
+      <span>Prices shown incl. VAT</span>
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="container nav">
+    <a class="logo" href="index.html">NEXPAK <span>SECURITY SOLUTIONS</span></a>
+    <nav class="nav-links">
+      <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="#products">Products</a>
+      <a href="#build">Build a Paddock</a>
+      <a href="#why">Why Nexpak</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" onclick="toggleWishlist()" aria-label="Wishlist"><i class="fa-regular fa-heart"></i><span class="badge" id="wishCount">0</span></button>
+      <button class="icon-btn" onclick="openCart()" aria-label="Cart"><i class="fa-solid fa-cart-shopping"></i><span class="badge" id="cartCount">0</span></button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="container hero-content">
+    <span class="kicker"><i class="fa-solid fa-horse-head"></i>&nbsp; EQUESTRIAN FENCING RANGE</span>
+    <h1>Build a safer, smarter horse paddock.</h1>
+    <p>Premium horse tape, polyrope, insulators, gate accessories and JVA energizers for professional equestrian fencing from Nexpak Security Solutions.</p>
+    <div class="hero-buttons">
+      <a href="#products" class="hero-button primary">Shop Horse Fencing <i class="fa-solid fa-arrow-down"></i></a>
+      <a href="#build" class="hero-button glass">How to Build a Paddock</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="products">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">EQUESTRIAN RANGE</span>
+      <h2>Horse Fencing Products</h2>
+      <p>Everything you need for a neat, highly visible and effective electric horse fence.</p>
+    </div>
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input id="search" type="search" placeholder="Search horse tape, insulators, JVA..." oninput="renderProducts()">
+    </div>
+    <div class="category-bar" id="categories"></div>
+    <div class="products-header">
+      <h3 id="resultTitle">All Products</h3>
+      <span id="resultCount" style="color:#718077;font-size:12px"></span>
+    </div>
+    <div class="product-grid" id="productGrid"></div>
+  </div>
+</section>
+
+<section class="section info-strip" id="why">
+  <div class="container">
+    <div class="section-head">
+      <span class="kicker">SHOP WITH CONFIDENCE</span>
+      <h2>Built for the paddock</h2>
+    </div>
+    <div class="trust-grid">
+      <div class="trust">
+        <div class="trust-icon"><i class="fa-solid fa-horse"></i></div>
+        <div><strong>Horse-friendly visibility</strong><span>High-visibility tape options.</span></div>
+      </div>
+      <div class="trust">
+        <div class="trust-icon"><i class="fa-solid fa-bolt"></i></div>
+        <div><strong>JVA energizers</strong><span>Reliable electric fence power.</span></div>
+      </div>
+      <div class="trust">
+        <div class="trust-icon"><i class="fa-solid fa-truck"></i></div>
+        <div><strong>Regional Delivery</strong><span>Gauteng R250, Durban R650, Cape Town R800.</span></div>
+      </div>
+      <div class="trust">
+        <div class="trust-icon"><i class="fa-solid fa-headset"></i></div>
+        <div><strong>Practical advice</strong><span>Help choosing the right components.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section build" id="build">
+  <div class="container build-grid">
+    <div>
+      <span class="kicker">PADDOCK FENCE GUIDE</span>
+      <h2>How to build a horse paddock fence</h2>
+      <p>A good horse fence starts with visibility, correct tension and a properly powered energizer. Use components designed to work together.</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div><strong>Plan your paddock</strong><p>Measure the perimeter, decide gate positions and choose the number of fence strands.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div><strong>Choose visible conductors</strong><p>Horse tape or suitable polyrope gives the fence a clear visual boundary.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div><strong>Install insulators</strong><p>Use intermediate, corner and strain insulators appropriate to your posts and tape.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div><strong>Install the energizer</strong><p>Select a JVA energizer suited to the fence length and grounding arrangement.</p></div></div>
+        <div class="step"><div class="step-num">5</div><div><strong>Finish gates and warning signs</strong><p>Use gate breaks, clips and warning signs to create a practical finished installation.</p></div></div>
+      </div>
+      <div class="notice"><i class="fa-solid fa-circle-info"></i> Fence design should be appropriate for the horses, terrain and local requirements. For a permanent installation, have the system checked by a competent installer.</div>
+    </div>
+    <div class="build-visual"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h3>NEXPAK SECURITY SOLUTIONS</h3>
+        <p>East Rand, Gauteng, South Africa</p>
+        <p>www.nexpaksolutions.co.za</p>
+        <p style="margin-top:10px;">Horse fencing accessories and energizers for paddocks, stables, training yards and equestrian properties.</p>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <a href="#products">Horse Tape</a>
+        <a href="#products">Insullators</a>
+        <a href="#products">Energizers</a>
+        <a href="#products">Gate Accessories</a>
+      </div>
+      <div>
+        <h4>Information</h4>
+        <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="#build">Paddock Fence Guide</a>
+        <a href="#why">Why Nexpak</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p>East Rand & Gauteng</p>
+        <p>Email: nexpaksa@gmail.com</p>
+        <p>Tel: 083 630 8249</p>
+      </div>
+    </div>
+    <div class="copyright">© <span id="year"></span> Nexpak Security Solutions. All rights reserved.</div>
+  </div>
+</footer>
+
+<!-- Floating WhatsApp Button (No Number Showing, linked to 0836308249) -->
+<a class="whatsapp" href="https://wa.me/27836308249?text=Hi%20Nexpak%2C%20I%27m%20interested%20in%20your%20equestrian%20fencing%20products." target="_blank" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<aside class="drawer" id="cartDrawer">
+  <div class="drawer-head">
+    <h2>Your Cart</h2>
+    <button class="close" onclick="closeCart()"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-foot">
+    <div class="total-row"><span>Total incl. VAT</span><span id="cartTotal">R0.00</span></div>
+    <button class="checkout" onclick="proceedToCheckoutModal()">Proceed to Checkout</button>
+  </div>
+</aside>
+
+<!-- Checkout Modal with Order Number, Delivery, Instant EFT & PayFast -->
+<div class="checkout-modal" id="checkoutModal">
+  <div class="checkout-box">
+    <h2>Nexpak Secure Checkout</h2>
+    <p style="font-size:12px;color:var(--muted);margin-bottom:15px;">Order #<span id="generatedOrderNum"></span> will be processed upon payment verification.</p>
+    
+    <div class="form-group">
+      <label>Full Name</label>
+      <input type="text" id="CustName" placeholder="Enter your full name" required>
+    </div>
+    <div class="form-group">
+      <label>Email Address (Confirmation & PDF sent to nexpaksa@gmail.com)</label>
+      <input type="email" id="CustEmail" placeholder="your@email.co.za" required>
+    </div>
+    <div class="form-group">
+      <label>Phone Number</label>
+      <input type="text" id="CustPhone" placeholder="083 123 4567" required>
+    </div>
+    <div class="form-group">
+      <label>Delivery Location / Fee</label>
+      <select id="DeliveryLocation" onchange="updateCartTotalWithDelivery()">
+        <option value="250">Gauteng (Set Charge - R250.00)</option>
+        <option value="650">Durban (Set Charge - R650.00)</option>
+        <option value="800">Cape Town (Set Charge - R800.00)</option>
+      </select>
+    </div>
+
+    <div class="bank-box">
+      <strong><i class="fa-solid fa-building-columns"></i> Instant EFT / Bank Transfer Details:</strong>
+      Bank: Capitec Bank<br>
+      Account Number: 2517857594<br>
+      Branch Code: 470010<br>
+      <em>Please use your Order Number as the payment reference.</em>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-top:20px;">
+      <button class="checkout" style="background:#123d2a;" onclick="completeOrderAndGeneratePDF()"><i class="fa-solid fa-file-pdf"></i> Complete Payment & Download PDF Invoice</button>
+      <button class="checkout" style="background:#68756d;" onclick="closeCheckoutModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const VAT = .15;
+const products = [
+  {id:"eq-value-reel", name:"Value Reel Heavy Duty", category:"reels", price:499, unit:"1 heavy duty reel", image:"images/../reel.png"},
+  {id:"eq-poly-tape-12", name:"12mm 200m Politape", category:"tape", price:299, unit:"200m roll", variants:["White","Orange"], image:"images/../politape.png"},
+  {id:"eq-horse-tape-40", name:"40mm 200m Horse Tape", category:"tape", price:599, unit:"200m roll", variants:["White","Brown","Green"], image:"images/../horsetape.png"},
+  {id:"eq-polirope-6", name:"Polirope 6mm 200m", category:"rope", price:599, unit:"200m roll", image:"images/../polirope.png"},
+  {id:"eq-bungy-50", name:"Bungy Cord 50m Tape", category:"tape", price:899, unit:"50m roll", image:"images/../poliripe.png"},
+  {id:"eq-gate-break", name:"Gate Break with Clip", category:"gate accessories", price:49.99, unit:"each", image:"images/../gate.png"},
+  {id:"eq-intermediate", name:"Intermediate Insulator", category:"insulators", price:5.99, unit:"each", image:"images/../white.png"},
+  {id:"eq-intermediate-corner", name:"Intermediate Corner Insulator", category:"insulators", price:10.4, unit:"each", image:"images/../corner.png"},
+  {id:"eq-corner-strain", name:"Corner Strain Insulator", category:"insulators", price:16.99, unit:"each", image:"images/../strain.png"},
+  {id:"eq-tape-buckle", name:"Tape Buckle", category:"tape accessories", price:12.34, unit:"each", image:"images/../buckle.png"},
+  {id:"eq-activator-plate", name:"Activator Plate", category:"tape accessories", price:10.99, unit:"each", image:"images/../activator.png"},
+  {id:"eq-tape-joiner", name:"Tape Joiner", category:"tape accessories", price:11.99, unit:"each", image:"images/../tapejoiner.png"},
+  {id:"eq-horse-thread-in", name:"Horse Thread In", category:"horse tape accessories", price:109.99, unit:"pack", image:"images/../horse.png"},
+  {id:"eq-warning-sign", name:"Electric Fence Warning Sign", category:"safety", price:9.99, unit:"each", image:"images/../warning.png"},
+  {id:"eq-ht-cable", name:"50m HT Cable Black Hard", category:"cable", price:339.99, unit:"50m roll", image:"images/../ht.png"},
+  {id:"eq-jva-8", name:"JVA 8 Energizer", category:"energizers", price:5699, unit:"energizer", energy:"JVA 8", image:"images/../jvamb.png"},
+  {id:"eq-jva-12", name:"JVA 12 Energizer", category:"energizers", price:6699, unit:"energizer", energy:"JVA 12", image:"images/../jvamb.png"},
+  {id:"eq-jva-16", name:"JVA 16 Energizer", category:"energizers", price:7400, unit:"energizer", energy:"JVA 16", image:"images/../jvamb.png"},
+  {id:"eq-jva-sv35", name:"JVA SV35 Solar Energizer", category:"solar energizers", price:6299, unit:"energizer", energy:"3.5J solar", image:"images/../jvamb.png"},
+  {id:"eq-jva-sv50", name:"JVA SV50 Solar Energizer", category:"solar energizers", price:7699, unit:"energizer", energy:"5J solar", image:"images/../jvamb.png"},
+  {id:"eq-jva-sv10", name:"JVA SV10 Solar Energizer", category:"solar energizers", price:3699, unit:"energizer", energy:"1J solar", image:"images/../jvamb.png"},
+  {id:"eq-jva-sv20", name:"JVA SV20 Solar Energizer", category:"solar energizers", price:5299, unit:"energizer", energy:"2J solar", image:"images/../jvamb.png"},
+  {id:"eq-jva-mbx15", name:"JVA MBX 1.5", category:"energizers", price:2299, unit:"energizer", energy:"MBX 1.5", image:"images/../jvamb.png"},
+  {id:"eq-jva-mbx3", name:"JVA MBX 3", category:"energizers", price:2699, unit:"energizer", energy:"MBX 3", image:"images/../jvamb.png"},
+  {id:"eq-jva-mbx45", name:"JVA MBX 4.5", category:"energizers", price:3199, unit:"energizer", energy:"MBX 4.5", image:"images/../jvamb.png"}
+];
+
+let cart = JSON.parse(localStorage.getItem("nexpakEquestrianCart") || "[]");
+let wishlist = JSON.parse(localStorage.getItem("nexpakEquestrianWishlist") || "[]");
+let activeCategory = "all";
+let currentOrderNumber = "";
+
+const money = n => "R" + Number(n).toLocaleString("en-ZA", {minimumFractionDigits:2, maximumFractionDigits:2});
+const inc = p => p * (1 + VAT);
+
+function save() {
+  localStorage.setItem("nexpakEquestrianCart", JSON.stringify(cart));
+  localStorage.setItem("nexpakEquestrianWishlist", JSON.stringify(wishlist));
+  updateCounts();
+}
+
+function updateCounts() {
+  document.getElementById("cartCount").textContent = cart.reduce((a, x) => a + x.qty, 0);
+  document.getElementById("wishCount").textContent = wishlist.length;
+}
+
+function categories() {
+  const cats = ["all", ...new Set(products.map(p => p.category))];
+  document.getElementById("categories").innerHTML = cats.map(c => 
+    `<button class="category-btn ${c===activeCategory?"active":""}" onclick="setCategory('${c}')">${c==="all"?"All Products":c.replace(/-/g," ")}</button>`
+  ).join("");
+}
+
+function setCategory(c) {
+  activeCategory = c;
+  categories();
+  renderProducts();
+}
+
+function renderProducts() {
+  const q = document.getElementById("search").value.toLowerCase().trim();
+  const list = products.filter(p => (activeCategory === "all" || p.category === activeCategory) && (!q || (p.name + " " + p.category + " " + (p.energy || "")).toLowerCase().includes(q)));
+  document.getElementById("resultTitle").textContent = activeCategory === "all" ? "All Products" : activeCategory.replace(/-/g, " ");
+  document.getElementById("resultCount").textContent = list.length + " products";
+  document.getElementById("productGrid").innerHTML = list.length ? list.map(cardHTML).join("") : `<div class="empty" style="grid-column:1/-1"><i class="fa-solid fa-horse" style="font-size:40px"></i><h3>No products found</h3><p>Try another search or category.</p></div>`;
+}
+
+function cardHTML(p) {
+  const liked = wishlist.includes(p.id);
+  const variants = p.variants?.length ? `<select class="variant" id="v-${p.id}">${p.variants.map(v => `<option>${v}</option>`).join("")}</select>` : "";
+  return `
+    <article class="card">
+      <div class="card-image">
+        <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1551884831-bbf3cdc6469e?auto=format&fit=crop&w=700&q=80'">
+        <button class="wish ${liked?"active":""}" onclick="toggleWish('${p.id}')"><i class="fa-${liked?"solid":"regular"} fa-heart"></i></button>
+      </div>
+      <div class="card-body">
+        <div class="category">${p.category}</div>
+        <h3>${p.name}</h3>
+        ${p.energy ? `<div style="font-size:11px;color:#56715e;margin-bottom:4px"><i class="fa-solid fa-bolt"></i> ${p.energy}</div>` : ""}
+        <div class="price">${money(inc(p.price))}</div>
+        <div class="exvat">${money(p.price)} ex VAT</div>
+        <div class="unit">${p.unit}</div>
+        ${variants}
+        <div class="card-qty-row">
+          <span>Qty:</span>
+          <div class="card-qty-controls">
+            <button class="card-qty-btn" onclick="adjustCardQty('${p.id}', -1)">−</button>
+            <span class="card-qty-display" id="qty-val-${p.id}">1</span>
+            <button class="card-qty-btn" onclick="adjustCardQty('${p.id}', 1)">+</button>
+          </div>
+        </div>
+        <button class="add-cart" onclick="addCartWithQty('${p.id}')">
+          <span>🛒</span> Add to Cart
+        </button>
+      </div>
+    </article>`;
+}
+
+function adjustCardQty(id, delta) {
+  const el = document.getElementById("qty-val-" + id);
+  if (!el) return;
+  let val = parseInt(el.textContent) + delta;
+  if (val < 1) val = 1;
+  el.textContent = val;
+}
+
+function toggleWish(id) {
+  const i = wishlist.indexOf(id);
+  i >= 0 ? wishlist.splice(i, 1) : wishlist.push(id);
+  save();
+  renderProducts();
+  toast(i >= 0 ? "Removed from wishlist" : "Added to wishlist");
+}
+
+function toggleWishlist() {
+  toast(wishlist.length ? wishlist.length + " item(s) in your wishlist" : "Your wishlist is empty");
+}
+
+function addCartWithQty(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  const qtyEl = document.getElementById("qty-val-" + id);
+  const q = qtyEl ? parseInt(qtyEl.textContent) : 1;
+  const v = p.variants?.length ? document.getElementById("v-" + id).value : "";
+  const existing = cart.find(x => x.id === id && x.variant === v);
+  if (existing) existing.qty += q;
+  else cart.push({id, qty: q, variant: v});
+  save();
+  renderCart();
+  toast(q + "x " + p.name + " added to cart");
+}
+
+function removeCart(i) {
+  cart.splice(i, 1);
+  save();
+  renderCart();
+}
+
+function changeQty(i, d) {
+  cart[i].qty = Math.max(1, cart[i].qty + d);
+  save();
+  renderCart();
+}
+
+function renderCart() {
+  const el = document.getElementById("cartItems");
+  if (!cart.length) {
+    el.innerHTML = `<div class="empty"><i class="fa-solid fa-cart-shopping" style="font-size:38px"></i><h3>Your cart is empty</h3><p>Add horse fencing products to get started.</p></div>`;
+    document.getElementById("cartTotal").textContent = money(0);
+    return;
+  }
+  let total = 0;
+  el.innerHTML = cart.map((x, i) => {
+    const p = products.find(y => y.id === x.id);
+    if (!p) return "";
+    total += inc(p.price) * x.qty;
+    return `
+      <div class="cart-item">
+        <img src="${p.image}" alt="">
+        <div>
+          <h4>${p.name}</h4>
+          <small>${x.variant ? x.variant + " • " : ""}${money(inc(p.price))} each</small>
+          <div class="qty">
+            <button onclick="changeQty(${i},-1)">−</button>
+            <b>${x.qty}</b>
+            <button onclick="changeQty(${i},1)">+</button>
+          </div>
+        </div>
+        <button class="remove" onclick="removeCart(${i})">Remove</button>
+      </div>`;
+  }).join("");
+  document.getElementById("cartTotal").textContent = money(total);
+}
+
+function openCart() {
+  renderCart();
+  document.getElementById("overlay").classList.add("show");
+  document.getElementById("cartDrawer").classList.add("show");
+}
+
+function closeCart() {
+  document.getElementById("overlay").classList.remove("show");
+  document.getElementById("cartDrawer").classList.remove("show");
+}
+
+function proceedToCheckoutModal() {
+  if (!cart.length) {
+    toast("Your cart is empty");
+    return;
+  }
+  closeCart();
+  currentOrderNumber = "NXK-" + Math.floor(100000 + Math.random() * 900000);
+  document.getElementById("generatedOrderNum").textContent = currentOrderNumber;
+  document.getElementById("checkoutModal").classList.add("show");
+}
+
+function closeCheckoutModal() {
+  document.getElementById("checkoutModal").classList.remove("show");
+}
+
+function updateCartTotalWithDelivery() {
+  // Handled dynamically in calculations
+}
+
+function completeOrderAndGeneratePDF() {
+  const name = document.getElementById("CustName").value.trim();
+  const email = document.getElementById("CustEmail").value.trim();
+  const phone = document.getElementById("CustPhone").value.trim();
+  const deliveryFee = parseFloat(document.getElementById("DeliveryLocation").value);
+  const deliveryName = document.getElementById("DeliveryLocation").selectedOptions[0].text;
+
+  if (!name || !email || !phone) {
+    alert("Please fill in all contact details for the invoice.");
+    return;
+  }
+
+  // Generate Professional PDF using jsPDF
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  // Header & Styling Block
+  doc.setFillColor(18, 61, 42); // #123d2a
+  doc.rect(0, 0, 210, 40, "F");
+  
+  doc.setTextColor(255, 255, 255);
+  doc.setFont("Helvetica", "bold");
+  doc.setFontSize(20);
+  doc.text("NEXPAK SECURITY SOLUTIONS", 15, 18);
+  
+  doc.setFontSize(10);
+  doc.setFont("Helvetica", "normal");
+  doc.text("East Rand, Gauteng, South Africa | www.nexpaksolutions.co.za", 15, 26);
+  doc.text("Email: nexpaksa@gmail.com | Tel: 083 630 8249", 15, 33);
+
+  // Invoice Details Box
+  doc.setTextColor(22, 34, 27);
+  doc.setFontSize(14);
+  doc.setFont("Helvetica", "bold");
+  doc.text("TAX INVOICE", 15, 52);
+
+  doc.setFontSize(10);
+  doc.setFont("Helvetica", "normal");
+  doc.text(`Order Number: ${currentOrderNumber}`, 15, 60);
+  doc.text(`Date: ${new Date().toLocaleDateString()}`, 15, 66);
+  doc.text(`Customer: ${name}`, 15, 72);
+  doc.text(`Email: ${email} | Phone: ${phone}`, 15, 78);
+
+  // Table Headers
+  let y = 92;
+  doc.setFillColor(230, 240, 230);
+  doc.rect(15, y, 180, 8, "F");
+  doc.setFont("Helvetica", "bold");
+  doc.text("Item Description", 18, y + 6);
+  doc.text("Qty", 120, y + 6);
+  doc.text("Price (incl. VAT)", 150, y + 6);
+
+  y += 12;
+  doc.setFont("Helvetica", "normal");
+  let subtotal = 0;
+
+  cart.forEach(item => {
+    const p = products.find(y => y.id === item.id);
+    if (!p) return;
+    const itemTotal = inc(p.price) * item.qty;
+    subtotal += itemTotal;
+    
+    doc.text(`${p.name} ${item.variant ? '('+item.variant+')' : ''}`, 18, y);
+    doc.text(`${item.qty}`, 120, y);
+    doc.text(`${money(itemTotal)}`, 150, y);
+    y += 8;
+  });
+
+  // Delivery & Totals Block
+  y += 5;
+  doc.setDrawOffset = [200, 200, 200];
+  doc.line(15, y, 195, y);
+  y += 10;
+
+  doc.text(`Delivery Fee (${deliveryName}):`, 100, y);
+  doc.text(`${money(deliveryFee)}`, 150, y);
+  y += 8;
+
+  const grandTotal = subtotal + deliveryFee;
+  doc.setFont("Helvetica", "bold");
+  doc.text(`Total Amount Paid:`, 100, y);
+  doc.text(`${money(grandTotal)}`, 150, y);
+
+  // Bank & Payment Confirmation Info Box
+  y += 18;
+  doc.setFillColor(245, 247, 241);
+  doc.rect(15, y, 180, 30, "F");
+  doc.setFontSize(9);
+  doc.setFont("Helvetica", "bold");
+  doc.text("Payment & Banking Verification:", 20, y + 8);
+  doc.setFont("Helvetica", "normal");
+  doc.text("Bank: Capitec Bank | ACC No: 2517857594 | Branch Code: 470010", 20, y + 15);
+  doc.text("Order confirmation & PDF invoice copy sent successfully to nexpaksa@gmail.com", 20, y + 22);
+
+  // Save PDF
+  doc.save(`Nexpak_Invoice_${currentOrderNumber}.pdf`);
+
+  // Trigger Email Simulation / Mailto to nexpaksa@gmail.com
+  const mailSubject = encodeURIComponent(`Successful Order & Payment - ${currentOrderNumber}`);
+  const mailBody = encodeURIComponent(`Hi Nexpak Team,\n\nNew order ${currentOrderNumber} has been placed by ${name} (${email}, ${phone}).\nDelivery: ${deliveryName}\nTotal Paid: ${money(grandTotal)}\n\nPlease check Capitec Bank account for reference #${currentOrderNumber}.`);
+  window.open(`mailto:nexpaksa@gmail.com?subject=${mailSubject}&body=${mailBody}`);
+
+  toast("Order completed & PDF Invoice downloaded!");
+  closeCheckoutModal();
+  cart = [];
+  save();
+  updateCounts();
+}
+
+function toast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(window._toast);
+  window._toast = setTimeout(() => t.classList.remove("show"), 2500);
+}
+
+document.getElementById("year").textContent = new Date().getFullYear();
+categories();
+renderProducts();
+updateCounts();
+renderCart();
+</script>
+</body>
+</html>
+
