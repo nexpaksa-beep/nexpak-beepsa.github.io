@@ -843,16 +843,28 @@ async function confirmDeliveryAddress() {
         return alert("Please fill in street, suburb and city so we can calculate delivery.");
     }
 
-    const fullAddress = `${street}, ${suburb}, ${city}${postal ? ', ' + postal : ''}, South Africa`;
+    // Two versions of the address: exact, and a broader fallback
+    const exactAddress = `${street}, ${suburb}, ${city}${postal ? ', ' + postal : ''}, South Africa`;
+    const fallbackAddress = `${suburb}, ${city}, South Africa`; 
+    
     const statusEl = document.getElementById('deliveryStatus');
     statusEl.style.display = 'block';
 
     try {
-        const geo = await geocodeAddress(fullAddress);
+        let geo;
+        try {
+            // Step 1: Try to find the exact street location
+            geo = await geocodeAddress(exactAddress);
+        } catch (exactErr) {
+            // Step 2: If the street isn't mapped on OpenStreetMap, use the Suburb center
+            console.warn("Exact address not found on OSM, falling back to Suburb level...");
+            geo = await geocodeAddress(fallbackAddress);
+        }
+
         const distanceKm = haversineKm(STORE_COORDS.lat, STORE_COORDS.lon, geo.lat, geo.lon);
 
         deliveryInfo = {
-            address: fullAddress,
+            address: exactAddress, // Still save their full address for the actual invoice
             distanceKm: Math.round(distanceKm * 10) / 10,
             lat: geo.lat,
             lon: geo.lon
@@ -871,7 +883,7 @@ async function confirmDeliveryAddress() {
     } catch(e) {
         console.error("Geocoding error:", e);
         statusEl.style.display = 'none';
-        alert("We couldn't pinpoint that address automatically. Please check the spelling, or include more detail (e.g. suburb + city), and try again.");
+        alert("We couldn't pinpoint that suburb. Please check the spelling (e.g. try Boksburg instead of East Rand) and try again.");
     }
 }
 
