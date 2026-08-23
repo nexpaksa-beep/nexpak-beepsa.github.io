@@ -641,15 +641,31 @@ function haversineKm(lat1, lon1, lat2, lon2) {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c;
 }
-
 async function geocodeAddress(addressString) {
-    const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(addressString)}`;
-    const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+    // 1. Identify the app to OpenStreetMap using your NexPak email
+    const emailParam = "&email=nexpaksa@outlook.com"; 
+    const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(addressString)}${emailParam}`;
+    
+    // 2. Create an 8-second timeout controller
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000); 
+    
+    // 3. Pass the abort signal to the fetch request
+    const res = await fetch(url, { 
+        headers: { 'Accept': 'application/json' },
+        signal: controller.signal
+    });
+    
+    // 4. Clear the timeout if the request succeeds quickly
+    clearTimeout(timeoutId);
+    
     if (!res.ok) throw new Error("Geocoding request failed");
     const data = await res.json();
     if (!data || data.length === 0) throw new Error("Address not found");
+    
     return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon), display: data[0].display_name };
-}
+    }
+    
 
 function getKitPrice(kit, optionsObj) {
     let total = Number(kit.price);
