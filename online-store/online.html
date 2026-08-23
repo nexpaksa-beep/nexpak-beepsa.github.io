@@ -464,7 +464,7 @@ const NEXPAK_KIT_DATABASE = [
     {
         id: "RG-KIT-01", category: "roboguard", name: "Roboguard Beam Kit",
         description: "Wireless outdoor early warning beams.", price: 5999.00,
-        image: "../images/Rob.png", weight: 14,
+        image: "../images/Rob.png", weight: 8,
         options: {
             beams: [{value: "2", label: "2 Beams", extra: 0}, {value: "4", label: "4 Beams", extra: 3000}, {value: "6", label: "6 Beams", extra: 4000}, {value: "8", label: "8 Beams", extra: 3000}],
             color: [{value: "black", label: "Black", extra: 0}, {value: "green", label: "Green", extra: 0}, {value: "white", label: "White", extra: 0}]
@@ -490,52 +490,52 @@ const NEXPAK_KIT_DATABASE = [
         contents: ["Ajax hub", "ajax keypad", "Ajax indoor siren", "2 x indoor PIR", "2 x indoor door magnets"]
     },
     {
-        id: "CENT-D5EVO", category: "gate-automation", name: "Centurion D3 SmartKit",
+        id: "CENT-D3SMART", category: "gate-automation", name: "Centurion D3 SmartKit",
         description: "Proven 300kg sliding gate motor kit.", price: 4999.00,
-        image: "../images/centurion.png", weight: 30,
+        image: "../images/centurion.png", weight: 13,
         contents: ["D5 motor", "7 amp battery", "2 x 2m nylon rack", "2 x 4 button Blue Nova remotes"]
     },
     {
         id: "CENT-D5SMART", category: "gate-automation", name: "Centurion D5 Smart Kit",
         description: "Intelligent, fast 500kg sliding gate motor.", price: 5999.00,
-        image: "../images/centurion.png", weight: 35,
+        image: "../images/centurion.png", weight: 13,
         contents: ["D5 smart motors", "2 x battery", "2 x 2m nylon rack", "2 x 4 button Blue Nova remotes"]
     },
     {
         id: "CENT-D10SMART", category: "gate-automation", name: "Centurion D10 Smart Kit",
         description: "Heavy duty 1000kg industrial sliding gate motor.", price: 12999.00,
-        image: "../images/D10.png", weight: 55,
+        image: "../images/D10.png", weight: 26,
         contents: ["d10 smart motors", "2 x battery", "3 x 2m steel rack", "2 x 4 button Blue Nova remotes"]
     },
     {
         id: "CENT-D10TURBO", category: "gate-automation", name: "Centurion D10 Smart Turbo Kit",
         description: "High-speed 1000kg industrial sliding motor.", price: 12999.00,
-        image: "../images/centurion.png", weight: 55,
+        image: "../images/centurion.png", weight: 26,
         contents: ["d10 turbo smart motors", "2 x battery", "3 x 2m steel rack", "2 x 4 button Blue Nova remotes"]
     },
     {
         id: "CENT-D6SMART", category: "gate-automation", name: "Centurion D6 Smart Kit",
         description: "High-volume 600kg sliding gate motor.", price: 7999.00,
-        image: "../images/centurion.png", weight: 40,
+        image: "../images/centurion.png", weight: 16,
         contents: ["motor", "battery X2", "4m nylon rack", "2 x Blue Nova remotes"]
     },
     {
         id: "CENT-SDO", category: "gate-automation", name: "Centurion SDO Smart Kit",
         description: "Sectional / Tip-up garage door operator.", price: 2999.00,
-        image: "../images/centurion.png", weight: 18,
+        image: "../images/centurion.png", weight: 8,
         options: { doorType: [{value: "tip up", label: "Tip Up", extra: 0}, {value: "tilt", label: "Tilt", extra: 1500}] },
         contents: ["SDO Smart Kit", "Extrusion Rail", "2 x Blue Nova Remotes"]
     },
     {
         id: "CENT-RDO", category: "gate-automation", name: "Centurion RDO Kit",
         description: "Roll-up garage door operator.", price: 2899.00,
-        image: "../images/centurion.png", weight: 16,
+        image: "../images/centurion.png", weight: 8,
         contents: ["RDO Kit", "2 x Blue Nova Remotes"]
     },
     {
         id: "CENT-SWING", category: "gate-automation", name: "Centurion Swing Gate Kit",
         description: "Double swing gate automation.", price: 12999.00,
-        image: "../images/centurion.png", weight: 48,
+        image: "../images/centurion.png", weight: 25,
         options: { model: [{value: "400", label: "Vantage 400", extra: 0}, {value: "500", label: "Vantage 500", extra: 1500}] },
         contents: ["vantage controller", "2 x vantage motors", "2 x Blue Nova remotes", "25 meter vector cable"]
     },
@@ -587,7 +587,7 @@ const NEXPAK_COMPANY = {
     name: "Nexpak Security Solutions PTY Ltd",
     address: "215 Russell Street, Benoni, East Rand, Gauteng",
     phone: "083 630 8249",
-    email: "nexpaksa@gmail.com",
+    email: "nexpaksa@outlook.com",
     bankName: "Capitec Bank",
     accountNo: "2517857594",
     branchCode: "470010",
@@ -599,8 +599,8 @@ const STORE_COORDS = { lat: -26.18848, lon: 28.32078 };
 
 // Delivery pricing — adjust these rates to match your actual courier costs.
 const DELIVERY_BASE_FEE = 100;   // R call-out / handling fee
-const RATE_PER_KM = 6;           // R per km (one-way distance from store)
-const RATE_PER_KG = 15;          // R per kg of total order weight
+const RATE_PER_KM = 4.5;           // R per km (one-way distance from store)
+const RATE_PER_KG = 9;          // R per kg of total order weight
 
 // EmailJS config — sign up free at https://www.emailjs.com, create a Service +
 // two Templates (one for you, one for the client), then paste the IDs below.
