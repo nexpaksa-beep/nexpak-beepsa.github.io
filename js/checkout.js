@@ -221,5 +221,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Run on script load
     initCheckout();
    
+   <script src="js/payments.js"></script>
 });
            
