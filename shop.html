@@ -3738,29 +3738,244 @@
                                     fa-solid
                                     fa-torii-gate
                                 "
+                            ></i>                            Gate
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+
+
+            /* ======================================================
+               CCTV CAMERAS
+               ====================================================== */
+
+            for (
+                let i = 0;
+                i < cameraCount;
+                i++
+            ) {
+
+                if (
+                    i >=
+                    markerPositions.cameras.length
+                ) {
+
+                    break;
+
+                }
+
+
+                const pos =
+                    markerPositions.cameras[i];
+
+
+                overlay.innerHTML += `
+
+                    <div
+                        class="marker"
+                        style="
+                            top:
+                            ${pos.top};
+
+                            left:
+                            ${pos.left};
+                        "
+                    >
+
+                        <div
+                            class="
+                                bg-blue-600
+                                text-white
+                                h-6
+                                w-6
+                                flex
+                                items-center
+                                justify-center
+                                rounded-full
+                                shadow-lg
+                                text-xs
+                                border-2
+                                border-white
+                            "
+                        >
+
+                            <i
+                                class="
+                                    fa-solid
+                                    fa-video
+                                "
                             ></i>
 
-       
-                
+                        </div>
 
-                    
-            
-                                
+                    </div>
 
-                
-            
-    </script>
+                `;
+
+            }
 
 
-    <!-- ==========================================================
-         SEO SCHEMA
-         ========================================================== -->
+            /* ======================================================
+               ROBOGUARD
+               ====================================================== */
 
-    <script
-        src="js/seo-schema-injector.js"
-    ></script>
+            for (
+                let i = 0;
+                i < roboguardCount;
+                i++
+            ) {
 
+                if (
+                    i >=
+                    markerPositions.roboguards.length
+                ) {
+
+                    break;
+
+                }
+
+
+                const pos =
+                    markerPositions.roboguards[i];
+
+
+                overlay.innerHTML += `
+
+                    <div
+                        class="marker"
+                        style="
+                            top:
+                            ${pos.top};
+
+                            left:
+                            ${pos.left};
+                        "
+                    >
+
+                        <div
+                            class="
+                                bg-green-600
+                                text-white
+                                h-6
+                                w-6
+                                flex
+                                items-center
+                                justify-center
+                                rounded-full
+                                shadow-lg
+                                text-xs
+                                border-2
+                                border-white
+                                pulse
+                            "
+                        >
+
+                            <i
+                                class="
+                                    fa-solid
+                                    fa-wave-square
+                                "
+                            ></i>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        /* ==========================================================
+           LOAD SAVED CART
+           ========================================================== */
+
+        function loadSavedCart() {
+
+            try {
+
+                const savedCart =
+                    localStorage.getItem(
+                        'nexpak_cart'
+                    );
+
+
+                if (!savedCart) {
+
+                    return;
+
+                }
+
+
+                const parsedCart =
+                    JSON.parse(
+                        savedCart
+                    );
+
+
+                if (
+                    Array.isArray(
+                        parsedCart
+                    )
+                ) {
+
+                    cart =
+                        parsedCart;
+
+                }
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    'Unable to load saved cart:',
+                    error
+                );
+
+
+                cart =
+                    [];
+
+            }
+
+
+            updateCartUI();
+
+            updateVisualizer();
+
+        }
+
+
+        /* ==========================================================
+           INITIALIZE
+           ========================================================== */
+
+        document.addEventListener(
+            'DOMContentLoaded',
+            function() {
+
+                loadSavedCart();
+
+            }
+        );
+
+</script>
+
+
+<!-- ==========================================================
+     SEO SCHEMA
+     ========================================================== -->
+
+<script src="js/seo-schema-injector.js"></script>
 
 </body>
 </html>
-     
+
+    
