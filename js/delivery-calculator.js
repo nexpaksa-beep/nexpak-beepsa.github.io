@@ -2110,4 +2110,882 @@ function displayDeliveryResult(
 }
 
 
+   11. DELIVERY CALCULATION
+   ========================================================================== */
+
+function calculateDelivery() {
+
+    const distanceInput =
+        document.getElementById('deliveryDistance');
+
+    const deliveryResult =
+        document.getElementById('deliveryResult');
+
+    const deliveryFeeElement =
+        document.getElementById('deliveryFee');
+
+    if (!distanceInput) {
+        console.warn(
+            'Delivery distance input not found.'
+        );
+        return;
+    }
+
+    const distance =
+        parseFloat(distanceInput.value) || 0;
+
+    if (distance < 0) {
+        alert(
+            'Please enter a valid delivery distance.'
+        );
+        return;
+    }
+
+    const weight =
+        getConfiguratorCartWeight();
+
+    const baseFee =
+        DELIVERY_CONFIG.baseFee;
+
+    const distanceFee =
+        distance *
+        DELIVERY_CONFIG.perKm;
+
+    const weightFee =
+        weight *
+        DELIVERY_CONFIG.perKg;
+
+    const totalDelivery =
+        baseFee +
+        distanceFee +
+        weightFee;
+
+    if (deliveryFeeElement) {
+
+        deliveryFeeElement.textContent =
+            formatCurrency(totalDelivery);
+
+    }
+
+    if (deliveryResult) {
+
+        deliveryResult.style.display =
+            'block';
+
+    }
+
+    /*
+     * Store the delivery amount so the checkout
+     * system can use exactly the same value.
+     */
+
+    window.nexpakDelivery = {
+
+        distanceKm: distance,
+
+        weightKg: weight,
+
+        baseFee: baseFee,
+
+        distanceFee: distanceFee,
+
+        weightFee: weightFee,
+
+        total: totalDelivery
+
+    };
+
+    /*
+     * Notify other configurator modules.
+     */
+
+    document.dispatchEvent(
+        new CustomEvent(
+            'nexpakDeliveryUpdated',
+            {
+                detail:
+                    window.nexpakDelivery
+            }
+        )
+    );
+
+    return totalDelivery;
+}
+
+
 /* ==========================================================================
+   12. ADDRESS-BASED DELIVERY CALCULATION
+   ========================================================================== */
+
+async function calculateDeliveryByAddress() {
+
+    const addressInput =
+        document.getElementById('deliveryAddress');
+
+    const distanceInput =
+        document.getElementById('deliveryDistance');
+
+    const button =
+        document.getElementById('calculateDeliveryBtn');
+
+    if (!addressInput) {
+
+        console.warn(
+            'Delivery address input not found.'
+        );
+
+        return;
+
+    }
+
+    const address =
+        addressInput.value.trim();
+
+    if (!address) {
+
+        alert(
+            'Please enter your delivery address.'
+        );
+
+        return;
+
+    }
+
+    if (button) {
+
+        button.disabled = true;
+
+        button.textContent =
+            'Calculating...';
+
+    }
+
+    try {
+
+        /*
+         * Google Distance Matrix API
+         *
+         * NOTE:
+         * The API key is intentionally kept in
+         * DELIVERY_CONFIG because this is the
+         * configuration already used by Nexpak.
+         */
+
+        const url =
+            `https://maps.googleapis.com/maps/api/distancematrix/json` +
+            `?origins=${encodeURIComponent(
+                DELIVERY_CONFIG.warehouseAddress
+            )}` +
+            `&destinations=${encodeURIComponent(
+                address
+            )}` +
+            `&key=${encodeURIComponent(
+                DELIVERY_CONFIG.apiKey
+            )}`;
+
+        const response =
+            await fetch(url);
+
+        if (!response.ok) {
+
+            throw new Error(
+                `Google Maps request failed: ${response.status}`
+            );
+
+        }
+
+        const data =
+            await response.json();
+
+        if (
+            data.status !== 'OK' ||
+            !data.rows ||
+            !data.rows[0] ||
+            !data.rows[0].elements ||
+            !data.rows[0].elements[0]
+        ) {
+
+            throw new Error(
+                'Invalid Google Maps response.'
+            );
+
+        }
+
+        const element =
+            data.rows[0].elements[0];
+
+        if (element.status !== 'OK') {
+
+            throw new Error(
+                'Destination could not be calculated.'
+            );
+
+        }
+
+        const distanceKm =
+            element.distance.value / 1000;
+
+        if (distanceInput) {
+
+            distanceInput.value =
+                distanceKm.toFixed(1);
+
+        }
+
+        /*
+         * Calculate using the real distance.
+         */
+
+        calculateDelivery();
+
+        /*
+         * Save address information.
+         */
+
+        window.nexpakDelivery =
+            window.nexpakDelivery || {};
+
+        window.nexpakDelivery.address =
+            address;
+
+        window.nexpakDelivery.distanceText =
+            element.distance.text;
+
+        window.nexpakDelivery.durationText =
+            element.duration
+                ? element.duration.text
+                : '';
+
+        document.dispatchEvent(
+            new CustomEvent(
+                'nexpakDeliveryAddressCalculated',
+                {
+                    detail:
+                        window.nexpakDelivery
+                }
+            )
+        );
+
+        /*
+         * Show successful calculation.
+         */
+
+        if (button) {
+
+            button.textContent =
+                '✓ Delivery Calculated';
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            'Delivery calculation error:',
+            error
+        );
+
+        alert(
+            'We could not calculate the delivery distance automatically. ' +
+            'Please enter the distance from Benoni manually.'
+        );
+
+    } finally {
+
+        if (button) {
+
+            setTimeout(() => {
+
+                button.disabled =
+                    false;
+
+                button.textContent =
+                    'Calculate Delivery';
+
+            }, 1500);
+
+        }
+
+    }
+
+}
+
+
+/* ==========================================================================
+   13. REGIONAL DELIVERY FALLBACK
+   ========================================================================== */
+
+function calculateRegionalDelivery(region) {
+
+    if (!region) {
+
+        return;
+
+    }
+
+    const rate =
+        REGIONAL_RATES[region];
+
+    if (typeof rate !== 'number') {
+
+        console.warn(
+            'Unknown delivery region:',
+            region
+        );
+
+        return;
+
+    }
+
+    const weight =
+        getConfiguratorCartWeight();
+
+    const weightFee =
+        weight *
+        DELIVERY_CONFIG.perKg;
+
+    const total =
+        rate +
+        weightFee;
+
+    window.nexpakDelivery = {
+
+        region: region,
+
+        distanceKm: 0,
+
+        weightKg: weight,
+
+        baseFee: rate,
+
+        distanceFee: 0,
+
+        weightFee: weightFee,
+
+        total: total
+
+    };
+
+    displayRegionalDelivery(
+        rate,
+        weightFee,
+        total
+    );
+
+    document.dispatchEvent(
+        new CustomEvent(
+            'nexpakDeliveryUpdated',
+            {
+                detail:
+                    window.nexpakDelivery
+            }
+        )
+    );
+
+    return total;
+}
+
+
+/* ==========================================================================
+   14. DELIVERY DISPLAY
+   ========================================================================== */
+
+function displayRegionalDelivery(
+    baseFee,
+    weightFee,
+    total
+) {
+
+    const baseElement =
+        document.getElementById(
+            'deliveryBaseFee'
+        );
+
+    const distanceElement =
+        document.getElementById(
+            'deliveryDistanceFee'
+        );
+
+    const weightElement =
+        document.getElementById(
+            'deliveryWeightFee'
+        );
+
+    const totalElement =
+        document.getElementById(
+            'deliveryFee'
+        );
+
+    const resultElement =
+        document.getElementById(
+            'deliveryResult'
+        );
+
+    if (baseElement) {
+
+        baseElement.textContent =
+            formatCurrency(baseFee);
+
+    }
+
+    if (distanceElement) {
+
+        distanceElement.textContent =
+            formatCurrency(0);
+
+    }
+
+    if (weightElement) {
+
+        weightElement.textContent =
+            formatCurrency(weightFee);
+
+    }
+
+    if (totalElement) {
+
+        totalElement.textContent =
+            formatCurrency(total);
+
+    }
+
+    if (resultElement) {
+
+        resultElement.style.display =
+            'block';
+
+    }
+
+}
+
+
+/* ==========================================================================
+   15. DELIVERY UI INITIALISATION
+   ========================================================================== */
+
+function initDeliveryCalculator() {
+
+    /*
+     * Prevent duplicate initialisation.
+     */
+
+    if (
+        document.body.dataset
+            .nexpakDeliveryInitialised === 'true'
+    ) {
+
+        return;
+
+    }
+
+    document.body.dataset
+        .nexpakDeliveryInitialised =
+        'true';
+
+
+    /*
+     * Address button
+     */
+
+    const addressButton =
+        document.getElementById(
+            'calculateDeliveryBtn'
+        );
+
+    if (addressButton) {
+
+        addressButton.addEventListener(
+            'click',
+            calculateDeliveryByAddress
+        );
+
+    }
+
+
+    /*
+     * Distance input
+     */
+
+    const distanceInput =
+        document.getElementById(
+            'deliveryDistance'
+        );
+
+    if (distanceInput) {
+
+        distanceInput.addEventListener(
+            'change',
+            calculateDelivery
+        );
+
+        distanceInput.addEventListener(
+            'input',
+            function () {
+
+                /*
+                 * Do not calculate every keystroke
+                 * when the user is typing.
+                 */
+
+                clearTimeout(
+                    window.nexpakDeliveryTimer
+                );
+
+                window.nexpakDeliveryTimer =
+                    setTimeout(
+                        calculateDelivery,
+                        500
+                    );
+
+            }
+        );
+
+    }
+
+
+    /*
+     * Region selector.
+     */
+
+    const regionSelect =
+        document.getElementById(
+            'deliveryRegion'
+        );
+
+    if (regionSelect) {
+
+        regionSelect.addEventListener(
+            'change',
+            function () {
+
+                calculateRegionalDelivery(
+                    this.value
+                );
+
+            }
+        );
+
+    }
+
+
+    /*
+     * Update delivery whenever the
+     * configurator cart changes.
+     */
+
+    document.addEventListener(
+        'cartUpdated',
+        function () {
+
+            updateConfiguratorWeight();
+
+            /*
+             * Recalculate delivery if a
+             * distance has already been entered.
+             */
+
+            const currentDistance =
+                document.getElementById(
+                    'deliveryDistance'
+                );
+
+            if (
+                currentDistance &&
+                parseFloat(
+                    currentDistance.value
+                ) > 0
+            ) {
+
+                calculateDelivery();
+
+            }
+
+        }
+    );
+
+
+    /*
+     * Also listen for configurator-specific
+     * updates.
+     */
+
+    document.addEventListener(
+        'configuratorCartUpdated',
+        function () {
+
+            updateConfiguratorWeight();
+
+            const currentDistance =
+                document.getElementById(
+                    'deliveryDistance'
+                );
+
+            if (
+                currentDistance &&
+                parseFloat(
+                    currentDistance.value
+                ) > 0
+            ) {
+
+                calculateDelivery();
+
+            }
+
+        }
+    );
+
+
+    /*
+     * Initial weight calculation.
+     */
+
+    updateConfiguratorWeight();
+
+}
+
+
+/* ==========================================================================
+   16. CHECKOUT INTEGRATION
+   ========================================================================== */
+
+function getDeliveryFee() {
+
+    if (
+        window.nexpakDelivery &&
+        typeof window.nexpakDelivery.total ===
+            'number'
+    ) {
+
+        return window.nexpakDelivery.total;
+
+    }
+
+    return 0;
+
+}
+
+
+function getDeliveryData() {
+
+    if (
+        window.nexpakDelivery
+    ) {
+
+        return {
+            ...window.nexpakDelivery
+        };
+
+    }
+
+    return {
+
+        distanceKm: 0,
+
+        weightKg:
+            getConfiguratorCartWeight(),
+
+        baseFee: 0,
+
+        distanceFee: 0,
+
+        weightFee: 0,
+
+        total: 0
+
+    };
+
+}
+
+
+/* ==========================================================================
+   17. SAVE DELIVERY TO LOCAL STORAGE
+   ========================================================================== */
+
+function saveDeliveryData() {
+
+    const delivery =
+        getDeliveryData();
+
+    try {
+
+        localStorage.setItem(
+            'nexpak_delivery',
+            JSON.stringify(delivery)
+        );
+
+    } catch (error) {
+
+        console.warn(
+            'Unable to save delivery data:',
+            error
+        );
+
+    }
+
+    return delivery;
+
+}
+
+
+/* ==========================================================================
+   18. LOAD DELIVERY FROM LOCAL STORAGE
+   ========================================================================== */
+
+function loadDeliveryData() {
+
+    try {
+
+        const saved =
+            localStorage.getItem(
+                'nexpak_delivery'
+            );
+
+        if (!saved) {
+
+            return null;
+
+        }
+
+        const delivery =
+            JSON.parse(saved);
+
+        if (
+            delivery &&
+            typeof delivery.total ===
+                'number'
+        ) {
+
+            window.nexpakDelivery =
+                delivery;
+
+            return delivery;
+
+        }
+
+    } catch (error) {
+
+        console.warn(
+            'Unable to load saved delivery data:',
+            error
+        );
+
+    }
+
+    return null;
+
+}
+
+
+/* ==========================================================================
+   19. DELIVERY RESET
+   ========================================================================== */
+
+function resetDeliveryCalculation() {
+
+    window.nexpakDelivery = {
+
+        distanceKm: 0,
+
+        weightKg:
+            getConfiguratorCartWeight(),
+
+        baseFee: 0,
+
+        distanceFee: 0,
+
+        weightFee: 0,
+
+        total: 0
+
+    };
+
+    try {
+
+        localStorage.removeItem(
+            'nexpak_delivery'
+        );
+
+    } catch (error) {
+
+        console.warn(
+            'Unable to clear delivery data:',
+            error
+        );
+
+    }
+
+
+    const resultElement =
+        document.getElementById(
+            'deliveryResult'
+        );
+
+    if (resultElement) {
+
+        resultElement.style.display =
+            'none';
+
+    }
+
+}
+
+
+/* ==========================================================================
+   20. GLOBAL API
+   ========================================================================== */
+
+window.NexpakDelivery = {
+
+    calculate:
+        calculateDelivery,
+
+    calculateByAddress:
+        calculateDeliveryByAddress,
+
+    calculateRegion:
+        calculateRegionalDelivery,
+
+    getFee:
+        getDeliveryFee,
+
+    getData:
+        getDeliveryData,
+
+    save:
+        saveDeliveryData,
+
+    load:
+        loadDeliveryData,
+
+    reset:
+        resetDeliveryCalculation,
+
+    getWeight:
+        getConfiguratorCartWeight
+
+};
+
+
+/* ==========================================================================
+   21. INITIALISE
+   ========================================================================== */
+
+if (
+    document.readyState ===
+    'loading'
+) {
+
+    document.addEventListener(
+        'DOMContentLoaded',
+        initDeliveryCalculator
+    );
+
+} else {
+
+    initDeliveryCalculator();
+
+}
+
+
+/* ==========================================================================
+   END OF NEXPAK DELIVERY CALCULATOR
+   ========================================================================== */
