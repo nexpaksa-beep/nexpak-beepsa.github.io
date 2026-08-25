@@ -114,47 +114,7 @@
                     <p class="text-slate-400 italic text-sm">Cart is empty.</p>
                 </div>
 
-                <!-- Delivery Calculator -->
-                <div class="bg-slate-50 p-4 rounded-lg mb-6 border border-slate-200">
-                    <h3 class="font-bold text-sm mb-3">Automated Delivery Calculator</h3>
-                    <div class="flex items-center space-x-3 mb-2">
-                        <label class="text-sm font-semibold w-1/2">Distance from Benoni (km):</label>
-                        <input type="number" id="distance-km" min="0" value="0" class="w-1/2 p-2 border rounded" onchange="calculateTotals()">
-                    </div>
-                    <p class="text-xs text-slate-500">* Base rate Gauteng: R90.00 | R6.50 / km | R8.00 / kg</p>
-                </div>
-
-                <!-- Totals -->
-                <div class="space-y-2 text-sm">
-                    <div class="flex justify-between"><span>Subtotal (Excl. VAT):</span> <span id="cart-subtotal" class="font-semibold">R0.00</span></div>
-                    <div class="flex justify-between"><span>Total Weight Est.:</span> <span id="cart-weight" class="font-semibold">0 kg</span></div>
-                    <div class="flex justify-between text-blue-600"><span>Delivery Fee:</span> <span id="cart-delivery" class="font-semibold">R0.00</span></div>
-                    <div class="flex justify-between text-red-500"><span>VAT (15%):</span> <span id="cart-vat" class="font-semibold">R0.00</span></div>
-                    <div class="flex justify-between text-lg font-bold border-t pt-2 mt-2"><span>Total Payable:</span> <span id="cart-total" class="text-nexpakBlue">R0.00</span></div>
-                </div>
-
-                <!-- Checkout Actions -->
-                <div class="mt-6 space-y-3">
-                    <button class="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg transition shadow flex justify-center items-center opacity-70 cursor-not-allowed" disabled>
-                        <i class="fa-solid fa-credit-card mr-2"></i> PayFast (Coming Soon)
-                    </button>
-                    <button onclick="toggleEFT()" class="w-full bg-slate-800 hover:bg-slate-900 text-white font-bold py-3 px-4 rounded-lg transition shadow flex justify-center items-center">
-                        <i class="fa-solid fa-building-columns mr-2"></i> EFT Payment
-                    </button>
-                </div>
-
-                <!-- Bank Details -->
-                <div id="eft-details" class="hide mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-sm">
-                    <h4 class="font-bold mb-2">Bank Details for EFT:</h4>
-                    <p><strong>Bank:</strong> Capitec bank</p>
-                    <p><strong>Account Name:</strong> Nexpak Security Solutions</p>
-                    <p><strong>Account No:</strong> 2517857594</p>
-                    <p><strong>Branch Code:</strong> 470010</p>
-                    <p class="mt-2 text-red-600 text-xs italic">* Please use your name as reference and email proof of payment.</p>
-                </div>
-            </div>
-        </div>
-    </main>
+                
 
     <!-- JavaScript Data and Logic -->
     <script>
