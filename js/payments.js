@@ -2319,7 +2319,9 @@ if (
     initializePaymentSystem();
 
 }
-
+window.PayFast = {
+    checkout: payWithPayFastCheckout
+};
 
 /* ==========================================================================
    END OF PAYMENT.JS
