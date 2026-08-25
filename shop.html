@@ -293,9 +293,17 @@
         }
 
         function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartUI();
-            updateVisualizer();
+
+    cart.splice(index, 1);
+
+    // Keep checkout cart synchronized
+    localStorage.setItem(
+        'nexpak_cart',
+        JSON.stringify(cart)
+    );
+
+    updateCartUI();
+    updateVisualizer();
         }
      function updateCartUI() {
     const cartContainer = document.getElementById('cart-items');
