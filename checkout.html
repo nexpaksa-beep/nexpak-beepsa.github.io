@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Secure checkout for Nexpak Security Solutions."
+    >
+
+    <meta
+        name="theme-color"
+        content="#07111f"
+    >
+
+    <title>
+        Secure Checkout | Nexpak Security Solutions
+    </title>
+
+
+    <!-- ================================================================
+         GOOGLE FONT
+         ================================================================ -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- ================================================================
+         FONT AWESOME
+         ================================================================ -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+    <!-- ================================================================
+         CHECKOUT STYLES
+         ================================================================ -->
+
+    <style>
+
+        /* ==============================================================
+           GLOBAL
+           ============================================================== */
+
+        :root {
+
+            --nexpak-dark: #07111f;
+            --nexpak-dark-2: #0d1b2d;
+            --nexpak-blue: #1677ff;
+            --nexpak-blue-dark: #095dcc;
+            --nexpak-blue-light: #eaf3ff;
+
+            --success: #16a34a;
+            --success-light: #ecfdf3;
+
+            --warning: #f59e0b;
+
+            --text: #172033;
+            --muted: #64748b;
+
+            --border: #e2e8f0;
+            --background: #f5f7fb;
+            --white: #ffffff;
+
+            --shadow-sm:
+                0 2px 8px rgba(15, 23, 42, 0.05);
+
+            --shadow:
+                0 12px 35px rgba(15, 23, 42, 0.08);
+
+            --radius: 16px;
+
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family:
+                'Inter',
+                Arial,
+                sans-serif;
+
+            background:
+                var(--background);
+
+            color:
+                var(--text);
+
+            line-height: 1.5;
+
+        }
+
+
+        button,
+        input,
+        textarea,
+        select {
+
+            font-family: inherit;
+
+        }
+
+
+        button {
+
+            cursor: pointer;
+
+        }
+
+
+        a {
+
+            text-decoration: none;
+
+            color: inherit;
+
+        }
+
+
+        /* ==============================================================
+           TOP SECURITY BAR
+           ============================================================== */
+
+        .security-bar {
+
+            background:
+                var(--nexpak-dark);
+
+            color:
+                #dbeafe;
+
+            font-size:
+                12px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.08);
+
+        }
+
+
+        .security-bar-inner {
+
+            max-width:
+                1400px;
+
+            margin:
+                0 auto;
+
+            padding:
+                9px 24px;
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            gap:
+                20px;
+
+        }
+
+
+        .security-message {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                8px;
+
+        }
+
+
+        .security-message i {
+
+            color:
+                #4ade80;
+
+        }
+
+
+        .security-links {
+
+            display:
+                flex;
+
+            gap:
+                18px;
+
+            color:
+                #94a3b8;
+
+        }
+
+
+        /* ==============================================================
+           HEADER
+           ============================================================== */
+
+        .checkout-header {
+
+            background:
+                var(--white);
+
+            border-bottom:
+                1px solid var(--border);
+
+            position:
+                sticky;
+
+            top:
+                0;
+
+            z-index:
+                100;
+
+        }
+
+
+        .checkout-header-inner {
+
+            max-width:
+                1400px;
+
+            margin:
+                0 auto;
+
+            padding:
+                18px 24px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+        }
+
+
+        .brand {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+        }
+
+
+        .brand-icon {
+
+            width:
+                44px;
+
+            height:
+                44px;
+
+            border-radius:
+                12px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--nexpak-blue),
+                    #38bdf8
+                );
+
+            color:
+                white;
+
+            font-size:
+                20px;
+
+            box-shadow:
+                0 8px 20px rgba(22,119,255,0.22);
+
+        }
+
+
+        .brand-text {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+        }
+
+
+        .brand-name {
+
+            font-size:
+                17px;
+
+            font-weight:
+                800;
+
+            letter-spacing:
+                0.3px;
+
+            color:
+                var(--nexpak-dark);
+
+        }
+
+
+        .brand-subtitle {
+
+            font-size:
+                11px;
+
+            font-weight:
+                600;
+
+            color:
+                var(--muted);
+
+            letter-spacing:
+                0.4px;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .checkout-title {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                9px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                13px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .checkout-title i {
+
+            color:
+                var(--success);
+
+        }
+
+
+        /* ==============================================================
+           CHECKOUT PROGRESS
+           ============================================================== */
+
+        .checkout-progress {
+
+            background:
+                white;
+
+            border-bottom:
+                1px solid var(--border);
+
+        }
+
+
+        .progress-inner {
+
+            max-width:
+                1400px;
+
+            margin:
+                0 auto;
+
+            padding:
+                18px 24px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            gap:
+                0;
+
+        }
+
+
+        .progress-step {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                8px;
+
+            font-size:
+                12px;
+
+            font-weight:
+                700;
+
+            color:
+                #94a3b8;
+
+        }
+
+
+        .progress-step.active {
+
+            color:
+                var(--nexpak-blue);
+
+        }
+
+
+        .progress-number {
+
+            width:
+                28px;
+
+            height:
+                28px;
+
+            border-radius:
+                50%;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            background:
+                #eef2f7;
+
+            color:
+                #64748b;
+
+            font-size:
+                12px;
+
+            font-weight:
+                800;
+
+        }
+
+
+        .progress-step.active
+        .progress-number {
+
+            background:
+                var(--nexpak-blue);
+
+            color:
+                white;
+
+            box-shadow:
+                0 5px 15px rgba(22,119,255,0.25);
+
+        }
+
+
+        .progress-line {
+
+            width:
+                70px;
+
+            height:
+                2px;
+
+            background:
+                #e2e8f0;
+
+            margin:
+                0 12px;
+
+        }
+
+
+        .progress-line.active {
+
+            background:
+                var(--nexpak-blue);
+
+        }
+
+
+        /* ==============================================================
+           MAIN CHECKOUT WRAPPER
+           ============================================================== */
+
+        .checkout-page {
+
+            max-width:
+                1400px;
+
+            margin:
+                0 auto;
+
+            padding:
+                42px 24px 80px;
+
+        }
+
+
+        .checkout-heading {
+
+            text-align:
+                center;
+
+            margin-bottom:
+                35px;
+
+        }
+
+
+        .checkout-heading h1 {
+
+            margin:
+                0 0 8px;
+
+            font-size:
+                clamp(28px, 4vw, 42px);
+
+            line-height:
+                1.15;
+
+            font-weight:
+                800;
+
+            letter-spacing:
+                -1px;
+
+            color:
+                var(--nexpak-dark);
+
+        }
+
+
+        .checkout-heading p {
+
+            margin:
+                0;
+
+            color:
+                var(--muted);
+
+            font-size:
+                14px;
+
+        }
+
+
+        /* ==============================================================
+           TWO COLUMN LAYOUT
+           ============================================================== */
+
+        .checkout-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                minmax(0, 1.45fr)
+                minmax(340px, 0.75fr);
+
+            gap:
+                28px;
+
+            align-items:
+                start;
+
+        }
+
+
+        .checkout-left {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            gap:
+                22px;
+
+        }
+
+
+        .checkout-right {
+
+            position:
+                sticky;
+
+            top:
+                105px;
+
+        }
+
+
+        /* ==============================================================
+           CARD
+           ============================================================== */
+
+        .checkout-card {
+
+            background:
+                var(--white);
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius);
+
+            box-shadow:
+                var(--shadow-sm);
+
+            overflow:
+                hidden;
+
+        }
+
+
+        .card-header {
+
+            padding:
+                22px 24px;
+
+            border-bottom:
+                1px solid var(--border);
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                13px;
+
+        }
+
+
+        .card-icon {
+
+            width:
+                38px;
+
+            height:
+                38px;
+
+            border-radius:
+                10px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            background:
+                var(--nexpak-blue-light);
+
+            color:
+                var(--nexpak-blue);
+
+        }
+
+
+        .card-header-text h2 {
+
+            margin:
+                0;
+
+            font-size:
+                17px;
+
+            font-weight:
+                800;
+
+            color:
+                var(--nexpak-dark);
+
+        }
+
+
+        .card-header-text p {
+
+            margin:
+                2px 0 0;
+
+            font-size:
+                12px;
+
+            color:
+                var(--muted);
+
+        }
+
+
+        .card-body {
+
+            padding:
+                24px;
+
+        }
+
+
+        /* ==============================================================
+           FORM
+           ============================================================== */
+
+        .form-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap:
+                18px;
+
+        }
+
+
+        .form-group {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            gap:
+                7px;
+
+        }
+
+
+        .form-group.full {
+
+            grid-column:
+                1 / -1;
+
+        }
+
+
+        .form-label {
+
+            font-size:
+                12px;
+
+            font-weight:
+                700;
+
+            color:
+                #334155;
+
+        }
+
+
+        .required {
+
+            color:
+                #ef4444;
+
+        }
+
+
+        .form-control {
+
+            width:
+                100%;
+
+            border:
+                1px solid #d8e0ea;
+
+            border-radius:
+                10px;
+
+            padding:
+                13px 14px;
+
+            font-size:
+                13px;
+
+            color:
+                var(--text);
+
+            background:
+                white;
+
+            outline:
+                none;
+
+            transition:
+                border-color .2s ease,
+                box-shadow .2s ease;
+
+        }
+
+
+        .form-control::placeholder {
+
+            color:
+                #a1adbd;
+
+        }
+
+
+        .form-control:focus {
+
+            border-color:
+                var(--nexpak-blue);
+
+            box-shadow:
+                0 0 0 3px rgba(22,119,255,0.10);
+
+        }
+
+
+        textarea.form-control {
+
+            min-height:
+                95px;
+
+            resize:
+                vertical;
+
+        }
+
+
+        /* ==============================================================
+           DELIVERY CALCULATOR AREA
+           ============================================================== */
+
+        .delivery-highlight {
+
+            margin-top:
+                22px;
+
+            padding:
+                18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f8fbff,
+                    #eef6ff
+                );
+
+            border:
+                1px solid #d8eaff;
+
+            border-radius:
+                12px;
+
+        }
+
+
+        .delivery-highlight-header {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            gap:
+                15px;
+
+            margin-bottom:
+                14px;
+
+        }
+
+
+        .delivery-highlight-title {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                9px;
+
+            font-size:
+                13px;
+
+            font-weight:
+                800;
+
+            color:
+                var(--nexpak-dark);
+
+        }
+
+
+        .delivery-highlight-title i {
+
+            color:
+                var(--nexpak-blue);
+
+        }
+
+
+        .delivery-status {
+
+            font-size:
+                11px;
+
+            font-weight:
+                700;
+
+            color:
+                var(--muted);
+
+        }
+
+
+        .delivery-row {
+
+            display:
+                flex;
+
+            gap:
+                10px;
+
+        }
+
+
+        .delivery-row .form-control {
+
+            flex:
+                1;
+
+        }
+
+
+        .delivery-button {
+
+            border:
+                0;
+
+            border-radius:
+                10px;
+
+            padding:
+                0 18px;
+
+            background:
+                var(--nexpak-blue);
+
+            color:
+                white;
+
+            font-size:
+                12px;
+
+            font-weight:
+                800;
+
+            transition:
+                .2s ease;
+
+            white-space:
+                nowrap;
+
+        }
+
+
+        .delivery-button:hover {
+
+            background:
+                var(--nexpak-blue-dark);
+
+            transform:
+                translateY(-1px);
+
+        }
+
+
+        /* ==============================================================
+           PAYMENT SECTION
+           ============================================================== */
+
+        .payment-option {
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                13px;
+
+            margin-bottom:
+                12px;
+
+            overflow:
+                hidden;
+
+            transition:
+                border-color .2s ease,
+                box-shadow .2s ease;
+
+        }
+
+
+        .payment-option.selected {
+
+            border-color:
+                var(--nexpak-blue);
+
+            box-shadow:
+                0 0 0 3px rgba(22,119,255,0.08);
+
+        }
+
+
+        .payment-option-label {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                13px;
+
+            padding:
+                17px;
+
+            cursor:
+                pointer;
+
+        }
+
+
+        .payment-option input[type="radio"] {
+
+            width:
+                17px;
+
+            height:
+                17px;
+
+            accent-color:
+                var(--nexpak-blue);
+
+            flex:
+                0 0 auto;
+
+        }
+
+
+        .payment-brand {
+
+            flex:
+                1;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                15px;
+
+        }
+
+
+        .payment-name {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+        }
+
+
+        .payment-name strong {
+
+            font-size:
+                13px;
+
+            font-weight:
+                800;
+
+            color:
+                var(--nexpak-dark);
+
+        }
+
+
+        .payment-name span {
+
+            font-size:
+                11px;
+
+            color:
+                var(--muted);
+
+            margin-top:
+                2px;
+
+        }
+
+
+        /* ==============================================================
+           PAYMENT LOGO CONTAINERS
+           ==============================================================
+           Actual payment logos can be inserted into these containers.
+           ============================================================== */
+
+        .payment-logos {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                7px;
+
+            flex-wrap:
+                wrap;
+
+            justify-content:
+                flex-end;
+
+        }
+
+
+        .payment-logo {
+
+            height:
+                28px;
+
+            min-width:
+                48px;
+
+            padding:
+                4px 7px;
+
+            border:
+                1px solid #e2e8f0;
+
+            border-radius:
+                6px;
+
+            background:
+                white;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            font-size:
+                9px;
+
+            font-weight:
+                900;
+
+            color:
+                #334155;
+
+  
