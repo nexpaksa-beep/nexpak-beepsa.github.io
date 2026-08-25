@@ -293,6 +293,24 @@
     );
 
     updateCartUI();
+        function proceedToCheckout() {
+
+    if (!Array.isArray(cart) || cart.length === 0) {
+
+        alert('Your cart is empty.');
+
+        return;
+    }
+
+    // Make absolutely sure checkout has the latest cart
+    localStorage.setItem(
+        'nexpak_cart',
+        JSON.stringify(cart)
+    );
+
+    // Open the dedicated checkout page
+    window.location.href = 'checkout.html';
+        }
     updateVisualizer();
 
 } else {
