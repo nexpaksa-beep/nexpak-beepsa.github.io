@@ -36,28 +36,18 @@ button { cursor: pointer; }
 
 /* Floating WhatsApp Button */
 .whatsapp-float {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
+    position: fixed; bottom: 25px; right: 25px;
     background: linear-gradient(135deg, #25D366, #128C7E);
-    color: white;
-    border-radius: 50px;
-    padding: 12px 22px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    color: white; border-radius: 50px; padding: 12px 22px;
+    display: flex; align-items: center; gap: 10px;
     box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
-    z-index: 9990;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 14px;
-    backdrop-filter: blur(5px);
+    z-index: 9990; text-decoration: none; font-weight: 700; font-size: 14px;
     border: 1px solid rgba(255, 255, 255, 0.3);
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-.whatsapp-float:hover { transform: scale(1.08) translateY(-3px); box-shadow: 0 12px 30px rgba(37, 211, 102, 0.6); }
+.whatsapp-float:hover { transform: scale(1.08) translateY(-3px); }
 
-/* Top Header */
+/* Top Header & Navigation */
 .top-header { background: #ffffff; padding: 12px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-bottom: 2px solid #e2e8f0; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
 .logo-container a { display: flex; align-items: center; gap: 12px; text-decoration: none; }
 .logo-container img { height: 42px; width: auto; object-fit: contain; }
@@ -65,117 +55,49 @@ button { cursor: pointer; }
 .brand-title { font-weight: 900; font-size: 18px; color: var(--primary-navy); letter-spacing: -0.5px; }
 .brand-subtitle { font-size: 9px; font-weight: 700; color: var(--accent-blue); letter-spacing: 1px; text-transform: uppercase; }
 
-/* Search Bar */
-.search-bar { flex: 1; max-width: 550px; display: flex; align-items: center; border: 2px solid #cbd5e1; border-radius: 30px; overflow: hidden; background: #fff; transition: border-color 0.2s; }
-.search-bar:focus-within { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(0,102,255,0.15); }
+.search-bar { flex: 1; max-width: 550px; display: flex; align-items: center; border: 2px solid #cbd5e1; border-radius: 30px; overflow: hidden; background: #fff; }
 .search-bar input { flex: 1; padding: 10px 18px; border: none; font-size: 13px; outline: none; color: var(--text-dark); }
-.search-bar button { background: var(--accent-blue); color: #ffffff; border: none; padding: 10px 20px; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-.search-bar button:hover { background: #0052cc; }
+.search-bar button { background: var(--accent-blue); color: #ffffff; border: none; padding: 10px 20px; cursor: pointer; }
 
-/* Header Action Buttons */
 .header-actions { display: flex; align-items: center; gap: 10px; }
-.header-action-item { display: flex; align-items: center; gap: 6px; color: #334155; text-decoration: none; font-size: 12px; font-weight: 700; padding: 8px 16px; border: 1px solid #cbd5e1; border-radius: 20px; background: #ffffff; transition: all 0.2s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
-.header-action-item:hover { background: #f8fafc; border-color: var(--accent-blue); color: var(--accent-blue); transform: translateY(-1px); }
+.header-action-item { display: flex; align-items: center; gap: 6px; color: #334155; text-decoration: none; font-size: 12px; font-weight: 700; padding: 8px 16px; border: 1px solid #cbd5e1; border-radius: 20px; background: #ffffff; }
 .badge-icon { position: relative; display: flex; align-items: center; font-size: 14px; }
-.badge { position: absolute; top: -8px; right: -10px; background: var(--accent-blue); color: #ffffff; font-size: 9px; font-weight: bold; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+.badge { position: absolute; top: -8px; right: -10px; background: var(--accent-blue); color: #ffffff; font-size: 9px; font-weight: bold; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; }
 
-/* Navigation Bar */
 .nav-bar { background: var(--nav-bg); display: flex; gap: 15px; padding: 0 32px; overflow-x: auto; white-space: nowrap; align-items: center; border-bottom: 3px solid var(--accent-blue); }
-.nav-link { color: #cbd5e1; text-decoration: none; padding: 14px 12px; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 6px; transition: all 0.2s; border-bottom: 3px solid transparent; }
+.nav-link { color: #cbd5e1; text-decoration: none; padding: 14px 12px; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 6px; border-bottom: 3px solid transparent; }
 .nav-link.active, .nav-link:hover { color: #ffffff; border-bottom: 3px solid var(--accent-cyan); background: rgba(255, 255, 255, 0.05); }
 
-/* Hero Banner */
-.hero-banner { background: linear-gradient(135deg, var(--hero-blue-start) 20%, var(--hero-blue-end) 100%); color: #ffffff; padding: 60px 32px; text-align: left; position: relative; overflow: hidden; }
-.hero-banner::after { content: ''; position: absolute; right: -50px; top: -50px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(0,240,255,0.15) 0%, transparent 70%); pointer-events: none; }
-.hero-container { max-width: 1200px; margin: 0 auto; position: relative; z-index: 2; }
+/* Hero Banner & Grids */
+.hero-banner { background: linear-gradient(135deg, var(--hero-blue-start) 20%, var(--hero-blue-end) 100%); color: #ffffff; padding: 60px 32px; text-align: left; }
+.hero-container { max-width: 1200px; margin: 0 auto; }
 .hero-tag { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent-cyan); margin-bottom: 12px; display: inline-block; background: rgba(0,240,255,0.1); padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(0,240,255,0.3); }
-.hero-title { font-size: 40px; font-weight: 900; line-height: 1.15; margin-bottom: 12px; color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+.hero-title { font-size: 40px; font-weight: 900; line-height: 1.15; margin-bottom: 12px; }
 .hero-title span { color: #93c5fd; }
 .hero-subtitle { font-size: 15px; color: #cbd5e1; max-width: 580px; margin-bottom: 24px; line-height: 1.6; }
-.hero-btn { display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.4); backdrop-filter: blur(8px); color: #ffffff; font-size: 13px; font-weight: 700; padding: 12px 24px; border-radius: 30px; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-.hero-btn:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-2px); }
+.hero-btn { display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.4); color: #ffffff; font-size: 13px; font-weight: 700; padding: 12px 24px; border-radius: 30px; text-decoration: none; }
 
-/* Catalogue Grid & Glass Cards */
 .container { max-width: 1200px; margin: 35px auto; padding: 0 20px; }
 .section-title { color: var(--primary-navy); margin-bottom: 24px; font-size: 24px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
 .section-title::after { content: ''; flex: 1; height: 2px; background: linear-gradient(90deg, #cbd5e1, transparent); margin-left: 10px; }
 .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 24px; }
 
-.product-card { 
-    background: var(--card-bg); 
-    border: 1px solid rgba(226, 232, 240, 0.8); 
-    border-radius: 16px; 
-    padding: 20px; 
-    display: flex; 
-    flex-direction: column; 
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-    position: relative;
-    overflow: hidden;
-}
-.product-card:hover { 
-    transform: translateY(-6px); 
-    box-shadow: 0 12px 30px rgba(0,0,80,0.12); 
-    border-color: rgba(0,102,255,0.3);
-}
-.product-image-container { width: 100%; height: 170px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; background: #ffffff; border-radius: 12px; overflow: hidden; padding: 12px; border: 1px solid #f1f5f9; }
-.product-image-container img { max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.3s ease; }
-.product-card:hover .product-image-container img { transform: scale(1.05); }
-.product-name { font-weight: 800; font-size: 16px; margin-bottom: 6px; color: var(--primary-navy); line-height: 1.3; }
+.product-card { background: var(--card-bg); border: 1px solid rgba(226, 232, 240, 0.8); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+.product-image-container { width: 100%; height: 170px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; background: #ffffff; border-radius: 12px; padding: 12px; border: 1px solid #f1f5f9; }
+.product-image-container img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.product-name { font-weight: 800; font-size: 16px; margin-bottom: 6px; color: var(--primary-navy); }
 .product-desc { font-size: 12px; color: var(--text-muted); margin-bottom: 15px; flex-grow: 1; line-height: 1.4; }
-.price-text { font-size: 20px; font-weight: 900; color: var(--primary-navy); margin: 10px 0; letter-spacing: -0.5px; }
+.price-text { font-size: 20px; font-weight: 900; color: var(--primary-navy); margin: 10px 0; }
 
 .selector-container { margin-bottom: 12px; }
-.selector-container label { font-size: 10px; font-weight: 800; display: block; margin-bottom: 4px; color: var(--primary-navy); letter-spacing: 0.5px; }
+.selector-container label { font-size: 10px; font-weight: 800; display: block; margin-bottom: 4px; color: var(--primary-navy); }
 .selector-container select, .selector-container input { width: 100%; padding: 8px 12px; font-size: 12px; border: 1px solid var(--border-color); border-radius: 8px; background: #f8fafc; font-weight: 600; }
 
-/* Glass & Bubble Styling for Buttons */
 .card-actions { display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 8px; margin-top: 15px; }
-
-.btn-glass {
-    position: relative;
-    border: none;
-    padding: 10px 8px;
-    border-radius: 25px;
-    font-size: 11px;
-    font-weight: 800;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    backdrop-filter: blur(8px);
-    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    overflow: hidden;
-}
-.btn-glass::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; height: 50%;
-    background: rgba(255, 255, 255, 0.35);
-    border-radius: 25px 25px 0 0;
-    pointer-events: none;
-}
-.btn-glass:hover { transform: translateY(-2px) scale(1.02); }
-.btn-glass:active { transform: translateY(1px) scale(0.98); }
-
-.btn-info-glass {
-    background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
-    color: #ffffff;
-    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.2), inset 0 1px 1px rgba(255,255,255,0.4);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-.btn-summary-quote {
-    background: linear-gradient(135deg, rgba(226, 232, 240, 0.9), rgba(203, 213, 225, 0.95));
-    color: var(--primary-navy);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05), inset 0 1px 1px rgba(255,255,255,0.8);
-    border: 1px solid rgba(255, 255, 255, 0.8);
-}
-.btn-add-cart {
-    background: linear-gradient(135deg, #0066ff, #000080);
-    color: #ffffff;
-    box-shadow: 0 4px 12px rgba(0, 102, 255, 0.35), inset 0 1px 2px rgba(255,255,255,0.5);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
+.btn-glass { border: none; padding: 10px 8px; border-radius: 25px; font-size: 11px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; gap: 4px; }
+.btn-info-glass { background: #1e293b; color: #fff; }
+.btn-summary-quote { background: #e2e8f0; color: var(--primary-navy); }
+.btn-add-cart { background: linear-gradient(135deg, #0066ff, #000080); color: #fff; }
 
 /* Modals & Drawers */
 .cart-overlay, .modal-overlay { position: fixed; inset: 0; background: rgba(8, 18, 37, 0.7); backdrop-filter: blur(4px); z-index: 9998; display: none; }
@@ -188,27 +110,23 @@ button { cursor: pointer; }
 .cart-item { display: flex; gap: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 15px; align-items: center; }
 .cart-item-img { width: 55px; height: 55px; object-fit: contain; border: 1px solid var(--border-color); border-radius: 8px; padding: 4px; background: #fff; }
 .cart-item-details { flex: 1; }
-.cart-item-details h4 { font-size: 13px; margin-bottom: 4px; color: var(--primary-navy); font-weight: 800; }
 .cart-summary { padding: 24px; border-top: 1px solid var(--border-color); background: #f8fafc; }
 
 .checkout-modal, .info-modal { position: fixed; inset: 0; z-index: 10000; display: none; justify-content: center; align-items: center; padding: 20px; }
 .checkout-modal.open, .info-modal.open { display: flex; }
-.modal-window { background: #fff; width: 540px; max-width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); }
+.modal-window { background: #fff; width: 540px; max-width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
 .modal-header { background: var(--nav-bg); color: #fff; padding: 18px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent-blue); }
 .modal-body { padding: 24px; max-height: 80vh; overflow-y: auto; }
 
-.action-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #0066ff, #000080); color: white; border: none; border-radius: 30px; font-weight: 800; font-size: 15px; margin-top: 12px; box-shadow: 0 4px 15px rgba(0, 102, 255, 0.3); transition: all 0.2s; }
-.action-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0, 102, 255, 0.4); }
-
+.payfast-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #16a34a, #15803d); color: white; border: none; border-radius: 30px; font-weight: 800; font-size: 15px; margin-top: 16px; cursor: pointer; }
 .spec-list { list-style: none; margin-top: 12px; }
 .spec-list li { padding: 8px 12px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; font-size: 12px; display: flex; align-items: center; gap: 8px; font-weight: 600; }
-.spec-list li i { color: var(--accent-blue); }
 </style>
 </head>
 <body>
 
 <!-- Floating WhatsApp Button -->
-<a href="https://wa.me/27836308249?text=Hello%20NexPak%20Security,%20I%20have%20an%20inquiry%20regarding%20your%20products." target="_blank" class="whatsapp-float">
+<a href="https://wa.me/27836308249?text=Hello%20NexPak%20Security,%20I%20have%20an%20inquiry." target="_blank" class="whatsapp-float">
     <i class="fa-brands fa-whatsapp" style="font-size: 20px;"></i>
     <span>083 630 8249</span>
 </a>
@@ -216,7 +134,7 @@ button { cursor: pointer; }
 <header class="top-header">
     <div class="logo-container">
         <a href="index.html">
-            <img src="images/logo.png" alt="NexPak Logo" onerror="this.src='images/logo.png'">
+            <img src="images/logo.png" alt="NexPak Logo" onerror="this.src='https://via.placeholder.com/150x45?text=NexPak+Security'">
             <div class="brand-text">
                 <span class="brand-title">NEXPAK SECURITY</span>
                 <span class="brand-subtitle">PROTECTING WHAT MATTERS MOST</span>
@@ -229,7 +147,6 @@ button { cursor: pointer; }
     </div>
     <div class="header-actions">
         <a href="index.html" class="header-action-item"><i class="fa-solid fa-house"></i> Home</a>
-        <a href="#" class="header-action-item"><i class="fa-regular fa-user"></i> Account</a>
         <a href="#" class="header-action-item" onclick="openCart(); return false;">
             <span class="badge-icon"><i class="fa-solid fa-cart-shopping"></i><span class="badge" id="cartCount">0</span></span> Cart
         </a>
@@ -237,8 +154,7 @@ button { cursor: pointer; }
 </header>
 
 <nav class="nav-bar">
-    <a href="index.html" class="nav-link"><i class="fa-solid fa-house"></i> Home</a>
-    <a href="#" class="nav-link active" data-category="all" onclick="filterCategory('all'); return false;"><i class="fa-solid fa-layer-group"></i> All Kits</a>
+    <a href="index.html" class="nav-link active" data-category="all" onclick="filterCategory('all'); return false;"><i class="fa-solid fa-layer-group"></i> All Kits</a>
     <a href="#" class="nav-link" data-category="electric-fencing" onclick="filterCategory('electric-fencing'); return false;"><i class="fa-solid fa-bolt"></i> Electric Fencing</a>
     <a href="#" class="nav-link" data-category="roboguard" onclick="filterCategory('roboguard'); return false;"><i class="fa-solid fa-shield-halved"></i> Roboguard</a>
     <a href="#" class="nav-link" data-category="cctv" onclick="filterCategory('cctv'); return false;"><i class="fa-solid fa-video"></i> HD CCTV</a>
@@ -266,10 +182,30 @@ button { cursor: pointer; }
     <div class="modal-overlay" onclick="closeInfoModal()"></div>
     <div class="modal-window">
         <div class="modal-header">
-            <span style="font-weight:800; font-size:16px;" id="infoTitle"><i class="fa-solid fa-circle-info"></i> Product Specifications</span>
+            <span style="font-weight:800; font-size:16px;" id="infoTitle"><i class="fa-solid fa-circle-info"></i> Specifications</span>
             <button onclick="closeInfoModal()" style="background:transparent; border:none; color:#fff; font-size:18px;"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="modal-body" id="infoBody"></div>
+    </div>
+</div>
+
+<!-- Delivery Address Modal -->
+<div id="deliveryModal" class="info-modal">
+    <div class="modal-overlay" onclick="cancelDeliveryModal()"></div>
+    <div class="modal-window">
+        <div class="modal-header">
+            <span style="font-weight:800; font-size:16px;"><i class="fa-solid fa-truck-fast"></i> Delivery Address</span>
+            <button onclick="cancelDeliveryModal()" style="background:transparent; border:none; color:#fff; font-size:18px;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+            <p style="font-size:12px; color:#64748b; margin-bottom:14px;">We calculate your delivery fee based on distance from our Benoni branch and order weight.</p>
+            <div class="selector-container"><label>Street Address *</label><input type="text" id="delStreet" placeholder="e.g. 12 Main Road"></div>
+            <div class="selector-container"><label>Suburb *</label><input type="text" id="delSuburb" placeholder="e.g. Benoni"></div>
+            <div class="selector-container"><label>City / Town *</label><input type="text" id="delCity" placeholder="e.g. Johannesburg"></div>
+            <div class="selector-container"><label>Postal Code</label><input type="text" id="delPostal" placeholder="e.g. 1501"></div>
+            <div id="deliveryStatus" style="font-size:12px; color:#0066ff; font-weight:700; margin-bottom:10px; display:none;"><i class="fa-solid fa-spinner fa-spin"></i> Calculating distance...</div>
+            <button type="button" class="payfast-btn" style="background: linear-gradient(135deg, #0066ff, #000080);" onclick="confirmDeliveryAddress()"><i class="fa-solid fa-check"></i> Confirm & Calculate Delivery</button>
+        </div>
     </div>
 </div>
 
@@ -282,12 +218,17 @@ button { cursor: pointer; }
     </div>
     <div id="cartItems" class="cart-items"></div>
     <div class="cart-summary">
+        <div id="cartDeliveryAddressLine" style="font-size:11px; color:#64748b; margin-bottom:10px; display:none;">
+            <i class="fa-solid fa-location-dot"></i> <span id="cartDeliveryAddressText"></span>
+            &nbsp;<a href="#" onclick="openDeliveryModal(); return false;" style="color:var(--accent-blue); font-weight:700;">Change</a>
+        </div>
         <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:13px;"><span>Subtotal:</span><strong id="cartSubtotal">R 0.00</strong></div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:13px;"><span>Estimated Delivery:</span><strong id="cartDelivery">R 0.00</strong></div>
         <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:13px;"><span>VAT (15% incl.):</span><strong id="cartVat">R 0.00</strong></div>
         <div style="display:flex; justify-content:space-between; font-size:18px; border-top:2px solid #cbd5e1; padding-top:10px; font-weight:900; color:var(--primary-navy);"><span>Total:</span><strong id="cartTotal">R 0.00</strong></div>
         
-        <button class="action-btn" onclick="generateNexpakQuotation()"><i class="fa-solid fa-file-pdf"></i> Download Cart Quote</button>
-        <button class="action-btn" style="background: linear-gradient(135deg, #16a34a, #15803d);" onclick="openCheckout()"><i class="fa-solid fa-check"></i> Proceed To Checkout</button>
+        <button class="payfast-btn" style="background: linear-gradient(135deg, #0066ff, #000080); margin-top:15px;" onclick="generateNexpakQuotation()"><i class="fa-solid fa-file-pdf"></i> Download Cart Quote</button>
+        <button class="payfast-btn" onclick="openCheckout()"><i class="fa-solid fa-lock"></i> Proceed To Checkout</button>
     </div>
 </aside>
 
@@ -296,102 +237,24 @@ button { cursor: pointer; }
     <div class="modal-overlay" onclick="closeCheckout()"></div>
     <div class="modal-window">
         <div class="modal-header">
-            <span style="font-weight:800; font-size:16px;"><i class="fa-solid fa-file-invoice"></i> Order Checkout</span>
+            <span style="font-weight:800; font-size:16px;"><i class="fa-solid fa-lock"></i> Secure Order Checkout</span>
             <button onclick="closeCheckout()" style="background:transparent; border:none; color:#fff; font-size:18px;"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="modal-body">
-            <!-- Order Summary -->
             <div style="background:#f8f9fa; border:1px solid #e9ecef; border-radius:8px; padding:15px; margin-bottom:20px;">
                 <h4 style="margin:0 0 10px 0; font-size:14px; color:#333; font-weight:700;"><i class="fa-solid fa-cart-shopping"></i> Order Summary</h4>
                 <div id="checkoutItemsList" style="max-height:150px; overflow-y:auto; margin-bottom:10px;"></div>
                 <hr style="border:none; border-top:1px solid #dee2e6; margin:10px 0;">
-                <div style="display:flex; justify-content:space-between; font-size:13px; color:#555; margin-bottom:5px;">
-                    <span>Subtotal:</span>
-                    <span id="checkoutSubtotal">R 0.00</span>
-                </div>
-                <div style="display:flex; justify-content:space-between; font-size:13px; color:#555; margin-bottom:5px;">
-                    <span>VAT (15%):</span>
-                    <span id="checkoutVat">R 0.00</span>
-                </div>
-                <div style="display:flex; justify-content:space-between; font-size: 1.1rem; font-weight: bold; margin-top: 10px; border-top: 1px solid #ddd; padding-top: 10px;">
-                  <span>Grand Total:</span>
-                  <span id="grandTotal">R 0.00</span>
-                </div>
-              </div>
-
-              <!-- Customer Info / Action Buttons -->
-              <div style="margin-top: 20px;">
-                <input type="text" id="customerName" placeholder="Your Name" style="width: 100%; padding: 8px; margin-bottom: 10px; box-sizing: border-box;" />
-                <input type="email" id="customerEmail" placeholder="Your Email Address" style="width: 100%; padding: 8px; margin-bottom: 15px; box-sizing: border-box;" />
-                
-                <button id="checkoutBtn" style="width: 100%; background-color: #007bff; color: #fff; padding: 12px; border: none; border-radius: 4px; font-size: 1rem; cursor: pointer;">
-                  Proceed to PayFast
-                </button>
-              </div>
+                <div style="display:flex; justify-content:space-between; font-size:13px; color:#555; margin-bottom:5px;"><span>Subtotal:</span><span id="checkoutSubtotal">R 0.00</span></div>
+                <div style="display:flex; justify-content:space-between; font-size:13px; color:#555; margin-bottom:5px;"><span>Delivery Fee:</span><span id="checkoutDelivery">R 0.00</span></div>
+                <div style="display:flex; justify-content:space-between; font-size:13px; color:#555; margin-bottom:5px;"><span>VAT (15%):</span><span id="checkoutVat">R 0.00</span></div>
+                <div style="display:flex; justify-content:space-between; font-size:15px; font-weight:800; color:#000; margin-top:8px; padding-top:8px; border-top:2px solid #222;"><span>Total Amount:</span><span id="checkoutTotal">R 0.00</span></div>
             </div>
-          </div>
-        </section>
-      </div>
-    </div>
-  </main>
 
-  <!-- External Script Tags from /js Folder -->
-  <script src="js/delivery-calculator.js"></script>
-  <script src="js/payfast-integration.js"></script>
-  <script src="js/payments.js"></script>
-
-  <!-- Script Initialization & Wiring -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      let currentGrandTotal = '0.00';
-
-      // Initialize Delivery Calculator UI bindings
-      if (typeof DeliveryCalculator !== 'undefined') {
-        DeliveryCalculator.initCalculatorUI({
-          zoneSelectId: 'deliveryZone',
-          shippingDisplayId: 'shippingFee',
-          totalDisplayId: 'grandTotal',
-          cartSubtotal: 0.00,
-          cartWeight: 1.0,
-          cartDimensions: { length: 10, width: 10, height: 10 }
-        });
-      }
-
-      // Sync delivery calculation changes to checkout total
-      document.addEventListener('deliveryUpdated', (e) => {
-        if (e.detail && e.detail.grandTotal) {
-          currentGrandTotal = e.detail.grandTotal;
-        }
-      });
-
-      // Attach PayFast payment trigger
-      const checkoutBtn = document.getElementById('checkoutBtn');
-      if (checkoutBtn) {
-        checkoutBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-
-          const nameVal = document.getElementById('customerName')?.value.trim();
-          const emailVal = document.getElementById('customerEmail')?.value.trim();
-
-          if (!emailVal) {
-            alert('Please enter a valid email address before proceeding.');
-            return;
-          }
-
-          if (typeof initiatePayFastCheckout === 'function') {
-            initiatePayFastCheckout({
-              amount: currentGrandTotal,
-              item_name: 'Order Checkout',
-              name_first: nameVal || 'Customer',
-              email_address: emailVal
-            });
-          } else {
-            console.error('PayFast integration function is unavailable.');
-          }
-        });
-      }
-    });
-  </script>
-</body>
-</html>
-    
+            <form id="checkoutForm" onsubmit="handleCheckoutSubmit(event)">
+                <div class="selector-container"><label>Full Name *</label><input type="text" id="custName" required placeholder="John Doe"></div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                    <div class="selector-container"><label>Email Address *</label><input type="email" id="custEmail" required placeholder="name@example.com"></div>
+                    <div class="selector-container"><label>Phone Number *</label><input type="tel" id="custPhone" required placeholder="082 123 4567"></div>
+                </div>
+                <div class="selector-container"><label>Delivery Address *</label><textarea id="custAddress" rows="2" required placeholder="Street, Suburb, City, Postal Code" style="width:100%; padding:10
