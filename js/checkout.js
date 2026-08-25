@@ -2928,6 +2928,28 @@ if (
 
 }
 
+<!-- =========================================================
+     NEXPAK CHECKOUT SCRIPTS
+     ========================================================= -->
+
+<!-- 1. Delivery calculation -->
+<script src="js/delivery-calculator.js"></script>
+
+<!-- 2. PayFast payment integration -->
+<script src="js/payments.js"></script>
+
+<!-- 3. Checkout logic / routing -->
+<script src="js/checkout.js"></script>
+
+<!-- 4. AI Chatbot -->
+<script src="js/chatbot.js"></script>
+
+<!-- 5. SEO / Schema.org structured data -->
+<script src="js/schemaorg.js"></script>
+
+</body>
+</html>
+
 
 /* ==========================================================================
    END OF NEXPAK DELIVERY CALCULATOR
