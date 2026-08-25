@@ -1440,618 +1440,178 @@ function addPayFastSuccessStyles() {
    END OF PART 2
    ========================================================================== */
 /* ==========================================================================
-   7. PAYMENT METHOD HANDLING
+   10. SEND PAYMENT REQUEST TO SECURE SERVER
    ========================================================================== */
 
-function setupPaymentMethods() {
+async function requestPayFastPayment(
+    paymentRequest
+) {
 
-    const paymentMethods = document.querySelectorAll(
-        'input[name="paymentMethod"]'
+    const response = await fetch(
+        PAYFAST_CONFIG.paymentApi,
+        {
+            method: 'POST',
+
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+
+            body: JSON.stringify(
+                paymentRequest
+            )
+        }
     );
 
-    if (!paymentMethods.length) {
-        console.warn('No payment method inputs found.');
-        return;
-    }
 
-    paymentMethods.forEach(method => {
-
-        method.addEventListener('change', function () {
-
-            checkoutState.paymentMethod = this.value;
-
-            const eftPanel =
-                document.getElementById('eftDetailsPanel');
-
-            if (eftPanel) {
-                eftPanel.style.display =
-                    this.value === 'eft'
-                        ? 'block'
-                        : 'none';
-            }
-
-            console.log(
-                'Payment method selected:',
-                checkoutState.paymentMethod
-            );
-        });
-
-    });
-
-}
-
-
-/* ==========================================================================
-   8. CUSTOMER VALIDATION
-   ========================================================================== */
-
-function getCustomerDetails() {
-
-    const nameEl =
-        document.getElementById('custName') ||
-        document.getElementById('CustName');
-
-    const emailEl =
-        document.getElementById('custEmail') ||
-        document.getElementById('CustEmail');
-
-    const phoneEl =
-        document.getElementById('custPhone') ||
-        document.getElementById('CustPhone');
-
-    const addressEl =
-        document.getElementById('shippingAddress') ||
-        document.getElementById('delivery-address');
-
-    const customer = {
-        name: nameEl ? nameEl.value.trim() : '',
-        email: emailEl ? emailEl.value.trim() : '',
-        phone: phoneEl ? phoneEl.value.trim() : '',
-        address: addressEl ? addressEl.value.trim() : ''
-    };
-
-    return customer;
-}
-
-
-function validateCustomerDetails() {
-
-    const customer = getCustomerDetails();
-
-    if (!customer.name) {
-        alert('Please enter your full name.');
-        return false;
-    }
-
-    if (!customer.email) {
-        alert('Please enter your email address.');
-        return false;
-    }
-
-    const emailPattern =
-        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!emailPattern.test(customer.email)) {
-        alert('Please enter a valid email address.');
-        return false;
-    }
-
-    if (!customer.phone) {
-        alert('Please enter your phone number.');
-        return false;
-    }
-
-    if (!customer.address) {
-        alert('Please enter your delivery address.');
-        return false;
-    }
-
-    return true;
-}
-
-
-/* ==========================================================================
-   9. ORDER REFERENCE
-   ========================================================================== */
-
-function generateCheckoutOrderReference() {
-
-    const timestamp =
-        Date.now().toString().slice(-8);
-
-    const random =
-        Math.random()
-            .toString(36)
-            .substring(2, 7)
-            .toUpperCase();
-
-    return `NEX-${timestamp}-${random}`;
-}
-
-
-/* ==========================================================================
-   10. ORDER DATA
-   ========================================================================== */
-
-function buildOrderPayload() {
-
-    const customer =
-        getCustomerDetails();
-
-    const orderReference =
-        checkoutState.orderReference ||
-        generateCheckoutOrderReference();
-
-    checkoutState.orderReference =
-        orderReference;
-
-    return {
-
-        reference: orderReference,
-
-        orderReference: orderReference,
-
-        customer: {
-            name: customer.name,
-            email: customer.email,
-            phone: customer.phone,
-            address: customer.address
-        },
-
-        cart: checkoutState.cart,
-
-        subtotalExclVat:
-            Number(
-                checkoutState.subtotalExclVat.toFixed(2)
-            ),
-
-        deliveryFee:
-            Number(
-                checkoutState.deliveryFee.toFixed(2)
-            ),
-
-        vatAmount:
-            Number(
-                checkoutState.vatAmount.toFixed(2)
-            ),
-
-        grandTotal:
-            Number(
-                checkoutState.grandTotal.toFixed(2)
-            ),
-
-        totalWeightKg:
-            Number(
-                checkoutState.totalWeightKg.toFixed(2)
-            ),
-
-        distanceKm:
-            Number(
-                checkoutState.distanceKm.toFixed(2)
-            ),
-
-        paymentMethod:
-            checkoutState.paymentMethod,
-
-        createdAt:
-            new Date().toISOString(),
-
-        company:
-            'Nexpak Security Solutions'
-    };
-}
-
-
-/* ==========================================================================
-   11. SAVE ORDER LOCALLY
-   ========================================================================== */
-
-function saveCheckoutOrder(order) {
+    let data;
 
     try {
 
-        localStorage.setItem(
-            'nexpak_pending_order',
-            JSON.stringify(order)
-        );
-
-        localStorage.setItem(
-            'nexpak_order_reference',
-            order.reference
-        );
-
-        console.log(
-            'Checkout order saved:',
-            order.reference
-        );
+        data = await response.json();
 
     } catch (error) {
 
-        console.error(
-            'Could not save checkout order:',
-            error
+        throw new Error(
+            'The payment server returned an invalid response.'
         );
 
     }
-}
 
 
-/* ==========================================================================
-   12. PAYMENT ROUTING
-   ========================================================================== */
+    if (!response.ok) {
 
-function processPayment() {
-
-    if (!validateCustomerDetails()) {
-        return;
-    }
-
-    if (
-        !checkoutState.deliveryFee ||
-        checkoutState.deliveryFee <= 0
-    ) {
-
-        alert(
-            'Please calculate your delivery fee before proceeding with payment.'
+        throw new Error(
+            data.message ||
+            'Unable to create PayFast payment.'
         );
 
-        return;
     }
 
-    if (
-        !checkoutState.grandTotal ||
-        checkoutState.grandTotal <= 0
-    ) {
 
-        alert(
-            'Your order total could not be calculated. Please refresh the checkout.'
+    if (!data.success) {
+
+        throw new Error(
+            data.message ||
+            'PayFast payment could not be created.'
         );
 
-        return;
-    }
-
-    const order =
-        buildOrderPayload();
-
-    saveCheckoutOrder(order);
-
-    console.log(
-        'Processing order:',
-        order
-    );
-
-
-    /* ----------------------------------------------------------------------
-       PAYFAST
-       ---------------------------------------------------------------------- */
-
-    if (
-        checkoutState.paymentMethod === 'payfast'
-    ) {
-
-        if (
-            typeof window.PayFast === 'undefined' ||
-            typeof window.PayFast.checkout !== 'function'
-        ) {
-
-            alert(
-                'PayFast is not available. Please refresh the page and try again.'
-            );
-
-            console.error(
-                'window.PayFast.checkout is not available.'
-            );
-
-            return;
-        }
-
-        console.log(
-            'Routing order to PayFast:',
-            order.reference
-        );
-
-        window.PayFast.checkout(
-
-            checkoutState.grandTotal,
-
-            checkoutState.cart,
-
-            order.customer.email,
-
-            order.customer.name
-
-        );
-
-        return;
     }
 
 
-    /* ----------------------------------------------------------------------
-       MANUAL EFT
-       ---------------------------------------------------------------------- */
-
-    if (
-        checkoutState.paymentMethod === 'eft'
-    ) {
-
-        processManualEFT(order);
-
-        return;
-    }
-
-
-    alert(
-        'Please select a payment method.'
-    );
+    return data;
 
 }
 
 
 /* ==========================================================================
-   13. MANUAL EFT
+   11. REDIRECT CUSTOMER TO PAYFAST
    ========================================================================== */
 
-function processManualEFT(order) {
+function redirectToPayFast(
+    paymentResponse
+) {
 
-    console.log(
-        'Processing manual EFT order:',
-        order.reference
-    );
+    if (!paymentResponse) {
 
-    localStorage.setItem(
-        'nexpak_eft_order',
-        JSON.stringify(order)
-    );
+        throw new Error(
+            'No PayFast payment response received.'
+        );
 
-    const amount =
-        Number(order.grandTotal).toFixed(2);
-
-    const reference =
-        order.reference;
-
-
-    const message =
-        `Order ${reference} has been created.
-
-` +
-        `Amount: R${amount}
-
-` +
-        `Please use ${reference} as your payment reference.`;
-
-
-    alert(message);
+    }
 
 
     /*
-     * Do NOT clear the cart yet.
-     *
-     * The cart should remain available until
-     * the order has been successfully recorded.
+     * The secure server should return the
+     * PayFast redirect URL.
      */
 
+    const redirectUrl =
+        paymentResponse.redirectUrl ||
+        paymentResponse.redirect_url ||
+        paymentResponse.url;
 
-    const eftPanel =
-        document.getElementById('eftDetailsPanel');
 
-    if (eftPanel) {
+    if (!redirectUrl) {
 
-        eftPanel.style.display =
-            'block';
-
-        eftPanel.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center'
-        });
-
-    }
-
-}
-
-
-/* ==========================================================================
-   14. CHECKOUT BUTTON
-   ========================================================================== */
-
-function setupCheckoutButton() {
-
-    const button =
-        document.getElementById('completeOrderBtn');
-
-    if (!button) {
-
-        console.warn(
-            'completeOrderBtn not found.'
-        );
-
-        return;
-    }
-
-
-    button.addEventListener(
-        'click',
-        function(event) {
-
-            event.preventDefault();
-
-            if (
-                button.disabled
-            ) {
-                return;
-            }
-
-            button.disabled = true;
-
-            const originalHTML =
-                button.innerHTML;
-
-            button.innerHTML =
-                '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
-
-
-            try {
-
-                processPayment();
-
-            } catch (error) {
-
-                console.error(
-                    'Checkout processing error:',
-                    error
-                );
-
-                alert(
-                    'Something went wrong while processing your order. Please try again.'
-                );
-
-                button.disabled = false;
-
-                button.innerHTML =
-                    originalHTML;
-
-            }
-
-        }
-    );
-
-}
-
-
-/* ==========================================================================
-   15. CHECKOUT FORM SUBMISSION
-   ========================================================================== */
-
-function setupCheckoutForm() {
-
-    const form =
-        document.getElementById('checkoutForm');
-
-    if (!form) {
-        return;
-    }
-
-    form.addEventListener(
-        'submit',
-        function(event) {
-
-            event.preventDefault();
-
-            processPayment();
-
-        }
-    );
-
-}
-
-
-/* ==========================================================================
-   16. ORDER SUMMARY DISPLAY
-   ========================================================================== */
-
-function updateOrderSummaryDisplay() {
-
-    if (elSubtotal) {
-
-        elSubtotal.textContent =
-            `R ${checkoutState.subtotalExclVat.toFixed(2)}`;
-
-    }
-
-    if (elDelivery) {
-
-        if (
-            checkoutState.deliveryFee > 0
-        ) {
-
-            elDelivery.textContent =
-                `R ${checkoutState.deliveryFee.toFixed(2)}`;
-
-        } else {
-
-            elDelivery.textContent =
-                'Pending Address';
-
-        }
-
-    }
-
-    if (elVat) {
-
-        elVat.textContent =
-            `R ${checkoutState.vatAmount.toFixed(2)}`;
-
-    }
-
-    if (elTotal) {
-
-        elTotal.textContent =
-            `R ${checkoutState.grandTotal.toFixed(2)}`;
-
-    }
-
-}
-
-
-/* ==========================================================================
-   17. DELIVERY RESULT LISTENER
-   ========================================================================== */
-
-document.addEventListener(
-    'deliveryCalculated',
-    function(event) {
-
-        if (!event.detail) {
-            return;
-        }
-
-        const deliveryFee =
-            Number(event.detail.total || 0);
-
-        const distance =
-            Number(event.detail.distance || 0);
-
-        checkoutState.deliveryFee =
-            deliveryFee;
-
-        checkoutState.distanceKm =
-            distance;
-
-        updateFinancials();
-
-        console.log(
-            'Delivery received by checkout:',
-            deliveryFee
+        throw new Error(
+            'PayFast did not return a payment URL.'
         );
 
     }
-);
+
+
+    console.log(
+        'Redirecting customer to secure PayFast payment page.'
+    );
+
+
+    window.location.href =
+        redirectUrl;
+
+}
 
 
 /* ==========================================================================
-   18. LOCAL STORAGE CART REFRESH
+   12. CREATE PAYFAST PAYMENT
    ========================================================================== */
 
-function refreshCheckoutCart() {
+async function createPayFastPayment(
+    amount,
+    items,
+    customerEmail,
+    customerName
+) {
 
     try {
 
-        const storedCart =
-            localStorage.getItem(
-                'nexpak_cart'
+        showPaymentLoading();
+
+
+        const paymentRequest =
+            buildPayFastPaymentRequest(
+                amount,
+                items,
+                customerEmail,
+                customerName
             );
 
-        checkoutState.cart =
-            storedCart
-                ? JSON.parse(storedCart)
-                : [];
 
-        initCheckout();
+        console.log(
+            'Creating PayFast payment...'
+        );
+
+
+        const paymentResponse =
+            await requestPayFastPayment(
+                paymentRequest
+            );
+
+
+        console.log(
+            'PayFast payment created successfully.'
+        );
+
+
+        redirectToPayFast(
+            paymentResponse
+        );
+
 
     } catch (error) {
 
         console.error(
-            'Could not refresh checkout cart:',
+            'PayFast payment error:',
             error
+        );
+
+
+        hidePaymentLoading();
+
+
+        alert(
+            error.message ||
+            'Unable to start PayFast payment. Please try again.'
         );
 
     }
@@ -2060,72 +1620,228 @@ function refreshCheckoutCart() {
 
 
 /* ==========================================================================
-   19. EXPOSE CHECKOUT FUNCTIONS
+   13. PUBLIC PAYFAST CHECKOUT FUNCTION
    ========================================================================== */
 
-window.NexpakCheckout = {
+function payWithPayFastCheckout(
+    amount,
+    items,
+    customerEmail,
+    customerName
+) {
 
-    getState: function() {
-        return checkoutState;
-    },
+    /*
+     * Basic validation before sending anything
+     * to the secure payment server.
+     */
 
-    getOrderPayload:
-        buildOrderPayload,
+    const numericAmount =
+        Number(amount);
 
-    processPayment:
-        processPayment,
 
-    refreshCart:
-        refreshCheckoutCart,
+    if (
+        !Number.isFinite(numericAmount) ||
+        numericAmount <= 0
+    ) {
 
-    calculateTotals:
-        updateFinancials
+        alert(
+            'Invalid payment amount.'
+        );
+
+        return;
+
+    }
+
+
+    if (
+        !customerEmail ||
+        !String(customerEmail).trim()
+    ) {
+
+        alert(
+            'Customer email address is required.'
+        );
+
+        return;
+
+    }
+
+
+    if (
+        !customerName ||
+        !String(customerName).trim()
+    ) {
+
+        alert(
+            'Customer name is required.'
+        );
+
+        return;
+
+    }
+
+
+    const safeItems =
+        Array.isArray(items)
+            ? items
+            : [];
+
+
+    return createPayFastPayment(
+        numericAmount,
+        safeItems,
+        customerEmail,
+        customerName
+    );
+
+}
+
+
+/* ==========================================================================
+   14. PAYFAST GLOBAL API
+   ========================================================================== */
+
+window.PayFast = {
+
+    checkout:
+        payWithPayFastCheckout
 
 };
 
 
 /* ==========================================================================
-   20. INITIALIZATION
+   15. PAYMENT LOADING SCREEN
    ========================================================================== */
 
-function initializeCheckoutSystem() {
+function showPaymentLoading() {
 
-    console.log(
-        'Nexpak Checkout System initializing...'
-    );
+    /*
+     * Prevent duplicate loading screens.
+     */
 
-    initCheckout();
+    if (
+        document.getElementById(
+            'payment-loading'
+        )
+    ) {
+        return;
+    }
 
-    setupPaymentMethods();
 
-    setupCheckoutButton();
+    const loadingHTML = `
+        <div
+            id="payment-loading"
+            style="
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.82);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 999999;
+                padding: 20px;
+            "
+        >
 
-    setupCheckoutForm();
+            <div
+                style="
+                    background: #ffffff;
+                    width: 100%;
+                    max-width: 420px;
+                    padding: 35px;
+                    border-radius: 16px;
+                    text-align: center;
+                    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+                "
+            >
 
-    updateOrderSummaryDisplay();
+                <div
+                    style="
+                        width: 58px;
+                        height: 58px;
+                        margin: 0 auto 20px;
+                        border: 4px solid #e8eee9;
+                        border-top-color: #1a5f2a;
+                        border-radius: 50%;
+                        animation: nexpakPaySpin 0.9s linear infinite;
+                    "
+                ></div>
 
-    console.log(
-        'Nexpak Checkout System ready.'
+                <h2
+                    style="
+                        margin: 0 0 10px;
+                        color: #1a5f2a;
+                        font-size: 22px;
+                    "
+                >
+                    Redirecting to PayFast
+                </h2>
+
+                <p
+                    style="
+                        margin: 0;
+                        color: #666;
+                        font-size: 14px;
+                        line-height: 1.6;
+                    "
+                >
+                    Your secure payment session is being created.
+                    Please wait...
+                </p>
+
+                <p
+                    style="
+                        margin: 18px 0 0;
+                        color: #999;
+                        font-size: 12px;
+                    "
+                >
+                    Please do not close this window.
+                </p>
+
+            </div>
+
+        </div>
+
+        <style>
+            @keyframes nexpakPaySpin {
+                from {
+                    transform: rotate(0deg);
+                }
+
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+    `;
+
+
+    document.body.insertAdjacentHTML(
+        'beforeend',
+        loadingHTML
     );
 
 }
 
 
 /* ==========================================================================
-   21. DOM READY
+   16. HIDE PAYMENT LOADING SCREEN
    ========================================================================== */
 
-if (
-    document.readyState === 'loading'
-) {
+function hidePaymentLoading() {
 
-    document.addEventListener(
-        'DOMContentLoaded',
-        initializeCheckoutSystem
-    );
+    const loading =
+        document.getElementById(
+            'payment-loading'
+        );
 
-} else {
 
-    initializeCheckoutSystem();
+    if (loading) {
 
-       }
+        loading.remove();
+
+    }
+
+}
+        
