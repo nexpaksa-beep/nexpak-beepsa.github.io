@@ -2862,6 +2862,269 @@
            ADD CATEGORY TO CART
            ========================================================== */
 
+        <script>
+        /* ==========================================================
+           CART STATE
+           ========================================================== */
+
+        let cart = [];
+
+        let currentCategory = "";
+
+
+        /* ==========================================================
+           PROPERTY MARKER POSITIONS
+           ========================================================== */
+
+        const markerPositions = {
+
+            cameras: [
+
+                { top: '35%', left: '30%' },
+                { top: '35%', left: '60%' },
+
+                { top: '65%', left: '25%' },
+                { top: '65%', left: '75%' },
+
+                { top: '25%', left: '45%' },
+                { top: '25%', left: '55%' },
+
+                { top: '75%', left: '45%' },
+                { top: '75%', left: '55%' },
+
+                { top: '45%', left: '20%' },
+                { top: '45%', left: '80%' },
+
+                { top: '55%', left: '20%' },
+                { top: '55%', left: '80%' }
+
+            ],
+
+            roboguards: [
+
+                { top: '75%', left: '35%' },
+                { top: '75%', left: '65%' },
+
+                { top: '25%', left: '35%' },
+                { top: '25%', left: '65%' }
+
+            ],
+
+            gate: {
+
+                top: '82%',
+                left: '50%'
+
+            }
+
+        };
+
+
+        /* ==========================================================
+           DOM ELEMENTS
+           ========================================================== */
+
+        const formContainer =
+            document.getElementById(
+                'dynamic-form'
+            );
+
+        const productFormBox =
+            document.getElementById(
+                'product-form-container'
+            );
+
+        const overlay =
+            document.getElementById(
+                'visualizer-overlay'
+            );
+
+
+        /* ==========================================================
+           LOAD PRODUCT CATEGORY
+           ========================================================== */
+
+        function loadCategoryForm() {
+
+            const select =
+                document.getElementById(
+                    'categorySelect'
+                );
+
+            currentCategory =
+                select.value;
+
+
+            if (!currentCategory) {
+
+                productFormBox.classList.add(
+                    'hide'
+                );
+
+                formContainer.innerHTML =
+                    '';
+
+                return;
+
+            }
+
+
+            const products =
+                productDb[currentCategory];
+
+
+            if (!products) {
+
+                console.error(
+                    'Product category not found:',
+                    currentCategory
+                );
+
+                productFormBox.classList.add(
+                    'hide'
+                );
+
+                return;
+
+            }
+
+
+            productFormBox.classList.remove(
+                'hide'
+            );
+
+
+            formContainer.innerHTML =
+                '';
+
+
+            products.forEach(
+                function(prod) {
+
+                    let html = `
+
+                        <div
+                            class="p-3 bg-slate-50 border rounded
+                            flex flex-col md:flex-row
+                            md:items-center
+                            justify-between gap-3"
+                        >
+
+                            <div
+                                class="font-semibold text-sm
+                                w-full md:w-1/3"
+                            >
+                                ${prod.name}
+                            </div>
+
+                    `;
+
+
+                    /* ==================================================
+                       PRODUCT VARIANTS
+                       ================================================== */
+
+                    if (prod.variants) {
+
+                        html += `
+
+                            <select
+                                id="var_${prod.id}"
+                                class="p-2 text-sm border rounded
+                                outline-none
+                                focus:ring-1
+                                focus:ring-blue-500
+                                flex-1"
+                            >
+
+                        `;
+
+
+                        prod.variants.forEach(
+                            function(v) {
+
+                                html += `
+
+                                    <option value="${v}">
+                                        ${v}
+                                    </option>
+
+                                `;
+
+                            }
+                        );
+
+
+                        html += `
+
+                            </select>
+
+                        `;
+
+                    }
+
+                    else {
+
+                        html += `
+
+                            <div class="flex-1"></div>
+
+                        `;
+
+                    }
+
+
+                    /* ==================================================
+                       QUANTITY
+                       ================================================== */
+
+                    html += `
+
+                        <div
+                            class="flex items-center space-x-2"
+                        >
+
+                            <label
+                                class="text-xs
+                                text-slate-500
+                                font-bold"
+                            >
+                                QTY:
+                            </label>
+
+                            <input
+                                type="number"
+                                id="qty_${prod.id}"
+                                min="0"
+                                value="0"
+                                class="w-16 p-2 text-sm
+                                border rounded
+                                outline-none
+                                text-center"
+                            >
+
+                        </div>
+
+                    </div>
+
+                    `;
+
+
+                    formContainer.insertAdjacentHTML(
+                        'beforeend',
+                        html
+                    );
+
+                }
+            );
+
+        }
+
+
+        /* ==========================================================
+           ADD CATEGORY TO CART
+           ========================================================== */
+
         function addCurrentCategoryToCart() {
 
             if (!currentCategory) {
@@ -2875,7 +3138,39 @@
             }
 
 
-                                    );
+            const products =
+                productDb[currentCategory];
+
+
+            if (!Array.isArray(products)) {
+
+                alert(
+                    "Unable to load this product category."
+                );
+
+                return;
+
+            }
+
+
+            let addedCount = 0;
+
+
+            products.forEach(
+                function(prod) {
+
+                    const qtyInput =
+                        document.getElementById(
+                            `qty_${prod.id}`
+                        );
+
+
+                    if (!qtyInput) {
+
+                        return;
+
+                    }
+
 
                     const qty =
                         parseInt(
@@ -2883,104 +3178,119 @@
                         ) || 0;
 
 
-                    if (qty > 0) {
+                    if (qty <= 0) {
 
-                        let variant = "";
+                        return;
 
-
-                        if (prod.variants) {
-
-                            const varSelect =
-                                document.getElementById(
-                                    `var_${prod.id}`
-                                );
-
-                            variant =
-                                varSelect
-                                    ? varSelect.value
-                                    : "";
-
-                        }
+                    }
 
 
-                        /*
-                         * Check whether the exact
-                         * product + variant already
-                         * exists in the cart.
-                         */
+                    let variant = "";
 
-                        const existingIdx =
-                            cart.findIndex(
-                                function(item) {
 
-                                    return (
-                                        item.id === prod.id &&
-                                        item.variant === variant
-                                    );
+                    if (prod.variants) {
 
-                                }
+                        const varSelect =
+                            document.getElementById(
+                                `var_${prod.id}`
                             );
 
 
-                        if (existingIdx > -1) {
-
-                            cart[existingIdx].qty += qty;
-
-                        } else {
-
-                            cart.push({
-
-                                id:
-                                    prod.id,
-
-                                name:
-                                    prod.name,
-
-                                variant:
-                                    variant,
-
-                                qty:
-                                    qty,
-
-                                price:
-                                    prod.price,
-
-                                weight:
-                                    prod.weight,
-
-                                category:
-                                    currentCategory
-
-                            });
-
-                        }
-
-
-                        /*
-                         * Reset quantity field
-                         * after adding.
-                         */
-
-                        qtyInput.value = 0;
-
-                        addedCount++;
+                        variant =
+                            varSelect
+                                ? varSelect.value
+                                : "";
 
                     }
+
+
+                    /* ==================================================
+                       CHECK IF PRODUCT ALREADY EXISTS
+                       ================================================== */
+
+                    const existingIdx =
+                        cart.findIndex(
+                            function(item) {
+
+                                return (
+
+                                    item.id === prod.id &&
+
+                                    item.variant === variant
+
+                                );
+
+                            }
+                        );
+
+
+                    if (existingIdx > -1) {
+
+                        cart[existingIdx].qty +=
+                            qty;
+
+                    }
+
+                    else {
+
+                        cart.push({
+
+                            id:
+                                prod.id,
+
+                            name:
+                                prod.name,
+
+                            variant:
+                                variant,
+
+                            qty:
+                                qty,
+
+                            price:
+                                Number(
+                                    prod.price
+                                ) || 0,
+
+                            weight:
+                                Number(
+                                    prod.weight
+                                ) || 0,
+
+                            category:
+                                currentCategory
+
+                        });
+
+                    }
+
+
+                    /* Reset quantity */
+
+                    qtyInput.value =
+                        0;
+
+
+                    addedCount++;
 
                 }
             );
 
 
-            /*
-             * Save cart if products
-             * were successfully added.
-             */
+            /* ==========================================================
+               SAVE CART
+               ========================================================== */
 
             if (addedCount > 0) {
 
                 localStorage.setItem(
-                    "nexpak_cart",
-                    JSON.stringify(cart)
+
+                    'nexpak_cart',
+
+                    JSON.stringify(
+                        cart
+                    )
+
                 );
 
 
@@ -2988,17 +3298,9 @@
 
                 updateVisualizer();
 
+            }
 
-                /*
-                 * Small confirmation message.
-                 */
-
-                alert(
-                    addedCount +
-                    " product selection(s) added to your cart."
-                );
-
-            } else {
+            else {
 
                 alert(
                     "Please specify a quantity greater than 0 for at least one item."
@@ -3017,39 +3319,13 @@
 
             const cartContainer =
                 document.getElementById(
-                    "cart-items"
+                    'cart-items'
                 );
 
             const cartBadge =
                 document.getElementById(
-                    "cart-badge"
+                    'cart-badge'
                 );
-
-
-            /*
-             * Calculate total quantity,
-             * rather than number of different
-             * products.
-             */
-
-            let totalQuantity = 0;
-
-            cart.forEach(
-                function(item) {
-
-                    totalQuantity +=
-                        Number(item.qty) || 0;
-
-                }
-            );
-
-
-            if (cartBadge) {
-
-                cartBadge.innerText =
-                    totalQuantity;
-
-            }
 
 
             if (!cartContainer) {
@@ -3059,15 +3335,29 @@
             }
 
 
-            if (
-                !Array.isArray(cart) ||
-                cart.length === 0
-            ) {
+            /* Cart badge */
+
+            if (cartBadge) {
+
+                cartBadge.innerText =
+                    cart.length;
+
+            }
+
+
+            /* Empty cart */
+
+            if (cart.length === 0) {
 
                 cartContainer.innerHTML = `
-                    <p class="text-slate-400 italic text-sm">
+
+                    <p
+                        class="text-slate-400
+                        italic text-sm"
+                    >
                         Cart is empty.
                     </p>
+
                 `;
 
                 return;
@@ -3075,7 +3365,8 @@
             }
 
 
-            let html = "";
+            let html =
+                '';
 
 
             cart.forEach(
@@ -3083,63 +3374,78 @@
 
                     const desc =
                         item.variant
+
                             ? `${item.name} (${item.variant})`
+
                             : item.name;
 
 
-                    const lineTotal =
+                    const total =
                         (
                             Number(item.price) *
                             Number(item.qty)
-                        ) || 0;
+                        ).toFixed(2);
 
 
                     html += `
 
                         <div
-                            class="flex justify-between items-center
-                                   text-sm border-b border-slate-100
-                                   pb-3 mb-3"
+                            class="flex
+                            justify-between
+                            items-center
+                            text-sm
+                            border-b
+                            border-slate-100
+                            pb-2"
                         >
 
-                            <div class="flex-1 pr-3">
+                            <div
+                                class="flex-1"
+                            >
 
                                 <span
                                     class="font-bold
-                                           text-nexpakAccent"
+                                    text-nexpakAccent"
                                 >
                                     ${item.qty}x
                                 </span>
 
-                                <span>
-                                    ${desc}
-                                </span>
+                                ${desc}
 
                             </div>
 
 
                             <div
                                 class="text-right
-                                       flex items-center gap-3"
+                                flex
+                                items-center
+                                gap-3"
                             >
 
-                                <span class="font-semibold">
-                                    R${lineTotal.toFixed(2)}
+                                <span>
+                                    R${total}
                                 </span>
 
 
                                 <button
+
                                     type="button"
-                                    onclick="removeFromCart(${index})"
-                                    class="text-red-400
-                                           hover:text-red-600
-                                           transition"
-                                    title="Remove item"
+
+                                    onclick="
+                                        removeFromCart(${index})
+                                    "
+
+                                    class="
+                                        text-red-400
+                                        hover:text-red-600
+                                    "
                                 >
 
                                     <i
-                                        class="fa-solid
-                                               fa-trash-can"
+                                        class="
+                                            fa-solid
+                                            fa-trash-can
+                                        "
                                     ></i>
 
                                 </button>
@@ -3154,50 +3460,6 @@
             );
 
 
-            /*
-             * Cart total.
-             */
-
-            let cartTotal = 0;
-
-
-            cart.forEach(
-                function(item) {
-
-                    cartTotal +=
-                        (
-                            Number(item.price) *
-                            Number(item.qty)
-                        ) || 0;
-
-                }
-            );
-
-
-            html += `
-
-                <div
-                    class="flex justify-between
-                           items-center pt-3
-                           border-t border-slate-200"
-                >
-
-                    <span class="font-bold text-lg">
-                        Total
-                    </span>
-
-                    <span
-                        class="font-extrabold
-                               text-xl text-nexpakAccent"
-                    >
-                        R${cartTotal.toFixed(2)}
-                    </span>
-
-                </div>
-
-            `;
-
-
             cartContainer.innerHTML =
                 html;
 
@@ -3208,7 +3470,9 @@
            REMOVE FROM CART
            ========================================================== */
 
-        function removeFromCart(index) {
+        function removeFromCart(
+            index
+        ) {
 
             if (
                 index < 0 ||
@@ -3226,14 +3490,16 @@
             );
 
 
-            /*
-             * Keep checkout cart
-             * synchronised.
-             */
+            /* Keep checkout synchronized */
 
             localStorage.setItem(
-                "nexpak_cart",
-                JSON.stringify(cart)
+
+                'nexpak_cart',
+
+                JSON.stringify(
+                    cart
+                )
+
             );
 
 
@@ -3256,7 +3522,7 @@
             ) {
 
                 alert(
-                    "Your cart is empty."
+                    'Your cart is empty.'
                 );
 
                 return;
@@ -3264,23 +3530,23 @@
             }
 
 
-            /*
-             * Final cart save before
-             * leaving the builder.
-             */
+            /* Save latest cart */
 
             localStorage.setItem(
-                "nexpak_cart",
-                JSON.stringify(cart)
+
+                'nexpak_cart',
+
+                JSON.stringify(
+                    cart
+                )
+
             );
 
 
-            /*
-             * Open dedicated checkout.
-             */
+            /* Open checkout */
 
             window.location.href =
-                "checkout.html";
+                'checkout.html';
 
         }
 
@@ -3298,43 +3564,59 @@
             }
 
 
-            overlay.innerHTML = "";
+            overlay.innerHTML =
+                '';
 
 
             let cameraCount =
                 0;
 
-            let roboguardCount =
-                0;
 
             let hasElectricFence =
                 false;
+
 
             let hasGateMotor =
                 false;
 
 
-            /*
-             * Inspect everything currently
-             * inside the cart.
-             */
+            let roboguardCount =
+                0;
+
+
+            /* ======================================================
+               CHECK CART PRODUCTS
+               ====================================================== */
 
             cart.forEach(
                 function(item) {
 
+
+                    /* CCTV */
+
                     if (
-                        item.category === "cctv" &&
-                        item.id === "cctv_cam"
+
+                        item.category === 'cctv' &&
+
+                        item.id === 'cctv_cam'
+
                     ) {
 
                         cameraCount +=
-                            Number(item.qty) || 0;
+                            Number(
+                                item.qty
+                            ) || 0;
 
                     }
 
 
+                    /* Electric fencing */
+
                     if (
-                        item.category === "electricFence"
+
+                        item.category ===
+                        'electricFence'
+
                     ) {
 
                         hasElectricFence =
@@ -3343,28 +3625,57 @@
                     }
 
 
+                    /* Gate motors */
+
                     if (
+
                         (
-                            item.category === "gateD5" ||
-                            item.category === "gateD10"
-                        ) &&
-                        item.id &&
-                        item.id.includes("motor")
+                            item.category ===
+                            'gateD5'
+
+                        ) ||
+
+                        (
+                            item.category ===
+                            'gateD10'
+
+                        )
+
                     ) {
 
-                        hasGateMotor =
-                            true;
+                        if (
+
+                            item.id &&
+                            item.id.includes(
+                                'motor'
+                            )
+
+                        ) {
+
+                            hasGateMotor =
+                                true;
+
+                        }
 
                     }
 
 
+                    /* Roboguard */
+
                     if (
-                        item.category === "roboguard" &&
-                        item.id === "rg_beam"
+
+                        item.category ===
+                        'roboguard' &&
+
+                        item.id ===
+                        'rg_beam'
+
                     ) {
 
                         roboguardCount +=
-                            Number(item.qty) || 0;
+                            Number(
+                                item.qty
+                            ) || 0;
 
                     }
 
@@ -3372,9 +3683,9 @@
             );
 
 
-            /*
-             * ELECTRIC FENCE
-             */
+            /* ======================================================
+               ELECTRIC FENCE
+               ====================================================== */
 
             if (hasElectricFence) {
 
@@ -3382,7 +3693,6 @@
 
                     <div
                         class="ef-active"
-                        title="Electric fencing"
                     ></div>
 
                 `;
@@ -3390,14 +3700,11 @@
             }
 
 
-            /*
-             * GATE MOTOR
-             */
+            /* ======================================================
+               GATE MOTOR
+               ====================================================== */
 
-            if (
-                hasGateMotor &&
-                markerPositions.gate
-            ) {
+            if (hasGateMotor) {
 
                 overlay.innerHTML += `
 
@@ -3405,9 +3712,10 @@
                         class="marker pulse"
                         style="
                             top:
-                                ${markerPositions.gate.top};
+                            ${markerPositions.gate.top};
+
                             left:
-                                ${markerPositions.gate.left};
+                            ${markerPositions.gate.left};
                         "
                     >
 
@@ -3426,241 +3734,21 @@
                         >
 
                             <i
-                                class="fa-solid fa-torii-gate"
+                                class="
+                                    fa-solid
+                                    fa-torii-gate
+                                "
                             ></i>
 
-                            Gate
-
-                        </div>
-
-                    </div>
-
-                `;
-
-            }
-
-
-            /*
-             * CCTV CAMERAS
-             */
-
-            for (
-                let i = 0;
-                i < cameraCount;
-                i++
-            ) {
-
-                if (
-                    i >=
-                    markerPositions.cameras.length
-                ) {
-
-                    break;
-
-                }
-
-
-                const pos =
-                    markerPositions.cameras[i];
-
-
-                overlay.innerHTML += `
-
-                    <div
-                        class="marker"
-                        style="
-                            top: ${pos.top};
-                            left: ${pos.left};
-                        "
-                    >
-
-                        <div
-                            class="
-                                bg-blue-600
-                                text-white
-                                h-7
-                                w-7
-                                flex
-                                items-center
-                                justify-center
-                                rounded-full
-                                shadow-lg
-                                text-xs
-                                border-2
-                                border-white
-                            "
-                            title="CCTV Camera"
-                        >
-
-                            <i
-                                class="fa-solid fa-video"
-                            ></i>
-
-                        </div>
-
-                    </div>
-
-                `;
-
-            }
-
-
-            /*
-             * ROBOGUARD BEAMS
-             */
-
-            for (
-                let i = 0;
-                i < roboguardCount;
-                i++
-            ) {
-
-                if (
-                    i >=
-                    markerPositions.roboguards.length
-                ) {
-
-                    break;
-
-                }
-
-
-                const pos =
-                    markerPositions.roboguards[i];
-
-
-                overlay.innerHTML += `
-
-                    <div
-                        class="marker"
-                        style="
-                            top: ${pos.top};
-                            left: ${pos.left};
-                        "
-                    >
-
-                        <div
-                            class="
-                                bg-green-600
-                                text-white
-                                h-7
-                                w-7
-                                flex
-                                items-center
-                                justify-center
-                                rounded-full
-                                shadow-lg
-                                text-xs
-                                border-2
-                                border-white
-                                pulse
-                            "
-                            title="Roboguard Beam"
-                        >
-
-                            <i
-                                class="fa-solid fa-wave-square"
-                            ></i>
-
-                        </div>
-
-                    </div>
-
-                `;
-
-            }
-
-        }
-
-
-        /* ==========================================================
-           LOAD SAVED CART
-           ========================================================== */
-
-        function loadSavedCart() {
-
-            try {
-
-                const savedCart =
-                    localStorage.getItem(
-                        "nexpak_cart"
-                    );
-
-
-                if (
-                    savedCart
-                ) {
-
-                    const parsedCart =
-                        JSON.parse(
-                            savedCart
-                        );
-
-
-                    if (
-                        Array.isArray(parsedCart)
-                    ) {
-
-                        cart =
-                            parsedCart;
-
-                    }
-
-                }
-
-            }
-
-            catch (error) {
-
-                console.error(
-                    "Unable to load saved cart:",
-                    error
-                );
-
-                cart = [];
-
-            }
-
-
-            updateCartUI();
-
-            updateVisualizer();
-
-        }
-
-
-        /* ==========================================================
-           INITIALISE BUILDER
-           ========================================================== */
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            function() {
-
-                /*
-                 * Reload the cart from localStorage.
-                 */
-
-                loadSavedCart();
-
-
-                /*
-                 * Make sure the cart badge
-                 * is correct when the page opens.
-                 */
-
-                updateCartUI();
-
-
-                /*
-                 * Initialise visualiser.
-                 */
-
-                updateVisualizer();
-
-            }
-        );
-
+       
+                
+
+                    
+            
+                                
+
+                
+            
     </script>
 
 
