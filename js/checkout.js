@@ -1,863 +1,533 @@
 /* ==========================================================================
-   Nexpak Security Solutions
+   NEXPAK SECURITY SOLUTIONS
    Checkout & Payment Routing
-   File: js/checkout.js
+   checkout.js
    ========================================================================== */
 
-console.log('Nexpak Checkout initialized');
+document.addEventListener('DOMContentLoaded', () => {
 
-document.addEventListener('DOMContentLoaded', function () {
+    'use strict';
 
-    // ======================================================================
-    // 1. CHECKOUT STATE
-    // ======================================================================
+    /* ==========================================================================
+       1. CHECKOUT STATE
+       ========================================================================== */
 
     const checkoutState = {
-        cart: [],
-        subtotal: 0,
+
+        cart: JSON.parse(
+            localStorage.getItem('nexpak_cart')
+        ) || [],
+
+        subtotalExclVat: 0,
+
+        totalWeightKg: 0,
+
+        distanceKm: 0,
+
         deliveryFee: 0,
-        vat: 0,
+
+        vatAmount: 0,
+
         grandTotal: 0,
-        deliveryCalculated: false,
+
         paymentMethod: 'payfast',
-        orderReference: null
+
+        deliveryCalculated: false,
+
+        customer: {
+            name: '',
+            email: '',
+            phone: '',
+            address: ''
+        },
+
+        orderReference: ''
+
     };
 
-    // ======================================================================
-    // 2. LOAD CART
-    // ======================================================================
 
-    function loadCart() {
+    /* ==========================================================================
+       2. VAT
+       ========================================================================== */
 
-        try {
-            checkoutState.cart =
-                JSON.parse(localStorage.getItem('nexpak_cart')) || [];
-        } catch (error) {
+    const VAT_RATE = 0.15;
 
-            console.error('Could not load Nexpak cart:', error);
 
-            checkoutState.cart = [];
-        }
+    /* ==========================================================================
+       3. DOM ELEMENTS
+       ========================================================================== */
 
-        return checkoutState.cart;
+    const orderItemsContainer =
+        document.getElementById('checkoutOrderItems');
+
+    const elSubtotal =
+        document.getElementById('chkSubtotal');
+
+    const elDelivery =
+        document.getElementById('chkDelivery');
+
+    const elVat =
+        document.getElementById('chkVat');
+
+    const elTotal =
+        document.getElementById('chkGrandTotal');
+
+    const checkoutForm =
+        document.getElementById('checkoutForm');
+
+    const addressInput =
+        document.getElementById('shippingAddress');
+
+    const calculateDeliveryBtn =
+        document.getElementById('btnCalculateDelivery');
+
+    const paymentRadios =
+        document.querySelectorAll(
+            'input[name="paymentMethod"]'
+        );
+
+    const eftDetailsPanel =
+        document.getElementById('eftDetailsPanel');
+
+
+    /* ==========================================================================
+       4. CART VALIDATION
+       ========================================================================== */
+
+    if (!Array.isArray(checkoutState.cart) ||
+        checkoutState.cart.length === 0) {
+
+        alert(
+            'Your cart is empty. Redirecting to the shop.'
+        );
+
+        window.location.href = 'shop.html';
+
+        return;
     }
 
-    loadCart();
 
+    /* ==========================================================================
+       5. UTILITY FUNCTIONS
+       ========================================================================== */
 
-    // ======================================================================
-    // 3. DOM ELEMENTS
-    // ======================================================================
+    function money(value) {
 
-    const checkoutModal =
-        document.getElementById('checkoutModal');
+        return `R ${Number(value || 0).toFixed(2)}`;
 
-    const customerName =
-        document.getElementById('CustName');
+    }
 
-    const customerEmail =
-        document.getElementById('CustEmail');
-
-    const customerPhone =
-        document.getElementById('CustPhone');
-
-    const generatedOrderNum =
-        document.getElementById('generatedOrderNum');
-
-    const completeOrderBtn =
-        document.getElementById('completeOrderBtn');
-
-    const deliveryContainer =
-        document.getElementById('deliveryContainer');
-
-    const paymentContainer =
-        document.getElementById('paymentContainer');
-
-
-    // ======================================================================
-    // 4. GENERATE ORDER REFERENCE
-    // ======================================================================
 
     function generateOrderReference() {
 
-        const timestamp = Date.now();
-
-        const random =
+        return (
+            'NEX-' +
+            Date.now() +
+            '-' +
             Math.random()
                 .toString(36)
-                .substring(2, 8)
-                .toUpperCase();
+                .substring(2, 7)
+                .toUpperCase()
+        );
 
-        return `NXP-${timestamp}-${random}`;
     }
 
 
-    // ======================================================================
-    // 5. CALCULATE CART SUBTOTAL
-    // ======================================================================
+    /* ==========================================================================
+       6. DETERMINE PRODUCT / KIT WEIGHT
+       ========================================================================== */
 
-    function calculateSubtotal() {
+    function getItemWeight(item) {
 
-        let subtotal = 0;
+        /*
+         * First try explicit weight stored on the product.
+         */
 
-        checkoutState.cart.forEach(function (item) {
+        if (item && Number(item.weight) > 0) {
 
-            let price = Number(
-                item.price ||
-                item.total ||
-                item.amount ||
-                0
-            );
+            return Number(item.weight);
 
-            let quantity = Number(
-                item.quantity || 1
-            );
+        }
 
-            subtotal += price * quantity;
-        });
 
-        checkoutState.subtotal = subtotal;
+        /*
+         * Try common nested product structures.
+         */
 
-        return subtotal;
+        if (
+            item &&
+            item.product &&
+            Number(item.product.weight) > 0
+        ) {
+
+            return Number(item.product.weight);
+
+        }
+
+
+        /*
+         * Category fallback.
+         *
+         * These are only fallbacks for products that do not
+         * contain an explicit weight.
+         */
+
+        const category =
+            String(item?.category || '')
+                .toLowerCase();
+
+
+        if (category === 'gate-motors') {
+
+            return 12;
+
+        }
+
+
+        if (category === 'cctv-hd') {
+
+            return 5;
+
+        }
+
+
+        if (category === 'cctv-ip') {
+
+            return 5;
+
+        }
+
+
+        if (category === 'electric-fencing') {
+
+            return 8;
+
+        }
+
+
+        if (category === 'roboguard') {
+
+            return 10;
+
+        }
+
+
+        if (category === 'ids-alarm') {
+
+            return 4;
+
+        }
+
+
+        if (category === 'ajax-security') {
+
+            return 4;
+
+        }
+
+
+        if (category === 'stafix-agri') {
+
+            return 6;
+
+        }
+
+
+        /*
+         * Generic fallback.
+         */
+
+        return 1;
+
     }
 
 
-    // ======================================================================
-    // 6. CALCULATE VAT
-    // ======================================================================
+    /* ==========================================================================
+       7. CALCULATE TOTAL CART WEIGHT
+       ========================================================================== */
 
-    function calculateVAT() {
-
-        const taxableAmount =
-            checkoutState.subtotal +
-            checkoutState.deliveryFee;
-
-        checkoutState.vat =
-            taxableAmount * 0.15;
-
-        return checkoutState.vat;
-    }
-
-
-    // ======================================================================
-    // 7. CALCULATE GRAND TOTAL
-    // ======================================================================
-
-    function calculateGrandTotal() {
-
-        calculateSubtotal();
-        calculateVAT();
-
-        checkoutState.grandTotal =
-            checkoutState.subtotal +
-            checkoutState.deliveryFee +
-            checkoutState.vat;
-
-        return checkoutState.grandTotal;
-    }
-
-
-    // ======================================================================
-    // 8. GET CART WEIGHT
-    // ======================================================================
-
-    function getCartWeight() {
+    function calculateCartWeight() {
 
         let totalWeight = 0;
 
-        checkoutState.cart.forEach(function (item) {
+
+        checkoutState.cart.forEach(item => {
 
             const quantity =
-                Number(item.quantity || 1);
+                Number(item.quantity) > 0
+                    ? Number(item.quantity)
+                    : 1;
 
-            const weight =
-                Number(
-                    item.weight ||
-                    item.weightKg ||
-                    0.5
-                );
 
-            totalWeight += weight * quantity;
+            const itemWeight =
+                getItemWeight(item);
+
+
+            totalWeight +=
+                itemWeight * quantity;
+
         });
 
-        return totalWeight;
+
+        checkoutState.totalWeightKg =
+            Number(totalWeight.toFixed(2));
+
+
+        return checkoutState.totalWeightKg;
+
     }
 
 
-    // ======================================================================
-    // 9. DISPLAY CHECKOUT SUMMARY
-    // ======================================================================
+    /* ==========================================================================
+       8. RENDER CART ITEMS
+       ========================================================================== */
 
-    function updateCheckoutSummary() {
+    function renderCheckoutItems() {
 
-        calculateGrandTotal();
+        if (!orderItemsContainer) {
 
-        const summary =
-            document.getElementById('checkoutSummary');
-
-        if (!summary) {
             return;
+
         }
 
-        summary.innerHTML = `
-            <div class="checkout-summary-row">
-                <span>Subtotal</span>
-                <strong>
-                    R${checkoutState.subtotal.toFixed(2)}
-                </strong>
-            </div>
 
-            <div class="checkout-summary-row">
-                <span>Delivery</span>
-                <strong>
-                    ${
-                        checkoutState.deliveryCalculated
-                        ? 'R' + checkoutState.deliveryFee.toFixed(2)
-                        : 'Pending'
-                    }
-                </strong>
-            </div>
-
-            <div class="checkout-summary-row">
-                <span>VAT (15%)</span>
-                <strong>
-                    R${checkoutState.vat.toFixed(2)}
-                </strong>
-            </div>
-
-            <div class="checkout-summary-row checkout-grand-total">
-                <span>Total</span>
-                <strong>
-                    R${checkoutState.grandTotal.toFixed(2)}
-                </strong>
-            </div>
-        `;
-    }
+        orderItemsContainer.innerHTML = '';
 
 
-    // ======================================================================
-    // 10. UPDATE GENERATED ORDER NUMBER
-    // ======================================================================
-
-    function updateOrderReference() {
-
-        if (!checkoutState.orderReference) {
-
-            checkoutState.orderReference =
-                generateOrderReference();
-        }
-
-        if (generatedOrderNum) {
-
-            generatedOrderNum.textContent =
-                checkoutState.orderReference;
-        }
-    }
+        checkoutState.subtotalExclVat = 0;
 
 
-    // ======================================================================
-    // 11. CREATE DELIVERY SUMMARY
-    // ======================================================================
+        checkoutState.cart.forEach((item, index) => {
 
-    function createDeliverySummary() {
-
-        if (!deliveryContainer) {
-            return;
-        }
-
-        /*
-         * Do not destroy an existing delivery calculator.
-         * If equestrian-delivery-calculator.js has already created
-         * the calculator, leave it alone.
-         */
-
-        const existingCalculator =
-            document.getElementById('equestrian-delivery-calc');
-
-        if (existingCalculator) {
-            return;
-        }
-
-        deliveryContainer.innerHTML = `
-            <div class="checkout-delivery-box">
-
-                <h3>
-                    <i class="fa-solid fa-truck"></i>
-                    Delivery
-                </h3>
-
-                <p>
-                    Please select your delivery area before payment.
-                </p>
-
-                <div class="checkout-delivery-options">
-
-                    <button
-                        type="button"
-                        class="delivery-option"
-                        data-fee="200"
-                        data-region="gauteng"
-                    >
-                        Gauteng
-                        <strong>From R200</strong>
-                    </button>
-
-                    <button
-                        type="button"
-                        class="delivery-option"
-                        data-fee="650"
-                        data-region="durban"
-                    >
-                        Durban
-                        <strong>From R650</strong>
-                    </button>
-
-                    <button
-                        type="button"
-                        class="delivery-option"
-                        data-fee="800"
-                        data-region="capetown"
-                    >
-                        Cape Town
-                        <strong>From R800</strong>
-                    </button>
-
-                    <button
-                        type="button"
-                        class="delivery-option"
-                        data-fee="500"
-                        data-region="other"
-                    >
-                        Other Areas
-                        <strong>From R500</strong>
-                    </button>
-
-                </div>
-
-                <div
-                    id="checkoutDeliveryResult"
-                    style="display:none;"
-                >
-                    Delivery:
-                    <strong id="checkoutDeliveryAmount">
-                        R0.00
-                    </strong>
-                </div>
-
-            </div>
-        `;
-
-        setupDeliveryOptions();
-    }
+            const quantity =
+                Number(item.quantity) > 0
+                    ? Number(item.quantity)
+                    : 1;
 
 
-    // ======================================================================
-    // 12. DELIVERY OPTION EVENTS
-    // ======================================================================
+            /*
+             * Support both totalExclVat and price-based
+             * cart structures.
+             */
 
-    function setupDeliveryOptions() {
-
-        const buttons =
-            document.querySelectorAll('.delivery-option');
-
-        buttons.forEach(function (button) {
-
-            button.addEventListener('click', function () {
-
-                buttons.forEach(function (btn) {
-                    btn.classList.remove('selected');
-                });
-
-                button.classList.add('selected');
-
-                const fee =
-                    Number(button.dataset.fee || 0);
-
-                checkoutState.deliveryFee = fee;
-
-                checkoutState.deliveryCalculated =
-                    fee > 0;
-
-                const result =
-                    document.getElementById(
-                        'checkoutDeliveryResult'
-                    );
-
-                const amount =
-                    document.getElementById(
-                        'checkoutDeliveryAmount'
-                    );
-
-                if (result) {
-                    result.style.display = 'block';
-                }
-
-                if (amount) {
-                    amount.textContent =
-                        `R${fee.toFixed(2)}`;
-                }
-
-                updateCheckoutSummary();
-
-                console.log(
-                    'Delivery selected:',
-                    fee
-                );
-            });
-        });
-    }
+            let itemTotal = 0;
 
 
-    // ======================================================================
-    // 13. LISTEN FOR EXTERNAL DELIVERY CALCULATOR
-    // ======================================================================
+            if (Number(item.totalExclVat) > 0) {
 
-    document.addEventListener(
-        'deliveryCalculated',
-        function (event) {
+                itemTotal =
+                    Number(item.totalExclVat);
 
-            const fee =
-                Number(
-                    event.detail?.fee || 0
-                );
+            } else if (Number(item.price) > 0) {
 
-            if (fee <= 0) {
-                return;
+                itemTotal =
+                    Number(item.price) * quantity;
+
+            } else if (Number(item.total) > 0) {
+
+                itemTotal =
+                    Number(item.total);
+
             }
 
-            checkoutState.deliveryFee = fee;
 
-            checkoutState.deliveryCalculated = true;
-
-            updateCheckoutSummary();
-        }
-    );
+            checkoutState.subtotalExclVat +=
+                itemTotal;
 
 
-    // ======================================================================
-    // 14. PAYMENT METHOD UI
-    // ======================================================================
+            const itemName =
+                item?.baseKit?.name ||
+                item?.name ||
+                item?.product?.name ||
+                'Security System';
 
-    function createPaymentOptions() {
 
-        if (!paymentContainer) {
-            return;
-        }
+            const category =
+                String(
+                    item?.category ||
+                    'security'
+                )
+                .replace(/-/g, ' ')
+                .toUpperCase();
 
-        paymentContainer.innerHTML = `
 
-            <div class="checkout-payment-box">
+            const itemDiv =
+                document.createElement('div');
 
-                <h3>
-                    <i class="fa-solid fa-credit-card"></i>
-                    Payment Method
-                </h3>
 
-                <label class="payment-option selected">
+            itemDiv.className =
+                'checkout-line-item';
 
-                    <input
-                        type="radio"
-                        name="checkoutPaymentMethod"
-                        value="payfast"
-                        checked
-                    >
 
-                    <span class="payment-option-content">
+            itemDiv.innerHTML = `
 
-                        <span class="payment-option-title">
-                            Pay securely with
-                        </span>
-
-                        <span class="payfast-brand">
-                            <span class="payfast-p">
-                                P
-                            </span>
-
-                            <span>
-                                PayFast
-                            </span>
-                        </span>
-
-                        <small>
-                            Secure online payment
-                        </small>
-
-                    </span>
-
-                </label>
-
-                <label class="payment-option">
-
-                    <input
-                        type="radio"
-                        name="checkoutPaymentMethod"
-                        value="eft"
-                    >
-
-                    <span class="payment-option-content">
-
-                        <span class="payment-option-title">
-                            Manual EFT
-                        </span>
-
-                        <small>
-                            Receive banking details after placing your order
-                        </small>
-
-                    </span>
-
-                </label>
-
-                <div
-                    id="eftCheckoutDetails"
-                    class="eft-checkout-details"
-                    style="display:none;"
-                >
+                <div class="chk-item-info">
 
                     <strong>
-                        Manual EFT
+                        ${escapeHtml(itemName)}
                     </strong>
 
-                    <p>
-                        Your order will be held pending
-                        payment verification.
-                    </p>
+                    <span class="chk-item-cat">
+                        ${escapeHtml(category)}
+                    </span>
+
+                    <span class="chk-item-qty">
+                        Qty: ${quantity}
+                    </span>
 
                 </div>
 
-            </div>
-        `;
+                <div class="chk-item-price">
+                    ${money(itemTotal)}
+                </div>
 
-        setupPaymentOptions();
-    }
+            `;
 
 
-    // ======================================================================
-    // 15. PAYMENT OPTION EVENTS
-    // ======================================================================
-
-    function setupPaymentOptions() {
-
-        const radios =
-            document.querySelectorAll(
-                'input[name="checkoutPaymentMethod"]'
+            orderItemsContainer.appendChild(
+                itemDiv
             );
 
-        const eftDetails =
-            document.getElementById(
-                'eftCheckoutDetails'
-            );
-
-        radios.forEach(function (radio) {
-
-            radio.addEventListener(
-                'change',
-                function () {
-
-                    checkoutState.paymentMethod =
-                        radio.value;
-
-                    document
-                        .querySelectorAll('.payment-option')
-                        .forEach(function (option) {
-
-                            option.classList.remove(
-                                'selected'
-                            );
-                        });
-
-                    const parent =
-                        radio.closest(
-                            '.payment-option'
-                        );
-
-                    if (parent) {
-                        parent.classList.add(
-                            'selected'
-                        );
-                    }
-
-                    if (eftDetails) {
-
-                        eftDetails.style.display =
-                            radio.value === 'eft'
-                            ? 'block'
-                            : 'none';
-                    }
-                }
-            );
         });
+
+
+        checkoutState.subtotalExclVat =
+            Number(
+                checkoutState.subtotalExclVat.toFixed(2)
+            );
+
+
+        calculateCartWeight();
+
+        updateFinancials();
+
     }
 
 
-    // ======================================================================
-    // 16. VALIDATE CUSTOMER DETAILS
-    // ======================================================================
+    /* ==========================================================================
+       9. HTML ESCAPE
+       ========================================================================== */
 
-    function validateCustomerDetails() {
+    function escapeHtml(value) {
 
-        const name =
-            customerName?.value.trim() || '';
+        return String(value ?? '')
 
-        const email =
-            customerEmail?.value.trim() || '';
+            .replace(/&/g, '&amp;')
 
-        const phone =
-            customerPhone?.value.trim() || '';
+            .replace(/</g, '&lt;')
 
-        if (!name) {
+            .replace(/>/g, '&gt;')
 
-            alert(
-                'Please enter your full name.'
-            );
+            .replace(/"/g, '&quot;')
 
-            customerName?.focus();
+            .replace(/'/g, '&#039;');
 
-            return false;
-        }
-
-        if (!email) {
-
-            alert(
-                'Please enter your email address.'
-            );
-
-            customerEmail?.focus();
-
-            return false;
-        }
-
-        if (!email.includes('@')) {
-
-            alert(
-                'Please enter a valid email address.'
-            );
-
-            customerEmail?.focus();
-
-            return false;
-        }
-
-        if (!phone) {
-
-            alert(
-                'Please enter your phone number.'
-            );
-
-            customerPhone?.focus();
-
-            return false;
-        }
-
-        return true;
     }
 
 
-    // ======================================================================
-    // 17. CREATE PAYMENT PAYLOAD
-    // ======================================================================
+    /* ==========================================================================
+       10. INITIAL FINANCIAL CALCULATION
+       ========================================================================== */
 
-    function createPaymentPayload() {
+    function updateFinancials() {
 
-        return {
-
-            orderReference:
-                checkoutState.orderReference,
-
-            customer: {
-                name:
-                    customerName?.value.trim() || '',
-
-                email:
-                    customerEmail?.value.trim() || '',
-
-                phone:
-                    customerPhone?.value.trim() || ''
-            },
-
-            subtotal:
-                checkoutState.subtotal.toFixed(2),
-
-            delivery:
-                checkoutState.deliveryFee.toFixed(2),
-
-            vat:
-                checkoutState.vat.toFixed(2),
-
-            total:
-                checkoutState.grandTotal.toFixed(2),
-
-            paymentMethod:
-                checkoutState.paymentMethod,
-
-            cart:
-                checkoutState.cart,
-
-            createdAt:
-                new Date().toISOString()
-        };
-    }
+        const taxableAmount =
+            checkoutState.subtotalExclVat +
+            checkoutState.deliveryFee;
 
 
-    // ======================================================================
-    // 18. SAVE PENDING ORDER
-    // ======================================================================
-
-    function savePendingOrder(payload) {
-
-        try {
-
-            localStorage.setItem(
-                'nexpak_pending_order',
-                JSON.stringify(payload)
+        checkoutState.vatAmount =
+            Number(
+                (taxableAmount * VAT_RATE)
+                    .toFixed(2)
             );
 
-        } catch (error) {
 
-            console.error(
-                'Could not save pending order:',
-                error
-            );
-        }
-    }
-
-
-    // ======================================================================
-    // 19. PAYFAST PAYMENT
-    // ======================================================================
-
-    function processPayFastPayment() {
-
-        if (!window.PayFast) {
-
-            alert(
-                'PayFast payment system has not loaded. Please refresh the page and try again.'
+        checkoutState.grandTotal =
+            Number(
+                (
+                    taxableAmount +
+                    checkoutState.vatAmount
+                ).toFixed(2)
             );
 
-            console.error(
-                'window.PayFast is unavailable.'
-            );
 
-            return;
+        if (elSubtotal) {
+
+            elSubtotal.textContent =
+                money(
+                    checkoutState.subtotalExclVat
+                );
+
         }
 
-        if (
-            typeof window.PayFast.checkout !==
-            'function'
-        ) {
 
-            alert(
-                'PayFast checkout is unavailable.'
-            );
+        if (elDelivery) {
 
-            return;
+            if (
+                checkoutState.deliveryCalculated
+            ) {
+
+                elDelivery.textContent =
+                    money(
+                        checkoutState.deliveryFee
+                    );
+
+            } else {
+
+                elDelivery.textContent =
+                    'Pending';
+
+            }
+
         }
 
-        const payload =
-            createPaymentPayload();
 
-        savePendingOrder(payload);
+        if (elVat) {
 
-        console.log(
-            'Starting PayFast payment:',
-            payload
-        );
+            elVat.textContent =
+                money(
+                    checkoutState.vatAmount
+                );
+
+        }
+
+
+        if (elTotal) {
+
+            elTotal.textContent =
+                money(
+                    checkoutState.grandTotal
+                );
+
+        }
+
 
         /*
-         * IMPORTANT:
-         * The actual PayFast integration is handled
-         * by payments.js.
-         *
-         * We do NOT duplicate merchant credentials here.
+         * Keep the calculated values available to
+         * other checkout/payment modules.
          */
 
-        window.PayFast.checkout(
-            checkoutState.grandTotal,
-            checkoutState.cart,
-                       customerEmail,
-            customerName
-        );
+        window.NEXPAK_CHECKOUT = checkoutState;
 
-        } else {
-            // ============================================================
-            // MANUAL EFT PAYMENT
-            // ============================================================
-
-            console.log("Processing Manual EFT order:", payload);
-
-            // Save order details locally so they can be referenced
-            // after the customer returns to the website.
-            const eftOrder = {
-                ...payload,
-                paymentMethod: 'eft',
-                status: 'payment_pending',
-                createdAt: new Date().toISOString()
-            };
-
-            localStorage.setItem(
-                'nexpak_pending_order',
-                JSON.stringify(eftOrder)
-            );
-
-            // Remove cart after the order has been created
-            localStorage.removeItem('nexpak_cart');
-
-            alert(
-                `Order placed successfully!\n\n` +
-                `Order Reference: ${orderRef}\n\n` +
-                `Amount: R${payload.amount}\n\n` +
-                `Please complete the EFT payment using the banking details provided. ` +
-                `Use your order reference as the payment reference.`
-            );
-
-            window.location.href = 'index.html';
-        }
-    });
-
-    // ================================================================
-    // INITIALIZE CHECKOUT
-    // ================================================================
-
-    initCheckout();
-
-    // ================================================================
-    // RESTORE PAYMENT METHOD STATE
-    // ================================================================
-
-    const selectedPayment = document.querySelector(
-        'input[name="paymentMethod"]:checked'
-    );
-
-    if (selectedPayment) {
-        checkoutState.paymentMethod = selectedPayment.value;
-
-        if (
-            checkoutState.paymentMethod === 'eft' &&
-            eftDetailsPanel
-        ) {
-            eftDetailsPanel.style.display = 'block';
-        }
     }
 
-    // ================================================================
-    // EXPOSE CHECKOUT STATE FOR OTHER MODULES
-    // ================================================================
 
-    window.NexpakCheckout = {
-        getState: () => checkoutState,
+    /* ==========================================================================
+       11. EXPOSE CHECKOUT STATE
+       ========================================================================== */
 
-        getCart: () => checkoutState.cart,
+    window.NEXPAK_CHECKOUT =
+        checkoutState;
 
-        getTotal: () => checkoutState.grandTotal,
 
-        getDeliveryFee: () => checkoutState.deliveryFee,
+    /*
+     * Continue with PART 2.
+     */
 
-        getWeight: () => checkoutState.totalWeightKg,
-
-        refresh: () => {
-            initCheckout();
-        }
-    };
+    console.log(
+        'Nexpak checkout initialized.',
+        checkoutState
+    );
 
 });
-            
