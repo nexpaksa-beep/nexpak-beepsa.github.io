@@ -2265,3 +2265,670 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ==========================================================================
        END OF PART 3
        ========================================================================== */
+/* ==========================================================================
+   Nexpak Security Solutions
+   DELIVERY CALCULATOR
+   PART 4 — FINAL SECTION
+   ========================================================================== */
+
+
+/* ==========================================================================
+   13. DELIVERY RESULT DISPLAY
+   ========================================================================== */
+
+function displayDeliveryResult(baseFee, distanceFee, weightFee, total) {
+
+    const baseEl =
+        document.getElementById('base-fee-display');
+
+    const distanceEl =
+        document.getElementById('distance-fee-display');
+
+    const weightEl =
+        document.getElementById('weight-fee-display');
+
+    const totalEl =
+        document.getElementById('total-delivery-display');
+
+    const resultEl =
+        document.getElementById('delivery-result');
+
+    if (baseEl) {
+        baseEl.textContent =
+            formatCurrency(baseFee);
+    }
+
+    if (distanceEl) {
+        distanceEl.textContent =
+            formatCurrency(distanceFee);
+    }
+
+    if (weightEl) {
+        weightEl.textContent =
+            formatCurrency(weightFee);
+    }
+
+    if (totalEl) {
+        totalEl.textContent =
+            formatCurrency(total);
+    }
+
+    if (resultEl) {
+        resultEl.style.display =
+            'block';
+    }
+
+    /*
+     * Also expose the calculated delivery amount
+     * globally so checkout.js / configurator.js
+     * can use the exact same value.
+     */
+
+    window.NexpakDelivery = window.NexpakDelivery || {};
+
+    window.NexpakDelivery.deliveryFee =
+        Number(total) || 0;
+
+    window.NexpakDelivery.baseFee =
+        Number(baseFee) || 0;
+
+    window.NexpakDelivery.distanceFee =
+        Number(distanceFee) || 0;
+
+    window.NexpakDelivery.weightFee =
+        Number(weightFee) || 0;
+
+    /*
+     * Notify other modules that delivery
+     * has been calculated.
+     */
+
+    document.dispatchEvent(
+        new CustomEvent('nexpakDeliveryCalculated', {
+            detail: {
+                baseFee: Number(baseFee) || 0,
+                distanceFee: Number(distanceFee) || 0,
+                weightFee: Number(weightFee) || 0,
+                total: Number(total) || 0
+            }
+        })
+    );
+}
+
+
+/* ==========================================================================
+   14. CURRENCY FORMATTER
+   ========================================================================== */
+
+function formatCurrency(amount) {
+
+    const value =
+        Number(amount) || 0;
+
+    return 'R' +
+        value.toFixed(2);
+}
+
+
+/* ==========================================================================
+   15. DELIVERY FEE ACCESS
+   ========================================================================== */
+
+function getDeliveryFee() {
+
+    if (
+        window.NexpakDelivery &&
+        typeof window.NexpakDelivery.deliveryFee === 'number'
+    ) {
+
+        return window.NexpakDelivery.deliveryFee;
+
+    }
+
+    return 0;
+}
+
+
+/* ==========================================================================
+   16. DELIVERY CALCULATION STATE
+   ========================================================================== */
+
+function getDeliveryState() {
+
+    const state =
+        window.NexpakDelivery || {};
+
+    return {
+
+        deliveryFee:
+            Number(state.deliveryFee) || 0,
+
+        baseFee:
+            Number(state.baseFee) || 0,
+
+        distanceFee:
+            Number(state.distanceFee) || 0,
+
+        weightFee:
+            Number(state.weightFee) || 0,
+
+        distanceKm:
+            Number(state.distanceKm) || 0,
+
+        weightKg:
+            Number(state.weightKg) || 0,
+
+        method:
+            state.method || null,
+
+        address:
+            state.address || '',
+
+        region:
+            state.region || ''
+
+    };
+}
+
+
+/* ==========================================================================
+   17. SAVE DELIVERY STATE
+   ========================================================================== */
+
+function saveDeliveryState(data) {
+
+    window.NexpakDelivery =
+        window.NexpakDelivery || {};
+
+    if (
+        typeof data.deliveryFee !== 'undefined'
+    ) {
+
+        window.NexpakDelivery.deliveryFee =
+            Number(data.deliveryFee) || 0;
+
+    }
+
+    if (
+        typeof data.baseFee !== 'undefined'
+    ) {
+
+        window.NexpakDelivery.baseFee =
+            Number(data.baseFee) || 0;
+
+    }
+
+    if (
+        typeof data.distanceFee !== 'undefined'
+    ) {
+
+        window.NexpakDelivery.distanceFee =
+            Number(data.distanceFee) || 0;
+
+    }
+
+    if (
+        typeof data.weightFee !== 'undefined'
+    ) {
+
+        window.NexpakDelivery.weightFee =
+            Number(data.weightFee) || 0;
+
+    }
+
+    if (
+        typeof data.distanceKm !== 'undefined'
+    ) {
+
+        window.NexpakDelivery.distanceKm =
+            Number(data.distanceKm) || 0;
+
+    }
+
+    if (
+        typeof data.weightKg !== 'undefined'
+    ) {
+
+        window.NexpakDelivery.weightKg =
+            Number(data.weightKg) || 0;
+
+    }
+
+    if (
+        typeof data.method !== 'undefined'
+    ) {
+
+        window.NexpakDelivery.method =
+            data.method;
+
+    }
+
+    if (
+        typeof data.address !== 'undefined'
+    ) {
+
+        window.NexpakDelivery.address =
+            data.address;
+
+    }
+
+    if (
+        typeof data.region !== 'undefined'
+    ) {
+
+        window.NexpakDelivery.region =
+            data.region;
+
+    }
+}
+
+
+/* ==========================================================================
+   18. CONFIGURATOR INTEGRATION
+   ========================================================================== */
+
+function getConfiguratorWeight() {
+
+    /*
+     * First try the global configurator weight.
+     */
+
+    if (
+        window.NexpakConfigurator &&
+        typeof window.NexpakConfigurator.totalWeight === 'number'
+    ) {
+
+        return Number(
+            window.NexpakConfigurator.totalWeight
+        );
+
+    }
+
+
+    /*
+     * Try common configurator properties.
+     */
+
+    if (
+        window.configurator &&
+        typeof window.configurator.totalWeight === 'number'
+    ) {
+
+        return Number(
+            window.configurator.totalWeight
+        );
+
+    }
+
+
+    /*
+     * Try DOM-based weight values.
+     */
+
+    const selectors = [
+        '#totalWeight',
+        '#total-weight',
+        '#systemWeight',
+        '#system-weight',
+        '.total-weight',
+        '.system-weight',
+        '[data-total-weight]'
+    ];
+
+    for (
+        let i = 0;
+        i < selectors.length;
+        i++
+    ) {
+
+        const element =
+            document.querySelector(
+                selectors[i]
+            );
+
+        if (!element) {
+            continue;
+        }
+
+        const value =
+            parseFloat(
+                element.textContent ||
+                element.value ||
+                element.dataset.totalWeight ||
+                '0'
+            );
+
+        if (!isNaN(value) && value > 0) {
+            return value;
+        }
+
+    }
+
+    return 0;
+}
+
+
+/* ==========================================================================
+   19. CONFIGURATOR DELIVERY CALCULATION
+   ========================================================================== */
+
+function calculateConfiguratorDelivery() {
+
+    const weight =
+        getConfiguratorWeight();
+
+    const distanceInput =
+        document.getElementById(
+            'distance-km'
+        );
+
+    const distance =
+        distanceInput
+            ? parseFloat(distanceInput.value) || 0
+            : 0;
+
+    const baseFee =
+        Number(
+            DELIVERY_CONFIG.baseFee
+        ) || 0;
+
+    const perKm =
+        Number(
+            DELIVERY_CONFIG.perKm
+        ) || 0;
+
+    const perKg =
+        Number(
+            DELIVERY_CONFIG.perKg
+        ) || 0;
+
+    const distanceFee =
+        distance * perKm;
+
+    const weightFee =
+        weight * perKg;
+
+    const total =
+        baseFee +
+        distanceFee +
+        weightFee;
+
+
+    saveDeliveryState({
+
+        deliveryFee: total,
+
+        baseFee: baseFee,
+
+        distanceFee: distanceFee,
+
+        weightFee: weightFee,
+
+        distanceKm: distance,
+
+        weightKg: weight,
+
+        method: 'configurator'
+
+    });
+
+
+    displayDeliveryResult(
+        baseFee,
+        distanceFee,
+        weightFee,
+        total
+    );
+
+
+    return total;
+}
+
+
+/* ==========================================================================
+   20. CART / CONFIGURATOR CHANGE LISTENER
+   ========================================================================== */
+
+document.addEventListener(
+    'cartUpdated',
+    function () {
+
+        updateDeliveryWeightDisplay();
+
+    }
+);
+
+
+document.addEventListener(
+    'configuratorUpdated',
+    function () {
+
+        updateDeliveryWeightDisplay();
+
+    }
+);
+
+
+document.addEventListener(
+    'systemUpdated',
+    function () {
+
+        updateDeliveryWeightDisplay();
+
+    }
+);
+
+
+/* ==========================================================================
+   21. UPDATE WEIGHT DISPLAY
+   ========================================================================== */
+
+function updateDeliveryWeightDisplay() {
+
+    const weight =
+        getCartWeight();
+
+    const configuratorWeight =
+        getConfiguratorWeight();
+
+    const finalWeight =
+        configuratorWeight > 0
+            ? configuratorWeight
+            : weight;
+
+
+    const weightElements = [
+        '#cart-weight',
+        '#totalWeight',
+        '#total-weight',
+        '#systemWeight',
+        '#system-weight',
+        '.cart-total-weight',
+        '.total-weight',
+        '.system-weight'
+    ];
+
+
+    weightElements.forEach(
+        function (selector) {
+
+            const element =
+                document.querySelector(
+                    selector
+                );
+
+            if (!element) {
+                return;
+            }
+
+            /*
+             * Do not overwrite inputs.
+             */
+
+            if (
+                element.tagName === 'INPUT'
+            ) {
+                return;
+            }
+
+            element.textContent =
+                finalWeight.toFixed(2) +
+                ' kg';
+
+        }
+    );
+
+
+    const eqWeight =
+        document.getElementById(
+            'eq-cart-weight'
+        );
+
+    if (eqWeight) {
+
+        eqWeight.textContent =
+            finalWeight.toFixed(2);
+
+    }
+
+
+    saveDeliveryState({
+
+        weightKg: finalWeight
+
+    });
+}
+
+
+/* ==========================================================================
+   22. PUBLIC API
+   ========================================================================== */
+
+window.NexpakDeliveryCalculator = {
+
+    calculateByAddress:
+        calculateDeliveryByAddress,
+
+    calculateManual:
+        calculateDeliveryManual,
+
+    calculateRegion:
+        calculateDeliveryRegion,
+
+    calculateConfigurator:
+        calculateConfiguratorDelivery,
+
+    getCartWeight:
+        getCartWeight,
+
+    getConfiguratorWeight:
+        getConfiguratorWeight,
+
+    getDeliveryFee:
+        getDeliveryFee,
+
+    getState:
+        getDeliveryState,
+
+    saveState:
+        saveDeliveryState,
+
+    updateWeight:
+        updateDeliveryWeightDisplay
+
+};
+
+
+/* ==========================================================================
+   23. BACKWARD COMPATIBILITY
+   ========================================================================== */
+
+window.getNexpakDeliveryFee =
+    getDeliveryFee;
+
+
+window.getNexpakDeliveryState =
+    getDeliveryState;
+
+
+/* ==========================================================================
+   24. INITIALIZATION
+   ========================================================================== */
+
+function initializeNexpakDelivery() {
+
+    /*
+     * Prevent duplicate initialization.
+     */
+
+    if (
+        window.NexpakDelivery &&
+        window.NexpakDelivery.initialized
+    ) {
+
+        updateDeliveryWeightDisplay();
+
+        return;
+
+    }
+
+
+    window.NexpakDelivery =
+        window.NexpakDelivery || {};
+
+    window.NexpakDelivery.initialized =
+        true;
+
+
+    /*
+     * Initialize calculator UI.
+     */
+
+    initDeliveryCalculator();
+
+
+    /*
+     * Update current cart/configurator
+     * weight.
+     */
+
+    setTimeout(
+        function () {
+
+            updateDeliveryWeightDisplay();
+
+        },
+        100
+    );
+
+
+    console.log(
+        'Nexpak Delivery Calculator initialized'
+    );
+
+}
+
+
+/* ==========================================================================
+   25. DOM READY
+   ========================================================================== */
+
+if (
+    document.readyState === 'loading'
+) {
+
+    document.addEventListener(
+        'DOMContentLoaded',
+        initializeNexpakDelivery
+    );
+
+} else {
+
+    initializeNexpakDelivery();
+
+}
+
+
+/* ==========================================================================
+   END OF NEXPAK DELIVERY CALCULATOR
+   ========================================================================== */
