@@ -774,4 +774,90 @@ document.addEventListener('DOMContentLoaded', function () {
         window.PayFast.checkout(
             checkoutState.grandTotal,
             checkoutState.cart,
+                       customerEmail,
+            customerName
+        );
+
+        } else {
+            // ============================================================
+            // MANUAL EFT PAYMENT
+            // ============================================================
+
+            console.log("Processing Manual EFT order:", payload);
+
+            // Save order details locally so they can be referenced
+            // after the customer returns to the website.
+            const eftOrder = {
+                ...payload,
+                paymentMethod: 'eft',
+                status: 'payment_pending',
+                createdAt: new Date().toISOString()
+            };
+
+            localStorage.setItem(
+                'nexpak_pending_order',
+                JSON.stringify(eftOrder)
+            );
+
+            // Remove cart after the order has been created
+            localStorage.removeItem('nexpak_cart');
+
+            alert(
+                `Order placed successfully!\n\n` +
+                `Order Reference: ${orderRef}\n\n` +
+                `Amount: R${payload.amount}\n\n` +
+                `Please complete the EFT payment using the banking details provided. ` +
+                `Use your order reference as the payment reference.`
+            );
+
+            window.location.href = 'index.html';
+        }
+    });
+
+    // ================================================================
+    // INITIALIZE CHECKOUT
+    // ================================================================
+
+    initCheckout();
+
+    // ================================================================
+    // RESTORE PAYMENT METHOD STATE
+    // ================================================================
+
+    const selectedPayment = document.querySelector(
+        'input[name="paymentMethod"]:checked'
+    );
+
+    if (selectedPayment) {
+        checkoutState.paymentMethod = selectedPayment.value;
+
+        if (
+            checkoutState.paymentMethod === 'eft' &&
+            eftDetailsPanel
+        ) {
+            eftDetailsPanel.style.display = 'block';
+        }
+    }
+
+    // ================================================================
+    // EXPOSE CHECKOUT STATE FOR OTHER MODULES
+    // ================================================================
+
+    window.NexpakCheckout = {
+        getState: () => checkoutState,
+
+        getCart: () => checkoutState.cart,
+
+        getTotal: () => checkoutState.grandTotal,
+
+        getDeliveryFee: () => checkoutState.deliveryFee,
+
+        getWeight: () => checkoutState.totalWeightKg,
+
+        refresh: () => {
+            initCheckout();
+        }
+    };
+
+});
             
