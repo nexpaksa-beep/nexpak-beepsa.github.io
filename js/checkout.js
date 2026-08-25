@@ -172,8 +172,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log("Routing directly to PayFast Instant EFT with payload:", payload);
                 
                 const payfastUrl = "https://www.payfast.co.za/eng/process"; // Switch to sandbox.payfast.co.za/eng/process for live test mode if needed
-                const merchantId = "YOUR_MERCHANT_ID";   // Replace with Nexpak's PayFast Merchant ID
-                const merchantKey = "YOUR_MERCHANT_KEY"; // Replace with Nexpak's PayFast Merchant Key
+                const merchantId = "36692313";   // Replace with Nexpak's PayFast Merchant ID
+                const merchantKey = "cmvr2h6hmum6e"; // Replace with Nexpak's PayFast Merchant Key
                 
                 // Construct an auto-submitting form to push user straight to PayFast Instant EFT
                 const form = document.createElement('form');
@@ -220,5 +220,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Run on script load
     initCheckout();
+   
 });
            
