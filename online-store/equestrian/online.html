@@ -1,2875 +1,465 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexPak Security Solutions - Official Store</title>
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+<!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<meta
-    name="theme-color"
-    content="#0057ff"
->
+<style>
+:root {
+    --primary-navy: #000080; 
+    --dark-navy: #040914;
+    --nav-bg: #081225;
+    --hero-blue-start: #061126;
+    --hero-blue-end: #0052cc;
+    --accent-blue: #0066ff;
+    --accent-cyan: #00f0ff;
+    --bg-light: #f1f5f9;
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --border-color: #cbd5e1;
+    --text-dark: #0f172a;
+    --text-muted: #64748b;
+    --danger: #dc2626;
+}
 
-<meta
-    name="description"
-    content="Nexpak Security Solutions Online Store - Professional security equipment and complete security kits."
->
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+body { background: var(--bg-light); color: var(--text-dark); position: relative; min-height: 100vh; }
+button, input, select { font-family: inherit; outline: none; }
+button { cursor: pointer; }
 
-<title>
-Nexpak Security Solutions | Online Store
-</title>
+/* Floating WhatsApp Button */
+.whatsapp-float {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: linear-gradient(135deg, #25D366, #128C7E);
+    color: white;
+    border-radius: 50px;
+    padding: 12px 22px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+    z-index: 9990;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.whatsapp-float:hover { transform: scale(1.08) translateY(-3px); box-shadow: 0 12px 30px rgba(37, 211, 102, 0.6); }
 
+/* Top Header */
+.top-header { background: #ffffff; padding: 12px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; border-bottom: 2px solid #e2e8f0; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
+.logo-container a { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo-container img { height: 42px; width: auto; object-fit: contain; }
+.brand-text { display: flex; flex-direction: column; }
+.brand-title { font-weight: 900; font-size: 18px; color: var(--primary-navy); letter-spacing: -0.5px; }
+.brand-subtitle { font-size: 9px; font-weight: 700; color: var(--accent-blue); letter-spacing: 1px; text-transform: uppercase; }
 
-<!-- =====================================================
-     GOOGLE FONT
-===================================================== -->
+/* Search Bar */
+.search-bar { flex: 1; max-width: 550px; display: flex; align-items: center; border: 2px solid #cbd5e1; border-radius: 30px; overflow: hidden; background: #fff; transition: border-color 0.2s; }
+.search-bar:focus-within { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(0,102,255,0.15); }
+.search-bar input { flex: 1; padding: 10px 18px; border: none; font-size: 13px; outline: none; color: var(--text-dark); }
+.search-bar button { background: var(--accent-blue); color: #ffffff; border: none; padding: 10px 20px; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.search-bar button:hover { background: #0052cc; }
 
-<link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
->
+/* Header Action Buttons */
+.header-actions { display: flex; align-items: center; gap: 10px; }
+.header-action-item { display: flex; align-items: center; gap: 6px; color: #334155; text-decoration: none; font-size: 12px; font-weight: 700; padding: 8px 16px; border: 1px solid #cbd5e1; border-radius: 20px; background: #ffffff; transition: all 0.2s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
+.header-action-item:hover { background: #f8fafc; border-color: var(--accent-blue); color: var(--accent-blue); transform: translateY(-1px); }
+.badge-icon { position: relative; display: flex; align-items: center; font-size: 14px; }
+.badge { position: absolute; top: -8px; right: -10px; background: var(--accent-blue); color: #ffffff; font-size: 9px; font-weight: bold; border-radius: 50%; width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
 
-<link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-    crossorigin
->
+/* Navigation Bar */
+.nav-bar { background: var(--nav-bg); display: flex; gap: 15px; padding: 0 32px; overflow-x: auto; white-space: nowrap; align-items: center; border-bottom: 3px solid var(--accent-blue); }
+.nav-link { color: #cbd5e1; text-decoration: none; padding: 14px 12px; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 6px; transition: all 0.2s; border-bottom: 3px solid transparent; }
+.nav-link.active, .nav-link:hover { color: #ffffff; border-bottom: 3px solid var(--accent-cyan); background: rgba(255, 255, 255, 0.05); }
 
-<link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
->
+/* Hero Banner */
+.hero-banner { background: linear-gradient(135deg, var(--hero-blue-start) 20%, var(--hero-blue-end) 100%); color: #ffffff; padding: 60px 32px; text-align: left; position: relative; overflow: hidden; }
+.hero-banner::after { content: ''; position: absolute; right: -50px; top: -50px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(0,240,255,0.15) 0%, transparent 70%); pointer-events: none; }
+.hero-container { max-width: 1200px; margin: 0 auto; position: relative; z-index: 2; }
+.hero-tag { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent-cyan); margin-bottom: 12px; display: inline-block; background: rgba(0,240,255,0.1); padding: 4px 12px; border-radius: 20px; border: 1px solid rgba(0,240,255,0.3); }
+.hero-title { font-size: 40px; font-weight: 900; line-height: 1.15; margin-bottom: 12px; color: #ffffff; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+.hero-title span { color: #93c5fd; }
+.hero-subtitle { font-size: 15px; color: #cbd5e1; max-width: 580px; margin-bottom: 24px; line-height: 1.6; }
+.hero-btn { display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.15); border: 1px solid rgba(255, 255, 255, 0.4); backdrop-filter: blur(8px); color: #ffffff; font-size: 13px; font-weight: 700; padding: 12px 24px; border-radius: 30px; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+.hero-btn:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-2px); }
 
+/* Catalogue Grid & Glass Cards */
+.container { max-width: 1200px; margin: 35px auto; padding: 0 20px; }
+.section-title { color: var(--primary-navy); margin-bottom: 24px; font-size: 24px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+.section-title::after { content: ''; flex: 1; height: 2px; background: linear-gradient(90deg, #cbd5e1, transparent); margin-left: 10px; }
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 24px; }
 
-<!-- =====================================================
-     FONT AWESOME
-===================================================== -->
+.product-card { 
+    background: var(--card-bg); 
+    border: 1px solid rgba(226, 232, 240, 0.8); 
+    border-radius: 16px; 
+    padding: 20px; 
+    display: flex; 
+    flex-direction: column; 
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    position: relative;
+    overflow: hidden;
+}
+.product-card:hover { 
+    transform: translateY(-6px); 
+    box-shadow: 0 12px 30px rgba(0,0,80,0.12); 
+    border-color: rgba(0,102,255,0.3);
+}
+.product-image-container { width: 100%; height: 170px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; background: #ffffff; border-radius: 12px; overflow: hidden; padding: 12px; border: 1px solid #f1f5f9; }
+.product-image-container img { max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 0.3s ease; }
+.product-card:hover .product-image-container img { transform: scale(1.05); }
+.product-name { font-weight: 800; font-size: 16px; margin-bottom: 6px; color: var(--primary-navy); line-height: 1.3; }
+.product-desc { font-size: 12px; color: var(--text-muted); margin-bottom: 15px; flex-grow: 1; line-height: 1.4; }
+.price-text { font-size: 20px; font-weight: 900; color: var(--primary-navy); margin: 10px 0; letter-spacing: -0.5px; }
 
-<link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
->
+.selector-container { margin-bottom: 12px; }
+.selector-container label { font-size: 10px; font-weight: 800; display: block; margin-bottom: 4px; color: var(--primary-navy); letter-spacing: 0.5px; }
+.selector-container select, .selector-container input { width: 100%; padding: 8px 12px; font-size: 12px; border: 1px solid var(--border-color); border-radius: 8px; background: #f8fafc; font-weight: 600; }
 
+/* Impressive Glass & Bubble Styling for Buttons */
+.card-actions { display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 8px; margin-top: 15px; }
 
-<!-- =====================================================
-     ONLINE STORE CSS
-===================================================== -->
+.btn-glass {
+    position: relative;
+    border: none;
+    padding: 10px 8px;
+    border-radius: 25px;
+    font-size: 11px;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    backdrop-filter: blur(8px);
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+}
+.btn-glass::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 50%;
+    background: rgba(255, 255, 255, 0.35);
+    border-radius: 25px 25px 0 0;
+    pointer-events: none;
+}
+.btn-glass:hover { transform: translateY(-2px) scale(1.02); }
+.btn-glass:active { transform: translateY(1px) scale(0.98); }
 
-<link
-    rel="stylesheet"
-    href="online.css"
->
+.btn-info-glass {
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(15, 23, 42, 0.95));
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.2), inset 0 1px 1px rgba(255,255,255,0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.btn-summary-quote {
+    background: linear-gradient(135deg, rgba(226, 232, 240, 0.9), rgba(203, 213, 225, 0.95));
+    color: var(--primary-navy);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05), inset 0 1px 1px rgba(255,255,255,0.8);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+.btn-add-cart {
+    background: linear-gradient(135deg, #0066ff, #000080);
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 102, 255, 0.35), inset 0 1px 2px rgba(255,255,255,0.5);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
 
+/* Modals & Drawers */
+.cart-overlay, .modal-overlay { position: fixed; inset: 0; background: rgba(8, 18, 37, 0.7); backdrop-filter: blur(4px); z-index: 9998; display: none; }
+.cart-overlay.open, .modal-overlay.open { display: block; }
 
+.cart-drawer { position: fixed; top: 0; right: -420px; width: 420px; max-width: 100%; height: 100vh; background: #fff; z-index: 9999; display: flex; flex-direction: column; transition: right 0.3s ease; box-shadow: -10px 0 30px rgba(0,0,0,0.2); }
+.cart-drawer.open { right: 0; }
+.cart-header { padding: 20px 24px; background: var(--nav-bg); color: #fff; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent-blue); }
+.cart-items { flex: 1; overflow-y: auto; padding: 20px; }
+.cart-item { display: flex; gap: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 15px; align-items: center; }
+.cart-item-img { width: 55px; height: 55px; object-fit: contain; border: 1px solid var(--border-color); border-radius: 8px; padding: 4px; background: #fff; }
+.cart-item-details { flex: 1; }
+.cart-item-details h4 { font-size: 13px; margin-bottom: 4px; color: var(--primary-navy); font-weight: 800; }
+.cart-summary { padding: 24px; border-top: 1px solid var(--border-color); background: #f8fafc; }
+
+.checkout-modal, .info-modal { position: fixed; inset: 0; z-index: 10000; display: none; justify-content: center; align-items: center; padding: 20px; }
+.checkout-modal.open, .info-modal.open { display: flex; }
+.modal-window { background: #fff; width: 540px; max-width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); }
+.modal-header { background: var(--nav-bg); color: #fff; padding: 18px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--accent-blue); }
+.modal-body { padding: 24px; max-height: 80vh; overflow-y: auto; }
+
+.checkout-field { margin-bottom: 16px; }
+.checkout-field label { display: block; font-size: 11px; font-weight: 800; margin-bottom: 6px; color: var(--primary-navy); letter-spacing: 0.5px; }
+.checkout-field input, .checkout-field select, .checkout-field textarea { width: 100%; padding: 10px 14px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 13px; background: #f8fafc; }
+
+.checkout-totals { background: #f1f5f9; padding: 16px; border-radius: 10px; margin-top: 16px; border: 1px solid var(--border-color); }
+.checkout-totals div { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 13px; font-weight: 600; }
+.checkout-totals .grand-total { font-size: 18px; font-weight: 900; color: var(--primary-navy); border-top: 2px dashed #cbd5e1; padding-top: 10px; margin-top: 10px; }
+
+.payfast-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #16a34a, #15803d); color: white; border: none; border-radius: 30px; font-weight: 800; font-size: 15px; margin-top: 16px; box-shadow: 0 4px 15px rgba(22, 163, 74, 0.3); transition: all 0.2s; }
+.payfast-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(22, 163, 74, 0.4); }
+
+.spec-list { list-style: none; margin-top: 12px; }
+.spec-list li { padding: 8px 12px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; font-size: 12px; display: flex; align-items: center; gap: 8px; font-weight: 600; }
+.spec-list li i { color: var(--accent-blue); }
+</style>
 </head>
-
-
 <body>
 
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/27836308249?text=Hello%20NexPak%20Security,%20I%20have%20an%20inquiry%20regarding%20your%20products." target="_blank" class="whatsapp-float">
+    <i class="fa-brands fa-whatsapp" style="font-size: 20px;"></i>
+    <span>083 630 8249</span>
+</a>
 
-<!-- =====================================================
-     STORE HEADER
-===================================================== -->
-
-<header
-    class="online-header"
->
-
-    <div
-        class="online-container"
-    >
-
-
-        <!-- =================================================
-             LOGO
-        ================================================== -->
-
-        <a
-            href="../index.html"
-            class="online-logo"
-            aria-label="Nexpak Security Solutions Home"
-        >
-
-            <img
-                src="../images/logo.png"
-                alt="Nexpak Security Solutions"
-            >
-
+<header class="top-header">
+    <div class="logo-container">
+        <a <a href="../index.html">Home</a>
+            <img src="images/logo.png" alt="NexPak Logo" onerror="this.src='https://via.placeholder.com/150x45?text=NexPak+Security'">
+            <div class="brand-text">
+                <span class="brand-title">NEXPAK SECURITY</span>
+                <span class="brand-subtitle">PROTECTING WHAT MATTERS MOST</span>
+            </div>
         </a>
-
-
-        <!-- =================================================
-             SEARCH
-        ================================================== -->
-
-        <div
-            class="online-search"
-        >
-
-            <input
-                type="search"
-                id="onlineSearch"
-                placeholder="Search security kits..."
-                autocomplete="off"
-                aria-label="Search security kits"
-            >
-
-
-            <button
-                type="button"
-                id="onlineSearchButton"
-                aria-label="Search"
-            >
-
-                <i
-                    class="fas fa-search"
-                    aria-hidden="true"
-                ></i>
-
-            </button>
-
-        </div>
-
-
-        <!-- =================================================
-             HEADER ACTIONS
-        ================================================== -->
-
-        <div
-            class="online-actions"
-        >
-
-
-            <!-- ACCOUNT -->
-
-            <button
-                type="button"
-                id="onlineAccountButton"
-                class="online-action"
-                aria-label="My Account"
-            >
-
-                <i
-                    class="far fa-user"
-                    aria-hidden="true"
-                ></i>
-
-                <span>
-                    Account
-                </span>
-
-            </button>
-
-
-            <!-- WISHLIST -->
-
-            <button
-                type="button"
-                id="onlineWishlistButton"
-                class="online-action"
-                aria-label="Wishlist"
-            >
-
-                <i
-                    class="far fa-heart"
-                    aria-hidden="true"
-                ></i>
-
-                <span>
-                    Wishlist
-                </span>
-
-                <b
-                    id="onlineWishlistCount"
-                >
-                    0
-                </b>
-
-            </button>
-
-
-            <!-- CART -->
-
-            <button
-                type="button"
-                id="onlineCartButton"
-                class="online-action"
-                data-online-action="open-cart"
-                aria-label="Shopping Cart"
-            >
-
-                <i
-                    class="fas fa-shopping-cart"
-                    aria-hidden="true"
-                ></i>
-
-                <span>
-                    Cart
-                </span>
-
-                <b
-                    id="onlineCartCount"
-                >
-                    0
-                </b>
-
-            </button>
-
-
-        </div>
-
     </div>
-
+    <div class="search-bar">
+        <input id="storeSearch" type="text" placeholder="Search security kits, alarms, CCTV..." onkeyup="if(event.key === 'Enter') searchStore()">
+        <button type="button" onclick="searchStore()"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+    <div class="header-actions">
+        <a href="../index.html" class="header-action-item"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="#" class="header-action-item"><i class="fa-regular fa-user"></i> Account</a>
+        <a href="#" class="header-action-item" onclick="openCart(); return false;">
+            <span class="badge-icon"><i class="fa-solid fa-cart-shopping"></i><span class="badge" id="cartCount">0</span></span> Cart
+        </a>
+    </div>
 </header>
 
-
-
-<!-- =====================================================
-     CATEGORY NAVIGATION
-===================================================== -->
-
-<nav
-    class="online-navigation"
-    aria-label="Store Categories"
->
-
-    <div
-        class="online-container"
-        id="onlineCategoryNavigation"
-    >
-
-        <!--
-            Categories will be populated
-            by online.js.
-        -->
-
-    </div>
-
+<nav class="nav-bar">
+    <a href="index.html" class="nav-link"><i class="fa-solid fa-house"></i> Home</a>
+    <a href="#" class="nav-link active" data-category="all" onclick="filterCategory('all'); return false;"><i class="fa-solid fa-layer-group"></i> All Kits</a>
+    <a href="#" class="nav-link" data-category="electric-fencing" onclick="filterCategory('electric-fencing'); return false;"><i class="fa-solid fa-bolt"></i> Electric Fencing</a>
+    <a href="#" class="nav-link" data-category="roboguard" onclick="filterCategory('roboguard'); return false;"><i class="fa-solid fa-shield-halved"></i> Roboguard</a>
+    <a href="#" class="nav-link" data-category="cctv" onclick="filterCategory('cctv'); return false;"><i class="fa-solid fa-video"></i> HD CCTV</a>
+    <a href="#" class="nav-link" data-category="cctv-ip" onclick="filterCategory('cctv-ip'); return false;"><i class="fa-solid fa-network-wired"></i> IP CCTV</a>
+    <a href="#" class="nav-link" data-category="alarms" onclick="filterCategory('alarms'); return false;"><i class="fa-solid fa-bell"></i> Alarms</a>
+    <a href="#" class="nav-link" data-category="gate-automation" onclick="filterCategory('gate-automation'); return false;"><i class="fa-solid fa-warehouse"></i> Gate Automation</a>
 </nav>
 
-
-
-<!-- =====================================================
-     MAIN STORE
-===================================================== -->
-
-<main>
-
-
-<!-- =====================================================
-     BLUE STORE HERO
-===================================================== -->
-
-<section
-    class="online-hero"
->
-
-    <div
-        class="online-container"
-    >
-
-        <div
-            class="online-hero-content"
-        >
-
-
-            <!-- HERO LABEL -->
-
-            <span
-                class="online-hero-label"
-            >
-
-                <i
-                    class="fas fa-shield-halved"
-                    aria-hidden="true"
-                ></i>
-
-                NEXPAK SECURITY STORE
-
-            </span>
-
-
-
-            <!-- HERO HEADING -->
-
-            <h1>
-
-                Professional Security.
-
-                <br>
-
-                <strong>
-                    Delivered To Your Door.
-                </strong>
-
-            </h1>
-
-
-
-            <!-- HERO DESCRIPTION -->
-
-            <p>
-
-                Complete security kits for homes,
-                businesses, estates, farms and
-                other properties.
-
-            </p>
-
-
-
-            <!-- HERO ACTION -->
-
-            <div
-                class="online-hero-actions"
-            >
-
-                <a
-                    href="#kit-shop"
-                    class="hero-shop-btn"
-                >
-
-                    <i
-                        class="fas fa-cart-shopping"
-                        aria-hidden="true"
-                    ></i>
-
-                    Shop Security Kits
-
-                </a>
-
-            </div>
-
-
-        </div>
-
+<section class="hero-banner">
+    <div class="hero-container">
+        <span class="hero-tag"><i class="fa-solid fa-shield-halved"></i> Official NexPak Security Store</span>
+        <h1 class="hero-title">Professional Security.<br><span>Delivered To Your Door.</span></h1>
+        <p class="hero-subtitle">Complete high-grade security systems for homes, businesses, estates, and farms with automated direct quoting.</p>
+        <a href="#onlineProductGrid" class="hero-btn"><i class="fa-solid fa-cart-shopping"></i> Shop Security Kits</a>
     </div>
-
 </section>
 
-
-
-<!-- =====================================================
-     KIT SHOP START
-===================================================== -->
-
-<section
-    id="kit-shop"
-    class="online-kit-shop"
->
-
-    <div
-        class="online-container"
-    >
-
-
-        <!-- =================================================
-             PART 2 CONTINUES HERE
-        ================================================== -->
-               <!-- =================================================
-             STORE TOP BAR
-        ================================================== -->
-
-        <div
-            class="store-topbar"
-        >
-
-            <div>
-
-                <small>
-                    NEXPAK ONLINE STORE
-                </small>
-
-                <h2>
-                    Security Kits
-                </h2>
-
-            </div>
-
-
-            <!-- =================================================
-                 SORTING
-            ================================================== -->
-
-            <div
-                class="store-controls"
-            >
-
-                <label
-                    for="onlineSort"
-                >
-                    Sort
-                </label>
-
-                <select
-                    id="onlineSort"
-                    aria-label="Sort security kits"
-                >
-
-                    <option value="default">
-                        Featured
-                    </option>
-
-                    <option value="price-low">
-                        Price: Low to High
-                    </option>
-
-                    <option value="price-high">
-                        Price: High to Low
-                    </option>
-
-                    <option value="name">
-                        Name: A-Z
-                    </option>
-
-                </select>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- =================================================
-             STORE STATUS
-        ================================================== -->
-
-        <div
-            id="onlineStoreStatus"
-            class="online-store-status"
-            aria-live="polite"
-        >
-
-            <span>
-                Security kits
-            </span>
-
-        </div>
-
-
-
-        <!-- =================================================
-             KIT STORE
-        ================================================== -->
-
-        <div
-            id="onlineKitStore"
-            class="online-kit-store"
-        >
-
-
-            <!-- =================================================
-                 LOADING STATE
-            ================================================== -->
-
-            <div
-                id="onlineKitLoading"
-                class="online-kit-loading"
-            >
-
-                <div
-                    class="online-loading-spinner"
-                    aria-hidden="true"
-                ></div>
-
-                <p>
-                    Loading security kits...
-                </p>
-
-            </div>
-
-
-
-            <!-- =================================================
-                 EMPTY STATE
-            ================================================== -->
-
-            <div
-                id="onlineKitEmpty"
-                class="online-kit-empty"
-                hidden
-            >
-
-                <div
-                    class="online-empty-icon"
-                    aria-hidden="true"
-                >
-
-                    <i
-                        class="fas fa-box-open"
-                    ></i>
-
-                </div>
-
-                <h3>
-                    No Security Kits Found
-                </h3>
-
-                <p>
-                    We couldn't find any kits
-                    matching your selection.
-                </p>
-
-                <button
-                    type="button"
-                    class="online-empty-reset"
-                    data-online-action="reset-filters"
-                >
-
-                    View All Kits
-
-                </button>
-
-            </div>
-
-
-
-            <!-- =================================================
-                 DYNAMIC KIT GRID
-            ================================================== -->
-
-            <div
-                id="onlineKitGrid"
-                class="kit-grid"
-                aria-live="polite"
-            >
-
-                <!--
-                    online.js renders the
-                    pre-built kits here.
-
-                    DO NOT add individual
-                    product cards manually.
-                -->
-
-            </div>
-
-
-        </div>
-
-
-
-        <!-- =================================================
-             STORE PAGINATION / RESULT AREA
-        ================================================== -->
-
-        <div
-            id="onlineStoreFooter"
-            class="online-store-footer"
-        >
-
-            <div
-                id="onlineResultCount"
-                class="online-result-count"
-            ></div>
-
-                   </div>
-                               <!-- =================================================
-                 END OF STORE FOOTER
-            ================================================== -->
-
-        </div>
-
-
-        <!-- =================================================
-             END OF KIT SHOP CONTAINER
-        ================================================== -->
-
-    </div>
-
-
-    <!-- =====================================================
-         PART 3 CONTINUES HERE
-    ===================================================== -->
-
-       <!-- =====================================================
-         KIT DETAILS MODAL
-    ===================================================== -->
-
-    <div
-        id="onlineKitModal"
-        class="online-modal"
-        hidden
-        aria-hidden="true"
-    >
-
-        <div
-            class="online-modal-backdrop"
-            data-online-action="close-modal"
-        ></div>
-
-
-        <div
-            class="online-modal-dialog"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="onlineKitModalTitle"
-        >
-
-
-            <!-- =================================================
-                 MODAL HEADER
-            ================================================== -->
-
-            <div
-                class="online-modal-header"
-            >
-
-                <div>
-
-                    <small>
-                        NEXPAK SECURITY KIT
-                    </small>
-
-                    <h2
-                        id="onlineKitModalTitle"
-                    >
-                        Security Kit
-                    </h2>
-
-                </div>
-
-
-                <button
-                    type="button"
-                    class="online-modal-close"
-                    data-online-action="close-modal"
-                    aria-label="Close kit details"
-                >
-
-                    <i
-                        class="fas fa-xmark"
-                        aria-hidden="true"
-                    ></i>
-
-                </button>
-
-            </div>
-
-
-
-            <!-- =================================================
-                 MODAL CONTENT
-            ================================================== -->
-
-            <div
-                id="onlineKitModalContent"
-                class="online-modal-content"
-            >
-
-                <!--
-                    onlineui.js will populate
-                    the selected kit details here.
-                -->
-
-            </div>
-
-
-
-            <!-- =================================================
-                 MODAL FOOTER
-            ================================================== -->
-
-            <div
-                class="online-modal-footer"
-            >
-
-                <button
-                    type="button"
-                    class="online-modal-secondary"
-                    data-online-action="close-modal"
-                >
-
-                    Close
-
-                </button>
-
-
-                <button
-                    type="button"
-                    id="onlineModalAddButton"
-                    class="online-modal-primary"
-                    data-online-action="add-kit"
-                >
-
-                    <i
-                        class="fas fa-cart-plus"
-                        aria-hidden="true"
-                    ></i>
-
-                    Add Kit To Cart
-
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- =====================================================
-         CART DRAWER
-    ===================================================== -->
-
-    <aside
-        id="onlineCartDrawer"
-        class="online-cart-drawer"
-        aria-hidden="true"
-    >
-
-
-        <!-- =================================================
-             CART HEADER
-        ================================================== -->
-
-        <div
-            class="online-cart-header"
-        >
-
-            <div>
-
-                <small>
-                    NEXPAK ONLINE STORE
-                </small>
-
-                <h2>
-                    Your Cart
-                </h2>
-
-            </div>
-
-
-            <button
-                type="button"
-                class="online-cart-close"
-                data-online-action="close-cart"
-                aria-label="Close cart"
-            >
-
-                <i
-                    class="fas fa-xmark"
-                    aria-hidden="true"
-                ></i>
-
-            </button>
-
-        </div>
-
-
-
-        <!-- =================================================
-             CART CONTENT
-        ================================================== -->
-
-        <div
-            id="onlineCartContent"
-            class="online-cart-content"
-        >
-
-            <!--
-                onlineui.js will render
-                cart items here.
-            -->
-
-        </div>
-
-
-
-        <!-- =================================================
-             CART SUMMARY
-        ================================================== -->
-
-        <div
-            class="online-cart-summary"
-        >
-
-            <div
-                class="online-cart-summary-row"
-            >
-
-                <span>
-                    Subtotal EX VAT
-                </span>
-
-                <strong
-                    id="onlineCartSubtotal"
-                >
-                    R0.00
-                </strong>
-
-            </div>
-
-
-            <div
-                class="online-cart-summary-row"
-            >
-
-                <span>
-                    VAT @ 15%
-                </span>
-
-                <strong
-                    id="onlineCartVat"
-                >
-                    R0.00
-                </strong>
-
-            </div>
-
-
-            <div
-                class="online-cart-summary-row"
-            >
-
-                <span>
-                    Delivery
-                </span>
-
-                <strong
-                    id="onlineCartDelivery"
-                >
-                    R0.00
-                </strong>
-
-            </div>
-
-
-            <div
-                class="online-cart-summary-row online-cart-total"
-            >
-
-                <span>
-                    Total Incl VAT
-                </span>
-
-                <strong
-                    id="onlineCartTotal"
-                >
-                    R0.00
-                </strong>
-
-            </div>
-
-
-            <!-- =================================================
-                 CHECKOUT BUTTON
-            ================================================== -->
-
-            <button
-                type="button"
-                id="onlineCheckoutButton"
-                class="online-checkout-button"
-                data-online-action="checkout"
-            >
-
-                <i
-                    class="fas fa-lock"
-                    aria-hidden="true"
-                ></i>
-
-                Proceed To Checkout
-
-            </button>
-
-
-            <p
-                class="online-secure-note"
-            >
-
-                <i
-                    class="fas fa-shield-halved"
-                    aria-hidden="true"
-                ></i>
-
-                Secure NEXPAK checkout
-
-            </p>
-
-        </div>
-
-    </aside>
-
-
-
-    <!-- =====================================================
-         CART BACKDROP
-    ===================================================== -->
-
-    <div
-        id="onlineCartBackdrop"
-        class="online-cart-backdrop"
-        data-online-action="close-cart"
-        hidden
-    ></div>
-
-       <!-- =====================================================
-         DELIVERY + CHECKOUT AREA
-    ===================================================== -->
-
-    <section
-        id="onlineCheckout"
-        class="online-checkout-section"
-        hidden
-    >
-
-        <div
-            class="online-container"
-        >
-
-
-            <!-- =================================================
-                 CHECKOUT HEADER
-            ================================================== -->
-
-            <div
-                class="online-checkout-heading"
-            >
-
-                <small>
-                    NEXPAK ONLINE STORE
-                </small>
-
-                <h2>
-                    Secure Checkout
-                </h2>
-
-                <p>
-                    Complete your details and select
-                    your preferred payment method.
-                </p>
-
-            </div>
-
-
-
-            <!-- =================================================
-                 CHECKOUT LAYOUT
-            ================================================== -->
-
-            <div
-                class="online-checkout-layout"
-            >
-
-
-                <!-- =================================================
-                     CUSTOMER DETAILS
-                ================================================== -->
-
-                <div
-                    class="online-checkout-card"
-                >
-
-                    <div
-                        class="online-checkout-card-header"
-                    >
-
-                        <span
-                            class="online-checkout-step"
-                        >
-                            1
-                        </span>
-
-                        <div>
-
-                            <small>
-                                CUSTOMER
-                            </small>
-
-                            <h3>
-                                Customer Details
-                            </h3>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div
-                        class="online-form-grid"
-                    >
-
-
-                        <div
-                            class="online-form-field"
-                        >
-
-                            <label
-                                for="onlineCustomerName"
-                            >
-                                Full Name
-                            </label>
-
-                            <input
-                                type="text"
-                                id="onlineCustomerName"
-                                name="customerName"
-                                autocomplete="name"
-                                placeholder="Your full name"
-                            >
-
-                        </div>
-
-
-
-                        <div
-                            class="online-form-field"
-                        >
-
-                            <label
-                                for="onlineCustomerCompany"
-                            >
-                                Company
-                                <span>(Optional)</span>
-                            </label>
-
-                            <input
-                                type="text"
-                                id="onlineCustomerCompany"
-                                name="company"
-                                autocomplete="organization"
-                                placeholder="Company name"
-                            >
-
-                        </div>
-
-
-
-                        <div
-                            class="online-form-field"
-                        >
-
-                            <label
-                                for="onlineCustomerEmail"
-                            >
-                                Email Address
-                            </label>
-
-                            <input
-                                type="email"
-                                id="onlineCustomerEmail"
-                                name="email"
-                                autocomplete="email"
-                                placeholder="you@example.com"
-                            >
-
-                        </div>
-
-
-
-                        <div
-                            class="online-form-field"
-                        >
-
-                            <label
-                                for="onlineCustomerPhone"
-                            >
-                                Phone Number
-                            </label>
-
-                            <input
-                                type="tel"
-                                id="onlineCustomerPhone"
-                                name="phone"
-                                autocomplete="tel"
-                                placeholder="082 000 0000"
-                            >
-
-                        </div>
-
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     DELIVERY DETAILS
-                ================================================== -->
-
-                <div
-                    class="online-checkout-card"
-                >
-
-                    <div
-                        class="online-checkout-card-header"
-                    >
-
-                        <span
-                            class="online-checkout-step"
-                        >
-                            2
-                        </span>
-
-                        <div>
-
-                            <small>
-                                DELIVERY
-                            </small>
-
-                            <h3>
-                                Delivery Details
-                            </h3>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div
-                        class="online-form-grid"
-                    >
-
-
-                        <div
-                            class="online-form-field online-form-full"
-                        >
-
-                            <label
-                                for="onlineDeliveryAddress"
-                            >
-                                Delivery Address
-                            </label>
-
-                            <textarea
-                                id="onlineDeliveryAddress"
-                                name="deliveryAddress"
-                                rows="3"
-                                autocomplete="street-address"
-                                placeholder="Street address, suburb and city"
-                            ></textarea>
-
-                        </div>
-
-
-
-                        <div
-                            class="online-form-field"
-                        >
-
-                            <label
-                                for="onlineDeliveryPostalCode"
-                            >
-                                Postal Code
-                            </label>
-
-                            <input
-                                type="text"
-                                id="onlineDeliveryPostalCode"
-                                name="postalCode"
-                                autocomplete="postal-code"
-                                placeholder="0000"
-                            >
-
-                        </div>
-
-
-
-                        <div
-                            class="online-form-field"
-                        >
-
-                            <label
-                                for="onlineDeliveryDistance"
-                            >
-                                Estimated Distance
-                            </label>
-
-                            <div
-                                class="online-input-with-unit"
-                            >
-
-                                <input
-                                    type="number"
-                                    id="onlineDeliveryDistance"
-                                    name="distance"
-                                    min="0"
-                                    step="0.1"
-                                    placeholder="0"
-                                >
-
-                                <span>
-                                    km
-                                </span>
-
-                            </div>
-
-                        </div>
-
-
-                    </div>
-
-
-
-                    <!-- =================================================
-                         DELIVERY SUMMARY
-                    ================================================== -->
-
-                    <div
-                        id="onlineDeliverySummary"
-                        class="online-delivery-summary"
-                    >
-
-                        <div
-                            class="online-delivery-summary-row"
-                        >
-
-                            <span>
-                                Cart Weight
-                            </span>
-
-                            <strong
-                                id="onlineDeliveryWeight"
-                            >
-                                0 kg
-                            </strong>
-
-                        </div>
-
-
-                        <div
-                            class="online-delivery-summary-row"
-                        >
-
-                            <span>
-                                Distance
-                            </span>
-
-                            <strong
-                                id="onlineDeliveryDistanceDisplay"
-                            >
-                                0 km
-                            </strong>
-
-                        </div>
-
-
-                        <div
-                            class="online-delivery-summary-row"
-                        >
-
-                            <span>
-                                Delivery Fee
-                            </span>
-
-                            <strong
-                                id="onlineDeliveryFee"
-                            >
-                                R0.00
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     PAYMENT METHOD
-                ================================================== -->
-
-                <div
-                    class="online-checkout-card"
-                >
-
-                    <div
-                        class="online-checkout-card-header"
-                    >
-
-                        <span
-                            class="online-checkout-step"
-                        >
-                            3
-                        </span>
-
-                        <div>
-
-                            <small>
-                                PAYMENT
-                            </small>
-
-                            <h3>
-                                Payment Method
-                            </h3>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div
-                        class="online-payment-options"
-                    >
-
-
-                        <!-- INSTANT EFT -->
-
-                        <label
-                            class="online-payment-option"
-                        >
-
-                            <input
-                                type="radio"
-                                name="paymentMethod"
-                                value="eft"
-                                id="onlinePaymentEft"
-                                checked
-                            >
-
-                            <span
-                                class="online-payment-option-content"
-                            >
-
-                                <strong>
-                                    Instant EFT
-                                </strong>
-
-                                <small>
-                                    Pay directly using
-                                    NEXPAK bank details.
-                                </small>
-
-                            </span>
-
-                        </label>
-
-
-
-                        <!-- PAYFAST PLACEHOLDER -->
-
-                        <label
-                            class="online-payment-option online-payment-disabled"
-                        >
-
-                            <input
-                                type="radio"
-                                name="paymentMethod"
-                                value="payfast"
-                                id="onlinePaymentPayfast"
-                                disabled
-                            >
-
-                            <span
-                                class="online-payment-option-content"
-                            >
-
-                                <strong>
-                                    PayFast
-                                </strong>
-
-                                <small>
-                                    Coming soon
-                                </small>
-
-                            </span>
-
-                        </label>
-
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     ORDER SUMMARY
-                ================================================== -->
-
-                <div
-                    class="online-checkout-card online-order-summary-card"
-                >
-
-                    <div
-                        class="online-checkout-card-header"
-                    >
-
-                        <span
-                            class="online-checkout-step"
-                        >
-                            4
-                        </span>
-
-                        <div>
-
-                            <small>
-                                ORDER
-                            </small>
-
-                            <h3>
-                                Order Summary
-                            </h3>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div
-                        id="onlineCheckoutOrderItems"
-                        class="online-checkout-order-items"
-                    >
-
-                        <!--
-                            onlinecheckout.js renders
-                            the order items here.
-                        -->
-
-                    </div>
-
-
-
-                    <div
-                        class="online-checkout-totals"
-                    >
-
-                        <div>
-
-                            <span>
-                                Subtotal EX VAT
-                            </span>
-
-                            <strong
-                                id="onlineCheckoutSubtotal"
-                            >
-                                R0.00
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>
-                                VAT @ 15%
-                            </span>
-
-                            <strong
-                                id="onlineCheckoutVat"
-                            >
-                                R0.00
-                            </strong>
-
-                        </div>
-
-
-                        <div>
-
-                            <span>
-                                Delivery
-                            </span>
-
-                            <strong
-                                id="onlineCheckoutDelivery"
-                            >
-                                R0.00
-                            </strong>
-
-                        </div>
-
-
-                        <div
-                            class="online-checkout-grand-total"
-                        >
-
-                            <span>
-                                Total Incl VAT
-                            </span>
-
-                            <strong
-                                id="onlineCheckoutTotal"
-                            >
-                                R0.00
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-
-            </div>
-
-        </div>
-
-                       </section>
-
-       <!-- =====================================================
-         PAYMENT AREA
-    ===================================================== -->
-
-    <section
-        id="onlinePaymentArea"
-        class="online-payment-area"
-        hidden
-    >
-
-        <div
-            class="online-container"
-        >
-
-
-            <!-- =================================================
-                 PAYMENT HEADER
-            ================================================== -->
-
-            <div
-                class="online-payment-heading"
-            >
-
-                <small>
-                    NEXPAK PAYMENT
-                </small>
-
-                <h2>
-                    Complete Your Payment
-                </h2>
-
-                <p>
-                    Your order has been created.
-                    Use the details below to complete
-                    your Instant EFT payment.
-                </p>
-
-            </div>
-
-
-
-            <!-- =================================================
-                 ORDER NUMBER
-            ================================================== -->
-
-            <div
-                class="online-payment-order"
-            >
-
-                <span>
-                    Order Number
-                </span>
-
-                <strong
-                    id="onlinePaymentOrderNumber"
-                >
-                    NEX-00000000-0000
-                </strong>
-
-                <small>
-                    Use this order number as your
-                    EFT payment reference.
-                </small>
-
-            </div>
-
-
-
-            <!-- =================================================
-                 INSTANT EFT CARD
-            ================================================== -->
-
-            <div
-                class="online-eft-card"
-            >
-
-
-                <div
-                    class="online-eft-header"
-                >
-
-                    <div
-                        class="online-eft-icon"
-                    >
-
-                        <i
-                            class="fas fa-building-columns"
-                            aria-hidden="true"
-                        ></i>
-
-                    </div>
-
-                    <div>
-
-                        <small>
-                            PAYMENT METHOD
-                        </small>
-
-                        <h3>
-                            Instant EFT
-                        </h3>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     BANK DETAILS
-                ================================================== -->
-
-                <div
-                    class="online-bank-details"
-                >
-
-
-                    <div
-                        class="online-bank-row"
-                    >
-
-                        <span>
-                            Account Name
-                        </span>
-
-                        <strong
-                            id="onlineEftAccountName"
-                        >
-                            TO BE CONFIGURED
-                        </strong>
-
-                    </div>
-
-
-                    <div
-                        class="online-bank-row"
-                    >
-
-                        <span>
-                            Bank
-                        </span>
-
-                        <strong
-                            id="onlineEftBankName"
-                        >
-                            TO BE CONFIGURED
-                        </strong>
-
-                    </div>
-
-
-                    <div
-                        class="online-bank-row"
-                    >
-
-                        <span>
-                            Account Number
-                        </span>
-
-                        <strong
-                            id="onlineEftAccountNumber"
-                        >
-                            TO BE CONFIGURED
-                        </strong>
-
-                    </div>
-
-
-                    <div
-                        class="online-bank-row"
-                    >
-
-                        <span>
-                            Branch Code
-                        </span>
-
-                        <strong
-                            id="onlineEftBranchCode"
-                        >
-                            TO BE CONFIGURED
-                        </strong>
-
-                    </div>
-
-
-                    <div
-                        class="online-bank-row"
-                    >
-
-                        <span>
-                            Account Type
-                        </span>
-
-                        <strong
-                            id="onlineEftAccountType"
-                        >
-                            TO BE CONFIGURED
-                        </strong>
-
-                    </div>
-
-
-                </div>
-
-
-
-                <!-- =================================================
-                     PAYMENT AMOUNT
-                ================================================== -->
-
-                <div
-                    class="online-eft-amount"
-                >
-
-                    <span>
-                        Amount To Pay
-                    </span>
-
-                    <strong
-                        id="onlineEftAmount"
-                    >
-                        R0.00
-                    </strong>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     PAYMENT INSTRUCTION
-                ================================================== -->
-
-                <div
-                    class="online-eft-instruction"
-                >
-
-                    <i
-                        class="fas fa-circle-info"
-                        aria-hidden="true"
-                    ></i>
-
-                    <p>
-
-                        Please use your order number
-                        as the EFT payment reference.
-                        Your payment will be manually
-                        verified before your order is
-                        processed.
-
-                    </p>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     PAYMENT CONFIRMATION BUTTON
-                ================================================== -->
-
-                <button
-                    type="button"
-                    id="onlinePaymentMadeButton"
-                    class="online-payment-made-button"
-                    data-online-action="payment-made"
-                >
-
-                    <i
-                        class="fas fa-check"
-                        aria-hidden="true"
-                    ></i>
-
-                    I've Made Payment
-
-                </button>
-
-
-                <p
-                    class="online-payment-warning"
-                >
-
-                    <i
-                        class="fas fa-shield-halved"
-                        aria-hidden="true"
-                    ></i>
-
-                    NEXPAK will verify your payment
-                    manually. Your order will not be
-                    marked as paid automatically.
-
-                </p>
-
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         PAYMENT PENDING AREA
-    ===================================================== -->
-
-    <section
-        id="onlinePaymentPending"
-        class="online-payment-pending"
-        hidden
-    >
-
-        <div
-            class="online-container"
-        >
-
-            <div
-                class="online-pending-card"
-            >
-
-
-                <div
-                    class="online-pending-icon"
-                >
-
-                    <i
-                        class="fas fa-clock"
-                        aria-hidden="true"
-                    ></i>
-
-                </div>
-
-
-                <small>
-                    PAYMENT STATUS
-                </small>
-
-
-                <h2>
-                    Payment Pending Verification
-                </h2>
-
-
-                <p>
-
-                    Thank you. We've received your
-                    payment notification.
-
-                    <br>
-
-                    Your order will remain pending
-                    until the EFT payment has been
-                    manually verified by NEXPAK.
-
-                </p>
-
-
-                <div
-                    class="online-pending-order"
-                >
-
-                    <span>
-                        Order Number
-                    </span>
-
-                    <strong
-                        id="onlinePendingOrderNumber"
-                    >
-                        NEX-00000000-0000
-                    </strong>
-
-                </div>
-
-
-                <div
-                    class="online-pending-status"
-                >
-
-                    <span>
-                        Current Status
-                    </span>
-
-                    <strong>
-                        PAYMENT PENDING
-                    </strong>
-
-                </div>
-
-
-                <p
-                    class="online-pending-note"
-                >
-
-                    Please keep your order number
-                    for future reference.
-
-                </p>
-
-
-                <button
-                    type="button"
-                    class="online-return-store-button"
-                    data-online-action="return-store"
-                >
-
-                    <i
-                        class="fas fa-store"
-                        aria-hidden="true"
-                    ></i>
-
-                    Return To Store
-
-                </button>
-
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         ORDER CONFIRMATION AREA
-    ===================================================== -->
-
-    <section
-        id="onlineOrderConfirmation"
-        class="online-order-confirmation"
-        hidden
-    >
-
-        <div
-            class="online-container"
-        >
-
-            <div
-                class="online-confirmation-card"
-            >
-
-                <div
-                    class="online-confirmation-icon"
-                >
-
-                    <i
-                        class="fas fa-check"
-                        aria-hidden="true"
-                    ></i>
-
-                </div>
-
-
-                <small>
-                    NEXPAK SECURITY SOLUTIONS
-                </small>
-
-
-                <h2>
-                    Order Received
-                </h2>
-
-
-                <p>
-                    Your order has been successfully
-                    created and is awaiting payment
-                    verification.
-                </p>
-
-
-                <div
-                    class="online-confirmation-order"
-                >
-
-                    <span>
-                        Order Number
-                    </span>
-
-                    <strong
-                        id="onlineConfirmationOrderNumber"
-                    >
-                        NEX-00000000-0000
-                    </strong>
-
-                </div>
-
-
-                <div
-                    class="online-confirmation-status"
-                >
-
-                    <span>
-                        Status
-                    </span>
-
-                    <strong>
-                        PAYMENT PENDING
-                    </strong>
-
-                </div>
-
-
-                <button
-                    type="button"
-                    class="online-return-store-button"
-                    data-online-action="return-store"
-                >
-
-                    <i
-                        class="fas fa-store"
-                        aria-hidden="true"
-                    ></i>
-
-                    Continue Shopping
-
-                </button>
-
-
-            </div>
-
-        </div>
-
-                   </section>
-
-       <!-- =====================================================
-         STORE INFORMATION
-    ===================================================== -->
-
-    <section
-        class="online-store-information"
-        id="onlineStoreInformation"
-    >
-
-        <div
-            class="online-container"
-        >
-
-            <div
-                class="online-info-grid"
-            >
-
-
-                <!-- =================================================
-                     PRE-BUILT KITS
-                ================================================== -->
-
-                <div
-                    class="online-info-card"
-                >
-
-                    <div
-                        class="online-info-icon"
-                    >
-
-                        <i
-                            class="fas fa-box-open"
-                            aria-hidden="true"
-                        ></i>
-
-                    </div>
-
-                    <div>
-
-                        <h3>
-                            Complete Security Kits
-                        </h3>
-
-                        <p>
-                            Professionally selected
-                            pre-built kits designed for
-                            residential, commercial,
-                            agricultural and estate
-                            security applications.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     DELIVERY
-                ================================================== -->
-
-                <div
-                    class="online-info-card"
-                >
-
-                    <div
-                        class="online-info-icon"
-                    >
-
-                        <i
-                            class="fas fa-truck-fast"
-                            aria-hidden="true"
-                        ></i>
-
-                    </div>
-
-                    <div>
-
-                        <h3>
-                            Delivery Available
-                        </h3>
-
-                        <p>
-                            Delivery is calculated from
-                            distance and total kit weight,
-                            with the applicable minimum
-                            and maximum delivery limits.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     EFT
-                ================================================== -->
-
-                <div
-                    class="online-info-card"
-                >
-
-                    <div
-                        class="online-info-icon"
-                    >
-
-                        <i
-                            class="fas fa-building-columns"
-                            aria-hidden="true"
-                        ></i>
-
-                    </div>
-
-                    <div>
-
-                        <h3>
-                            Instant EFT
-                        </h3>
-
-                        <p>
-                            Pay directly by EFT using the
-                            NEXPAK banking details supplied
-                            during checkout. Payments are
-                            manually verified.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     SUPPORT
-                ================================================== -->
-
-                <div
-                    class="online-info-card"
-                >
-
-                    <div
-                        class="online-info-icon"
-                    >
-
-                        <i
-                            class="fas fa-headset"
-                            aria-hidden="true"
-                        ></i>
-
-                    </div>
-
-                    <div>
-
-                        <h3>
-                            Security Support
-                        </h3>
-
-                        <p>
-                            Need help selecting the right
-                            kit? Contact NEXPAK Security
-                            Solutions before placing your
-                            order.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         DELIVERY NOTICE
-    ===================================================== -->
-
-    <section
-        class="online-delivery-notice"
-    >
-
-        <div
-            class="online-container"
-        >
-
-            <div
-                class="online-delivery-notice-content"
-            >
-
-                <div
-                    class="online-delivery-notice-icon"
-                >
-
-                    <i
-                        class="fas fa-truck"
-                        aria-hidden="true"
-                    ></i>
-
-                </div>
-
-
-                <div>
-
-                    <small>
-                        DELIVERY INFORMATION
-                    </small>
-
-                    <h2>
-                        Delivery Calculated At Checkout
-                    </h2>
-
-                    <p>
-                        Delivery is calculated according
-                        to distance and the combined weight
-                        of the kits in your cart.
-                    </p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- =====================================================
-         ONLINE STORE FOOTER
-    ===================================================== -->
-
-    <footer
-        class="online-footer"
-    >
-
-        <div
-            class="online-container"
-        >
-
-            <div
-                class="online-footer-grid"
-            >
-
-
-                <!-- =================================================
-                     COMPANY
-                ================================================== -->
-
-                <div
-                    class="online-footer-brand"
-                >
-
-                    <a
-                        href="../index.html"
-                        class="online-footer-logo"
-                    >
-
-                        <img
-                            src="../images/logo.png"
-                            alt="Nexpak Security Solutions"
-                        >
-
-                    </a>
-
-
-                    <p>
-                        Professional security solutions
-                        for homes, businesses, estates,
-                        farms and properties across
-                        South Africa.
-                    </p>
-
-
-                    <div
-                        class="online-footer-social"
-                    >
-
-                        <a
-                            href="#"
-                            aria-label="Facebook"
-                        >
-
-                            <i
-                                class="fab fa-facebook-f"
-                                aria-hidden="true"
-                            ></i>
-
-                        </a>
-
-
-                        <a
-                            href="#"
-                            aria-label="WhatsApp"
-                        >
-
-                            <i
-                                class="fab fa-whatsapp"
-                                aria-hidden="true"
-                            ></i>
-
-                        </a>
-
-
-                        <a
-                            href="#"
-                            aria-label="Instagram"
-                        >
-
-                            <i
-                                class="fab fa-instagram"
-                                aria-hidden="true"
-                            ></i>
-
-                        </a>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     ONLINE STORE
-                ================================================== -->
-
-                <div
-                    class="online-footer-column"
-                >
-
-                    <h3>
-                        Online Store
-                    </h3>
-
-                    <a
-                        href="#kit-shop"
-                    >
-                        Security Kits
-                    </a>
-
-                    <a
-                        href="#onlineCheckout"
-                    >
-                        Checkout
-                    </a>
-
-                    <a
-                        href="#onlinePaymentArea"
-                    >
-                        Payment
-                    </a>
-
-                    <a
-                        href="#onlineStoreInformation"
-                    >
-                        Delivery Information
-                    </a>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     SECURITY SYSTEMS
-                ================================================== -->
-
-                <div
-                    class="online-footer-column"
-                >
-
-                    <h3>
-                        Security Systems
-                    </h3>
-
-                    <a
-                        href="../products.html"
-                    >
-                        CCTV
-                    </a>
-
-                    <a
-                        href="../products.html"
-                    >
-                        Electric Fencing
-                    </a>
-
-                    <a
-                        href="../products.html"
-                    >
-                        Alarm Systems
-                    </a>
-
-                    <a
-                        href="../products.html"
-                    >
-                        Gate Automation
-                    </a>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     CONTACT
-                ================================================== -->
-
-                <div
-                    class="online-footer-column"
-                >
-
-                    <h3>
-                        NEXPAK Security
-                    </h3>
-
-                    <a
-                        href="../contact.html"
-                    >
-                        Contact Us
-                    </a>
-
-                    <a
-                        href="../shop.html"
-                    >
-                        Build Your System
-                    </a>
-
-                    <a
-                        href="../about.html"
-                    >
-                        About NEXPAK
-                    </a>
-
-                    <span>
-                        South Africa
-                    </span>
-
-                </div>
-
-
-            </div>
-
-
-
-            <!-- =================================================
-                 FOOTER BOTTOM
-            ================================================== -->
-
-            <div
-                class="online-footer-bottom"
-            >
-
-                <span>
-                    © 2026 Nexpak Security Solutions.
-                    All rights reserved.
-                </span>
-
-
-                <span>
-                    Online Store
-                </span>
-
-            </div>
-
-        </div>
-
-               </footer>
-
-       <!-- =====================================================
-         GLOBAL ONLINE STORE UI
-    ===================================================== -->
-
-
-    <!-- =====================================================
-         NOTIFICATION / TOAST
-    ===================================================== -->
-
-    <div
-        id="onlineToast"
-        class="online-toast"
-        role="status"
-        aria-live="polite"
-        aria-atomic="true"
-        hidden
-    >
-
-        <div
-            class="online-toast-icon"
-            aria-hidden="true"
-        >
-
-            <i
-                class="fas fa-circle-check"
-            ></i>
-
-        </div>
-
-
-        <div
-            class="online-toast-content"
-        >
-
-            <strong
-                id="onlineToastTitle"
-            >
-                NEXPAK Online Store
-            </strong>
-
-            <span
-                id="onlineToastMessage"
-            >
-                Action completed.
-            </span>
-
-        </div>
-
-
-        <button
-            type="button"
-            class="online-toast-close"
-            data-online-action="close-toast"
-            aria-label="Close notification"
-        >
-
-            <i
-                class="fas fa-xmark"
-                aria-hidden="true"
-            ></i>
-
-        </button>
-
-    </div>
-
-
-
-    <!-- =====================================================
-         GLOBAL LOADING OVERLAY
-    ===================================================== -->
-
-    <div
-        id="onlineLoadingOverlay"
-        class="online-loading-overlay"
-        hidden
-        aria-hidden="true"
-    >
-
-        <div
-            class="online-loading-card"
-        >
-
-            <div
-                class="online-loading-spinner"
-                aria-hidden="true"
-            ></div>
-
-
-            <strong
-                id="onlineLoadingTitle"
-            >
-                Please wait
-            </strong>
-
-
-            <p
-                id="onlineLoadingMessage"
-            >
-                Processing your request...
-            </p>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- =====================================================
-         CONFIRMATION DIALOG
-    ===================================================== -->
-
-    <div
-        id="onlineConfirmDialog"
-        class="online-confirm-dialog"
-        hidden
-        aria-hidden="true"
-    >
-
-        <div
-            class="online-confirm-backdrop"
-            data-online-action="close-confirm"
-        ></div>
-
-
-        <div
-            class="online-confirm-card"
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="onlineConfirmTitle"
-        >
-
-            <div
-                class="online-confirm-icon"
-            >
-
-                <i
-                    class="fas fa-circle-question"
-                    aria-hidden="true"
-                ></i>
-
-            </div>
-
-
-            <h2
-                id="onlineConfirmTitle"
-            >
-                Confirm Action
-            </h2>
-
-
-            <p
-                id="onlineConfirmMessage"
-            >
-                Are you sure you want to continue?
-            </p>
-
-
-            <div
-                class="online-confirm-actions"
-            >
-
-                <button
-                    type="button"
-                    class="online-confirm-cancel"
-                    data-online-action="close-confirm"
-                >
-                    Cancel
-                </button>
-
-
-                <button
-                    type="button"
-                    id="onlineConfirmButton"
-                    class="online-confirm-primary"
-                    data-online-action="confirm"
-                >
-                    Confirm
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-
-    <!-- =====================================================
-         WHATSAPP FLOATING BUTTON
-    ===================================================== -->
-
-    <a
-        href="https://wa.me/"
-        class="nexpak-whatsapp"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Contact Nexpak Security Solutions on WhatsApp"
-    >
-
-        <i
-            class="fab fa-whatsapp"
-            aria-hidden="true"
-        ></i>
-
-
-        <span
-            class="nexpak-whatsapp-label"
-        >
-            Chat With NEXPAK
-        </span>
-
-    </a>
-
-
-
-    <!-- =====================================================
-         BACK TO TOP
-    ===================================================== -->
-
-    <button
-        type="button"
-        id="onlineBackToTop"
-        class="online-back-to-top"
-        aria-label="Back to top"
-        data-online-action="back-to-top"
-    >
-
-        <i
-            class="fas fa-arrow-up"
-            aria-hidden="true"
-        ></i>
-
-    </button>
-
-
-
-    <!-- =====================================================
-         MOBILE CART BAR
-    ===================================================== -->
-
-    <div
-        id="onlineMobileCartBar"
-        class="online-mobile-cart-bar"
-    >
-
-        <div
-            class="online-mobile-cart-info"
-        >
-
-            <i
-                class="fas fa-cart-shopping"
-                aria-hidden="true"
-            ></i>
-
-
-            <span>
-
-                Cart
-
-                <strong
-                    id="onlineMobileCartCount"
-                >
-                    0
-                </strong>
-
-            </span>
-
-        </div>
-
-
-        <button
-            type="button"
-            data-online-action="open-cart"
-        >
-
-            View Cart
-
-        </button>
-
-           </div>
-
-       <!-- =====================================================
-         ONLINE STORE JAVASCRIPT
-    ===================================================== -->
-
-
-    <!-- =====================================================
-         STORE DATA
-         Must load first.
-    ===================================================== -->
-
-    <script
-        src="online-data.js"
-    ></script>
-
-
-    <!-- =====================================================
-         ONLINE STORE ENGINE
-    ===================================================== -->
-
-    <script
-        src="online.js"
-    ></script>
-
-
-    <!-- =====================================================
-         ONLINE CONFIGURATOR
-         Existing architecture file.
-         Do not confuse with Build Your System
-         configurator.js.
-    ===================================================== -->
-
-    <script
-        src="onlineconfigurator.js"
-    ></script>
-
-
-    <!-- =====================================================
-         DELIVERY ENGINE
-    ===================================================== -->
-
-    <script
-        src="onlinedelivery.js"
-    ></script>
-
-
-    <!-- =====================================================
-         CHECKOUT ENGINE
-    ===================================================== -->
-
-    <script
-        src="onlinecheckout.js"
-    ></script>
-
-
-    <!-- =====================================================
-         INTEGRATION BRIDGE
-    ===================================================== -->
-
-    <script
-        src="onlineintegration.js"
-    ></script>
-
-
-    <!-- =====================================================
-         USER INTERFACE
-         Loads last so the complete UI can connect
-         to the existing store engines.
-    ===================================================== -->
-
-    <script
-        src="onlineui.js"
-    ></script>
-
-
-
+<main class="container">
+    <h2 class="section-title" id="catalogueCategoryTitle"><i class="fa-solid fa-boxes-stacked"></i> All Security Kits</h2>
+    <div class="card-grid" id="onlineProductGrid"></div>
 </main>
 
+<!-- Info Modal -->
+<div id="infoModal" class="info-modal">
+    <div class="modal-overlay" onclick="closeInfoModal()"></div>
+    <div class="modal-window">
+        <div class="modal-header">
+            <span style="font-weight:800; font-size:16px;" id="infoTitle"><i class="fa-solid fa-circle-info"></i> Product Specifications</span>
+            <button onclick="closeInfoModal()" style="background:transparent; border:none; color:#fff; font-size:18px;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body" id="infoBody"></div>
+    </div>
+</div>
 
-<!-- =====================================================
-     END BODY
-===================================================== -->
+<!-- Delivery Address Modal -->
+<div id="deliveryModal" class="info-modal">
+    <div class="modal-overlay" onclick="cancelDeliveryModal()"></div>
+    <div class="modal-window">
+        <div class="modal-header">
+            <span style="font-weight:800; font-size:16px;"><i class="fa-solid fa-truck-fast"></i> Delivery Address</span>
+            <button onclick="cancelDeliveryModal()" style="background:transparent; border:none; color:#fff; font-size:18px;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body">
+            <p style="font-size:12px; color:#64748b; margin-bottom:14px;">We calculate your delivery fee based on distance from our Benoni branch and the total weight of your order. Please enter your delivery address below.</p>
+            <div class="checkout-field">
+                <label>Street Address *</label>
+                <input type="text" id="delStreet" placeholder="e.g. 12 Main Road">
+            </div>
+            <div class="checkout-field">
+                <label>Suburb *</label>
+                <input type="text" id="delSuburb" placeholder="e.g. Sandton">
+            </div>
+            <div class="checkout-field">
+                <label>City / Town *</label>
+                <input type="text" id="delCity" placeholder="e.g. Johannesburg">
+            </div>
+            <div class="checkout-field">
+                <label>Postal Code</label>
+                <input type="text" id="delPostal" placeholder="e.g. 2196">
+            </div>
+            <div id="deliveryStatus" style="font-size:12px; color:#0066ff; font-weight:700; margin-bottom:10px; display:none;"><i class="fa-solid fa-spinner fa-spin"></i> Calculating distance...</div>
+            <button type="button" class="payfast-btn" style="background: linear-gradient(135deg, #0066ff, #000080);" onclick="confirmDeliveryAddress()"><i class="fa-solid fa-check"></i> Confirm Address & Calculate Delivery</button>
+        </div>
+    </div>
+</div>
 
-</body>
+<!-- Cart Drawer -->
+<div id="cartOverlay" class="cart-overlay" onclick="closeCart()"></div>
+<aside id="cartDrawer" class="cart-drawer">
+    <div class="cart-header">
+        <span style="font-weight:800; font-size:16pxADDRESS MODAL --- */
+function openDeliveryModal() {
+    document.getElementById('deliveryModal').classList.add('open');
+}
+function cancelDeliveryModal() {
+    document.getElementById('deliveryModal').classList.remove('open');
+    pendingAddKitId = null;
+}
 
+async function confirmDeliveryAddress() {
+    const street = document.getElementById('delStreet').value.trim();
+    const suburb = document.getElementById('delSuburb').value.trim();
+    const city = document.getElementById('delCity').value.trim();
+    const postal = document.getElementById('delPostal').value.trim();
 
-<!-- =====================================================
-     END HTML
-===================================================== -->
+    if (!street || !suburb || !city) {
+        return alert("Please fill in street, suburb and city so we can calculate delivery.");
+    }
 
-</html>
+    const fullAddress = `${street}, ${suburb}, ${city}${postal ? ', ' + postal : ''}, South Africa`;
+    const statusEl = document.getElementById('deliveryStatus');
+    statusEl.style.display = 'block';
+
+    try {
+        const geo = await geocodeAddress(fullAddress);
+        const distanceKm = haversineKm(STORE_COORDS.lat, STORE_COORDS.lon, geo.lat, geo.lon);
+
+        deliveryInfo = {
+            address: fullAddress,
+            distanceKm: Math.round(distanceKm * 10) / 10,
+            lat: geo.lat,
+            lon: geo.lon
+        };
+        localStorage.setItem('nexpak_delivery', JSON.stringify(deliveryInfo));
+
+        statusEl.style.display = 'none';
+        document.getElementById('deliveryModal').classList.remove('open');
+
+        if (pendingAddKitId) {
+            commitAddToCart(pendingAddKitId);
+            pendingAddKitId = null;
+        } else {
+            renderCart();
+        }
+    } catch(e) {
+        console.error("Geocoding error:", e);
+        statusEl.style.display = 'none';
+        alert("We couldn't pinpoint that address automatically. Please check the spelling, or include more detail (e.g. suburb + city), and try again.");
+    }
+}
+
+function cartTotalWeight() {
+    return cart.reduce((sum, item) => sum + ((item.unitWeight || 5) * item.qty), 0);
+}
+
+function cartTotals() {
+    const subtotal = cart.reduce((sum, item) => sum + (item.unitPrice * item.qty), 0);
+    let delivery = 0;
+    if (cart.length > 0 && deliveryInfo) {
+        const weightKg = cartTotalWeight();
+        delivery = DELIVERY_BASE_FEE + (deliveryInfo.distanceKm * RATE_PER_KM) + (weightKg * RATE_PER_KG);
+    }
+    delivery = Math.round(delivery * 100) / 100;
+    // VAT included in the final total, calculated on (subtotal + delivery).
+    const vat = (subtotal + delivery) * 0.15;
+    const total = subtotal + delivery + vat;
+    return { subtotal, delivery, vat, total };
+}
+
+function renderCart() {
+    const container = document.getElementById("cartItems");
+    if(cart.length === 0) { container.innerHTML = "<p>Your cart is empty.</p>"; }
+    else {
+        container.innerHTML = cart.map(item => `
+            <div class="cart-item">
+                <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+                <div class="cart-item-details">
+                    <h4>${item.name}</h4>
+                    <p style="font-size:11px; color:#64748b;">${Object.values(item.optionsText || {}).join(' | ')}</p>
+                    <p style="font-weight:bold; color:var(--primary-navy); margin-top:5px;">${formatMoney(item.unitPrice)} x ${item.qty}</p>
+                    <button onclick="removeFromCart('${item.id}')" style="margin-top:5px; color:#dc2626; border:none; background:transparent; font-size:12px; font-weight:bold;">Remove</button>
+                </div>
+            </div>`).join("");
+    }
+
+    const addrLine = document.getElementById('cartDeliveryAddressLine');
+    if (deliveryInfo) {
+        addrLine.style.display = 'block';
+        document.getElementById('cartDeliveryAddressText').innerText = `${deliveryInfo.address} (${deliveryInfo.distanceKm} km)`;
+    } else {
+        addrLine.style.display = 'none';
+    }
+
+    const { subtotal, delivery, vat, total } = cartTotals();
+    document.getElementById("cartSubtotal").innerText = formatMoney(subtotal);
+    document.getElementById("cartDelivery").innerText = formatMoney(delivery);
+    document.getElementById("cartVat").innerText = formatMoney(vat);
+    document.getElementById("cartTotal").innerText = formatMoney(total);
+}
+
+function removeFromCart(id) { cart = cart.filter(i => i.id !== id); saveCart(); }
+function clearCart() { cart = []; saveCart(); }
+function openCart() { renderCart(); document.getElementById('cartOverlay').classList.add('open'); document.getElementById('cartDrawer').classList.add('open'); }
+function closeCart() { document.getElementById('cartOverlay').classList.remove('open'); document.getElementById('cartDrawer').classList.remove('open'); }
+
+/* --- CHECKOUT MODAL --- */
+function openCheckout() {
+    if(cart.length === 0) return alert("Your cart is empty.");
+    if(!deliveryInfo) { openDeliveryModal(); return; }
+    closeCart();
+
+    const { subtotal, delivery, vat, total } = cartTotals();
+    document.getElementById('checkoutItemsList').innerHTML = cart.map(item => `
+        <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:6px;">
+            <span>${item.name} x${item.qty}</span>
+            <span>${formatMoney(item.unitPrice * item.qty)}</span>
+        </div>`).join('');
+    document.getElementById('checkoutSubtotal').innerText = formatMoney(subtotal);
+    document.getElementById('checkoutDelivery').innerText = formatMoney(delivery);
+    document.getElementById('checkoutVat').innerText = formatMoney(vat);
+    document.getElementById('checkoutTotal').innerText = formatMoney(total);
+
+    if (deliveryInfo && !document.getElementById('custAddress').value) {
+        document.getElementById('custAddress').value = deliveryInfo.address;
+    }
+
+    document.getElementById('checkoutModal').style.display = 'flex';
+}
+
+/* ==========================================================
+   PROFESSIONAL PDF GENERATION (letterhead, borders, order #,
+   bank details, terms & conditions)
+   ========================================================== */
+const NEXPAK_TERMS = [
+    "1. This document is valid for 30 days from the date of issue unless otherwise stated.",
+    "2. A minimum 50% deposit is required before any order is scheduled for installation or dispatch.",
+    "3. Full and final payment is due prior to delivery/installation unless otherwise agreed in writing.",
+    "4. Goods remain the property of Nexpak Security Solutions PTY Ltd until paid for in full.",
+    "5. Delivery fees are estimates based on distance and weight and may be adjusted for access difficulty.",
+    "6. Standard manufacturer warranty applies to all products. Installation workmanship is guaranteed for 12 months.",
+    "7. Prices include 15% VAT and are subject to change without prior notice on unconfirmed quotations."
+];
+
+function loadImageAsDataURL(url) {
+    return new Promise((resolve) => {
+        const img = new Image();
