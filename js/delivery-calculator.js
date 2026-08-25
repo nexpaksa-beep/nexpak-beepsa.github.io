@@ -917,4 +917,1197 @@ function updateDeliveryWeight() {
 
 /* ==========================================================================
    10. CONFIGURATOR WEIGHT
-   ============================================
+   ========================================================================== */
+
+function getConfiguratorWeight() {
+
+    /*
+       We deliberately check several possible structures because the
+       configurator has evolved through different versions.
+
+       The first valid source is used.
+    */
+
+
+    /* ----------------------------------------------------------------------
+       Global configurator cart
+       ---------------------------------------------------------------------- */
+
+    if (
+        Array.isArray(window.cart) &&
+        window.cart.length
+    ) {
+
+        return calculateItemsWeight(
+            window.cart
+        );
+
+    }
+
+
+    /* ----------------------------------------------------------------------
+       Nexpak saved cart
+       ---------------------------------------------------------------------- */
+
+    const savedCart =
+        getLocalStorageArray(
+            'nexpak_cart'
+        );
+
+
+    if (savedCart.length) {
+
+        return calculateItemsWeight(
+            savedCart
+        );
+
+    }
+
+
+    /* ----------------------------------------------------------------------
+       Configurator state
+       ---------------------------------------------------------------------- */
+
+    if (
+        window.configuratorState &&
+        Array.isArray(
+            window.configuratorState.cart
+        )
+    ) {
+
+        return calculateItemsWeight(
+            window.configuratorState.cart
+        );
+
+    }
+
+
+    /* ----------------------------------------------------------------------
+       Configurator selected products
+       ---------------------------------------------------------------------- */
+
+    if (
+        window.selectedProducts &&
+        Array.isArray(window.selectedProducts)
+    ) {
+
+        return calculateItemsWeight(
+            window.selectedProducts
+        );
+
+    }
+
+
+    /*
+       Some versions of the configurator use an object rather than
+       an array.
+    */
+
+    if (
+        window.selectedProducts &&
+        typeof window.selectedProducts === 'object'
+    ) {
+
+        return calculateObjectWeight(
+            window.selectedProducts
+        );
+
+    }
+
+
+    return 0;
+
+}
+
+
+/* ==========================================================================
+   11. ONLINE STORE WEIGHT
+   ========================================================================== */
+
+function getOnlineStoreWeight() {
+
+    /*
+       First try the global cart.
+    */
+
+    if (
+        Array.isArray(window.cart) &&
+        window.cart.length
+    ) {
+
+        return calculateItemsWeight(
+            window.cart
+        );
+
+    }
+
+
+    /*
+       Try the Nexpak online cart.
+    */
+
+    const onlineCartKeys = [
+        'nexpak_cart',
+        'online_cart',
+        'nexpak_online_cart',
+        'cart'
+    ];
+
+
+    for (
+        let i = 0;
+        i < onlineCartKeys.length;
+        i++
+    ) {
+
+        const cart =
+            getLocalStorageArray(
+                onlineCartKeys[i]
+            );
+
+
+        if (cart.length) {
+
+            return calculateItemsWeight(
+                cart
+            );
+
+        }
+
+    }
+
+
+    /*
+       Try common global cart variables.
+    */
+
+    if (
+        Array.isArray(window.onlineCart)
+    ) {
+
+        return calculateItemsWeight(
+            window.onlineCart
+        );
+
+    }
+
+
+    if (
+        Array.isArray(window.storeCart)
+    ) {
+
+        return calculateItemsWeight(
+            window.storeCart
+        );
+
+    }
+
+
+    return 0;
+
+}
+
+
+/* ==========================================================================
+   12. EQUESTRIAN WEIGHT
+   ========================================================================== */
+
+function getEquestrianWeight() {
+
+    /*
+       Equestrian products can use the same cart system as the online store.
+    */
+
+    if (
+        Array.isArray(window.cart) &&
+        window.cart.length
+    ) {
+
+        return calculateItemsWeight(
+            window.cart
+        );
+
+    }
+
+
+    /*
+       Check localStorage.
+    */
+
+    const possibleKeys = [
+        'nexpak_cart',
+        'equestrian_cart',
+        'nexpak_equestrian_cart',
+        'online_cart'
+    ];
+
+
+    for (
+        let i = 0;
+        i < possibleKeys.length;
+        i++
+    ) {
+
+        const cart =
+            getLocalStorageArray(
+                possibleKeys[i]
+            );
+
+
+        if (cart.length) {
+
+            return calculateItemsWeight(
+                cart
+            );
+
+        }
+
+    }
+
+
+    /*
+       Equestrian-specific global cart.
+    */
+
+    if (
+        Array.isArray(window.equestrianCart)
+    ) {
+
+        return calculateItemsWeight(
+            window.equestrianCart
+        );
+
+    }
+
+
+    return 0;
+
+}
+
+
+/* ==========================================================================
+   13. GENERIC CART WEIGHT
+   ========================================================================== */
+
+function getGenericCartWeight() {
+
+    const possibleSources = [
+
+        window.cart,
+
+        window.onlineCart,
+
+        window.storeCart,
+
+        window.equestrianCart
+
+    ];
+
+
+    for (
+        let i = 0;
+        i < possibleSources.length;
+        i++
+    ) {
+
+        if (
+            Array.isArray(
+                possibleSources[i]
+            ) &&
+            possibleSources[i].length
+        ) {
+
+            return calculateItemsWeight(
+                possibleSources[i]
+            );
+
+        }
+
+    }
+
+
+    const possibleKeys = [
+        'nexpak_cart',
+        'online_cart',
+        'equestrian_cart',
+        'nexpak_online_cart',
+        'nexpak_equestrian_cart'
+    ];
+
+
+    for (
+        let i = 0;
+        i < possibleKeys.length;
+        i++
+    ) {
+
+        const cart =
+            getLocalStorageArray(
+                possibleKeys[i]
+            );
+
+
+        if (cart.length) {
+
+            return calculateItemsWeight(
+                cart
+            );
+
+        }
+
+    }
+
+
+    return 0;
+
+}
+
+
+/* ==========================================================================
+   14. READ LOCAL STORAGE ARRAY
+   ========================================================================== */
+
+function getLocalStorageArray(key) {
+
+    try {
+
+        const raw =
+            localStorage.getItem(key);
+
+
+        if (!raw) {
+
+            return [];
+
+        }
+
+
+        const parsed =
+            JSON.parse(raw);
+
+
+        if (Array.isArray(parsed)) {
+
+            return parsed;
+
+        }
+
+
+        /*
+           Some cart systems store:
+
+           {
+               items: [...]
+           }
+        */
+
+        if (
+            parsed &&
+            Array.isArray(parsed.items)
+        ) {
+
+            return parsed.items;
+
+        }
+
+
+        /*
+           Some systems store:
+
+           {
+               cart: [...]
+           }
+        */
+
+        if (
+            parsed &&
+            Array.isArray(parsed.cart)
+        ) {
+
+            return parsed.cart;
+
+        }
+
+
+        return [];
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            'Could not read cart from localStorage:',
+            key,
+            error
+        );
+
+        return [];
+
+    }
+
+}
+
+
+/* ==========================================================================
+   15. CALCULATE ITEM WEIGHT
+   ========================================================================== */
+
+function calculateItemsWeight(items) {
+
+    if (!Array.isArray(items)) {
+
+        return 0;
+
+    }
+
+
+    let totalWeight = 0;
+
+
+    items.forEach(function(item) {
+
+        if (!item) {
+
+            return;
+
+        }
+
+
+        /*
+           Quantity
+
+           Supports:
+
+           quantity
+           qty
+           count
+        */
+
+        const quantity =
+            Number(
+                item.quantity ??
+                item.qty ??
+                item.count ??
+                1
+            ) || 1;
+
+
+        /*
+           Product weight
+
+           Supports:
+
+           weight
+           weightKg
+           kg
+           productWeight
+           unitWeight
+        */
+
+        let weight =
+            Number(
+                item.weight ??
+                item.weightKg ??
+                item.kg ??
+                item.productWeight ??
+                item.unitWeight ??
+                0
+            );
+
+
+        /*
+           If weight is stored in grams, convert to kg.
+        */
+
+        if (
+            weight > 100 &&
+            (
+                item.weightUnit === 'g' ||
+                item.unit === 'g' ||
+                item.weight_unit === 'g'
+            )
+        ) {
+
+            weight =
+                weight / 1000;
+
+        }
+
+
+        /*
+           If no weight exists on the item, attempt to find it
+           from the product database.
+        */
+
+        if (!weight) {
+
+            weight =
+                findProductWeight(
+                    item
+                );
+
+        }
+
+
+        /*
+           Final safety fallback.
+
+           We use 0.5kg rather than silently ignoring an item.
+        */
+
+        if (!weight || weight < 0) {
+
+            weight = 0.5;
+
+        }
+
+
+        totalWeight +=
+            weight * quantity;
+
+    });
+
+
+    return totalWeight;
+
+}
+
+
+/* ==========================================================================
+   16. CALCULATE OBJECT WEIGHT
+   ========================================================================== */
+
+function calculateObjectWeight(products) {
+
+    if (
+        !products ||
+        typeof products !== 'object'
+    ) {
+
+        return 0;
+
+    }
+
+
+    let totalWeight = 0;
+
+
+    Object.keys(products).forEach(function(key) {
+
+        const item =
+            products[key];
+
+
+        if (!item) {
+
+            return;
+
+        }
+
+
+        /*
+           If the object itself looks like a product.
+        */
+
+        if (
+            typeof item === 'object'
+        ) {
+
+            const quantity =
+                Number(
+                    item.quantity ??
+                    item.qty ??
+                    1
+                ) || 1;
+
+
+            let weight =
+                Number(
+                    item.weight ??
+                    item.weightKg ??
+                    item.kg ??
+                    item.productWeight ??
+                    0
+                );
+
+
+            if (!weight) {
+
+                weight =
+                    findProductWeight(
+                        item
+                    );
+
+            }
+
+
+            if (!weight) {
+
+                weight = 0.5;
+
+            }
+
+
+            totalWeight +=
+                weight * quantity;
+
+        }
+
+    });
+
+
+    return totalWeight;
+
+}
+
+
+/* ==========================================================================
+   17. PRODUCT WEIGHT DATABASE
+   ========================================================================== */
+
+const NEXPAK_PRODUCT_WEIGHTS = {
+
+    /*
+       Equestrian
+    */
+
+    polytape: 0.5,
+    'polytape-200m': 2.5,
+    'polytape-500m': 6.0,
+
+    rope: 0.8,
+    'rope-200m': 3.0,
+
+    insulator: 0.05,
+
+    energizer: 2.0,
+    'solar-energizer': 3.5,
+
+    'gate-handle': 0.3,
+    'gate-latch': 0.5,
+    'gate-hinge': 0.4,
+    'gate-hardware-kit': 2.5,
+
+    'tape-connector': 0.1,
+
+    strainers: 0.8,
+
+    posts: 1.5,
+
+    wire: 0.1,
+
+
+    /*
+       Security products
+    */
+
+    'gate-motor': 12,
+    'gate-motors': 12,
+
+    'cctv-camera': 0.6,
+    'cctv-camera-hd': 0.6,
+    'cctv-camera-ip': 0.7,
+
+    'dvr': 2.0,
+    'nvr': 2.0,
+
+    'cctv-kit': 5.0,
+
+    'alarm-panel': 1.5,
+
+    'alarm-kit': 3.0,
+
+    'ajax-hub': 0.8,
+
+    'ajax-kit': 2.5,
+
+    'roboguard': 2.0,
+
+    'roboguard-kit': 5.0,
+
+    'electric-fence-energizer': 2.0,
+
+    'electric-fence-kit': 8.0,
+
+    'access-control': 1.5,
+
+    'intercom': 1.5,
+
+    'intercom-kit': 3.0,
+
+
+    /*
+       General kit fallback weights
+    */
+
+    'security-kit': 5.0,
+
+    'custom-kit': 5.0
+
+};
+
+
+/* ==========================================================================
+   18. FIND PRODUCT WEIGHT
+   ========================================================================== */
+
+function findProductWeight(item) {
+
+    if (!item) {
+
+        return 0;
+
+    }
+
+
+    /*
+       Direct weight properties.
+    */
+
+    const directWeight =
+        Number(
+            item.weightKg ??
+            item.weight ??
+            item.kg ??
+            item.productWeight ??
+            item.unitWeight ??
+            0
+        );
+
+
+    if (
+        directWeight > 0
+    ) {
+
+        return directWeight;
+
+    }
+
+
+    /*
+       Collect possible product identifiers.
+    */
+
+    const identifiers = [
+
+        item.id,
+
+        item.productId,
+
+        item.product_id,
+
+        item.sku,
+
+        item.productSku,
+
+        item.name,
+
+        item.productName,
+
+        item.title
+
+    ];
+
+
+    for (
+        let i = 0;
+        i < identifiers.length;
+        i++
+    ) {
+
+        if (!identifiers[i]) {
+
+            continue;
+
+        }
+
+
+        const normalized =
+            String(
+                identifiers[i]
+            )
+            .toLowerCase()
+            .trim()
+            .replace(/\s+/g, '-');
+
+
+        /*
+           Exact match.
+        */
+
+        if (
+            Object.prototype.hasOwnProperty.call(
+                NEXPAK_PRODUCT_WEIGHTS,
+                normalized
+            )
+        ) {
+
+            return NEXPAK_PRODUCT_WEIGHTS[
+                normalized
+            ];
+
+        }
+
+
+        /*
+           Partial match.
+
+           Example:
+
+           "12mm-200m-politape"
+           can match
+           "polytape-200m"
+        */
+
+        const weightKeys =
+            Object.keys(
+                NEXPAK_PRODUCT_WEIGHTS
+            );
+
+
+        for (
+            let j = 0;
+            j < weightKeys.length;
+            j++
+        ) {
+
+            const key =
+                weightKeys[j];
+
+
+            if (
+                normalized.includes(key) ||
+                key.includes(normalized)
+            ) {
+
+                return NEXPAK_PRODUCT_WEIGHTS[
+                    key
+                ];
+
+            }
+
+        }
+
+    }
+
+
+    return 0;
+
+}
+
+
+/* ==========================================================================
+   19. CALCULATE DELIVERY BY REGION
+   ========================================================================== */
+
+function calculateDeliveryRegion() {
+
+    const regionSelect =
+        document.getElementById(
+            'delivery-region'
+        );
+
+
+    if (!regionSelect) {
+
+        return;
+
+    }
+
+
+    const region =
+        regionSelect.value;
+
+
+    if (!region) {
+
+        return;
+
+    }
+
+
+    const regionData =
+        NEXPAK_DELIVERY_CONFIG.regionalRates[
+            region
+        ];
+
+
+    if (!regionData) {
+
+        console.warn(
+            'Unknown delivery region:',
+            region
+        );
+
+        return;
+
+    }
+
+
+    const weight =
+        updateDeliveryWeight();
+
+
+    /*
+       Regional delivery starts at the regional base rate.
+
+       Weight surcharge is added separately.
+    */
+
+    const weightFee =
+        weight *
+        NEXPAK_DELIVERY_CONFIG.pricing.perKg;
+
+
+    const total =
+        regionData.baseFee +
+        weightFee;
+
+
+    NEXPAK_DELIVERY_STATE.calculated = true;
+
+    NEXPAK_DELIVERY_STATE.method = 'region';
+
+    NEXPAK_DELIVERY_STATE.region = region;
+
+    NEXPAK_DELIVERY_STATE.address = '';
+
+    NEXPAK_DELIVERY_STATE.distanceKm = 0;
+
+    NEXPAK_DELIVERY_STATE.baseFee =
+        regionData.baseFee;
+
+    NEXPAK_DELIVERY_STATE.distanceFee =
+        0;
+
+    NEXPAK_DELIVERY_STATE.weightFee =
+        weightFee;
+
+    NEXPAK_DELIVERY_STATE.total =
+        total;
+
+    NEXPAK_DELIVERY_STATE.timestamp =
+        Date.now();
+
+
+    displayDeliveryResult(
+        regionData.baseFee,
+        0,
+        weightFee,
+        total
+    );
+
+
+    saveDeliveryQuote();
+
+
+    setDeliveryStatus(
+        `Delivery calculated for ${regionData.name}.`,
+        'success'
+    );
+
+
+    dispatchDeliveryUpdatedEvent();
+
+
+    return total;
+
+}
+
+
+/* ==========================================================================
+   20. CALCULATE DELIVERY MANUALLY
+   ========================================================================== */
+
+function calculateDeliveryManual() {
+
+    const distanceInput =
+        document.getElementById(
+            'distance-km'
+        );
+
+
+    if (!distanceInput) {
+
+        return;
+
+    }
+
+
+    const distance =
+        Number(
+            distanceInput.value
+        ) || 0;
+
+
+    if (distance < 0) {
+
+        alert(
+            'Distance cannot be negative.'
+        );
+
+        return;
+
+    }
+
+
+    const weight =
+        updateDeliveryWeight();
+
+
+    const baseFee =
+        NEXPAK_DELIVERY_CONFIG.pricing.baseFee;
+
+
+    const distanceFee =
+        distance *
+        NEXPAK_DELIVERY_CONFIG.pricing.perKm;
+
+
+    const weightFee =
+        weight *
+        NEXPAK_DELIVERY_CONFIG.pricing.perKg;
+
+
+    const total =
+        baseFee +
+        distanceFee +
+        weightFee;
+
+
+    NEXPAK_DELIVERY_STATE.calculated = true;
+
+    NEXPAK_DELIVERY_STATE.method = 'distance';
+
+    NEXPAK_DELIVERY_STATE.region = null;
+
+    NEXPAK_DELIVERY_STATE.address = '';
+
+    NEXPAK_DELIVERY_STATE.distanceKm =
+        distance;
+
+    NEXPAK_DELIVERY_STATE.baseFee =
+        baseFee;
+
+    NEXPAK_DELIVERY_STATE.distanceFee =
+        distanceFee;
+
+    NEXPAK_DELIVERY_STATE.weightFee =
+        weightFee;
+
+    NEXPAK_DELIVERY_STATE.total =
+        total;
+
+    NEXPAK_DELIVERY_STATE.timestamp =
+        Date.now();
+
+
+    displayDeliveryResult(
+        baseFee,
+        distanceFee,
+        weightFee,
+        total
+    );
+
+
+    saveDeliveryQuote();
+
+
+    setDeliveryStatus(
+        'Delivery calculated successfully.',
+        'success'
+    );
+
+
+    dispatchDeliveryUpdatedEvent();
+
+
+    return total;
+
+}
+
+
+/* ==========================================================================
+   21. DISPLAY DELIVERY RESULT
+   ========================================================================== */
+
+function displayDeliveryResult(
+    base,
+    distance,
+    weight,
+    total
+) {
+
+    const baseEl =
+        document.getElementById(
+            'base-fee-display'
+        );
+
+
+    const distanceEl =
+        document.getElementById(
+            'distance-fee-display'
+        );
+
+
+    const weightEl =
+        document.getElementById(
+            'weight-fee-display'
+        );
+
+
+    const totalEl =
+        document.getElementById(
+            'total-delivery-display'
+        );
+
+
+    const resultEl =
+        document.getElementById(
+            'delivery-result'
+        );
+
+
+    if (baseEl) {
+
+        baseEl.textContent =
+            formatRand(base);
+
+    }
+
+
+    if (distanceEl) {
+
+        distanceEl.textContent =
+            formatRand(distance);
+
+    }
+
+
+    if (weightEl) {
+
+        weightEl.textContent =
+            formatRand(weight);
+
+    }
+
+
+    if (totalEl) {
+
+        totalEl.textContent =
+            formatRand(total);
+
+    }
+
+
+    if (resultEl) {
+
+        resultEl.style.display =
+            'block';
+
+    }
+
+}
+
+
+/* ==========================================================================
