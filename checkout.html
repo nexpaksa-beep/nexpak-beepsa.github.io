@@ -2368,5 +2368,635 @@
                                     >
                                         Delivery Address
                                         <span class="required">*</span>
+                                                                            </label>
+
+                                    <input
+                                        type="text"
+                                        id="shippingAddress"
+                                        name="shippingAddress"
+                                        class="form-control"
+                                        placeholder="Street, suburb, city"
+                                        autocomplete="street-address"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="form-group full">
+
+                                    <label
+                                        class="form-label"
+                                        for="deliveryNotes"
+                                    >
+                                        Delivery Notes
+
+                                        <span
+                                            style="
+                                                font-weight:400;
+                                                color:#94a3b8;
+                                            "
+                                        >
+                                            (optional)
+                                        </span>
+
+                                    </label>
+
+                                    <textarea
+                                        id="deliveryNotes"
+                                        name="deliveryNotes"
+                                        class="form-control"
+                                        placeholder="Gate instructions, access information or other delivery notes..."
+                                    ></textarea>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- ==================================================
+                                 DELIVERY CALCULATOR
+                                 ================================================== -->
+
+                            <div class="delivery-highlight">
+
+                                <div class="delivery-highlight-header">
+
+                                    <div class="delivery-highlight-title">
+
+                                        <i
+                                            class="fa-solid fa-truck-fast"
+                                        ></i>
+
+                                        <span>
+                                            Calculate Delivery
+                                        </span>
+
+                                    </div>
+
+                                    <span
+                                        class="delivery-status"
+                                        id="deliveryStatus"
+                                    >
+                                        Enter your address
+                                    </span>
+
+                                </div>
+
+
+                                <div class="delivery-row">
+
+                                    <input
+                                        type="number"
+                                        id="distance-km"
+                                        class="form-control"
+                                        min="0"
+                                        step="1"
+                                        placeholder="Distance from Benoni (km)"
+                                    >
+
+
+                                    <button
+                                        type="button"
+                                        id="btnCalculateDelivery"
+                                        class="delivery-button"
+                                    >
+
+                                        <i
+                                            class="fa-solid fa-calculator"
+                                        ></i>
+
+                                        Calculate
+
+                                    </button>
+
+                                </div>
+
+
+                                <div
+                                    class="delivery-info"
+                                    id="deliveryInfo"
+                                >
+
+                                    <i
+                                        class="fa-solid fa-circle-info"
+                                    ></i>
+
+                                    <span>
+                                        Enter the delivery distance from
+                                        Benoni to calculate your delivery fee.
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                        </form>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ==========================================================
+                     PAYMENT METHOD CARD
+                     ========================================================== -->
+
+                <section class="checkout-card">
+
+                    <div class="card-header">
+
+                        <div class="card-icon">
+
+                            <i
+                                class="fa-solid fa-credit-card"
+                            ></i>
+
+                        </div>
+
+                        <div class="card-header-text">
+
+                            <h2>
+                                Choose Payment Method
+                            </h2>
+
+                            <p>
+                                Select your preferred secure payment option
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-body">
+
+
+                        <!-- ==================================================
+                             PAYFAST
+                             ================================================== -->
+
+                        <div
+                            class="payment-option selected"
+                            id="payfastPaymentOption"
+                        >
+
+                            <label class="payment-option-label">
+
+                                <input
+                                    type="radio"
+                                    name="paymentMethod"
+                                    value="payfast"
+                                    checked
+                                >
+
+
+                                <div class="payment-brand">
+
+                                    <div class="payment-name">
+
+                                        <strong>
+                                            PayFast
+                                        </strong>
+
+                                        <span>
+                                            Secure online payment
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="payment-logos">
+
+                                        <div
+                                            class="payment-logo payfast"
+                                        >
+                                            PAYFAST
+                                        </div>
+
+
+                                        <div
+                                            class="payment-logo visa"
+                                        >
+                                            VISA
+                                        </div>
+
+
+                                        <div
+                                            class="payment-logo mastercard"
+                                        >
+                                            MC
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </label>
+
+                        </div>
+
+
+                        <!-- ==================================================
+                             INSTANT EFT
+                             ================================================== -->
+
+                        <div
+                            class="payment-option"
+                            id="eftPaymentOption"
+                        >
+
+                            <label class="payment-option-label">
+
+                                <input
+                                    type="radio"
+                                    name="paymentMethod"
+                                    value="eft"
+                                >
+
+
+                                <div class="payment-brand">
+
+                                    <div class="payment-name">
+
+                                        <strong>
+                                            Instant EFT / EFT
+                                        </strong>
+
+                                        <span>
+                                            Secure bank transfer
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="payment-logos">
+
+                                        <div
+                                            class="payment-logo eft"
+                                        >
+                                            INSTANT EFT
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </label>
+
+                        </div>
+
+
+                        <!-- ==================================================
+                             EFT DETAILS
+                             ================================================== -->
+
+                        <div
+                            id="eftDetailsPanel"
+                        >
+
+                            <div class="eft-title">
+
+                                <i
+                                    class="fa-solid fa-building-columns"
+                                ></i>
+
+                                EFT Payment Instructions
+
+                            </div>
+
+
+                            <div class="eft-row">
+
+                                <span>
+                                    Bank
+                                </span>
+
+                                <span>
+                                    Capitec Bank
+                                </span>
+
+                            </div>
+
+
+                            <div class="eft-row">
+
+                                <span>
+                                    Account Name
+                                </span>
+
+                                <span>
+                                    Nexpak Security Solutions
+                                </span>
+
+                            </div>
+
+
+                            <div class="eft-row">
+
+                                <span>
+                                    Account Number
+                                </span>
+
+                                <span>
+                                    2517857594
+                                </span>
+
+                            </div>
+
+
+                            <div class="eft-row">
+
+                                <span>
+                                    Branch Code
+                                </span>
+
+                                <span>
+                                    470010
+                                </span>
+
+                            </div>
+
+
+                            <div class="eft-row">
+
+                                <span>
+                                    Reference
+                                </span>
+
+                                <span>
+                                    Your Order Number
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ==================================================
+                             SECURITY MESSAGE
+                             ================================================== -->
+
+                        <div class="secure-payment-note">
+
+                            <i
+                                class="fa-solid fa-circle-check"
+                            ></i>
+
+                            <div>
+
+                                <strong>
+                                    Secure payment processing
+                                </strong>
+
+                                <br>
+
+                                Your payment details are handled through
+                                secure payment processing. Nexpak does not
+                                store your card details.
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </section>
+
+
+            </div>
+
+
+            <!-- ============================================================
+                 RIGHT COLUMN
+                 ============================================================ -->
+
+            <aside class="checkout-right">
+
+
+                <!-- ========================================================
+                     ORDER SUMMARY
+                     ======================================================== -->
+
+                <section class="checkout-card summary-card">
+
+                    <div class="summary-header">
+
+                        <h2>
+                            <i
+                                class="fa-solid fa-receipt"
+                            ></i>
+
+                            Order Summary
+                        </h2>
+
+                        <p>
+                            Review your order before payment
+                        </p>
+
+                    </div>
+
+
+                    <!-- CART ITEMS -->
+
+                    <div
+                        id="checkoutOrderItems"
+                    >
+
+                        <!-- Checkout.js will populate this -->
+
+                    </div>
+
+
+                    <!-- TOTALS -->
+
+                    <div class="summary-totals">
+
+
+                        <div class="summary-total-row">
+
+                            <span>
+                                Subtotal (Excl. VAT)
+                            </span>
+
+                            <span id="chkSubtotal">
+                                R 0.00
+                            </span>
+
+                        </div>
+
+
+                        <div class="summary-total-row">
+
+                            <span>
+                                Delivery
+                            </span>
+
+                            <span id="chkDelivery">
+                                R 0.00
+                            </span>
+
+                        </div>
+
+
+                        <div class="summary-total-row">
+
+                            <span>
+                                VAT (15%)
+                            </span>
+
+                            <span id="chkVat">
+                                R 0.00
+                            </span>
+
+                        </div>
+
+
+                        <div class="summary-grand-total">
+
+                            <span>
+                                Total Payable
+                            </span>
+
+                            <span id="chkGrandTotal">
+                                R 0.00
+                            </span>
+
+                        </div>
+
+
+                        <!-- ==================================================
+                             COMPLETE ORDER BUTTON
+                             ================================================== -->
+
+                        <button
+                            type="button"
+                            id="btnCompleteCheckout"
+                            class="checkout-submit"
+                        >
+
+                            <i
+                                class="fa-solid fa-lock"
+                            ></i>
+
+                            Proceed to Secure Payment
+
+                        </button>
+
+
+                        <!-- TRUST BADGES -->
+
+                        <div class="trust-section">
+
+                            <div class="trust-grid">
+
+
+                                <div class="trust-item">
+
+                                    <i
+                                        class="fa-solid fa-shield-halved"
+                                    ></i>
+
+                                    <span>
+                                        Secure Checkout
+                                    </span>
+
+                                </div>
+
+
+                                <div class="trust-item">
+
+                                    <i
+                                        class="fa-solid fa-truck-fast"
+                                    ></i>
+
+                                    <span>
+                                        Reliable Delivery
+                                    </span>
+
+                                </div>
+
+
+                                <div class="trust-item">
+
+                                    <i
+                                        class="fa-solid fa-headset"
+                                    ></i>
+
+                                    <span>
+                                        Customer Support
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+            </aside>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================================================================
+         FOOTER
+         ================================================================ -->
+
+    <footer class="checkout-footer">
+
+        <div class="footer-inner">
+
+            <div class="footer-security">
+
+                <i
+                    class="fa-solid fa-lock"
+                ></i>
+
+                <span>
+                    Secure checkout powered by Nexpak Security Solutions
+                </span>
+
+            </div>
+
+
+            <div class="footer-copy">
+
+                © 2026 Nexpak Security Solutions.
+                All rights reserved.
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- ================================================================
+         JAVASCRIPT
+         ================================================================ -->
+
+    <script src="js/delivery-calculator.js"></script>
+
+    <script src="js/payments.js"></script>
+
+    <script src="js/checkout.js"></script>
+
+    <script src="js/chatbot.js"></script>
+
+    <script src="js/seo-schema-injector.js"></script>
+
+
+</body>
+
+    </html>
                               
   
