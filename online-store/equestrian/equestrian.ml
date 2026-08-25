@@ -714,6 +714,9 @@ renderProducts();
 updateCounts();
 renderCart();
 </script>
+ <script src="../../js/chatbot.js"></script>
+    <script src="../../js/delivery-calculator.js"></script>
+<script src="js/seo-schema-injector.js"></script>
 </body>
 </html>
 
