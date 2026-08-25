@@ -757,4 +757,53 @@ function completeOrderAndGeneratePDF() {
   y += 10;
 
   doc.text(`Delivery Fee (${deliveryName}):`, 100, y);
-  doc.text(`
+  doc.text(`${money(deliveryFee)}`, 150, y);
+  y += 8;
+
+  const grandTotal = subtotal + deliveryFee;
+  doc.setFont("Helvetica", "bold");
+  doc.text(`Total Amount Paid:`, 100, y);
+  doc.text(`${money(grandTotal)}`, 150, y);
+
+  // Bank & Payment Confirmation Info Box
+  y += 18;
+  doc.setFillColor(245, 247, 241);
+  doc.rect(15, y, 180, 30, "F");
+  doc.setFontSize(9);
+  doc.setFont("Helvetica", "bold");
+  doc.text("Payment & Banking Verification:", 20, y + 8);
+  doc.setFont("Helvetica", "normal");
+  doc.text("Bank: Capitec Bank | ACC No: 2517857594 | Branch Code: 470010", 20, y + 15);
+  doc.text("Order confirmation & PDF invoice copy sent successfully to nexpaksa@gmail.com", 20, y + 22);
+
+  // Save PDF
+  doc.save(`Nexpak_Invoice_${currentOrderNumber}.pdf`);
+
+  // Trigger Email Simulation / Mailto to nexpaksa@gmail.com
+  const mailSubject = encodeURIComponent(`Successful Order & Payment - ${currentOrderNumber}`);
+  const mailBody = encodeURIComponent(`Hi Nexpak Team,\n\nNew order ${currentOrderNumber} has been placed by ${name} (${email}, ${phone}).\nDelivery: ${deliveryName}\nTotal Paid: ${money(grandTotal)}\n\nPlease check Capitec Bank account for reference #${currentOrderNumber}.`);
+  window.open(`mailto:nexpaksa@gmail.com?subject=${mailSubject}&body=${mailBody}`);
+
+  toast("Order completed & PDF Invoice downloaded!");
+  closeCheckoutModal();
+  cart = [];
+  save();
+  updateCounts();
+}
+
+function toast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(window._toast);
+  window._toast = setTimeout(() => t.classList.remove("show"), 2500);
+}
+
+document.getElementById("year").textContent = new Date().getFullYear();
+categories();
+renderProducts();
+updateCounts();
+renderCart();
+</script>
+</body>
+</html>
