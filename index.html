@@ -39,186 +39,138 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        .logo {
+        .logo-container {
             display: flex;
             align-items: center;
             gap: 1rem;
-            text-decoration: none;
-            color: white;
         }
-        .logo img {
+        .logo-container img {
             height: 50px;
         }
-        .logo-text h1 {
-            margin: 0;
-            font-size: 1.5rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-        .logo-text p {
-            margin: 0;
-            font-size: 0.75rem;
-            opacity: 0.8;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        nav {
+        nav ul {
+            list-style: none;
             display: flex;
             gap: 2rem;
+            margin: 0;
+            padding: 0;
         }
         nav a {
             color: white;
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s;
-            font-size: 0.95rem;
         }
         nav a:hover {
             color: var(--accent-color);
         }
         .hero {
-            background: linear-gradient(rgba(6, 20, 35, 0.8), rgba(6, 20, 35, 0.8)), url('images/hero-bg.jpg');
+            background: linear-gradient(rgba(6, 20, 35, 0.8), rgba(6, 20, 35, 0.8)), url('images/security-bg.jpg');
             background-size: cover;
             background-position: center;
-            color: white;
-            padding: 8rem 2rem;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
+            color: white;
+            padding: 0 1rem;
         }
-        .hero h2 {
+        .hero h1 {
             font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            font-weight: 800;
+            margin-bottom: 1rem;
+            max-width: 900px;
         }
-        .hero p {
-            font-size: 1.25rem;
-            max-width: 800px;
-            margin: 0 auto 2.5rem;
-            opacity: 0.9;
-        }
-        .btn {
-            display: inline-block;
-            padding: 1rem 2.5rem;
+        .cta-button {
             background-color: var(--accent-color);
             color: white;
-            text-decoration: none;
+            padding: 1rem 2.5rem;
             border-radius: 5px;
-            font-weight: 600;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 2rem;
             transition: transform 0.3s, background-color 0.3s;
         }
-        .btn:hover {
+        .cta-button:hover {
             transform: translateY(-3px);
-            background-color: #d62839;
+            background-color: #c92a35;
         }
         .services {
-            padding: 6rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
+            padding: 5rem 2rem;
+            background-color: var(--light-bg);
         }
         .section-title {
             text-align: center;
-            margin-bottom: 4rem;
-        }
-        .section-title h2 {
             font-size: 2.5rem;
-            color: var(--primary-color);
+            margin-bottom: 4rem;
         }
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         .service-card {
             background: white;
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
             transition: transform 0.3s;
-            border-bottom: 4px solid transparent;
         }
         .service-card:hover {
             transform: translateY(-10px);
-            border-bottom-color: var(--accent-color);
-        }
-        .service-card h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
         }
         footer {
             background-color: var(--primary-color);
             color: white;
-            padding: 4rem 2rem;
-            text-align: center;
-        }
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-            text-align: left;
+            padding: 4rem 2rem 2rem;
         }
     </style>
 </head>
 <body>
     <header>
-        <a href="index.html" class="logo">
+        <div class="logo-container">
             <img src="images/logo-security.png" alt="Nexpak Logo">
-            <div class="logo-text">
-                <h1>NEXPAK</h1>
-                <p>Security Solutions</p>
-            </div>
-        </a>
+            <span>NEXPAK SECURITY</span>
+        </div>
         <nav>
-            <a href="index.html">Home</a>
-            <a href="shop.html">Online Store</a>
-            <a href="products.html">Products</a>
-            <a href="aboutus.html">About Us</a>
-            <a href="contact.html">Contact</a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Online Store</a></li>
+                <li><a href="aboutus.html">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
         </nav>
     </header>
 
     <section class="hero">
-        <h2>Total Security Peace of Mind</h2>
-        <p>South Africa's trusted provider for CCTV, Electric Fencing, and Smart Security Integrations.</p>
-        <a href="shop.html" class="btn">Shop Security Systems</a>
+        <h1>South Africa's Premier Security Solutions Provider</h1>
+        <p>Comprehensive security systems for home and business</p>
+        <a href="shop.html" class="cta-button">Shop Security Systems</a>
     </section>
 
     <section class="services">
-        <div class="section-title">
-            <h2>Our Expert Services</h2>
-        </div>
+        <h2 class="section-title">Our Core Services</h2>
         <div class="services-grid">
             <div class="service-card">
                 <h3>CCTV Systems</h3>
-                <p>High-definition surveillance solutions with remote mobile viewing for homes and businesses.</p>
+                <p>High-definition surveillance solutions from Hikvision and Dahua.</p>
             </div>
             <div class="service-card">
                 <h3>Electric Fencing</h3>
-                <p>COC compliant perimeter security installations and maintenance.</p>
+                <p>Advanced perimeter protection with remote monitoring.</p>
             </div>
             <div class="service-card">
                 <h3>Access Control</h3>
-                <p>Biometric and keypad entry systems for controlled premises access.</p>
+                <p>Biometric and RFID solutions for secure premises.</p>
             </div>
         </div>
     </section>
 
     <footer>
-        <div class="footer-content">
-            <div>
-                <h3>About Nexpak</h3>
-                <p>Professional security technology provider serving South Africa.</p>
-            </div>
-            <div>
-                <h3>Contact Us</h3>
-                <p>Email: sales@nexpaksolutions.co.za</p>
-                <p>Phone: +27 (0) 12 345 6789</p>
-            </div>
-        </div>
-        <p style="margin-top: 3rem; opacity: 0.6;">&copy; 2026 Nexpak Security Solutions. All rights reserved.</p>
+        <p>&copy; 2024 Nexpak Security Solutions. All rights reserved.</p>
     </footer>
     <script src="js/seo-schema-injector.js"></script>
 </body>
