@@ -346,42 +346,9 @@
                 });
                 cartContainer.innerHTML = html;
             }
-            calculateTotals();
-        }
-
-        function calculateTotals() {
-            let subtotal = 0;
-            let totalWeight = 0;
-
-            cart.forEach(item => {
-                subtotal += item.price * item.qty;
-                totalWeight += item.weight * item.qty;
-            });
-
-            const distanceInput = document.getElementById('distance-km').value;
-            const distance = parseFloat(distanceInput) || 0;
-
-            let delivery = 0;
-            if (cart.length > 0) {
-                delivery = 90 + (distance * 6.50) + (totalWeight * 8.00);
-            }
-
-            const vat = subtotal * 0.15;
-            const totalPayable = subtotal + vat + delivery;
-
-            document.getElementById('cart-subtotal').innerText = `R${subtotal.toFixed(2)}`;
-            document.getElementById('cart-weight').innerText = `${totalWeight.toFixed(2)} kg`;
-            document.getElementById('cart-delivery').innerText = `R${delivery.toFixed(2)}`;
-            document.getElementById('cart-vat').innerText = `R${vat.toFixed(2)}`;
-            document.getElementById('cart-total').innerText = `R${totalPayable.toFixed(2)}`;
-        }
-
-        function toggleEFT() {
-            const el = document.getElementById('eft-details');
-            if (el.classList.contains('hide')) {
-                el.classList.remove('hide');
-            } else {
-                el.classList.add('hide');
+            
+            if (typeof calculateTotals === 'function') {
+                calculateTotals();
             }
         }
 
@@ -433,14 +400,13 @@
         }
     </script>
     
-    src="../../js/chatbot.js"></script>
+    <script src="../../js/chatbot.js"></script>
     <script src="../../js/delivery-calculator.js"></script>
-<script src="js/seo-schema-injector.js"></script>
-  <!-- Load in this exact order before </body> -->
-<script src="payfast-integration.js"></script>
-<script src="payments.js"></script>
-<script src="checkout.js"></script>
-<script src="https://static.nexpak.com/visualizer/3d-property.js"></script>
-    <script src
+    <script src="js/seo-schema-injector.js"></script>
+    <!-- Load in this exact order before </body> -->
+    <script src="payfast-integration.js"></script>
+    <script src="payments.js"></script>
+    <script src="checkout.js"></script>
+    <script src="https://static.nexpak.com/visualizer/3d-property.js"></script>
 </body>
 </html>
