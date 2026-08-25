@@ -538,3 +538,904 @@ async function requestPayFastPayment(
 /* ==========================================================================
    END OF PART 1
    ========================================================================== */
+/* ==========================================================================
+   11. SUBMIT PAYFAST PAYMENT FORM
+   ========================================================================== */
+
+/*
+ * The secure Vercel API will return the PayFast fields required for the
+ * transaction. This function creates the POST form and sends the customer
+ * to PayFast.
+ *
+ * We deliberately do NOT generate the PayFast signature in this browser
+ * file.
+ */
+
+function submitPayFastForm(paymentData) {
+
+    if (!paymentData) {
+
+        throw new Error(
+            'No PayFast payment data was received.'
+        );
+    }
+
+    /*
+     * Accept either:
+     *
+     * {
+     *     fields: {...}
+     * }
+     *
+     * or directly:
+     *
+     * {
+     *     merchant_id: "...",
+     *     signature: "..."
+     * }
+     *
+     * This makes the frontend tolerant of the server response structure.
+     */
+
+    const fields =
+        paymentData.fields ||
+        paymentData;
+
+    const payfastUrl =
+        fields.payfast_url ||
+        PAYFAST_CONFIG.urls[
+            PAYFAST_CONFIG.mode
+        ];
+
+    if (!payfastUrl) {
+
+        throw new Error(
+            'PayFast payment URL is missing.'
+        );
+    }
+
+
+    /*
+     * Remove an existing payment form.
+     */
+
+    const existingForm =
+        document.getElementById(
+            'nexpak-payfast-form'
+        );
+
+    if (existingForm) {
+
+        existingForm.remove();
+    }
+
+
+    /*
+     * Create PayFast POST form.
+     */
+
+    const form =
+        document.createElement('form');
+
+    form.id =
+        'nexpak-payfast-form';
+
+    form.method =
+        'POST';
+
+    form.action =
+        payfastUrl;
+
+    form.style.display =
+        'none';
+
+
+    /*
+     * Add all server-generated PayFast fields.
+     */
+
+    Object.keys(fields).forEach(key => {
+
+        /*
+         * payfast_url is used by our frontend and is NOT itself a
+         * PayFast form parameter.
+         */
+
+        if (key === 'payfast_url') {
+
+            return;
+        }
+
+        const value =
+            fields[key];
+
+        /*
+         * Ignore undefined/null values.
+         */
+
+        if (
+            value === undefined ||
+            value === null
+        ) {
+
+            return;
+        }
+
+        const input =
+            document.createElement('input');
+
+        input.type =
+            'hidden';
+
+        input.name =
+            key;
+
+        input.value =
+            String(value);
+
+        form.appendChild(input);
+
+    });
+
+
+    /*
+     * Make sure the form actually contains the required merchant ID.
+     */
+
+    if (
+        !form.querySelector(
+            'input[name="merchant_id"]'
+        )
+    ) {
+
+        throw new Error(
+            'PayFast merchant information is missing.'
+        );
+    }
+
+
+    /*
+     * Make sure a signature was supplied by the secure server.
+     */
+
+    if (
+        !form.querySelector(
+            'input[name="signature"]'
+        )
+    ) {
+
+        throw new Error(
+            'PayFast security signature is missing.'
+        );
+    }
+
+
+    document.body.appendChild(form);
+
+
+    /*
+     * Give the loading screen a moment to render before redirecting.
+     */
+
+    setTimeout(() => {
+
+        form.submit();
+
+    }, 500);
+}
+
+
+/* ==========================================================================
+   12. MAIN PAYFAST CHECKOUT FUNCTION
+   ========================================================================== */
+
+/*
+ * This is the function that checkout.js calls:
+ *
+ * window.PayFast.checkout(...)
+ *
+ * Example:
+ *
+ * window.PayFast.checkout(
+ *     total,
+ *     cart,
+ *     customerEmail,
+ *     customerName
+ * );
+ */
+
+async function payWithPayFastCheckout(
+    total,
+    items,
+    customerEmail,
+    customerName
+) {
+
+    /*
+     * Prevent accidental double-clicks.
+     */
+
+    if (PAYFAST_STATE.processing) {
+
+        console.warn(
+            'PayFast payment is already being processed.'
+        );
+
+        return;
+    }
+
+
+    /*
+     * Validate checkout information.
+     */
+
+    const validationErrors =
+        validatePayFastCheckoutData(
+            total,
+            items,
+            customerEmail,
+            customerName
+        );
+
+
+    if (validationErrors.length > 0) {
+
+        alert(
+            validationErrors.join('\n')
+        );
+
+        return;
+    }
+
+
+    /*
+     * Lock payment process.
+     */
+
+    PAYFAST_STATE.processing =
+        true;
+
+
+    /*
+     * Store current payment details.
+     */
+
+    PAYFAST_STATE.currentAmount =
+        Number(total);
+
+    PAYFAST_STATE.currentCustomerEmail =
+        String(customerEmail).trim();
+
+    PAYFAST_STATE.currentCustomerName =
+        String(customerName).trim();
+
+
+    /*
+     * Create order/payment request.
+     */
+
+    const paymentRequest =
+        buildPayFastRequest(
+            total,
+            items,
+            customerEmail,
+            customerName
+        );
+
+
+    PAYFAST_STATE.currentOrderId =
+        paymentRequest.orderId;
+
+
+    /*
+     * Store the order reference locally.
+     *
+     * This allows the success page to retrieve the reference after
+     * returning from PayFast.
+     */
+
+    try {
+
+        localStorage.setItem(
+            'nexpak_pending_order',
+            JSON.stringify({
+
+                orderId:
+                    paymentRequest.orderId,
+
+                amount:
+                    paymentRequest.amount,
+
+                customerName:
+                    paymentRequest.customer.name,
+
+                customerEmail:
+                    paymentRequest.customer.email,
+
+                createdAt:
+                    Date.now()
+
+            })
+        );
+
+    } catch (storageError) {
+
+        console.warn(
+            'Could not save pending order:',
+            storageError
+        );
+    }
+
+
+    /*
+     * Display loading screen.
+     */
+
+    showPaymentLoading();
+
+
+    try {
+
+        /*
+         * Ask our secure Vercel API to create the PayFast transaction.
+         */
+
+        const paymentResponse =
+            await requestPayFastPayment(
+                paymentRequest
+            );
+
+
+        console.log(
+            'PayFast payment created:',
+            paymentRequest.orderId
+        );
+
+
+        /*
+         * Submit the signed payment to PayFast.
+         */
+
+        submitPayFastForm(
+            paymentResponse
+        );
+
+    } catch (error) {
+
+        console.error(
+            'PayFast checkout error:',
+            error
+        );
+
+
+        PAYFAST_STATE.processing =
+            false;
+
+
+        hidePaymentLoading();
+
+
+        alert(
+            'We could not connect to PayFast.\n\n' +
+            (
+                error.message ||
+                'Please try again.'
+            )
+        );
+
+    }
+
+}
+
+
+/* ==========================================================================
+   13. RESET PAYMENT STATE
+   ========================================================================== */
+
+function resetPayFastState() {
+
+    PAYFAST_STATE.processing =
+        false;
+
+    PAYFAST_STATE.currentOrderId =
+        null;
+
+    PAYFAST_STATE.currentAmount =
+        0;
+
+    PAYFAST_STATE.currentCustomerEmail =
+        null;
+
+    PAYFAST_STATE.currentCustomerName =
+        null;
+
+}
+
+
+/* ==========================================================================
+   14. CANCELLED PAYMENT
+   ========================================================================== */
+
+function handlePayFastCancelled() {
+
+    resetPayFastState();
+
+    hidePaymentLoading();
+
+
+    /*
+     * Keep the customer's cart intact.
+     *
+     * They may want to try another payment method.
+     */
+
+    console.log(
+        'PayFast payment cancelled.'
+    );
+
+
+    const pendingOrder =
+        getPendingPayFastOrder();
+
+
+    if (pendingOrder) {
+
+        console.log(
+            'Cancelled order:',
+            pendingOrder.orderId
+        );
+    }
+
+}
+
+
+/* ==========================================================================
+   15. RETRIEVE PENDING ORDER
+   ========================================================================== */
+
+function getPendingPayFastOrder() {
+
+    try {
+
+        const stored =
+            localStorage.getItem(
+                'nexpak_pending_order'
+            );
+
+        if (!stored) {
+
+            return null;
+        }
+
+        return JSON.parse(
+            stored
+        );
+
+    } catch (error) {
+
+        console.warn(
+            'Could not retrieve pending PayFast order:',
+            error
+        );
+
+        return null;
+    }
+
+}
+
+
+/* ==========================================================================
+   16. CLEAR PENDING ORDER
+   ========================================================================== */
+
+function clearPendingPayFastOrder() {
+
+    try {
+
+        localStorage.removeItem(
+            'nexpak_pending_order'
+        );
+
+    } catch (error) {
+
+        console.warn(
+            'Could not clear pending order:',
+            error
+        );
+    }
+
+}
+
+
+/* ==========================================================================
+   17. PAYMENT RETURN STATUS
+   ========================================================================== */
+
+function getPayFastReturnStatus() {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    return {
+
+        status:
+            params.get('status'),
+
+        paymentId:
+            params.get('m_payment_id'),
+
+        transactionId:
+            params.get('pf_payment_id'),
+
+        token:
+            params.get('token')
+
+    };
+
+}
+
+
+/* ==========================================================================
+   18. HANDLE SUCCESS RETURN
+   ========================================================================== */
+
+function handlePayFastSuccess() {
+
+    hidePaymentLoading();
+
+
+    const pendingOrder =
+        getPendingPayFastOrder();
+
+
+    console.log(
+        'PayFast successful return:',
+        pendingOrder
+    );
+
+
+    /*
+     * IMPORTANT:
+     *
+     * Returning from PayFast does NOT by itself prove that payment
+     * was successfully settled.
+     *
+     * The server-side PayFast ITN/webhook must verify the transaction.
+     */
+
+
+    if (pendingOrder) {
+
+        showPayFastSuccessMessage(
+            pendingOrder
+        );
+
+    } else {
+
+        showPayFastSuccessMessage({
+            orderId:
+                'Pending verification',
+
+            amount:
+                0
+        });
+
+    }
+
+}
+
+
+/* ==========================================================================
+   19. SUCCESS MESSAGE
+   ========================================================================== */
+
+function showPayFastSuccessMessage(
+    order
+) {
+
+    /*
+     * Don't create a second success screen if checkout.js already
+     * created one.
+     */
+
+    if (
+        document.getElementById(
+            'payfast-success-message'
+        )
+    ) {
+
+        return;
+    }
+
+
+    const overlay =
+        document.createElement('div');
+
+    overlay.id =
+        'payfast-success-message';
+
+    overlay.innerHTML = `
+
+        <div class="payfast-success-overlay">
+
+            <div class="payfast-success-box">
+
+                <div class="payfast-success-icon">
+
+                    <i class="fa-solid fa-check"></i>
+
+                </div>
+
+                <h2>
+                    Payment Received
+                </h2>
+
+                <p>
+                    Thank you for your order.
+                </p>
+
+                <div class="payfast-order-reference">
+
+                    <span>
+                        Order Reference
+                    </span>
+
+                    <strong>
+                        ${
+                            escapePayFastHtml(
+                                order.orderId ||
+                                'Pending verification'
+                            )
+                        }
+                    </strong>
+
+                </div>
+
+                <p class="payfast-success-note">
+
+                    Your payment is being verified.
+                    We will process your order once
+                    PayFast confirms the transaction.
+
+                </p>
+
+                <button
+                    type="button"
+                    onclick="window.location.href='index.html'"
+                    class="payfast-success-button"
+                >
+                    Return to Nexpak
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+    document.body.appendChild(
+        overlay
+    );
+
+    addPayFastSuccessStyles();
+
+}
+
+
+/* ==========================================================================
+   20. ESCAPE HTML
+   ========================================================================== */
+
+function escapePayFastHtml(value) {
+
+    return String(value || '')
+        .replace(
+            /&/g,
+            '&amp;'
+        )
+        .replace(
+            /</g,
+            '&lt;'
+        )
+        .replace(
+            />/g,
+            '&gt;'
+        )
+        .replace(
+            /"/g,
+            '&quot;'
+        )
+        .replace(
+            /'/g,
+            '&#039;'
+        );
+
+}
+
+
+/* ==========================================================================
+   21. SUCCESS SCREEN STYLES
+   ========================================================================== */
+
+function addPayFastSuccessStyles() {
+
+    if (
+        document.getElementById(
+            'nexpak-payfast-success-styles'
+        )
+    ) {
+
+        return;
+    }
+
+
+    const style =
+        document.createElement('style');
+
+    style.id =
+        'nexpak-payfast-success-styles';
+
+
+    style.textContent = `
+
+        .payfast-success-overlay {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 999999;
+
+            background:
+                rgba(0, 0, 0, 0.78);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+        }
+
+        .payfast-success-box {
+
+            width: 100%;
+
+            max-width: 460px;
+
+            background: #ffffff;
+
+            border-radius: 20px;
+
+            padding: 40px 30px;
+
+            text-align: center;
+
+            box-shadow:
+                0 20px 60px
+                rgba(0, 0, 0, 0.3);
+
+        }
+
+        .payfast-success-icon {
+
+            width: 76px;
+
+            height: 76px;
+
+            margin:
+                0 auto 20px;
+
+            border-radius: 50%;
+
+            background:
+                #123d2a;
+
+            color: #ffffff;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 34px;
+
+        }
+
+        .payfast-success-box h2 {
+
+            color: #123d2a;
+
+            margin:
+                0 0 10px;
+
+        }
+
+        .payfast-success-box p {
+
+            color: #555;
+
+        }
+
+        .payfast-order-reference {
+
+            background:
+                #f5f7f6;
+
+            border-radius: 10px;
+
+            padding: 15px;
+
+            margin:
+                20px 0;
+
+        }
+
+        .payfast-order-reference span {
+
+            display: block;
+
+            color: #777;
+
+            font-size: 12px;
+
+            margin-bottom: 5px;
+
+        }
+
+        .payfast-order-reference strong {
+
+            color: #123d2a;
+
+            font-size: 18px;
+
+        }
+
+        .payfast-success-note {
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+        }
+
+        .payfast-success-button {
+
+            margin-top: 15px;
+
+            padding:
+                13px 25px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background:
+                #123d2a;
+
+            color: #ffffff;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+        }
+
+    `;
+
+
+    document.head.appendChild(
+        style
+    );
+
+}
+
+
+/* ==========================================================================
+   END OF PART 2
+   ========================================================================== */
