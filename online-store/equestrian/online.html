@@ -463,3 +463,305 @@ const NEXPAK_TERMS = [
 function loadImageAsDataURL(url) {
     return new Promise((resolve) => {
         const img = new Image();
+            Function getKitWeight(kit, optionsObj) {
+    if (kit.dynamicWeights && optionsObj && optionsObj.channels) {
+        return kit.dynamicWeights[optionsObj.channels] || kit.weight || 5;
+    }
+    return kit.weight || 5;
+}
+
+/* ==========================================================
+   COMPANY / BANKING / EMAIL CONFIG — edit these as needed
+   ========================================================== */
+const NEXPAK_COMPANY = {
+    name: "Nexpak Security Solutions PTY Ltd",
+    address: "215 Russell Street, Benoni, East Rand, Gauteng",
+    phone: "083 630 8249",
+    email: "nexpaksa@outlook.com",
+    bankName: "Capitec Bank",
+    accountNo: "2517857594",
+    branchCode: "470010",
+    logoPath: "images/logo.png"
+};
+
+// Store's coordinates (Benoni, East Rand) — used as the delivery distance origin.
+const STORE_COORDS = { lat: -26.18848, lon: 28.32078 };
+
+// Delivery pricing — adjust these rates to match your actual courier costs.
+const DELIVERY_BASE_FEE = 100;   // R call-out / handling fee
+const RATE_PER_KM = 4.5;           // R per km (one-way distance from store)
+const RATE_PER_KG = 9;          // R per kg of total order weight
+
+// EmailJS config — sign up free at https://www.emailjs.com, create a Service +
+// two Templates (one for you, one for the client), then paste the IDs below.
+// Until these are filled in, emails will NOT actually send — the site will
+// still work fine (cart, quotes, PDFs), it just won't email anyone yet.
+const EMAILJS_PUBLIC_KEY = "bXfWnydaXf0hcwBh3";
+const EMAILJS_SERVICE_ID = "service_ms6r3ri";
+const EMAILJS_TEMPLATE_ADMIN = "template_pzhl0m2"; // sends to nexpaksa@outlook.com
+const EMAILJS_TEMPLATE_CLIENT = "template_gr51ncp"; // sends to the customer
+let emailjsReady = false;
+try {
+    if (window.emailjs && EMAILJS_PUBLIC_KEY !== "YOUR_EMAILJS_PUBLIC_KEY") {
+        emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+        emailjsReady = true;
+    }
+} catch(e) { console.warn("EmailJS not configured yet:", e); }
+
+/* --- CORE FUNCTIONS --- */
+function formatMoney(amount) { return "R " + Number(amount).toFixed(2); }
+
+/* --- ORDER NUMBER GENERATOR --- */
+function getNextOrderNumber() {
+    let seq = parseInt(localStorage.getItem('nexpak_order_seq') || '1000', 10);
+    seq += 1;
+    localStorage.setItem('nexpak_order_seq', String(seq));
+    const year = new Date().getFullYear();
+    return `NPK-${year}-${String(seq).padStart(4, '0')}`;
+}
+
+/* --- DELIVERY DISTANCE (Haversine) --- */
+function haversineKm(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+}
+
+async function geocodeAddress(addressString) {
+    const url = `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(addressString)}`;
+    const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+    if (!res.ok) throw new Error("Geocoding request failed");
+    const data = await res.json();
+    if (!data || data.length === 0) throw new Error("Address not found");
+    return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon), display: data[0].display_name };
+}
+
+function getKitPrice(kit, optionsObj) {
+    let total = Number(kit.price);
+    if (!kit.options) return total;
+    Object.keys(optionsObj).forEach(key => {
+        const selectedVal = optionsObj[key];
+        const optList = kit.options[key];
+        if (optList) {
+            const match = optList.find(o => o.value === selectedVal);
+            if (match) total += Number(match.extra);
+        }
+    });
+    return total;
+}
+
+function getKitContents(kit, optionsObj) {
+    if (kit.dynamicContents && optionsObj && optionsObj.channels) {
+        return kit.dynamicContents[optionsObj.channels] || [];
+    }
+    return kit.contents || [];
+}
+
+/* --- RENDER CATALOGUE --- */
+function renderNexpakKitCatalogue(category = "all", searchTerm = "") {
+    const grid = document.getElementById("onlineProductGrid");
+    let kits = NEXPAK_KIT_DATABASE;
+
+    if (category !== "all") kits = kits.filter(k => k.category === category);
+    if (searchTerm) kits = kits.filter(k => k.name.toLowerCase().includes(searchTerm.toLowerCase()) || k.description.toLowerCase().includes(searchTerm.toLowerCase()));
+
+    document.getElementById("catalogueCategoryTitle").innerHTML = category === "all" && !searchTerm ? '<i class="fa-solid fa-boxes-stacked"></i> All Security Kits' : `<i class="fa-solid fa-boxes-stacked"></i> ${kits.length} Kits Found`;
+
+    grid.innerHTML = kits.map(kit => {
+        let defaultOpts = {};
+        let optHTML = "";
+        if(kit.options) {
+            Object.keys(kit.options).forEach(key => {
+                defaultOpts[key] = kit.options[key][0].value;
+                optHTML += `<div class="selector-container"><label>${key.toUpperCase()}</label><select class="kit-option" data-kit-id="${kit.id}" data-option="${key}" onchange="updateLivePrice('${kit.id}')">` +
+                    kit.options[key].map(o => `<option value="${o.value}">${o.label} ${o.extra > 0 ? '(+R'+o.extra+')' : ''}</option>`).join('') +
+                    `</select></div>`;
+            });
+        }
+
+        return `
+        <article class="product-card" id="card-${kit.id}">
+            <div class="product-image-container">
+                <img src="${kit.image}" alt="${kit.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/200x170?text=NexPak'">
+            </div>
+            <div class="product-name">${kit.name}</div>
+            <div class="product-desc">${kit.description}</div>
+            ${optHTML}
+            <div class="price-text" id="price-${kit.id}">${formatMoney(getKitPrice(kit, defaultOpts))}</div>
+            <div class="selector-container"><label>Quantity</label>
+                <input type="number" min="1" value="1" id="qty-${kit.id}">
+            </div>
+            <div class="card-actions">
+                <button class="btn-info-glass" onclick="showKitInfo('${kit.id}')"><i class="fa-solid fa-circle-info"></i> Info</button>
+                <button class="btn-summary-quote" onclick="generateNexpakKitQuote('${kit.id}')"><i class="fa-solid fa-file-pdf"></i> Quote</button>
+                <button class="btn-add-cart" onclick="addNexpakKitToCart('${kit.id}')"><i class="fa-solid fa-cart-plus"></i> Add</button>
+            </div>
+        </article>`;
+    }).join("");
+}
+
+function updateLivePrice(kitId) {
+    const kit = NEXPAK_KIT_DATABASE.find(k => k.id === kitId);
+    const card = document.getElementById(`card-${kitId}`);
+    let selectedOpts = {};
+    card.querySelectorAll('.kit-option').forEach(sel => { selectedOpts[sel.getAttribute('data-option')] = sel.value; });
+    document.getElementById(`price-${kitId}`).innerHTML = formatMoney(getKitPrice(kit, selectedOpts));
+}
+
+function filterCategory(cat) {
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+    document.querySelector(`.nav-link[data-category="${cat}"]`)?.classList.add('active');
+    renderNexpakKitCatalogue(cat);
+}
+
+function searchStore() {
+    const term = document.getElementById('storeSearch').value;
+    renderNexpakKitCatalogue('all', term);
+}
+
+/* --- INFO MODAL --- */
+function showKitInfo(kitId) {
+    const kit = NEXPAK_KIT_DATABASE.find(k => k.id === kitId);
+    const card = document.getElementById(`card-${kitId}`);
+    let selectedOpts = {};
+    card.querySelectorAll('.kit-option').forEach(sel => { selectedOpts[sel.getAttribute('data-option')] = sel.value; });
+    const contents = getKitContents(kit, selectedOpts);
+
+    document.getElementById('infoTitle').innerHTML = `<i class="fa-solid fa-circle-info"></i> ${kit.name}`;
+    document.getElementById('infoBody').innerHTML = `
+        <p style="color:#64748b; margin-bottom:10px;">${kit.description}</p>
+        <ul class="spec-list">${contents.map(c => `<li><i class="fa-solid fa-check"></i> ${c}</li>`).join('')}</ul>`;
+    document.getElementById('infoModal').classList.add('open');
+}
+function closeInfoModal() { document.getElementById('infoModal').classList.remove('open'); }
+
+/* --- CART FUNCTIONS --- */
+let cart = JSON.parse(localStorage.getItem('nexpak_cart')) || [];
+let deliveryInfo = JSON.parse(localStorage.getItem('nexpak_delivery')) || null; // {address, distanceKm, lat, lon}
+let pendingAddKitId = null; // kit waiting on delivery address confirmation
+
+function addNexpakKitToCart(kitId) {
+    // First item ever added (no delivery address on file) -> capture address first.
+    if (!deliveryInfo) {
+        pendingAddKitId = kitId;
+        openDeliveryModal();
+        return;
+    }
+    commitAddToCart(kitId);
+}
+
+function commitAddToCart(kitId) {
+    try {
+        const kit = NEXPAK_KIT_DATABASE.find(k => k.id === kitId);
+        const card = document.getElementById(`card-${kitId}`);
+        const qty = parseInt(document.getElementById(`qty-${kitId}`).value) || 1;
+
+        let textOptions = {};
+        let valueOptions = {};
+
+        card.querySelectorAll('.kit-option').forEach(sel => {
+            textOptions[sel.getAttribute('data-option')] = sel.options[sel.selectedIndex].text;
+            valueOptions[sel.getAttribute('data-option')] = sel.value;
+        });
+
+        const unitPrice = getKitPrice(kit, valueOptions);
+        const unitWeight = getKitWeight(kit, valueOptions);
+
+        cart.push({
+            id: kit.id + '-' + Date.now(),
+            kitId: kit.id,
+            name: kit.name,
+            image: kit.image,
+            qty: qty,
+            unitPrice: unitPrice,
+            unitWeight: unitWeight,
+            optionsText: textOptions,
+            optionsValues: valueOptions
+        });
+
+        saveCart();
+        alert(`${kit.name} added to cart!`);
+    } catch(e) {
+        console.error("Cart Error:", e);
+        alert("Could not add to cart. Please ensure selections are valid.");
+    }
+}
+
+function saveCart() {
+    localStorage.setItem('nexpak_cart', JSON.stringify(cart));
+    document.getElementById('cartCount').innerText = cart.reduce((sum, item) => sum + item.qty, 0);
+    renderCart();
+}
+
+/* --- DELIVERY ADDRESS MODAL --- */
+function openDeliveryModal() {
+    document.getElementById('deliveryModal').classList.add('open');
+}
+function cancelDeliveryModal() {
+    document.getElementById('deliveryModal').classList.remove('open');
+    pendingAddKitId = null;
+}
+
+async function confirmDeliveryAddress() {
+    const street = document.getElementById('delStreet').value.trim();
+    const suburb = document.getElementById('delSuburb').value.trim();
+    const city = document.getElementById('delCity').value.trim();
+    const postal = document.getElementById('delPostal').value.trim();
+
+    if (!street || !suburb || !city) {
+        return alert("Please fill in street, suburb and city so we can calculate delivery.");
+    }
+
+    const fullAddress = `${street}, ${suburb}, ${city}${postal ? ', ' + postal : ''}, South Africa`;
+    const statusEl = document.getElementById('deliveryStatus');
+    statusEl.style.display = 'block';
+
+    try {
+        const geo = await geocodeAddress(fullAddress);
+        const distanceKm = haversineKm(STORE_COORDS.lat, STORE_COORDS.lon, geo.lat, geo.lon);
+
+        deliveryInfo = {
+            address: fullAddress,
+            distanceKm: Math.round(distanceKm * 10) / 10,
+            lat: geo.lat,
+            lon: geo.lon
+        };
+        localStorage.setItem('nexpak_delivery', JSON.stringify(deliveryInfo));
+
+        statusEl.style.display = 'none';
+        document.getElementById('deliveryModal').classList.remove('open');
+
+        if (pendingAddKitId) {
+            commitAddToCart(pendingAddKitId);
+            pendingAddKitId = null;
+        } else {
+            renderCart();
+        }
+    } catch(e) {
+        console.error("Geocoding error:", e);
+        statusEl.style.display = 'none';
+        alert("We couldn't pinpoint that address automatically. Please check the spelling, or include more detail (e.g. suburb + city), and try again.");
+    }
+}
+
+function cartTotalWeight() {
+    return cart.reduce((sum, item) => sum + ((item.unitWeight || 5) * item.qty), 0);
+}
+
+function cartTotals() {
+    const subtotal = cart.reduce((sum, item) => sum + (item.unitPrice * item.qty), 0);
+    let delivery = 0;
+    if (cart.length > 0 && deliveryInfo) {
+        const weightKg = cartTotalWeight();
+        delivery = DELIVERY_BASE_FEE + (deliveryInfo.distanceKm * RATE_PER_KM) + (weightKg * RATE_PER_KG);
+    }
+    delivery = Math.round(delivery * 100) / 100;
+    // VAT included in the final total, calculated on (subtotal + delivery).
+    const vat = (subtotal + delivery) * 0.15;
+    const total = subtotal + delivery + vat;
+    return { subtotal, delivery, vat, total };
