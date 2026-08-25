@@ -9,7 +9,7 @@ const DELIVERY_CONFIG = {
   perKm: 6.50, // R6.50 per km[span_5](start_span)[span_5](end_span)
   perKg: 8.00, // R8.00 per kg[span_6](start_span)[span_6](end_span)
   warehouseAddress: 'Benoni, Gauteng, South Africa',[span_7](start_span)[span_7](end_span)
-  apiKey: 'YOUR_GOOGLE_MAPS_API_KEY' // Get free key at Google Cloud Console[span_8](start_span)[span_8](end_span)
+  apiKey: 'ca13591e37193a981604a85d0441ecf91a825edd4b7d461b196294e124c87776' // Get free key at Google Cloud Console[span_8](start_span)[span_8](end_span)
 };
 
 // Regional fallback rates[span_9](start_span)[span_9](end_span)
