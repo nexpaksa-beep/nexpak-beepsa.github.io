@@ -1,4 +1,4 @@
-/* ==========================================================================
+l/* ==========================================================================
    NEXPAK SECURITY SOLUTIONS
    Checkout & Payment Routing
    checkout.js
@@ -7,6 +7,19 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     'use strict';
+
+       /*
+     * checkout.js must only execute on the checkout page.
+     * Shop, equestrian and other pages must not run checkout logic.
+     */
+
+    const isCheckoutPage =
+        document.getElementById('checkoutForm') ||
+        document.getElementById('checkoutOrderItems');
+
+    if (!isCheckoutPage) {
+        return;
+    }
 
     /* ==========================================================================
        1. CHECKOUT STATE
