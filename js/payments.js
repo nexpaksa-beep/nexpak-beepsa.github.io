@@ -1149,6 +1149,9 @@ window.PayFast = {
     }
 };
 
+window.PayFast = {
+    checkout: payWithPayFastCheckout
+};
 
 // ==========================================
 // PAYMENT BUTTON HELPER
