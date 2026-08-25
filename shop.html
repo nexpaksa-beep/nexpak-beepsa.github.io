@@ -2875,17 +2875,804 @@
             }
 
 
-            const products =
-                productDb[currentCategory];
+                                    );
+
+                    const qty =
+                        parseInt(
+                            qtyInput.value
+                        ) || 0;
 
 
-            let addedCount = 0;
+                    if (qty > 0) {
+
+                        let variant = "";
 
 
-            products.forEach(
-                function(prod) {
+                        if (prod.variants) {
 
-                    const qtyInput =
-                        document.getElementById(
-                            `qty_${prod.id}`
+                            const varSelect =
+                                document.getElementById(
+                                    `var_${prod.id}`
+                                );
+
+                            variant =
+                                varSelect
+                                    ? varSelect.value
+                                    : "";
+
+                        }
+
+
+                        /*
+                         * Check whether the exact
+                         * product + variant already
+                         * exists in the cart.
+                         */
+
+                        const existingIdx =
+                            cart.findIndex(
+                                function(item) {
+
+                                    return (
+                                        item.id === prod.id &&
+                                        item.variant === variant
+                                    );
+
+                                }
+                            );
+
+
+                        if (existingIdx > -1) {
+
+                            cart[existingIdx].qty += qty;
+
+                        } else {
+
+                            cart.push({
+
+                                id:
+                                    prod.id,
+
+                                name:
+                                    prod.name,
+
+                                variant:
+                                    variant,
+
+                                qty:
+                                    qty,
+
+                                price:
+                                    prod.price,
+
+                                weight:
+                                    prod.weight,
+
+                                category:
+                                    currentCategory
+
+                            });
+
+                        }
+
+
+                        /*
+                         * Reset quantity field
+                         * after adding.
+                         */
+
+                        qtyInput.value = 0;
+
+                        addedCount++;
+
+                    }
+
+                }
+            );
+
+
+            /*
+             * Save cart if products
+             * were successfully added.
+             */
+
+            if (addedCount > 0) {
+
+                localStorage.setItem(
+                    "nexpak_cart",
+                    JSON.stringify(cart)
+                );
+
+
+                updateCartUI();
+
+                updateVisualizer();
+
+
+                /*
+                 * Small confirmation message.
+                 */
+
+                alert(
+                    addedCount +
+                    " product selection(s) added to your cart."
+                );
+
+            } else {
+
+                alert(
+                    "Please specify a quantity greater than 0 for at least one item."
+                );
+
+            }
+
+        }
+
+
+        /* ==========================================================
+           UPDATE CART UI
+           ========================================================== */
+
+        function updateCartUI() {
+
+            const cartContainer =
+                document.getElementById(
+                    "cart-items"
+                );
+
+            const cartBadge =
+                document.getElementById(
+                    "cart-badge"
+                );
+
+
+            /*
+             * Calculate total quantity,
+             * rather than number of different
+             * products.
+             */
+
+            let totalQuantity = 0;
+
+            cart.forEach(
+                function(item) {
+
+                    totalQuantity +=
+                        Number(item.qty) || 0;
+
+                }
+            );
+
+
+            if (cartBadge) {
+
+                cartBadge.innerText =
+                    totalQuantity;
+
+            }
+
+
+            if (!cartContainer) {
+
+                return;
+
+            }
+
+
+            if (
+                !Array.isArray(cart) ||
+                cart.length === 0
+            ) {
+
+                cartContainer.innerHTML = `
+                    <p class="text-slate-400 italic text-sm">
+                        Cart is empty.
+                    </p>
+                `;
+
+                return;
+
+            }
+
+
+            let html = "";
+
+
+            cart.forEach(
+                function(item, index) {
+
+                    const desc =
+                        item.variant
+                            ? `${item.name} (${item.variant})`
+                            : item.name;
+
+
+                    const lineTotal =
+                        (
+                            Number(item.price) *
+                            Number(item.qty)
+                        ) || 0;
+
+
+                    html += `
+
+                        <div
+                            class="flex justify-between items-center
+                                   text-sm border-b border-slate-100
+                                   pb-3 mb-3"
+                        >
+
+                            <div class="flex-1 pr-3">
+
+                                <span
+                                    class="font-bold
+                                           text-nexpakAccent"
+                                >
+                                    ${item.qty}x
+                                </span>
+
+                                <span>
+                                    ${desc}
+                                </span>
+
+                            </div>
+
+
+                            <div
+                                class="text-right
+                                       flex items-center gap-3"
+                            >
+
+                                <span class="font-semibold">
+                                    R${lineTotal.toFixed(2)}
+                                </span>
+
+
+                                <button
+                                    type="button"
+                                    onclick="removeFromCart(${index})"
+                                    class="text-red-400
+                                           hover:text-red-600
+                                           transition"
+                                    title="Remove item"
+                                >
+
+                                    <i
+                                        class="fa-solid
+                                               fa-trash-can"
+                                    ></i>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+                }
+            );
+
+
+            /*
+             * Cart total.
+             */
+
+            let cartTotal = 0;
+
+
+            cart.forEach(
+                function(item) {
+
+                    cartTotal +=
+                        (
+                            Number(item.price) *
+                            Number(item.qty)
+                        ) || 0;
+
+                }
+            );
+
+
+            html += `
+
+                <div
+                    class="flex justify-between
+                           items-center pt-3
+                           border-t border-slate-200"
+                >
+
+                    <span class="font-bold text-lg">
+                        Total
+                    </span>
+
+                    <span
+                        class="font-extrabold
+                               text-xl text-nexpakAccent"
+                    >
+                        R${cartTotal.toFixed(2)}
+                    </span>
+
+                </div>
+
+            `;
+
+
+            cartContainer.innerHTML =
+                html;
+
+        }
+
+
+        /* ==========================================================
+           REMOVE FROM CART
+           ========================================================== */
+
+        function removeFromCart(index) {
+
+            if (
+                index < 0 ||
+                index >= cart.length
+            ) {
+
+                return;
+
+            }
+
+
+            cart.splice(
+                index,
+                1
+            );
+
+
+            /*
+             * Keep checkout cart
+             * synchronised.
+             */
+
+            localStorage.setItem(
+                "nexpak_cart",
+                JSON.stringify(cart)
+            );
+
+
+            updateCartUI();
+
+            updateVisualizer();
+
+        }
+
+
+        /* ==========================================================
+           PROCEED TO CHECKOUT
+           ========================================================== */
+
+        function proceedToCheckout() {
+
+            if (
+                !Array.isArray(cart) ||
+                cart.length === 0
+            ) {
+
+                alert(
+                    "Your cart is empty."
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * Final cart save before
+             * leaving the builder.
+             */
+
+            localStorage.setItem(
+                "nexpak_cart",
+                JSON.stringify(cart)
+            );
+
+
+            /*
+             * Open dedicated checkout.
+             */
+
+            window.location.href =
+                "checkout.html";
+
+        }
+
+
+        /* ==========================================================
+           PROPERTY VISUALIZER
+           ========================================================== */
+
+        function updateVisualizer() {
+
+            if (!overlay) {
+
+                return;
+
+            }
+
+
+            overlay.innerHTML = "";
+
+
+            let cameraCount =
+                0;
+
+            let roboguardCount =
+                0;
+
+            let hasElectricFence =
+                false;
+
+            let hasGateMotor =
+                false;
+
+
+            /*
+             * Inspect everything currently
+             * inside the cart.
+             */
+
+            cart.forEach(
+                function(item) {
+
+                    if (
+                        item.category === "cctv" &&
+                        item.id === "cctv_cam"
+                    ) {
+
+                        cameraCount +=
+                            Number(item.qty) || 0;
+
+                    }
+
+
+                    if (
+                        item.category === "electricFence"
+                    ) {
+
+                        hasElectricFence =
+                            true;
+
+                    }
+
+
+                    if (
+                        (
+                            item.category === "gateD5" ||
+                            item.category === "gateD10"
+                        ) &&
+                        item.id &&
+                        item.id.includes("motor")
+                    ) {
+
+                        hasGateMotor =
+                            true;
+
+                    }
+
+
+                    if (
+                        item.category === "roboguard" &&
+                        item.id === "rg_beam"
+                    ) {
+
+                        roboguardCount +=
+                            Number(item.qty) || 0;
+
+                    }
+
+                }
+            );
+
+
+            /*
+             * ELECTRIC FENCE
+             */
+
+            if (hasElectricFence) {
+
+                overlay.innerHTML += `
+
+                    <div
+                        class="ef-active"
+                        title="Electric fencing"
+                    ></div>
+
+                `;
+
+            }
+
+
+            /*
+             * GATE MOTOR
+             */
+
+            if (
+                hasGateMotor &&
+                markerPositions.gate
+            ) {
+
+                overlay.innerHTML += `
+
+                    <div
+                        class="marker pulse"
+                        style="
+                            top:
+                                ${markerPositions.gate.top};
+                            left:
+                                ${markerPositions.gate.left};
+                        "
+                    >
+
+                        <div
+                            class="
+                                bg-red-600
+                                text-white
+                                p-1.5
+                                rounded
+                                shadow-lg
+                                text-xs
+                                font-bold
+                                border-2
+                                border-white
+                            "
+                        >
+
+                            <i
+                                class="fa-solid fa-torii-gate"
+                            ></i>
+
+                            Gate
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+
+
+            /*
+             * CCTV CAMERAS
+             */
+
+            for (
+                let i = 0;
+                i < cameraCount;
+                i++
+            ) {
+
+                if (
+                    i >=
+                    markerPositions.cameras.length
+                ) {
+
+                    break;
+
+                }
+
+
+                const pos =
+                    markerPositions.cameras[i];
+
+
+                overlay.innerHTML += `
+
+                    <div
+                        class="marker"
+                        style="
+                            top: ${pos.top};
+                            left: ${pos.left};
+                        "
+                    >
+
+                        <div
+                            class="
+                                bg-blue-600
+                                text-white
+                                h-7
+                                w-7
+                                flex
+                                items-center
+                                justify-center
+                                rounded-full
+                                shadow-lg
+                                text-xs
+                                border-2
+                                border-white
+                            "
+                            title="CCTV Camera"
+                        >
+
+                            <i
+                                class="fa-solid fa-video"
+                            ></i>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+
+
+            /*
+             * ROBOGUARD BEAMS
+             */
+
+            for (
+                let i = 0;
+                i < roboguardCount;
+                i++
+            ) {
+
+                if (
+                    i >=
+                    markerPositions.roboguards.length
+                ) {
+
+                    break;
+
+                }
+
+
+                const pos =
+                    markerPositions.roboguards[i];
+
+
+                overlay.innerHTML += `
+
+                    <div
+                        class="marker"
+                        style="
+                            top: ${pos.top};
+                            left: ${pos.left};
+                        "
+                    >
+
+                        <div
+                            class="
+                                bg-green-600
+                                text-white
+                                h-7
+                                w-7
+                                flex
+                                items-center
+                                justify-center
+                                rounded-full
+                                shadow-lg
+                                text-xs
+                                border-2
+                                border-white
+                                pulse
+                            "
+                            title="Roboguard Beam"
+                        >
+
+                            <i
+                                class="fa-solid fa-wave-square"
+                            ></i>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        /* ==========================================================
+           LOAD SAVED CART
+           ========================================================== */
+
+        function loadSavedCart() {
+
+            try {
+
+                const savedCart =
+                    localStorage.getItem(
+                        "nexpak_cart"
+                    );
+
+
+                if (
+                    savedCart
+                ) {
+
+                    const parsedCart =
+                        JSON.parse(
+                            savedCart
+                        );
+
+
+                    if (
+                        Array.isArray(parsedCart)
+                    ) {
+
+                        cart =
+                            parsedCart;
+
+                    }
+
+                }
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Unable to load saved cart:",
+                    error
+                );
+
+                cart = [];
+
+            }
+
+
+            updateCartUI();
+
+            updateVisualizer();
+
+        }
+
+
+        /* ==========================================================
+           INITIALISE BUILDER
+           ========================================================== */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function() {
+
+                /*
+                 * Reload the cart from localStorage.
+                 */
+
+                loadSavedCart();
+
+
+                /*
+                 * Make sure the cart badge
+                 * is correct when the page opens.
+                 */
+
+                updateCartUI();
+
+
+                /*
+                 * Initialise visualiser.
+                 */
+
+                updateVisualizer();
+
+            }
+        );
+
+    </script>
+
+
+    <!-- ==========================================================
+         SEO SCHEMA
+         ========================================================== -->
+
+    <script
+        src="js/seo-schema-injector.js"
+    ></script>
+
+
+</body>
+</html>
      
