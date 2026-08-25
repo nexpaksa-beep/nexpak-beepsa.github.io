@@ -403,4 +403,36 @@ function calculateDeliveryRegion() {
   document.getElementById('distance-fee-display').textContent = 'R0.00';[span_135](start_span)[span_135](end_span)
   document.getElementById('weight-fee-display').textContent = 'R' + weightFee.toFixed(2);[span_136](start_span)[span_136](end_span)
   document.getElementById('total-delivery-display').textContent = 'R' + total.toFixed(2);[span_137](start_span)[span_137](end_span)
-  
+    document.getElementById('delivery-result').style.display = 'block';[span_0](start_span)[span_0](end_span)
+}
+
+function displayDeliveryResult(base, distance, weight, total) {
+  document.getElementById('base-fee-display').textContent = 'R' + base.toFixed(2);[span_1](start_span)[span_1](end_span)
+  document.getElementById('distance-fee-display').textContent = 'R' + distance.toFixed(2);[span_2](start_span)[span_2](end_span)
+  document.getElementById('weight-fee-display').textContent = 'R' + weight.toFixed(2);[span_3](start_span)[span_3](end_span)
+  document.getElementById('total-delivery-display').textContent = 'R' + total.toFixed(2);[span_4](start_span)[span_4](end_span)
+  document.getElementById('delivery-result').style.display = 'block';[span_5](start_span)[span_5](end_span)
+}
+
+function getCartWeight() {
+  const cartElement = document.querySelector('.cart-total-weight, #cart-weight, [data-weight]');[span_6](start_span)[span_6](end_span)
+  if (cartElement) {
+    return parseFloat(cartElement.textContent) || 0;[span_7](start_span)[span_7](end_span)
+  }
+  return 0;[span_8](start_span)[span_8](end_span)
+}
+
+// Global Exports & Page Initialization[span_9](start_span)[span_9](end_span)[span_10](start_span)[span_10](end_span)
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.location.search.includes('status=')) {
+    handlePayFastReturn();[span_11](start_span)[span_11](end_span)
+  }
+  initDeliveryCalculator();[span_12](start_span)[span_12](end_span)
+});
+
+window.PayFast = {
+  config: PAYFAST_CONFIG,[span_13](start_span)[span_13](end_span)
+  pay: initPayFastPayment,[span_14](start_span)[span_14](end_span)
+  checkout: payWithPayFastCheckout[span_15](start_span)[span_15](end_span)
+};
+    
