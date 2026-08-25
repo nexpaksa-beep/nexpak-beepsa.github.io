@@ -257,4 +257,28 @@ button { cursor: pointer; }
                     <div class="selector-container"><label>Email Address *</label><input type="email" id="custEmail" required placeholder="name@example.com"></div>
                     <div class="selector-container"><label>Phone Number *</label><input type="tel" id="custPhone" required placeholder="082 123 4567"></div>
                 </div>
-                <div class="selector-container"><label>Delivery Address *</label><textarea id="custAddress" rows="2" required placeholder="Street, Suburb, City, Postal Code" style="width:100%; padding:10
+                <div class="selector-container"><label>Delivery Address *</label><textarea id="custAddress" rows="2" required placeholder="Street, Suburb, City, Postal Code" style="width:100%; padding:10px; border:1px solid #cbd5e1; border-radius:8px; font-size:12px; background:#f8fafc;"></textarea></div>
+                <div class="selector-container">
+                    <label>Payment Option *</label>
+                    <select id="paymentMethod" required>
+                        <option value="eft">Instant EFT / Bank Transfer</option>
+                        <option value="card">Credit / Debit Card (PayFast)</option>
+                        <option value="quote">Generate Official Pro-Forma Quote (PDF)</option>
+                    </select>
+                </div>
+                <button type="submit" class="payfast-btn" style="background:#28a745;"><i class="fa-solid fa-circle-check"></i> Complete & Place Order</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ==========================================================
+     MODULAR SCRIPT LOADING (In exact dependency order)
+     ========================================================== -->
+<script src="delivery-calculator.js"></script>
+<script src="payfast-integration.js"></script>
+<script src="payments.js"></script>
+<script src="checkout.js"></script>
+</body>
+</html>
+
