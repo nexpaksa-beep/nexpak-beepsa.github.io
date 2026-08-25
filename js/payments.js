@@ -1439,3 +1439,693 @@ function addPayFastSuccessStyles() {
 /* ==========================================================================
    END OF PART 2
    ========================================================================== */
+/* ==========================================================================
+   7. PAYMENT METHOD HANDLING
+   ========================================================================== */
+
+function setupPaymentMethods() {
+
+    const paymentMethods = document.querySelectorAll(
+        'input[name="paymentMethod"]'
+    );
+
+    if (!paymentMethods.length) {
+        console.warn('No payment method inputs found.');
+        return;
+    }
+
+    paymentMethods.forEach(method => {
+
+        method.addEventListener('change', function () {
+
+            checkoutState.paymentMethod = this.value;
+
+            const eftPanel =
+                document.getElementById('eftDetailsPanel');
+
+            if (eftPanel) {
+                eftPanel.style.display =
+                    this.value === 'eft'
+                        ? 'block'
+                        : 'none';
+            }
+
+            console.log(
+                'Payment method selected:',
+                checkoutState.paymentMethod
+            );
+        });
+
+    });
+
+}
+
+
+/* ==========================================================================
+   8. CUSTOMER VALIDATION
+   ========================================================================== */
+
+function getCustomerDetails() {
+
+    const nameEl =
+        document.getElementById('custName') ||
+        document.getElementById('CustName');
+
+    const emailEl =
+        document.getElementById('custEmail') ||
+        document.getElementById('CustEmail');
+
+    const phoneEl =
+        document.getElementById('custPhone') ||
+        document.getElementById('CustPhone');
+
+    const addressEl =
+        document.getElementById('shippingAddress') ||
+        document.getElementById('delivery-address');
+
+    const customer = {
+        name: nameEl ? nameEl.value.trim() : '',
+        email: emailEl ? emailEl.value.trim() : '',
+        phone: phoneEl ? phoneEl.value.trim() : '',
+        address: addressEl ? addressEl.value.trim() : ''
+    };
+
+    return customer;
+}
+
+
+function validateCustomerDetails() {
+
+    const customer = getCustomerDetails();
+
+    if (!customer.name) {
+        alert('Please enter your full name.');
+        return false;
+    }
+
+    if (!customer.email) {
+        alert('Please enter your email address.');
+        return false;
+    }
+
+    const emailPattern =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailPattern.test(customer.email)) {
+        alert('Please enter a valid email address.');
+        return false;
+    }
+
+    if (!customer.phone) {
+        alert('Please enter your phone number.');
+        return false;
+    }
+
+    if (!customer.address) {
+        alert('Please enter your delivery address.');
+        return false;
+    }
+
+    return true;
+}
+
+
+/* ==========================================================================
+   9. ORDER REFERENCE
+   ========================================================================== */
+
+function generateCheckoutOrderReference() {
+
+    const timestamp =
+        Date.now().toString().slice(-8);
+
+    const random =
+        Math.random()
+            .toString(36)
+            .substring(2, 7)
+            .toUpperCase();
+
+    return `NEX-${timestamp}-${random}`;
+}
+
+
+/* ==========================================================================
+   10. ORDER DATA
+   ========================================================================== */
+
+function buildOrderPayload() {
+
+    const customer =
+        getCustomerDetails();
+
+    const orderReference =
+        checkoutState.orderReference ||
+        generateCheckoutOrderReference();
+
+    checkoutState.orderReference =
+        orderReference;
+
+    return {
+
+        reference: orderReference,
+
+        orderReference: orderReference,
+
+        customer: {
+            name: customer.name,
+            email: customer.email,
+            phone: customer.phone,
+            address: customer.address
+        },
+
+        cart: checkoutState.cart,
+
+        subtotalExclVat:
+            Number(
+                checkoutState.subtotalExclVat.toFixed(2)
+            ),
+
+        deliveryFee:
+            Number(
+                checkoutState.deliveryFee.toFixed(2)
+            ),
+
+        vatAmount:
+            Number(
+                checkoutState.vatAmount.toFixed(2)
+            ),
+
+        grandTotal:
+            Number(
+                checkoutState.grandTotal.toFixed(2)
+            ),
+
+        totalWeightKg:
+            Number(
+                checkoutState.totalWeightKg.toFixed(2)
+            ),
+
+        distanceKm:
+            Number(
+                checkoutState.distanceKm.toFixed(2)
+            ),
+
+        paymentMethod:
+            checkoutState.paymentMethod,
+
+        createdAt:
+            new Date().toISOString(),
+
+        company:
+            'Nexpak Security Solutions'
+    };
+}
+
+
+/* ==========================================================================
+   11. SAVE ORDER LOCALLY
+   ========================================================================== */
+
+function saveCheckoutOrder(order) {
+
+    try {
+
+        localStorage.setItem(
+            'nexpak_pending_order',
+            JSON.stringify(order)
+        );
+
+        localStorage.setItem(
+            'nexpak_order_reference',
+            order.reference
+        );
+
+        console.log(
+            'Checkout order saved:',
+            order.reference
+        );
+
+    } catch (error) {
+
+        console.error(
+            'Could not save checkout order:',
+            error
+        );
+
+    }
+}
+
+
+/* ==========================================================================
+   12. PAYMENT ROUTING
+   ========================================================================== */
+
+function processPayment() {
+
+    if (!validateCustomerDetails()) {
+        return;
+    }
+
+    if (
+        !checkoutState.deliveryFee ||
+        checkoutState.deliveryFee <= 0
+    ) {
+
+        alert(
+            'Please calculate your delivery fee before proceeding with payment.'
+        );
+
+        return;
+    }
+
+    if (
+        !checkoutState.grandTotal ||
+        checkoutState.grandTotal <= 0
+    ) {
+
+        alert(
+            'Your order total could not be calculated. Please refresh the checkout.'
+        );
+
+        return;
+    }
+
+    const order =
+        buildOrderPayload();
+
+    saveCheckoutOrder(order);
+
+    console.log(
+        'Processing order:',
+        order
+    );
+
+
+    /* ----------------------------------------------------------------------
+       PAYFAST
+       ---------------------------------------------------------------------- */
+
+    if (
+        checkoutState.paymentMethod === 'payfast'
+    ) {
+
+        if (
+            typeof window.PayFast === 'undefined' ||
+            typeof window.PayFast.checkout !== 'function'
+        ) {
+
+            alert(
+                'PayFast is not available. Please refresh the page and try again.'
+            );
+
+            console.error(
+                'window.PayFast.checkout is not available.'
+            );
+
+            return;
+        }
+
+        console.log(
+            'Routing order to PayFast:',
+            order.reference
+        );
+
+        window.PayFast.checkout(
+
+            checkoutState.grandTotal,
+
+            checkoutState.cart,
+
+            order.customer.email,
+
+            order.customer.name
+
+        );
+
+        return;
+    }
+
+
+    /* ----------------------------------------------------------------------
+       MANUAL EFT
+       ---------------------------------------------------------------------- */
+
+    if (
+        checkoutState.paymentMethod === 'eft'
+    ) {
+
+        processManualEFT(order);
+
+        return;
+    }
+
+
+    alert(
+        'Please select a payment method.'
+    );
+
+}
+
+
+/* ==========================================================================
+   13. MANUAL EFT
+   ========================================================================== */
+
+function processManualEFT(order) {
+
+    console.log(
+        'Processing manual EFT order:',
+        order.reference
+    );
+
+    localStorage.setItem(
+        'nexpak_eft_order',
+        JSON.stringify(order)
+    );
+
+    const amount =
+        Number(order.grandTotal).toFixed(2);
+
+    const reference =
+        order.reference;
+
+
+    const message =
+        `Order ${reference} has been created.
+
+` +
+        `Amount: R${amount}
+
+` +
+        `Please use ${reference} as your payment reference.`;
+
+
+    alert(message);
+
+
+    /*
+     * Do NOT clear the cart yet.
+     *
+     * The cart should remain available until
+     * the order has been successfully recorded.
+     */
+
+
+    const eftPanel =
+        document.getElementById('eftDetailsPanel');
+
+    if (eftPanel) {
+
+        eftPanel.style.display =
+            'block';
+
+        eftPanel.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        });
+
+    }
+
+}
+
+
+/* ==========================================================================
+   14. CHECKOUT BUTTON
+   ========================================================================== */
+
+function setupCheckoutButton() {
+
+    const button =
+        document.getElementById('completeOrderBtn');
+
+    if (!button) {
+
+        console.warn(
+            'completeOrderBtn not found.'
+        );
+
+        return;
+    }
+
+
+    button.addEventListener(
+        'click',
+        function(event) {
+
+            event.preventDefault();
+
+            if (
+                button.disabled
+            ) {
+                return;
+            }
+
+            button.disabled = true;
+
+            const originalHTML =
+                button.innerHTML;
+
+            button.innerHTML =
+                '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
+
+
+            try {
+
+                processPayment();
+
+            } catch (error) {
+
+                console.error(
+                    'Checkout processing error:',
+                    error
+                );
+
+                alert(
+                    'Something went wrong while processing your order. Please try again.'
+                );
+
+                button.disabled = false;
+
+                button.innerHTML =
+                    originalHTML;
+
+            }
+
+        }
+    );
+
+}
+
+
+/* ==========================================================================
+   15. CHECKOUT FORM SUBMISSION
+   ========================================================================== */
+
+function setupCheckoutForm() {
+
+    const form =
+        document.getElementById('checkoutForm');
+
+    if (!form) {
+        return;
+    }
+
+    form.addEventListener(
+        'submit',
+        function(event) {
+
+            event.preventDefault();
+
+            processPayment();
+
+        }
+    );
+
+}
+
+
+/* ==========================================================================
+   16. ORDER SUMMARY DISPLAY
+   ========================================================================== */
+
+function updateOrderSummaryDisplay() {
+
+    if (elSubtotal) {
+
+        elSubtotal.textContent =
+            `R ${checkoutState.subtotalExclVat.toFixed(2)}`;
+
+    }
+
+    if (elDelivery) {
+
+        if (
+            checkoutState.deliveryFee > 0
+        ) {
+
+            elDelivery.textContent =
+                `R ${checkoutState.deliveryFee.toFixed(2)}`;
+
+        } else {
+
+            elDelivery.textContent =
+                'Pending Address';
+
+        }
+
+    }
+
+    if (elVat) {
+
+        elVat.textContent =
+            `R ${checkoutState.vatAmount.toFixed(2)}`;
+
+    }
+
+    if (elTotal) {
+
+        elTotal.textContent =
+            `R ${checkoutState.grandTotal.toFixed(2)}`;
+
+    }
+
+}
+
+
+/* ==========================================================================
+   17. DELIVERY RESULT LISTENER
+   ========================================================================== */
+
+document.addEventListener(
+    'deliveryCalculated',
+    function(event) {
+
+        if (!event.detail) {
+            return;
+        }
+
+        const deliveryFee =
+            Number(event.detail.total || 0);
+
+        const distance =
+            Number(event.detail.distance || 0);
+
+        checkoutState.deliveryFee =
+            deliveryFee;
+
+        checkoutState.distanceKm =
+            distance;
+
+        updateFinancials();
+
+        console.log(
+            'Delivery received by checkout:',
+            deliveryFee
+        );
+
+    }
+);
+
+
+/* ==========================================================================
+   18. LOCAL STORAGE CART REFRESH
+   ========================================================================== */
+
+function refreshCheckoutCart() {
+
+    try {
+
+        const storedCart =
+            localStorage.getItem(
+                'nexpak_cart'
+            );
+
+        checkoutState.cart =
+            storedCart
+                ? JSON.parse(storedCart)
+                : [];
+
+        initCheckout();
+
+    } catch (error) {
+
+        console.error(
+            'Could not refresh checkout cart:',
+            error
+        );
+
+    }
+
+}
+
+
+/* ==========================================================================
+   19. EXPOSE CHECKOUT FUNCTIONS
+   ========================================================================== */
+
+window.NexpakCheckout = {
+
+    getState: function() {
+        return checkoutState;
+    },
+
+    getOrderPayload:
+        buildOrderPayload,
+
+    processPayment:
+        processPayment,
+
+    refreshCart:
+        refreshCheckoutCart,
+
+    calculateTotals:
+        updateFinancials
+
+};
+
+
+/* ==========================================================================
+   20. INITIALIZATION
+   ========================================================================== */
+
+function initializeCheckoutSystem() {
+
+    console.log(
+        'Nexpak Checkout System initializing...'
+    );
+
+    initCheckout();
+
+    setupPaymentMethods();
+
+    setupCheckoutButton();
+
+    setupCheckoutForm();
+
+    updateOrderSummaryDisplay();
+
+    console.log(
+        'Nexpak Checkout System ready.'
+    );
+
+}
+
+
+/* ==========================================================================
+   21. DOM READY
+   ========================================================================== */
+
+if (
+    document.readyState === 'loading'
+) {
+
+    document.addEventListener(
+        'DOMContentLoaded',
+        initializeCheckoutSystem
+    );
+
+} else {
+
+    initializeCheckoutSystem();
+
+       }
