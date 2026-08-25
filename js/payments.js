@@ -706,15 +706,6 @@ function escapeHtml(value) {
    16. REAL MD5 IMPLEMENTATION
    ========================================================================== */
 
-function md5(string) {
-
-    function rotateLeft(value, shift) {
-
-        return (
-            (value << shift) |
-            (value >>> (32 - shift))
-        );
-    }
 
 
     function addUnsigned(a, b) {
