@@ -1,565 +1,777 @@
 /* ==========================================================================
-   Nexpak Security Solutions - Equestrian Checkout
-   checkout.js
-
-   Handles:
-   - Customer details
-   - Equestrian cart
-   - Delivery result
-   - VAT
-   - Complete Payment button
-   - PayFast routing
-   - Manual EFT fallback
-
-   PayFast processing is handled by:
-   js/payfast-integration.js
+   Nexpak Security Solutions
+   Checkout & Payment Routing
+   File: js/checkout.js
    ========================================================================== */
 
-document.addEventListener('DOMContentLoaded', () => {
+console.log('Nexpak Checkout initialized');
 
-    console.log('Nexpak Equestrian Checkout initialized');
+document.addEventListener('DOMContentLoaded', function () {
 
-    // ------------------------------------------------------------
-    // CHECKOUT STATE
-    // ------------------------------------------------------------
+    // ======================================================================
+    // 1. CHECKOUT STATE
+    // ======================================================================
 
     const checkoutState = {
+        cart: [],
+        subtotal: 0,
         deliveryFee: 0,
+        vat: 0,
+        grandTotal: 0,
         deliveryCalculated: false,
-        paymentMethod: 'payfast'
+        paymentMethod: 'payfast',
+        orderReference: null
     };
 
-    // ------------------------------------------------------------
-    // DOM ELEMENTS
-    // ------------------------------------------------------------
+    // ======================================================================
+    // 2. LOAD CART
+    // ======================================================================
 
-    const completeOrderBtn = document.getElementById('completeOrderBtn');
+    function loadCart() {
 
-    const customerNameInput = document.getElementById('CustName');
-    const customerEmailInput = document.getElementById('CustEmail');
-    const customerPhoneInput = document.getElementById('CustPhone');
-
-    const checkoutModal = document.getElementById('checkoutModal');
-
-    // ------------------------------------------------------------
-    // CART HELPERS
-    // ------------------------------------------------------------
-
-    function getCurrentCart() {
-        // Equestrian cart is maintained by equestrian.js
-        if (typeof cart !== 'undefined' && Array.isArray(cart)) {
-            return cart;
-        }
-
-        // Fallback to localStorage
         try {
-            const storedCart = JSON.parse(
-                localStorage.getItem('nexpak_cart')
-            );
-
-            if (Array.isArray(storedCart)) {
-                return storedCart;
-            }
+            checkoutState.cart =
+                JSON.parse(localStorage.getItem('nexpak_cart')) || [];
         } catch (error) {
-            console.error('Could not read stored cart:', error);
+
+            console.error('Could not load Nexpak cart:', error);
+
+            checkoutState.cart = [];
         }
 
-        return [];
+        return checkoutState.cart;
     }
 
-    function getCartProducts() {
-        const currentCart = getCurrentCart();
+    loadCart();
 
-        if (typeof products === 'undefined') {
-            console.error('Product database not available.');
-            return [];
-        }
 
-        return currentCart.map(item => {
+    // ======================================================================
+    // 3. DOM ELEMENTS
+    // ======================================================================
 
-            const product = products.find(
-                product => product.id === item.id
+    const checkoutModal =
+        document.getElementById('checkoutModal');
+
+    const customerName =
+        document.getElementById('CustName');
+
+    const customerEmail =
+        document.getElementById('CustEmail');
+
+    const customerPhone =
+        document.getElementById('CustPhone');
+
+    const generatedOrderNum =
+        document.getElementById('generatedOrderNum');
+
+    const completeOrderBtn =
+        document.getElementById('completeOrderBtn');
+
+    const deliveryContainer =
+        document.getElementById('deliveryContainer');
+
+    const paymentContainer =
+        document.getElementById('paymentContainer');
+
+
+    // ======================================================================
+    // 4. GENERATE ORDER REFERENCE
+    // ======================================================================
+
+    function generateOrderReference() {
+
+        const timestamp = Date.now();
+
+        const random =
+            Math.random()
+                .toString(36)
+                .substring(2, 8)
+                .toUpperCase();
+
+        return `NXP-${timestamp}-${random}`;
+    }
+
+
+    // ======================================================================
+    // 5. CALCULATE CART SUBTOTAL
+    // ======================================================================
+
+    function calculateSubtotal() {
+
+        let subtotal = 0;
+
+        checkoutState.cart.forEach(function (item) {
+
+            let price = Number(
+                item.price ||
+                item.total ||
+                item.amount ||
+                0
             );
 
-            if (!product) return null;
+            let quantity = Number(
+                item.quantity || 1
+            );
 
-            return {
-                id: product.id,
-                name: product.name,
-                price: Number(product.price) || 0,
-                quantity: Number(item.qty) || 1,
-                variant: item.variant || '',
-                unit: product.unit || ''
-            };
-
-        }).filter(Boolean);
-    }
-
-    // ------------------------------------------------------------
-    // CALCULATE CART TOTAL
-    // ------------------------------------------------------------
-
-    function calculateCartSubtotal() {
-
-        const items = getCartProducts();
-
-        let subtotalExVat = 0;
-
-        items.forEach(item => {
-            subtotalExVat += item.price * item.quantity;
+            subtotal += price * quantity;
         });
 
-        return subtotalExVat;
+        checkoutState.subtotal = subtotal;
+
+        return subtotal;
     }
 
-    // ------------------------------------------------------------
-    // CALCULATE VAT
-    // ------------------------------------------------------------
+
+    // ======================================================================
+    // 6. CALCULATE VAT
+    // ======================================================================
+
+    function calculateVAT() {
+
+        const taxableAmount =
+            checkoutState.subtotal +
+            checkoutState.deliveryFee;
+
+        checkoutState.vat =
+            taxableAmount * 0.15;
+
+        return checkoutState.vat;
+    }
+
+
+    // ======================================================================
+    // 7. CALCULATE GRAND TOTAL
+    // ======================================================================
 
     function calculateGrandTotal() {
 
-        const subtotalExVat = calculateCartSubtotal();
+        calculateSubtotal();
+        calculateVAT();
 
-        const delivery = Number(checkoutState.deliveryFee) || 0;
+        checkoutState.grandTotal =
+            checkoutState.subtotal +
+            checkoutState.deliveryFee +
+            checkoutState.vat;
 
-        const taxableAmount = subtotalExVat + delivery;
-
-        const vat = taxableAmount * 0.15;
-
-        return {
-            subtotalExVat,
-            delivery,
-            vat,
-            grandTotal: taxableAmount + vat
-        };
+        return checkoutState.grandTotal;
     }
 
-    // ------------------------------------------------------------
-    // FIND DELIVERY RESULT FROM EQUESTRIAN CALCULATOR
-    // ------------------------------------------------------------
 
-    function readDeliveryAmount() {
+    // ======================================================================
+    // 8. GET CART WEIGHT
+    // ======================================================================
 
-        const deliveryElement =
-            document.getElementById('eq-total-delivery');
+    function getCartWeight() {
 
-        if (!deliveryElement) {
-            return 0;
+        let totalWeight = 0;
+
+        checkoutState.cart.forEach(function (item) {
+
+            const quantity =
+                Number(item.quantity || 1);
+
+            const weight =
+                Number(
+                    item.weight ||
+                    item.weightKg ||
+                    0.5
+                );
+
+            totalWeight += weight * quantity;
+        });
+
+        return totalWeight;
+    }
+
+
+    // ======================================================================
+    // 9. DISPLAY CHECKOUT SUMMARY
+    // ======================================================================
+
+    function updateCheckoutSummary() {
+
+        calculateGrandTotal();
+
+        const summary =
+            document.getElementById('checkoutSummary');
+
+        if (!summary) {
+            return;
         }
 
-        const text = deliveryElement.textContent || '';
+        summary.innerHTML = `
+            <div class="checkout-summary-row">
+                <span>Subtotal</span>
+                <strong>
+                    R${checkoutState.subtotal.toFixed(2)}
+                </strong>
+            </div>
 
-        const numericValue = parseFloat(
-            text.replace(/[^\d.]/g, '')
-        );
+            <div class="checkout-summary-row">
+                <span>Delivery</span>
+                <strong>
+                    ${
+                        checkoutState.deliveryCalculated
+                        ? 'R' + checkoutState.deliveryFee.toFixed(2)
+                        : 'Pending'
+                    }
+                </strong>
+            </div>
 
-        return Number.isFinite(numericValue)
-            ? numericValue
-            : 0;
+            <div class="checkout-summary-row">
+                <span>VAT (15%)</span>
+                <strong>
+                    R${checkoutState.vat.toFixed(2)}
+                </strong>
+            </div>
+
+            <div class="checkout-summary-row checkout-grand-total">
+                <span>Total</span>
+                <strong>
+                    R${checkoutState.grandTotal.toFixed(2)}
+                </strong>
+            </div>
+        `;
     }
 
-    // ------------------------------------------------------------
-    // UPDATE DELIVERY STATE
-    // ------------------------------------------------------------
 
-    function updateDeliveryState() {
+    // ======================================================================
+    // 10. UPDATE GENERATED ORDER NUMBER
+    // ======================================================================
 
-        const deliveryAmount = readDeliveryAmount();
+    function updateOrderReference() {
 
-        if (deliveryAmount > 0) {
+        if (!checkoutState.orderReference) {
 
-            checkoutState.deliveryFee = deliveryAmount;
+            checkoutState.orderReference =
+                generateOrderReference();
+        }
+
+        if (generatedOrderNum) {
+
+            generatedOrderNum.textContent =
+                checkoutState.orderReference;
+        }
+    }
+
+
+    // ======================================================================
+    // 11. CREATE DELIVERY SUMMARY
+    // ======================================================================
+
+    function createDeliverySummary() {
+
+        if (!deliveryContainer) {
+            return;
+        }
+
+        /*
+         * Do not destroy an existing delivery calculator.
+         * If equestrian-delivery-calculator.js has already created
+         * the calculator, leave it alone.
+         */
+
+        const existingCalculator =
+            document.getElementById('equestrian-delivery-calc');
+
+        if (existingCalculator) {
+            return;
+        }
+
+        deliveryContainer.innerHTML = `
+            <div class="checkout-delivery-box">
+
+                <h3>
+                    <i class="fa-solid fa-truck"></i>
+                    Delivery
+                </h3>
+
+                <p>
+                    Please select your delivery area before payment.
+                </p>
+
+                <div class="checkout-delivery-options">
+
+                    <button
+                        type="button"
+                        class="delivery-option"
+                        data-fee="200"
+                        data-region="gauteng"
+                    >
+                        Gauteng
+                        <strong>From R200</strong>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="delivery-option"
+                        data-fee="650"
+                        data-region="durban"
+                    >
+                        Durban
+                        <strong>From R650</strong>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="delivery-option"
+                        data-fee="800"
+                        data-region="capetown"
+                    >
+                        Cape Town
+                        <strong>From R800</strong>
+                    </button>
+
+                    <button
+                        type="button"
+                        class="delivery-option"
+                        data-fee="500"
+                        data-region="other"
+                    >
+                        Other Areas
+                        <strong>From R500</strong>
+                    </button>
+
+                </div>
+
+                <div
+                    id="checkoutDeliveryResult"
+                    style="display:none;"
+                >
+                    Delivery:
+                    <strong id="checkoutDeliveryAmount">
+                        R0.00
+                    </strong>
+                </div>
+
+            </div>
+        `;
+
+        setupDeliveryOptions();
+    }
+
+
+    // ======================================================================
+    // 12. DELIVERY OPTION EVENTS
+    // ======================================================================
+
+    function setupDeliveryOptions() {
+
+        const buttons =
+            document.querySelectorAll('.delivery-option');
+
+        buttons.forEach(function (button) {
+
+            button.addEventListener('click', function () {
+
+                buttons.forEach(function (btn) {
+                    btn.classList.remove('selected');
+                });
+
+                button.classList.add('selected');
+
+                const fee =
+                    Number(button.dataset.fee || 0);
+
+                checkoutState.deliveryFee = fee;
+
+                checkoutState.deliveryCalculated =
+                    fee > 0;
+
+                const result =
+                    document.getElementById(
+                        'checkoutDeliveryResult'
+                    );
+
+                const amount =
+                    document.getElementById(
+                        'checkoutDeliveryAmount'
+                    );
+
+                if (result) {
+                    result.style.display = 'block';
+                }
+
+                if (amount) {
+                    amount.textContent =
+                        `R${fee.toFixed(2)}`;
+                }
+
+                updateCheckoutSummary();
+
+                console.log(
+                    'Delivery selected:',
+                    fee
+                );
+            });
+        });
+    }
+
+
+    // ======================================================================
+    // 13. LISTEN FOR EXTERNAL DELIVERY CALCULATOR
+    // ======================================================================
+
+    document.addEventListener(
+        'deliveryCalculated',
+        function (event) {
+
+            const fee =
+                Number(
+                    event.detail?.fee || 0
+                );
+
+            if (fee <= 0) {
+                return;
+            }
+
+            checkoutState.deliveryFee = fee;
+
             checkoutState.deliveryCalculated = true;
 
-            console.log(
-                'Equestrian delivery:',
-                checkoutState.deliveryFee
-            );
+            updateCheckoutSummary();
+        }
+    );
 
-            return true;
+
+    // ======================================================================
+    // 14. PAYMENT METHOD UI
+    // ======================================================================
+
+    function createPaymentOptions() {
+
+        if (!paymentContainer) {
+            return;
         }
 
-        checkoutState.deliveryFee = 0;
-        checkoutState.deliveryCalculated = false;
+        paymentContainer.innerHTML = `
 
-        return false;
+            <div class="checkout-payment-box">
+
+                <h3>
+                    <i class="fa-solid fa-credit-card"></i>
+                    Payment Method
+                </h3>
+
+                <label class="payment-option selected">
+
+                    <input
+                        type="radio"
+                        name="checkoutPaymentMethod"
+                        value="payfast"
+                        checked
+                    >
+
+                    <span class="payment-option-content">
+
+                        <span class="payment-option-title">
+                            Pay securely with
+                        </span>
+
+                        <span class="payfast-brand">
+                            <span class="payfast-p">
+                                P
+                            </span>
+
+                            <span>
+                                PayFast
+                            </span>
+                        </span>
+
+                        <small>
+                            Secure online payment
+                        </small>
+
+                    </span>
+
+                </label>
+
+                <label class="payment-option">
+
+                    <input
+                        type="radio"
+                        name="checkoutPaymentMethod"
+                        value="eft"
+                    >
+
+                    <span class="payment-option-content">
+
+                        <span class="payment-option-title">
+                            Manual EFT
+                        </span>
+
+                        <small>
+                            Receive banking details after placing your order
+                        </small>
+
+                    </span>
+
+                </label>
+
+                <div
+                    id="eftCheckoutDetails"
+                    class="eft-checkout-details"
+                    style="display:none;"
+                >
+
+                    <strong>
+                        Manual EFT
+                    </strong>
+
+                    <p>
+                        Your order will be held pending
+                        payment verification.
+                    </p>
+
+                </div>
+
+            </div>
+        `;
+
+        setupPaymentOptions();
     }
 
-    // ------------------------------------------------------------
-    // VALIDATE CUSTOMER DETAILS
-    // ------------------------------------------------------------
+
+    // ======================================================================
+    // 15. PAYMENT OPTION EVENTS
+    // ======================================================================
+
+    function setupPaymentOptions() {
+
+        const radios =
+            document.querySelectorAll(
+                'input[name="checkoutPaymentMethod"]'
+            );
+
+        const eftDetails =
+            document.getElementById(
+                'eftCheckoutDetails'
+            );
+
+        radios.forEach(function (radio) {
+
+            radio.addEventListener(
+                'change',
+                function () {
+
+                    checkoutState.paymentMethod =
+                        radio.value;
+
+                    document
+                        .querySelectorAll('.payment-option')
+                        .forEach(function (option) {
+
+                            option.classList.remove(
+                                'selected'
+                            );
+                        });
+
+                    const parent =
+                        radio.closest(
+                            '.payment-option'
+                        );
+
+                    if (parent) {
+                        parent.classList.add(
+                            'selected'
+                        );
+                    }
+
+                    if (eftDetails) {
+
+                        eftDetails.style.display =
+                            radio.value === 'eft'
+                            ? 'block'
+                            : 'none';
+                    }
+                }
+            );
+        });
+    }
+
+
+    // ======================================================================
+    // 16. VALIDATE CUSTOMER DETAILS
+    // ======================================================================
 
     function validateCustomerDetails() {
 
-        if (!customerNameInput) {
-            alert('Customer name field could not be found.');
-            return false;
-        }
+        const name =
+            customerName?.value.trim() || '';
 
-        if (!customerEmailInput) {
-            alert('Customer email field could not be found.');
-            return false;
-        }
+        const email =
+            customerEmail?.value.trim() || '';
 
-        if (!customerPhoneInput) {
-            alert('Customer phone field could not be found.');
-            return false;
-        }
-
-        const name = customerNameInput.value.trim();
-        const email = customerEmailInput.value.trim();
-        const phone = customerPhoneInput.value.trim();
+        const phone =
+            customerPhone?.value.trim() || '';
 
         if (!name) {
-            alert('Please enter your full name.');
-            customerNameInput.focus();
+
+            alert(
+                'Please enter your full name.'
+            );
+
+            customerName?.focus();
+
             return false;
         }
 
         if (!email) {
-            alert('Please enter your email address.');
-            customerEmailInput.focus();
+
+            alert(
+                'Please enter your email address.'
+            );
+
+            customerEmail?.focus();
+
             return false;
         }
 
         if (!email.includes('@')) {
-            alert('Please enter a valid email address.');
-            customerEmailInput.focus();
+
+            alert(
+                'Please enter a valid email address.'
+            );
+
+            customerEmail?.focus();
+
             return false;
         }
 
         if (!phone) {
-            alert('Please enter your phone number.');
-            customerPhoneInput.focus();
+
+            alert(
+                'Please enter your phone number.'
+            );
+
+            customerPhone?.focus();
+
             return false;
         }
 
         return true;
     }
 
-    // ------------------------------------------------------------
-    // GET PAYMENT METHOD
-    // ------------------------------------------------------------
 
-    function getPaymentMethod() {
+    // ======================================================================
+    // 17. CREATE PAYMENT PAYLOAD
+    // ======================================================================
 
-        const selectedRadio =
-            document.querySelector(
-                'input[name="paymentMethod"]:checked'
-            );
+    function createPaymentPayload() {
 
-        if (selectedRadio) {
-            return selectedRadio.value;
-        }
+        return {
 
-        return 'payfast';
+            orderReference:
+                checkoutState.orderReference,
+
+            customer: {
+                name:
+                    customerName?.value.trim() || '',
+
+                email:
+                    customerEmail?.value.trim() || '',
+
+                phone:
+                    customerPhone?.value.trim() || ''
+            },
+
+            subtotal:
+                checkoutState.subtotal.toFixed(2),
+
+            delivery:
+                checkoutState.deliveryFee.toFixed(2),
+
+            vat:
+                checkoutState.vat.toFixed(2),
+
+            total:
+                checkoutState.grandTotal.toFixed(2),
+
+            paymentMethod:
+                checkoutState.paymentMethod,
+
+            cart:
+                checkoutState.cart,
+
+            createdAt:
+                new Date().toISOString()
+        };
     }
 
-    // ------------------------------------------------------------
-    // CREATE ORDER REFERENCE
-    // ------------------------------------------------------------
 
-    function generateOrderReference() {
+    // ======================================================================
+    // 18. SAVE PENDING ORDER
+    // ======================================================================
 
-        if (
-            typeof currentOrderNumber !== 'undefined' &&
-            currentOrderNumber
-        ) {
-            return currentOrderNumber;
-        }
+    function savePendingOrder(payload) {
 
-        return 'NXK-' +
-            Math.floor(
-                100000 +
-                Math.random() * 900000
-            );
-    }
-
-    // ------------------------------------------------------------
-    // COMPLETE PAYMENT
-    // ------------------------------------------------------------
-
-    function completePayment() {
-
-        console.log('Complete Payment clicked');
-
-        // --------------------------------------------------------
-        // 1. CHECK CART
-        // --------------------------------------------------------
-
-        const currentCart = getCurrentCart();
-
-        if (!currentCart.length) {
-
-            alert(
-                'Your cart is empty. Please add products before checking out.'
-            );
-
-            return;
-        }
-
-        // --------------------------------------------------------
-        // 2. VALIDATE CUSTOMER
-        // --------------------------------------------------------
-
-        if (!validateCustomerDetails()) {
-            return;
-        }
-
-        // --------------------------------------------------------
-        // 3. CHECK DELIVERY
-        // --------------------------------------------------------
-
-        updateDeliveryState();
-
-        if (!checkoutState.deliveryCalculated) {
-
-            alert(
-                'Please select your delivery region and calculate your delivery cost before completing payment.'
-            );
-
-            const deliverySection =
-                document.getElementById(
-                    'equestrian-delivery-calc'
-                );
-
-            if (deliverySection) {
-                deliverySection.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center'
-                });
-            }
-
-            return;
-        }
-
-        // --------------------------------------------------------
-        // 4. CALCULATE FINAL TOTAL
-        // --------------------------------------------------------
-
-        const totals = calculateGrandTotal();
-
-        if (totals.grandTotal <= 0) {
-
-            alert(
-                'Unable to calculate the order total. Please try again.'
-            );
-
-            return;
-        }
-
-        // --------------------------------------------------------
-        // 5. CUSTOMER DETAILS
-        // --------------------------------------------------------
-
-        const customerName =
-            customerNameInput.value.trim();
-
-        const customerEmail =
-            customerEmailInput.value.trim();
-
-        const customerPhone =
-            customerPhoneInput.value.trim();
-
-        const orderReference =
-            generateOrderReference();
-
-        // --------------------------------------------------------
-        // 6. PAYMENT METHOD
-        // --------------------------------------------------------
-
-        const paymentMethod =
-            getPaymentMethod();
-
-        console.log('--------------------------------');
-        console.log('NEXPAK ORDER');
-        console.log('Reference:', orderReference);
-        console.log('Customer:', customerName);
-        console.log('Email:', customerEmail);
-        console.log('Phone:', customerPhone);
-        console.log('Subtotal:', totals.subtotalExVat);
-        console.log('Delivery:', totals.delivery);
-        console.log('VAT:', totals.vat);
-        console.log('Grand Total:', totals.grandTotal);
-        console.log('Payment:', paymentMethod);
-        console.log('--------------------------------');
-
-        // --------------------------------------------------------
-        // 7. PAYFAST
-        // --------------------------------------------------------
-
-        if (paymentMethod === 'payfast') {
-
-            if (
-                typeof payWithPayFastCheckout !== 'function'
-            ) {
-
-                console.error(
-                    'payWithPayFastCheckout() is not available.'
-                );
-
-                alert(
-                    'The PayFast payment system has not loaded correctly. Please refresh the page and try again.'
-                );
-
-                return;
-            }
-
-            // Disable button while redirecting
-            completeOrderBtn.disabled = true;
-
-            completeOrderBtn.innerHTML =
-                '<i class="fa-solid fa-spinner fa-spin"></i> Connecting to PayFast...';
-
-            // Convert cart into payment items
-            const paymentItems =
-                getCartProducts().map(item => ({
-                    name: item.name +
-                        (
-                            item.variant
-                                ? ' (' + item.variant + ')'
-                                : ''
-                        ),
-                    price: item.price,
-                    quantity: item.quantity
-                }));
-
-            /*
-             * PayFast integration receives:
-             *
-             * total
-             * items
-             * customer email
-             * customer name
-             */
-
-            try {
-
-                payWithPayFastCheckout(
-                    totals.grandTotal,
-                    paymentItems,
-                    customerEmail,
-                    customerName
-                );
-
-            } catch (error) {
-
-                console.error(
-                    'PayFast checkout error:',
-                    error
-                );
-
-                completeOrderBtn.disabled = false;
-
-                completeOrderBtn.innerHTML =
-                    '<i class="fa-solid fa-lock"></i> Complete Payment with PayFast';
-
-                alert(
-                    'There was a problem connecting to PayFast. Please try again.'
-                );
-            }
-
-            return;
-        }
-
-        // --------------------------------------------------------
-        // 8. MANUAL EFT
-        // --------------------------------------------------------
-
-        if (paymentMethod === 'eft') {
-
-            const reference = orderReference;
+        try {
 
             localStorage.setItem(
                 'nexpak_pending_order',
-                JSON.stringify({
-                    reference,
-                    customerName,
-                    customerEmail,
-                    customerPhone,
-                    subtotalExVat: totals.subtotalExVat,
-                    delivery: totals.delivery,
-                    vat: totals.vat,
-                    total: totals.grandTotal,
-                    cart: currentCart,
-                    createdAt: new Date().toISOString()
-                })
+                JSON.stringify(payload)
             );
 
+        } catch (error) {
+
+            console.error(
+                'Could not save pending order:',
+                error
+            );
+        }
+    }
+
+
+    // ======================================================================
+    // 19. PAYFAST PAYMENT
+    // ======================================================================
+
+    function processPayFastPayment() {
+
+        if (!window.PayFast) {
+
             alert(
-                'Order created successfully.\n\n' +
-                'Order Reference: ' + reference +
-                '\n\n' +
-                'Please use this reference when making your EFT payment.'
+                'PayFast payment system has not loaded. Please refresh the page and try again.'
+            );
+
+            console.error(
+                'window.PayFast is unavailable.'
             );
 
             return;
         }
 
-        alert(
-            'Please select a payment method.'
-        );
-    }
+        if (
+            typeof window.PayFast.checkout !==
+            'function'
+        ) {
 
-    // ------------------------------------------------------------
-    // BUTTON EVENT
-    // ------------------------------------------------------------
+            alert(
+                'PayFast checkout is unavailable.'
+            );
 
-    if (completeOrderBtn) {
+            return;
+        }
 
-        completeOrderBtn.addEventListener(
-            'click',
-            function(event) {
+        const payload =
+            createPaymentPayload();
 
-                event.preventDefault();
-
-                completePayment();
-
-            }
-        );
+        savePendingOrder(payload);
 
         console.log(
-            'Complete Payment button connected.'
+            'Starting PayFast payment:',
+            payload
         );
 
-    } else {
+        /*
+         * IMPORTANT:
+         * The actual PayFast integration is handled
+         * by payments.js.
+         *
+         * We do NOT duplicate merchant credentials here.
+         */
 
-        console.error(
-            'ERROR: completeOrderBtn was not found.'
-        );
-    }
-
-    // ------------------------------------------------------------
-    // WATCH DELIVERY CALCULATOR
-    // ------------------------------------------------------------
-
-    document.addEventListener(
-        'change',
-        function(event) {
-
-            if (
-                event.target &&
-                (
-                    event.target.id === 'eq-region-select' ||
-                    event.target.id === 'eq-delivery-address'
-                )
-            ) {
-
-                setTimeout(() => {
-
-                    updateDeliveryState();
-
-                }, 100);
-
-            }
-
-        }
-    );
-
-    // ------------------------------------------------------------
-    // INITIALIZE
-    // ------------------------------------------------------------
-
-    updateDeliveryState();
-
-});
+        window.PayFast.checkout(
+            checkoutState.grandTotal,
+            checkoutState.cart,
+            
