@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexpak Security Solutions | Online Store</title>
+    <style>
+        :root {
+            --primary-blue: #0b2341;
+            --accent-gold: #d1a119;
+            --text-dark: #333333;
+            --bg-light: #f4f6f9;
+            --border-color: #e1e4e8;
+        }
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding: 0; color: var(--text-dark); background-color: var(--bg-light); }
+        header { background-color: var(--primary-blue); color: #fff; padding: 15px 20px; }
+        .header-main { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        .branding-sub { font-size: 11px; letter-spacing: 2px; color: #aaa; margin-top: 5px; text-transform: uppercase; }
+        .meta-nav { font-size: 13px; display: flex; gap: 15px; }
+        .meta-nav span { font-weight: bold; color: var(--accent-gold); }
+        .hero-banner { background: linear-gradient(rgba(11, 35, 65, 0.9), rgba(11, 35, 65, 0.9)), url('images/hero-bg.jpg') no-repeat center/cover; color: #fff; padding: 50px 20px; text-align: center; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 25px; }
+        .store-section-title { color: var(--primary-blue); border-bottom: 2px solid var(--accent-gold); padding-bottom: 8px; margin: 40px 0 20px 0; font-size: 24px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .app-product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .app-product-card { background: #fff; border: 1px solid var(--border-color); border-radius: 6px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .app-product-card img { width: 100%; height: 180px; object-fit: contain; margin-bottom: 15px; }
+        .app-product-card .tag { font-size: 11px; text-transform: uppercase; font-weight: bold; color: #777; margin-bottom: 4px; }
+        .app-product-card h3 { margin: 5px 0; font-size: 18px; color: var(--primary-blue); }
+        .app-product-card p { font-size: 13px; color: #666; margin: 0 0 15px 0; line-height: 1.4; }
+        
+        .variant-selector { width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 13px; color: var(--text-dark); background-color: #fff; }
+        
+        .app-product-card .button-group { display: flex; gap: 8px; margin-top: auto; }
+        
+        .custom-app-btn { flex: 1; background-color: var(--accent-gold); color: var(--primary-blue); padding: 10px 8px; border: none; font-weight: bold; border-radius: 4px; cursor: pointer; text-transform: uppercase; font-size: 10px; letter-spacing: 0.5px; text-align: center; }
+        .custom-app-btn:hover { background-color: #c49514; }
+        .btn-info { background-color: #f1f5f9; color: var(--primary-blue); border: 1px solid var(--border-color); }
+        .btn-info:hover { background-color: #e2e8f0; }
+        .btn-quote { background-color: var(--primary-blue); color: white; }
+        .btn-quote:hover { background-color: #12345d; }
+        
+        .app-checkout-container { background: #fff; border: 1px solid var(--border-color); border-radius: 8px; padding: 30px; margin-top: 40px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+        .checkout-step-header { display: flex; align-items: center; gap: 12px; margin: 25px 0 15px 0; padding-bottom: 8px; border-bottom: 1px solid #eee; }
+        .checkout-step-number { background: var(--primary-blue); color: #fff; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: bold; }
+        .checkout-step-header h3 { margin: 0; font-size: 16px; color: var(--primary-blue); text-transform: uppercase; }
+        
+        .app-form-group { margin-bottom: 15px; }
+        .app-form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 13px; color: #444; }
+        .app-form-group input, .app-form-group textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; }
+        
+        .app-summary-box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; border-radius: 6px; margin: 20px 0; }
+        .app-summary-line { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; }
+        .app-summary-total { font-size: 20px; font-weight: bold; color: var(--primary-blue); border-top: 2px dashed #cbd5e1; margin-top: 10px; padding-top: 10px; }
+        
+        footer { background: #0b2341; color: #8a99ad; padding: 40px 20px; text-align: center; font-size: 13px; margin-top: 60px; }
+        footer a { color: #fff; text-decoration: none; margin: 0 10px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-main">
+            <div>
+                <div style="font-weight: bold; font-size: 22px; letter-spacing: 0.5px;">Nexpak Security Solutions</div>
+                <div class="branding-sub">Protecting What Matters Most</div>
+            </div>
+            <div class="meta-nav">
+                <div>Account</div>
+                <div>Wishlist <span>0</span></div>
+                <div>Cart <span>0</span></div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-banner">
+        <div style="font-size: 14px; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-gold); margin-bottom: 10px; font-weight: bold;">Nexpak Security Store</div>
+        <h1 style="margin: 0 0 15px 0; font-size: 32px;">Professional Security. <strong>Delivered To Your Door.</strong></h1>
+        <p style="margin: 0; font-size: 15px; color: #e2e8f0;">Complete security kits for homes, businesses, estates, farms and other properties.</p>
+        <button class="custom-app-btn" style="margin-top: 20px; max-width: 200px;">Shop Security Kits</button>
+    </section>
+
+    <div class="container">
+
+        <!-- ==========================================================
+             NEXPAK SECURITY KITS VIEW (All 16 Original Dynamic Layout Windows Preserved)
+             ========================================================== -->
+        <h2 class="store-section-title">Security Kits</h2>
+        <div class="app-product-grid">
+            
+            <!-- 1. Electric Fencing Standard Kit -->
+            <div class="app-product-card">
+                <img src="images/electric-fence-kit.jpg" alt="Electric Fencing Standard Kit">
+                <div>
+                    <div class="tag">Electric Fencing</div>
+                    <h3>Electric Fencing Standard Kit</h3>
+                    <p>High-grade parameter fencing system for domestic properties.</p>
+                    <select class="variant-selector">
+                        <option>Select Distance: 100m Kit — R8,450.00</option>
+                        <option>Select Distance: 200m Kit — R11,950.00</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <!-- 2. Electric Fencing Commercial Kit -->
+            <div class="app-product-card">
+                <img src="images/electric-fence-comm.jpg" alt="Commercial Electric Fencing Kit">
+                <div>
+                    <div class="tag">Electric Fencing</div>
+                    <h3>Commercial Electric Fencing Kit</h3>
+                    <p>Heavy duty high-voltage security protection for warehouses and complexes.</p>
+                    <select class="variant-selector">
+                        <option>Select Distance: 100m Kit — R14,200.00</option>
+                        <option>Select Distance: 200m Kit — R19,850.00</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <!-- 3. Electric Fencing Agricultural Farm Kit -->
+            <div class="app-product-card">
+                <img src="images/electric-fence-farm.jpg" alt="Agricultural Farm Fence Kit">
+                <div>
+                    <div class="tag">Electric Fencing</div>
+                    <h3>Agricultural Farm Fence Kit</h3>
+                    <p>Long distance robust wire containment and perimeter security kit.</p>
+                    <select class="variant-selector">
+                        <option>Select Distance: 100m Kit — R9,600.00</option>
+                        <option>Select Distance: 200m Kit — R13,400.00</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <!-- 4. Roboguard Wireless Perimeter Kit -->
+            <div class="app-product-card">
+                <img src="images/roboguard-kit.jpg" alt="Roboguard Wireless Perimeter Kit">
+                <div>
+                    <div class="tag">Outdoor Beams</div>
+                    <h3>Roboguard Wireless Perimeter Kit</h3>
+                    <p>Early warning sensor setup with HQ HQ controller unit modules.</p>
+                    <select class="variant-selector">
+                        <option>Select Sensor Capacity: 2 Kit Beams — R7,800.00</option>
+                        <option>Select Sensor Capacity: 4 Kit Beams — R12,200.00</option>
+                        <option>Select Sensor Capacity: 6 Kit Beams — R16,500.00</option>
+                        <option>Select Sensor Capacity: 8 Kit Beams — R20,900.00</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <!-- 5. Roboguard Commercial Heavy Kit -->
+            <div class="app-product-card">
+                <img src="images/roboguard-comm.jpg" alt="Roboguard Commercial Heavy Kit">
+                <div>
+                    <div class="tag">Outdoor Beams</div>
+                    <h3>Roboguard Commercial Heavy Kit</h3>
+                    <p>Industrial site monitoring system with heavy rugged outdoor framing protection.</p>
+                    <select class="variant-selector">
+                        <option>Select Sensor Capacity: 2 Kit Beams — R9,400.00</option>
+                        <option>Select Sensor Capacity: 4 Kit Beams — R14,600.00</option>
+                        <option>Select Sensor Capacity: 6 Kit Beams — R19,100.00</option>
+                        <option>Select Sensor Capacity: 8 Kit Beams — R23,800.00</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <!-- 6. HD CCTV Analog Home Kit -->
+            <div class="app-product-card">
+                <img src="images/hd-cctv-kit.jpg" alt="HD CCTV Analog Home Kit">
+                <div>
+                    <div class="tag">HD CCTV</div>
+                    <h3>HD CCTV Analog Home Kit</h3>
+                    <p>Crystal clear 1080p high definition cameras and recording station bundle.</p>
+                    <select class="variant-selector">
+                        <option>4-Channel Camera Setup — R4,200.00</option>
+                        <option>8-Channel Camera Setup — R5,800.00</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <!-- 7. HD CCTV Business Pro Kit -->
+            <div class="app-product-card">
+                <img src="images/hd-cctv-bus.jpg" alt="HD CCTV Business Pro Kit">
+                <div>
+                    <div class="tag">HD CCTV</div>
+                    <h3>HD CCTV Business Pro Kit</h3>
+                    <p>Expanded visual coverage arrays for corporate office sites and retail parks.</p>
+                    <select class="variant-selector">
+                        <option>8-Channel Camera Setup — R7,900.00</option>
+                        <option>16-Channel Camera Setup — R12,400.00</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <!-- 8. IP CCTV Network Smart Kit -->
+            <div class="app-product-card">
+                <img src="images/ip-cctv-kit.jpg" alt="IP CCTV Network Smart Kit">
+                <div>
+                    <div class="tag">IP CCTV</div>
+                    <h3>IP CCTV Network Smart Kit</h3>
+                    <p>Ultra 4K network visual stream units featuring remote access and AI filters.</p>
+                    <select class="variant-selector">
+                        <option>4-Camera POE System — R6,900.00</option>
+                        <option>8-Camera POE System — R9,900.00</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <!-- 9. IP CCTV Estate Ultra Kit -->
+            <div class="app-product-card">
+                <img src="images/ip-cctv-estate.jpg" alt="IP CCTV Estate Ultra Kit">
+                <div>
+                    <div class="tag">IP CCTV</div>
+                    <h3>IP CCTV Estate Ultra Kit</h3>
+                    <p>Enterprise smart tracking matrix setups with active perimeter classification logic.</p>
+                    <select class="variant-selector">
+                        <option>8-Camera Matrix Array — R15,800.00</option>
+                        <option>16-Camera Matrix Array — R27,300.00</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <!-- 10. Intruder Alarm Standard Home Kit -->
+            <div class="app-product-card">
+                <img src="images/alarm-kit.jpg" alt="Intruder Alarm Standard Home Kit">
+                <div>
+                    <div class="tag">Alarm Systems</div>
+                    <h3>Intruder Alarm Standard Home Kit</h3>
+                    <p>Fully programmable indoor safety panels with PIR motion detection nodes.</p>
+                    <select class="variant-selector">
+                        <option>4-Zone Standard Relay — R3,150.00</option>
+                        <option>8-Zone Standard Relay — R4,350.00</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <!-- 11. Intruder Alarm Commercial Expandable Kit -->
+            <div class="app-product-card">
+                <img src="images/alarm-comm.jpg" alt="Alarm Commercial Expandable Kit">
+                <div>
+                    <div class="tag">Alarm Systems</div>
+                    <h3>Commercial Expandable Alarm Kit</h3>
+                    <p>Multi-partition layout array for larger stores and warehouses requiring partitions.</p>
+                    <select class="variant-selector">
+                        <option>16-Zone Hybrid Setup — R6,800.00</option>
+                        <option>32-Zone Hybrid Setup — R9,950.00</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <!-- 12. Centurion Slide Gate Kit -->
+            <div class="app-product-card">
+                <img src="images/gate-automation-kit.jpg" alt="Centurion Slide Gate Kit">
+                <div>
+                    <div class="tag">Gate Automation</div>
+                    <h3>Centurion Slide Gate Kit</h3>
+                    <p>Centurion D5 Smart high speed reliable automated motor and tracking package.</p>
+                    <select class="variant-selector">
+                        <option>Standard Residential Pack — R6,850.00</option>
+                        <option>Heavy-Duty Industrial Pack — R11,200.00</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <!-- 13. Centurion Swing Gate Kit -->
+            <div class="app-product-card">
+                <img src="images/gate-swing.jpg" alt="Centurion Swing Gate Kit">
+                <div>
+                    <div class="tag">Gate Automation</div>
+                    <h3>Centurion Swing Gate Kit</h3>
+                    <p>Vantage series gate actuators for double or single swing access gates.</p>
+                    <select class="variant-selector">
+                        <option>Single Swing Gate Motor — R8,400.00</option>
+                        <option>Double Swing Gate Motor — R13,900.00</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <!-- 14. Complex Access Gate Automation Kit -->
+            <div class="app-product-card">
+                <img src="images/gate-complex.jpg" alt="Complex Access Gate Automation Kit">
+                <div>
+                    <div class="tag">Gate Automation</div>
+                    <h3>Complex Access Gate Kit</h3>
+                    <p>High traffic automation solutions fitted with industrial safety beams.</p>
+                    <select class="variant-selector">
+                        <option>High Traffic Loop Setup — R18,500.00</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <!-- 15. Outdoor Perimeter Laser Kit -->
+            <div class="app-product-card">
+                <img src="images/perimeter-laser.jpg" alt="Outdoor Perimeter Laser Kit">
+                <div>
+                    <div class="tag">Outdoor Beams</div>
+                    <h3>Outdoor Perimeter Laser Kit</h3>
+                    <p>Long range active infrared photo-electric wall beams to avoid false alarms.</p>
+                    <select class="variant-selector">
+                        <option>50m Dual Beam Range — R3,400.00</option>
+                        <option>100m Quad Beam Range — R5,200.00</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <!-- 16. Wireless Multi-Zone Office Alarm Kit -->
+            <div class="app-product-card">
+                <img src="images/office-alarm-kit.jpg" alt="Wireless Multi-Zone Office Alarm Kit">
+                <div>
+                    <div class="tag">Alarm Systems</div>
+                    <h3>Wireless Multi-Zone Office Alarm Kit</h3>
+                    <p>Premium modern standalone encryption protection for businesses.</p>
+                    <select class="variant-selector">
+                        <option>8-Zone Office Hub Pack — R5,900.00</option>
+                        <option>16-Zone Office Hub Pack — R8,650.00</option>
+                    </select>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================================
+             HIGH-DEMAND INDIVIDUAL FENCE ENERGIZERS CATALOGUE
+             ========================================================== -->
+        <h2 class="store-section-title">High-Demand Fence Energizers</h2>
+        <div class="app-product-grid">
+            <div class="app-product-card">
+                <img src="images/nemtek-druid.jpg" alt="Nemtek Druid Energizer">
+                <div>
+                    <div class="tag">Nemtek</div>
+                    <h3>Nemtek Druid Energizer</h3>
+                    <p>Nemtek Druid 13 LCD 3-Joule Security Energizer</p>
+                    <div style="font-size: 19px; font-weight: bold; color: var(--primary-blue); margin-bottom: 15px;">R4,350.00</div>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <div class="app-product-card">
+                <img src="images/jva-z14.jpg" alt="JVA Z14 Energizer">
+                <div>
+                    <div class="tag">JVA</div>
+                    <h3>JVA Z14 Energizer</h3>
+                    <p>JVA Z14 Single Zone Security Fence Energizer (4 Joule)</p>
+                    <div style="font-size: 19px; font-weight: bold; color: var(--primary-blue); margin-bottom: 15px;">R5,100.00</div>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <div class="app-product-card">
+                <img src="images/stafix-x1.jpg" alt="Stafix Energizer">
+                <div>
+                    <div class="tag">Stafix</div>
+                    <h3>Stafix Energizer</h3>
+                    <p>Stafix X1 Unidir/Bi-polar High Power Fence Energizer</p>
+                    <div style="font-size: 19px; font-weight: bold; color: var(--primary-blue); margin-bottom: 15px;">R3,950.00</div>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================================================
+             HIGH-END DAHUA CCTV INTELLIGENCE SECTION
+             ========================================================== -->
+        <h2 class="store-section-title">High-End Dahua CCTV Intelligence</h2>
+        <div class="app-product-grid">
+            <div class="app-product-card">
+                <img src="images/dahua-tioc.jpg" alt="Dahua TiOC Camera">
+                <div>
+                    <div class="tag">Dahua IP</div>
+                    <h3>Dahua TiOC Camera</h3>
+                    <p>Dahua 5MP TiOC 2.0 Active Deterrence Network Turret</p>
+                    <div style="font-size: 19px; font-weight: bold; color: var(--primary-blue); margin-bottom: 15px;">R2,450.00</div>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <div class="app-product-card">
+                <img src="images/dahua-ptz.jpg" alt="Dahua PTZ Camera">
+                <div>
+                    <div class="tag">Dahua PTZ</div>
+                    <h3>Dahua PTZ Camera</h3>
+                    <p>Dahua 4MP 25x Starlight Smart Tracking IP PTZ Camera</p>
+                    <div style="font-size: 19px; font-weight: bold; color: var(--primary-blue); margin-bottom: 15px;">R8,900.00</div>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <div class="app-product-card">
+                <img src="images/dahua-nvr.jpg" alt="Dahua NVR">
+                <div>
+                    <div class="tag">Dahua Storage</div>
+                    <h3>Dahua NVR</h3>
+                    <p>Dahua 8-Channel 4K AI Network Video Recorder (NVR)</p>
+                    <div style="font-size: 19px; font-weight: bold; color: var(--primary-blue); margin-bottom: 15px;">R3,600.00</div>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================================================
+             AJAX WIRELESS SMART ALARM PRODUCTS GRID
+             ========================================================== -->
+        <h2 class="store-section-title">Ajax Wireless Smart Alarm Products</h2>
+        <div class="app-product-grid">
+            <div class="app-product-card">
+                <img src="images/ajax-hub2.jpg" alt="Ajax Hub 2 Plus">
+                <div>
+                    <div class="tag">Ajax Hub</div>
+                    <h3>Ajax Hub 2 Plus</h3>
+                    <p>Ajax Hub 2 Plus Intelligent Security Control Panel</p>
+                    <div style="font-size: 19px; font-weight: bold; color: var(--primary-blue); margin-bottom: 15px;">R6,950.00</div>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <div class="app-product-card">
+                <img src="images/ajax-motioncam.jpg" alt="Ajax MotionCam">
+                <div>
+                    <div class="tag">Ajax Sensors</div>
+                    <h3>Ajax MotionCam</h3>
+                    <p>Ajax MotionCam Wireless PIR Detector with Photo Verification</p>
+                    <div style="font-size: 19px; font-weight: bold; color: var(--primary-blue); margin-bottom: 15px;">R2,150.00</div>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <div class="app-product-card">
+                <img src="images/ajax-streetsiren.jpg" alt="Ajax StreetSiren">
+                <div>
+                    <div class="tag">Ajax Output</div>
+                    <h3>Ajax StreetSiren</h3>
+                    <p>Ajax StreetSiren Wireless Outdoor High-Decibel Siren</p>
+                    <div style="font-size: 19px; font-weight: bold; color: var(--primary-blue); margin-bottom: 15px;">R2,400.00</div>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==========================================================
+             NEXPAK APPLICATION SECURE CHECKOUT MODULE 
+             ========================================================== -->
+        <div class="app-checkout-container">
+            <h2 style="margin-top:0; color: var(--primary-blue); text-transform: uppercase; letter-spacing: 0.5px;">Secure Checkout</h2>
+            <p style="color: #666; font-size: 14px; margin-bottom: 25px;">Complete your details below to generate your official, itemized pro-forma quotation.</p>
+
+            <div class="checkout-step-header">
+                <div class="checkout-step-number">1</div>
+                <h3>Customer Details</h3>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="app-form-group">
+                    <label>Full Name *</label>
+                    <input type="text" placeholder="John Doe" required>
+                </div>
+                <div class="app-form-group">
+                    <label>Company (Optional)</label>
+                    <input type="text" placeholder="Nexpak Solutions Hub">
+                </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                <div class="app-form-group">
+                    <label>Email Address *</label>
+                    <input type="email" placeholder="john@example.co.za" required>
+                </div>
+                <div class="app-form-group">
+                    <label>Phone Number *</label>
+                    <input type="tel" placeholder="083 630 8249" required>
+                </div>
+            </div>
+
+            <div class="checkout-step-header">
+                <div class="checkout-step-number">2</div>
+                <h3>Delivery Details</h3>
+            </div>
+            <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 15px;">
+                <div class="app-form-group">
+                    <label>Delivery / Installation Address *</label>
+                    <input type="text" placeholder="123 Security Estate Road, Benoni" required>
+                </div>
+                <div class="app-form-group">
+                    <label>Postal Code *</label>
+                    <input type="text" placeholder="1501" required>
+                </div>
+            </div>
+
+            <div class="checkout-step-header">
+                <div class="checkout-step-number">3</div>
+                <h3>Order Summary Review</h3>
+            </div>
+            <div class="app-summary-box">
+                <div class="app-summary-line">
+                    <span>Subtotal EX VAT:</span>
+                    <strong>R0.00</strong>
+                </div>
+                <div class="app-summary-line">
+                    <span>VAT @ 15%:</span>
+                    <strong>R0.00</strong>
+                </div>
+                <div class="app-summary-line app-summary-total">
+                    <span>Total Incl VAT:</span>
+                    <span>R0.00</span>
+                </div>
+            </div>
+
+            <form action="#" method="POST" onsubmit="event.preventDefault();">
+                <button type="submit" class="custom-app-btn" style="width: 100%; padding: 16px; font-size: 14px; margin-top: 15px;">
+                    Generate Official Pro-Forma Quote (PDF)
+                </button>
+            </form>
+        </div>
+
+    </div>
+
+    <footer>
+        <div style="margin-bottom: 20px;">
+            <a href="#">Security Kits</a> | 
+            <a href="#">Checkout</a> | 
+            <a href="#">Delivery Information</a> | 
+            <a href="#">Contact Us</a>
+        </div>
+        <p>© 2026 Nexpak Security Solutions. All rights reserved. Online Store</p>
+    </footer>
+
+<!-- ==========================================================
+     MODULAR SCRIPTS FROM js FOLDER
+     ========================================================== -->
+<script src="js/delivery.js"></script>
+<script src="js/payfast-integration.js"></script>
+<script src="js/payments.js"></script>
+<script src="js/checkout.js"></script>
+<script src="js/chatbots.js"></script>
+</body>
+</html>
