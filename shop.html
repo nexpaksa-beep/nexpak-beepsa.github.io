@@ -285,9 +285,17 @@
             });
 
             if (addedCount > 0) {
-                updateCartUI();
-                updateVisualizer();
-            } else {
+
+    // Save Build Your System cart for checkout
+    localStorage.setItem(
+        'nexpak_cart',
+        JSON.stringify(cart)
+    );
+
+    updateCartUI();
+    updateVisualizer();
+
+} else {
                 alert("Please specify a quantity greater than 0 for at least one item.");
             }
         }
