@@ -1845,3 +1845,482 @@ function hidePaymentLoading() {
 
 }
         
+/* ==========================================================================
+   11. REDIRECT TO PAYFAST
+   ========================================================================== */
+
+/**
+ * Handles the response returned by the secure payment server.
+ *
+ * The server is responsible for creating the PayFast payment request.
+ * The browser must NOT contain the PayFast merchant key or passphrase.
+ */
+function redirectToPayFast(data) {
+
+    if (!data) {
+
+        throw new Error(
+            'No payment response was received.'
+        );
+
+    }
+
+    /*
+     * Preferred response:
+     *
+     * {
+     *     success: true,
+     *     redirectUrl: "https://www.payfast.co.za/eng/process/..."
+     * }
+     */
+
+    if (data.redirectUrl) {
+
+        window.location.href =
+            data.redirectUrl;
+
+        return;
+
+    }
+
+    /*
+     * Some server implementations may return
+     * a payment URL using a different property.
+     */
+
+    if (data.paymentUrl) {
+
+        window.location.href =
+            data.paymentUrl;
+
+        return;
+
+    }
+
+    if (data.url) {
+
+        window.location.href =
+            data.url;
+
+        return;
+
+    }
+
+    throw new Error(
+        'PayFast payment URL was not returned by the payment server.'
+    );
+}
+
+
+/* ==========================================================================
+   12. PAYFAST CHECKOUT
+   ========================================================================== */
+
+/**
+ * Main public PayFast checkout function.
+ *
+ * This is intentionally kept compatible with:
+ *
+ * window.PayFast.checkout(...)
+ *
+ * The actual PayFast credentials remain on the secure server.
+ */
+async function payWithPayFastCheckout(
+    amount,
+    cart,
+    customerName,
+    customerEmail,
+    options = {}
+) {
+
+    try {
+
+        /* --------------------------------------------------------------
+           VALIDATE AMOUNT
+           -------------------------------------------------------------- */
+
+        const numericAmount =
+            Number(amount);
+
+        if (
+            !Number.isFinite(
+                numericAmount
+            ) ||
+            numericAmount <= 0
+        ) {
+
+            throw new Error(
+                'Invalid payment amount.'
+            );
+
+        }
+
+
+        /* --------------------------------------------------------------
+           VALIDATE CUSTOMER
+           -------------------------------------------------------------- */
+
+        const name =
+            String(
+                customerName || ''
+            ).trim();
+
+        const email =
+            String(
+                customerEmail || ''
+            ).trim();
+
+
+        if (!name) {
+
+            throw new Error(
+                'Please enter your full name.'
+            );
+
+        }
+
+        if (!email) {
+
+            throw new Error(
+                'Please enter your email address.'
+            );
+
+        }
+
+
+        /* --------------------------------------------------------------
+           NORMALISE CART
+           -------------------------------------------------------------- */
+
+        const safeCart =
+            Array.isArray(cart)
+                ? cart
+                : [];
+
+
+        /* --------------------------------------------------------------
+           BUILD PAYMENT REQUEST
+           -------------------------------------------------------------- */
+
+        const paymentRequest =
+            buildPayFastRequest(
+                numericAmount,
+                safeCart,
+                name,
+                email,
+                options
+            );
+
+
+        console.log(
+            'Creating secure PayFast payment...'
+        );
+
+
+        /* --------------------------------------------------------------
+           SEND TO SECURE SERVER
+           -------------------------------------------------------------- */
+
+        const response =
+            await requestPayFastPayment(
+                paymentRequest
+            );
+
+
+        /* --------------------------------------------------------------
+           REDIRECT TO PAYFAST
+           -------------------------------------------------------------- */
+
+        redirectToPayFast(
+            response
+        );
+
+
+        return response;
+
+    } catch (error) {
+
+        console.error(
+            'PayFast checkout error:',
+            error
+        );
+
+
+        /*
+         * Allow the checkout page to display
+         * the error without exposing sensitive
+         * server/payment information.
+         */
+
+        const message =
+            error &&
+            error.message
+                ? error.message
+                : 'Unable to start PayFast payment.';
+
+
+        if (
+            typeof window.showToast ===
+            'function'
+        ) {
+
+            window.showToast(
+                message,
+                'error'
+            );
+
+        } else {
+
+            alert(message);
+
+        }
+
+
+        throw error;
+
+    }
+
+}
+
+
+/* ==========================================================================
+   13. PAYMENT STATUS HANDLING
+   ========================================================================== */
+
+/**
+ * Stores the current payment reference locally.
+ *
+ * This does NOT confirm payment.
+ *
+ * Actual payment confirmation must come from
+ * the secure PayFast ITN/server process.
+ */
+function storePaymentReference(
+    reference
+) {
+
+    if (!reference) {
+        return;
+    }
+
+    try {
+
+        localStorage.setItem(
+            'nexpak_payment_reference',
+            String(reference)
+        );
+
+    } catch (error) {
+
+        console.warn(
+            'Unable to store payment reference:',
+            error
+        );
+
+    }
+
+}
+
+
+/* ==========================================================================
+   14. CLEAR PAYMENT DATA
+   ========================================================================== */
+
+function clearPaymentData() {
+
+    try {
+
+        localStorage.removeItem(
+            'nexpak_payment_reference'
+        );
+
+        localStorage.removeItem(
+            'nexpak_payment_pending'
+        );
+
+    } catch (error) {
+
+        console.warn(
+            'Unable to clear payment data:',
+            error
+        );
+
+    }
+
+}
+
+
+/* ==========================================================================
+   15. PAYMENT PENDING
+   ========================================================================== */
+
+function markPaymentPending(
+    orderReference
+) {
+
+    try {
+
+        localStorage.setItem(
+            'nexpak_payment_pending',
+            JSON.stringify({
+
+                reference:
+                    orderReference || '',
+
+                timestamp:
+                    new Date().toISOString()
+
+            })
+        );
+
+        storePaymentReference(
+            orderReference
+        );
+
+    } catch (error) {
+
+        console.warn(
+            'Unable to mark payment as pending:',
+            error
+        );
+
+    }
+
+}
+
+
+/* ==========================================================================
+   16. PUBLIC PAYMENT API
+   ========================================================================== */
+
+window.NexpakPayments = {
+
+    checkout:
+        payWithPayFastCheckout,
+
+    createPayment:
+        payWithPayFastCheckout,
+
+    buildRequest:
+        buildPayFastRequest,
+
+    requestPayment:
+        requestPayFastPayment,
+
+    redirect:
+        redirectToPayFast,
+
+    storeReference:
+        storePaymentReference,
+
+    markPending:
+        markPaymentPending,
+
+    clearPaymentData:
+        clearPaymentData
+
+};
+
+
+/* ==========================================================================
+   17. PAYFAST COMPATIBILITY BRIDGE
+   ========================================================================== */
+
+/**
+ * IMPORTANT:
+ *
+ * checkout.js calls:
+ *
+ *     window.PayFast.checkout(...)
+ *
+ * Therefore we expose the secure checkout function here.
+ *
+ * Do NOT put merchant credentials here.
+ * Do NOT put the PayFast passphrase here.
+ * Do NOT generate PayFast signatures in browser JavaScript.
+ */
+
+window.PayFast = {
+
+    checkout:
+        payWithPayFastCheckout
+
+};
+
+
+/* ==========================================================================
+   18. INITIALIZATION
+   ========================================================================== */
+
+function initializePaymentSystem() {
+
+    console.log(
+        'Nexpak Payment System initializing...'
+    );
+
+
+    /*
+     * Confirm that the payment configuration exists.
+     */
+
+    if (
+        typeof PAYFAST_CONFIG ===
+        'undefined'
+    ) {
+
+        console.warn(
+            'PayFast configuration was not loaded.'
+        );
+
+    }
+
+
+    /*
+     * Confirm that the secure payment
+     * endpoint exists.
+     */
+
+    if (
+        typeof PAYFAST_CONFIG !==
+        'undefined' &&
+        !PAYFAST_CONFIG.paymentApi
+    ) {
+
+        console.warn(
+            'PayFast payment API endpoint is not configured.'
+        );
+
+    }
+
+
+    console.log(
+        'Nexpak Payment System ready.'
+    );
+
+}
+
+
+/* ==========================================================================
+   19. DOM READY
+   ========================================================================== */
+
+if (
+    document.readyState ===
+    'loading'
+) {
+
+    document.addEventListener(
+        'DOMContentLoaded',
+        initializePaymentSystem
+    );
+
+} else {
+
+    initializePaymentSystem();
+
+}
+
+
+/* ==========================================================================
+   END OF PAYMENT.JS
+   ========================================================================== */
