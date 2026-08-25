@@ -318,3 +318,189 @@ footer a{display:block;margin:7px 0}.copyright{border-top:1px solid rgba(255,255
 </div>
 </div>
     </section>
+<!-- Main Product Showcase Grid -->
+<section class="product-grid-section" style="padding: 40px 20px; max-width: 1200px; margin: 0 auto;">
+    <h2 style="border-bottom: 2px solid #0056b3; padding-bottom: 10px; color: #333;">Featured Equestrian & Security Hardware</h2>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+        <!-- Product 1 -->
+        <div class="product-card" style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+            <div class="product-badge" style="background: #28a745; color: white; padding: 3px 8px; font-size: 12px; border-radius: 4px; display: inline-block; margin-bottom: 10px;">In Stock</div>
+            <h3 style="font-size: 1.1rem; margin: 10px 0;">40mm Equestrian Polytape (200m)</h3>
+            <p style="color: #666; font-size: 0.9rem;">UV-stabilized, heavy-duty stainless steel strands for maximum visibility and containment safety.</p>
+            <div style="font-size: 1.2rem; font-weight: bold; color: #0056b3; margin: 15px 0;">R 850.00</div>
+            <button onclick="addToQuote('40mm Polytape (200m)', 850)" style="width: 100%; background: #0056b3; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; font-weight: bold;">Add to Quote</button>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="product-card" style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+            <div class="product-badge" style="background: #28a745; color: white; padding: 3px 8px; font-size: 12px; border-radius: 4px; display: inline-block; margin-bottom: 10px;">In Stock</div>
+            <h3 style="font-size: 1.1rem; margin: 10px 0;">JVA Electric Fence Energizer</h3>
+            <p style="color: #666; font-size: 0.9rem;">Mains / Battery dual-purpose energizer engineered for reliable perimeter security and paddock fencing.</p>
+            <div style="font-size: 1.2rem; font-weight: bold; color: #0056b3; margin: 15px 0;">R 3,450.00</div>
+            <button onclick="addToQuote('JVA Energizer', 3450)" style="width: 100%; background: #0056b3; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; font-weight: bold;">Add to Quote</button>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="product-card" style="border: 1px solid #ddd; border-radius: 8px; padding: 15px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+            <div class="product-badge" style="background: #28a745; color: white; padding: 3px 8px; font-size: 12px; border-radius: 4px; display: inline-block; margin-bottom: 10px;">In Stock</div>
+            <h3 style="font-size: 1.1rem; margin: 10px 0;">Wood-Post Tape Insulators (25 Pack)</h3>
+            <p style="color: #666; font-size: 0.9rem;">Impact-resistant polycarbonate insulators designed specifically for 40mm wide tape.</p>
+            <div style="font-size: 1.2rem; font-weight: bold; color: #0056b3; margin: 15px 0;">R 220.00</div>
+            <button onclick="addToQuote('Wood Post Insulators Pack', 220)" style="width: 100%; background: #0056b3; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer; font-weight: bold;">Add to Quote</button>
+        </div>
+    </div>
+</section>
+
+<!-- Automated Quote Builder & PDF Generator Section -->
+<section id="quote-section" style="background: #f1f3f5; padding: 40px 20px; margin-top: 40px;">
+    <div style="max-width: 800px; margin: 0 auto; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08);">
+        <h2 style="margin-top: 0; color: #333; border-bottom: 2px solid #0056b3; padding-bottom: 10px;">Your Custom Quotation</h2>
+        
+        <table id="quoteTable" style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+            <thead>
+                <tr style="border-bottom: 2px solid #ddd; text-align: left;">
+                    <th style="padding: 10px;">Item Description</th>
+                    <th style="padding: 10px;">Qty</th>
+                    <th style="padding: 10px;">Unit Price</th>
+                    <th style="padding: 10px;">Total</th>
+                </tr>
+            </thead>
+            <tbody id="quoteItems">
+                <tr>
+                    <td colspan="4" style="padding: 15px; text-align: center; color: #888;">No items added to quote yet. Click "Add to Quote" on products above.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="text-align: right; margin-top: 20px; font-size: 1.2rem; font-weight: bold; color: #222;">
+            Total (Excl. VAT): <span id="quoteTotal" style="color: #0056b3;">R 0.00</span>
+        </div>
+
+        <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end;">
+            <button onclick="generatePDF()" style="background: #28a745; color: white; border: none; padding: 12px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1rem;">Download PDF Quote</button>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer style="background-color: #1a1a1a; color: #ffffff; padding: 40px 20px 20px 20px; margin-top: 60px;">
+    <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px;">
+        <div>
+            <h4 style="color: #0056b3; margin-top: 0;">NexPak Solutions</h4>
+            <p style="font-size: 0.9rem; color: #ccc; line-height: 1.6;">Your trusted provider for industrial packaging supplies, security electronics, and heavy-duty equestrian paddock containment.</p>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-top: 0;">Product Range</h4>
+            <ul style="list-style: none; padding: 0; line-height: 2; font-size: 0.9rem;">
+                <li><a href="#" style="color: #ccc; text-decoration: none;">Industrial Packaging</a></li>
+                <li><a href="#" style="color: #ccc; text-decoration: none;">Security Electronics</a></li>
+                <li><a href="#" style="color: #ccc; text-decoration: none;">Equestrian Fencing</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4 style="color: #fff; margin-top: 0;">Contact Us</h4>
+            <p style="font-size: 0.9rem; color: #ccc; margin: 5px 0;"><strong>Location:</strong> East Rand, Gauteng</p>
+            <p style="font-size: 0.9rem; color: #ccc; margin: 5px 0;"><strong>Email:</strong> sales@nexpaksolutions.co.za</p>
+            <p style="font-size: 0.9rem; color: #ccc; margin: 5px 0;"><strong>Web:</strong> www.nexpaksolutions.co.za</p>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 30px; border-top: 1px solid #333; padding-top: 15px; font-size: 0.8rem; color: #888;">
+        &copy; 2026 NexPak Solutions (Pty) Ltd. All rights reserved.
+    </div>
+</footer>
+
+<!-- Dynamic Quote Cart & jsPDF Generator Script -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+    let quote = [];
+
+    function addToQuote(name, price) {
+        let existing = quote.find(i => i.name === name);
+        if (existing) {
+            existing.qty += 1;
+        } else {
+            quote.push({ name: name, price: price, qty: 1 });
+        }
+        renderQuote();
+    }
+
+    function renderQuote() {
+        const tbody = document.getElementById('quoteItems');
+        const totalEl = document.getElementById('quoteTotal');
+        
+        if (quote.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4" style="padding: 15px; text-align: center; color: #888;">No items added to quote yet.</td></tr>';
+            totalEl.innerText = 'R 0.00';
+            return;
+        }
+
+        tbody.innerHTML = '';
+        let grandTotal = 0;
+
+        quote.forEach(item => {
+            let total = item.price * item.qty;
+            grandTotal += total;
+            tbody.innerHTML += `
+                <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 10px;">${item.name}</td>
+                    <td style="padding: 10px;">${item.qty}</td>
+                    <td style="padding: 10px;">R ${item.price.toFixed(2)}</td>
+                    <td style="padding: 10px;">R ${total.toFixed(2)}</td>
+                </tr>
+            `;
+        });
+
+        totalEl.innerText = `R ${grandTotal.toFixed(2)}`;
+    }
+
+    function generatePDF() {
+        if (quote.length === 0) {
+            alert('Please add products to your quote first.');
+            return;
+        }
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        doc.setFontSize(18);
+        doc.text("NexPak Solutions - Official Quote", 14, 20);
+
+        doc.setFontSize(10);
+        doc.text("Email: sales@nexpaksolutions.co.za", 14, 28);
+        doc.text("Web: www.nexpaksolutions.co.za", 14, 34);
+        doc.text("Date: " + new Date().toLocaleDateString(), 14, 40);
+
+        let yPos = 55;
+        doc.setFontSize(11);
+        doc.text("Item Description", 14, yPos);
+        doc.text("Qty", 110, yPos);
+        doc.text("Unit Price", 135, yPos);
+        doc.text("Total", 170, yPos);
+
+        doc.line(14, yPos + 2, 195, yPos + 2);
+        yPos += 10;
+
+        let totalAmount = 0;
+        quote.forEach(item => {
+            let itemTotal = item.price * item.qty;
+            totalAmount += itemTotal;
+            doc.setFontSize(10);
+            doc.text(item.name, 14, yPos);
+            doc.text(item.qty.toString(), 110, yPos);
+            doc.text("R " + item.price.toFixed(2), 135, yPos);
+            doc.text("R " + itemTotal.toFixed(2), 170, yPos);
+            yPos += 8;
+        });
+
+        doc.line(14, yPos, 195, yPos);
+        yPos += 10;
+        doc.setFontSize(12);
+        doc.text("Total (Excl. VAT): R " + totalAmount.toFixed(2), 130, yPos);
+
+        doc.save("NexPak_Quotation.pdf");
+    }
+</script>
+</body>
+  </html>
+  
