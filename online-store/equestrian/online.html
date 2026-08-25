@@ -427,13 +427,13 @@ const NEXPAK_KIT_DATABASE = [
     {
         id: "STRIP-GRAZE-01", category: "strip-grazing", name: "Strip Grazing Kit",
         description: "Complete portable strip grazing fencing solution.", price: 1899.00,
-        image: "../images/strip.png", weight: 8,
+        image: "images/strip.png", weight: 8,
         contents: ["Energizer", "Polywire", "Tread-in posts", "Gate handle", "Earth peg", "Warning signs"]
     },
     {
         id: "EQUESTRIAN-01", category: "equestrian", name: "Equestrian Fencing Kit",
         description: "Safe and visible electric fencing for horses.", price: 4299.00,
-        image: "../images/horse.png", weight: 12,
+        image: "images/horse.png", weight: 12,
         options: {
             tapeColor: [{value: "white", label: "White Tape", extra: 0}, {value: "brown", label: "Brown Tape", extra: 0}]
         },
@@ -442,7 +442,7 @@ const NEXPAK_KIT_DATABASE = [
     {
         id: "EF-6L-01", category: "electric-fencing", name: "Electric Fence Kit 6 line square tube",
         description: "Complete 6 line perimeter wall top solution.", price: 8899.00,
-        image: "../images/ef6.png", weight: 28,
+        image: "images/ef6.png", weight: 28,
         options: {
             length: [{value: "100m", label: "100m", extra: 0}, {value: "200m", label: "200m", extra: 4200}],
             bracketType: [{value: "angle", label: "Angle", extra: 0}, {value: "straight", label: "Straight", extra: 0}],
@@ -453,7 +453,7 @@ const NEXPAK_KIT_DATABASE = [
     {
         id: "EF-8L-01", category: "electric-fencing", name: "Electric Fence Kit 8 line square tube",
         description: "Complete 8 line high-security perimeter solution.", price: 9999.00,
-        image: "../images/ef6.png", weight: 32,
+        image: "images/ef6.png", weight: 32,
         options: {
             length: [{value: "100m", label: "100m", extra: 0}, {value: "200m", label: "200m", extra: 5000}],
             bracketType: [{value: "angle", label: "Angle", extra: 0}, {value: "straight", label: "Straight", extra: 0}],
@@ -464,7 +464,7 @@ const NEXPAK_KIT_DATABASE = [
     {
         id: "RG-KIT-01", category: "roboguard", name: "Roboguard Beam Kit",
         description: "Wireless outdoor early warning beams.", price: 5999.00,
-        image: "../images/Rob.png", weight: 14,
+        image: "images/Rob.png", weight: 14,
         options: {
             beams: [{value: "2", label: "2 Beams", extra: 0}, {value: "4", label: "4 Beams", extra: 3000}, {value: "6", label: "6 Beams", extra: 4000}, {value: "8", label: "8 Beams", extra: 3000}],
             color: [{value: "black", label: "Black", extra: 0}, {value: "green", label: "Green", extra: 0}, {value: "white", label: "White", extra: 0}]
@@ -474,75 +474,75 @@ const NEXPAK_KIT_DATABASE = [
     {
         id: "IDS-806", category: "alarms", name: "IDS 806 KIT",
         description: "Reliable 8-zone wired alarm system.", price: 2199.00,
-        image: "../images/806.png", weight: 6,
+        image: "images/806.png", weight: 6,
         contents: ["panel", "keypad", "battery", "PSU", "siren", "2 x PIR", "2 x door magnets", "2 x panic", "1 x 4 core comms cable"]
     },
     {
         id: "IDS-X64", category: "alarms", name: "IDS X64 KIT",
         description: "Advanced expandable alarm system.", price: 3899.00,
-        image: "../images/X64.png", weight: 8,
+        image: "images/X64.png", weight: 8,
         contents: ["IDS X64 panel", "keypad", "battery PSU", "siren", "4 x pir", "2 door contacts", "2 panics", "1 x 6 core comms", "1 x 4 core comms"]
     },
     {
         id: "AJAX-WL", category: "alarms", name: "Ajax Wireless Kit",
         description: "Premium wireless smart alarm system.", price: 8499.00,
-        image: "../images/ajax.png", weight: 5,
+        image: "images/ajax.png", weight: 5,
         contents: ["Ajax hub", "ajax keypad", "Ajax indoor siren", "2 x indoor PIR", "2 x indoor door magnets"]
     },
     {
-        id: "CENT-D5EVO", category: "gate-automation", name: "Centurion D3 SmartKit",
+        id: "CENT-D3SMART", category: "gate-automation", name: "Centurion D3 SmartKit",
         description: "Proven 300kg sliding gate motor kit.", price: 4999.00,
-        image: "../images/centurion.png", weight: 30,
-        contents: ["D5 motor", "7 amp battery", "2 x 2m nylon rack", "2 x 4 button Blue Nova remotes"]
+        image: "images/centurion.png", weight: 30,
+        contents: ["D3smart motor", "7 amp battery", "2 x 2m nylon rack", "2 x 4 button Blue Nova remotes"]
     },
     {
         id: "CENT-D5SMART", category: "gate-automation", name: "Centurion D5 Smart Kit",
         description: "Intelligent, fast 500kg sliding gate motor.", price: 5999.00,
-        image: "../images/centurion.png", weight: 35,
+        image: "images/centurion.png", weight: 35,
         contents: ["D5 smart motors", "2 x battery", "2 x 2m nylon rack", "2 x 4 button Blue Nova remotes"]
     },
     {
         id: "CENT-D10SMART", category: "gate-automation", name: "Centurion D10 Smart Kit",
         description: "Heavy duty 1000kg industrial sliding gate motor.", price: 12999.00,
-        image: "../images/D10.png", weight: 55,
+        image: "images/D10.png", weight: 55,
         contents: ["d10 smart motors", "2 x battery", "3 x 2m steel rack", "2 x 4 button Blue Nova remotes"]
     },
     {
         id: "CENT-D10TURBO", category: "gate-automation", name: "Centurion D10 Smart Turbo Kit",
         description: "High-speed 1000kg industrial sliding motor.", price: 12999.00,
-        image: "../images/centurion.png", weight: 55,
+        image: "images/centurion.png", weight: 55,
         contents: ["d10 turbo smart motors", "2 x battery", "3 x 2m steel rack", "2 x 4 button Blue Nova remotes"]
     },
     {
         id: "CENT-D6SMART", category: "gate-automation", name: "Centurion D6 Smart Kit",
         description: "High-volume 600kg sliding gate motor.", price: 7999.00,
-        image: "../images/centurion.png", weight: 40,
+        image: "images/centurion.png", weight: 40,
         contents: ["motor", "battery X2", "4m nylon rack", "2 x Blue Nova remotes"]
     },
     {
         id: "CENT-SDO", category: "gate-automation", name: "Centurion SDO Smart Kit",
         description: "Sectional / Tip-up garage door operator.", price: 2999.00,
-        image: "../images/centurion.png", weight: 18,
+        image: "images/centurion.png", weight: 18,
         options: { doorType: [{value: "tip up", label: "Tip Up", extra: 0}, {value: "tilt", label: "Tilt", extra: 1500}] },
         contents: ["SDO Smart Kit", "Extrusion Rail", "2 x Blue Nova Remotes"]
     },
     {
         id: "CENT-RDO", category: "gate-automation", name: "Centurion RDO Kit",
         description: "Roll-up garage door operator.", price: 2899.00,
-        image: "../images/centurion.png", weight: 16,
+        image: "images/centurion.png", weight: 16,
         contents: ["RDO Kit", "2 x Blue Nova Remotes"]
     },
     {
         id: "CENT-SWING", category: "gate-automation", name: "Centurion Swing Gate Kit",
         description: "Double swing gate automation.", price: 12999.00,
-        image: "../images/centurion.png", weight: 48,
+        image: "images/centurion.png", weight: 48,
         options: { model: [{value: "400", label: "Vantage 400", extra: 0}, {value: "500", label: "Vantage 500", extra: 1500}] },
         contents: ["vantage controller", "2 x vantage motors", "2 x Blue Nova remotes", "25 meter vector cable"]
     },
     {
         id: "CCTV-HD", category: "cctv", name: "CCTV HD KIT Dahua",
         description: "Professional Analog HD surveillance.", price: 7999.00,
-        image: "../images/8ch.png", weight: 10,
+        image: "images/8ch.png", weight: 10,
         options: {
             channels: [{value: "8", label: "8 Channel", extra: 0}, {value: "16", label: "16 Channel", extra: 6999}, {value: "32", label: "32 Channel", extra: 15000}],
             style: [{value: "bullet", label: "Bullet Cameras", extra: 0}, {value: "dome", label: "Dome Cameras", extra: 0}],
@@ -558,7 +558,7 @@ const NEXPAK_KIT_DATABASE = [
     {
         id: "CCTV-IP", category: "cctv-ip", name: "IP CCTV KIT",
         description: "Networked PoE digital surveillance.", price: 15999.00,
-        image: "../images/dahua.png", weight: 12,
+        image: "images/dahua.png", weight: 12,
         options: {
             channels: [{value: "8", label: "8 Channel", extra: 0}, {value: "16", label: "16 Channel", extra: 14999}, {value: "32", label: "32 Channel", extra: 25000}],
             style: [{value: "bullet", label: "Bullet", extra: 0}, {value: "dome", label: "Dome", extra: 0}],
@@ -587,7 +587,7 @@ const NEXPAK_COMPANY = {
     name: "Nexpak Security Solutions PTY Ltd",
     address: "215 Russell Street, Benoni, East Rand, Gauteng",
     phone: "083 630 8249",
-    email: "nexpaksa@gmail.com",
+    email: "nexpaksa@outlook.com",
     bankName: "Capitec Bank",
     accountNo: "2517857594",
     branchCode: "470010",
