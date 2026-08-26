@@ -1152,7 +1152,1103 @@
                 14px;
         }
 
-
         /* =====================================================
            MISTAKES
-        ======================
+        ====================================================== */
+
+        .mistakes-list {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap:
+                15px;
+
+            margin-top:
+                25px;
+        }
+
+
+        .mistake {
+
+            display:
+                flex;
+
+            gap:
+                13px;
+
+            padding:
+                18px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                12px;
+
+            background:
+                white;
+        }
+
+
+        .mistake-icon {
+
+            width:
+                32px;
+
+            height:
+                32px;
+
+            flex-shrink:
+                0;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                50%;
+
+            background:
+                #f4e8e8;
+
+            color:
+                #8b3a3a;
+
+            font-weight:
+                900;
+        }
+
+
+        .mistake strong {
+
+            display:
+                block;
+
+            color:
+                var(--dark-green);
+
+            margin-bottom:
+                3px;
+        }
+
+
+        .mistake span {
+
+            color:
+                var(--muted);
+
+            font-size:
+                13px;
+        }
+
+
+        /* =====================================================
+           SAFETY
+        ====================================================== */
+
+        .safety-section {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--dark-green-2),
+                    var(--dark-green)
+                );
+
+            color:
+                white;
+
+            border-radius:
+                var(--radius);
+
+            padding:
+                40px;
+
+            margin-bottom:
+                25px;
+        }
+
+
+        .safety-section h2 {
+
+            color:
+                white;
+
+            margin-bottom:
+                12px;
+        }
+
+
+        .safety-section > p {
+
+            color:
+                rgba(255,255,255,0.82);
+
+            margin-bottom:
+                20px;
+        }
+
+
+        .safety-list {
+
+            list-style:
+                none;
+        }
+
+
+        .safety-list li {
+
+            position:
+                relative;
+
+            padding-left:
+                29px;
+
+            margin-bottom:
+                12px;
+
+            color:
+                rgba(255,255,255,0.9);
+        }
+
+
+        .safety-list li::before {
+
+            content:
+                "✓";
+
+            position:
+                absolute;
+
+            left:
+                0;
+
+            color:
+                var(--light-green);
+
+            font-weight:
+                900;
+        }
+
+
+        /* =====================================================
+           MAINTENANCE FEATURE GRID
+        ====================================================== */
+
+        .feature-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap:
+                15px;
+
+            margin-top:
+                25px;
+        }
+
+
+        .feature-card {
+
+            background:
+                var(--very-light-green);
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                14px;
+
+            padding:
+                22px;
+        }
+
+
+        .feature-card strong {
+
+            display:
+                block;
+
+            color:
+                var(--dark-green);
+
+            margin-bottom:
+                5px;
+        }
+
+
+        .feature-card span {
+
+            display:
+                block;
+
+            color:
+                var(--muted);
+
+            font-size:
+                14px;
+        }
+
+
+        /* =====================================================
+           RELATED PRODUCTS
+        ====================================================== */
+
+        .related-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap:
+                15px;
+
+            margin-top:
+                25px;
+        }
+
+
+        .related-card {
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                14px;
+
+            padding:
+                22px;
+
+            background:
+                var(--very-light-green);
+
+            transition:
+                0.25s ease;
+        }
+
+
+        .related-card:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                var(--shadow);
+        }
+
+
+        .related-card strong {
+
+            display:
+                block;
+
+            color:
+                var(--dark-green);
+
+            margin-bottom:
+                6px;
+        }
+
+
+        .related-card span {
+
+            color:
+                var(--muted);
+
+            font-size:
+                13px;
+        }
+
+
+        /* =====================================================
+           FINAL CTA
+        ====================================================== */
+
+        .final-cta {
+
+            background:
+                var(--soft-green);
+
+            border:
+                1px solid var(--border);
+
+            border-radius:
+                var(--radius);
+
+            padding:
+                45px 30px;
+
+            text-align:
+                center;
+        }
+
+
+        .final-cta h2 {
+
+            color:
+                var(--dark-green);
+
+            margin-bottom:
+                10px;
+        }
+
+
+        .final-cta p {
+
+            max-width:
+                700px;
+
+            margin:
+                0 auto 25px;
+
+            color:
+                var(--muted);
+        }
+
+
+        .cta-buttons {
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            flex-wrap:
+                wrap;
+        }
+
+
+        .cta-button {
+
+            display:
+                inline-block;
+
+            padding:
+                14px 22px;
+
+            border-radius:
+                11px;
+
+            font-weight:
+                800;
+
+            transition:
+                0.25s ease;
+        }
+
+
+        .cta-primary {
+
+            background:
+                var(--dark-green);
+
+            color:
+                white;
+        }
+
+
+        .cta-primary:hover {
+
+            background:
+                var(--green);
+        }
+
+
+        .cta-secondary {
+
+            background:
+                var(--light-green);
+
+            color:
+                var(--dark-green);
+        }
+
+
+        .cta-secondary:hover {
+
+            background:
+                #a9dfb5;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ====================================================== */
+
+        footer {
+
+            background:
+                var(--dark-green-2);
+
+            color:
+                white;
+
+            padding:
+                35px 20px;
+
+            text-align:
+                center;
+        }
+
+
+        footer strong {
+
+            color:
+                var(--light-green);
+
+            font-size:
+                16px;
+        }
+
+
+        footer p {
+
+            color:
+                rgba(255,255,255,0.65);
+
+            font-size:
+                13px;
+
+            margin-top:
+                7px;
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ====================================================== */
+
+        @media (max-width: 900px) {
+
+            nav {
+
+                display:
+                    none;
+            }
+
+
+            .facts-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .application-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .related-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .hero-card {
+
+                padding:
+                    40px 25px;
+            }
+
+
+            .info-section {
+
+                padding:
+                    28px 22px;
+            }
+
+
+            .steps {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .mistakes-list {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .feature-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .related-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .safety-section {
+
+                padding:
+                    30px 23px;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .header-inner {
+
+                padding:
+                    14px 15px;
+            }
+
+
+            .logo {
+
+                font-size:
+                    20px;
+            }
+
+
+            .breadcrumb-wrap {
+
+                padding:
+                    15px;
+            }
+
+
+            .training-hero {
+
+                padding:
+                    0 15px;
+            }
+
+
+            .content-container {
+
+                padding-left:
+                    15px;
+
+                padding-right:
+                    15px;
+            }
+
+
+            .facts-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .connection-diagram {
+
+                flex-direction:
+                    column;
+            }
+
+
+            .diagram-arrow {
+
+                transform:
+                    rotate(90deg);
+            }
+
+
+            h2 {
+
+                font-size:
+                    24px;
+            }
+
+
+            .hero-card h1 {
+
+                font-size:
+                    34px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     TOP BAR
+========================================================= -->
+
+<div class="top-bar">
+
+    Professional Equestrian Fencing
+    • Product Knowledge Centre
+
+</div>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header>
+
+    <div class="header-inner">
+
+        <a
+            href="equestrian.html"
+            class="logo"
+        >
+            Nexpak
+            <span>Equestrian</span>
+        </a>
+
+
+        <nav>
+
+            <a href="equestrian.html">
+                Equestrian Products
+            </a>
+
+
+            <a href="../../index.html">
+                Nexpak Security
+            </a>
+
+
+            <a
+                href="https://wa.me/27820000000"
+                target="_blank"
+                class="header-button"
+            >
+                WhatsApp Us
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================================
+     BREADCRUMB
+========================================================= -->
+
+<div class="breadcrumb-wrap">
+
+    <div class="breadcrumb">
+
+        <a href="equestrian.html">
+            Equestrian
+        </a>
+
+        <span>›</span>
+
+        <span>
+            Product Knowledge Centre
+        </span>
+
+        <span>›</span>
+
+        <span>
+            Tape Buckles
+        </span>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="training-hero">
+
+    <div class="hero-card">
+
+        <div class="hero-label">
+            Product Knowledge Centre
+        </div>
+
+
+        <h1>
+
+            40mm
+            <span>Polytape Buckle</span>
+
+        </h1>
+
+
+        <p>
+
+            A practical guide to the purpose, applications,
+            correct installation and safe use of polytape
+            buckles in equestrian electric fencing systems.
+
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<main>
+
+    <div class="content-container">
+
+
+        <!-- =====================================================
+             INTRODUCTION
+        ====================================================== -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    🔗
+                </div>
+
+                <h2>
+                    About the Polytape Buckle
+                </h2>
+
+            </div>
+
+
+            <p>
+
+                A polytape buckle is used to create a secure
+                mechanical and electrical connection between
+                sections of electric fence tape.
+
+            </p>
+
+
+            <p>
+
+                For equestrian fencing, the buckle is particularly
+                useful when terminating tape at an end post,
+                changing direction at a corner, connecting a
+                tape gate, or joining two lengths of tape.
+
+            </p>
+
+
+            <p>
+
+                The buckle helps maintain contact with the
+                conductive elements of the tape so that the
+                electrical circuit can continue through the
+                connection when correctly installed.
+
+            </p>
+
+
+            <div class="facts-grid">
+
+
+                <div class="fact-card">
+
+                    <div class="fact-icon">
+                        📏
+                    </div>
+
+                    <strong>
+                        Up to 40mm
+                    </strong>
+
+                    <span>
+                        Designed for compatible polytape
+                        up to 40mm wide.
+                    </span>
+
+                </div>
+
+
+                <div class="fact-card">
+
+                    <div class="fact-icon">
+                        🔩
+                    </div>
+
+                    <strong>
+                        Heavy Duty
+                    </strong>
+
+                    <span>
+                        Typically manufactured from
+                        outdoor-suitable metal.
+                    </span>
+
+                </div>
+
+
+                <div class="fact-card">
+
+                    <div class="fact-icon">
+                        ⚡
+                    </div>
+
+                    <strong>
+                        Electrical Connection
+                    </strong>
+
+                    <span>
+                        Helps maintain electrical continuity
+                        across a tape connection.
+                    </span>
+
+                </div>
+
+
+                <div class="fact-card">
+
+                    <div class="fact-icon">
+                        🐴
+                    </div>
+
+                    <strong>
+                        Equestrian Use
+                    </strong>
+
+                    <span>
+                        Suitable for applications within
+                        horse fencing systems.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             KEY SPECIFICATIONS
+        ====================================================== -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    📋
+                </div>
+
+                <h2>
+                    Key Specifications
+                </h2>
+
+            </div>
+
+
+            <table class="spec-table">
+
+                <tr>
+
+                    <td>
+                        Tape Compatibility
+                    </td>
+
+                    <td>
+                        Designed for compatible polytape
+                        up to 40mm wide.
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        Material
+                    </td>
+
+                    <td>
+                        Common versions are manufactured
+                        from galvanised steel, zinc or
+                        other outdoor-suitable,
+                        rust-resistant metal.
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        Primary Function
+                    </td>
+
+                    <td>
+                        Provides a secure connection between
+                        compatible electric fence tape sections
+                        while maintaining electrical continuity.
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        Typical Applications
+                    </td>
+
+                    <td>
+                        End termination, corners, tape gates
+                        and joining/splicing tape.
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        Insulator Compatibility
+                    </td>
+
+                    <td>
+                        Can be used with suitable corner
+                        strain insulators and other compatible
+                        fencing components.
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        Example Dimensions
+                    </td>
+
+                    <td>
+                        Some heavy-duty 40mm buckle variations
+                        may be approximately 40mm × 6mm × 60mm.
+                        Always confirm the dimensions of the
+                        specific product supplied.
+                    </td>
+
+                </tr>
+
+            </table>
+
+
+            <div class="note-box">
+
+                <strong>
+                    Important specification note
+                </strong>
+
+                <p>
+
+                    Dimensions and material specifications can
+                    vary between manufacturers and product
+                    versions. The example dimensions above
+                    should not be treated as the exact
+                    specification of every 40mm buckle.
+
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             COMMON APPLICATIONS
+        ====================================================== -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    🛠️
+                </div>
+
+                <h2>
+                    Common Uses
+                </h2>
+
+            </div>
+
+
+            <p>
+
+                A 40mm polytape buckle can perform several
+                important functions within an electric
+                equestrian fencing system.
+
+            </p>
+
+
+            <div class="application-grid">
+
+
+                <div class="application-card">
+
+                    <div class="application-number">
+                        01
+                    </div>
+
+                    <h3>
+                        End Termination
+                    </h3>
+
+                    <p>
+
+                        Used to secure and terminate the end
+                        of a tape run at an end post or suitable
+                        termination point.
+
+                    </p>
+
+                </div>
+
+
+                <div class="application-card">
+
+                    <div class="application-number"
