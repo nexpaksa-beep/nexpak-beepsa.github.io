@@ -1177,4 +1177,969 @@
                     rgba(
                         59,
                         130,
-                        2
+                        2                    46,
+                    0
+                );
+
+        }
+
+        100% {
+
+            box-shadow:
+                0 0 0 0
+                rgba(
+                    59,
+                    130,
+                    246,
+                    0
+                );
+
+        }
+
+    }
+
+
+    /* ==========================================================
+       ELECTRIC FENCE VISUAL
+       ========================================================== */
+
+    .ef-active {
+
+        position:
+            absolute;
+
+        top:
+            15%;
+
+        left:
+            10%;
+
+        width:
+            80%;
+
+        height:
+            75%;
+
+        border:
+            2px dashed
+            #fbbf24;
+
+        border-radius:
+            10px;
+
+        box-shadow:
+            0 0 15px
+            rgba(
+                251,
+                191,
+                36,
+                0.5
+            );
+
+        pointer-events:
+            none;
+
+    }
+
+
+    /* ==========================================================
+       HIDDEN ELEMENT
+       ========================================================== */
+
+    .hide {
+
+        display:
+            none !important;
+
+    }
+
+
+    /* ==========================================================
+       PROPERTY SELECTOR GRID
+       ========================================================== */
+
+    .property-selector {
+
+        display:
+            grid;
+
+        grid-template-columns:
+            repeat(
+                4,
+                minmax(
+                    0,
+                    1fr
+                )
+            );
+
+        gap:
+            12px;
+
+        margin-top:
+            15px;
+
+    }
+
+
+    .property-option {
+
+        position:
+            relative;
+
+        overflow:
+            hidden;
+
+        border:
+            2px solid
+            #e2e8f0;
+
+        border-radius:
+            10px;
+
+        cursor:
+            pointer;
+
+        background:
+            #ffffff;
+
+        transition:
+            all 0.25s ease;
+
+    }
+
+
+    .property-option:hover {
+
+        border-color:
+            #3b82f6;
+
+        transform:
+            translateY(-2px);
+
+        box-shadow:
+            0 8px 20px
+            rgba(
+                15,
+                23,
+                42,
+                0.12
+            );
+
+    }
+
+
+    .property-option.active {
+
+        border-color:
+            #3b82f6;
+
+        box-shadow:
+            0 0 0 3px
+            rgba(
+                59,
+                130,
+                246,
+                0.18
+            );
+
+    }
+
+
+    .property-option img {
+
+        display:
+            block;
+
+        width:
+            100%;
+
+        aspect-ratio:
+            16 / 10;
+
+        object-fit:
+            cover;
+
+    }
+
+
+    .property-option-label {
+
+        padding:
+            8px;
+
+        text-align:
+            center;
+
+        font-size:
+            12px;
+
+        font-weight:
+            800;
+
+        color:
+            #334155;
+
+        background:
+            #ffffff;
+
+    }
+
+
+    /* ==========================================================
+       RESPONSIVE PROPERTY SELECTOR
+       ========================================================== */
+
+    @media (
+        max-width: 768px
+    ) {
+
+        .property-selector {
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(
+                        0,
+                        1fr
+                    )
+                );
+
+        }
+
+    }
+
+
+    /* ==========================================================
+       SOCIAL FOOTER
+       ========================================================== */
+
+    .social-footer {
+
+        background:
+            #0f172a;
+
+        color:
+            #ffffff;
+
+        margin-top:
+            40px;
+
+        padding:
+            35px 20px;
+
+    }
+
+
+    .social-footer-inner {
+
+        max-width:
+            1200px;
+
+        margin:
+            0 auto;
+
+        display:
+            flex;
+
+        flex-direction:
+            column;
+
+        align-items:
+            center;
+
+        text-align:
+            center;
+
+        gap:
+            18px;
+
+    }
+
+
+    .social-icons {
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        gap:
+            14px;
+
+    }
+
+
+    .social-icons a {
+
+        width:
+            42px;
+
+        height:
+            42px;
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        border-radius:
+            50%;
+
+        background:
+            #1e293b;
+
+        color:
+            #ffffff;
+
+        font-size:
+            18px;
+
+        transition:
+            all 0.25s ease;
+
+    }
+
+
+    .social-icons a:hover {
+
+        background:
+            #3b82f6;
+
+        transform:
+            translateY(
+                -3px
+            );
+
+    }
+
+
+    .payfast-icon {
+
+        height:
+            32px;
+
+        width:
+            auto;
+
+        object-fit:
+            contain;
+
+        background:
+            #ffffff;
+
+        padding:
+            4px 10px;
+
+        border-radius:
+            6px;
+
+    }
+
+
+    /* ==========================================================
+       WHATSAPP FLOATING BUTTON
+       ========================================================== */
+
+    .whatsapp-float {
+
+        position:
+            fixed;
+
+        right:
+            20px;
+
+        bottom:
+            20px;
+
+        width:
+            58px;
+
+        height:
+            58px;
+
+        display:
+            flex;
+
+        align-items:
+            center;
+
+        justify-content:
+            center;
+
+        background:
+            #25D366;
+
+        color:
+            #ffffff;
+
+        border-radius:
+            50%;
+
+        font-size:
+            30px;
+
+        text-decoration:
+            none;
+
+        box-shadow:
+            0 6px 20px
+            rgba(
+                0,
+                0,
+                0,
+                0.25
+            );
+
+        z-index:
+            9999;
+
+        transition:
+            transform 0.25s ease;
+
+    }
+
+
+    .whatsapp-float:hover {
+
+        transform:
+            scale(
+                1.08
+            );
+
+    }
+
+
+    /* ==========================================================
+       MOBILE WHATSAPP BUTTON
+       ========================================================== */
+
+    @media (
+        max-width: 640px
+    ) {
+
+        .whatsapp-float {
+
+            width:
+                52px;
+
+            height:
+                52px;
+
+            right:
+                15px;
+
+            bottom:
+                15px;
+
+            font-size:
+                27px;
+
+        }
+
+    }
+
+</style>
+
+</head>
+
+
+<body class="text-slate-800">
+
+
+    <!-- ==========================================================
+         HEADER
+         ========================================================== -->
+
+    <header
+        class="bg-nexpakBlue text-white shadow-lg"
+    >
+
+        <div
+            class="max-w-7xl mx-auto px-4 py-4"
+        >
+
+            <div
+                class="flex items-center justify-between"
+            >
+
+                <a
+                    href="index.html"
+                    class="flex items-center gap-3"
+                >
+
+                    <img
+                        src="images/logo.png"
+                        alt="Nexpak Security Solutions"
+                        class="h-12 w-auto object-contain"
+                    >
+
+                    <div
+                        class="hidden sm:block"
+                    >
+
+                        <div
+                            class="font-extrabold text-lg"
+                        >
+                            Nexpak Security Solutions
+                        </div>
+
+                        <div
+                            class="text-xs text-slate-300"
+                        >
+                            Professional Security Solutions
+                        </div>
+
+                    </div>
+
+                </a>
+
+
+                <!-- TOP MENU BUTTON -->
+
+                <div
+                    class="relative"
+                >
+
+                    <button
+                        id="menuButton"
+                        type="button"
+                        class="flex items-center gap-2 bg-slate-800 hover:bg-blue-600 px-4 py-2 rounded-lg font-bold transition"
+                    >
+
+                        <i
+                            class="fa-solid fa-bars"
+                        ></i>
+
+                        Menu
+
+                    </button>
+
+
+                    <!-- DROPDOWN PANEL -->
+
+                    <div
+                        id="menuPanel"
+                        class="hidden absolute right-0 top-full mt-2 w-56 bg-white text-slate-800 rounded-xl shadow-2xl border border-slate-200 overflow-hidden z-50"
+                    >
+
+                        <a
+                            href="index.html"
+                            class="flex items-center gap-3 px-5 py-3 hover:bg-slate-100 transition"
+                        >
+
+                            <i
+                                class="fa-solid fa-house text-blue-600 w-5"
+                            ></i>
+
+                            Home
+
+                        </a>
+
+
+                        <a
+                            href="aboutus.html"
+                            class="flex items-center gap-3 px-5 py-3 hover:bg-slate-100 transition"
+                        >
+
+                            <i
+                                class="fa-solid fa-circle-info text-blue-600 w-5"
+                            ></i>
+
+                            About Us
+
+                        </a>
+
+
+                        <a
+                            href="contact.html"
+                            class="flex items-center gap-3 px-5 py-3 hover:bg-slate-100 transition"
+                        >
+
+                            <i
+                                class="fa-solid fa-envelope text-blue-600 w-5"
+                            ></i>
+
+                            Contact Us
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ==========================================================
+         HERO / BANNER
+         ========================================================== -->
+
+    <section
+        class="bg-gradient-to-r from-nexpakBlue via-slate-900 to-blue-900 text-white py-16 text-center"
+    >
+
+        <div
+            class="max-w-4xl mx-auto px-4"
+        >
+
+            <span
+                class="text-blue-400 font-bold text-sm tracking-widest uppercase mb-3 block"
+            >
+
+                <i
+                    class="fa-solid fa-layer-group mr-2"
+                ></i>
+
+                Build Your System
+
+            </span>
+
+
+            <h1
+                class="text-4xl md:text-5xl font-extrabold mb-4"
+            >
+
+                Build Your Own Security System
+
+            </h1>
+
+
+            <p
+                class="text-slate-300 text-lg max-w-3xl mx-auto"
+            >
+
+                Choose the security products you need,
+                configure quantities, and see a visual
+                layout tailored to your property.
+
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==========================================================
+         MAIN BUILDER
+         ========================================================== -->
+
+    <main
+        class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 lg:grid-cols-12 gap-8"
+    >
+
+
+        <!-- LEFT COLUMN -->
+
+        <div
+            class="lg:col-span-5 space-y-6"
+        >
+
+            <div
+                class="bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+            >
+
+                <h2
+                    class="text-xl font-bold mb-4 border-b pb-2"
+                >
+
+                    1. Select Category
+
+                </h2>
+
+
+                <select
+                    id="categorySelect"
+                    class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none font-semibold"
+                    onchange="loadCategoryForm()"
+                >
+
+                    <option value="">
+                        -- Choose a Product Category --
+                    </option>
+
+                    <option value="electricFence">
+                        Electric Fencing
+                    </option>
+
+                    <option value="roboguard">
+                        Roboguard Wireless Beams
+                    </option>
+
+                    <option value="gateD5">
+                        Gate Automation (Centurion D5)
+                    </option>
+
+                    <option value="gateD10">
+                        Gate Automation (Centurion D10)
+                    </option>
+
+                    <option value="cctv">
+                        CCTV Systems
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- PROPERTY SELECTOR -->
+
+            <div
+                class="bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+            >
+
+                <h2
+                    class="text-xl font-bold mb-2"
+                >
+
+                    <i
+                        class="fa-solid fa-house text-blue-600 mr-2"
+                    ></i>
+
+                    2. Choose Your Property
+
+                </h2>
+
+
+                <p
+                    class="text-sm text-slate-500 mb-4"
+                >
+
+                    Select the layout that best matches
+                    your property.
+
+                </p>
+
+
+                <div
+                    class="property-selector"
+                >
+
+                    <button
+                        type="button"
+                        class="property-option active"
+                        data-layout="lay.png"
+                        onclick="selectPropertyLayout('lay.png', this)"
+                    >
+
+                        <img
+                            src="lay.png"
+                            alt="Property Layout 1"
+                        >
+
+                        <div
+                            class="property-option-label"
+                        >
+                            Standard Property
+                        </div>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="property-option"
+                        data-layout="lay2.png"
+                        onclick="selectPropertyLayout('lay2.png', this)"
+                    >
+
+                        <img
+                            src="lay2.png"
+                            alt="Property Layout 2"
+                        >
+
+                        <div
+                            class="property-option-label"
+                        >
+                            Large Property
+                        </div>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="property-option"
+                        data-layout="lay3.png"
+                        onclick="selectPropertyLayout('lay3.png', this)"
+                    >
+
+                        <img
+                            src="lay3.png"
+                            alt="Property Layout 3"
+                        >
+
+                        <div
+                            class="property-option-label"
+                        >
+                            Angled Property
+                        </div>
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="property-option"
+                        data-layout="lay4.png"
+                        onclick="selectPropertyLayout('lay4.png', this)"
+                    >
+
+                        <img
+                            src="lay4.png"
+                            alt="Property Layout 4"
+                        >
+
+                        <div
+                            class="property-option-label"
+                        >
+                            Interior View
+                        </div>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT FORM -->
+
+            <div
+                id="product-form-container"
+                class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hide"
+            >
+
+                <h2
+                    class="text-xl font-bold mb-4 border-b pb-2"
+                >
+
+                    3. Configure Products
+
+                </h2>
+
+
+                <div
+                    id="dynamic-form"
+                    class="space-y-4 max-h-[500px] overflow-y-auto pr-2"
+                ></div>
+
+
+                <button
+                    onclick="addCurrentCategoryToCart()"
+                    class="mt-6 w-full bg-nexpakBlue hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition shadow-lg"
+                >
+
+                    Add Selection to Cart
+
+                    <i
+                        class="fa-solid fa-arrow-right ml-2"
+                    ></i>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT COLUMN -->
+
+        <div
+            class="lg:col-span-7 space-y-6"
+        >
+
+            <!-- PROPERTY VISUALISER -->
+
+            <div
+                class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200"
+            >
+
+                <div
+                    class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4"
+                >
+
+                    <div>
+
+                        <h2
+                            class="text-xl font-bold text-nexpakBlue"
+                        >
+                            <i class="fa-solid fa-map-location-dot text-nexpakAccent mr-2"></i>
+                            Property View
+                        </h2>
+
+                        <p class="text-sm text-slate-500 mt-1">
+                            Select a property layout to position your security products.
+                        </p>
+
+                    </div>
+
+
+                    <!-- PROPERTY SELECTOR DROPDOWN -->
+
+                    <select
+                        id="propertySelect"
+                        onchange="changePropertyLayout()"
+                        class="p-3 border border-slate-300 rounded-lg bg-white font-semibold text-sm focus:ring-2 focus:ring-nexpakAccent outline-none"
+                    >
+
+                        <option value="lay.png">
+                            Property 1 — Standard
+                        </option>
+
+                        <option value="lay2.png">
+                            Property 2 — Large Yard
+                        </option>
+
+                        <option value="lay3.png">
+                            Property 3 — Angled Property
+                        </option>
+
+                        <option value="lay4.png">
+                            Property 4 — Open Interior
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- VISUALIZER -->
+
+                <div
+                    id="visualizer-box"
+                    class="relative w-full rounded-xl overflow-hidden border-2 border-slate-800 bg-slate-950"
+                >
+
+                    <img
+                        id="propertyImage"
+                        src="lay.png"
+                        alt="Nexpak security property layout"
+                        class="w-full h-auto object-contain block"
+                        onerror="handlePropertyImageError(this)"
+                    >
+
+
+                    <!-- PRODUCT MARKERS -->
+
+                    <div
+                        id="visualizer-overlay"
+                        class="visualizer-overlay"
+                    ></div>
+
+                </div>
+
+
+       
