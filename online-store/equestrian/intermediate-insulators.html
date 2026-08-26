@@ -1283,5 +1283,802 @@
 
             border-radius:
                 12px;
+                        background:
+                var(--card);
 
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+
+        }
+
+
+        .mistake:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 8px 20px
+                rgba(0, 0, 0, 0.08);
+
+        }
+
+
+        .mistake-icon {
+
+            min-width:
+                30px;
+
+            height:
+                30px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            border-radius:
+                50%;
+
+            background:
+                #e9f5e9;
+
+            color:
+                var(--dark-green);
+
+            font-weight:
+                800;
+
+        }
+
+
+        .mistake strong {
+
+            display:
+                block;
+
+            color:
+                var(--dark-green);
+
+            margin-bottom:
+                5px;
+
+            font-size:
+                15px;
+
+        }
+
+
+        .mistake span {
+
+            display:
+                block;
+
+            color:
+                var(--text-muted);
+
+            font-size:
+                13px;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        /* =====================================================
+           SAFETY SECTION
+        ====================================================== */
+
+        .safety-section {
+
+            margin-top:
+                35px;
+
+            padding:
+                30px;
+
+            border-radius:
+                18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--dark-green),
+                    var(--green)
+                );
+
+            color:
+                white;
+
+            box-shadow:
+                0 12px 30px
+                rgba(0, 0, 0, 0.10);
+
+        }
+
+
+        .safety-section h2 {
+
+            margin:
+                0 0 14px;
+
+            font-size:
+                25px;
+
+        }
+
+
+        .safety-section p {
+
+            margin:
+                0 0 20px;
+
+            line-height:
+                1.7;
+
+            opacity:
+                0.95;
+
+        }
+
+
+        .safety-list {
+
+            margin:
+                0;
+
+            padding-left:
+                20px;
+
+        }
+
+
+        .safety-list li {
+
+            margin-bottom:
+                10px;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        /* =====================================================
+           INSPECTION & MAINTENANCE
+        ====================================================== */
+
+        .feature-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap:
+                15px;
+
+            margin-top:
+                25px;
+
+        }
+
+
+        .feature-card {
+
+            padding:
+                20px;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius:
+                14px;
+
+            background:
+                var(--card);
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+
+        }
+
+
+        .feature-card:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 8px 20px
+                rgba(0, 0, 0, 0.08);
+
+        }
+
+
+        .feature-card strong {
+
+            display:
+                block;
+
+            color:
+                var(--dark-green);
+
+            font-size:
+                16px;
+
+            margin-bottom:
+                8px;
+
+        }
+
+
+        .feature-card span {
+
+            display:
+                block;
+
+            color:
+                var(--text-muted);
+
+            font-size:
+                13px;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        /* =====================================================
+           RELATED PRODUCTS
+        ====================================================== */
+
+        .related-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap:
+                16px;
+
+            margin-top:
+                25px;
+
+        }
+
+
+        .related-card {
+
+            display:
+                block;
+
+            padding:
+                22px;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius:
+                14px;
+
+            background:
+                var(--card);
+
+            text-decoration:
+                none;
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+
+        }
+
+
+        .related-card:hover {
+
+            transform:
+                translateY(-4px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(0, 0, 0, 0.09);
+
+        }
+
+
+        .related-card strong {
+
+            display:
+                block;
+
+            color:
+                var(--dark-green);
+
+            margin-bottom:
+                8px;
+
+            font-size:
+                16px;
+
+        }
+
+
+        .related-card span {
+
+            display:
+                block;
+
+            color:
+                var(--text-muted);
+
+            font-size:
+                13px;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        /* =====================================================
+           FINAL CTA
+        ====================================================== */
+
+        .final-cta {
+
+            margin-top:
+                40px;
+
+            padding:
+                40px 25px;
+
+            text-align:
+                center;
+
+            border-radius:
+                20px;
+
+            background:
+                #f0f7f0;
+
+            border:
+                1px solid
+                var(--border);
+
+        }
+
+
+        .final-cta h2 {
+
+            margin:
+                0 0 12px;
+
+            color:
+                var(--dark-green);
+
+            font-size:
+                28px;
+
+        }
+
+
+        .final-cta p {
+
+            max-width:
+                720px;
+
+            margin:
+                0 auto 25px;
+
+            color:
+                var(--text-muted);
+
+            line-height:
+                1.7;
+
+        }
+
+
+        .cta-buttons {
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            align-items:
+                center;
+
+            flex-wrap:
+                wrap;
+
+            gap:
+                12px;
+
+        }
+
+
+        .cta-button {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            min-height:
+                48px;
+
+            padding:
+                12px 22px;
+
+            border-radius:
+                10px;
+
+            text-decoration:
+                none;
+
+            font-weight:
+                700;
+
+            font-size:
+                14px;
+
+            transition:
+                all 0.25s ease;
+
+        }
+
+
+        .cta-primary {
+
+            background:
+                var(--dark-green);
+
+            color:
+                white;
+
+        }
+
+
+        .cta-primary:hover {
+
+            background:
+                var(--green);
+
+            transform:
+                translateY(-2px);
+
+        }
+
+
+        .cta-secondary {
+
+            background:
+                white;
+
+            color:
+                var(--dark-green);
+
+            border:
+                1px solid
+                var(--green);
+
+        }
+
+
+        .cta-secondary:hover {
+
+            background:
+                #eaf5ea;
+
+            transform:
+                translateY(-2px);
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ====================================================== */
+
+        footer {
+
+            margin-top:
+                50px;
+
+            padding:
+                25px 20px;
+
+            text-align:
+                center;
+
+            background:
+                var(--dark-green);
+
+            color:
+                white;
+
+            font-size:
+                13px;
+
+        }
+
+
+        footer p {
+
+            margin:
+                5px 0;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE DESIGN
+        ====================================================== */
+
+        @media (
+            max-width: 900px
+        ) {
+
+            .page-container {
+
+                width:
+                    92%;
+
+            }
+
+
+            .related-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media (
+            max-width: 700px
+        ) {
+
+            .page-title {
+
+                font-size:
+                    32px;
+
+            }
+
+
+            .hero-product {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .spec-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .applications-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .steps {
+
+                gap:
+                    12px;
+
+            }
+
+
+            .step {
+
+                grid-template-columns:
+                    40px 1fr;
+
+            }
+
+
+            .mistakes-list {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .feature-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .related-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .connection-diagram {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .diagram-arrow {
+
+                transform:
+                    rotate(90deg);
+
+            }
+
+
+            .safety-section {
+
+                padding:
+                    25px 20px;
+
+            }
+
+
+            .final-cta {
+
+                padding:
+                    32px 20px;
+
+            }
+
+
+            .final-cta h2 {
+
+                font-size:
+                    24px;
+
+            }
+
+
+            .cta-buttons {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .cta-button {
+
+                width:
+                    100%;
+
+            }
+
+        }
+
+
+        @media (
+            max-width: 450px
+        ) {
+
+            .page-title {
+
+                font-size:
+                    27px;
+
+            }
+
+
+            .section-heading h2 {
+
+                font-size:
+                    21px;
+
+            }
+
+
+            .info-section {
+
+                padding:
+                    20px;
+
+            }
+
+
+            .safety-section h2 {
+
+                font-size:
+                    22px;
+
+            }
+
+
+            .feature-card,
+            .related-card {
+
+                padding:
+                    17px;
+
+            }
+
+        }
+
+
+    </style>
+
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         PAGE CONTENT
+    ====================================================== -->
+
+
+    <main class="page-container">
+
+        <!-- Any remaining HTML content should continue here -->
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+        <p>
+            © 2026 Nexpak Security Solutions.
+            All rights reserved.
+        </p>
+
+        <p>
+            Professional Equestrian & Horse Fencing Solutions
+        </p>
+
+    </footer>
+
+
+</body>
+
+
+</html>
  
