@@ -5,14 +5,13 @@ l/* ==========================================================================
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-
+document.addEventListener('DOMContentLoaded', () => {
     'use strict';
 
-       /*
+    /*
      * checkout.js must only execute on the checkout page.
      * Shop, equestrian and other pages must not run checkout logic.
      */
-
     const isCheckoutPage =
         document.getElementById('checkoutForm') ||
         document.getElementById('checkoutOrderItems');
@@ -20,6 +19,43 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!isCheckoutPage) {
         return;
     }
+
+    // ==========================================
+    // CART DATA RETRIEVAL (Loads items passed from shop)
+    // ==========================================
+    const savedCount = localStorage.getItem('nexpak_cart_count') || 0;
+    const savedTotal = parseFloat(localStorage.getItem('nexpak_cart_total')) || 0;
+    const savedItems = JSON.parse(localStorage.getItem('nexpak_cart_items')) || [];
+
+    // Target elements on your checkout page
+    const checkoutCountDisplay = document.getElementById('checkout-cart-count');
+    const checkoutTotalDisplay = document.getElementById('checkout-total-price');
+    const itemsContainer = document.getElementById('checkout-items-list');
+
+    // Update the display elements
+    if (checkoutCountDisplay) {
+        checkoutCountDisplay.textContent = savedCount;
+    }
+
+    if (checkoutTotalDisplay) {
+        checkoutTotalDisplay.textContent = 'R' + savedTotal.toLocaleString('en-ZA', { minimumFractionDigits: 2 });
+    }
+
+    // Populate individual items if the container exists
+    if (itemsContainer && savedItems.length > 0) {
+        itemsContainer.innerHTML = ''; // Clear default placeholder
+        savedItems.forEach(item => {
+            const itemElement = document.createElement('div');
+            itemElement.className = 'checkout-item-row';
+            itemElement.innerHTML = `
+                <span>${item.name}</span>
+                <span>R${item.price.toLocaleString('en-ZA', { minimumFractionDigits: 2 })}</span>
+            `;
+            itemsContainer.appendChild(itemElement);
+        });
+    }
+});
+   
 
     /* ==========================================================================
        1. CHECKOUT STATE
