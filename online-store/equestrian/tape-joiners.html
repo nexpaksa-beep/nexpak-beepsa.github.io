@@ -1273,5 +1273,649 @@
             grid-template-columns:
                 repeat(3, 1fr);
 
+                            gap:
+                    15px;
+
+            margin-top:
+                24px;
+
+        }
+
+
+        .related-card {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
             gap:
-                15p
+                9px;
+
+            padding:
+                20px;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius:
+                14px;
+
+            background:
+                var(--card);
+
+            color:
+                var(--text);
+
+            text-decoration:
+                none;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                border-color 0.2s ease;
+
+        }
+
+
+        .related-card:hover {
+
+            transform:
+                translateY(-4px);
+
+            box-shadow:
+                0 8px 24px
+                rgba(0, 0, 0, 0.10);
+
+            border-color:
+                var(--green);
+
+        }
+
+
+        .related-card strong {
+
+            font-size:
+                17px;
+
+            color:
+                var(--dark-green);
+
+        }
+
+
+        .related-card span {
+
+            font-size:
+                14px;
+
+            line-height:
+                1.65;
+
+            color:
+                var(--muted);
+
+        }
+
+
+        /* =====================================================
+           FINAL CTA
+        ====================================================== */
+
+        .final-cta {
+
+            margin-top:
+                35px;
+
+            padding:
+                40px 30px;
+
+            border-radius:
+                20px;
+
+            text-align:
+                center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--green),
+                    var(--dark-green)
+                );
+
+            color:
+                white;
+
+        }
+
+
+        .final-cta h2 {
+
+            margin:
+                0 0 12px;
+
+            font-size:
+                28px;
+
+        }
+
+
+        .final-cta p {
+
+            max-width:
+                760px;
+
+            margin:
+                0 auto 25px;
+
+            line-height:
+                1.7;
+
+            opacity:
+                0.95;
+
+        }
+
+
+        .cta-buttons {
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            flex-wrap:
+                wrap;
+
+        }
+
+
+        .cta-button {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            min-height:
+                48px;
+
+            padding:
+                0 22px;
+
+            border-radius:
+                10px;
+
+            text-decoration:
+                none;
+
+            font-weight:
+                700;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+
+        }
+
+
+        .cta-button:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 7px 18px
+                rgba(0, 0, 0, 0.15);
+
+        }
+
+
+        .cta-primary {
+
+            background:
+                white;
+
+            color:
+                var(--dark-green);
+
+        }
+
+
+        .cta-secondary {
+
+            background:
+                rgba(255, 255, 255, 0.14);
+
+            color:
+                white;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.55);
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ====================================================== */
+
+        footer {
+
+            margin-top:
+                45px;
+
+            padding:
+                25px 20px;
+
+            text-align:
+                center;
+
+            border-top:
+                1px solid
+                var(--border);
+
+            color:
+                var(--muted);
+
+            font-size:
+                13px;
+
+        }
+
+
+        footer a {
+
+            color:
+                var(--dark-green);
+
+            text-decoration:
+                none;
+
+            font-weight:
+                600;
+
+        }
+
+
+        /* =====================================================
+           MOBILE RESPONSIVE
+        ====================================================== */
+
+        @media (
+            max-width: 850px
+        ) {
+
+            .related-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .spec-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .application-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .feature-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media (
+            max-width: 600px
+        ) {
+
+            body {
+
+                font-size:
+                    15px;
+
+            }
+
+
+            .container {
+
+                width:
+                    min(94%, 1100px);
+
+            }
+
+
+            .hero {
+
+                padding:
+                    55px 20px;
+
+            }
+
+
+            .hero h1 {
+
+                font-size:
+                    32px;
+
+            }
+
+
+            .hero p {
+
+                font-size:
+                    15px;
+
+            }
+
+
+            .info-section {
+
+                padding:
+                    22px;
+
+            }
+
+
+            .safety-section {
+
+                padding:
+                    25px 20px;
+
+            }
+
+
+            .section-heading {
+
+                align-items:
+                    flex-start;
+
+            }
+
+
+            .section-heading h2 {
+
+                font-size:
+                    22px;
+
+            }
+
+
+            .spec-grid,
+            .application-grid,
+            .feature-grid,
+            .mistakes-list,
+            .related-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .connection-diagram {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .diagram-arrow {
+
+                transform:
+                    rotate(90deg);
+
+            }
+
+
+            .step {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .step-number {
+
+                width:
+                    38px;
+
+                height:
+                    38px;
+
+            }
+
+
+            .cta-buttons {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .cta-button {
+
+                width:
+                    100%;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           ACCESSIBILITY
+        ====================================================== */
+
+        a:focus-visible,
+        button:focus-visible {
+
+            outline:
+                3px solid
+                var(--green);
+
+            outline-offset:
+                3px;
+
+        }
+
+
+        /* =====================================================
+           PRINT
+        ====================================================== */
+
+        @media print {
+
+            .final-cta,
+            footer {
+
+                display:
+                    none;
+
+            }
+
+
+            body {
+
+                background:
+                    white;
+
+                color:
+                    black;
+
+            }
+
+
+            .info-section,
+            .safety-section {
+
+                break-inside:
+                    avoid;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <header class="site-header">
+
+        <div class="header-inner">
+
+            <a
+                href="equestrian.html"
+                class="brand"
+            >
+
+                <span class="brand-mark">
+                    N
+                </span>
+
+                <span>
+
+                    <strong>
+                        Nexpak Security Solutions
+                    </strong>
+
+                    <small>
+                        Equestrian Training Centre
+                    </small>
+
+                </span>
+
+            </a>
+
+
+            <a
+                href="equestrian.html"
+                class="back-link"
+            >
+
+                ← Equestrian Products
+
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="container">
+
+
+        <!-- =====================================================
+             HERO
+        ====================================================== -->
+
+        <section class="hero">
+
+            <div class="hero-badge">
+                PRODUCT KNOWLEDGE
+            </div>
+
+
+            <h1>
+                40mm Horse Tape Joiners
+            </h1>
+
+
+            <p>
+
+                Professional guidance on selecting, installing
+                and maintaining joiners for 40mm electric horse
+                fencing tape.
+
+            </p>
+
+
+            <div class="hero-note">
+
+                <strong>
+                    Important:
+                </strong>
+
+                Never knot electric fence tape. A proper tape
+                joiner helps maintain mechanical strength and
+                electrical continuity.
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             FOOTER
+        ====================================================== -->
+
+        <footer>
+
+            <p>
+
+                © 2026 Nexpak Security Solutions.
+                Equestrian Product Knowledge Centre.
+
+            </p>
+
+
+            <p>
+
+                <a href="equestrian.html">
+                    Back to Equestrian Products
+                </a>
+
+            </p>
+
+        </footer>
+
+
+    </main>
+
+</body>
+
+</html>
