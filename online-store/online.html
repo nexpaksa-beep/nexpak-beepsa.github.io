@@ -925,10 +925,9 @@ document.addEventListener('DOMContentLoaded', () => {
 <script src="../js/payment.js"></script>
 <script src="../js/checkout.js"></script>
 
-<!-- PASTE THE NEW SCRIPT BLOCK HERE -->
+<!-- CART STORAGE & PRODUCT SCRIPT -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Load cart data from localStorage if it exists, otherwise initialize
     let cartCount = parseInt(localStorage.getItem('nexpak_cart_count')) || 0;
     let cartTotal = parseFloat(localStorage.getItem('nexpak_cart_total')) || 0;
     let cartItems = JSON.parse(localStorage.getItem('nexpak_cart_items')) || [];
@@ -947,7 +946,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateCartUI();
 
-    // 2. Dynamic Kit Price & Centurion Image Switcher
     document.querySelectorAll('.app-product-card').forEach(card => {
         const select = card.querySelector('.variant-selector');
         const priceTag = card.querySelector('.product-price-tag');
@@ -985,7 +983,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // 3. Button Action Handlers
         const btnCart = card.querySelector('.custom-app-btn:not(.btn-info):not(.btn-quote)');
         const btnInfo = card.querySelector('.btn-info');
         const btnQuote = card.querySelector('.btn-quote');
@@ -1027,4 +1024,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </body>
 </html>
-                    
+
