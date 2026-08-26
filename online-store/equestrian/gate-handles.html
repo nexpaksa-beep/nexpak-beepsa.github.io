@@ -1247,12 +1247,1128 @@
         }
 
 
-        .mistake {
+                .mistake {
 
             display:
                 flex;
 
             gap:
                 13px;
+
+            padding:
+                18px;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius:
+                12px;
+
+            background:
+                var(--card);
+
+            align-items:
+                flex-start;
+
+        }
+
+
+        .mistake-icon {
+
+            width:
+                30px;
+
+            height:
+                30px;
+
+            min-width:
+                30px;
+
+            border-radius:
+                50%;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            background:
+                #f4d35e;
+
+            color:
+                #26351f;
+
+            font-weight:
+                900;
+
+            font-size:
+                15px;
+
+        }
+
+
+        .mistake strong {
+
+            display:
+                block;
+
+            margin-bottom:
+                5px;
+
+            color:
+                var(--dark-green);
+
+            font-size:
+                15px;
+
+        }
+
+
+        .mistake span {
+
+            display:
+                block;
+
+            color:
+                var(--text-muted);
+
+            font-size:
+                13px;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        /* =====================================================
+           SAFETY
+        ====================================================== */
+
+        .safety-section {
+
+            margin-top:
+                30px;
+
+            padding:
+                32px;
+
+            border-radius:
+                18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--dark-green),
+                    var(--green)
+                );
+
+            color:
+                white;
+
+        }
+
+
+        .safety-section h2 {
+
+            margin:
+                0 0 13px;
+
+            font-size:
+                25px;
+
+        }
+
+
+        .safety-section p {
+
+            margin:
+                0 0 18px;
+
+            opacity:
+                0.94;
+
+            line-height:
+                1.7;
+
+        }
+
+
+        .safety-list {
+
+            margin:
+                0;
+
+            padding-left:
+                20px;
+
+        }
+
+
+        .safety-list li {
+
+            margin-bottom:
+                9px;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        /* =====================================================
+           RELATED PRODUCTS
+        ====================================================== */
+
+        .related-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap:
+                15px;
+
+            margin-top:
+                24px;
+
+        }
+
+
+        .related-card {
+
+            display:
+                block;
+
+            padding:
+                20px;
+
+            border:
+                1px solid
+                var(--border);
+
+            border-radius:
+                14px;
+
+            background:
+                var(--card);
+
+            text-decoration:
+                none;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+
+        }
+
+
+        .related-card:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 8px 22px
+                rgba(0,0,0,0.08);
+
+        }
+
+
+        .related-card strong {
+
+            display:
+                block;
+
+            margin-bottom:
+                8px;
+
+            color:
+                var(--dark-green);
+
+            font-size:
+                16px;
+
+        }
+
+
+        .related-card span {
+
+            display:
+                block;
+
+            color:
+                var(--text-muted);
+
+            font-size:
+                13px;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        /* =====================================================
+           FINAL CTA
+        ====================================================== */
+
+        .final-cta {
+
+            margin-top:
+                35px;
+
+            padding:
+                40px 30px;
+
+            text-align:
+                center;
+
+            border-radius:
+                20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--green),
+                    var(--dark-green)
+                );
+
+            color:
+                white;
+
+        }
+
+
+        .final-cta h2 {
+
+            margin:
+                0 0 12px;
+
+            font-size:
+                28px;
+
+        }
+
+
+        .final-cta p {
+
+            max-width:
+                720px;
+
+            margin:
+                0 auto 25px;
+
+            line-height:
+                1.7;
+
+            opacity:
+                0.95;
+
+        }
+
+
+        .cta-buttons {
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            flex-wrap:
+                wrap;
+
+        }
+
+
+        .cta-button {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                13px 20px;
+
+            border-radius:
+                9px;
+
+            text-decoration:
+                none;
+
+            font-weight:
+                700;
+
+            font-size:
+                14px;
+
+            transition:
+                transform 0.2s ease,
+                opacity 0.2s ease;
+
+        }
+
+
+        .cta-button:hover {
+
+            transform:
+                translateY(-2px);
+
+            opacity:
+                0.92;
+
+        }
+
+
+        .cta-primary {
+
+            background:
+                white;
+
+            color:
+                var(--dark-green);
+
+        }
+
+
+        .cta-secondary {
+
+            border:
+                1px solid
+                rgba(255,255,255,0.7);
+
+            color:
+                white;
+
+            background:
+                rgba(255,255,255,0.08);
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ====================================================== */
+
+        footer {
+
+            margin-top:
+                45px;
+
+            padding:
+                25px 20px;
+
+            text-align:
+                center;
+
+            border-top:
+                1px solid
+                var(--border);
+
+            color:
+                var(--text-muted);
+
+            font-size:
+                13px;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ====================================================== */
+
+        @media (
+            max-width: 900px
+        ) {
+
+            .spec-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .application-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .feature-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .related-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media (
+            max-width: 650px
+        ) {
+
+            body {
+
+                font-size:
+                    14px;
+
+            }
+
+
+            .page-container {
+
+                width:
+                    94%;
+
+                margin:
+                    20px auto;
+
+            }
+
+
+            .hero {
+
+                padding:
+                    35px 20px;
+
+            }
+
+
+            .hero h1 {
+
+                font-size:
+                    29px;
+
+            }
+
+
+            .hero p {
+
+                font-size:
+                    14px;
+
+            }
+
+
+            .info-section {
+
+                padding:
+                    22px 18px;
+
+            }
+
+
+            .section-heading h2 {
+
+                font-size:
+                    21px;
+
+            }
+
+
+            .spec-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .application-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .feature-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .related-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .mistakes-list {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .connection-diagram {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .diagram-arrow {
+
+                transform:
+                    rotate(90deg);
+
+            }
+
+
+            .safety-section {
+
+                padding:
+                    25px 20px;
+
+            }
+
+
+            .final-cta {
+
+                padding:
+                    32px 20px;
+
+            }
+
+
+            .final-cta h2 {
+
+                font-size:
+                    23px;
+
+            }
+
+
+            .cta-buttons {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .cta-button {
+
+                width:
+                    100%;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           SMALL MOBILE DEVICES
+        ====================================================== */
+
+        @media (
+            max-width: 420px
+        ) {
+
+            .hero h1 {
+
+                font-size:
+                    25px;
+
+            }
+
+
+            .section-icon {
+
+                width:
+                    36px;
+
+                height:
+                    36px;
+
+                min-width:
+                    36px;
+
+            }
+
+
+            .application-card {
+
+                padding:
+                    17px;
+
+            }
+
+
+            .step {
+
+                padding:
+                    15px;
+
+            }
+
+
+            .step-number {
+
+                width:
+                    30px;
+
+                height:
+                    30px;
+
+                min-width:
+                    30px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         PAGE CONTENT
+    ====================================================== -->
+
+    <main class="page-container">
+
+
+        <!-- =================================================
+             HERO
+        ================================================== -->
+
+        <section class="hero">
+
+            <div class="hero-badge">
+                🐴 EQUESTRIAN FENCING TRAINING
+            </div>
+
+            <h1>
+                Electric Fence Gate Handles
+                & Gate Break Systems
+            </h1>
+
+            <p>
+                A professional guide to selecting,
+                installing and correctly using insulated
+                gate handles and gate-break systems for
+                horse fencing.
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             INTRODUCTION
+        ================================================== -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    🚪
+                </div>
+
+                <h2>
+                    What Are Gate Handles & Gate Breaks?
+                </h2>
+
+            </div>
+
+
+            <p>
+
+                Electric fence gate handles and gate-break
+                systems allow paddock and field entrances to
+                be opened and closed while maintaining the
+                electrical integrity of the surrounding fence.
+
+            </p>
+
+
+            <p>
+
+                For equestrian applications, the gate system
+                should provide a secure mechanical connection,
+                good electrical continuity and sufficient
+                insulation so that the user can operate the
+                gate safely.
+
+            </p>
+
+
+            <p>
+
+                High-visibility tape gates can also provide a
+                clearly visible boundary for horses when
+                correctly designed and installed.
+
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             JVA
+        ================================================== -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    🔧
+                </div>
+
+                <h2>
+                    JVA Gate Handles & Break Systems
+                </h2>
+
+            </div>
+
+
+            <p>
+
+                JVA offers several insulated gate-handle
+                solutions designed for electric fencing,
+                including heavy-duty compression-style
+                handles and insulated handles for temporary
+                fencing applications.
+
+            </p>
+
+
+            <div class="feature-grid">
+
+                <div class="feature-card">
+
+                    <strong>
+                        Heavy Duty Compression Handle
+                    </strong>
+
+                    <span>
+
+                        Uses an internal compression spring
+                        designed to resist over-stretching
+                        under tension.
+
+                    </span>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <strong>
+                        Positive Non-Slip Grip
+                    </strong>
+
+                    <span>
+
+                        The insulated handle provides a
+                        controlled gripping surface when
+                        opening and closing the gate.
+
+                    </span>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <strong>
+                        Insulated Construction
+                    </strong>
+
+                    <span>
+
+                        The handle separates the user's hand
+                        from the conductive components of
+                        the electric fence.
+
+                    </span>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <strong>
+                        Zammer Handle
+                    </strong>
+
+                    <span>
+
+                        A compact insulated handle suited to
+                        temporary fencing and quick-release
+                        applications.
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             NEMTEK
+        ================================================== -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    ⚡
+                </div>
+
+                <h2>
+                    Nemtek Gate Handles & Gate Systems
+                </h2>
+
+            </div>
+
+
+            <p>
+
+                Nemtek provides a range of insulated gate
+                handles and gate components for different
+                electric-fencing applications.
+
+            </p>
+
+
+            <div class="feature-grid">
+
+                <div class="feature-card">
+
+                    <strong>
+                        Gate Handle with Spring
+                    </strong>
+
+                    <span>
+
+                        Designed to span an opening while
+                        maintaining tension in the gate
+                        conductor.
+
+                    </span>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <strong>
+                        Insulated Handle with Hook
+                    </strong>
+
+                    <span>
+
+                        Can be used with suitable spring
+                        systems and is also compatible with
+                        appropriate horse poly tape and rope
+                        applications.
+
+                    </span>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <strong>
+                        Tape Gate Handle Kit
+                    </strong>
+
+                    <span>
+
+                        Designed around a highly visible
+                        poly-tape gate arrangement suitable
+                        for equestrian applications.
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             APPLICATIONS
+        ================================================== -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    📍
+                </div>
+
+                <h2>
+                    Common Applications
+                </h2>
+
+            </div>
+
+
+            <div class="application-grid">
+
+
+                <div class="application-card">
+
+                    <div class="application-number">
+                        01
+                    </div>
+
+                    <h3>
+                        Paddock Gates
+                    </h3>
+
+                    <p>
+
+                        Provides a controlled access point
+                        into horse paddocks and grazing areas.
+
+                    </p>
+
+                </div>
+
+
+                <div class="application-card">
+
+                    <div class="application-number">
+                        02
+                    </div>
+
+                    <h3>
+                        Stable Entrances
+                    </h3>
+
+                    <p>
+
+                        Can be incorporated into suitable
+                        equestrian facility boundary systems.
+
+                    </p>
+
+                </div>
+
+
+                <div class="application-card">
+
+                    <div class="application-number">
+                        03
+                    </div>
+
+                    <h3>
+                        Temporary Fencing
+                    </h3>
+
+                    <p>
+
+                        Useful for temporary paddocks,
+                        strip grazing and movable fencing
+                        systems.
+
+                    </p>
+
+                </div>
+
+
+                <div class="application-card">
+
+                    <div class="application-number">
+                        04
+                    </div>
+
+                    <h3>
+                        Tape Gates
+                    </h3>
+
+                    <p>
+
+                        A wide, highly visible poly-tape
+                        conductor can be used where a
+                        high-visibility gate is preferred.
+
+                    </p>
+
+                </div>
+
+
+                <div class="application-card">
+
+                    <div class="application-number">
+                        05
+                    </div>
+
+                    <h3>
+                        Farm Access
+                    </h3>
+
+                    <p>
+
+                        Suitable gate systems can provide
+                        controlled access while maintaining
+                        the electrical circuit.
+
+                    </p>
+
+                </div>
+
+
+                <div class="application-card">
+
+                    <div class="application-number">
+                        06
+                    </div>
+
+           
 
            
