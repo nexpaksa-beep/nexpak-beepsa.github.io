@@ -1277,5 +1277,975 @@
         }
 
 
+                /* =====================================================
+           RESPONSIVE
+        ====================================================== */
+
+        @media (max-width: 900px) {
+
+            .page-container {
+                padding:
+                    0 20px;
+            }
+
+
+            .hero {
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .hero-content {
+                padding:
+                    35px 25px;
+            }
+
+
+            .hero-image {
+                min-height:
+                    280px;
+            }
+
+
+            .spec-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .application-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .feature-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+
+            .related-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+        }
+
+
+
+        @media (max-width: 650px) {
+
+            body {
+                font-size:
+                    15px;
+            }
+
+
+            .page-container {
+                padding:
+                    0 14px;
+            }
+
+
+            .hero {
+                margin:
+                    15px 0 25px;
+            }
+
+
+            .hero-content {
+                padding:
+                    30px 20px;
+            }
+
+
+            .hero h1 {
+                font-size:
+                    32px;
+            }
+
+
+            .hero-subtitle {
+                font-size:
+                    16px;
+            }
+
+
+            .hero-image {
+                min-height:
+                    220px;
+            }
+
+
+            .info-section,
+            .safety-section {
+                padding:
+                    24px 18px;
+            }
+
+
+            .section-heading h2 {
+                font-size:
+                    22px;
+            }
+
+
+            .spec-grid,
+            .application-grid,
+            .feature-grid,
+            .mistakes-list {
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .spec-card {
+                padding:
+                    18px;
+            }
+
+
+            .steps {
+                gap:
+                    15px;
+            }
+
+
+            .step {
+                flex-direction:
+                    column;
+                gap:
+                    12px;
+            }
+
+
+            .step-number {
+                flex-shrink:
+                    0;
+            }
+
+
+            .connection-diagram {
+                flex-direction:
+                    column;
+            }
+
+
+            .diagram-arrow {
+                transform:
+                    rotate(90deg);
+            }
+
+
+            .cta-buttons {
+                flex-direction:
+                    column;
+            }
+
+
+            .cta-button {
+                width:
+                    100%;
+            }
+
+
+            .final-cta {
+                padding:
+                    30px 20px;
+            }
+
+
+            .final-cta h2 {
+                font-size:
+                    25px;
+            }
+
+        }
+
+
+
         /* =====================================================
+           SMALL MOBILE DEVICES
+        ====================================================== */
+
+        @media (max-width: 420px) {
+
+            .hero h1 {
+                font-size:
+                    28px;
+            }
+
+
+            .hero-badge {
+                font-size:
+                    11px;
+            }
+
+
+            .section-icon {
+                width:
+                    38px;
+
+                height:
+                    38px;
+
+                font-size:
+                    18px;
+            }
+
+
+            .section-heading {
+                gap:
+                    10px;
+            }
+
+
+            .info-section {
+                margin-top:
+                    20px;
+            }
+
+
+            .safety-section {
+                margin-top:
+                    20px;
+            }
+
+
+            .final-cta {
+                margin-top:
+                    25px;
+
+                padding:
+                    28px 18px;
+            }
+
+        }
+
+
+
+        /* =====================================================
+           ACCESSIBILITY
+        ====================================================== */
+
+        a:focus-visible,
+        button:focus-visible {
+
+            outline:
+                3px solid
+                var(--green);
+
+            outline-offset:
+                3px;
+
+        }
+
+
+        /* =====================================================
+           PRINT
+        ====================================================== */
+
+        @media print {
+
+            body {
+                background:
+                    white;
+
+                color:
+                    #111;
+            }
+
+
+            .hero,
+            .info-section,
+            .safety-section,
+            .final-cta {
+
+                box-shadow:
+                    none;
+
+                break-inside:
+                    avoid;
+            }
+
+
+            .cta-buttons {
+                display:
+                    none;
+            }
+
+
+            a {
+                color:
+                    #111;
+
+                text-decoration:
+                    none;
+            }
+
+        }
+
+    </style>
+
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         PAGE WRAPPER
+    ====================================================== -->
+
+    <main class="page-container">
+
+
+        <!-- =====================================================
+             BREADCRUMB
+        ====================================================== -->
+
+        <div class="breadcrumb">
+
+            <a href="equestrian.html">
+                Equestrian
+            </a>
+
+            <span>
+                →
+            </span>
+
+            <span>
+                12mm Poly Tape
+            </span>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             HERO
+        ====================================================== -->
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="hero-badge">
+                    EQUESTRIAN PRODUCT KNOWLEDGE
+                </div>
+
+
+                <h1>
+                    12mm Poly Tape
+                </h1>
+
+
+                <p class="hero-subtitle">
+
+                    A lightweight, highly visible electric
+                    fencing conductor designed for temporary
+                    horse paddocks, strip grazing and
+                    secondary fence lines.
+
+                </p>
+
+
+                <div class="hero-tags">
+
+                    <span>
+                        12mm Width
+                    </span>
+
+                    <span>
+                        High Visibility
+                    </span>
+
+                    <span>
+                        Temporary Fencing
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="hero-image">
+
+                <div class="hero-image-content">
+
+                    <div class="hero-product-icon">
+                        🐎
+                    </div>
+
+                    <strong>
+                        12mm POLY TAPE
+                    </strong>
+
+                    <span>
+                        Portable • Visible • Conductive
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             INTRODUCTION
+        ====================================================== -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    📘
+                </div>
+
+                <h2>
+                    About 12mm Poly Tape
+                </h2>
+
+            </div>
+
+
+            <p>
+
+                12mm poly tape is commonly used in equestrian
+                electric fencing where a lightweight and highly
+                visible conductor is required.
+
+            </p>
+
+
+            <p>
+
+                It is particularly useful for temporary horse
+                paddocks, strip grazing and portable fencing.
+                It can also be used as a secondary lower strand
+                beneath a wider 40mm horse tape.
+
+            </p>
+
+
+            <p>
+
+                The tape consists of UV-stabilized polyethylene
+                woven together with conductive metal strands.
+                These conductors carry the electrical pulse
+                from the energiser through the fence.
+
+            </p>
+
+
+            <div class="knowledge-note">
+
+                <strong>
+                    Why visibility matters
+                </strong>
+
+                <span>
+
+                    Horses can see a wide, contrasting fence
+                    conductor more easily than a thin wire.
+                    Good visibility can help horses recognise
+                    the fence boundary and reduce accidental
+                    contact.
+
+                </span>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             SPECIFICATIONS
+        ====================================================== -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    📋
+                </div>
+
+                <h2>
+                    Technical Specifications
+                </h2>
+
+            </div>
+
+
+            <div class="spec-grid">
+
+
+                <div class="spec-card">
+
+                    <span class="spec-label">
+                        Width
+                    </span>
+
+                    <strong>
+                        12mm
+                    </strong>
+
+                </div>
+
+
+                <div class="spec-card">
+
+                    <span class="spec-label">
+                        Standard JVA Roll
+                    </span>
+
+                    <strong>
+                        200m
+                    </strong>
+
+                </div>
+
+
+                <div class="spec-card">
+
+                    <span class="spec-label">
+                        Nemtek Mix 5
+                    </span>
+
+                    <strong>
+                        200m / 400m
+                    </strong>
+
+                </div>
+
+
+                <div class="spec-card">
+
+                    <span class="spec-label">
+                        JVA Conductors
+                    </span>
+
+                    <strong>
+                        7 Stainless Steel
+                    </strong>
+
+                </div>
+
+
+                <div class="spec-card">
+
+                    <span class="spec-label">
+                        Nemtek Mix 5
+                    </span>
+
+                    <strong>
+                        5 Mixed Conductors
+                    </strong>
+
+                </div>
+
+
+                <div class="spec-card">
+
+                    <span class="spec-label">
+                        Typical Use
+                    </span>
+
+                    <strong>
+                        Temporary Equine Fencing
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             JVA VS NEMTEK
+        ====================================================== -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    ⚡
+                </div>
+
+                <h2>
+                    JVA vs Nemtek 12mm Poly Tape
+                </h2>
+
+            </div>
+
+
+            <p>
+
+                Different manufacturers use different conductor
+                configurations. The specifications below are
+                useful when deciding which type of tape is
+                appropriate for a particular installation.
+
+            </p>
+
+
+            <div class="comparison-table-wrapper">
+
+                <table class="comparison-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Specification
+                            </th>
+
+                            <th>
+                                JVA 12mm Standard
+                            </th>
+
+                            <th>
+                                Nemtek Mix 5
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+                                Roll Sizes
+                            </td>
+
+                            <td>
+                                200m
+                            </td>
+
+                            <td>
+                                200m / 400m
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Conductors
+                            </td>
+
+                            <td>
+                                7 Stainless Steel
+                            </td>
+
+                            <td>
+                                5 mixed-metal conductors
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Resistance
+                            </td>
+
+                            <td>
+                                Higher resistance
+                            </td>
+
+                            <td>
+                                Very low resistance
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Typical Application
+                            </td>
+
+                            <td>
+                                Shorter portable runs
+                            </td>
+
+                            <td>
+                                Longer runs
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Visibility
+                            </td>
+
+                            <td>
+                                High
+                            </td>
+
+                            <td>
+                                High
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             ELECTRICAL PERFORMANCE
+        ====================================================== -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    🔌
+                </div>
+
+                <h2>
+                    Electrical Performance
+                </h2>
+
+            </div>
+
+
+            <p>
+
+                The resistance of electric fence tape determines
+                how easily the electrical pulse travels along
+                the conductor.
+
+            </p>
+
+
+            <div class="feature-grid">
+
+
+                <div class="feature-card">
+
+                    <strong>
+                        Stainless Steel Conductors
+                    </strong>
+
+                    <span>
+
+                        Durable and corrosion resistant,
+                        making them suitable for outdoor
+                        fencing applications.
+
+                    </span>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <strong>
+                        Mixed-Metal Conductors
+                    </strong>
+
+                    <span>
+
+                        Some premium tapes combine stainless
+                        steel with highly conductive metals
+                        to reduce resistance.
+
+                    </span>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <strong>
+                        Longer Fence Runs
+                    </strong>
+
+                    <span>
+
+                        Low-resistance tape is generally
+                        better suited to longer installations.
+
+                    </span>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <strong>
+                        Short Portable Runs
+                    </strong>
+
+                    <span>
+
+                        Standard stainless-steel tape can be
+                        practical for shorter temporary
+                        paddocks.
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             APPLICATIONS
+        ====================================================== -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    🐴
+                </div>
+
+                <h2>
+                    Common Applications
+                </h2>
+
+            </div>
+
+
+            <div class="application-grid">
+
+
+                <div class="application-card">
+
+                    <div class="application-number">
+                        01
+                    </div>
+
+                    <h3>
+                        Temporary Paddocks
+                    </h3>
+
+                    <p>
+
+                        Ideal for creating temporary grazing
+                        areas that can be moved or adjusted
+                        as required.
+
+                    </p>
+
+                </div>
+
+
+                <div class="application-card">
+
+                    <div class="application-number">
+                        02
+                    </div>
+
+                    <h3>
+                        Strip Grazing
+                    </h3>
+
+                    <p>
+
+                        Useful for dividing grazing areas
+                        and controlling access to pasture.
+
+                    </p>
+
+                </div>
+
+
+                <div class="application-card">
+
+                    <div class="application-number">
+                        03
+                    </div>
+
+                    <h3>
+                        Portable Fencing
+                    </h3>
+
+                    <p>
+
+                        Lightweight tape can be deployed and
+                        collected relatively easily when used
+                        with a suitable reel system.
+
+                    </p>
+
+                </div>
+
+
+                <div class="application-card">
+
+                    <div class="application-number">
+                        04
+                    </div>
+
+                    <h3>
+                        Secondary Fence Line
+                    </h3>
+
+                    <p>
+
+                        Can be used as a lower strand beneath
+                        a wider 40mm horse tape.
+
+                    </p>
+
+                </div>
+
+
+                <div class="application-card">
+
+                    <div class="application-number">
+                        05
+                    </div>
+
+                    <h3>
+                        Temporary Divisions
+                    </h3>
+
+                    <p>
+
+                        Suitable for dividing larger equestrian
+                        areas into smaller controlled sections.
+
+                    </p>
+
+                </div>
+
+
+              
        
