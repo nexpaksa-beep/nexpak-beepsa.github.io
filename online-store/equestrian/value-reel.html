@@ -1279,4 +1279,1054 @@
 
         .final-cta {
 
-            marg
+            margin-top:
+                35px;
+
+            padding:
+                40px 30px;
+
+            text-align:
+                center;
+
+            border-radius:
+                20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--dark-green),
+                    var(--green)
+                );
+
+            color:
+                white;
+
+        }
+
+
+        .final-cta h2 {
+
+            margin:
+                0 0 12px;
+
+            font-size:
+                28px;
+
+            line-height:
+                1.25;
+
+        }
+
+
+        .final-cta p {
+
+            max-width:
+                760px;
+
+            margin:
+                0 auto 25px;
+
+            line-height:
+                1.7;
+
+            opacity:
+                0.95;
+
+        }
+
+
+        .cta-buttons {
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            align-items:
+                center;
+
+            flex-wrap:
+                wrap;
+
+            gap:
+                12px;
+
+        }
+
+
+        .cta-button {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            min-height:
+                48px;
+
+            padding:
+                12px 22px;
+
+            border-radius:
+                10px;
+
+            text-decoration:
+                none;
+
+            font-weight:
+                700;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
+
+        }
+
+
+        .cta-button:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 8px 20px
+                rgba(0, 0, 0, 0.18);
+
+        }
+
+
+        .cta-primary {
+
+            background:
+                white;
+
+            color:
+                var(--dark-green);
+
+        }
+
+
+        .cta-primary:hover {
+
+            background:
+                #f1f7f1;
+
+        }
+
+
+        .cta-secondary {
+
+            border:
+                1px solid
+                rgba(255,255,255,0.65);
+
+            color:
+                white;
+
+            background:
+                rgba(255,255,255,0.08);
+
+        }
+
+
+        .cta-secondary:hover {
+
+            background:
+                rgba(255,255,255,0.16);
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ====================================================== */
+
+        .page-footer {
+
+            margin-top:
+                35px;
+
+            padding:
+                25px 20px;
+
+            text-align:
+                center;
+
+            border-top:
+                1px solid
+                var(--border);
+
+            color:
+                var(--muted);
+
+            font-size:
+                13px;
+
+        }
+
+
+        .page-footer strong {
+
+            color:
+                var(--dark-green);
+
+        }
+
+
+        /* =====================================================
+           MOBILE RESPONSIVE
+        ====================================================== */
+
+        @media (
+            max-width: 900px
+        ) {
+
+            .spec-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .feature-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .related-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .applications-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media (
+            max-width: 650px
+        ) {
+
+            body {
+
+                font-size:
+                    14px;
+
+            }
+
+
+            .page-container {
+
+                width:
+                    calc(100% - 24px);
+
+                margin:
+                    12px auto 30px;
+
+            }
+
+
+            .hero {
+
+                padding:
+                    30px 20px;
+
+            }
+
+
+            .hero h1 {
+
+                font-size:
+                    29px;
+
+            }
+
+
+            .hero p {
+
+                font-size:
+                    14px;
+
+            }
+
+
+            .info-section,
+            .safety-section {
+
+                padding:
+                    22px 18px;
+
+            }
+
+
+            .section-heading h2 {
+
+                font-size:
+                    22px;
+
+            }
+
+
+            .spec-grid,
+            .feature-grid,
+            .related-grid,
+            .applications-grid,
+            .mistakes-list {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .connection-diagram {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .diagram-arrow {
+
+                transform:
+                    rotate(90deg);
+
+            }
+
+
+            .step {
+
+                flex-direction:
+                    column;
+
+                gap:
+                    12px;
+
+            }
+
+
+            .step-number {
+
+                width:
+                    36px;
+
+                height:
+                    36px;
+
+                min-width:
+                    36px;
+
+            }
+
+
+            .final-cta {
+
+                padding:
+                    32px 20px;
+
+            }
+
+
+            .final-cta h2 {
+
+                font-size:
+                    24px;
+
+            }
+
+
+            .cta-buttons {
+
+                flex-direction:
+                    column;
+
+                width:
+                    100%;
+
+            }
+
+
+            .cta-button {
+
+                width:
+                    100%;
+
+            }
+
+        }
+
+
+        @media (
+            max-width: 420px
+        ) {
+
+            .hero h1 {
+
+                font-size:
+                    25px;
+
+            }
+
+
+            .section-heading {
+
+                align-items:
+                    flex-start;
+
+            }
+
+
+            .section-icon {
+
+                width:
+                    36px;
+
+                height:
+                    36px;
+
+                min-width:
+                    36px;
+
+                font-size:
+                    17px;
+
+            }
+
+
+            .spec-card,
+            .feature-card,
+            .application-card,
+            .mistake {
+
+                padding:
+                    16px;
+
+            }
+
+        }
+
+    </style>
+
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         PAGE WRAPPER
+    ====================================================== -->
+
+    <main class="page-container">
+
+
+        <!-- =====================================================
+             HERO
+        ====================================================== -->
+
+        <section class="hero">
+
+            <div class="hero-badge">
+                EQUESTRIAN PRODUCT KNOWLEDGE
+            </div>
+
+
+            <h1>
+                JVA Nylon Value Reel
+            </h1>
+
+
+            <p>
+
+                Heavy-duty portable fencing reel designed
+                for deploying and recovering electric fence
+                tape and polywire in temporary horse fencing,
+                paddocks and strip-grazing applications.
+
+            </p>
+
+
+            <div class="hero-tags">
+
+                <span>
+                    🐎 Equestrian
+                </span>
+
+                <span>
+                    ⚡ Electric Fencing
+                </span>
+
+                <span>
+                    🔄 Portable Fencing
+                </span>
+
+                <span>
+                    ☀️ UV Stabilised
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             INTRODUCTION
+        ====================================================== -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    🔄
+                </div>
+
+                <h2>
+                    About the Nylon Value Reel
+                </h2>
+
+            </div>
+
+
+            <p>
+
+                The JVA Nylon Value Reel is designed for
+                portable electric fencing applications where
+                fencing tape or polywire needs to be deployed,
+                tensioned and recovered efficiently.
+
+            </p>
+
+
+            <p>
+
+                Its heavy-duty nylon construction and
+                galvanised steel frame make it suitable for
+                demanding agricultural and equestrian
+                environments.
+
+            </p>
+
+
+            <p>
+
+                For horse fencing, a reel can be particularly
+                useful when creating temporary paddocks,
+                strip-grazing areas or movable boundaries.
+
+            </p>
+
+        </section>
+
+
+        <!-- =====================================================
+             KEY SPECIFICATIONS
+        ====================================================== -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    📋
+                </div>
+
+                <h2>
+                    Key Specifications
+                </h2>
+
+            </div>
+
+
+            <div class="spec-grid">
+
+
+                <div class="spec-card">
+
+                    <strong>
+                        Part Code
+                    </strong>
+
+                    <span>
+                        S912 / N-S912
+                    </span>
+
+                </div>
+
+
+                <div class="spec-card">
+
+                    <strong>
+                        Spool Material
+                    </strong>
+
+                    <span>
+                        UV-stabilised nylon
+                    </span>
+
+                </div>
+
+
+                <div class="spec-card">
+
+                    <strong>
+                        Frame
+                    </strong>
+
+                    <span>
+                        Heavy-duty galvanised steel
+                    </span>
+
+                </div>
+
+
+                <div class="spec-card">
+
+                    <strong>
+                        Drive Ratio
+                    </strong>
+
+                    <span>
+                        1:1 direct drive
+                    </span>
+
+                </div>
+
+
+                <div class="spec-card">
+
+                    <strong>
+                        Locking
+                    </strong>
+
+                    <span>
+                        Integrated manual locking lever
+                    </span>
+
+                </div>
+
+
+                <div class="spec-card">
+
+                    <strong>
+                        Approx. Weight
+                    </strong>
+
+                    <span>
+                        ±1.10 kg
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CAPACITY
+        ====================================================== -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    📏
+                </div>
+
+                <h2>
+                    Approximate Fence Capacity
+                </h2>
+
+            </div>
+
+
+            <p>
+
+                Reel capacity depends on the conductor type,
+                winding method and how tightly the material
+                is wound onto the spool.
+
+            </p>
+
+
+            <div class="feature-grid">
+
+
+                <div class="feature-card">
+
+                    <strong>
+                        2.5mm Poliwire
+                    </strong>
+
+                    <span>
+                        Up to approximately 500 metres.
+                    </span>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <strong>
+                        12mm Politape
+                    </strong>
+
+                    <span>
+                        Up to approximately 300 metres.
+                    </span>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <strong>
+                        40mm Horse Tape
+                    </strong>
+
+                    <span>
+                        Up to approximately 50 metres.
+                    </span>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <strong>
+                        Important
+                    </strong>
+
+                    <span>
+                        Always verify the actual capacity
+                        against the manufacturer's specification.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             HOW IT IS USED
+        ====================================================== -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    🐎
+                </div>
+
+                <h2>
+                    How the Reel Is Used
+                </h2>
+
+            </div>
+
+
+            <div class="applications-grid">
+
+
+                <div class="application-card">
+
+                    <div class="application-number">
+                        01
+                    </div>
+
+                    <h3>
+                        Temporary Paddocks
+                    </h3>
+
+                    <p>
+
+                        Use the reel to deploy portable
+                        electric fencing around temporary
+                        grazing areas.
+
+                    </p>
+
+                </div>
+
+
+                <div class="application-card">
+
+                    <div class="application-number">
+                        02
+                    </div>
+
+                    <h3>
+                        Strip Grazing
+                    </h3>
+
+                    <p>
+
+                        Allows temporary boundaries to be
+                        moved as grazing areas change.
+
+                    </p>
+
+                </div>
+
+
+                <div class="application-card">
+
+                    <div class="application-number">
+                        03
+                    </div>
+
+                    <h3>
+                        Temporary Horse Camps
+                    </h3>
+
+                    <p>
+
+                        Useful where fencing needs to be
+                        installed and removed regularly.
+
+                    </p>
+
+                </div>
+
+
+                <div class="application-card">
+
+                    <div class="application-number">
+                        04
+                    </div>
+
+                    <h3>
+                        Fence Deployment
+                    </h3>
+
+                    <p>
+
+                        Provides controlled winding and
+                        unwinding of compatible fence
+                        conductors.
+
+                    </p>
+
+                </div>
+
+
+                <div class="application-card">
+
+                    <div class="application-number">
+                        05
+                    </div>
+
+                    <h3>
+                        Fence Recovery
+                    </h3>
+
+                    <p>
+
+                        Makes it easier to recover temporary
+                        fencing after an installation is
+                        completed.
+
+                    </p>
+
+                </div>
+
+
+                <div class="application-card">
+
+                    <div class="application-number">
+                        06
+                    </div>
+
+                    <h3>
+                        Portable Systems
+                    </h3>
+
+                    <p>
+
+                        Particularly useful for movable
+                        electric-fence systems where the
+                        conductor is reused at different
+                        locations.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CORRECT USE
+        ====================================================== -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    🔧
+                </div>
+
+                <h2>
+                    Correct Use & Handling
+                </h2>
+
+            </div>
+
+
+            <div class="steps">
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        1
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Switch Off the Energiser
+                        </h3>
+
+                        <p>
+
+                            Always switch off and isolate the
+                            energiser before connecting,
+                            disconnecting or handling the
+                            electric fence conductor.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        2
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Position the Reel
+                        </h3>
+
+                        <p>
+
+                            Place or mount the reel securely
+                            so it cannot move unexpectedly
+                            while the conductor is being
+                            deployed.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        3
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Connect the Conductor
+                        </h3>
+
+                        <p>
+
+                            Attach the appropriate conductor
+                            to the reel and ensure the
+                            electrical connection is secure
+                            before operation.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        4
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Deploy the Fence
+                        </h3>
+
+                        <p>
+
+                            Unwind the tape or polywire
+                            smoothly while maintaining
+                            appropriate tension and avoiding
+                            twists or tangles.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        5
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Secure the Fence
+                        </h3>
+
+                        <p>
+
+                            Once the fence is positioned,
+                            secure the reel and conductor so
+                            the system remains stable during
+                            normal use.
+
+                        </p>
+
+              
