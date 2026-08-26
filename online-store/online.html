@@ -641,8 +641,7 @@
     });
 });
 </script>
-    
-<!-- ==========================================================
+    <!-- ==========================================================
      MODULAR SCRIPTS & DYNAMIC UI LOGIC
      ========================================================== -->
 <script src="../js/delivery-calculator.js"></script>
@@ -743,8 +742,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
-});
-        // CLEAR CART BUTTON FUNCTIONALITY
+
+    // CLEAR CART BUTTON FUNCTIONALITY (Now correctly inside DOMContentLoaded)
     const clearCartBtn = document.getElementById('clear-cart-btn');
     if (clearCartBtn) {
         clearCartBtn.addEventListener('click', () => {
@@ -762,7 +761,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
+});
 </script>
 </body>
 </html>
