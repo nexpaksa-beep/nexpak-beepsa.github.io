@@ -1969,5 +1969,182 @@ footer p {
 
         <section class="final-cta">
 
+    <h2>
+        Need Help With Your Horse Fencing?
+    </h2>
+
+    <p>
+        Not sure how much tape, which insulators
+        or which fencing components you need?
+        Speak to Nexpak Security Solutions about
+        your equestrian fencing requirements.
+    </p>
+
+    <div class="cta-buttons">
+
+        <a
+            href="https://wa.me/27820000000"
+            target="_blank"
+            class="btn btn-primary"
+        >
+            💬 WhatsApp Nexpak
+        </a>
+
+        <a
+            href="equestrian/equestrian.html"
+            class="btn btn-secondary"
+        >
+            ← Back to Equestrian Products
+        </a>
+
+    </div>
+
+</section>
+
+</div>
+
+</main>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <strong>
+        Nexpak Security Solutions
+    </strong>
+
+    <p>
+        Professional Security & Equestrian Fencing Solutions
+    </p>
+
+    <p>
+        © 2026 Nexpak Security Solutions. All rights reserved.
+    </p>
+
+</footer>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+/* =========================================================
+   COLOUR SELECTION
+========================================================= */
+
+const colourButtons =
+    document.querySelectorAll(".colour-option");
+
+let selectedColour = "White";
+
+
+colourButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        colourButtons.forEach(btn => {
+            btn.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
+        selectedColour =
+            button.dataset.colour;
+
+        console.log(
+            "Selected colour:",
+            selectedColour
+        );
+
+    });
+
+});
+
+
+/* =========================================================
+   QUANTITY
+========================================================= */
+
+const quantityInput =
+    document.getElementById("quantity");
+
+const minusBtn =
+    document.getElementById("minusBtn");
+
+const plusBtn =
+    document.getElementById("plusBtn");
+
+
+minusBtn.addEventListener("click", () => {
+
+    let quantity =
+        parseInt(quantityInput.value) || 1;
+
+    if (quantity > 1) {
+
+        quantity--;
+
+        quantityInput.value =
+            quantity;
+    }
+
+});
+
+
+plusBtn.addEventListener("click", () => {
+
+    let quantity =
+        parseInt(quantityInput.value) || 1;
+
+    if (quantity < 99) {
+
+        quantity++;
+
+        quantityInput.value =
+            quantity;
+    }
+
+});
+
+
+/* =========================================================
+   ADD TO CART
+========================================================= */
+
+document
+    .getElementById("addToCartBtn")
+    .addEventListener("click", () => {
+
+        const quantity =
+            parseInt(quantityInput.value) || 1;
+
+        /*
+            TEMPORARY FUNCTION
+
+            We will connect this button to your
+            existing Equestrian cart system later.
+
+            DO NOT create a second cart system here.
+        */
+
+        alert(
+            "Horse Fence Tape\n\n" +
+            "Colour: " + selectedColour + "\n" +
+            "Quantity: " + quantity + "\n\n" +
+            "Cart integration will be connected."
+        );
+
+    });
+
+</script>
+
+</body>
+</html>
+
    
     
