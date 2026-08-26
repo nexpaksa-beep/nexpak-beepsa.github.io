@@ -1050,4 +1050,924 @@
 
 
         .final-cta h2 {
+    margin-bottom: 10px;
+}
+
+.final-cta p {
+    max-width: 650px;
+    margin: 0 auto 25px;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+
+/* =====================================================
+   FOOTER
+====================================================== */
+
+footer {
+    background: var(--dark-green-2);
+    color: white;
+    padding: 35px 20px;
+    text-align: center;
+}
+
+footer strong {
+    color: var(--light-green);
+}
+
+footer p {
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    margin-top: 7px;
+}
+
+
+/* =====================================================
+   MOBILE RESPONSIVE
+====================================================== */
+
+@media (max-width: 850px) {
+
+    nav {
+        display: none;
+    }
+
+    .product-section {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .product-image {
+        min-height: 350px;
+    }
+
+    .product-image img {
+        height: 350px;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .steps {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 550px) {
+
+    .header-inner {
+        padding: 14px 15px;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+
+    .header-cta {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    .breadcrumb-wrap {
+        padding: 15px;
+    }
+
+    .product-section,
+    .content-container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .product-image-card {
+        padding: 15px;
+    }
+
+    .product-image {
+        min-height: 280px;
+    }
+
+    .product-image img {
+        height: 280px;
+    }
+
+    .quick-info {
+        grid-template-columns: 1fr;
+    }
+
+    .action-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .info-section {
+        padding: 25px 20px;
+    }
+
+    .safety-box {
+        padding: 27px 22px;
+    }
+
+    h1 {
+        font-size: 34px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     TOP BAR
+========================================================= -->
+
+<div class="top-bar">
+    Professional Equestrian & Security Solutions
+</div>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header>
+
+    <div class="header-inner">
+
+        <a href="equestrian/equestrian.html" class="logo">
+            Nexpak <span>Equestrian</span>
+        </a>
+
+        <nav>
+
+            <a href="equestrian/equestrian.html">
+                Equestrian Products
+            </a>
+
+            <a href="../index.html">
+                Nexpak Security
+            </a>
+
+            <a
+                href="https://wa.me/27820000000"
+                target="_blank"
+                class="header-cta"
+            >
+                WhatsApp Us
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================================
+     BREADCRUMB
+========================================================= -->
+
+<div class="breadcrumb-wrap">
+
+    <div class="breadcrumb">
+
+        <a href="equestrian/equestrian.html">
+            Equestrian
+        </a>
+
+        <span>›</span>
+
+        <span>Horse Fence Tape</span>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     MAIN PRODUCT
+========================================================= -->
+
+<main>
+
+    <section class="product-section">
+
+
+        <!-- PRODUCT IMAGE -->
+
+        <div class="product-image-card">
+
+            <div class="product-badge">
+                EQUESTRIAN FENCING
+            </div>
+
+            <div class="product-image">
+
+                <img
+                    src="../images/equestrian/horse-tape.jpg"
+                    alt="40mm 200m horse fence tape for equestrian fencing"
+                    onerror="this.style.display='none'; document.getElementById('imagePlaceholder').style.display='block';"
+                >
+
+                <div
+                    id="imagePlaceholder"
+                    class="image-placeholder"
+                    style="display:none;"
+                >
+
+                    <div class="image-placeholder-icon">
+                        🐴
+                    </div>
+
+                    <strong>
+                        Horse Fence Tape
+                    </strong>
+
+                    <p>
+                        Product image will appear here.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PRODUCT DETAILS -->
+
+        <div class="product-details">
+
+            <div class="eyebrow">
+                Equestrian Electric Fencing
+            </div>
+
+            <h1>
+                40mm Horse Fence Tape
+            </h1>
+
+            <p class="product-subtitle">
+                Professional 200m fencing tape for
+                equestrian applications.
+            </p>
+
+
+            <div class="price">
+                R<span id="productPrice">0</span>
+
+                <span class="price-note">
+                    Price to be connected to your online store
+                </span>
+            </div>
+
+
+            <!-- QUICK INFORMATION -->
+
+            <div class="quick-info">
+
+                <div class="quick-info-item">
+
+                    <span class="quick-info-label">
+                        Width
+                    </span>
+
+                    <span class="quick-info-value">
+                        40mm
+                    </span>
+
+                </div>
+
+
+                <div class="quick-info-item">
+
+                    <span class="quick-info-label">
+                        Roll Length
+                    </span>
+
+                    <span class="quick-info-value">
+                        200m
+                    </span>
+
+                </div>
+
+
+                <div class="quick-info-item">
+
+                    <span class="quick-info-label">
+                        Application
+                    </span>
+
+                    <span class="quick-info-value">
+                        Horse Fencing
+                    </span>
+
+                </div>
+
+
+                <div class="quick-info-item">
+
+                    <span class="quick-info-label">
+                        Colours
+                    </span>
+
+                    <span class="quick-info-value">
+                        3 Options
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- COLOUR SELECTOR -->
+
+            <div class="selector-title">
+                Select Colour
+            </div>
+
+            <div class="colour-options">
+
+                <button
+                    type="button"
+                    class="colour-option active"
+                    data-colour="White"
+                >
+                    White
+                </button>
+
+                <button
+                    type="button"
+                    class="colour-option"
+                    data-colour="Green"
+                >
+                    Green
+                </button>
+
+                <button
+                    type="button"
+                    class="colour-option"
+                    data-colour="Brown"
+                >
+                    Brown
+                </button>
+
+            </div>
+
+
+            <!-- QUANTITY -->
+
+            <div class="quantity-row">
+
+                <strong>
+                    Quantity:
+                </strong>
+
+                <div class="quantity-control">
+
+                    <button
+                        type="button"
+                        id="minusBtn"
+                    >
+                        −
+                    </button>
+
+                    <input
+                        type="number"
+                        id="quantity"
+                        value="1"
+                        min="1"
+                        max="99"
+                    >
+
+                    <button
+                        type="button"
+                        id="plusBtn"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- ACTION BUTTONS -->
+
+            <div class="action-buttons">
+
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    id="addToCartBtn"
+                >
+                    🛒 Add to Cart
+                </button>
+
+                <a
+                    href="https://wa.me/27820000000"
+                    target="_blank"
+                    class="btn btn-secondary"
+                >
+                    💬 WhatsApp Enquiry
+                </a>
+
+            </div>
+
+
+            <div class="trust-note">
+                Need help choosing your horse fencing?
+                Contact Nexpak for assistance.
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PRODUCT INFORMATION
+    ====================================================== -->
+
+    <div class="content-container">
+
+
+        <!-- ABOUT THE PRODUCT -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    🐴
+                </div>
+
+                <h2>
+                    About the Product
+                </h2>
+
+            </div>
+
+            <p>
+                Our 40mm Horse Fence Tape is designed for
+                equestrian fencing applications where
+                visibility and a clearly defined fence
+                line are important.
+            </p>
+
+            <p>
+                Supplied in convenient 200m rolls, the tape
+                is available in <strong>white, green and
+                brown</strong>, allowing you to select a
+                colour that suits your paddock, property
+                or fencing layout.
+            </p>
+
+            <p>
+                Horse fencing should be planned and installed
+                with the behaviour and safety of the horse
+                in mind. The fencing system should always be
+                installed using suitable components and
+                according to the requirements of the
+                complete electric fencing system.
+            </p>
+
+        </section>
+
+
+        <!-- KEY FEATURES -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    ✓
+                </div>
+
+                <h2>
+                    Key Features
+                </h2>
+
+            </div>
+
+
+            <div class="feature-grid">
+
+                <div class="feature-card">
+
+                    <strong>
+                        40mm Width
+                    </strong>
+
+                    <span>
+                        Broad fencing tape designed to
+                        provide a clearly visible fence line.
+                    </span>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <strong>
+                        200m Roll
+                    </strong>
+
+                    <span>
+                        Convenient roll length for
+                        equestrian fencing projects.
+                    </span>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <strong>
+                        Three Colours
+                    </strong>
+
+                    <span>
+                        Available in white, green and
+                        brown.
+                    </span>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <strong>
+                        Equestrian Application
+                    </strong>
+
+                    <span>
+                        Designed for use as part of
+                        horse fencing systems.
+                    </span>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <strong>
+                        High Visibility
+                    </strong>
+
+                    <span>
+                        The broad tape format helps create
+                        a clearly defined visual barrier.
+                    </span>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <strong>
+                        Professional Solution
+                    </strong>
+
+                    <span>
+                        Suitable for paddocks, horse yards
+                        and equestrian properties.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CORRECT USE & INSTALLATION -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    🔧
+                </div>
+
+                <h2>
+                    Correct Use & Installation
+                </h2>
+
+            </div>
+
+            <p>
+                Horse fence tape should be installed as part
+                of a properly designed fencing system. The
+                following provides general guidance.
+            </p>
+
+
+            <div class="steps">
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        1
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Plan the Fence
+                        </h3>
+
+                        <p>
+                            Determine the paddock perimeter,
+                            fence height and number of
+                            fencing lines required for the
+                            property.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        2
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Position the Posts
+                        </h3>
+
+                        <p>
+                            Install suitable fencing posts
+                            and ensure they are secure and
+                            appropriate for the terrain.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        3
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Install Suitable Insulators
+                        </h3>
+
+                        <p>
+                            Use fencing insulators designed
+                            to accommodate the width and
+                            type of tape being installed.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        4
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Install the Tape
+                        </h3>
+
+                        <p>
+                            Feed the tape through the
+                            appropriate insulators and
+                            maintain a neat, consistent
+                            fence line.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        5
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Tension Correctly
+                        </h3>
+
+                        <p>
+                            Apply appropriate tension while
+                            avoiding excessive tension that
+                            could damage the tape or fittings.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        6
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Test the Fence
+                        </h3>
+
+                        <p>
+                            Test the completed electric fence
+                            using a suitable fence tester before
+                            introducing horses to the paddock.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- SAFETY -->
+
+        <section class="safety-box">
+
+            <h2>
+                Safety & Best Practice
+            </h2>
+
+            <p>
+                Horse fencing should always be designed with
+                animal safety as a priority. Electric fencing
+                components must be correctly installed and
+                maintained.
+            </p>
+
+
+            <ul class="safety-list">
+
+                <li>
+                    Use appropriate fencing components
+                    designed for the tape.
+                </li>
+
+                <li>
+                    Keep the fence line clearly visible
+                    and properly maintained.
+                </li>
+
+                <li>
+                    Check the fence regularly for damage,
+                    loose fittings or vegetation contact.
+                </li>
+
+                <li>
+                    Use a suitable electric fence tester
+                    to check the system.
+                </li>
+
+                <li>
+                    Follow the manufacturer's installation
+                    and safety instructions for the complete
+                    electric fencing system.
+                </li>
+
+                <li>
+                    Ensure gates and access points are
+                    properly designed and safely managed.
+                </li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- TECHNICAL SPECIFICATIONS -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    📋
+                </div>
+
+                <h2>
+                    Technical Specifications
+                </h2>
+
+            </div>
+
+
+            <table class="spec-table">
+
+                <tr>
+                    <td>
+                        Product
+                    </td>
+
+                    <td>
+                        Horse Fence Tape
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>
+                        Width
+                    </td>
+
+                    <td>
+                        40mm
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>
+                        Roll Length
+                    </td>
+
+                    <td>
+                        200m
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>
+                        Available Colours
+                    </td>
+
+                    <td>
+                        White, Green, Brown
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>
+                        Application
+                    </td>
+
+                    <td>
+                        Equestrian / Horse Fencing
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td>
+                        Installation
+                    </td>
+
+                    <td>
+                        Use with suitable fencing
+                        insulators and components
+                    </td>
+                </tr>
+
+            </table>
+
+        </section>
+
+
+        <!-- FINAL CTA -->
+
+        <section class="final-cta">
+
+   
     
