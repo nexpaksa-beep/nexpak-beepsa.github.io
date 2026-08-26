@@ -2732,7 +2732,301 @@
                     <select id="var_${prod.id}" class="p-2 text-sm border rounded-lg outline-none focus:ring-1 focus:ring-blue-500 flex-1">
                 `;
                 prod.variants.forEach(function(v) {
-                    
+                                        html += `<option value="${v}">${v}</option>`;
+                });
+                html += `</select>`;
+            } else {
+                html += `<div class="flex-1"></div>`;
+            }
+
+            html += `
+                    <div class="flex items-center space-x-2">
+                        <label class="text-xs text-slate-500 font-bold">QTY:</label>
+                        <input type="number" id="qty_${prod.id}" min="0" value="0" class="w-16 p-2 text-sm border rounded-lg outline-none text-center">
+                    </div>
+                </div>
+            `;
+
+            formContainer.insertAdjacentHTML("beforeend", html);
+        });
+    }
+
+
+    /* ==========================================================
+       ADD TO CART
+       ========================================================== */
+
+    function addCurrentCategoryToCart() {
+        if (!currentCategory) {
+            alert("Please select a product category.");
+            return;
+        }
+
+        const products = productDb[currentCategory];
+        if (!Array.isArray(products)) {
+            alert("Unable to load this product category.");
+            return;
+        }
+
+        let addedCount = 0;
+
+        products.forEach(function(prod) {
+            const qtyInput = document.getElementById(`qty_${prod.id}`);
+            if (!qtyInput) return;
+
+            const qty = parseInt(qtyInput.value) || 0;
+            if (qty <= 0) return;
+
+            let variant = "";
+            if (prod.variants) {
+                const varSelect = document.getElementById(`var_${prod.id}`);
+                variant = varSelect ? varSelect.value : "";
+            }
+
+            const existingIdx = cart.findIndex(function(item) {
+                return item.id === prod.id && item.variant === variant;
+            });
+
+            if (existingIdx > -1) {
+                cart[existingIdx].qty += qty;
+            } else {
+                cart.push({
+                    id: prod.id,
+                    name: prod.name,
+                    variant: variant,
+                    qty: qty,
+                    price: Number(prod.price) || 0,
+                    weight: Number(prod.weight) || 0,
+                    category: currentCategory
+                });
+            }
+
+            qtyInput.value = 0;
+            addedCount++;
+        });
+
+        if (addedCount > 0) {
+            localStorage.setItem('nexpak_cart', JSON.stringify(cart));
+            updateCartUI();
+            updateVisualizer();
+        } else {
+            alert("Please specify a quantity greater than 0 for at least one item.");
+        }
+    }
+
+
+    /* ==========================================================
+       UPDATE CART UI & TOTALS
+       ========================================================== */
+
+    function updateCartUI() {
+        const cartContainer = document.getElementById('cart-items');
+        const cartBadge = document.getElementById('cart-badge');
+        const cartCountLabel = document.getElementById('cart-count-label');
+        const cartSubtotal = document.getElementById('cart-subtotal');
+        const cartVat = document.getElementById('cart-vat');
+        const cartTotal = document.getElementById('cart-total');
+
+        if (!cartContainer) return;
+
+        let totalItemsCount = 0;
+        cart.forEach(item => totalItemsCount += Number(item.qty) || 0);
+
+        if (cartBadge) cartBadge.innerText = totalItemsCount;
+        if (cartCountLabel) cartCountLabel.innerText = `${totalItemsCount} items`;
+
+        if (cart.length === 0) {
+            cartContainer.innerHTML = `
+                <div class="text-center py-8 text-slate-400">
+                    <i class="fa-solid fa-cart-shopping text-3xl mb-3 opacity-30"></i>
+                    <p>Your system is empty.</p>
+                    <p class="text-xs mt-1">Select products from the left.</p>
+                </div>
+            `;
+            if (cartSubtotal) cartSubtotal.innerText = "R0.00";
+            if (cartVat) cartVat.innerText = "R0.00";
+            if (cartTotal) cartTotal.innerText = "R0.00";
+            return;
+        }
+
+        let html = '';
+        let subtotalAmt = 0;
+
+        cart.forEach(function(item, index) {
+            const desc = item.variant ? `${item.name} (${item.variant})` : item.name;
+            const lineTotal = Number(item.price) * Number(item.qty);
+            subtotalAmt += lineTotal;
+
+            html += `
+                <div class="flex justify-between items-center text-sm border-b border-slate-100 pb-2">
+                    <div class="flex-1">
+                        <span class="font-bold text-nexpakAccent">${item.qty}x</span> ${desc}
+                    </div>
+                    <div class="text-right flex items-center gap-3">
+                        <span>R${lineTotal.toFixed(2)}</span>
+                        <button type="button" onclick="removeFromCart(${index})" class="text-red-400 hover:text-red-600">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+        });
+
+        cartContainer.innerHTML = html;
+
+        const vatAmt = subtotalAmt * 0.15;
+        const grandTotal = subtotalAmt + vatAmt;
+
+        if (cartSubtotal) cartSubtotal.innerText = `R${subtotalAmt.toFixed(2)}`;
+        if (cartVat) cartVat.innerText = `R${vatAmt.toFixed(2)}`;
+        if (cartTotal) cartTotal.innerText = `R${grandTotal.toFixed(2)}`;
+    }
+
+
+    /* ==========================================================
+       REMOVE FROM CART
+       ========================================================== */
+
+    function removeFromCart(index) {
+        if (index < 0 || index >= cart.length) return;
+
+        cart.splice(index, 1);
+        localStorage.setItem('nexpak_cart', JSON.stringify(cart));
+
+        updateCartUI();
+        updateVisualizer();
+    }
+
+
+    /* ==========================================================
+       PROCEED TO CHECKOUT
+       ========================================================== */
+
+    function proceedToCheckout() {
+        if (!Array.isArray(cart) || cart.length === 0) {
+            alert('Your cart is empty.');
+            return;
+        }
+
+        localStorage.setItem('nexpak_cart', JSON.stringify(cart));
+        window.location.href = 'checkout.html';
+    }
+
+
+    /* ==========================================================
+       PROPERTY VISUALIZER
+       ========================================================== */
+
+    function updateVisualizer() {
+        if (!overlay) return;
+
+        overlay.innerHTML = '';
+
+        let cameraCount = 0;
+        let hasElectricFence = false;
+        let hasGateMotor = false;
+        let roboguardCount = 0;
+
+        cart.forEach(function(item) {
+            if (item.category === 'cctv' && item.id === 'cctv_cam') {
+                cameraCount += Number(item.qty) || 0;
+            }
+            if (item.category === 'electricFence') {
+                hasElectricFence = true;
+            }
+            if (item.category === 'gateD5' || item.category === 'gateD10') {
+                if (item.id && item.id.includes('motor')) {
+                    hasGateMotor = true;
+                }
+            }
+            if (item.category === 'roboguard' && item.id === 'rg_beam') {
+                roboguardCount += Number(item.qty) || 0;
+            }
+        });
+
+        if (hasElectricFence) {
+            overlay.innerHTML += `<div class="ef-active"></div>`;
+        }
+
+        if (hasGateMotor) {
+            overlay.innerHTML += `
+                <div class="marker pulse" style="top: ${markerPositions.gate.top}; left: ${markerPositions.gate.left};">
+                    <div class="bg-red-600 text-white p-1.5 rounded shadow-lg text-xs font-bold border-2 border-white">
+                        <i class="fa-solid fa-torii-gate"></i> Gate
+                    </div>
+                </div>
+            `;
+        }
+
+        for (let i = 0; i < cameraCount; i++) {
+            if (i >= markerPositions.cameras.length) break;
+            const pos = markerPositions.cameras[i];
+            overlay.innerHTML += `
+                <div class="marker" style="top: ${pos.top}; left: ${pos.left};">
+                    <div class="bg-blue-600 text-white h-6 w-6 flex items-center justify-center rounded-full shadow-lg text-xs border-2 border-white">
+                        <i class="fa-solid fa-video"></i>
+                    </div>
+                </div>
+            `;
+        }
+
+        for (let i = 0; i < roboguardCount; i++) {
+            if (i >= markerPositions.roboguards.length) break;
+            const pos = markerPositions.roboguards[i];
+            overlay.innerHTML += `
+                <div class="marker" style="top: ${pos.top}; left: ${pos.left};">
+                    <div class="bg-green-600 text-white h-6 w-6 flex items-center justify-center rounded-full shadow-lg text-xs border-2 border-white pulse">
+                        <i class="fa-solid fa-wave-square"></i>
+                    </div>
+                </div>
+            `;
+        }
+    }
+
+
+    /* ==========================================================
+       LOAD SAVED CART ON STARTUP
+       ========================================================== */
+
+    function loadSavedCart() {
+        try {
+            const savedCart = localStorage.getItem('nexpak_cart');
+            if (!savedCart) return;
+
+            const parsedCart = JSON.parse(savedCart);
+            if (Array.isArray(parsedCart)) {
+                cart = parsedCart;
+            }
+        } catch (error) {
+            console.error('Unable to load saved cart:', error);
+            cart = [];
+        }
+
+        updateCartUI();
+        updateVisualizer();
+    }
+
+
+    /* ==========================================================
+       INITIALIZE
+       ========================================================== */
+
+    document.addEventListener('DOMContentLoaded', function() {
+        loadSavedCart();
+    });
+
+    </script>
+
+
+    <!-- ==========================================================
+         SEO SCHEMA
+         ========================================================== -->
+
+    <script src="js/seo-schema-injector.js"></script>
+
+</body>
+</html>
+
           
 
 
