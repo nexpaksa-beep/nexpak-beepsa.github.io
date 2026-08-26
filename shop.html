@@ -3011,9 +3011,28 @@
        INITIALIZE
        ========================================================== */
 
-    document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {
         loadSavedCart();
+
+        // --- ADD THIS DROPDOWN TOGGLE FIX ---
+        const menuButton = document.getElementById('menuButton');
+        const menuPanel = document.getElementById('menuPanel');
+
+        if (menuButton && menuPanel) {
+            menuButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                menuPanel.classList.toggle('hidden');
+            });
+
+            // Close the menu if you click anywhere else on the page
+            document.addEventListener('click', function(e) {
+                if (!menuButton.contains(e.target) && !menuPanel.contains(e.target)) {
+                    menuPanel.classList.add('hidden');
+                }
+            });
+        }
     });
+        
 
     </script>
 
@@ -3021,7 +3040,7 @@
     <!-- ==========================================================
          SEO SCHEMA
          ========================================================== -->
-
+    <script src="js/chatbot.js"></script>
     <script src="js/seo-schema-injector.js"></script>
 
 </body>
