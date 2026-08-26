@@ -3117,15 +3117,130 @@
 
             <div class="footer-links">
 
-                <a href="equestrian.html">
-                    Equestrian
-                </a>
+    <a href="equestrian.html">
+        Equestrian
+    </a>
 
-                <a href="../online.html">
-                    Online Store
-                </a>
 
-                <a href
+    <a href="../online.html">
+        Online Store
+    </a>
+
+
+    <a href="../../index.html">
+        Home
+    </a>
+
+</div>
+
+</div>
+
+
+<div class="footer-bottom">
+
+    © 2026 Nexpak Security Solutions.
+    All Rights Reserved.
+
+</div>
+
+</footer>
+
+
+<!-- =========================================================
+     PAGE SCRIPT
+========================================================= -->
+
+<script>
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            const cards =
+                document.querySelectorAll(
+                    ".application-card, .feature-card, .mistake"
+                );
+
+
+            cards.forEach(
+                function (card) {
+
+                    card.addEventListener(
+                        "mouseenter",
+                        function () {
+
+                            card.style.transform =
+                                "translateY(-3px)";
+
+                        }
+                    );
+
+
+                    card.addEventListener(
+                        "mouseleave",
+                        function () {
+
+                            card.style.transform =
+                                "translateY(0)";
+
+                        }
+                    );
+
+                }
+            );
+
+
+            /* =================================================
+               SMOOTH INTERNAL NAVIGATION
+            ================================================= */
+
+            const links =
+                document.querySelectorAll(
+                    'a[href^="#"]'
+                );
+
+
+            links.forEach(
+                function (link) {
+
+                    link.addEventListener(
+                        "click",
+                        function (event) {
+
+                            const target =
+                                document.querySelector(
+                                    link.getAttribute("href")
+                                );
+
+
+                            if (target) {
+
+                                event.preventDefault();
+
+
+                                target.scrollIntoView({
+                                    behavior: "smooth",
+                                    block: "start"
+                                });
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>
+
 
 
             
