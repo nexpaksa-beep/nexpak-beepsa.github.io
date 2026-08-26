@@ -2140,6 +2140,599 @@
                     ></div>
 
                 </div>
+                                <div
+                    class="flex items-center justify-between mt-3 text-xs text-slate-500"
+                >
+
+                    <span>
+                        <i class="fa-solid fa-circle-info mr-1"></i>
+                        Products appear automatically on the property.
+                    </span>
+
+                    <span
+                        id="propertyLabel"
+                        class="font-semibold text-nexpakAccent"
+                    >
+                        Property 1
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- CART -->
+
+            <div
+                class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200"
+            >
+
+                <div
+                    class="flex items-center justify-between border-b pb-3 mb-4"
+                >
+
+                    <h2
+                        class="text-xl font-bold text-nexpakBlue"
+                    >
+
+                        <i
+                            class="fa-solid fa-cart-shopping text-nexpakAccent mr-2"
+                        ></i>
+
+                        Your System
+
+                    </h2>
+
+
+                    <span
+                        id="cart-count-label"
+                        class="text-sm font-semibold text-slate-500"
+                    >
+                        0 items
+                    </span>
+
+                </div>
+
+
+                <div
+                    id="cart-items"
+                    class="space-y-3 mb-6 max-h-80 overflow-y-auto"
+                >
+
+                    <div
+                        class="text-center py-8 text-slate-400"
+                    >
+
+                        <i
+                            class="fa-solid fa-cart-shopping text-3xl mb-3 opacity-30"
+                        ></i>
+
+                        <p>
+                            Your system is empty.
+                        </p>
+
+                        <p class="text-xs mt-1">
+                            Select products from the left.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CART TOTAL -->
+
+                <div
+                    class="border-t pt-4 space-y-2"
+                >
+
+                    <div
+                        class="flex justify-between text-sm text-slate-600"
+                    >
+
+                        <span>
+                            Subtotal
+                        </span>
+
+                        <span id="cart-subtotal">
+                            R0.00
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="flex justify-between text-sm text-slate-600"
+                    >
+
+                        <span>
+                            VAT (15%)
+                        </span>
+
+                        <span id="cart-vat">
+                            R0.00
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        class="flex justify-between text-lg font-extrabold text-nexpakBlue pt-2 border-t"
+                    >
+
+                        <span>
+                            Total
+                        </span>
+
+                        <span
+                            id="cart-total"
+                            class="text-nexpakAccent"
+                        >
+                            R0.00
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CHECKOUT -->
+
+                <button
+                    id="proceedToCheckoutBtn"
+                    onclick="proceedToCheckout()"
+                    class="w-full mt-6 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-xl transition shadow-lg flex justify-center items-center"
+                >
+
+                    <i class="fa-solid fa-lock mr-2"></i>
+
+                    Proceed to Secure Checkout
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ==========================================================
+         FOOTER
+         ========================================================== -->
+
+    <footer
+        class="bg-nexpakBlue text-white mt-16"
+    >
+
+        <div
+            class="max-w-7xl mx-auto px-4 py-10"
+        >
+
+            <div
+                class="grid grid-cols-1 md:grid-cols-3 gap-8"
+            >
+
+                <!-- COMPANY -->
+
+                <div>
+
+                    <div
+                        class="flex items-center gap-3 mb-4"
+                    >
+
+                        <img
+                            src="images/logo.png"
+                            alt="Nexpak Security Solutions"
+                            class="h-12 w-auto"
+                            onerror="this.style.display='none'"
+                        >
+
+                        <div>
+
+                            <h3
+                                class="font-bold text-lg"
+                            >
+                                Nexpak Security Solutions
+                            </h3>
+
+                            <p class="text-xs text-slate-400">
+                                Professional Security Solutions
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        CCTV, electric fencing, gate automation,
+                        Roboguard, alarms and complete security
+                        solutions for residential and commercial properties.
+                    </p>
+
+                </div>
+
+
+                <!-- QUICK LINKS -->
+
+                <div>
+
+                    <h3
+                        class="font-bold text-lg mb-4"
+                    >
+                        Quick Links
+                    </h3>
+
+                    <div
+                        class="space-y-2 text-sm"
+                    >
+
+                        <a
+                            href="index.html"
+                            class="block text-slate-300 hover:text-white transition"
+                        >
+                            Home
+                        </a>
+
+                        <a
+                            href="aboutus.html"
+                            class="block text-slate-300 hover:text-white transition"
+                        >
+                            About Us
+                        </a>
+
+                        <a
+                            href="shop.html"
+                            class="block text-slate-300 hover:text-white transition"
+                        >
+                            Build Your System
+                        </a>
+
+                        <a
+                            href="contact.html"
+                            class="block text-slate-300 hover:text-white transition"
+                        >
+                            Contact Us
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SOCIAL / PAYMENT -->
+
+                <div>
+
+                    <h3
+                        class="font-bold text-lg mb-4"
+                    >
+                        Connect With Us
+                    </h3>
+
+
+                    <div
+                        class="flex items-center gap-4 mb-6"
+                    >
+
+                        <a
+                            href="#"
+                            aria-label="Facebook"
+                            class="w-10 h-10 rounded-full bg-white/10 hover:bg-nexpakAccent flex items-center justify-center transition"
+                        >
+
+                            <i
+                                class="fa-brands fa-facebook-f"
+                            ></i>
+
+                        </a>
+
+
+                        <a
+                            href="#"
+                            aria-label="Instagram"
+                            class="w-10 h-10 rounded-full bg-white/10 hover:bg-nexpakAccent flex items-center justify-center transition"
+                        >
+
+                            <i
+                                class="fa-brands fa-instagram"
+                            ></i>
+
+                        </a>
+
+
+                        <a
+                            href="#"
+                            aria-label="LinkedIn"
+                            class="w-10 h-10 rounded-full bg-white/10 hover:bg-nexpakAccent flex items-center justify-center transition"
+                        >
+
+                            <i
+                                class="fa-brands fa-linkedin-in"
+                            ></i>
+
+                        </a>
+
+                    </div>
+
+
+                    <div
+                        class="bg-white rounded-lg inline-flex items-center px-4 py-2"
+                    >
+
+                        <span
+                            class="text-slate-700 font-bold text-sm mr-2"
+                        >
+                            Secure payments
+                        </span>
+
+                        <span
+                            class="text-blue-600 font-extrabold"
+                        >
+                            PayFast
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="border-t border-white/10 mt-8 pt-6 text-center text-xs text-slate-400"
+            >
+
+                © 2026 Nexpak Security Solutions.
+                All rights reserved.
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- ==========================================================
+         FLOATING WHATSAPP
+         ========================================================== -->
+
+    <a
+        href="https://wa.me/27836308249"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Contact Nexpak on WhatsApp"
+        class="fixed bottom-5 right-5 z-50 bg-green-500 hover:bg-green-600 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl transition hover:scale-110"
+    >
+
+        <i
+            class="fa-brands fa-whatsapp text-3xl"
+        ></i>
+
+    </a>
+
+
+    <!-- ==========================================================
+         JAVASCRIPT
+         ========================================================== -->
+
+    <script>
+
+    /* ==========================================================
+       PRODUCT DATABASE
+       ========================================================== */
+
+    const productDb = {
+
+        electricFence: [
+            { id: 'ef_tube', name: 'Square Tube', variants: ['6 line', '8 line', '10 line', '12 line'], price: 150, weight: 2 },
+            { id: 'ef_bracket', name: 'Bracket Style', variants: ['Straight', 'Angled'], price: 0, weight: 0 },
+            { id: 'ef_color', name: 'Color', variants: ['Black', 'White'], price: 0, weight: 0 },
+            { id: 'ef_anchors', name: 'Nail in anchors (8x80mm 100s)', price: 80, weight: 0.5 },
+            { id: 'ef_stays', name: 'Stays 750mm', price: 60, weight: 1 },
+            { id: 'ef_sleeve', name: 'Stay sleeve', price: 10, weight: 0.1 },
+            { id: 'ef_tensioner', name: 'Tensioners', price: 15, weight: 0.1 },
+            { id: 'ef_shook', name: 'S-hook', price: 5, weight: 0.05 },
+            { id: 'ef_ferrules', name: 'Ferrules 6mm (100s)', variants: ['Aluminium', 'Solid'], price: 45, weight: 0.2 },
+            { id: 'ef_wire', name: 'Wire', variants: ['Braided Galvanised 680m', 'Braided Aluminium 1000m'], price: 400, weight: 5 },
+            { id: 'ef_spikes', name: 'Earth spikes', price: 90, weight: 1.5 },
+            { id: 'ef_signs', name: 'Warning signs', price: 15, weight: 0.1 },
+            { id: 'ef_htcable', name: 'HT Cable', variants: ['50m', '100m'], price: 200, weight: 2 },
+            { id: 'ef_nitelight', name: 'Nite light', variants: ['Red', 'Blue', 'Green'], price: 120, weight: 0.2 },
+            { id: 'ef_gatecontact', name: 'Gate contact', variants: ['Single', 'Double'], price: 180, weight: 0.5 },
+            { id: 'ef_lugs', name: 'Lugs 6 x 35mm', price: 5, weight: 0.05 },
+            { id: 'ef_energizer', name: 'Energizer', variants: ['4 Joule', '8 Joule'], price: 1500, weight: 3 },
+            { id: 'ef_siren', name: 'Siren', price: 150, weight: 0.8 },
+            { id: 'ef_strobe', name: 'Strobe', price: 85, weight: 0.3 },
+            { id: 'ef_divertor', name: 'Lightning divertor', price: 110, weight: 0.4 }
+        ],
+
+        roboguard: [
+            { id: 'rg_beam', name: 'Roboguard Beam', variants: ['Black', 'Green', 'White'], price: 2500, weight: 1.5 },
+            { id: 'rg_hq', name: 'HQ Handheld', price: 1200, weight: 0.5 },
+            { id: 'rg_powerpack', name: 'Powerpack', price: 800, weight: 1 },
+            { id: 'rg_remote', name: '4 Button Remote', price: 150, weight: 0.1 },
+            { id: 'rg_siren', name: 'Siren', price: 150, weight: 0.8 }
+        ],
+
+        gateD5: [
+            { id: 'd5_motor', name: 'Centurion D5 Smart Motor', price: 5500, weight: 10 },
+            { id: 'd5_battery', name: 'Battery', price: 350, weight: 2.5 },
+            { id: 'd5_rack', name: '2m Nylon Rack', price: 250, weight: 1.5 },
+            { id: 'd5_remote', name: '4 Button Remotes', price: 150, weight: 0.1 },
+            { id: 'd5_antitheft', name: 'Anti-Theft Bracket', price: 450, weight: 2 },
+            { id: 'd5_beams', name: 'Infrared Wireless Beams', price: 650, weight: 0.5 }
+        ],
+
+        gateD10: [
+            { id: 'd10_motor', name: 'Centurion D10 Smart Motor', price: 8500, weight: 13 },
+            { id: 'd10_battery', name: 'Battery', price: 700, weight: 5 },
+            { id: 'd10_rack', name: 'Steel 2m Rack', price: 350, weight: 3 },
+            { id: 'd10_antitheft', name: 'Anti-Theft Bracket', price: 550, weight: 2 },
+            { id: 'd10_beams', name: 'Infrared Beams', price: 650, weight: 0.5 }
+        ],
+
+        cctv: [
+            { id: 'cctv_sys', name: 'System Type', variants: ['IP System', 'HD System'], price: 0, weight: 0 },
+            { id: 'cctv_dvr', name: 'DVR', variants: ['8 Channel', '16 Channel', '32 Channel'], price: 1500, weight: 2 },
+            { id: 'cctv_nvr', name: 'NVR', variants: ['8 Channel', '16 Channel'], price: 2000, weight: 2 },
+            { id: 'cctv_hdd', name: 'Hard Drive', variants: ['1TB', '2TB', '4TB'], price: 1000, weight: 0.5 },
+            { id: 'cctv_poe', name: 'Power/PoE', variants: ['8 Way', '16 Way', '9 Way PSU'], price: 600, weight: 1 },
+            { id: 'cctv_connector', name: 'Connectors', variants: ['RJ45', 'BNC'], price: 5, weight: 0.01 },
+            { id: 'cctv_boots', name: 'Accessories', variants: ['DC Leads', 'RJ45 Boots'], price: 10, weight: 0.05 },
+            { id: 'cctv_cam', name: 'Cameras', variants: ['IP Camera', 'HD Camera'], price: 600, weight: 0.4 },
+            { id: 'cctv_cable', name: 'Cable (100m)', variants: ['Cat 5', 'Poax'], price: 450, weight: 3 },
+            { id: 'cctv_enclosure', name: '100x100 Enclosure', price: 45, weight: 0.1 }
+        ]
+
+    };
+
+
+    /* ==========================================================
+       STATE & MARKERS
+       ========================================================== */
+
+    let cart = [];
+    let currentCategory = "";
+    let currentProperty = "lay.png";
+
+    const markerPositions = {
+        cameras: [
+            { top: '35%', left: '30%' },
+            { top: '35%', left: '60%' },
+            { top: '65%', left: '25%' },
+            { top: '65%', left: '75%' },
+            { top: '25%', left: '45%' },
+            { top: '25%', left: '55%' },
+            { top: '75%', left: '45%' },
+            { top: '75%', left: '55%' },
+            { top: '45%', left: '20%' },
+            { top: '45%', left: '80%' },
+            { top: '55%', left: '20%' },
+            { top: '55%', left: '80%' }
+        ],
+        roboguards: [
+            { top: '75%', left: '35%' },
+            { top: '75%', left: '65%' },
+            { top: '25%', left: '35%' },
+            { top: '25%', left: '65%' }
+        ],
+        gate: {
+            top: '82%',
+            left: '50%'
+        }
+    };
+
+
+    /* ==========================================================
+       DOM ELEMENTS
+       ========================================================== */
+
+    const formContainer = document.getElementById("dynamic-form");
+    const productFormBox = document.getElementById("product-form-container");
+    const overlay = document.getElementById("visualizer-overlay");
+
+
+    /* ==========================================================
+       PROPERTY LAYOUT SELECTOR FUNCTIONS
+       ========================================================== */
+
+    function selectPropertyLayout(layout, element) {
+        currentProperty = layout;
+        const propertyImage = document.getElementById("propertyImage");
+        if (propertyImage) {
+            propertyImage.src = layout;
+        }
+        const propertySelect = document.getElementById("propertySelect");
+        if (propertySelect) {
+            propertySelect.value = layout;
+        }
+        document.querySelectorAll(".property-option").forEach(btn => {
+            btn.classList.remove("active");
+        });
+        if (element) {
+            element.classList.add("active");
+        }
+        updatePropertyLabel(layout);
+        updateVisualizer();
+    }
+
+    function changePropertyLayout() {
+        const select = document.getElementById("propertySelect");
+        if (!select) return;
+        const layout = select.value;
+        currentProperty = layout;
+        const propertyImage = document.getElementById("propertyImage");
+        if (propertyImage) {
+            propertyImage.src = layout;
+        }
+        document.querySelectorAll(".property-option").forEach(btn => {
+            if (btn.getAttribute("data-layout") === layout) {
+                btn.classList.add("active");
+            } else {
+                btn.classList.remove("active");
+            }
+        });
+        updatePropertyLabel(layout);
+        updateVisualizer();
+    }
+
+    function updatePropertyLabel(layout) {
+        const labelMap = {
+            "lay.png": "Property 1",
+            "lay2.png": "Property 2",
+            "lay3.png": "Property 3",
+            "lay4.png": "Property 4"
+        };
+        const propertyLabel = document.getElementById("propertyLabel");
+        if (propertyLabel) {
+            propertyLabel.textContent = labelMap[layout] || "Property";
+        }
+    }
+
+    function handlePropertyImageError(img) {
+        console.error("Property image failed to load:", img.src);
+    }
+
+
+    /* ==========================================================
+       LOAD CATEGORY FORM
+       ========================================================== */
+
+    function loadCategoryForm() {
+        const select = document.getElementById("categorySelect");
+        currentCategory = select.value;
+
+        if (!currentCategory) {
+            productFormBox.classList.add("hide");
+            formContainer.innerHTML = "";
+            return;
+        }
+
+        const products = productDb[currentCategory];
+        if (!products) {
+            productFormBox.classList.add("hide");
+            return;
+        }
+
+        productFormBox.classList.remove("hide");
+        formContainer.innerHTML = "";
+
+        products.forEach(function(prod) {
+            let html = `
+                <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg flex flex-col md:flex-row md:items-center justify-between gap-3">
+                    <div class="font-semibold text-sm w-full md:w-1/3">
+                        ${prod.name}
+                    </div>
+            `;
+
+            if (prod.variants) {
+                html += `
+                    <select id="var_${prod.id}" class="p-2 text-sm border rounded-lg outline-none focus:ring-1 focus:ring-blue-500 flex-1">
+                `;
+                prod.variants.forEach(function(v) {
+          
 
 
        
