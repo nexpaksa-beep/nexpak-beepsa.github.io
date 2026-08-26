@@ -3007,40 +3007,43 @@
     }
 
 
-    /* ==========================================================
-       INITIALIZE
+        /* ==========================================================
+       INITIALIZE (ROBUST MENU TOGGLE)
        ========================================================== */
 
-        document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function() {
         loadSavedCart();
 
-        // --- ADD THIS DROPDOWN TOGGLE FIX ---
-        const menuButton = document.getElementById('menuButton');
-        const menuPanel = document.getElementById('menuPanel');
+        // Check for common variations of ID names (camelCase or hyphens)
+        const menuButton = document.getElementById('menuButton') || document.getElementById('menu-button');
+        const menuPanel = document.getElementById('menuPanel') || document.getElementById('menu-panel') || document.getElementById('mobileMenu');
 
-        if (menuButton && menuPanel) {
-            menuButton.addEventListener('click', function(e) {
-                e.stopPropagation();
-                menuPanel.classList.toggle('hidden');
-            });
-
-            // Close the menu if you click anywhere else on the page
-            document.addEventListener('click', function(e) {
-                if (!menuButton.contains(e.target) && !menuPanel.contains(e.target)) {
-                    menuPanel.classList.add('hidden');
-                }
-            });
+        if (!menuButton || !menuPanel) {
+            console.warn("Menu button or panel element could not be found. Check your HTML element IDs.");
+            return;
         }
+
+        menuButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            menuPanel.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!menuButton.contains(e.target) && !menuPanel.contains(e.target)) {
+                menuPanel.classList.add('hidden');
+            }
+        });
     });
-        
 
     </script>
+    
+        
 
 
     <!-- ==========================================================
          SEO SCHEMA
          ========================================================== -->
-    <script src="js/chatbot.js"></script>
+    
     <script src="js/seo-schema-injector.js"></script>
 
 </body>
