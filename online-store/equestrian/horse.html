@@ -1266,10 +1266,991 @@
 
             background:
                 linear-gradient(
-                    135deg,
-                    var(--green),
-                    var(--dark-green)
-                );
+                var(--white);
+
+            border-radius:
+                var(--radius);
+
+            padding:
+                45px 30px;
+
+            text-align:
+                center;
+
+        }
+
+
+        .final-cta h2 {
+
+            font-size:
+                30px;
+
+            margin-bottom:
+                12px;
+
+        }
+
+
+        .final-cta p {
+
+            max-width:
+                720px;
+
+            margin:
+                0 auto 25px;
 
             color:
-                va
+                #dcebe0;
+
+        }
+
+
+        .cta-buttons {
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            flex-wrap:
+                wrap;
+
+            gap:
+                12px;
+
+        }
+
+
+        .cta-button {
+
+            display:
+                inline-block;
+
+            padding:
+                12px 20px;
+
+            border-radius:
+                10px;
+
+            font-weight:
+                700;
+
+            font-size:
+                14px;
+
+            transition:
+                transform .2s ease,
+                background .2s ease;
+
+        }
+
+
+        .cta-primary {
+
+            background:
+                var(--white);
+
+            color:
+                var(--dark-green);
+
+        }
+
+
+        .cta-secondary {
+
+            border:
+                1px solid
+                rgba(255,255,255,.4);
+
+            color:
+                var(--white);
+
+        }
+
+
+        .cta-button:hover {
+
+            transform:
+                translateY(-2px);
+
+        }
+
+
+
+        /* =====================================================
+           FOOTER
+        ====================================================== */
+
+        footer {
+
+            background:
+                #091f15;
+
+            color:
+                #aec1b4;
+
+            text-align:
+                center;
+
+            padding:
+                25px 20px;
+
+            font-size:
+                13px;
+
+        }
+
+
+        footer strong {
+
+            color:
+                var(--white);
+
+        }
+
+
+
+        /* =====================================================
+           RESPONSIVE
+        ====================================================== */
+
+        @media (max-width: 850px) {
+
+            .application-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .maintenance-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+
+        @media (max-width: 650px) {
+
+            .hero {
+
+                padding:
+                    55px 18px;
+
+            }
+
+
+            main {
+
+                padding:
+                    30px 15px 60px;
+
+            }
+
+
+            .info-section,
+            .safety-section {
+
+                padding:
+                    25px 20px;
+
+            }
+
+
+            .spec-grid,
+            .conductivity-box,
+            .best-practice,
+            .mistakes-list,
+            .safety-list {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .application-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .maintenance-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .header-inner {
+
+                align-items:
+                    flex-start;
+
+            }
+
+
+            .brand {
+
+                font-size:
+                    18px;
+
+            }
+
+
+            .back-link {
+
+                font-size:
+                    12px;
+
+            }
+
+
+            .hero h1 {
+
+                font-size:
+                    38px;
+
+            }
+
+
+            .hero p {
+
+                font-size:
+                    16px;
+
+            }
+
+
+            .section-heading h2 {
+
+                font-size:
+                    23px;
+
+            }
+
+
+            .final-cta {
+
+                padding:
+                    35px 20px;
+
+            }
+
+
+            .final-cta h2 {
+
+                font-size:
+                    25px;
+
+            }
+
+
+            .cta-buttons {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .cta-button {
+
+                width:
+                    100%;
+
+                text-align:
+                    center;
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           EXTRA SMALL DEVICES
+        ====================================================== */
+
+        @media (max-width: 400px) {
+
+            .maintenance-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .product-meta {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .meta-item {
+
+                width:
+                    100%;
+
+                text-align:
+                    center;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="top-header">
+
+        <div class="header-inner">
+
+            <a
+                href="equestrian.html"
+                class="brand"
+            >
+
+                NEXPAK SECURITY SOLUTIONS
+
+                <span>
+                    Equestrian Product Knowledge
+                </span>
+
+            </a>
+
+
+            <a
+                href="equestrian.html"
+                class="back-link"
+            >
+
+                ← Equestrian Range
+
+            </a>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <section class="hero">
+
+        <div class="hero-inner">
+
+            <div class="eyebrow">
+                Product Knowledge Guide
+            </div>
+
+
+            <h1>
+
+                40mm
+
+                <span>
+                    Horse Fence Tape
+                </span>
+
+            </h1>
+
+
+            <p>
+
+                A professional guide to understanding,
+                selecting, installing and maintaining
+                40mm electric horse fencing tape.
+
+            </p>
+
+
+            <div class="product-meta">
+
+                <div class="meta-item">
+                    Width: 40mm
+                </div>
+
+                <div class="meta-item">
+                    Standard Roll: 200m
+                </div>
+
+                <div class="meta-item">
+                    Colours: White • Green • Brown
+                </div>
+
+                <div class="meta-item">
+                    UV-Stabilised
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <main>
+
+
+        <!-- =====================================================
+             ABOUT
+        ====================================================== -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    🐎
+                </div>
+
+                <h2>
+                    About 40mm Horse Fence Tape
+                </h2>
+
+            </div>
+
+
+            <p>
+
+                40mm electric horse fence tape, commonly
+                referred to as polytape, is designed to provide
+                a highly visible electric barrier for equestrian
+                fencing applications.
+
+            </p>
+
+
+            <p>
+
+                The wide tape construction provides substantially
+                more visual presence than narrow electric fence
+                wire, making it particularly suitable for horse
+                paddocks, arenas, temporary grazing areas and
+                boundary fencing.
+
+            </p>
+
+
+            <div class="intro-box">
+
+                <strong>
+                    Important:
+                </strong>
+
+                Horse fencing is not simply about choosing a
+                wide tape. The complete system should be properly
+                designed using compatible tape, insulators,
+                connectors, posts, earthing and an appropriate
+                energiser.
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             SPECIFICATIONS
+        ====================================================== -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    📋
+                </div>
+
+                <h2>
+                    General Specifications
+                </h2>
+
+            </div>
+
+
+            <p>
+
+                The following specifications represent common
+                characteristics of 40mm electric horse fencing
+                tape. Exact specifications can vary between
+                manufacturers and product ranges.
+
+            </p>
+
+
+            <div class="spec-grid">
+
+
+                <div class="spec-card">
+
+                    <strong>
+                        Width
+                    </strong>
+
+                    <span>
+                        40mm (approximately 1.5 inches)
+                    </span>
+
+                </div>
+
+
+                <div class="spec-card">
+
+                    <strong>
+                        Standard Roll Length
+                    </strong>
+
+                    <span>
+                        200 metres. Some manufacturers also
+                        offer longer rolls such as 350 metres.
+                    </span>
+
+                </div>
+
+
+                <div class="spec-card">
+
+                    <strong>
+                        Material
+                    </strong>
+
+                    <span>
+                        UV-stabilised polyethylene with
+                        integrated conductive elements.
+                    </span>
+
+                </div>
+
+
+                <div class="spec-card">
+
+                    <strong>
+                        Visibility
+                    </strong>
+
+                    <span>
+                        Wide tape construction provides high
+                        visibility for equestrian applications.
+                    </span>
+
+                </div>
+
+
+                <div class="spec-card">
+
+                    <strong>
+                        Conductors
+                    </strong>
+
+                    <span>
+                        Conductive metal strands are incorporated
+                        into the tape to carry the electrical pulse.
+                    </span>
+
+                </div>
+
+
+                <div class="spec-card">
+
+                    <strong>
+                        Applications
+                    </strong>
+
+                    <span>
+                        Horse paddocks, equine boundaries,
+                        temporary fencing and grazing areas.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             CONSTRUCTION
+        ====================================================== -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    ⚡
+                </div>
+
+                <h2>
+                    How the Tape Works
+                </h2>
+
+            </div>
+
+
+            <p>
+
+                Electric fence tape combines a flexible polymer
+                tape structure with conductive metal strands.
+                When the tape is correctly connected to an
+                energised electric fencing system, an electrical
+                pulse travels through the conductive elements.
+
+            </p>
+
+
+            <p>
+
+                The tape therefore performs two important
+                functions: it provides a highly visible physical
+                boundary and it carries the electrical pulse
+                throughout the fence circuit.
+
+            </p>
+
+
+            <div class="conductivity-box">
+
+
+                <div class="conductivity-card">
+
+                    <h3>
+                        Visible Boundary
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            40mm width provides strong visibility.
+                        </li>
+
+                        <li>
+                            Suitable for horse paddocks and
+                            equestrian boundaries.
+                        </li>
+
+                        <li>
+                            Helps make the fence visually obvious
+                            to animals and people.
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div class="conductivity-card">
+
+                    <h3>
+                        Electrical Conductor
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Integrated metal conductors carry
+                            the electrical pulse.
+                        </li>
+
+                        <li>
+                            Connections must maintain good
+                            electrical contact.
+                        </li>
+
+                        <li>
+                            Damaged or poorly connected tape can
+                            reduce system performance.
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             TECHNICAL VARIATIONS
+        ====================================================== -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    📊
+                </div>
+
+                <h2>
+                    Standard vs Low-Resistance Tape
+                </h2>
+
+            </div>
+
+
+            <p>
+
+                Not all 40mm tape is electrically identical.
+                Different products can use different numbers and
+                types of conductive strands.
+
+            </p>
+
+
+            <div class="comparison">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Specification
+                            </th>
+
+                            <th>
+                                Standard Poly Tape
+                            </th>
+
+                            <th>
+                                Heavy-Duty / Low Resistance
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        <tr>
+
+                            <td>
+                                Conductors
+                            </td>
+
+                            <td>
+                                Commonly 6–10 stainless-steel
+                                strands
+                            </td>
+
+                            <td>
+                                May use stainless-steel and
+                                tinned copper conductors
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Typical Tensile Strength
+                            </td>
+
+                            <td>
+                                Approximately 120–190kg,
+                                depending on product
+                            </td>
+
+                            <td>
+                                Some heavy-duty products can
+                                reach significantly higher
+                                tensile strengths
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Electrical Resistance
+                            </td>
+
+                            <td>
+                                Higher resistance; product
+                                specification must be checked
+                            </td>
+
+                            <td>
+                                Much lower resistance on
+                                suitable long-distance products
+                            </td>
+
+                        </tr>
+
+
+                        <tr>
+
+                            <td>
+                                Typical Application
+                            </td>
+
+                            <td>
+                                Shorter or portable fences
+                            </td>
+
+                            <td>
+                                Longer or more demanding
+                                permanent installations
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <div class="intro-box">
+
+                <strong>
+                    Selection rule:
+                </strong>
+
+                Do not choose tape based only on width.
+                For longer fences, check the manufacturer's
+                resistance specification and select an
+                appropriate low-resistance product where
+                required.
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             APPLICATIONS
+        ====================================================== -->
+
+        <section class="info-section">
+
+            <div class="section-heading">
+
+                <div class="section-icon">
+                    🏇
+                </div>
+
+                <h2>
+                    Common Applications
+                </h2>
+
+            </div>
+
+
+            <div class="application-grid">
+
+
+                <div class="application-card">
+
+                    <div class="application-number">
+                        01
+                    </div>
+
+                    <h3>
+                        Horse Paddocks
+                    </h3>
+
+                    <p>
+                        Used to create visible electric
+                        boundaries around paddocks and grazing
+                        areas.
+                    </p>
+
+                </div>
+
+
+                <div class="application-card">
+
+                    <div class="application-number">
+                        02
+                    </div>
+
+                    <h3>
+                        Permanent Fencing
+                    </h3>
+
+                    <p>
+                        Suitable products can form part of a
+                        properly designed permanent horse
+                        fencing system.
+                    </p>
+
+                </div>
+
+
+                <div class="application-card">
+
+                    <div class="application-number">
+                        03
+                    </div>
+
+                    <h3>
+                        Temporary Grazing
+                    </h3>
+
+                    <p>
+                        Can be used for temporary or movable
+                        grazing boundaries when the correct
+                        portable system is selected.
+                    </p>
+
+                </div>
+
+
+                <div class="application-card">
+
+                    <div class="application-number">
+                        04
+                    </div>
+
+                    <h3>
+                        Riding Facilities
+                    </h3>
+
+                    <p>
+                        Can be incorporated into suitable
+                        equestrian facility boundary systems.
+                    </p>
+
+                </div>
+
+
+                <div class="application-card">
+
+                    <div class="applic
