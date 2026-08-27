@@ -439,35 +439,132 @@ function renderProducts() {
 
 function cardHTML(p) {
   const liked = wishlist.includes(p.id);
-  const variants = p.variants?.length ? `<select class="variant" id="v-${p.id}">${p.variants.map(v => `<option>${v}</option>`).join("")}</select>` : "";
+
+  const variants = p.variants?.length
+    ? `<select class="variant" id="v-${p.id}">
+        ${p.variants.map(v => `<option>${v}</option>`).join("")}
+       </select>`
+    : "";
+
+  const infoButton = p.infoPage
+    ? `
+      <button
+        class="info-btn"
+        onclick="openProductInfo('${p.infoPage}')">
+        <i class="fa-solid fa-circle-info"></i>
+        Info
+      </button>
+    `
+    : "";
+
   return `
     <article class="card">
+
       <div class="card-image">
-        <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1551884831-bbf3cdc6469e?auto=format&fit=crop&w=700&q=80'">
-        <button class="wish ${liked?"active":""}" onclick="toggleWish('${p.id}')"><i class="fa-${liked?"solid":"regular"} fa-heart"></i></button>
-      </div>
-      <div class="card-body">
-        <div class="category">${p.category}</div>
-        <h3>${p.name}</h3>
-        ${p.energy ? `<div style="font-size:11px;color:#56715e;margin-bottom:4px"><i class="fa-solid fa-bolt"></i> ${p.energy}</div>` : ""}
-        <div class="price">${money(inc(p.price))}</div>
-        <div class="exvat">${money(p.price)} ex VAT</div>
-        <div class="unit">${p.unit}</div>
-        ${variants}
-        <div class="card-qty-row">
-          <span>Qty:</span>
-          <div class="card-qty-controls">
-            <button class="card-qty-btn" onclick="adjustCardQty('${p.id}', -1)">−</button>
-            <span class="card-qty-display" id="qty-val-${p.id}">1</span>
-            <button class="card-qty-btn" onclick="adjustCardQty('${p.id}', 1)">+</button>
-          </div>
-        </div>
-        <button class="add-cart" onclick="addCartWithQty('${p.id}')">
-          <span>🛒</span> Add to Cart
+
+        <img
+          src="${p.image}"
+          alt="${p.name}"
+          loading="lazy"
+          onerror="this.src='https://images.unsplash.com/photo-1551884831-bbf3cdc6469e?auto=format&fit=crop&w=700&q=80'"
+        >
+
+        <button
+          class="wish ${liked ? "active" : ""}"
+          onclick="toggleWish('${p.id}')"
+          aria-label="Add ${p.name} to wishlist">
+
+          <i class="fa-${liked ? "solid" : "regular"} fa-heart"></i>
+
         </button>
+
       </div>
-    </article>`;
-}
+
+      <div class="card-body">
+
+        <div class="category">
+          ${p.category}
+        </div>
+
+        <h3>
+          ${p.name}
+        </h3>
+
+        ${
+          p.energy
+            ? `
+              <div style="font-size:11px;color:#56715e;margin-bottom:4px">
+                <i class="fa-solid fa-bolt"></i>
+                ${p.energy}
+              </div>
+            `
+            : ""
+        }
+
+        <div class="price">
+          ${money(inc(p.price))}
+        </div>
+
+        <div class="exvat">
+          ${money(p.price)} ex VAT
+        </div>
+
+        <div class="unit">
+          ${p.unit}
+        </div>
+
+        ${variants}
+
+        <div class="card-qty-row">
+
+          <span>
+            Qty:
+          </span>
+
+          <div class="card-qty-controls">
+
+            <button
+              class="card-qty-btn"
+              onclick="adjustCardQty('${p.id}', -1)">
+              −
+            </button>
+
+            <span
+              class="card-qty-display"
+              id="qty-val-${p.id}">
+              1
+            </span>
+
+            <button
+              class="card-qty-btn"
+              onclick="adjustCardQty('${p.id}', 1)">
+              +
+            </button>
+
+          </div>
+
+        </div>
+
+        <div class="product-card-actions">
+
+          ${infoButton}
+
+          <button
+            class="add-cart"
+            onclick="addCartWithQty('${p.id}')">
+
+            <i class="fa-solid fa-cart-plus"></i>
+            Add to Cart
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
+  `;
+  }
 
 function adjustCardQty(id, delta) {
   const el = document.getElementById("qty-val-" + id);
