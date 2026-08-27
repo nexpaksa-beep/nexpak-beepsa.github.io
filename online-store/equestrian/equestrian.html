@@ -437,29 +437,84 @@ function renderProducts() {
   document.getElementById("productGrid").innerHTML = list.length ? list.map(cardHTML).join("") : `<div class="empty" style="grid-column:1/-1"><i class="fa-solid fa-horse" style="font-size:40px"></i><h3>No products found</h3><p>Try another search or category.</p></div>`;
 }
 
+/* ==========================================================
+   PRODUCT INFO PAGE
+   ========================================================== */
+
+function openProductInfo(page) {
+
+  if (!page) return;
+
+  window.location.href = page;
+
+}
+
+
+/* ==========================================================
+   PRODUCT CARD HTML
+   ========================================================== */
+
 function cardHTML(p) {
+
   const liked = wishlist.includes(p.id);
 
-  
+
+  /* --------------------------------------------------------
+     PRODUCT VARIANTS
+     -------------------------------------------------------- */
+
   const variants = p.variants?.length
-    ? `<select class="variant" id="v-${p.id}">
-        ${p.variants.map(v => `<option>${v}</option>`).join("")}
-       </select>`
+
+    ? `
+      <select
+        class="variant"
+        id="v-${p.id}"
+        aria-label="Choose ${p.name} variant">
+
+        ${p.variants
+          .map(v => `<option>${v}</option>`)
+          .join("")}
+
+      </select>
+      `
+
     : "";
+
+
+  /* --------------------------------------------------------
+     INFO BUTTON
+     Only appears when the product has an infoPage
+     -------------------------------------------------------- */
 
   const infoButton = p.infoPage
+
     ? `
       <button
+        type="button"
         class="info-btn"
-        onclick="openProductInfo('${p.infoPage}')">
+        onclick="openProductInfo('${p.infoPage}')"
+        aria-label="More information about ${p.name}">
+
         <i class="fa-solid fa-circle-info"></i>
+
         Info
+
       </button>
-    `
+      `
+
     : "";
 
+
+  /* --------------------------------------------------------
+     PRODUCT CARD
+     -------------------------------------------------------- */
+
   return `
+
     <article class="card">
+
+
+      <!-- PRODUCT IMAGE -->
 
       <div class="card-image">
 
@@ -467,116 +522,200 @@ function cardHTML(p) {
           src="${p.image}"
           alt="${p.name}"
           loading="lazy"
-          onerror="this.src='https://images.unsplash.com/photo-1551884831-bbf3cdc6469e?auto=format&fit=crop&w=700&q=80'"
+          onerror="
+            this.src='https://images.unsplash.com/photo-1551884831-bbf3cdc6469e?auto=format&fit=crop&w=700&q=80'
+          "
         >
 
+
+        <!-- WISHLIST -->
+
         <button
+          type="button"
           class="wish ${liked ? "active" : ""}"
           onclick="toggleWish('${p.id}')"
           aria-label="Add ${p.name} to wishlist">
 
-          <i class="fa-${liked ? "solid" : "regular"} fa-heart"></i>
+          <i
+            class="fa-${liked ? "solid" : "regular"} fa-heart">
+          </i>
 
         </button>
 
       </div>
 
+
+
+      <!-- PRODUCT INFORMATION -->
+
       <div class="card-body">
 
+
+        <!-- CATEGORY -->
+
         <div class="category">
+
           ${p.category}
+
         </div>
 
+
+
+        <!-- PRODUCT NAME -->
+
         <h3>
+
           ${p.name}
+
         </h3>
+
+
+
+        <!-- ENERGY -->
 
         ${
           p.energy
+
             ? `
-              <div style="font-size:11px;color:#56715e;margin-bottom:4px">
+              <div
+                style="
+                  font-size:11px;
+                  color:#56715e;
+                  margin-bottom:4px;
+                ">
+
                 <i class="fa-solid fa-bolt"></i>
+
                 ${p.energy}
+
               </div>
             `
+
             : ""
         }
 
+
+
+        <!-- PRICE INCLUDING VAT -->
+
         <div class="price">
+
           ${money(inc(p.price))}
+
         </div>
+
+
+
+        <!-- PRICE EXCLUDING VAT -->
 
         <div class="exvat">
+
           ${money(p.price)} ex VAT
+
         </div>
+
+
+
+        <!-- UNIT -->
 
         <div class="unit">
+
           ${p.unit}
+
         </div>
 
+
+
+        <!-- VARIANTS -->
+
         ${variants}
+
+
+
+        <!-- QUANTITY -->
 
         <div class="card-qty-row">
 
           <span>
+
             Qty:
+
           </span>
+
 
           <div class="card-qty-controls">
 
+
             <button
+              type="button"
               class="card-qty-btn"
-              onclick="adjustCardQty('${p.id}', -1)">
+              onclick="adjustCardQty('${p.id}', -1)"
+              aria-label="Decrease quantity">
+
               −
+
             </button>
+
 
             <span
               class="card-qty-display"
               id="qty-val-${p.id}">
+
               1
+
             </span>
 
+
             <button
+              type="button"
               class="card-qty-btn"
-              onclick="adjustCardQty('${p.id}', 1)">
+              onclick="adjustCardQty('${p.id}', 1)"
+              aria-label="Increase quantity">
+
               +
+
             </button>
+
 
           </div>
 
         </div>
 
+
+
+        <!-- INFO + ADD TO CART -->
+
         <div class="product-card-actions">
+
 
           ${infoButton}
 
+
+
+          <!-- ADD TO CART -->
+
           <button
+            type="button"
             class="add-cart"
             onclick="addCartWithQty('${p.id}')">
 
             <i class="fa-solid fa-cart-plus"></i>
+
             Add to Cart
 
           </button>
 
+
         </div>
+
 
       </div>
 
     </article>
+
   `;
+
   }
-
-  function cardHTML(p) {
-  const liked = wishlist.includes(p.id);
-
-  function openProductInfo(page) {
-  if (!page) return;
-
-  window.location.href = page;
-  }
-
-  const variants = p.variants
 
 function adjustCardQty(id, delta) {
   const el = document.getElementById("qty-val-" + id);
