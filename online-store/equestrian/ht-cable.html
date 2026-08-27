@@ -1319,7 +1319,7 @@
            FINAL CTA
         ====================================================== */
 
-        .final-cta {
+                .final-cta {
 
             margin-top:
                 35px;
@@ -1334,4 +1334,784 @@
                 20px;
 
             background:
-                l
+                linear-gradient(
+                    135deg,
+                    var(--dark-green),
+                    var(--green)
+                );
+
+            color:
+                white;
+
+            box-shadow:
+                0 15px 35px
+                rgba(0,0,0,0.12);
+
+        }
+
+
+        .final-cta h2 {
+
+            margin:
+                0 0 14px;
+
+            font-size:
+                30px;
+
+            line-height:
+                1.2;
+
+        }
+
+
+        .final-cta p {
+
+            max-width:
+                720px;
+
+            margin:
+                0 auto 25px;
+
+            font-size:
+                16px;
+
+            line-height:
+                1.7;
+
+            opacity:
+                0.95;
+
+        }
+
+
+        .cta-buttons {
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            flex-wrap:
+                wrap;
+
+        }
+
+
+        .cta-primary,
+        .cta-secondary {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            min-height:
+                48px;
+
+            padding:
+                13px 24px;
+
+            border-radius:
+                10px;
+
+            text-decoration:
+                none;
+
+            font-weight:
+                700;
+
+            font-size:
+                15px;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                background 0.2s ease;
+
+        }
+
+
+        .cta-primary {
+
+            background:
+                white;
+
+            color:
+                var(--dark-green);
+
+            border:
+                1px solid
+                white;
+
+        }
+
+
+        .cta-secondary {
+
+            border:
+                1px solid
+                rgba(255,255,255,0.6);
+
+            background:
+                rgba(255,255,255,0.08);
+
+            color:
+                white;
+
+        }
+
+
+        .cta-primary:hover,
+        .cta-secondary:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 8px 20px
+                rgba(0,0,0,0.18);
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ====================================================== */
+
+        .site-footer {
+
+            margin-top:
+                45px;
+
+            padding:
+                35px 0 0;
+
+            background:
+                #102019;
+
+            color:
+                white;
+
+        }
+
+
+        .footer-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1.5fr
+                1fr
+                1fr
+                1fr;
+
+            gap:
+                30px;
+
+        }
+
+
+        .footer-column h3 {
+
+            margin:
+                0 0 14px;
+
+            font-size:
+                16px;
+
+        }
+
+
+        .footer-column p {
+
+            margin:
+                0;
+
+            color:
+                rgba(255,255,255,0.72);
+
+            line-height:
+                1.7;
+
+            font-size:
+                14px;
+
+        }
+
+
+        .footer-links {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            gap:
+                9px;
+
+        }
+
+
+        .footer-links a {
+
+            color:
+                rgba(255,255,255,0.78);
+
+            text-decoration:
+                none;
+
+            font-size:
+                14px;
+
+            transition:
+                color 0.2s ease;
+
+        }
+
+
+        .footer-links a:hover {
+
+            color:
+                white;
+
+        }
+
+
+        .footer-bottom {
+
+            margin-top:
+                30px;
+
+            padding:
+                18px 0;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.1);
+
+            text-align:
+                center;
+
+            color:
+                rgba(255,255,255,0.58);
+
+            font-size:
+                13px;
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ====================================================== */
+
+        @media (
+            max-width:
+            900px
+        ) {
+
+            .footer-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media (
+            max-width:
+            700px
+        ) {
+
+            .container {
+
+                width:
+                    calc(100% - 30px);
+
+            }
+
+
+            .page-hero {
+
+                padding:
+                    55px 20px;
+
+            }
+
+
+            .page-hero h1 {
+
+                font-size:
+                    32px;
+
+            }
+
+
+            .page-hero p {
+
+                font-size:
+                    15px;
+
+            }
+
+
+            .section {
+
+                padding:
+                    24px 20px;
+
+            }
+
+
+            .section h2 {
+
+                font-size:
+                    24px;
+
+            }
+
+
+            .spec-grid,
+            .comparison-grid,
+            .applications-grid,
+            .related-grid,
+            .mistakes-list {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .diagram-flow {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .diagram-arrow {
+
+                transform:
+                    rotate(90deg);
+
+            }
+
+
+            .final-cta {
+
+                padding:
+                    40px 20px;
+
+            }
+
+
+            .final-cta h2 {
+
+                font-size:
+                    25px;
+
+            }
+
+
+            .cta-buttons {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .cta-primary,
+            .cta-secondary {
+
+                width:
+                    100%;
+
+                max-width:
+                    320px;
+
+            }
+
+
+            .footer-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+        }
+
+
+        @media (
+            max-width:
+            480px
+        ) {
+
+            .page-hero h1 {
+
+                font-size:
+                    27px;
+
+            }
+
+
+            .page-hero {
+
+                padding:
+                    45px 16px;
+
+            }
+
+
+            .section {
+
+                padding:
+                    20px 16px;
+
+            }
+
+
+            .safety-section {
+
+                padding:
+                    25px 20px;
+
+            }
+
+
+            .safety-section h2 {
+
+                font-size:
+                    22px;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           ACCESSIBILITY
+        ====================================================== */
+
+        a:focus-visible,
+        button:focus-visible {
+
+            outline:
+                3px solid
+                rgba(255,255,255,0.8);
+
+            outline-offset:
+                3px;
+
+        }
+
+
+        /* =====================================================
+           PRINT
+        ====================================================== */
+
+        @media print {
+
+            .site-header,
+            .site-footer,
+            .final-cta,
+            .cta-buttons {
+
+                display:
+                    none;
+
+            }
+
+
+            body {
+
+                background:
+                    white;
+
+                color:
+                    black;
+
+            }
+
+
+            .page-hero {
+
+                color:
+                    black;
+
+                background:
+                    white;
+
+            }
+
+
+            .section {
+
+                box-shadow:
+                    none;
+
+                border:
+                    1px solid
+                    #ddd;
+
+                break-inside:
+                    avoid;
+
+            }
+
+        }
+
+    </style>
+
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="site-header">
+
+        <div class="container header-inner">
+
+            <a
+                href="../../index.html"
+                class="brand"
+            >
+
+                <span class="brand-mark">
+                    N
+                </span>
+
+                <span class="brand-text">
+                    Nexpak Security Solutions
+                </span>
+
+            </a>
+
+
+            <nav class="main-nav">
+
+                <a href="../../index.html">
+                    Home
+                </a>
+
+                <a href="../equestrian.html">
+                    Equestrian
+                </a>
+
+                <a href="../online.html">
+                    Online Store
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main>
+
+        <!-- Your existing page content remains above this point -->
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="site-footer">
+
+        <div class="container">
+
+            <div class="footer-grid">
+
+
+                <div class="footer-column">
+
+                    <h3>
+                        Nexpak Security Solutions
+                    </h3>
+
+                    <p>
+                        Professional electric fencing,
+                        CCTV, alarm systems, access control
+                        and security solutions for homes,
+                        businesses and agricultural properties.
+                    </p>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <h3>
+                        Security Solutions
+                    </h3>
+
+                    <div class="footer-links">
+
+                        <a href="../../index.html">
+                            Security Solutions
+                        </a>
+
+                        <a href="../equestrian.html">
+                            Equestrian
+                        </a>
+
+                        <a href="../online.html">
+                            Online Store
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <h3>
+                        Equestrian
+                    </h3>
+
+                    <div class="footer-links">
+
+                        <a href="../equestrian.html">
+                            Equestrian Products
+                        </a>
+
+                        <a href="tread-in-posts.html">
+                            Tread-In Posts
+                        </a>
+
+                        <a href="12mm-politape.html">
+                            12mm Poly Tape
+                        </a>
+
+                        <a href="6mm-polirope.html">
+                            6mm Poly Rope
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <h3>
+                        Contact
+                    </h3>
+
+                    <div class="footer-links">
+
+                        <a href="../../index.html#contact">
+                            Contact Us
+                        </a>
+
+                        <a href="../../index.html#services">
+                            Our Services
+                        </a>
+
+                        <a href="../../index.html#about">
+                            About Nexpak
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="footer-bottom">
+
+                ©
+                <span id="footerYear">
+                    2026
+                </span>
+                Nexpak Security Solutions.
+                All rights reserved.
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         PAGE SCRIPT
+    ====================================================== -->
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const footer =
+                    document.querySelector(
+                        ".footer-bottom"
+                    );
+
+
+                if (footer) {
+
+                    const year =
+                        new Date()
+                            .getFullYear();
+
+                    const yearElement =
+                        document.getElementById(
+                            "footerYear"
+                        );
+
+                    if (yearElement) {
+
+                        yearElement.textContent =
+                            year;
+
+                    }
+
+                }
+
+            }
+
+        );
+
+    </script>
+
+
+</body>
+
+</html>
