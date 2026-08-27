@@ -3182,5 +3182,75 @@
                 </a>
 
                 <a href="../../index.html">
+    Home
+</a>
+
+
+<a href="../../contact.html">
+    Contact
+</a>
+
+</div>
+
+
+</div>
+
+
+<div class="footer-bottom">
+
+    <p>
+        © 2026 Nexpak Security Solutions.
+        All rights reserved.
+    </p>
+
+</div>
+
+</footer>
+
+
+<!-- =========================================================
+     PAGE SCRIPT
+========================================================== -->
+
+<script>
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
+
+            const footer =
+                document.querySelector(
+                    ".footer-bottom"
+                );
+
+            if (footer) {
+
+                const year =
+                    new Date().getFullYear();
+
+                const text =
+                    footer.querySelector("p");
+
+                if (text) {
+
+                    text.innerHTML =
+                        "© " +
+                        year +
+                        " Nexpak Security Solutions. " +
+                        "All rights reserved.";
+
+                }
+
+            }
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>
  
                     
