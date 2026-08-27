@@ -1277,7 +1277,7 @@
         }
 
 
-        .related-card span {
+                .related-card span {
 
             display:
                 block;
@@ -1287,5 +1287,762 @@
 
             font-size:
                 13px;
+
+            line-height:
+                1.6;
+
+            margin-top:
+                7px;
+
+        }
+
+
+        /* =====================================================
+           FINAL CTA
+        ====================================================== */
+
+        .final-cta {
+
+            margin-top:
+                35px;
+
+            padding:
+                40px 30px;
+
+            text-align:
+                center;
+
+            border-radius:
+                20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--dark-green),
+                    var(--green)
+                );
+
+            color:
+                white;
+
+            box-shadow:
+                0 15px 35px
+                rgba(0, 0, 0, 0.12);
+
+        }
+
+
+        .final-cta h2 {
+
+            margin:
+                0 0 12px;
+
+            font-size:
+                28px;
+
+        }
+
+
+        .final-cta p {
+
+            max-width:
+                720px;
+
+            margin:
+                0 auto 25px;
+
+            line-height:
+                1.7;
+
+            opacity:
+                0.95;
+
+        }
+
+
+        .cta-buttons {
+
+            display:
+                flex;
+
+            justify-content:
+                center;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            flex-wrap:
+                wrap;
+
+        }
+
+
+        .cta-button {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            min-height:
+                48px;
+
+            padding:
+                12px 22px;
+
+            border-radius:
+                10px;
+
+            text-decoration:
+                none;
+
+            font-weight:
+                700;
+
+            font-size:
+                14px;
+
+            transition:
+                transform 0.2s ease,
+                background 0.2s ease,
+                box-shadow 0.2s ease;
+
+        }
+
+
+        .cta-button:hover {
+
+            transform:
+                translateY(-2px);
+
+        }
+
+
+        .cta-primary {
+
+            background:
+                white;
+
+            color:
+                var(--dark-green);
+
+            box-shadow:
+                0 8px 20px
+                rgba(0, 0, 0, 0.12);
+
+        }
+
+
+        .cta-primary:hover {
+
+            background:
+                #f2f7f2;
+
+        }
+
+
+        .cta-secondary {
+
+            border:
+                1px solid
+                rgba(255,255,255,0.6);
+
+            background:
+                rgba(255,255,255,0.08);
+
+            color:
+                white;
+
+        }
+
+
+        .cta-secondary:hover {
+
+            background:
+                rgba(255,255,255,0.16);
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ====================================================== */
+
+        footer {
+
+            margin-top:
+                40px;
+
+            padding:
+                30px 20px;
+
+            background:
+                #102d1d;
+
+            color:
+                white;
+
+        }
+
+
+        .footer-inner {
+
+            max-width:
+                1100px;
+
+            margin:
+                auto;
+
+            display:
+                grid;
+
+            grid-template-columns:
+                1.5fr 1fr 1fr;
+
+            gap:
+                30px;
+
+        }
+
+
+        .footer-brand h3 {
+
+            margin:
+                0 0 10px;
+
+            font-size:
+                20px;
+
+        }
+
+
+        .footer-brand p {
+
+            margin:
+                0;
+
+            color:
+                rgba(255,255,255,0.75);
+
+            font-size:
+                13px;
+
+            line-height:
+                1.7;
+
+        }
+
+
+        .footer-column h4 {
+
+            margin:
+                0 0 12px;
+
+            font-size:
+                14px;
+
+        }
+
+
+        .footer-links {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            gap:
+                8px;
+
+        }
+
+
+        .footer-links a {
+
+            color:
+                rgba(255,255,255,0.75);
+
+            text-decoration:
+                none;
+
+            font-size:
+                13px;
+
+            transition:
+                color 0.2s ease;
+
+        }
+
+
+        .footer-links a:hover {
+
+            color:
+                white;
+
+        }
+
+
+        .footer-bottom {
+
+            max-width:
+                1100px;
+
+            margin:
+                25px auto 0;
+
+            padding-top:
+                18px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.12);
+
+            text-align:
+                center;
+
+            color:
+                rgba(255,255,255,0.6);
+
+            font-size:
+                12px;
+
+        }
+
+
+        /* =====================================================
+           MOBILE RESPONSIVE
+        ====================================================== */
+
+        @media (max-width: 800px) {
+
+            .page-container {
+
+                padding:
+                    25px 16px;
+
+            }
+
+
+            .hero {
+
+                padding:
+                    35px 22px;
+
+            }
+
+
+            .hero h1 {
+
+                font-size:
+                    30px;
+
+            }
+
+
+            .spec-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .comparison-table {
+
+                font-size:
+                    12px;
+
+            }
+
+
+            .comparison-table th,
+            .comparison-table td {
+
+                padding:
+                    10px 8px;
+
+            }
+
+
+            .application-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .mistakes-list {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .feature-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .related-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .footer-inner {
+
+                grid-template-columns:
+                    1fr;
+
+                gap:
+                    22px;
+
+            }
+
+
+            .connection-diagram {
+
+                flex-direction:
+                    column;
+
+            }
+
+
+            .diagram-arrow {
+
+                transform:
+                    rotate(90deg);
+
+            }
+
+        }
+
+
+        @media (max-width: 520px) {
+
+            .hero h1 {
+
+                font-size:
+                    26px;
+
+            }
+
+
+            .hero p {
+
+                font-size:
+                    14px;
+
+            }
+
+
+            .section-heading h2 {
+
+                font-size:
+                    21px;
+
+            }
+
+
+            .info-section {
+
+                padding:
+                    22px 17px;
+
+            }
+
+
+            .safety-section {
+
+                padding:
+                    25px 18px;
+
+            }
+
+
+            .final-cta {
+
+                padding:
+                    30px 18px;
+
+            }
+
+
+            .final-cta h2 {
+
+                font-size:
+                    23px;
+
+            }
+
+
+            .cta-buttons {
+
+                flex-direction:
+                    column;
+
+                width:
+                    100%;
+
+            }
+
+
+            .cta-button {
+
+                width:
+                    100%;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           ACCESSIBILITY
+        ====================================================== */
+
+        a:focus-visible,
+        button:focus-visible {
+
+            outline:
+                3px solid
+                rgba(47, 125, 71, 0.45);
+
+            outline-offset:
+                3px;
+
+        }
+
+
+        /* =====================================================
+           PRINT
+        ====================================================== */
+
+        @media print {
+
+            body {
+
+                background:
+                    white;
+
+            }
+
+
+            .final-cta {
+
+                box-shadow:
+                    none;
+
+            }
+
+
+            footer {
+
+                background:
+                    white;
+
+                color:
+                    black;
+
+            }
+
+
+            .footer-brand p,
+            .footer-links a,
+            .footer-bottom {
+
+                color:
+                    #444;
+
+            }
+
+        }
+
+    </style>
+
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="site-header">
+
+        <div class="header-inner">
+
+            <a
+                href="equestrian.html"
+                class="logo"
+            >
+                Nexpak
+                <span>Equestrian</span>
+            </a>
+
+
+            <a
+                href="equestrian.html"
+                class="back-link"
+            >
+                ← Equestrian Range
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="page-container">
+
+        <!-- Your existing page content remains above this point -->
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+        <div class="footer-inner">
+
+
+            <div class="footer-brand">
+
+                <h3>
+                    Nexpak Security Solutions
+                </h3>
+
+                <p>
+                    Professional electric fencing,
+                    security and equestrian fencing
+                    solutions for South African properties.
+                </p>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Equestrian
+                </h4>
+
+                <div class="footer-links">
+
+                    <a href="equestrian.html">
+                        Equestrian
+                    </a>
+
+                    <a href="../online.html">
+                        Online Store
+                    </a>
+
+                    <a href="horse.html">
+                        40mm Horse Fence Tape
+                    </a>
+
+                    <a href="intermediate-insulators.html">
+                        Intermediate Insulators
+                    </a>
+
+                    <a href="activator-plates.html">
+                        Activator Plates
+                    </a>
+
+                    <a href="tape-joiners.html">
+                        Tape Joiners
+                    </a>
+
+                    <a href="gate-handles.html">
+                        Gate Handles & Breaks
+                    </a>
+
+                    <a href="corner-strain-insulators.html">
+                        Corner Strain Insulators
+                    </a>
+
+                    <a href="value-reel.html">
+                        Value Reels
+                    </a>
+
+                    <a href="12mm-politape.html">
+                        12mm Poly Tape
+                    </a>
+
+                    <a href="bungy-cord.html">
+                        Bungy Cord
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Nexpak Security
+                </h4>
+
+                <div class="footer-links">
+
+                    <a href="../../index.html">
+                        Home
+                    </a>
+
+                    <a href="../../shop.html">
+                        Build Your System
+                    </a>
+
+                    <a href="../../contact.html">
+                        Contact
+                    </a>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            © 2026 Nexpak Security Solutions.
+            All rights reserved.
+
+        </div>
+
+    </footer>
+
+
+</body>
+
+</html>
 
  
