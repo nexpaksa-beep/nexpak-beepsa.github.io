@@ -1340,6 +1340,346 @@
 
         </div>
 
+            </div>
+
     </div>
 
-</sectio
+</section>
+
+
+<!-- =========================================================
+     FINAL CALL TO ACTION
+========================================================== -->
+
+<section class="final-cta">
+
+    <div class="container">
+
+        <h2>
+            Choose the Right JVA Energiser
+        </h2>
+
+        <p>
+            Whether you need a mains/battery hybrid energiser
+            for a permanent perimeter fence or an integrated
+            solar unit for a remote paddock, the JVA MB and SV
+            ranges provide solutions for different installation
+            requirements.
+        </p>
+
+        <div class="cta-buttons">
+
+            <a
+                href="../../shop.html"
+                class="cta-primary"
+            >
+                Build Your Security System
+            </a>
+
+            <a
+                href="equestrian.html"
+                class="cta-secondary"
+            >
+                Back to Equestrian Range
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================== -->
+
+<footer class="site-footer">
+
+    <div class="container">
+
+        <div class="footer-grid">
+
+            <div class="footer-brand">
+
+                <h3>
+                    Nexpak Security Solutions
+                </h3>
+
+                <p>
+                    Professional electric fencing,
+                    CCTV, alarms, access control and
+                    equestrian security solutions.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <h4>
+                    Equestrian
+                </h4>
+
+                <a href="equestrian.html">
+                    Equestrian Home
+                </a>
+
+                <a href="horse-tape.html">
+                    Horse Tape
+                </a>
+
+                <a href="poly-rope.html">
+                    Poly Rope
+                </a>
+
+                <a href="insulators.html">
+                    Insulators
+                </a>
+
+                <a href="energizers.html">
+                    Energizers
+                </a>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <h4>
+                    JVA Energizers
+                </h4>
+
+                <a href="jva-mb-sv-range.html">
+                    JVA MB & SV Range
+                </a>
+
+                <a href="jva-mb-range.html">
+                    JVA MB Range
+                </a>
+
+                <a href="jva-sv-range.html">
+                    JVA SV Range
+                </a>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <h4>
+                    Nexpak
+                </h4>
+
+                <a href="../../index.html">
+                    Home
+                </a>
+
+                <a href="../online.html">
+                    Online Store
+                </a>
+
+                <a href="../../contact.html">
+                    Contact
+                </a>
+
+                <a href="../../shop.html">
+                    Build Your System
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 Nexpak Security Solutions.
+                All Rights Reserved.
+            </p>
+
+            <p>
+                Professional Security.
+                Reliable Protection.
+            </p>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- =========================================================
+     WHATSAPP FLOATING BUTTON
+========================================================== -->
+
+<a
+    href="https://wa.me/278XXXXXXXX"
+    class="whatsapp-float"
+    target="_blank"
+    rel="noopener"
+    aria-label="Contact Nexpak Security Solutions on WhatsApp"
+>
+
+    WhatsApp
+
+</a>
+
+
+<!-- =========================================================
+     PAGE JAVASCRIPT
+========================================================== -->
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        /* =====================================================
+           CURRENT YEAR
+        ====================================================== */
+
+        const year =
+            document.querySelector(
+                ".footer-bottom"
+            );
+
+        if (year) {
+
+            const currentYear =
+                new Date().getFullYear();
+
+            year.innerHTML =
+                year.innerHTML.replace(
+                    "2026",
+                    currentYear
+                );
+
+        }
+
+
+        /* =====================================================
+           SMOOTH SCROLL
+        ====================================================== */
+
+        const links =
+            document.querySelectorAll(
+                'a[href^="#"]'
+            );
+
+        links.forEach(
+            function (link) {
+
+                link.addEventListener(
+                    "click",
+                    function (event) {
+
+                        const target =
+                            document.querySelector(
+                                this.getAttribute("href")
+                            );
+
+                        if (target) {
+
+                            event.preventDefault();
+
+                            target.scrollIntoView({
+                                behavior: "smooth",
+                                block: "start"
+                            });
+
+                        }
+
+                    }
+                );
+
+            }
+        );
+
+
+        /* =====================================================
+           ACTIVE NAVIGATION
+        ====================================================== */
+
+        const currentPage =
+            window.location.pathname
+                .split("/")
+                .pop();
+
+        const navLinks =
+            document.querySelectorAll(
+                ".site-nav a, .footer-links a"
+            );
+
+        navLinks.forEach(
+            function (link) {
+
+                const linkPage =
+                    link.getAttribute("href");
+
+                if (
+                    linkPage &&
+                    linkPage.endsWith(
+                        currentPage
+                    )
+                ) {
+
+                    link.classList.add(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           EXTERNAL LINKS
+        ====================================================== */
+
+        const externalLinks =
+            document.querySelectorAll(
+                'a[href^="http"]'
+            );
+
+        externalLinks.forEach(
+            function (link) {
+
+                if (
+                    !link.href.includes(
+                        window.location.hostname
+                    )
+                ) {
+
+                    link.setAttribute(
+                        "target",
+                        "_blank"
+                    );
+
+                    link.setAttribute(
+                        "rel",
+                        "noopener noreferrer"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+);
+
+</script>
+
+
+<!-- =========================================================
+     END OF DOCUMENT
+========================================================== -->
+
+</body>
+
+</html>
