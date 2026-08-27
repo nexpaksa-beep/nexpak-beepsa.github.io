@@ -3086,8 +3086,424 @@ footer p{
     </section>
 
 
+<!-- ==========================================================
+     FOOTER
+========================================================== -->
 
-    <!-- ==========================================================
-         FOOTER
-    ==========================
+<footer class="site-footer">
+
+    <div class="footer-container">
+
+        <div class="footer-brand">
+
+            <h3>
+                Nexpak Security Solutions
+            </h3>
+
+            <p>
+                Professional electric fencing, equestrian fencing,
+                CCTV, alarm and security solutions across Gauteng.
+            </p>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>
+                JVA Energizers
+            </h4>
+
+            <a href="jva-energizers.html">
+                JVA Energizers
+            </a>
+
+            <a href="jva-mb-range.html">
+                JVA MB Range
+            </a>
+
+            <a href="jva-sv-range.html">
+                JVA SV Range
+            </a>
+
+            <a href="warning-signs.html">
+                Warning Signs
+            </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>
+                Equestrian Fencing
+            </h4>
+
+            <a href="equestrian.html">
+                Equestrian Products
+            </a>
+
+            <a href="horse-tape.html">
+                Horse Tape
+            </a>
+
+            <a href="polirope.html">
+                Polirope
+            </a>
+
+            <a href="insulators.html">
+                Insulators
+            </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>
+                Contact
+            </h4>
+
+            <a href="https://wa.me/27836308249"
+               target="_blank"
+               rel="noopener">
+
+                WhatsApp
+
+            </a>
+
+            <a href="mailto:info@nexpaksolutions.co.za">
+
+                Email Us
+
+            </a>
+
+            <span>
+                East Rand, Gauteng
+            </span>
+
+            <span>
+                South Africa
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <p>
+            © 2026 Nexpak Security Solutions.
+            All rights reserved.
+        </p>
+
+        <p>
+            Professional Security & Equestrian Fencing Solutions
+        </p>
+
+    </div>
+
+</footer>
+
+
+
+<!-- ==========================================================
+     WHATSAPP BUTTON
+========================================================== -->
+
+<a
+    href="https://wa.me/27836308249"
+    class="whatsapp-button"
+    target="_blank"
+    rel="noopener"
+    aria-label="Contact Nexpak Security Solutions on WhatsApp"
+>
+
+    <i class="fa-brands fa-whatsapp"></i>
+
+</a>
+
+
+
+<!-- ==========================================================
+     FOOTER / WHATSAPP STYLES
+========================================================== -->
+
+<style>
+
+.site-footer {
+
+    background:
+        #09291b;
+
+    color:
+        #dcebe0;
+
+    margin-top:
+        60px;
+
+}
+
+
+.footer-container {
+
+    width:
+        min(1150px, 92%);
+
+    margin:
+        auto;
+
+    padding:
+        55px 0 40px;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        2fr 1fr 1fr 1fr;
+
+    gap:
+        40px;
+
+}
+
+
+.footer-brand h3 {
+
+    color:
+        #ffffff;
+
+    font-size:
+        20px;
+
+    margin-bottom:
+        12px;
+
+}
+
+
+.footer-brand p {
+
+    color:
+        #afc5b5;
+
+    font-size:
+        13px;
+
+    line-height:
+        1.7;
+
+    max-width:
+        320px;
+
+}
+
+
+.footer-column {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        8px;
+
+}
+
+
+.footer-column h4 {
+
+    color:
+        #ffffff;
+
+    font-size:
+        14px;
+
+    margin-bottom:
+        8px;
+
+}
+
+
+.footer-column a,
+.footer-column span {
+
+    color:
+        #afc5b5;
+
+    font-size:
+        12px;
+
+    transition:
+        .2s;
+
+}
+
+
+.footer-column a:hover {
+
+    color:
+        #b9e18b;
+
+    transform:
+        translateX(2px);
+
+}
+
+
+.footer-bottom {
+
+    width:
+        min(1150px, 92%);
+
+    margin:
+        auto;
+
+    padding:
+        20px 0;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.12);
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+    flex-wrap:
+        wrap;
+
+}
+
+
+.footer-bottom p {
+
+    color:
+        #8fa99a;
+
+    font-size:
+        11px;
+
+}
+
+
+.whatsapp-button {
+
+    position:
+        fixed;
+
+    right:
+        20px;
+
+    bottom:
+        20px;
+
+    width:
+        56px;
+
+    height:
+        56px;
+
+    border-radius:
+        50%;
+
+    background:
+        #25d366;
+
+    color:
+        #ffffff;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    font-size:
+        28px;
+
+    z-index:
+        2000;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.25);
+
+    transition:
+        transform .2s,
+        box-shadow .2s;
+
+}
+
+
+.whatsapp-button:hover {
+
+    transform:
+        scale(1.08);
+
+    box-shadow:
+        0 14px 35px rgba(0,0,0,.3);
+
+}
+
+
+@media (max-width: 800px) {
+
+    .footer-container {
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap:
+            30px;
+
+    }
+
+}
+
+
+@media (max-width: 520px) {
+
+    .footer-container {
+
+        grid-template-columns:
+            1fr;
+
+        padding:
+            40px 0 30px;
+
+    }
+
+
+    .footer-bottom {
+
+        flex-direction:
+            column;
+
+        gap:
+            6px;
+
+    }
+
+}
+
+
+</style>
+
+
+
+<!-- ==========================================================
+     END OF PAGE
+========================================================== -->
+
+</body>
+
+    </html>
      
