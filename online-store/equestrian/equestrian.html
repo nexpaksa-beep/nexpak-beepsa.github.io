@@ -440,6 +440,7 @@ function renderProducts() {
 function cardHTML(p) {
   const liked = wishlist.includes(p.id);
 
+  
   const variants = p.variants?.length
     ? `<select class="variant" id="v-${p.id}">
         ${p.variants.map(v => `<option>${v}</option>`).join("")}
@@ -565,6 +566,17 @@ function cardHTML(p) {
     </article>
   `;
   }
+
+  function cardHTML(p) {
+  const liked = wishlist.includes(p.id);
+
+  function openProductInfo(page) {
+  if (!page) return;
+
+  window.location.href = page;
+  }
+
+  const variants = p.variants
 
 function adjustCardQty(id, delta) {
   const el = document.getElementById("qty-val-" + id);
