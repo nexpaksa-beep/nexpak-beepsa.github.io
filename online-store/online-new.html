@@ -685,3 +685,95 @@
 
                     // Dynamic image switcher for Centurion slide gate kits
                     if (titleElement && titleElement.textContent.includes('Centurion Slide Gate Kit') && imgElement) {
+                        const textLower = selectedText.toLowerCase();
+                        if (textLower.includes('d3')) {
+                            imgElement.src = '../images/d3.png';
+                        } else if (textLower.includes('d5')) {
+                            imgElement.src = '../images/d5.png';
+                        } else if (textLower.includes('d6')) {
+                            imgElement.src = '../images/d6.png';
+                        } else if (textLower.includes('d10')) {
+                            imgElement.src = '../images/d10.png';
+                        } else if (textLower.includes('sdo')) {
+                            imgElement.src = '../images/sdo.png';
+                        } else if (textLower.includes('vantage')) {
+                            imgElement.src = '../images/van.png';
+                        }
+                    }
+                });
+            }
+
+            const btnCart = card.querySelector('.custom-app-btn:not(.btn-info):not(.btn-quote)');
+            const btnInfo = card.querySelector('.btn-info');
+            const btnQuote = card.querySelector('.btn-quote');
+            const productName = titleElement?.textContent || 'Security Item';
+
+            if (btnCart) {
+                btnCart.addEventListener('click', () => {
+                    cartCount++;
+                    
+                    let numericPrice = 0;
+                    let itemWeight = 2.0; // default fallback weight
+
+                    if (select) {
+                        const selectedOption = select.options[select.selectedIndex];
+                        numericPrice = parseFloat(selectedOption.getAttribute('data-price')) || 0;
+                        itemWeight = parseFloat(selectedOption.getAttribute('data-weight')) || 2.0;
+                    } else {
+                        numericPrice = parseFloat(card.getAttribute('data-single-price')) || 0;
+                        itemWeight = parseFloat(card.getAttribute('data-single-weight')) || 2.0;
+                    }
+
+                    cartSubtotal += numericPrice;
+                    totalWeight += itemWeight;
+
+                    cartItems.push({ name: productName, price: numericPrice, weight: itemWeight });
+
+                    localStorage.setItem('nexpak_cart_count', cartCount);
+                    localStorage.setItem('nexpak_cart_subtotal', cartSubtotal);
+                    localStorage.setItem('nexpak_cart_weight', totalWeight);
+                    localStorage.setItem('nexpak_cart_items', JSON.stringify(cartItems));
+
+                    updateCartUI();
+                    alert(`${productName} added to cart!`);
+                });
+            }
+
+            if (btnInfo) {
+                btnInfo.addEventListener('click', () => {
+                    alert(`More information for: ${productName}\nContact Nexpak Support for technical datasheets.`);
+                });
+            }
+
+            if (btnQuote) {
+                btnQuote.addEventListener('click', () => {
+                    alert(`${productName} has been added to your quotation request list.`);
+                });
+            }
+        });
+
+        // Clear Cart Functionality
+        const clearCartBtn = document.getElementById('clear-cart-btn');
+        if (clearCartBtn) {
+            clearCartBtn.addEventListener('click', () => {
+                if (confirm('Are you sure you want to clear your cart?')) {
+                    localStorage.removeItem('nexpak_cart_count');
+                    localStorage.removeItem('nexpak_cart_subtotal');
+                    localStorage.removeItem('nexpak_cart_weight');
+                    localStorage.removeItem('nexpak_cart_items');
+
+                    cartCount = 0;
+                    cartSubtotal = 0;
+                    totalWeight = 0;
+                    cartItems = [];
+
+                    updateCartUI();
+                    alert('Your cart has been cleared.');
+                }
+            });
+        }
+    });
+    </script>
+</body>
+</html>
+
