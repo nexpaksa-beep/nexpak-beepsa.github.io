@@ -2389,7 +2389,7 @@ img {
 
             <div class="cta-buttons">
 
-                <a
+                                <a
                     href="../equestrian.html"
                     class="cta-button primary">
 
@@ -2402,5 +2402,175 @@ img {
 
                 <a
                     href="https://wa.me/27836308249"
-                    clas
+                    class="cta-button whatsapp">
+
+                    <i class="fa-brands fa-whatsapp"></i>
+
+                    Ask About This Product
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+        <div class="footer-inner">
+
+            <div>
+
+                <strong>
+                    Nexpak Security Solutions
+                </strong>
+
+                <p>
+                    Professional security and equestrian
+                    fencing solutions in Gauteng.
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    Equestrian Fencing
+                </strong>
+
+                <a href="../../equestrian.html">
+                    Online Store
+                </a>
+
+                <a href="../../equestrian.html">
+                    Horse Fencing Products
+                </a>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    Support
+                </strong>
+
+                <a href="https://wa.me/27836308249">
+                    WhatsApp
+                </a>
+
+                <a href="mailto:info@nexpaksolutions.co.za">
+                    Email Us
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            © <span data-year>2026</span>
+            Nexpak Security Solutions.
+            All rights reserved.
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script>
+
+        /*
+         * =====================================================
+         * PRODUCT INFORMATION
+         * =====================================================
+         */
+
+        const productInfo = {
+
+            name:
+                "Electric Fence Tape Joiner",
+
+            category:
+                "Horse Tape Accessories",
+
+            description:
+                "Purpose-designed hardware for securely joining electric fence poly tape while maintaining electrical continuity.",
+
+            compatibility:
+                "Available designs for 12mm, 20mm and 40mm electric fence tape."
+
+        };
+
+
+        /*
+         * =====================================================
+         * FAQ ACCORDION
+         * =====================================================
+         */
+
+        document
+            .querySelectorAll(".faq details")
+            .forEach(function(item) {
+
+                item.addEventListener(
+                    "toggle",
+                    function() {
+
+                        if (item.open) {
+
+                            document
+                                .querySelectorAll(".faq details")
+                                .forEach(function(other) {
+
+                                    if (other !== item) {
+
+                                        other.open = false;
+
+                                    }
+
+                                });
+
+                        }
+
+                    }
+                );
+
+            });
+
+
+        /*
+         * =====================================================
+         * AUTOMATIC YEAR
+         * =====================================================
+         */
+
+        document
+            .querySelectorAll("[data-year]")
+            .forEach(function(element) {
+
+                element.textContent =
+                    new Date().getFullYear();
+
+            });
+
+    </script>
+
+
+</body>
+
+    </html>
                      
