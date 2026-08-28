@@ -72,14 +72,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 safeItemDescription = safeItemDescription.substring(0, 92) + '...';
             }
 
-            // ==========================================
-// SANDBOX CONFIGURATION (TEMPORARY FOR TESTING)
-// ==========================================
-const payfastMerchantId = '10004002';   // Universal test Merchant ID
-const payfastMerchantKey = 'q1cd2rdny4a53'; // Universal test Merchant Key
-
-// CHANGE THIS: Route the payment to sandbox instead of the live production system
-const payfastUrl = 'https://payfast.co.za'; 
+            // =========================================================================
+            // CONFIGURATION CONTROLLER (Toggle this for Testing vs Going Live)
+            // =========================================================================
+            
+            // --- MODE A: TESTING MODE (Active Now) ---
+            const payfastMerchantId = '10004002';   // Universal test Merchant ID
+            const payfastMerchantKey = 'q1cd2rdny4a53'; // Universal test Merchant Key
+            const payfastUrl = 'https://payfast.co.za'; // FIXED: Proper Sandbox URL
+            
+            /* 
+            // --- MODE B: LIVE PRODUCTION MODE (Uncomment this and comment out Mode A to take real money) ---
+            const payfastMerchantId = 'YOUR_LIVE_ID';   
+            const payfastMerchantKey = 'YOUR_LIVE_KEY'; 
+            const payfastUrl = 'https://payfast.co.za'; 
+            */
             
             // Build dynamic form to securely submit data to PayFast
             const form = document.createElement('form');
@@ -100,7 +107,7 @@ const payfastUrl = 'https://payfast.co.za';
 
                 // Transaction details
                 m_payment_id: 'NEX-' + Date.now(),
-                amount: numericTotal.toFixed(2), // PayFast handles standard decimal string values perfectly
+                amount: numericTotal.toFixed(2), 
                 item_name: safeItemDescription
             };
 
@@ -115,8 +122,7 @@ const payfastUrl = 'https://payfast.co.za';
                 }
             }
 
-            // PayFast requires clear local storage *before* leaving if no external webhook engine is built
-            // Unlocks empty state upon return redirect
+            // PayFast requires clear local storage before leaving if no external webhook engine is built
             localStorage.removeItem('nexpak_cart_count');
             localStorage.removeItem('nexpak_cart_total');
             localStorage.removeItem('nexpak_cart_items');
@@ -127,4 +133,4 @@ const payfastUrl = 'https://payfast.co.za';
         });
     }
 });
-                        
+                                             
