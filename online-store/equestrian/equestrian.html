@@ -378,30 +378,50 @@ footer a{display:block;margin:7px 0}.copyright{border-top:1px solid rgba(255,255
     
     <div class="form-group">
       <label>Full Name</label>
-      <input type="text" id="CustName" placeholder="Enter your full name" required>
+      <input type="text" id="customerName" placeholder="Enter your full name" required>
     </div>
     <div class="form-group">
       <label>Email Address</label>
-      <input type="email" id="CustEmail" placeholder="your@email.co.za" required>
+      <input type="email" id="customerEmail" placeholder="your@email.co.za" required>
     </div>
     <div class="form-group">
       <label>Phone Number</label>
-      <input type="text" id="CustPhone" placeholder="083 123 4567" required>
+      <input type="text" id="customerPhone" placeholder="083 123 4567" required>
     </div>
-    <div class="form-group" id="deliveryContainer">
-      <!-- Managed by js/equestrian-delivery-calculator.js -->
+    <div class="form-group">
+      <label>Shipping Address (Suburb / City in Gauteng)</label>
+      <input type="text" id="shippingAddress" placeholder="e.g. 123 Main Road, Boksburg" required>
+    </div>
+    <div class="form-group">
+      <label>Distance in Kilometres from Benoni (Auto-calculated)</label>
+      <input type="number" id="distance-km" placeholder="e.g. 12">
     </div>
 
-    <div id="paymentContainer">
-      <!-- Managed by js/payments.js and js/payfast-integration.js -->
+    <div style="margin-bottom:15px;">
+      <button type="button" class="checkout" id="btnCalculateDelivery" style="background:#2f7d52;padding:10px;font-size:13px;">Calculate Delivery Fee</button>
+      <div id="deliveryInfo" style="font-size:11px;color:var(--muted);margin-top:5px;"></div>
+    </div>
+
+    <div class="total-row" style="background:#f5f7f1;padding:10px;border-radius:8px;margin-bottom:15px;">
+      <span>Estimated Delivery Fee:</span>
+      <span id="chkDelivery">R0.00</span>
+    </div>
+
+    <div class="form-group">
+      <label>Payment Method</label>
+      <div style="display:flex;gap:15px;margin-top:5px;font-size:13px;">
+        <label><input type="radio" name="paymentMethod" value="payfast" checked> PayFast</label>
+        <label><input type="radio" name="paymentMethod" value="eft"> Direct EFT</label>
+      </div>
     </div>
 
     <div style="display:flex;gap:10px;margin-top:20px;">
-      <button class="checkout" id="completeOrderBtn" style="background:#123d2a;"><i class="fa-solid fa-lock"></i> Complete Payment with Payfast</button>
+      <button class="checkout" id="btnCompleteCheckout" style="background:#123d2a;"><i class="fa-solid fa-lock"></i> Complete Payment</button>
       <button class="checkout" style="background:#68756d;" onclick="closeCheckoutModal()">Cancel</button>
     </div>
   </div>
 </div>
+  
 
 <div class="toast" id="toast"></div>
 
