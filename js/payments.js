@@ -57,9 +57,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // ==========================================
             // YOUR PAYFAST CREDENTIALS & CONFIGURATION
-            // ==========================================
-            const payfastMerchantId = 'YOUR_MERCHANT_ID';   // <-- Replace with your PayFast Merchant ID
-            const payfastMerchantKey = 'YOUR_MERCHANT_KEY'; // <-- Replace with your PayFast Merchant Key
+           // ==========================================
+            const payfastMerchantId = '36692313';   // Your PayFast Merchant ID
+            const payfastMerchantKey = 'cmvr2h6hmum6e'; // Your PayFast Merchant Key
             
             // Use live PayFast URL (or sandbox.payfast.co.za for testing)
             const payfastUrl = 'https://www.payfast.co.za/eng/process';
