@@ -370,36 +370,6 @@ footer a{display:block;margin:7px 0}.copyright{border-top:1px solid rgba(255,255
   </div>
 </aside>
 
-<!-- Checkout Modal Container for external modules -->
-function proceedToCheckoutModal() {
-  if (!cart.length) {
-    toast("Your cart is empty");
-    return;
-  }
-
-  // Map equestrian cart items to standard format for checkout.html
-  const standardizedItems = cart.map(item => {
-    const p = products.find(y => y.id === item.id);
-    return {
-      name: p ? p.name : 'Equestrian Product',
-      price: p ? p.price * (1 + VAT) : 0,
-      qty: item.qty,
-      variant: item.variant || ''
-    };
-  });
-
-  let total = standardizedItems.reduce((acc, item) => acc + (item.price * item.qty), 0);
-  let totalCount = cart.reduce((acc, item) => acc + item.qty, 0);
-
-  // Save to standard keys used by the main checkout.html page
-  localStorage.setItem('nexpak_cart_items', JSON.stringify(standardizedItems));
-  localStorage.setItem('nexpak_cart_count', totalCount);
-  localStorage.setItem('nexpak_cart_total', total.toFixed(2));
-
-  // Redirect to main checkout page using correct relative path
-  window.location.href = '../../checkout.html';
-}
-  
 
 <div class="toast" id="toast"></div>
 
@@ -1125,7 +1095,7 @@ function proceedToCheckoutModal() {
   localStorage.setItem('nexpak_cart_total', total.toFixed(2));
 
   // Redirect to main checkout page
-  window.location.href = 'checkout.html';
+  window.location.href = '../../checkout.html';
 }
 
 function toast(msg) {
