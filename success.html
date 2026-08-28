@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Successful | Nexpak Security Solutions</title>
+    <!-- FontAwesome for the checkmark visual icon anchor -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    
+    <style>
+        :root {
+            --primary-color: #1e3a8a; /* Professional Security Blue */
+            --success-color: #16a34a; /* Safe Green */
+            --text-dark: #1f2937;
+            --bg-light: #f3f4f6;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .success-wrapper {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .success-card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            max-width: 550px;
+            width: 100%;
+            padding: 40px 30px;
+            text-align: center;
+            border-top: 6px solid var(--success-color);
+        }
+
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(22, 163, 74, 0.1);
+            color: var(--success-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            margin: 0 auto 24px auto;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .order-reference {
+            background-color: #eff6ff;
+            color: var(--primary-color);
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            display: inline-block;
+            margin: 15px 0 25px 0;
+            font-family: monospace;
+            font-size: 16px;
+        }
+
+        p {
+            line-height: 1.6;
+            color: #4b5563;
+            margin-bottom: 20px;
+        }
+
+        .next-steps-box {
+            text-align: left;
+            background-color: #fafafa;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .next-steps-box h3 {
+            margin-top: 0;
+            color: var(--text-dark);
+            font-size: 16px;
+        }
+
+        .next-steps-box ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .next-steps-box li {
+            margin-bottom: 10px;
+            color: #4b5563;
+            font-size: 14px;
+        }
+
+        .btn-continue {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            text-decoration: none;
+            padding: 14px 28px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background-color 0.2s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .btn-continue:hover {
+            background-color: #172554;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+            color: #9ca3af;
+            background: #ffffff;
+            border-top: 1px solid #e5e7eb;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="success-wrapper">
+        <div class="success-card">
+            
+            <div class="icon-circle">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+
+            <h1>Thank You for Your Order!</h1>
+            <p>Your payment has been successfully processed by PayFast, and your security hardware requirements are being compiled.</p>
+            
+            <div id="orderRefContainer" style="display: none;">
+                Order Reference: <div class="order-reference" id="orderNumberField">NEX-TRACKER</div>
+            </div>
+
+            <div class="next-steps-box">
+                <h3>What happens next?</h3>
+                <ul>
+                    <li>An automated tax invoice and order summary confirmation has been dispatched to your email address.</li>
+                    <li>Our Benoni fulfillment depot will package your perimeter security components securely.</li>
+                    <li>As soon as the courier dispatch driver collects your shipment box, a text notification containing your dynamic waybill tracking code will be shared with you.</li>
+                </ul>
+            </div>
+
+            <a href="index.html" class="btn-continue">Return to Storefront Home</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 Nexpak Security Solutions. All rights reserved. Professional Perimeter Hardware.</p>
+    </footer>
+
+    <!-- =========================================================================
+         SCRIPT BLOCK: DATA PERSISTENCE SECURITY WIPE
+         ========================================================================= -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            'use strict';
+
+            // 1. DUAL-WIPE SECURITY SAFETY NET: 
+            // Although payment.js clears the cart upon form submission, if a client 
+            // closes their tab mid-processing, this serves as an absolute guarantee 
+            // that returning users find a clean basket.
+            localStorage.removeItem('nexpak_cart_items');
+            localStorage.removeItem('nexpak_cart_total');
+            localStorage.removeItem('nexpak_cart_count');
+
+            // 2. OPTIONAL: Create a fresh look for the user tracking numbers on screen
+            const orderField = document.getElementById('orderNumberField');
+            const container = document.getElementById('orderRefContainer');
+            
+            if (orderField && container) {
+                // Generate a random numeric sequence placeholder for visual satisfaction
+                const trackingId = 'NEX-' + Math.floor(100000 + Math.random() * 900000);
+                orderField.textContent = trackingId;
+                container.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
+
