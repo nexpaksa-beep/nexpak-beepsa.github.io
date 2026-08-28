@@ -38,20 +38,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartTotal = parseFloat(localStorage.getItem('nexpak_cart_total')) || 0;
     const cartItems = JSON.parse(localStorage.getItem('nexpak_cart_items')) || [];
 
-    /**
+        /**
      * Loops through all cart items to extract and add up weights.
-     * Assumes your products have a .weight (in kg) key. Defaults to 1kg per item if missing.
+     * Natively handles numbers like 0.5. Defaults to 0.5kg per item if missing.
      */
     function calculateTotalCartWeight() {
         let totalWeight = 0;
+        
         cartItems.forEach(item => {
-            // Checks for 'weight' property. If your items don't have it yet, it acts as 1kg.
-            const itemWeight = parseFloat(item.weight) || 1.0; 
+            // 1. Read the raw weight property from your product object
+            let itemWeight = item.weight;
+
+            // 2. Safely parse it to a decimal number
+            if (typeof itemWeight === 'string') {
+                itemWeight = parseFloat(itemWeight);
+            }
+
+            // 3. Fallback check: If the item has no weight or it's invalid, 
+            // use 0.5kg as a safe baseline so you never undercharge for shipping.
+            if (itemWeight === undefined || itemWeight === null || isNaN(itemWeight) || itemWeight <= 0) {
+                itemWeight = 0.5; 
+            }
+
+            // 4. Multiply by item quantity and add to the total weight profile
             const quantity = parseInt(item.quantity) || 1;
             totalWeight += (itemWeight * quantity);
         });
+        
         return totalWeight;
     }
+    
 
     const cartWeight = calculateTotalCartWeight();
     console.log("Total computed cart weight:", cartWeight, "kg");
