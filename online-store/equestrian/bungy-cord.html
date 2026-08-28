@@ -3759,4 +3759,955 @@ button {
 }
 
 
-.
+.calculation-content small {
+
+    display: block;
+
+    margin-top: 12px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+}
+
+
+/* ==========================================================
+   EXPLANATION GRID
+========================================================== */
+
+.explanation-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+
+}
+
+
+.explanation-card {
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    padding: 25px;
+
+}
+
+
+.explanation-icon {
+
+    width: 45px;
+
+    height: 45px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 12px;
+
+    background: var(--light-green);
+
+    color: var(--green);
+
+}
+
+
+.explanation-card h3 {
+
+    color: var(--dark-green);
+
+    margin: 14px 0 8px;
+
+    font-size: 18px;
+
+}
+
+
+.explanation-card p {
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+}
+
+
+
+/* ==========================================================
+   COMPONENTS
+========================================================== */
+
+.components-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 16px;
+
+}
+
+
+.component-card {
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    padding: 23px;
+
+    box-shadow: var(--shadow);
+
+}
+
+
+.component-icon {
+
+    width: 45px;
+
+    height: 45px;
+
+    border-radius: 12px;
+
+    display: grid;
+
+    place-items: center;
+
+    background: var(--light-green);
+
+    color: var(--green);
+
+}
+
+
+.component-card h3 {
+
+    color: var(--dark-green);
+
+    font-size: 17px;
+
+    margin: 13px 0 7px;
+
+}
+
+
+.component-card p {
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+}
+
+
+
+/* ==========================================================
+   MAINTENANCE
+========================================================== */
+
+.maintenance-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 16px;
+
+}
+
+
+.maintenance-card {
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    padding: 23px;
+
+}
+
+
+.maintenance-number {
+
+    color: var(--green);
+
+    font-size: 12px;
+
+    font-weight: 900;
+
+}
+
+
+.maintenance-card h3 {
+
+    color: var(--dark-green);
+
+    margin: 10px 0 7px;
+
+    font-size: 17px;
+
+}
+
+
+.maintenance-card p {
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+}
+
+
+
+/* ==========================================================
+   BUYING GUIDE
+========================================================== */
+
+.buying-guide {
+
+    display: grid;
+
+    grid-template-columns: 70px 1fr;
+
+    gap: 24px;
+
+    background: var(--dark-green);
+
+    color: var(--white);
+
+    border-radius: var(--radius);
+
+    padding: 32px;
+
+}
+
+
+.buying-guide-icon {
+
+    width: 58px;
+
+    height: 58px;
+
+    border-radius: 15px;
+
+    background: rgba(255,255,255,.12);
+
+    display: grid;
+
+    place-items: center;
+
+    font-size: 22px;
+
+}
+
+
+.buying-guide h2 {
+
+    font-size: 27px;
+
+    margin: 5px 0 10px;
+
+}
+
+
+.buying-guide p {
+
+    color: #d8e9dd;
+
+    font-size: 14px;
+
+    max-width: 750px;
+
+}
+
+
+.buying-points {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px 25px;
+
+    margin-top: 17px;
+
+}
+
+
+.buying-points div {
+
+    color: #e4f1e8;
+
+    font-size: 12px;
+
+}
+
+
+.buying-points i {
+
+    color: #b9e18b;
+
+    margin-right: 5px;
+
+}
+
+
+
+/* ==========================================================
+   CHECKLIST
+========================================================== */
+
+.checklist {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 14px;
+
+}
+
+
+.checklist-item {
+
+    display: grid;
+
+    grid-template-columns: 48px 1fr;
+
+    gap: 14px;
+
+    align-items: start;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: 13px;
+
+    padding: 18px;
+
+}
+
+
+.check-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 11px;
+
+    background: var(--light-green);
+
+    color: var(--green);
+
+    display: grid;
+
+    place-items: center;
+
+}
+
+
+.checklist-item strong {
+
+    color: var(--dark-green);
+
+    display: block;
+
+    margin-bottom: 4px;
+
+    font-size: 14px;
+
+}
+
+
+.checklist-item p {
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+}
+
+
+
+/* ==========================================================
+   COMMON MISTAKES
+========================================================== */
+
+.mistakes-list {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 17px;
+
+}
+
+
+.mistake-card {
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    padding: 23px;
+
+    position: relative;
+
+}
+
+
+.mistake-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 50%;
+
+    background: #f9e6e3;
+
+    color: #b74d42;
+
+    display: grid;
+
+    place-items: center;
+
+}
+
+
+.mistake-card h3 {
+
+    color: var(--dark-green);
+
+    font-size: 17px;
+
+    margin: 13px 0 7px;
+
+}
+
+
+.mistake-card p {
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+}
+
+
+
+/* ==========================================================
+   FAQ
+========================================================== */
+
+.faq {
+
+    display: grid;
+
+    gap: 10px;
+
+}
+
+
+.faq details {
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+}
+
+
+.faq summary {
+
+    cursor: pointer;
+
+    list-style: none;
+
+    padding: 17px 20px;
+
+    color: var(--dark-green);
+
+    font-weight: 700;
+
+    font-size: 14px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+}
+
+
+.faq summary::-webkit-details-marker {
+
+    display: none;
+
+}
+
+
+.faq summary i {
+
+    color: var(--green);
+
+    transition: transform .2s;
+
+}
+
+
+.faq details[open] summary i {
+
+    transform: rotate(180deg);
+
+}
+
+
+.faq details p {
+
+    padding: 0 20px 18px;
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+}
+
+
+
+/* ==========================================================
+   RELATED PRODUCTS
+========================================================== */
+
+.related-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 16px;
+
+}
+
+
+.related-card {
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    padding: 23px;
+
+    transition: transform .2s, box-shadow .2s;
+
+}
+
+
+.related-card:hover {
+
+    transform: translateY(-4px);
+
+    box-shadow: var(--shadow);
+
+}
+
+
+.related-icon {
+
+    width: 45px;
+
+    height: 45px;
+
+    border-radius: 12px;
+
+    background: var(--light-green);
+
+    color: var(--green);
+
+    display: grid;
+
+    place-items: center;
+
+}
+
+
+.related-card h3 {
+
+    color: var(--dark-green);
+
+    font-size: 16px;
+
+    margin: 13px 0 7px;
+
+}
+
+
+.related-card p {
+
+    color: var(--muted);
+
+    font-size: 12px;
+
+    margin-bottom: 13px;
+
+}
+
+
+.related-card span {
+
+    color: var(--green);
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+}
+
+
+.related-card span i {
+
+    margin-left: 4px;
+
+}
+
+
+
+/* ==========================================================
+   FINAL CTA
+========================================================== */
+
+.final-cta {
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--green),
+            var(--dark-green)
+        );
+
+    color: var(--white);
+
+    padding: 65px 20px;
+
+    text-align: center;
+
+}
+
+
+.final-cta-inner {
+
+    max-width: 760px;
+
+    margin: auto;
+
+}
+
+
+.final-cta .label {
+
+    color: #b9e18b;
+
+}
+
+
+.final-cta h2 {
+
+    font-size: 36px;
+
+    line-height: 1.2;
+
+    margin-bottom: 12px;
+
+}
+
+
+.final-cta p {
+
+    color: #dcebe1;
+
+    font-size: 15px;
+
+    margin-bottom: 25px;
+
+}
+
+
+.cta-buttons {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+}
+
+
+.cta-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 13px 20px;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+}
+
+
+.cta-button.primary {
+
+    background: #25d366;
+
+    color: white;
+
+}
+
+
+.cta-button.secondary {
+
+    background: rgba(255,255,255,.1);
+
+    border: 1px solid rgba(255,255,255,.25);
+
+    color: white;
+
+}
+
+
+
+/* ==========================================================
+   FOOTER
+========================================================== */
+
+footer {
+
+    background: var(--deep-green);
+
+    color: #b9cfc0;
+
+    text-align: center;
+
+    padding: 28px 20px;
+
+    font-size: 12px;
+
+    border-top: 1px solid rgba(255,255,255,.08);
+
+}
+
+
+footer p {
+
+    margin: 4px 0;
+
+}
+
+
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media (max-width: 1000px) {
+
+    .application-grid,
+    .components-grid,
+    .maintenance-grid,
+    .related-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+
+    .feature-grid,
+    .explanation-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .info-section {
+
+        padding: 45px 0;
+
+    }
+
+
+    .section-heading h2 {
+
+        font-size: 27px;
+
+    }
+
+
+    .product-overview,
+    .feature-grid,
+    .explanation-grid,
+    .application-grid,
+    .components-grid,
+    .maintenance-grid,
+    .checklist,
+    .mistakes-list,
+    .related-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .calculation-card,
+    .buying-guide,
+    .safety-section {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .calculation-highlight {
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .calculation-arrow {
+
+        transform:
+            rotate(90deg);
+
+    }
+
+
+    .highlight-box {
+
+        flex-direction:
+            column;
+
+        align-items:
+            flex-start;
+
+    }
+
+
+    .highlight-box span {
+
+        text-align:
+            left;
+
+    }
+
+
+    .final-cta h2 {
+
+        font-size:
+            28px;
+
+    }
+
+}
+
+
+@media (max-width: 450px) {
+
+    .info-section {
+
+        width:
+            94%;
+
+    }
+
+
+    .product-overview-card,
+    .feature-card,
+    .component-card,
+    .maintenance-card,
+    .mistake-card {
+
+        padding:
+            19px;
+
+    }
+
+
+    .calculation-card,
+    .buying-guide,
+    .safety-section {
+
+        padding:
+            22px;
+
+    }
+
+}
+
+</style>
+
+
+<!-- ==========================================================
+     FOOTER
+========================================================== -->
+
+<footer>
+
+    <p>
+        © 2026 Nexpak Security Solutions.
+        All rights reserved.
+    </p>
+
+    <p>
+        Professional Equestrian & Horse Fencing Solutions
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>
