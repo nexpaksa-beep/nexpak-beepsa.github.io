@@ -618,7 +618,9 @@
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         let cartCount = parseInt(localStorage.getItem('nexpak_cart_count')) || 0;
-        let cartSubtotal = parseFloat(localStorage.getItem('nexpak_cart_subtotal')) || 0;
+        
+        // MATHEMATICAL LOCK: Use unified naming keys across your store and checkout
+        let cartSubtotal = parseFloat(localStorage.getItem('nexpak_cart_total')) || 0; 
         let totalWeight = parseFloat(localStorage.getItem('nexpak_cart_weight')) || 0;
         let cartItems = JSON.parse(localStorage.getItem('nexpak_cart_items')) || [];
 
@@ -642,8 +644,12 @@
                 navSpans[1].textContent = cartCount;
             }
             
-            const countDisplay = document.getElementById('cart-count-display');
-            const subtotalDisplay = document.getElementById('cart-subtotal-display');
+            // Sync navigation counter hook if matching your upper layout structure
+            const navCountAlt = document.getElementById('cart-count-nav');
+            if (navCountAlt) navCountAlt.textContent = cartCount;
+
+            const countDisplay = document.getElementById('cart-count-display') || document.getElementById('cart-count-bottom');
+            const subtotalDisplay = document.getElementById('cart-subtotal-display') || document.getElementById('cart-total-bottom');
             const weightDisplay = document.getElementById('cart-weight-display');
             const deliveryDisplay = document.getElementById('delivery-fee-display');
             const totalDisplay = document.getElementById('cart-total-display');
@@ -652,12 +658,12 @@
             const grandTotal = cartSubtotal + deliveryFee;
 
             if (countDisplay) countDisplay.textContent = cartCount;
-            if (subtotalDisplay) subtotalDisplay.textContent = 'R' + cartSubtotal.toLocaleString('en-ZA', {minimumFractionDigits: 2});
+            if (subtotalDisplay) subtotalDisplay.textContent = 'R ' + cartSubtotal.toLocaleString('en-ZA', {minimumFractionDigits: 2, maximumFractionDigits: 2});
             if (weightDisplay) weightDisplay.textContent = totalWeight.toFixed(1) + ' kg';
             if (deliveryDisplay) {
-                deliveryDisplay.textContent = deliveryFee === 0 ? 'FREE' : 'R' + deliveryFee.toLocaleString('en-ZA', {minimumFractionDigits: 2});
+                deliveryDisplay.textContent = deliveryFee === 0 ? 'FREE' : 'R ' + deliveryFee.toLocaleString('en-ZA', {minimumFractionDigits: 2, maximumFractionDigits: 2});
             }
-            if (totalDisplay) totalDisplay.textContent = 'R' + grandTotal.toLocaleString('en-ZA', {minimumFractionDigits: 2});
+            if (totalDisplay) totalDisplay.textContent = 'R ' + grandTotal.toLocaleString('en-ZA', {minimumFractionDigits: 2, maximumFractionDigits: 2});
         }
 
         updateCartUI();
@@ -703,9 +709,9 @@
                 });
             }
 
-            const btnCart = card.querySelector('.custom-app-btn:not(.btn-info):not(.btn-quote)');
+            const btnCart = card.querySelector('.custom-app-btn:not(.btn-info):not(.btn-quote)') || card.querySelector('.btn-add-to-cart');
             const btnInfo = card.querySelector('.btn-info');
-            const btnQuote = card.querySelector('.btn-quote');
+            const btnQuote = card.querySelector('.btn-quote') || card.querySelector('.btn-add-to-quote');
             const productName = titleElement?.textContent || 'Security Item';
 
             if (btnCart) {
@@ -713,29 +719,37 @@
                     cartCount++;
                     
                     let numericPrice = 0;
-                    let itemWeight = 2.0; // default fallback weight
+                    let itemWeight = 2.0; 
+                    let variantLabel = '';
 
                     if (select) {
                         const selectedOption = select.options[select.selectedIndex];
                         numericPrice = parseFloat(selectedOption.getAttribute('data-price')) || 0;
                         itemWeight = parseFloat(selectedOption.getAttribute('data-weight')) || 2.0;
+                        variantLabel = ' (' + selectedOption.textContent.split(' - ')[0] + ')';
                     } else {
-                        numericPrice = parseFloat(card.getAttribute('data-single-price')) || 0;
-                        itemWeight = parseFloat(card.getAttribute('data-single-weight')) || 2.0;
+                        // FIXED FALLBACKS: Standardizes matching both attribute styles gracefully
+                        numericPrice = parseFloat(card.getAttribute('data-price')) || parseFloat(card.getAttribute('data-single-price')) || 0;
+                        itemWeight = parseFloat(card.getAttribute('data-weight')) || parseFloat(card.getAttribute('data-single-weight')) || 2.0;
                     }
 
                     cartSubtotal += numericPrice;
                     totalWeight += itemWeight;
 
-                    cartItems.push({ name: productName, price: numericPrice, weight: itemWeight });
+                    cartItems.push({ 
+                        name: productName + variantLabel, 
+                        price: numericPrice, 
+                        weight: itemWeight,
+                        quantity: 1 
+                    });
 
                     localStorage.setItem('nexpak_cart_count', cartCount);
-                    localStorage.setItem('nexpak_cart_subtotal', cartSubtotal);
+                    localStorage.setItem('nexpak_cart_total', cartSubtotal); // Fixed: Write matching storage variable name
                     localStorage.setItem('nexpak_cart_weight', totalWeight);
                     localStorage.setItem('nexpak_cart_items', JSON.stringify(cartItems));
 
                     updateCartUI();
-                    alert(`${productName} added to cart!`);
+                    alert(`${productName}${variantLabel} added to cart!`);
                 });
             }
 
@@ -753,12 +767,12 @@
         });
 
         // Clear Cart Functionality
-        const clearCartBtn = document.getElementById('clear-cart-btn');
+        const clearCartBtn = document.getElementById('clear-cart-btn') || document.getElementById('btnClearCart');
         if (clearCartBtn) {
             clearCartBtn.addEventListener('click', () => {
                 if (confirm('Are you sure you want to clear your cart?')) {
                     localStorage.removeItem('nexpak_cart_count');
-                    localStorage.removeItem('nexpak_cart_subtotal');
+                    localStorage.removeItem('nexpak_cart_total'); // Clean matching variables
                     localStorage.removeItem('nexpak_cart_weight');
                     localStorage.removeItem('nexpak_cart_items');
 
@@ -776,4 +790,3 @@
     </script>
 </body>
 </html>
-
