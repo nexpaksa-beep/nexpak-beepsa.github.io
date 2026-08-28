@@ -13,6 +13,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const customerPhone = document.getElementById('customerPhone')?.value.trim();
             const shippingAddress = document.getElementById('shippingAddress')?.value.trim();
             const paymentMethodInput = document.querySelector('input[name="paymentMethod"]:checked');
+            
+            // DELIVERY CHECK HOOK: Ensure shipping costs have been actively updated
+            const deliveryEl = document.getElementById('chkDelivery');
+            const deliveryText = deliveryEl ? deliveryEl.textContent.trim() : '';
+            
+            // If the element says R 0.00 or is empty, force them to compute distance first
+            if (deliveryText === 'R 0.00' || deliveryText === '' || deliveryText === 'R 0') {
+                alert('Please calculate your delivery charges using your address/distance before completing your order.');
+                document.getElementById('btnCalculateDelivery')?.focus();
+                return;
+            }
 
             if (!customerName || !customerEmail || !customerPhone || !shippingAddress) {
                 alert('Please fill in all required customer and delivery details before proceeding.');
@@ -53,15 +64,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Gather cart items for description
             const cartItems = JSON.parse(localStorage.getItem('nexpak_cart_items')) || [];
-            const itemNames = cartItems.map(item => item.name).join(', ') || 'Nexpak Security Order';
+            const itemNames = cartItems.map(item => item.name).join(', ') || 'Security Hardware';
+            
+            // SAFE TRUNCATION HOOK: PayFast max character limit for item_name is 100
+            let safeItemDescription = 'Nexpak Order: ' + itemNames;
+            if (safeItemDescription.length > 95) {
+                safeItemDescription = safeItemDescription.substring(0, 92) + '...';
+            }
 
             // ==========================================
             // YOUR PAYFAST CREDENTIALS & CONFIGURATION
-           // ==========================================
-            const payfastMerchantId = '36692313';   // Your PayFast Merchant ID
-            const payfastMerchantKey = 'cmvr2h6hmum6e'; // Your PayFast Merchant Key
+            // ==========================================
+            // FIXED: Removed the superscript zeros causing syntax anomalies
+            const payfastMerchantId = '36692313';   // Replace with your actual Live PayFast Merchant ID
+            const payfastMerchantKey = 'cmvr2h6hmum6e'; // Replace with your actual Live PayFast Merchant Key
             
-            // Use live PayFast URL (or sandbox.payfast.co.za for testing)
+            // Use live PayFast URL (or 'https://sandbox.payfast.co.za/eng/process' for staging environments)
             const payfastUrl = 'https://www.payfast.co.za/eng/process';
 
             // Build dynamic form to securely submit data to PayFast
@@ -72,8 +90,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const paymentData = {
                 merchant_id: payfastMerchantId,
                 merchant_key: payfastMerchantKey,
-                return_url: window.location.origin + '/success.html', // Optional success page link
-                cancel_url: window.location.origin + '/checkout.html',
+                return_url: window.location.origin + '/success.html', // Redirect destination on successful clear
+                cancel_url: window.location.origin + '/checkout.html', // Redirect destination on back out
                 
                 // Customer details
                 name_first: firstName,
@@ -83,8 +101,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Transaction details
                 m_payment_id: 'NEX-' + Date.now(),
-                amount: numericTotal.toFixed(2),
-                item_name: 'Nexpak Order: ' + itemNames
+                amount: numericTotal.toFixed(2), // PayFast handles standard decimal string values perfectly
+                item_name: safeItemDescription
             };
 
             // Append all fields to the hidden form
@@ -98,10 +116,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
+            // PayFast requires clear local storage *before* leaving if no external webhook engine is built
+            // Unlocks empty state upon return redirect
+            localStorage.removeItem('nexpak_cart_count');
+            localStorage.removeItem('nexpak_cart_total');
+            localStorage.removeItem('nexpak_cart_items');
+
             // Append to body and submit to PayFast
             document.body.appendChild(form);
             form.submit();
         });
     }
 });
-
+                        
