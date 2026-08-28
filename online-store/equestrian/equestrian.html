@@ -1126,14 +1126,28 @@ function proceedToCheckoutModal() {
     toast("Your cart is empty");
     return;
   }
-  closeCart();
-  currentOrderNumber = "NXK-" + Math.floor(100000 + Math.random() * 900000);
-  document.getElementById("generatedOrderNum").textContent = currentOrderNumber;
-  document.getElementById("checkoutModal").classList.add("show");
-}
 
-function closeCheckoutModal() {
-  document.getElementById("checkoutModal").classList.remove("show");
+  // Map equestrian cart items to standard format for checkout.html
+  const standardizedItems = cart.map(item => {
+    const p = products.find(y => y.id === item.id);
+    return {
+      name: p ? p.name : 'Equestrian Product',
+      price: p ? p.price * (1 + VAT) : 0,
+      qty: item.qty,
+      variant: item.variant || ''
+    };
+  });
+
+  let total = standardizedItems.reduce((acc, item) => acc + (item.price * item.qty), 0);
+  let totalCount = cart.reduce((acc, item) => acc + item.qty, 0);
+
+  // Save to standard keys used by the main checkout.html page
+  localStorage.setItem('nexpak_cart_items', JSON.stringify(standardizedItems));
+  localStorage.setItem('nexpak_cart_count', totalCount);
+  localStorage.setItem('nexpak_cart_total', total.toFixed(2));
+
+  // Redirect to main checkout page
+  window.location.href = 'checkout.html';
 }
 
 function toast(msg) {
@@ -1157,5 +1171,4 @@ renderCart();
 <script src="../../js/chatbot.js"></script>
 <script src="../../js/seo-schema-injector.js"></script>
 </body>
-        </html>
-      
+</html>
