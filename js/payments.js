@@ -73,15 +73,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // ==========================================
-            // YOUR PAYFAST CREDENTIALS & CONFIGURATION
-            // ==========================================
-            // FIXED: Removed the superscript zeros causing syntax anomalies
-            const payfastMerchantId = '36692313';   // Replace with your actual Live PayFast Merchant ID
-            const payfastMerchantKey = 'cmvr2h6hmum6e'; // Replace with your actual Live PayFast Merchant Key
-            
-            // Use live PayFast URL (or 'https://sandbox.payfast.co.za/eng/process' for staging environments)
-            const payfastUrl = 'https://www.payfast.co.za/eng/process';
+// SANDBOX CONFIGURATION (TEMPORARY FOR TESTING)
+// ==========================================
+const payfastMerchantId = '10004002';   // Universal test Merchant ID
+const payfastMerchantKey = 'q1cd2rdny4a53'; // Universal test Merchant Key
 
+// CHANGE THIS: Route the payment to sandbox instead of the live production system
+const payfastUrl = 'https://payfast.co.za'; 
+            
             // Build dynamic form to securely submit data to PayFast
             const form = document.createElement('form');
             form.method = 'POST';
