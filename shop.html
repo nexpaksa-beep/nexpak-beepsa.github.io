@@ -2519,37 +2519,105 @@
 
     <script>
 
-    /* ==========================================================
-       PRODUCT DATABASE
+        /* ==========================================================
+       PRODUCT DATABASE (WITH VARIANT-SPECIFIC PRICING)
        ========================================================== */
 
     const productDb = {
 
         electricFence: [
-            { id: 'ef_tube', name: 'Square Tube', variants: ['6 line', '8 line', '10 line', '12 line'], price: 150, weight: 2 },
-            { id: 'ef_bracket', name: 'Bracket Style', variants: ['Straight', 'Angled'], price: 0, weight: 0 },
-            { id: 'ef_color', name: 'Color', variants: ['Black', 'White'], price: 0, weight: 0 },
+            { 
+                id: 'ef_tube', 
+                name: 'Square Tube', 
+                variants: [
+                    { name: '6 line', price: 130, weight: 1.8 },
+                    { name: '8 line', price: 150, weight: 2.0 },
+                    { name: '10 line', price: 175, weight: 2.3 },
+                    { name: '12 line', price: 200, weight: 2.6 }
+                ], 
+                weight: 2 
+            },
+            { id: 'ef_bracket', name: 'Bracket Style', variants: [{ name: 'Straight', price: 0 }, { name: 'Angled', price: 0 }], price: 0, weight: 0 },
+            { id: 'ef_color', name: 'Color', variants: [{ name: 'Black', price: 0 }, { name: 'White', price: 0 }], price: 0, weight: 0 },
             { id: 'ef_anchors', name: 'Nail in anchors (8x80mm 100s)', price: 80, weight: 0.5 },
             { id: 'ef_stays', name: 'Stays 750mm', price: 60, weight: 1 },
             { id: 'ef_sleeve', name: 'Stay sleeve', price: 10, weight: 0.1 },
             { id: 'ef_tensioner', name: 'Tensioners', price: 15, weight: 0.1 },
             { id: 'ef_shook', name: 'S-hook', price: 5, weight: 0.05 },
-            { id: 'ef_ferrules', name: 'Ferrules 6mm (100s)', variants: ['Aluminium', 'Solid'], price: 45, weight: 0.2 },
-            { id: 'ef_wire', name: 'Wire', variants: ['Braided Galvanised 680m', 'Braided Aluminium 1000m'], price: 400, weight: 5 },
+            { 
+                id: 'ef_ferrules', 
+                name: 'Ferrules 6mm (100s)', 
+                variants: [
+                    { name: 'Aluminium', price: 45, weight: 0.2 },
+                    { name: 'Solid', price: 65, weight: 0.3 }
+                ], 
+                price: 45, weight: 0.2 
+            },
+            { 
+                id: 'ef_wire', 
+                name: 'Wire', 
+                variants: [
+                    { name: 'Braided Galvanised 680m', price: 400, weight: 5 },
+                    { name: 'Braided Aluminium 1000m', price: 650, weight: 4 }
+                ], 
+                price: 400, weight: 5 
+            },
             { id: 'ef_spikes', name: 'Earth spikes', price: 90, weight: 1.5 },
             { id: 'ef_signs', name: 'Warning signs', price: 15, weight: 0.1 },
-            { id: 'ef_htcable', name: 'HT Cable', variants: ['50m', '100m'], price: 200, weight: 2 },
-            { id: 'ef_nitelight', name: 'Nite light', variants: ['Red', 'Blue', 'Green'], price: 120, weight: 0.2 },
-            { id: 'ef_gatecontact', name: 'Gate contact', variants: ['Single', 'Double'], price: 180, weight: 0.5 },
+            { 
+                id: 'ef_htcable', 
+                name: 'HT Cable', 
+                variants: [
+                    { name: '50m', price: 200, weight: 2 },
+                    { name: '100m', price: 380, weight: 3.8 }
+                ], 
+                price: 200, weight: 2 
+            },
+            { 
+                id: 'ef_nitelight', 
+                name: 'Nite light', 
+                variants: [
+                    { name: 'Red', price: 120, weight: 0.2 },
+                    { name: 'Blue', price: 120, weight: 0.2 },
+                    { name: 'Green', price: 120, weight: 0.2 }
+                ], 
+                price: 120, weight: 0.2 
+            },
+            { 
+                id: 'ef_gatecontact', 
+                name: 'Gate contact', 
+                variants: [
+                    { name: 'Single', price: 180, weight: 0.5 },
+                    { name: 'Double', price: 280, weight: 0.8 }
+                ], 
+                price: 180, weight: 0.5 
+            },
             { id: 'ef_lugs', name: 'Lugs 6 x 35mm', price: 5, weight: 0.05 },
-            { id: 'ef_energizer', name: 'Energizer', variants: ['4 Joule', '8 Joule'], price: 1500, weight: 3 },
+            { 
+                id: 'ef_energizer', 
+                name: 'Energizer', 
+                variants: [
+                    { name: '4 Joule', price: 1500, weight: 3 },
+                    { name: '8 Joule', price: 2600, weight: 4.5 }
+                ], 
+                price: 1500, weight: 3 
+            },
             { id: 'ef_siren', name: 'Siren', price: 150, weight: 0.8 },
             { id: 'ef_strobe', name: 'Strobe', price: 85, weight: 0.3 },
             { id: 'ef_divertor', name: 'Lightning divertor', price: 110, weight: 0.4 }
         ],
 
         roboguard: [
-            { id: 'rg_beam', name: 'Roboguard Beam', variants: ['Black', 'Green', 'White'], price: 2500, weight: 1.5 },
+            { 
+                id: 'rg_beam', 
+                name: 'Roboguard Beam', 
+                variants: [
+                    { name: 'Black', price: 2500, weight: 1.5 },
+                    { name: 'Green', price: 2500, weight: 1.5 },
+                    { name: 'White', price: 2500, weight: 1.5 }
+                ], 
+                price: 2500, weight: 1.5 
+            },
             { id: 'rg_hq', name: 'HQ Handheld', price: 1200, weight: 0.5 },
             { id: 'rg_powerpack', name: 'Powerpack', price: 800, weight: 1 },
             { id: 'rg_remote', name: '4 Button Remote', price: 150, weight: 0.1 },
@@ -2574,20 +2642,70 @@
         ],
 
         cctv: [
-            { id: 'cctv_sys', name: 'System Type', variants: ['IP System', 'HD System'], price: 0, weight: 0 },
-            { id: 'cctv_dvr', name: 'DVR', variants: ['8 Channel', '16 Channel', '32 Channel'], price: 1500, weight: 2 },
-            { id: 'cctv_nvr', name: 'NVR', variants: ['8 Channel', '16 Channel'], price: 2000, weight: 2 },
-            { id: 'cctv_hdd', name: 'Hard Drive', variants: ['1TB', '2TB', '4TB'], price: 1000, weight: 0.5 },
-            { id: 'cctv_poe', name: 'Power/PoE', variants: ['8 Way', '16 Way', '9 Way PSU'], price: 600, weight: 1 },
-            { id: 'cctv_connector', name: 'Connectors', variants: ['RJ45', 'BNC'], price: 5, weight: 0.01 },
-            { id: 'cctv_boots', name: 'Accessories', variants: ['DC Leads', 'RJ45 Boots'], price: 10, weight: 0.05 },
-            { id: 'cctv_cam', name: 'Cameras', variants: ['IP Camera', 'HD Camera'], price: 600, weight: 0.4 },
-            { id: 'cctv_cable', name: 'Cable (100m)', variants: ['Cat 5', 'Poax'], price: 450, weight: 3 },
+            { id: 'cctv_sys', name: 'System Type', variants: [{ name: 'IP System', price: 0 }, { name: 'HD System', price: 0 }], price: 0, weight: 0 },
+            { 
+                id: 'cctv_dvr', 
+                name: 'DVR', 
+                variants: [
+                    { name: '8 Channel', price: 1500, weight: 2 },
+                    { name: '16 Channel', price: 2400, weight: 2.5 },
+                    { name: '32 Channel', price: 4200, weight: 3.5 }
+                ], 
+                price: 1500, weight: 2 
+            },
+            { 
+                id: 'cctv_nvr', 
+                name: 'NVR', 
+                variants: [
+                    { name: '8 Channel', price: 2000, weight: 2 },
+                    { name: '16 Channel', price: 3200, weight: 2.5 }
+                ], 
+                price: 2000, weight: 2 
+            },
+            { 
+                id: 'cctv_hdd', 
+                name: 'Hard Drive', 
+                variants: [
+                    { name: '1TB', price: 1000, weight: 0.5 },
+                    { name: '2TB', price: 1500, weight: 0.5 },
+                    { name: '4TB', price: 2600, weight: 0.6 }
+                ], 
+                price: 1000, weight: 0.5 
+            },
+            { 
+                id: 'cctv_poe', 
+                name: 'Power/PoE', 
+                variants: [
+                    { name: '8 Way', price: 600, weight: 1 },
+                    { name: '16 Way', price: 950, weight: 1.5 },
+                    { name: '9 Way PSU', price: 450, weight: 0.8 }
+                ], 
+                price: 600, weight: 1 
+            },
+            { id: 'cctv_connector', name: 'Connectors', variants: [{ name: 'RJ45', price: 5 }, { name: 'BNC', price: 6 }], price: 5, weight: 0.01 },
+            { id: 'cctv_boots', name: 'Accessories', variants: [{ name: 'DC Leads', price: 10 }, { name: 'RJ45 Boots', price: 3 }], price: 10, weight: 0.05 },
+            { 
+                id: 'cctv_cam', 
+                name: 'Cameras', 
+                variants: [
+                    { name: 'IP Camera', price: 800, weight: 0.4 },
+                    { name: 'HD Camera', price: 600, weight: 0.4 }
+                ], 
+                price: 600, weight: 0.4 
+            },
+            { 
+                id: 'cctv_cable', 
+                name: 'Cable (100m)', 
+                variants: [
+                    { name: 'Cat 5', price: 450, weight: 3 },
+                    { name: 'Poax', price: 550, weight: 3.5 }
+                ], 
+                price: 450, weight: 3 
+            },
             { id: 'cctv_enclosure', name: '100x100 Enclosure', price: 45, weight: 0.1 }
         ]
-
     };
-
+        
 
     /* ==========================================================
        STATE & MARKERS
