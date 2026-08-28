@@ -79,13 +79,13 @@ document.addEventListener('DOMContentLoaded', () => {
             // --- MODE A: TESTING MODE (Active Now) ---
             const payfastMerchantId = '10004002';   // Universal test Merchant ID
             const payfastMerchantKey = 'q1cd2rdny4a53'; // Universal test Merchant Key
-            const payfastUrl = 'https://payfast.co.za'; // FIXED: Proper Sandbox URL
+            const payfastUrl = 'https://sandbox.payfast.co.za/eng/process'; // FIXED: Proper Sandbox processing endpoint
             
             /* 
-            // --- MODE B: LIVE PRODUCTION MODE (Uncomment this and comment out Mode A to take real money) ---
+            // --- MODE B: LIVE PRODUCTION MODE (Swap to this when ready to take real orders) ---
             const payfastMerchantId = 'YOUR_LIVE_ID';   
             const payfastMerchantKey = 'YOUR_LIVE_KEY'; 
-            const payfastUrl = 'https://payfast.co.za'; 
+            const payfastUrl = 'https://www.payfast.co.za/eng/process'; // FIXED: Proper Live processing endpoint
             */
             
             // Build dynamic form to securely submit data to PayFast
@@ -133,4 +133,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-                                             
