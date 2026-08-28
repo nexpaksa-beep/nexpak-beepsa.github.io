@@ -2902,15 +2902,32 @@
        PROCEED TO CHECKOUT
        ========================================================== */
 
-    function proceedToCheckout() {
+        function proceedToCheckout() {
         if (!Array.isArray(cart) || cart.length === 0) {
             alert('Your cart is empty.');
             return;
         }
 
+        let totalItemsCount = 0;
+        let subtotalAmt = 0;
+
+        cart.forEach(item => {
+            totalItemsCount += Number(item.qty) || 0;
+            subtotalAmt += (Number(item.price) || 0) * (Number(item.qty) || 0);
+        });
+
+        const vatAmt = subtotalAmt * 0.15;
+        const grandTotal = subtotalAmt + vatAmt;
+
+        // Save data across all expected localStorage keys for checkout compatibility
         localStorage.setItem('nexpak_cart', JSON.stringify(cart));
+        localStorage.setItem('nexpak_cart_items', JSON.stringify(cart));
+        localStorage.setItem('nexpak_cart_count', totalItemsCount);
+        localStorage.setItem('nexpak_cart_total', grandTotal.toFixed(2));
+
         window.location.href = 'checkout.html';
-    }
+        }
+             
 
 
     /* ==========================================================
