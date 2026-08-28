@@ -4,11 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // =========================================================================
     // 1. CONFIGURATION & DOM ELEMENTS
     // =========================================================================
-    const BASE_BOOKING_FEE = 35.00;     
-    const BASE_WEIGHT_LIMIT = 2.0;       
-    const PER_KG_EXCESS_RATE = 4.50;     
-    const FUEL_BUFFER_MULTIPLIER = 1.15; 
+    const BASE_BOOKING_FEE = 35.00;     // Base dispatch fee
+    const BASE_WEIGHT_LIMIT = 2.0;       // Max weight included in base price (kg)
+    const PER_KG_EXCESS_RATE = 4.50;     // Cost per kg over the base limit
+    const FUEL_BUFFER_MULTIPLIER = 1.15; // 15% surcharge protection (Fuel/Tolls/VAT)
 
+    // Estimated distance map from Benoni (km) for common areas
     const areaDistanceMap = {
         'benoni': 5, 'brakpan': 10, 'boksburg': 12, 'springs': 15, 'kempton park': 15,
         'edenvale': 22, 'germiston': 25, 'bedfordview': 28, 'johannesburg': 35, 'jhb': 35,
@@ -38,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartTotal = parseFloat(localStorage.getItem('nexpak_cart_total')) || 0;
     const cartItems = JSON.parse(localStorage.getItem('nexpak_cart_items')) || [];
 
-        /**
+    /**
      * Loops through all cart items to extract and add up weights.
      * Natively handles numbers like 0.5. Defaults to 0.5kg per item if missing.
      */
@@ -67,7 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         return totalWeight;
     }
-    
 
     const cartWeight = calculateTotalCartWeight();
     console.log("Total computed cart weight:", cartWeight, "kg");
@@ -186,4 +186,4 @@ document.addEventListener('DOMContentLoaded', () => {
     // Run initial financial calculation on page load (Delivery starts at R0.00)
     updateFinancialSummary();
 });
-       
+                
