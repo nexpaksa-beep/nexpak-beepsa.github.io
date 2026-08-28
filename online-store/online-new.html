@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexpak Security Solutions | Online Store</title>
+    <style>
+        :root {
+            --primary-blue: #040e1b;
+            --accent-gold: #e2b114;
+            --text-dark: #222222;
+            --border-color: #cbd5e1;
+        }
+        body { 
+            font-family: 'Segoe UI', Arial, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            color: var(--text-dark); 
+            background-color: #2b1f1a;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='30' viewBox='0 0 60 30'%3E%3Crect width='60' height='30' fill='%2334241d'/%3E%3Cpath d='M0 0h60v2H0zM0 15h60v2H0zM30 2h2v13h-2zM0 17h2v13H0z' fill='%231f1410'/%3E%3C/svg%3E");
+        }
+        header { background-color: var(--primary-blue); color: #fff; padding: 15px 25px; border-bottom: 2px solid var(--accent-gold); }
+        .header-main { display: flex; justify-content: space-between; align-items: center; }
+        .branding-sub { font-size: 11px; letter-spacing: 2px; color: #94a3b8; margin-top: 3px; text-transform: uppercase; }
+        .meta-nav { font-size: 13px; display: flex; gap: 20px; align-items: center; }
+        .meta-nav span { font-weight: bold; color: var(--accent-gold); }
+
+        /* Dropdown Menu Styling */
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-btn { background-color: var(--accent-gold); color: var(--primary-blue); border: none; padding: 8px 14px; font-weight: bold; border-radius: 4px; cursor: pointer; font-size: 13px; text-transform: uppercase; }
+        .dropdown-btn:hover { background-color: #cca012; }
+        .dropdown-content { display: none; position: absolute; background-color: #fff; min-width: 150px; box-shadow: 0px 8px 16px rgba(0,0,0,0.3); z-index: 100; border-radius: 4px; overflow: hidden; top: 100%; left: 0; margin-top: 6px; }
+        .dropdown-content a { color: var(--primary-blue); padding: 10px 15px; text-decoration: none; display: block; font-size: 13px; font-weight: 600; }
+        .dropdown-content a:hover { background-color: #f1f5f9; }
+        .dropdown:hover .dropdown-content { display: block; }
+
+        .hero-banner { background: linear-gradient(rgba(4, 14, 27, 0.92), rgba(4, 14, 27, 0.92)), url('../images/hero-bg.jpg') no-repeat center/cover; color: #fff; padding: 55px 20px; text-align: center; border-bottom: 4px solid var(--accent-gold); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 30px; }
+        .store-section-title { color: #fff; background: var(--primary-blue); border-left: 6px solid var(--accent-gold); padding: 10px 15px; margin: 45px 0 25px 0; font-size: 22px; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        
+        .app-product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 30px; }
+        
+        .app-product-card { 
+            background: #ffffff; 
+            border: 16px solid #5c2c16;
+            border-image: linear-gradient(135deg, #7a3c1c 0%, #3a1a0a 100%) 1;
+            box-shadow: inset 0 0 25px rgba(0,0,0,0.5), 0 12px 30px rgba(0,0,0,0.4);
+            border-radius: 6px; 
+            padding: 18px; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+            position: relative;
+        }
+        .app-product-card img { width: 100%; height: 180px; object-fit: contain; margin-bottom: 12px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 5px; }
+        .app-product-card .tag { font-size: 11px; text-transform: uppercase; font-weight: bold; color: #64748b; margin-bottom: 4px; }
+        .app-product-card h3 { margin: 5px 0; font-size: 17px; color: var(--primary-blue); }
+        .app-product-card p { font-size: 13px; color: #475569; margin: 0 0 12px 0; line-height: 1.4; }
+        
+        .variant-selector { width: 100%; padding: 9px; margin-bottom: 12px; border: 1px solid var(--border-color); border-radius: 4px; font-size: 13px; color: var(--text-dark); background-color: #f8fafc; font-weight: 500; }
+        
+        .product-price-tag {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--primary-blue);
+            background: #f1f5f9;
+            border: 1px solid var(--border-color);
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            margin: 10px 0 15px 0;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
+        }
+
+        .app-product-card .button-group { display: flex; gap: 6px; margin-top: auto; }
+        
+        .custom-app-btn { flex: 1; background-color: var(--accent-gold); color: var(--primary-blue); padding: 10px 6px; border: none; font-weight: bold; border-radius: 4px; cursor: pointer; text-transform: uppercase; font-size: 10px; letter-spacing: 0.5px; text-align: center; transition: background-color 0.2s; }
+        .custom-app-btn:hover { background-color: #cca012; }
+        .btn-info { background-color: #e2e8f0; color: var(--primary-blue); border: 1px solid var(--border-color); }
+        .btn-info:hover { background-color: #cbd5e1; }
+        .btn-quote { background-color: var(--primary-blue); color: white; }
+        .btn-quote:hover { background-color: #0b2341; }
+        
+        .app-checkout-container { background: #fff; border: 2px solid var(--border-color); border-radius: 8px; padding: 30px; margin-top: 50px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        .app-summary-box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 20px; border-radius: 6px; margin: 20px 0; }
+        .app-summary-line { display: flex; justify-content: space-between; padding: 6px 0; font-size: 14px; }
+        .app-summary-total { font-size: 20px; font-weight: bold; color: var(--primary-blue); border-top: 2px dashed #cbd5e1; margin-top: 10px; padding-top: 10px; }
+        
+        footer { background: #040e1b; color: #94a3b8; padding: 40px 20px; text-align: center; font-size: 13px; margin-top: 60px; border-top: 2px solid var(--accent-gold); }
+        footer a { color: #fff; text-decoration: none; margin: 0 10px; }
+
+        .whatsapp-float {
+            position: fixed; width: 60px; height: 60px; bottom: 30px; right: 30px;
+            background-color: #25d366; color: #FFF; border-radius: 50px; text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4); z-index: 1000; display: flex;
+            align-items: center; justify-content: center; text-decoration: none;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); background-color: #20ba5a; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-main">
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <div class="dropdown">
+                    <button class="dropdown-btn">Menu ▾</button>
+                    <div class="dropdown-content">
+                        <a href="../index.html">🏠 Home</a>
+                        <a href="#security-kits">Security Kits</a>
+                        <a href="#energizers">Energizers</a>
+                        <a href="#cctv">Dahua CCTV</a>
+                        <a href="#alarms">Ajax Alarms</a>
+                        <a href="#checkout">Checkout</a>
+                    </div>
+                </div>
+                <div>
+                    <div style="font-weight: bold; font-size: 22px; letter-spacing: 0.5px;">Nexpak Security Solutions</div>
+                    <div class="branding-sub">Protecting What Matters Most</div>
+                </div>
+            </div>
+            <div class="meta-nav">
+                <div>Account</div>
+                <div>Wishlist <span>0</span></div>
+                <div>Cart <span>0</span></div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-banner">
+        <div style="font-size: 13px; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-gold); margin-bottom: 10px; font-weight: bold;">Nexpak Security Store</div>
+        <h1 style="margin: 0 0 15px 0; font-size: 30px;">Professional Security. <strong>Delivered To Your Door.</strong></h1>
+        <p style="margin: 0; font-size: 15px; color: #cbd5e1;">Complete security kits and hardware for homes, businesses, estates and farms.</p>
+    </section>
+
+    <div class="container">
+
+        <!-- ==========================================================
+             SECTION 1: SECURITY KITS
+             ========================================================== -->
+        <h2 id="security-kits" class="store-section-title">Security Kits</h2>
+        <div class="app-product-grid">
+            
+            <!-- 1. Electric Fencing Standard Kit -->
+            <div class="app-product-card" data-product-name="Electric Fencing 6 Square tube Kit">
+                <img src="../images/ef6.png" alt="Electric Fencing Standard Kit">
+                <div>
+                    <div class="tag">Electric Fencing</div>
+                    <h3>Electric Fencing 6 Square tube Kit</h3>
+                    <p>High-grade parameter fencing system for domestic properties.</p>
+                    <select class="variant-selector">
+                        <option data-price="8850.00" data-weight="45.0">100m Kit Selection - R8,850.00</option>
+                        <option data-price="12999.00" data-weight="90.0">200m Kit Selection - R12,999.00</option>
+                    </select>
+                    <div class="product-price-tag">R8,850.00</div>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <!-- 2. Electric Fencing Commercial Kit -->
+            <div class="app-product-card" data-product-name="Commercial Electric Fencing 8 Line Square Tube Kit">
+                <img src="../images/ef.png" alt="Commercial Electric Fencing Kit">
+                <div>
+                    <div class="tag">Electric Fencing</div>
+                    <h3>Commercial Electric Fencing 8 Line Square Tube Kit</h3>
+                    <p>Heavy duty high-voltage security protection for warehouses and complexes.</p>
+                    <select class="variant-selector">
+                        <option data-price="9999.00" data-weight="58.0">100m Kit Selection - R9,999.00</option>
+                        <option data-price="14999.00" data-weight="116.0">200m Kit Selection - R14,999.00</option>
+                    </select>
+                    <div class="product-price-tag">R9,999.00</div>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <!-- 3. Electric Fencing Agricultural Farm Kit -->
+            <div class="app-product-card" data-product-name="Electric Fence 10 Line Square Kit">
+                <img src="../images/ef.png" alt="Agricultural Farm Fence Kit">
+                <div>
+                    <div class="tag">Electric Fencing</div>
+                    <h3>Electric Fence 10 Line Square Kit</h3>
+                    <p>Long distance robust wire containment and perimeter security kit.</p>
+                    <select class="variant-selector">
+                        <option data-price="13999.00" data-weight="72.0">100m Kit Selection - R13,999.00</option>
+                        <option data-price="17999.00" data-weight="144.0">200m Kit Selection - R17,999.00</option>
+                    </select>
+                    <div class="product-price-tag">R13,999.00</div>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <!-- 4. Roboguard Wireless Perimeter Kit -->
+            <div class="app-product-card" data-product-name="Roboguard Wireless Perimeter Kit">
+                <img src="../images/robo1.png" alt="Roboguard Wireless Perimeter Kit">
+                <div>
+                    <div class="tag">Outdoor Beams</div>
+                    <h3>Roboguard Wireless Perimeter Kit</h3>
+                    <p>Early warning sensor setup with HQ controller unit modules.</p>
+                    <select class="variant-selector">
+                        <option data-price="5999.00" data-weight="4.0">2 Beam Setup - R5,999.00</option>
+                        <option data-price="8999.00" data-weight="6.5">4 Beam Setup - R8,999.00</option>
+                        <option data-price="12999.00" data-weight="9.0">6 Beam Setup - R12,999.00</option>
+                        <option data-price="15999.00" data-weight="11.5">8 Beam Setup - R15,999.00</option>
+                    </select>
+                    <div class="product-price-tag">R5,999.00</div>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <!-- 5. Nice ET Motors -->
+            <div class="app-product-card" data-product-name="Nice ET Gate Motor Kit">
+                <img src="../images/nice.png" alt="Nice ET Gate Motor Kit">
+                <div>
+                    <div class="tag">Gate-Motors</div>
+                    <h3>Nice ET Gate Motor Kit</h3>
+                    <p>Residential and Business Gate Automation.</p>
+                    <select class="variant-selector">
+                        <option data-price="5999.00" data-weight="13.0">Nice ET500 Kit - R5,999.00</option>
+                        <option data-price="14999.00" data-weight="19.0">Drive 1000 Kit - R14,999.00</option>
+                    </select>
+                    <div class="product-price-tag">R5,999.00</div>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <!-- 6. HD CCTV Analog Home Kit -->
+            <div class="app-product-card" data-product-name="HD CCTV Dahua Analog Home Kit">
+                <img src="../images/16ch.png" alt="HD CCTV Analog Home Kit">
+                <div>
+                    <div class="tag">HD CCTV</div>
+                    <h3>HD CCTV Dahua Analog Home Kit</h3>
+                    <p>Crystal clear 1080p high definition cameras and recording station bundle.</p>
+                    <select class="variant-selector">
+                        <option data-price="7999.99" data-weight="8.5">8-Channel Setup - R7,999.99</option>
+                        <option data-price="14999.99" data-weight="14.0">16-Channel Setup - R14,999.99</option>
+                        <option data-price="29999.99" data-weight="26.0">32-Channel Setup - R29,999.99</option>
+                    </select>
+                    <div class="product-price-tag">R7,999.99</div>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <!-- 7. HD CCTV Business Pro Kit -->
+            <div class="app-product-card" data-product-name="HD CCTV Dahua Pro Kit">
+                <img src="../images/32ch.png" alt="HD CCTV Business Pro Kit">
+                <div>
+                    <div class="tag">HD CCTV</div>
+                    <h3>HD CCTV Dahua Pro Kit</h3>
+                    <p>Expanded visual coverage arrays for corporate office sites and retail parks.</p>
+                    <select class="variant-selector">
+                        <option data-price="11999.99" data-weight="12.0">8-Channel Setup - R11,999.99</option>
+                        <option data-price="21999.99" data-weight="21.0">16-Channel Setup - R21,999.99</option>
+                    </select>
+                    <div class="product-price-tag">R11,999.99</div>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <!-- 8. IP CCTV Network Smart Kit -->
+            <div class="app-product-card" data-product-name="IP CCTV Network Dahua Kit">
+                <img src="../images/ip-cctv.png" alt="IP CCTV Network Smart Kit">
+                <div>
+                    <div class="tag">IP CCTV</div>
+                    <h3>IP CCTV Network Dahua Kit</h3>
+                    <p>Ultra 4K network visual stream units featuring remote access and AI filters.</p>
+                    <select class="variant-selector">
+                        <option data-price="15999.99" data-weight="14.0">8-Camera POE System - R15,999.99</option>
+                        <option data-price="29999.99" data-weight="25.0">16-Camera POE System - R29,999.99</option>
+                    </select>
+                    <div class="product-price-tag">R15,999.99</div>
+                </div>
+                <div class="button-group">
+                    <button class="custom-app-btn btn-info">More Info</button>
+                    <button class="custom-app-btn">Add to Cart</button>
+                    <button class="custom-app-btn btn-quote">Add to Quote</button>
+                </div>
+            </div>
+
+            <!-- 9. Centurion Slide Gate Kit (Dynamic Image Switcher Enabled) -->
+            <div class="app-product-card" data-product-name="Centurion Slide Gate Kit">
+                <img src="../images/d5.png" alt="Centurion Gate Kit" id="centurion-img">
+                <div>
+                    <div class="tag">Gate & Garage door Automation</div>
+                    <h3>Centurion Slide Gate Kit</h3>
+                    <p>Centurion Smart high speed reliable automated motor and tracking package.</p>
+                    <select class="variant-selector" id="centurion-select">
+                        <option value="d3" data-price="4999.00" data-weight="10.0">D3 Smart Kit - R4,999.00</option>
+                        <option value="d5" data-price="5999.00" data-weight="13.0" selected>D5 Smart kit - R5,999.00</option>
+                        <option value="d6" data-price="7999.00" data-weight="15.0">D6 Smart kit - R7,999.00</option>
+                        <option value="d10" data-price="12999.00" data-weight="18.0">D10 Smart Kit - R12,999.00</option>
+                        <option value="d10-turbo" data-price="13200.00" data-weight="19.0">D10 Smart Turbo - R13,200.00</option>
+                        <option value="sdo" data-price="2999.00" data-weight="12.0">SDO Smart Garage door - R2,999.00</option>
+                        <option value="vantage" data-pri
