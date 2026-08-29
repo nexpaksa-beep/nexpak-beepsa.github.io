@@ -10935,7 +10935,7 @@ Security Team
 
 
 
-                    <div class="nx-field">
+                                        <div class="nx-field">
 
 
                         <label for="energizerRequirement">
@@ -10952,7 +10952,808 @@ Security Team
 
                             <option value="">
                                 Select requirement
-               
+                            </option>
+
+
+                            <option value="standard-energizer">
+                                Standard Energizer
+                            </option>
+
+
+                            <option value="multi-zone">
+                                Multi-Zone System
+                            </option>
+
+
+                            <option value="jva-zm20">
+                                JVA ZM20 Sector System
+                            </option>
+
+
+                            <option value="wifi-monitoring">
+                                WiFi / Remote Monitoring
+                            </option>
+
+
+                            <option value="existing-energizer">
+                                Existing Energizer
+                            </option>
+
+
+                            <option value="technical-recommendation">
+                                Require Technical Recommendation
+                            </option>
+
+
+                        </select>
+
+
+                    </div>
+
+
+
+                    <div class="nx-field nx-field-full">
+
+
+                        <label for="fenceDetails">
+
+                            Perimeter / Fence Details
+
+                        </label>
+
+
+                        <textarea
+                            id="fenceDetails"
+                            name="fenceDetails"
+                            rows="5"
+                            placeholder="Describe the perimeter, terrain, walls, existing fencing, gates, vegetation, slopes or other conditions..."></textarea>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </fieldset>
+
+
+
+            <!-- =================================================
+             SECTION 04
+             CCTV & IP NETWORK
+            ================================================= -->
+
+            <fieldset
+                class="nx-form-section">
+
+
+                <div class="nx-section-heading">
+
+
+                    <div class="nx-section-number">
+                        04
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            CCTV &amp; IP NETWORK
+                        </span>
+
+
+                        <h3>
+                            Design the surveillance layer.
+                        </h3>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="nx-form-grid">
+
+
+                    <div class="nx-field">
+
+
+                        <label for="cameraCount">
+
+                            Approximate Camera Quantity
+
+                        </label>
+
+
+                        <input
+                            type="number"
+                            id="cameraCount"
+                            name="cameraCount"
+                            min="0"
+                            placeholder="e.g. 32">
+
+
+                    </div>
+
+
+
+                    <div class="nx-field">
+
+
+                        <label for="cameraType">
+
+                            Camera Architecture
+
+                        </label>
+
+
+                        <select
+                            id="cameraType"
+                            name="cameraType">
+
+
+                            <option value="">
+                                Select requirement
+                            </option>
+
+
+                            <option value="dahua-ip">
+                                Dahua IP CCTV
+                            </option>
+
+
+                            <option value="dahua-hd">
+                                Dahua HD CCTV
+                            </option>
+
+
+                            <option value="ip-recommendation">
+                                IP CCTV — Brand Recommendation Required
+                            </option>
+
+
+                            <option value="existing-upgrade">
+                                Existing CCTV Upgrade
+                            </option>
+
+
+                            <option value="long-range">
+                                Long-Range Perimeter Surveillance
+                            </option>
+
+
+                            <option value="specialist">
+                                Specialist / Thermal Surveillance
+                            </option>
+
+
+                            <option value="technical-design">
+                                Not Sure — Require Technical Design
+                            </option>
+
+
+                        </select>
+
+
+                    </div>
+
+
+
+                    <div class="nx-field">
+
+
+                        <label for="networkType">
+
+                            Network Architecture
+
+                        </label>
+
+
+                        <select
+                            id="networkType"
+                            name="networkType">
+
+
+                            <option value="">
+                                Select network
+                            </option>
+
+
+                            <option value="structured">
+                                Structured Cabling
+                            </option>
+
+
+                            <option value="fibre">
+                                Fibre Network
+                            </option>
+
+
+                            <option value="wireless">
+                                Wireless Network
+                            </option>
+
+
+                            <option value="hybrid">
+                                Hybrid Wired / Wireless
+                            </option>
+
+
+                            <option value="point-to-point">
+                                Long-Distance Point-to-Point Wireless
+                            </option>
+
+
+                            <option value="multi-site">
+                                Multi-Site Wireless Network
+                            </option>
+
+
+                            <option value="technical-design">
+                                Require Technical Design
+                            </option>
+
+
+                        </select>
+
+
+                    </div>
+
+
+
+                    <div class="nx-field">
+
+
+                        <label for="wirelessDistance">
+
+                            Wireless Link Distance
+
+                        </label>
+
+
+                        <div class="nx-input-unit">
+
+
+                            <input
+                                type="number"
+                                id="wirelessDistance"
+                                name="wirelessDistance"
+                                min="0"
+                                step="0.1"
+                                placeholder="e.g. 3">
+
+
+                            <span>
+                                km
+                            </span>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="nx-field nx-field-full">
+
+
+                        <label>
+
+                            Network Infrastructure Requirements
+
+                        </label>
+
+
+                        <div class="nx-inline-checks">
+
+
+                            <label>
+
+                                <input
+                                    type="checkbox"
+                                    name="networkFeature"
+                                    value="ubiquiti">
+
+                                <span>
+                                    Ubiquiti Infrastructure
+                                </span>
+
+                            </label>
+
+
+                            <label>
+
+                                <input
+                                    type="checkbox"
+                                    name="networkFeature"
+                                    value="point-to-point">
+
+                                <span>
+                                    Point-to-Point Links
+                                </span>
+
+                            </label>
+
+
+                            <label>
+
+                                <input
+                                    type="checkbox"
+                                    name="networkFeature"
+                                    value="point-to-multipoint">
+
+                                <span>
+                                    Point-to-Multipoint
+                                </span>
+
+                            </label>
+
+
+                            <label>
+
+                                <input
+                                    type="checkbox"
+                                    name="networkFeature"
+                                    value="remote-sites">
+
+                                <span>
+                                    Remote Site Connectivity
+                                </span>
+
+                            </label>
+
+
+                            <label>
+
+                                <input
+                                    type="checkbox"
+                                    name="networkFeature"
+                                    value="poe">
+
+                                <span>
+                                    PoE Infrastructure
+                                </span>
+
+                            </label>
+
+
+                            <label>
+
+                                <input
+                                    type="checkbox"
+                                    name="networkFeature"
+                                    value="nvr">
+
+                                <span>
+                                    Centralised NVR
+                                </span>
+
+                            </label>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="nx-field nx-field-full">
+
+
+                        <label for="cctvDetails">
+
+                            CCTV / Network Details
+
+                        </label>
+
+
+                        <textarea
+                            id="cctvDetails"
+                            name="cctvDetails"
+                            rows="6"
+                            placeholder="Describe camera locations, distances, buildings, remote areas, existing network infrastructure, monitoring requirements, NVR requirements, wireless links or other technical requirements..."></textarea>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </fieldset>
+
+
+
+            <!-- =================================================
+             SECTION 05
+             INTEGRATED SECURITY
+            ================================================= -->
+
+            <fieldset
+                class="nx-form-section">
+
+
+                <div class="nx-section-heading">
+
+
+                    <div class="nx-section-number">
+                        05
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            INTEGRATED SECURITY
+                        </span>
+
+
+                        <h3>
+                            Make the systems work together.
+                        </h3>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <p class="nx-section-description">
+
+                    Modern security should not operate as isolated
+                    systems. We can design integrated architectures
+                    where perimeter detection, CCTV, networking,
+                    access control and alarms operate as one
+                    security environment.
+
+                </p>
+
+
+
+                <div class="nx-integration-options">
+
+
+                    <label class="nx-integration-card">
+
+
+                        <input
+                            type="checkbox"
+                            name="integration"
+                            value="electric-cctv">
+
+
+                        <div class="nx-integration-icon">
+                            EF
+                        </div>
+
+
+                        <strong>
+                            Electric Fence + CCTV
+                        </strong>
+
+
+                        <span>
+                            Integrate zoned perimeter detection
+                            with IP surveillance.
+                        </span>
+
+
+                    </label>
+
+
+
+                    <label class="nx-integration-card">
+
+
+                        <input
+                            type="checkbox"
+                            name="integration"
+                            value="jva-wifi">
+
+
+                        <div class="nx-integration-icon">
+                            RF
+                        </div>
+
+
+                        <strong>
+                            JVA + WiFi
+                        </strong>
+
+
+                        <span>
+                            Remote monitoring and communications
+                            for distributed fence sectors.
+                        </span>
+
+
+                    </label>
+
+
+
+                    <label class="nx-integration-card">
+
+
+                        <input
+                            type="checkbox"
+                            name="integration"
+                            value="cctv-network">
+
+
+                        <div class="nx-integration-icon">
+                            IP
+                        </div>
+
+
+                        <strong>
+                            CCTV + IP Network
+                        </strong>
+
+
+                        <span>
+                            Structured or wireless IP surveillance
+                            infrastructure.
+                        </span>
+
+
+                    </label>
+
+
+
+                    <label class="nx-integration-card">
+
+
+                        <input
+                            type="checkbox"
+                            name="integration"
+                            value="access-cctv">
+
+
+                        <div class="nx-integration-icon">
+                            AC
+                        </div>
+
+
+                        <strong>
+                            Access + CCTV
+                        </strong>
+
+
+                        <span>
+                            Controlled access combined with
+                            visual verification.
+                        </span>
+
+
+                    </label>
+
+
+
+                    <label class="nx-integration-card">
+
+
+                        <input
+                            type="checkbox"
+                            name="integration"
+                            value="alarm-cctv">
+
+
+                        <div class="nx-integration-icon">
+                            AL
+                        </div>
+
+
+                        <strong>
+                            Alarm + CCTV
+                        </strong>
+
+
+                        <span>
+                            Intrusion events supported by
+                            video verification.
+                        </span>
+
+
+                    </label>
+
+
+
+                    <label class="nx-integration-card">
+
+
+                        <input
+                            type="checkbox"
+                            name="integration"
+                            value="full-integration">
+
+
+                        <div class="nx-integration-icon">
+                            SYS
+                        </div>
+
+
+                        <strong>
+                            Full Security Integration
+                        </strong>
+
+
+                        <span>
+                            Multi-layer security architecture
+                            designed as one system.
+                        </span>
+
+
+                    </label>
+
+
+                </div>
+
+
+            </fieldset>
+
+
+
+            <!-- =================================================
+             SECTION 06
+             PUBLIC ACCESS / LOW VOLTAGE
+            ================================================= -->
+
+            <fieldset
+                class="nx-form-section">
+
+
+                <div class="nx-section-heading">
+
+
+                    <div class="nx-section-number">
+                        06
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            PUBLIC ACCESS &amp; LOW VOLTAGE
+                        </span>
+
+
+                        <h3>
+                            Special monitoring environments.
+                        </h3>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <p class="nx-section-description">
+
+                    Low-voltage monitoring and perimeter interfaces
+                    can be particularly useful in environments where
+                    public access, pedestrian movement or controlled
+                    interaction with the perimeter must be considered.
+
+                </p>
+
+
+
+                <div class="nx-form-grid">
+
+
+                    <div class="nx-field nx-field-full">
+
+
+                        <label>
+
+                            Environment
+
+                        </label>
+
+
+                        <div class="nx-inline-checks">
+
+
+                            <label>
+
+                                <input
+                                    type="checkbox"
+                                    name="publicEnvironment"
+                                    value="public-access">
+
+                                <span>
+                                    Public Access Area
+                                </span>
+
+                            </label>
+
+
+                            <label>
+
+                                <input
+                                    type="checkbox"
+                                    name="publicEnvironment"
+                                    value="pedestrian">
+
+                                <span>
+                                    Pedestrian Traffic
+                                </span>
+
+                            </label>
+
+
+                            <label>
+
+                                <input
+                                    type="checkbox"
+                                    name="publicEnvironment"
+                                    value="school">
+
+                                <span>
+                                    School / Campus
+                                </span>
+
+                            </label>
+
+
+                            <label>
+
+                                <input
+                                    type="checkbox"
+                                    name="publicEnvironment"
+                                    value="retail">
+
+                                <span>
+                                    Retail / Customer Area
+                                </span>
+
+                            </label>
+
+
+                            <label>
+
+                                <input
+                                    type="checkbox"
+                                    name="publicEnvironment"
+                                    value="municipal">
+
+                                <span>
+                                    Municipal / Public Facility
+                                </span>
+
+                            </label>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="nx-field">
+
+
+                        <label for="monitoringRequirement">
+
+                            Monitoring Requirement
+
+                        </label>
+
+
+                        <select
+                            id="monitoringRequirement"
+                            name="monitoringRequirement">
+
+
+                            <option value="">
+         
 
 <!-- =========================================================
  PART 1 COMPLETE
