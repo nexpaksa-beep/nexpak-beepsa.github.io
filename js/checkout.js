@@ -210,19 +210,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Pull exact on-screen grand total to eliminate rounding discrepancies
-            let finalPayfastAmount = '0.00';
-            if (grandTotalEl) {
-                const cleanAmount = grandTotalEl.textContent.replace(/[^0-9.]/g, '');
-                finalPayfastAmount = parseFloat(cleanAmount).toFixed(2);
-            }
+            // =========================================================================
+            // EXACT MATHEMATICAL LOCK (Bypasses DOM comma/string bugs)
+            // =========================================================================
+            const subtotal = cartTotal;
+            const vat = subtotal * 0.15; 
+            const exactGrandTotal = subtotal + vat + activeDeliveryFee;
+            const finalPayfastAmount = exactGrandTotal.toFixed(2);
 
-            if (!finalPayfastAmount || parseFloat(finalPayfastAmount) <= 0) {
-                const fallbackTotal = cartTotal + (cartTotal * 0.15) + activeDeliveryFee;
-                finalPayfastAmount = Number(fallbackTotal).toFixed(2);
-            }
+            console.log("🔒 PURE PAYFAST PAYLOAD LOCK -> Exact Calculated Total Sent:", finalPayfastAmount);
 
-            console.log("🔒 PURE PAYFAST PAYLOAD LOCK -> Exact On-Screen Total Sent:", finalPayfastAmount);
+            if (parseFloat(finalPayfastAmount) <= 0) {
+                alert('Your order total cannot be R0.00. Please add items to your cart.');
+                return;
+            }
 
             // PayFast Configuration (Sandbox Endpoint)
             const payfastMerchantId = '10004002';   
@@ -279,4 +280,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-    
+                          
