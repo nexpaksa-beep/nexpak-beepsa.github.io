@@ -11129,3 +11129,782 @@ assessment.
 
  }
    
+/* =========================================================
+   SUBMISSION HANDLER
+========================================================= */
+
+
+async function handleTechnicalSubmission(
+    event
+) {
+
+
+    event.preventDefault();
+
+
+    const form =
+        event.currentTarget;
+
+
+    /* =====================================================
+       VALIDATE FORM
+    ===================================================== */
+
+
+    if (
+        !validateTechnicalForm(form)
+    ) {
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       LOCK SUBMISSION
+    ===================================================== */
+
+
+    if (
+        technicalSubmissionLocked
+    ) {
+
+        return;
+
+    }
+
+
+    technicalSubmissionLocked =
+        true;
+
+
+    /* =====================================================
+       UI ELEMENTS
+    ===================================================== */
+
+
+    const button =
+        document.getElementById(
+            "technicalQuoteSubmit"
+        );
+
+
+    const status =
+        document.getElementById(
+            "technicalFormStatus"
+        );
+
+
+    /* =====================================================
+       DISABLE BUTTON
+    ===================================================== */
+
+
+    if (button) {
+
+
+        button.disabled =
+            true;
+
+
+        button.classList.add(
+            "is-submitting"
+        );
+
+
+        const buttonText =
+            button.querySelector(
+                "span"
+            );
+
+
+        if (buttonText) {
+
+            buttonText.textContent =
+                "Preparing Technical Request...";
+
+        }
+
+
+    }
+
+
+    /* =====================================================
+       SHOW PROCESSING STATUS
+    ===================================================== */
+
+
+    if (status) {
+
+
+        status.className =
+            "nx-form-status nx-status-processing";
+
+
+        status.innerHTML = `
+
+            <strong>
+                Technical assessment request received.
+            </strong>
+
+            <span>
+                Preparing your quotation information...
+            </span>
+
+        `;
+
+
+    }
+
+
+    /* =====================================================
+       COLLECT REQUEST
+    ===================================================== */
+
+
+    let request;
+
+
+    try {
+
+
+        request =
+            collectTechnicalRequest();
+
+
+    } catch (error) {
+
+
+        console.error(
+            "Technical request collection failed:",
+            error
+        );
+
+
+        showTechnicalError(
+            status,
+            button,
+            "We could not process the form information. Please check the form and try again."
+        );
+
+
+        technicalSubmissionLocked =
+            false;
+
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       BUILD EMAIL
+    ===================================================== */
+
+
+    let message;
+
+
+    try {
+
+
+        message =
+            buildTechnicalEmail(
+                request
+            );
+
+
+    } catch (error) {
+
+
+        console.error(
+            "Technical email generation failed:",
+            error
+        );
+
+
+        showTechnicalError(
+            status,
+            button,
+            "We could not prepare the technical quotation request. Please try again."
+        );
+
+
+        technicalSubmissionLocked =
+            false;
+
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       STORE LAST REQUEST LOCALLY
+    ===================================================== */
+
+
+    try {
+
+
+        sessionStorage.setItem(
+            "nexpak_last_technical_request",
+            JSON.stringify(
+                request
+            )
+        );
+
+
+    } catch (error) {
+
+
+        console.warn(
+            "Session storage unavailable.",
+            error
+        );
+
+
+    }
+
+
+    /* =====================================================
+       SEND REQUEST
+       
+       This opens the user's email application
+       with the complete technical quotation
+       already prepared.
+    ===================================================== */
+
+
+    sendTechnicalEmail(
+        request,
+        message,
+        button,
+        status
+    );
+
+
+}
+
+
+
+/* =========================================================
+   TECHNICAL FORM VALIDATION
+========================================================= */
+
+
+function validateTechnicalForm(
+    form
+) {
+
+
+    if (!form) {
+
+
+        return false;
+
+
+    }
+
+
+    /* =====================================================
+       NATIVE HTML VALIDATION
+    ===================================================== */
+
+
+    if (
+        !form.checkValidity()
+    ) {
+
+
+        form.reportValidity();
+
+
+        return false;
+
+
+    }
+
+
+    /* =====================================================
+       EMAIL VALIDATION
+    ===================================================== */
+
+
+    const email =
+        getFieldValue(
+            "email"
+        );
+
+
+    if (
+        email &&
+        !isValidEmail(email)
+    ) {
+
+
+        const emailField =
+            document.getElementById(
+                "email"
+            );
+
+
+        if (emailField) {
+
+            emailField.focus();
+
+        }
+
+
+        showTechnicalError(
+            document.getElementById(
+                "technicalFormStatus"
+            ),
+            document.getElementById(
+                "technicalQuoteSubmit"
+            ),
+            "Please enter a valid email address."
+        );
+
+
+        return false;
+
+
+    }
+
+
+    /* =====================================================
+       PHONE VALIDATION
+    ===================================================== */
+
+
+    const phone =
+        getFieldValue(
+            "phone"
+        );
+
+
+    if (
+        phone &&
+        phone.replace(
+            /\D/g,
+            ""
+        ).length < 7
+    ) {
+
+
+        const phoneField =
+            document.getElementById(
+                "phone"
+            );
+
+
+        if (phoneField) {
+
+            phoneField.focus();
+
+        }
+
+
+        showTechnicalError(
+            document.getElementById(
+                "technicalFormStatus"
+            ),
+            document.getElementById(
+                "technicalQuoteSubmit"
+            ),
+            "Please enter a valid contact number."
+        );
+
+
+        return false;
+
+
+    }
+
+
+    return true;
+
+
+}
+
+
+
+/* =========================================================
+   EMAIL FORMAT CHECK
+========================================================= */
+
+
+function isValidEmail(
+    email
+) {
+
+
+    const pattern =
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+    return pattern.test(
+        email
+    );
+
+
+}
+
+
+
+/* =========================================================
+   SHOW ERROR
+========================================================= */
+
+
+function showTechnicalError(
+    status,
+    button,
+    message
+) {
+
+
+    if (status) {
+
+
+        status.className =
+            "nx-form-status nx-status-error";
+
+
+        status.innerHTML = `
+
+            <strong>
+                Unable to continue
+            </strong>
+
+            <span>
+                ${message}
+            </span>
+
+        `;
+
+
+    }
+
+
+    if (button) {
+
+
+        button.disabled =
+            false;
+
+
+        button.classList.remove(
+            "is-submitting"
+        );
+
+
+        const buttonText =
+            button.querySelector(
+                "span"
+            );
+
+
+        if (buttonText) {
+
+            buttonText.textContent =
+                "Submit Technical Quote Request";
+
+        }
+
+
+    }
+
+
+}
+
+
+
+/* =========================================================
+   EMAIL SUBMISSION
+========================================================= */
+
+
+function sendTechnicalEmail(
+    request,
+    message,
+    button,
+    status
+) {
+
+
+    const technicalEmail =
+        "technical@nexpaksolutions.co.za";
+
+
+    const subject =
+        "Technical Quote Request | " +
+        request.reference;
+
+
+    const mailURL =
+        "mailto:" +
+        technicalEmail +
+        "?subject=" +
+        encodeURIComponent(
+            subject
+        ) +
+        "&body=" +
+        encodeURIComponent(
+            message
+        );
+
+
+    /* =====================================================
+       SHOW SUCCESS INFORMATION
+    ===================================================== */
+
+
+    if (status) {
+
+
+        status.className =
+            "nx-form-status nx-status-success";
+
+
+        status.innerHTML = `
+
+            <strong>
+                Technical quotation request prepared.
+            </strong>
+
+            <span>
+                Reference:
+                ${request.reference}
+            </span>
+
+            <small>
+                Your email application will now open.
+                Please review the information and send
+                the prepared request to our technical team.
+            </small>
+
+        `;
+
+
+    }
+
+
+    /* =====================================================
+       OPEN EMAIL CLIENT
+    ===================================================== */
+
+
+    window.location.href =
+        mailURL;
+
+
+    /* =====================================================
+       RESTORE BUTTON
+    ===================================================== */
+
+
+    setTimeout(
+        function () {
+
+
+            if (button) {
+
+
+                button.disabled =
+                    false;
+
+
+                button.classList.remove(
+                    "is-submitting"
+                );
+
+
+                const buttonText =
+                    button.querySelector(
+                        "span"
+                    );
+
+
+                if (buttonText) {
+
+                    buttonText.textContent =
+                        "Submit Technical Quote Request";
+
+                }
+
+
+            }
+
+
+            technicalSubmissionLocked =
+                false;
+
+
+        },
+        3000
+    );
+
+
+}
+
+
+
+/* =========================================================
+   WHATSAPP TECHNICAL REQUEST
+========================================================= */
+
+
+function sendTechnicalWhatsApp() {
+
+
+    const form =
+        document.getElementById(
+            "technicalQuoteForm"
+        );
+
+
+    if (!form) {
+
+        return;
+
+    }
+
+
+    if (
+        !validateTechnicalForm(
+            form
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    const request =
+        collectTechnicalRequest();
+
+
+    const message =
+        buildTechnicalEmail(
+            request
+        );
+
+
+    /*
+       IMPORTANT:
+       Replace this temporary number with
+       Nexpak's actual WhatsApp number before
+       publishing the page.
+    */
+
+
+    const whatsappNumber =
+        "27820000000";
+
+
+    const whatsappURL =
+        "https://wa.me/" +
+        whatsappNumber +
+        "?text=" +
+        encodeURIComponent(
+            message
+        );
+
+
+    window.open(
+        whatsappURL,
+        "_blank",
+        "noopener,noreferrer"
+    );
+
+
+}
+
+
+
+/* =========================================================
+   OPTIONAL WHATSAPP BUTTON
+========================================================= */
+
+
+const technicalWhatsAppButton =
+    document.getElementById(
+        "technicalWhatsAppBtn"
+    );
+
+
+if (
+    technicalWhatsAppButton
+) {
+
+
+    technicalWhatsAppButton.addEventListener(
+        "click",
+        sendTechnicalWhatsApp
+    );
+
+
+}
+
+
+
+/* =========================================================
+   GLOBAL TECHNICAL QUOTE API
+========================================================= */
+
+
+window.NexpakTechnicalQuote = {
+
+
+    getReference:
+        getTechnicalReference,
+
+
+    collectRequest:
+        collectTechnicalRequest,
+
+
+    buildEmail:
+        function () {
+
+
+            return buildTechnicalEmail(
+                collectTechnicalRequest()
+            );
+
+
+        },
+
+
+    validate:
+        function () {
+
+
+            return validateTechnicalForm(
+                document.getElementById(
+                    "technicalQuoteForm"
+                )
+            );
+
+
+        }
+
+
+};
+
+
+
+/* =========================================================
+   FINAL SCRIPT MARKER
+========================================================= */
+
+
+console.log(
+    "Nexpak Technical Quotation Engine loaded successfully."
+);
+
+
+</script>
