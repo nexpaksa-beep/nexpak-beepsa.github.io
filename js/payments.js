@@ -68,12 +68,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             console.log("🔒 PURE PAYFAST PAYLOAD LOCK -> Net:", subtotalNet, " | VAT:", vatAmount, " | Delivery:", deliveryFee, " | Sent total:", finalPayfastAmount);
 
+            
             // =========================================================================
-            // 5. CONFIGURATION CONTROLLER & FORM SUBMISSION
+            // 5. SECURE CHECKOUT & PAYFAST SUBMISSION HANDLER (LIVE PRODUCTION)
             // =========================================================================
-            const payfastMerchantId = '10004002';   // Universal test Merchant ID
-            const payfastMerchantKey = 'q1cd2rdny4a53'; // Universal test Merchant Key
-            const payfastUrl = 'https://sandbox.payfast.co.za/eng/process'; // Sandbox Endpoint
+            
+            // ✅ YOUR REAL LIVE CREDENTIALS GO HERE
+            const payfastMerchantId = '36692313';   
+            const payfastMerchantKey = 'cmvr2h6hmum6e'; 
+            
+            // ✅ LIVE PRODUCTION URL
+            const payfastUrl = 'https://www.payfast.co.za/eng/process'; 
             
             const nameParts = customerName.split(' ');
             const firstName = nameParts[0] || 'Valued'; 
