@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexPak Security Solutions | Centurion Smart Series Gate & Garage Motor Kits Manual</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --obsidian: #080d1a;
+            --slate-dark: #111e38;
+            --slate-light: #f8fafc;
+            --primary-blue: #2563eb;
+            --cyan-accent: #06b6d4;
+            --indigo-accent: #3b82f6;
+            --border-color: #cbd5e1;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: #f1f5f9; color: var(--text-main); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+        /* Stunning Modern Header */
+        header {
+            background: linear-gradient(135deg, var(--obsidian) 0%, var(--slate-dark) 100%);
+            color: white;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--primary-blue);
+            box-shadow: 0 10px 25px -5px rgba(8, 13, 26, 0.4);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo-area h1 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(90deg, #ffffff, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo-area span { color: var(--cyan-accent); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; display: block; margin-top: 2px; }
+        
+        .back-btn {
+            background: rgba(37, 99, 235, 0.15);
+            border: 1px solid rgba(37, 99, 235, 0.4);
+            color: white;
+            padding: 0.6rem 1.4rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .back-btn:hover { background: var(--primary-blue); border-color: var(--primary-blue); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4); }
+
+        /* Layout Grid */
+        .container {
+            max-width: 1450px;
+            margin: 2.5rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1.3fr 1.1fr;
+            gap: 2.5rem;
+        }
+
+        @media (max-width: 1100px) {
+            .container { grid-template-columns: 1fr; padding: 0 1rem; }
+        }
+
+        /* Technical Manual Column (Left) */
+        .manual-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+        .manual-container h2 { font-size: 2rem; font-weight: 800; color: var(--obsidian); margin-bottom: 1.5rem; letter-spacing: -0.5px; }
+        .manual-container h3 { font-size: 1.25rem; font-weight: 700; color: var(--indigo-accent); margin: 2rem 0 1rem 0; display: flex; align-items: center; gap: 12px; border-bottom: 2px solid #f1f5f9; padding-bottom: 0.5rem; }
+        .manual-container h3 i { color: var(--primary-blue); }
+        .manual-container p { color: #475569; margin-bottom: 1.2rem; font-size: 1rem; text-align: justify; }
+        .manual-container ul, .manual-container ol { margin-left: 1.5rem; margin-bottom: 1.5rem; color: #475569; }
+        .manual-container li { margin-bottom: 0.7rem; font-size: 0.95rem; }
+        .manual-container li strong { color: var(--obsidian); }
+
+        .pro-tip-box {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-left: 5px solid var(--primary-blue);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 2rem 0;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .pro-tip-box h4 { color: var(--obsidian); font-weight: 700; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 8px; font-size: 1rem; }
+        .pro-tip-box h4 i { color: #2563eb; }
+        .pro-tip-box p { margin-bottom: 0; font-size: 0.95rem; color: #1e293b; }
+
+        /* Kit Sidebar (Right - PDF Document Style Cards) */
+        .sidebar-kits {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .pdf-kit-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .pdf-kit-card:hover { transform: translateY(-4px); }
+
+        .pdf-card-header {
+            padding: 1.3rem 2rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-d3 { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-top: 5px solid #38bdf8; }
+        .header-d5 { background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 100%); border-top: 5px solid #2563eb; }
+        .header-d6 { background: linear-gradient(135deg, #0f172a 0%, #4338ca 100%); border-top: 5px solid #6366f1; }
+        .header-d10 { background: linear-gradient(135deg, #0f172a 0%, #581c87 100%); border-top: 5px solid #a855f7; }
+        .header-vantage { background: linear-gradient(135deg, #0f172a 0%, #0f766e 100%); border-top: 5px solid #14b8a6; }
+        .header-sdo { background: linear-gradient(135deg, #0f172a 0%, #065f46 100%); border-top: 5px solid #10b981; }
+
+        .pdf-card-title h3 { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.3px; }
+        .pdf-card-title span { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; color: #cbd5e1; display: block; margin-top: 2px; }
+        
+        .pdf-badge {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pdf-card-body {
+            padding: 1.3rem 2rem;
+            background: #ffffff;
+        }
+        .pdf-table-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 6px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .pdf-bom-list {
+            list-style: none;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .pdf-bom-list::-webkit-scrollbar { width: 5px; }
+        .pdf-bom-list::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+        .pdf-bom-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 7px 0;
+            border-bottom: 1px solid #f8fafc;
+            font-size: 0.88rem;
+            transition: background 0.2s;
+        }
+        .pdf-bom-item:hover { background: #f8fafc; padding-left: 4px; padding-right: 4px; border-radius: 4px; }
+        
+        .item-name { color: var(--text-main); font-weight: 500; display: flex; align-items: center; gap: 8px; }
+        .item-name i { font-size: 0.65rem; color: var(--primary-blue); }
+        
+        .item-qty {
+            background: #f1f5f9;
+            color: var(--obsidian);
+            font-family: monospace;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        footer {
+            background: white;
+            text-align: center;
+            padding: 2.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <h1>NexPak Security Solutions</h1>
+            <span>Centurion Smart Series Motor Kits & Engineering Compliance Manual</span>
+        </div>
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Store</a>
+    </header>
+
+    <div class="container">
+        
+        <div class="manual-container">
+            <h2>Centurion Smart Series Architectural Manual</h2>
+            <p>Centurion's cutting-edge Smart range—encompassing the <strong>D3 Smart, D5 Smart, D6 Smart, D10 Smart / D10 Smart Turbo, Vantage 500, and SDO Smart</strong>—combines high-speed industrial microprocessors, ultra-reliable battery backup architectures, and advanced IoT integration via the MyCentaG platform.</p>
+
+            <h3><i class="fas fa-gavel"></i> South African Legal & Safety Compliance Framework</h3>
+            <p>Automated gate and garage door systems installed in South Africa are legally governed by rigorous statutory standards under the <strong>Occupational Health and Safety Act (OHSA)</strong>, the National Building Regulations, and machine safety alignments such as <strong>EN 12453 / SANS</strong> codes:</p>
+            <ul>
+                <li><strong>Mandatory Obstruction Safety Beams:</strong> Automated gates must incorporate functional infrared safety beams (photocells) to prevent crushing or entrapment hazards during closing cycles. Omitting compliant beams violates safety liabilities and insurance rules.</li>
+                <li><strong>Electronic Collision Sensing:</strong> Centurion Smart controllers feature onboard collision-detection algorithms. Installers must calibrate obstacle force thresholds to ensure the gate immediately reverses upon encountering resistance.</li>
+                <li><strong>Emergency Manual Override:</strong> A secure, operational manual release mechanism must be accessible to allow manual operation during total power failure or internal fault states.</li>
+                <li><strong>Electrical Safety Isolation:</strong> Mains supply wiring supplying the charging transformer must conform to SANS 10142-1 wiring codes, terminating via an accessible double-pole isolator switch.</li>
+            </ul>
+
+            <h3><i class="fas fa-tools"></i> Professional Installation & Training Training Methodology</h3>
+            <p>Achieving silent, high-speed, and trouble-free operation requires precise mechanical preparation and setup:</p>
+            <ol>
+                <li><strong>Baseplate & Foundation Leveling:</strong> Pour a vibration-free, reinforced concrete foundation. Level the baseplate perfectly; incorrect leveling causes gear binding, high motor current draw, and rapid wear.</li>
+                <li><strong>Rack-to-Pinion Clearance (Sliding Kits):</strong> Mount nylon or steel racks maintaining a precise 2mm to 3mm clearance above the pinion gear. <em>Never allow the static weight of the gate to rest on the motor pinion.</em></li>
+                <li><strong>Limit Switch & Origin Setup:</strong> Position magnetic origin limits accurately to trigger smooth electronic soft-stop deceleration curves before full closure or opening limits.</li>
+                <li><strong>Actuator Geometry (Vantage 500):</strong> Measure mounting brackets meticulously using Centurion's geometric installation charts to ensure correct leverage and smooth travel across the swing arc without hinge binding.</li>
+                <li><strong>Shaft & Rail Setup (SDO Smart Garage):</strong> Secure the garage operator shaft and rail assembly properly to ceiling trusses, ensuring balanced tension on the sectional or tip-up door springs.</li>
+            </ol>
+
+            <div class="pro-tip-box">
+                <h4><i class="fas fa-bolt"></i> Professional Commissioning Tip</h4>
+                <p>Always perform a complete auto-set calibration routine via the MyCentaG mobile app after installation. This maps out gate limits, obstruction forces, and battery charging profiles automatically.</p>
+            </div>
+        </div>
+
+        <div class="sidebar-kits">
+            
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-d3">
+                    <div class="pdf-card-title">
+                        <h3>D3 Smart Motor Kit</h3>
+                        <span>Light Residential Sliding</span>
+                    </div>
+                    <div class="pdf-badge">Kit Ref: D3-SMART</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> D3 Smart motor</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 7amp battery</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 2m nylon rack</span><span class="item-qty">x 2</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 4 button nova remotes</span><span class="item-qty">x 2</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-d5">
+                    <div class="pdf-card-title">
+                        <h3>D5 Smart Motor Kit</h3>
+                        <span>Standard Residential Sliding</span>
+                    </div>
+                    <div class="pdf-badge">Kit Ref: D5-SMART</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> D5 Smart motor</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 7amp battery</span><span class="item-qty">x 2</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 2m nylon rack</span><span class="item-qty">x 2</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 4 button nova remotes</span><span class="item-qty">x 2</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-d6">
+                    <div class="pdf-card-title">
+                        <h3>D6 Smart Motor Kit</h3>
+                        <span>High-Torque Residential Sliding</span>
+                    </div>
+                    <div class="pdf-badge">Kit Ref: D6-SMART</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> D6 Smart motor</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 7amp battery</span><span class="item-qty">x 2</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 2m nylon rack</span><span class="item-qty">x 2</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 4 button nova remotes</span><span class="item-qty">x 2</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-d10">
+                    <div class="pdf-card-title">
+                        <h3>D10 Smart / D10 Turbo Smart Kit</h3>
+                        <span>Heavy Industrial Sliding</span>
+                    </div>
+                    <div class="pdf-badge">Kit Ref: D10-SMART</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> D10 Smart / D10 Smart Turbo motor</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 7amp battery</span><span class="item-qty">x 2</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 2m steel rack</span><span class="item-qty">x 3</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-vantage">
+                    <div class="pdf-card-title">
+                        <h3>Vantage 500 Smart Kit</h3>
+                        <span>High-Performance Swing Gate</span>
+                    </div>
+                    <div class="pdf-badge">Kit Ref: VANTAGE-500</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Vantage 500 motors</span><span class="item-qty">x 2</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Vantage smart controller</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 4 button nova remotes</span><span class="item-qty">x 2</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-sdo">
+                    <div class="pdf-card-title">
+                        <h3>SDO Smart Garage Motor Kit</h3>
+                        <span>Automated Sectional / Tip-Up Door</span>
+                    </div>
+                    <div class="pdf-badge">Kit Ref: SDO-SMART</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> SDO Smart garage motors</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Shaft / Rail assembly</span><span class="item-qty">x 1</span></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; 2026 NexPak Security Solutions. All rights reserved. Centurion Systems Gate Automation & Professional Smart Hardware Distribution.
+    </footer>
+
+</body>
+</html>
