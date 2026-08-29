@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexPak Security Solutions | Roboguard Perimeter Security Series & Engineering Manual</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --obsidian: #061a14;
+            --slate-dark: #0f2922;
+            --slate-light: #f0fdf4;
+            --emerald-accent: #059669;
+            --green-glow: #10b981;
+            --teal-accent: #14b8a6;
+            --border-color: #a7f3d0;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: #f8fafc; color: var(--text-main); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+        /* Modern Tactical Header */
+        header {
+            background: linear-gradient(135deg, var(--obsidian) 0%, var(--slate-dark) 100%);
+            color: white;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--emerald-accent);
+            box-shadow: 0 10px 25px -5px rgba(6, 26, 20, 0.4);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo-area h1 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(90deg, #ffffff, #6ee7b7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo-area span { color: var(--green-glow); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; display: block; margin-top: 2px; }
+        
+        .back-btn {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.4);
+            color: white;
+            padding: 0.6rem 1.4rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .back-btn:hover { background: var(--emerald-accent); border-color: var(--emerald-accent); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); }
+
+        /* Layout Grid */
+        .container {
+            max-width: 1450px;
+            margin: 2.5rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1.3fr 1.1fr;
+            gap: 2.5rem;
+        }
+
+        @media (max-width: 1100px) {
+            .container { grid-template-columns: 1fr; padding: 0 1rem; }
+        }
+
+        /* Technical Manual Column (Left) */
+        .manual-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+        .manual-container h2 { font-size: 2rem; font-weight: 800; color: var(--obsidian); margin-bottom: 1.5rem; letter-spacing: -0.5px; }
+        .manual-container h3 { font-size: 1.25rem; font-weight: 700; color: var(--emerald-accent); margin: 2rem 0 1rem 0; display: flex; align-items: center; gap: 12px; border-bottom: 2px solid #f1f5f9; padding-bottom: 0.5rem; }
+        .manual-container h3 i { color: var(--green-glow); }
+        .manual-container p { color: #475569; margin-bottom: 1.2rem; font-size: 1rem; text-align: justify; }
+        .manual-container ul, .manual-container ol { margin-left: 1.5rem; margin-bottom: 1.5rem; color: #475569; }
+        .manual-container li { margin-bottom: 0.7rem; font-size: 0.95rem; }
+        .manual-container li strong { color: var(--obsidian); }
+
+        .pro-tip-box {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-left: 5px solid var(--emerald-accent);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 2rem 0;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .pro-tip-box h4 { color: var(--obsidian); font-weight: 700; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 8px; font-size: 1rem; }
+        .pro-tip-box h4 i { color: var(--emerald-accent); }
+        .pro-tip-box p { margin-bottom: 0; font-size: 0.95rem; color: #1e293b; }
+
+        /* Kit Sidebar (Right - PDF Document Style Cards) */
+        .sidebar-kits {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .pdf-kit-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .pdf-kit-card:hover { transform: translateY(-4px); }
+
+        .pdf-card-header {
+            padding: 1.3rem 2rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-kit1 { background: linear-gradient(135deg, #061a14 0%, #0f2922 100%); border-top: 5px solid #10b981; }
+        .header-kit2 { background: linear-gradient(135deg, #061a14 0%, #064e3b 100%); border-top: 5px solid #059669; }
+        .header-kit3 { background: linear-gradient(135deg, #061a14 0%, #022c22 100%); border-top: 5px solid #34d399; }
+        .header-kit4 { background: linear-gradient(135deg, #061a14 0%, #14532d 100%); border-top: 5px solid #6ee7b7; }
+
+        .pdf-card-title h3 { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.3px; }
+        .pdf-card-title span { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; color: #a7f3d0; display: block; margin-top: 2px; }
+        
+        .pdf-badge {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pdf-card-body {
+            padding: 1.3rem 2rem;
+            background: #ffffff;
+        }
+        .pdf-table-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 6px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .pdf-bom-list {
+            list-style: none;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .pdf-bom-list::-webkit-scrollbar { width: 5px; }
+        .pdf-bom-list::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+        .pdf-bom-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 7px 0;
+            border-bottom: 1px solid #f8fafc;
+            font-size: 0.88rem;
+            transition: background 0.2s;
+        }
+        .pdf-bom-item:hover { background: #f8fafc; padding-left: 4px; padding-right: 4px; border-radius: 4px; }
+        
+        .item-name { color: var(--text-main); font-weight: 500; display: flex; align-items: center; gap: 8px; }
+        .item-name i { font-size: 0.65rem; color: var(--emerald-accent); }
+        
+        .item-qty {
+            background: #f1f5f9;
+            color: var(--obsidian);
+            font-family: monospace;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        footer {
+            background: white;
+            text-align: center;
+            padding: 2.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 4rem;
+            border-top: 1px solid #cbd5e1;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <h1>NexPak Security Solutions</h1>
+            <span>Roboguard Wireless Perimeter Security & Engineering Manual</span>
+        </div>
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Store</a>
+    </header>
+
+    <div class="container">
+        
+        <div class="manual-container">
+            <h2>Roboguard Perimeter Architecture & Specifications</h2>
+            <p>Roboguard wireless outdoor perimeter sensors are premium, South African-designed early-warning intruder detection systems. Unlike traditional point-to-point active infrared beams that require precise alignment, Roboguard utilizes dual passive infrared (PIR) sensors to track heat and movement across a broad 110° arc, protecting roughly 400 square meters per unit.</p>
+
+            <h3><i class="fas fa-shield-alt"></i> Key Technical Specifications & Coverage</h3>
+            <ul>
+                <li><strong>Detection Range & Arc:</strong> Detects motion up to 20 meters away across a wide 110° arc (covering 11 zones, one every 10 degrees).</li>
+                <li><strong>Wireless Transmission:</strong> Transmits signals up to 400 meters line-of-sight back to the HQ base station (extendable up to 800 meters using compatible repeaters).</li>
+                <li><strong>Power Architecture:</strong> Completely battery-operated using 8 x C-cell alkaline batteries per beam, delivering an exceptional service life of 3 to 5 years.</li>
+                <li><strong>Lightning & Cabling Immunity:</strong> Because the beams are completely wireless and require zero physical trenching or cabling, they are entirely immune to lightning surges.</li>
+                <li><strong>False Alarm Resistance:</strong> Built-in algorithm selectors and dual-sensor verification allow the system to ignore extreme weather, blowing foliage, and small animals.</li>
+            </ul>
+
+            <h3><i class="fas fa-tools"></i> Professional Installation & Deployment Methodology</h3>
+            <p>Deploying Roboguard perimeter systems successfully relies on strategic placement and proper base station integration:</p>
+            <ol>
+                <li><strong>Mounting Height & Angle:</strong> Mount sentry beams at a recommended height of 1 to 1.2 meters, pointing across potential entry paths rather than directly facing hot afternoon sun or reflective surfaces.</li>
+                <li><strong>HQ Base Station Pairing:</strong> Connect the central Roboguard HQ Base to your primary home alarm panel or dedicated siren. A single HQ base can manage and monitor up to eight independent Roboguard beams.</li>
+                <li><strong>Battery Maintenance & Testing:</strong> Monitor low-battery trouble flashes on the HQ base and replace C-cell batteries proactively every 3 to 5 years to maintain uninterrupted perimeter protection.</li>
+            </ol>
+
+            <div class="pro-tip-box">
+                <h4><i class="fas fa-bolt"></i> Professional Integration Tip</h4>
+                <p>Use the 4-button Roboguard remotes to arm and disarm perimeter zones independently while leaving your indoor alarm zones active or inactive according to your occupancy schedule.</p>
+            </div>
+        </div>
+
+        <div class="sidebar-kits">
+            
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-kit1">
+                    <div class="pdf-card-title">
+                        <h3>Roboguard Kit 1</h3>
+                        <span>Compact Perimeter Protection (2 Beams)</span>
+                    </div>
+                    <div class="pdf-badge">Kit Ref: RG-KIT-1</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Roboguard beams</span><span class="item-qty">x 2</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> HQ base station</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Roboguard powerpack</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> External siren</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 4-button Roboguard remotes</span><span class="item-qty">x 2</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-kit2">
+                    <div class="pdf-card-title">
+                        <h3>Roboguard Kit 2</h3>
+                        <span>Standard Perimeter Protection (4 Beams)</span>
+                    </div>
+                    <div class="pdf-badge">Kit Ref: RG-KIT-2</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Roboguard beams</span><span class="item-qty">x 4</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> HQ base station</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Roboguard powerpack</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> External siren</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 4-button Roboguard remotes</span><span class="item-qty">x 2</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-kit3">
+                    <div class="pdf-card-title">
+                        <h3>Roboguard Kit 3</h3>
+                        <span>Extended Perimeter Protection (6 Beams)</span>
+                    </div>
+                    <div class="pdf-badge">Kit Ref: RG-KIT-3</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Roboguard beams</span><span class="item-qty">x 6</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> HQ base station</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Roboguard powerpack</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> External siren</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 4-button Roboguard remotes</span><span class="item-qty">x 2</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-kit4">
+                    <div class="pdf-card-title">
+                        <h3>Roboguard Kit 4</h3>
+                        <span>Maximum Capacity Perimeter System (8 Beams)</span>
+                    </div>
+                    <div class="pdf-badge">Kit Ref: RG-KIT-4</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Roboguard beams</span><span class="item-qty">x 8</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> HQ base station</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Roboguard powerpack</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> External siren</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 4-button Roboguard remotes</span><span class="item-qty">x 2</span></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; 2026 NexPak Security Solutions. All rights reserved. Roboguard Wireless Perimeter Security Hardware Distribution Division.
+    </footer>
+
+</body>
+</html>
+
