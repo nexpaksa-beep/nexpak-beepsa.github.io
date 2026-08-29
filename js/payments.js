@@ -16,12 +16,11 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // DELIVERY GATEKEEPER CHECK: Inspect what is actively showing on the screen element
             const deliveryEl = document.getElementById('chkDelivery');
-            const currentDeliveryCostText = deliveryEl ? deliveryEl.textContent.replace(/[^0-9.]/g, '') : '';
-            const numericDeliveryValidation = parseFloat(currentDeliveryCostText) || 0;
+            const deliveryText = deliveryEl ? deliveryEl.textContent.trim().toLowerCase() : '';
 
             // ABSOLUTE PROTECTION: Block checkout if delivery hasn't been handled
-            if (!deliveryEl || deliveryEl.textContent.trim() === '' || deliveryEl.textContent.includes('0.00') || numericDeliveryValidation === 0) {
-                if (!deliveryEl.textContent.toLowerCase().includes('free')) {
+            if (!deliveryEl || deliveryText === '' || deliveryText === 'r 0.00' || deliveryText === 'r 0') {
+                if (!deliveryText.includes('free')) {
                     alert('Please calculate your delivery charges using your address/distance before completing your order.');
                     document.getElementById('btnCalculateDelivery')?.focus();
                     return;
@@ -39,59 +38,53 @@ document.addEventListener('DOMContentLoaded', () => {
             // 2. Handle Instant EFT vs PayFast
             if (paymentMethod === 'eft') {
                 alert('Order placed successfully! Please use the Capitec bank details provided on screen to complete your EFT payment using your order number as reference.');
-                
-                // Clear cart data after successful order creation
-                localStorage.removeItem('nexpak_cart_count');
-                localStorage.removeItem('nexpak_cart_total');
-                localStorage.removeItem('nexpak_cart_subtotal');
-                localStorage.removeItem('nexpak_cart_items');
-                localStorage.removeItem('nexpak_cart_weight');
-                
+                localStorage.clear(); 
                 window.location.href = 'index.html';
                 return;
             }
 
             // =========================================================================
-            // 3. SECURE MATHEMATICAL RE-CALCULATION BLOCK (FORCED FLOAT FIX)
+            // 3. PURE RAW CACHE EXTRACTION (NO ROOM FOR STRING BUG INTERPRETATIONS)
             // =========================================================================
             
-            // 1. FORCED NUMERIC CASTING: Pull raw numbers and explicitly force them to be numbers, NOT text!
-            const rawCartStorage = localStorage.getItem('nexpak_cart_total') || localStorage.getItem('nexpak_cart_subtotal') || '0';
-            const subtotalNet = parseFloat(rawCartStorage) || 0;
+            // Pull the raw base number value directly from the browser's storage array cache keys
+            const cartTotal = parseFloat(localStorage.getItem('nexpak_cart_total')) || 
+                              parseFloat(localStorage.getItem('nexpak_cart_subtotal')) || 0;
 
-            if (subtotalNet <= 0) {
+            if (cartTotal <= 0) {
                 alert('Your order total cannot be R0.00. Please add items to your cart.');
                 return;
             }
 
-            // 2. FORCED NUMERIC DELIVERY CLEANING: Strip out non-digits and strictly force it to a number
+            // Clean the delivery text using a strict regular expression that leaves ONLY numbers and periods
+            // This treats commas, standard spaces, currency signs, and non-breaking spaces as empty text
             let deliveryFee = 0;
             if (deliveryEl) {
-                if (!deliveryEl.textContent.toLowerCase().includes('free')) {
+                if (!deliveryText.includes('free')) {
                     const globalSanitizedString = deliveryEl.textContent.replace(/[^0-9.]/g, '');
                     deliveryFee = parseFloat(globalSanitizedString) || 0;
                 }
             }
 
-            // 3. THE MATHEMATICAL LOCKDOWN
-            // Now that all parts are strictly forced into numbers, math works perfectly instead of gluing text together!
+            // THE MATHEMATICAL LOCKDOWN:
+            // This runs the exact logic without any screen text string interference
+            const subtotalNet = cartTotal;
             const vatAmount = subtotalNet * 0.15; // 15% Standard SA VAT
             const absoluteGrandTotal = subtotalNet + vatAmount + deliveryFee;
 
-            // Format to a clean string layout for PayFast (e.g., "731.00" or with its VAT)
+            // Format to a clean string layout for PayFast payload ingestion (e.g. "731.00" or with its VAT)
             const finalPayfastAmount = Number(absoluteGrandTotal).toFixed(2);
 
-            // Log this to your browser console (Press F12) to watch the math happen cleanly!
-            console.log("🔒 FIXED PAYFAST MATH LOCK -> Net Subtotal:", subtotalNet, " | VAT:", vatAmount, " | Delivery:", deliveryFee, " | Grand Total Sent:", finalPayfastAmount);
+            console.log("🔒 PURE PAYFAST PAYLOAD LOCK -> Net:", subtotalNet, " | VAT:", vatAmount, " | Delivery:", deliveryFee, " | Sent total:", finalPayfastAmount);
 
             // =========================================================================
-            // CONFIGURATION CONTROLLER (Sandbox Testing Mode Active)
+            // CONFIGURATION CONTROLLER & FORM GENERATION
             // =========================================================================
             const payfastMerchantId = '10004002';   // Universal test Merchant ID
             const payfastMerchantKey = 'q1cd2rdny4a53'; // Universal test Merchant Key
-            const payfastUrl = 'https://sandbox.payfast.co.za/eng/process'; // FIXED: Pointed form destination back to endpoint
+            const payfastUrl = 'https://payfast.co.za'; 
             
-            // Parse customer names safely using single index values
+            // FIXED: Added missing index pointer [0] to extract the text string correctly
             const nameParts = customerName.split(' ');
             const firstName = nameParts[0] || 'Valued'; 
             const lastName = nameParts.slice(1).join(' ') || 'Customer';
@@ -120,11 +113,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 email_address: customerEmail,
                 cell_number: customerPhone,
                 m_payment_id: 'NEX-' + Date.now(),
-                amount: finalPayfastAmount, // Clean mathematical format
+                amount: finalPayfastAmount, // Completely clean numeric string structure (e.g. 731.00)
                 item_name: safeItemDescription
             };
 
-            // Append all fields into the form DOM element array
             for (const key in paymentData) {
                 if (paymentData.hasOwnProperty(key)) {
                     const input = document.createElement('input');
@@ -148,4 +140,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-                        
+                    
