@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const vatEl = document.getElementById('chkVat');
     const grandTotalEl = document.getElementById('chkGrandTotal');
     const itemsContainer = document.getElementById('checkoutOrderItems');
+    const completeCheckoutBtn = document.getElementById('btnCompleteCheckout');
 
     // Global variable tracking current delivery cost state
     let activeDeliveryFee = 0;
@@ -41,27 +42,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /**
      * Loops through all cart items to extract and add up weights.
-     * Natively handles numbers like 0.5. Defaults to 0.5kg per item if missing.
      */
     function calculateTotalCartWeight() {
         let totalWeight = 0;
         
         cartItems.forEach(item => {
-            // 1. Read the raw weight property from your product object
             let itemWeight = item.weight;
 
-            // 2. Safely parse it to a decimal number
             if (typeof itemWeight === 'string') {
                 itemWeight = parseFloat(itemWeight);
             }
 
-            // 3. Fallback check: If the item has no weight or it's invalid, 
-            // use 0.5kg as a safe baseline so you never undercharge for shipping.
             if (itemWeight === undefined || itemWeight === null || isNaN(itemWeight) || itemWeight <= 0) {
                 itemWeight = 0.5; 
             }
 
-            // 4. Multiply by item quantity and add to the total weight profile
             const quantity = parseInt(item.quantity) || 1;
             totalWeight += (itemWeight * quantity);
         });
@@ -73,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("Total computed cart weight:", cartWeight, "kg");
 
     // =========================================================================
-    // 3. CORE LOGIC FUNCTIONS
+    // 3. CORE CALCULATION FUNCTIONS
     // =========================================================================
     function getPerKmRate(km) {
         if (km <= 20) return 5.50;
@@ -81,10 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return 7.50;
     }
 
-    /**
-     * Recalculates and updates the entire financial panel.
-     * This avoids stagnant numbers when delivery changes.
-     */
     function updateFinancialSummary() {
         const subtotal = cartTotal;
         const vat = subtotal * 0.15; // 15% Standard SA VAT
@@ -105,17 +96,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // =========================================================================
-    // 4. EVENT LISTENERS & INITIALIZATION
+    // 4. DELIVERY CALCULATOR EVENT LISTENER
     // =========================================================================
     if (btnCalculate) {
         btnCalculate.addEventListener('click', () => {
             let km = NaN;
 
-            // Check manual input
             if (distanceInput && distanceInput.value.trim() !== '') {
                 km = parseFloat(distanceInput.value);
             } 
-            // Check string matching via address text
             else if (addressInput && addressInput.value.trim() !== '') {
                 const addressText = addressInput.value.toLowerCase();
                 for (const [area, estKm] of Object.entries(areaDistanceMap)) {
@@ -134,7 +123,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Execute delivery pricing formula
             const perKmRate = getPerKmRate(km);
             const distanceCost = km * perKmRate;
 
@@ -150,10 +138,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 activeDeliveryFee = (BASE_BOOKING_FEE + weightCost) * FUEL_BUFFER_MULTIPLIER; 
             }
 
-            // Sync the fresh delivery fee back to the financial elements
             updateFinancialSummary();
 
-            // Handle informational UI text changes
             if (deliveryStatus) {
                 deliveryStatus.textContent = `${km} km / ${cartWeight.toFixed(1)} kg calculated`;
             }
@@ -183,7 +169,114 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Run initial financial calculation on page load (Delivery starts at R0.00)
+    // Run initial financial calculation on page load
     updateFinancialSummary();
+
+    // =========================================================================
+    // 5. SECURE CHECKOUT & PAYFAST SUBMISSION HANDLER
+    // =========================================================================
+    if (completeCheckoutBtn) {
+        completeCheckoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            // Validate form fields
+            const customerName = document.getElementById('customerName')?.value.trim();
+            const customerEmail = document.getElementById('customerEmail')?.value.trim();
+            const customerPhone = document.getElementById('customerPhone')?.value.trim();
+            const shippingAddress = document.getElementById('shippingAddress')?.value.trim();
+            const paymentMethodInput = document.querySelector('input[name="paymentMethod"]:checked');
+            
+            // Delivery gatekeeper check
+            const deliveryText = deliveryEl ? deliveryEl.textContent.trim().toLowerCase() : '';
+            if (activeDeliveryFee <= 0 && !deliveryText.includes('free')) {
+                alert('Please calculate your delivery charges using your address/distance before completing your order.');
+                document.getElementById('btnCalculateDelivery')?.focus();
+                return;
+            }
+
+            if (!customerName || !customerEmail || !customerPhone || !shippingAddress) {
+                alert('Please fill in all required customer and delivery details before proceeding.');
+                document.getElementById('customerName')?.focus();
+                return;
+            }
+
+            const paymentMethod = paymentMethodInput ? paymentMethodInput.value : 'payfast';
+
+            // Handle Instant EFT vs PayFast
+            if (paymentMethod === 'eft') {
+                alert('Order placed successfully! Please use the Capitec bank details provided on screen to complete your EFT payment using your order number as reference.');
+                localStorage.clear(); 
+                window.location.href = '/index.html';
+                return;
+            }
+
+            // Pull exact on-screen grand total to eliminate rounding discrepancies
+            let finalPayfastAmount = '0.00';
+            if (grandTotalEl) {
+                const cleanAmount = grandTotalEl.textContent.replace(/[^0-9.]/g, '');
+                finalPayfastAmount = parseFloat(cleanAmount).toFixed(2);
+            }
+
+            if (!finalPayfastAmount || parseFloat(finalPayfastAmount) <= 0) {
+                const fallbackTotal = cartTotal + (cartTotal * 0.15) + activeDeliveryFee;
+                finalPayfastAmount = Number(fallbackTotal).toFixed(2);
+            }
+
+            console.log("🔒 PURE PAYFAST PAYLOAD LOCK -> Exact On-Screen Total Sent:", finalPayfastAmount);
+
+            // PayFast Configuration (Sandbox Endpoint)
+            const payfastMerchantId = '10004002';   
+            const payfastMerchantKey = 'q1cd2rdny4a53'; 
+            const payfastUrl = 'https://sandbox.payfast.co.za/eng/process'; 
+            
+            const nameParts = customerName.split(' ');
+            const firstName = nameParts[0] || 'Valued'; 
+            const lastName = nameParts.slice(1).join(' ') || 'Customer';
+
+            const itemNames = cartItems.map(item => item.name).join(', ') || 'Security Hardware & Packaging';
+            let safeItemDescription = 'Nexpak Order: ' + itemNames;
+            if (safeItemDescription.length > 95) {
+                safeItemDescription = safeItemDescription.substring(0, 92) + '...';
+            }
+            
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = payfastUrl;
+
+            const paymentData = {
+                merchant_id: payfastMerchantId,
+                merchant_key: payfastMerchantKey,
+                return_url: window.location.origin + '/success.html', 
+                cancel_url: window.location.origin + '/checkout.html', 
+                name_first: firstName,
+                name_last: lastName,
+                email_address: customerEmail,
+                cell_number: customerPhone,
+                m_payment_id: 'NEX-' + Date.now(),
+                amount: finalPayfastAmount,
+                item_name: safeItemDescription
+            };
+
+            for (const key in paymentData) {
+                if (paymentData.hasOwnProperty(key)) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = paymentData[key];
+                    form.appendChild(input);
+                }
+            }
+
+            // Clear local storage cart data right before redirecting
+            localStorage.removeItem('nexpak_cart_count');
+            localStorage.removeItem('nexpak_cart_total');
+            localStorage.removeItem('nexpak_cart_subtotal');
+            localStorage.removeItem('nexpak_cart_items');
+            localStorage.removeItem('nexpak_cart_weight');
+
+            document.body.appendChild(form);
+            form.submit();
+        });
+    }
 });
-                
+    
