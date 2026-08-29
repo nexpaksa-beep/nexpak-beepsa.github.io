@@ -41,21 +41,42 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.removeItem('nexpak_cart_count');
                 localStorage.removeItem('nexpak_cart_total');
                 localStorage.removeItem('nexpak_cart_items');
+                localStorage.removeItem('nexpak_cart_weight');
                 
                 // Redirect to a thank you or home page (or reload)
                 window.location.href = 'index.html';
                 return;
             }
 
-            // 3. PayFast Integration
-            // Pull the grand total from your summary display element
-            const grandTotalText = document.getElementById('chkGrandTotal')?.textContent || '0';
-            const numericTotal = parseFloat(grandTotalText.replace(/[R,\s]/g, '')) || 0;
+            // =========================================================================
+            // 3. SECURE MATHEMATICAL RE-CALCULATION BLOCK
+            // =========================================================================
+            
+            // Grab the clean, unformatted raw base number directly from local memory cache
+            const cartTotal = parseFloat(localStorage.getItem('nexpak_cart_total')) || 0;
 
-            if (numericTotal <= 0) {
+            if (cartTotal <= 0) {
                 alert('Your order total cannot be R0.00. Please add items to your cart.');
                 return;
             }
+
+            // Extract the delivery fee from the UI element and strip out EVERYTHING except digits and dots
+            // This safely treats spaces, commas, non-breaking spaces, and R-symbols as empty characters
+            let deliveryFee = 0;
+            if (deliveryEl) {
+                const globalSanitizedString = deliveryEl.textContent.replace(/[^0-9.]/g, '');
+                deliveryFee = parseFloat(globalSanitizedString) || 0;
+            }
+
+            // Execute the single-VAT ledger equation matching your checkout.js logic
+            const subtotalNet = cartTotal;
+            const vatAmount = subtotalNet * 0.15; // 15% Standard SA VAT
+            const absoluteGrandTotal = subtotalNet + vatAmount + deliveryFee;
+
+            // SANITIZATION FILTER: Strips all punctuation and forces a clean dot decimal format (e.g., "10971.00")
+            const finalPayfastAmount = Number(absoluteGrandTotal).toFixed(2);
+
+            console.log("🔒 Payfast Mathematical Payload Safe-Lock:", finalPayfastAmount);
 
             // Parse names for PayFast requirements
             const nameParts = customerName.split(' ');
@@ -79,13 +100,13 @@ document.addEventListener('DOMContentLoaded', () => {
             // --- MODE A: TESTING MODE (Active Now) ---
             const payfastMerchantId = '10004002';   // Universal test Merchant ID
             const payfastMerchantKey = 'q1cd2rdny4a53'; // Universal test Merchant Key
-            const payfastUrl = 'https://sandbox.payfast.co.za/eng/process'; // FIXED: Proper Sandbox processing endpoint
+            const payfastUrl = 'https://sandbox.payfast.co.za/eng/process'; // Proper Sandbox processing endpoint
             
             /* 
-            // --- MODE B: LIVE PRODUCTION MODE (Swap to this when ready to take real orders) ---
+            // --- MODE B: LIVE PRODUCTION MODE (Swap to this when ready to take real money) ---
             const payfastMerchantId = 'YOUR_LIVE_ID';   
             const payfastMerchantKey = 'YOUR_LIVE_KEY'; 
-            const payfastUrl = 'https://www.payfast.co.za/eng/process'; // FIXED: Proper Live processing endpoint
+            const payfastUrl = 'https://www.payfast.co.za/eng/process'; // Proper Live processing endpoint
             */
             
             // Build dynamic form to securely submit data to PayFast
@@ -107,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Transaction details
                 m_payment_id: 'NEX-' + Date.now(),
-                amount: numericTotal.toFixed(2), 
+                amount: finalPayfastAmount, // <-- FIXED: Passes clean unformatted raw string layout
                 item_name: safeItemDescription
             };
 
@@ -126,6 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.removeItem('nexpak_cart_count');
             localStorage.removeItem('nexpak_cart_total');
             localStorage.removeItem('nexpak_cart_items');
+            localStorage.removeItem('nexpak_cart_weight');
 
             // Append to body and submit to PayFast
             document.body.appendChild(form);
@@ -133,3 +155,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+                
