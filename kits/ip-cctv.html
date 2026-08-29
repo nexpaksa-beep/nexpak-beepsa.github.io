@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexPak Security Solutions | Dahua IP CCTV Series & Engineering Manual</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --obsidian: #0b132b;
+            --slate-dark: #1c2541;
+            --slate-light: #f8fafc;
+            --primary-blue: #3b82f6;
+            --cyan-accent: #06b6d4;
+            --indigo-accent: #2563eb;
+            --border-color: #cbd5e1;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: #f1f5f9; color: var(--text-main); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+        /* Modern Cyber Header */
+        header {
+            background: linear-gradient(135deg, var(--obsidian) 0%, var(--slate-dark) 100%);
+            color: white;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--cyan-accent);
+            box-shadow: 0 10px 25px -5px rgba(11, 19, 43, 0.4);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo-area h1 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(90deg, #ffffff, #67e8f9); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo-area span { color: var(--cyan-accent); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; display: block; margin-top: 2px; }
+        
+        .back-btn {
+            background: rgba(6, 182, 212, 0.15);
+            border: 1px solid rgba(6, 182, 212, 0.4);
+            color: white;
+            padding: 0.6rem 1.4rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .back-btn:hover { background: var(--cyan-accent); border-color: var(--cyan-accent); color: var(--obsidian); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(6, 182, 212, 0.4); }
+
+        /* Layout Grid */
+        .container {
+            max-width: 1450px;
+            margin: 2.5rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1.3fr 1.1fr;
+            gap: 2.5rem;
+        }
+
+        @media (max-width: 1100px) {
+            .container { grid-template-columns: 1fr; padding: 0 1rem; }
+        }
+
+        /* Technical Manual Column (Left) */
+        .manual-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+        .manual-container h2 { font-size: 2rem; font-weight: 800; color: var(--obsidian); margin-bottom: 1.5rem; letter-spacing: -0.5px; }
+        .manual-container h3 { font-size: 1.25rem; font-weight: 700; color: var(--indigo-accent); margin: 2rem 0 1rem 0; display: flex; align-items: center; gap: 12px; border-bottom: 2px solid #f1f5f9; padding-bottom: 0.5rem; }
+        .manual-container h3 i { color: var(--cyan-accent); }
+        .manual-container p { color: #475569; margin-bottom: 1.2rem; font-size: 1rem; text-align: justify; }
+        .manual-container ul, .manual-container ol { margin-left: 1.5rem; margin-bottom: 1.5rem; color: #475569; }
+        .manual-container li { margin-bottom: 0.7rem; font-size: 0.95rem; }
+        .manual-container li strong { color: var(--obsidian); }
+
+        .pro-tip-box {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border-left: 5px solid #10b981;
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 2rem 0;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .pro-tip-box h4 { color: var(--obsidian); font-weight: 700; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 8px; font-size: 1rem; }
+        .pro-tip-box h4 i { color: #059669; }
+        .pro-tip-box p { margin-bottom: 0; font-size: 0.95rem; color: #1e293b; }
+
+        /* Kit Sidebar (Right - PDF Document Style Cards) */
+        .sidebar-kits {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .pdf-kit-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .pdf-kit-card:hover { transform: translateY(-4px); }
+
+        .pdf-card-header {
+            padding: 1.3rem 2rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-8ch-ip { background: linear-gradient(135deg, #0b132b 0%, #1c2541 100%); border-top: 5px solid #06b6d4; }
+        .header-16ch-ip { background: linear-gradient(135deg, #0b132b 0%, #312e81 100%); border-top: 5px solid #3b82f6; }
+
+        .pdf-card-title h3 { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.3px; }
+        .pdf-card-title span { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; display: block; margin-top: 2px; }
+        
+        .pdf-badge {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pdf-card-body {
+            padding: 1.3rem 2rem;
+            background: #ffffff;
+        }
+        .pdf-table-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 6px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .pdf-bom-list {
+            list-style: none;
+            max-height: 320px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .pdf-bom-list::-webkit-scrollbar { width: 5px; }
+        .pdf-bom-list::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+        .pdf-bom-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 7px 0;
+            border-bottom: 1px solid #f8fafc;
+            font-size: 0.88rem;
+            transition: background 0.2s;
+        }
+        .pdf-bom-item:hover { background: #f8fafc; padding-left: 4px; padding-right: 4px; border-radius: 4px; }
+        
+        .item-name { color: var(--text-main); font-weight: 500; display: flex; align-items: center; gap: 8px; }
+        .item-name i { font-size: 0.65rem; color: var(--cyan-accent); }
+        
+        .item-qty {
+            background: #f1f5f9;
+            color: var(--obsidian);
+            font-family: monospace;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        footer {
+            background: white;
+            text-align: center;
+            padding: 2.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <h1>NexPak Security Solutions</h1>
+            <span>Dahua IP CCTV Series & Network Architecture Manual</span>
+        </div>
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Store</a>
+    </header>
+
+    <div class="container">
+        
+        <div class="manual-container">
+            <h2>Dahua IP CCTV Architecture & Network Design</h2>
+            <p>Dahua’s IP surveillance series brings high-definition digital video streaming, Power over Ethernet (PoE) efficiency, and intelligent NVR recording management across 8-channel and 16-channel array setups. Utilizing 2MP 30M IR IP bullet cameras combined with robust Cat5 UTP structured cabling, these systems deliver crystal-clear digital clarity and seamless remote connectivity.</p>
+
+            <h3><i class="fas fa-shield-alt"></i> Statutory Safety & Privacy Compliance in South Africa</h3>
+            <p>IP video surveillance installations in South Africa must strictly adhere to data protection, privacy, and infrastructural regulations:</p>
+            <ul>
+                <li><strong>Protection of Personal Information Act (POPIA):</strong> Camera installations monitoring public perimeters, shared access points, or commercial workspaces must feature clear, highly visible warning signage. Data subjects retain statutory rights regarding video logging and footage retention parameters.</li>
+                <li><strong>Constitutional Privacy Rights:</strong> Cameras must be targeted strictly toward secure assets and operational boundaries. Pointing digital lenses directly into private neighboring residences or non-consenting personal zones constitutes a direct violation of civil privacy laws.</li>
+                <li><strong>Cybersecurity & Default Credentials:</strong> Network video recorders and IP cameras are prime targets for unauthorized access if default factory passwords are left unchanged. Installers are legally and professionally required to configure strong administrative credentials and disable unencrypted protocols.</li>
+                <li><strong>Surge Protection & Grounding:</strong> Outdoor Ethernet runs exposed to lightning surges require reliable surge protection devices and proper equipment grounding to safeguard PoE switches and NVR mainboards against transient voltage spikes.</li>
+            </ul>
+
+            <h3><i class="fas fa-network-wired"></i> Professional Installation & Structured Cabling Methodology</h3>
+            <p>Deploying reliable Dahua IP camera networks requires strict adherence to networking standards:</p>
+            <ol>
+                <li><strong>Cat5e UTP Cabling Limits:</strong> Ensure individual camera cable runs do not exceed the standard 90-meter limit for reliable PoE data and power transmission without signal degradation or packet loss.</li>
+                <li><strong>RJ45 Termination (T568B Standard):</strong> Terminate all cable ends securely with high-grade RJ45 connectors and protective boots using professional crimping tools to prevent intermittent connection failures.</li>
+                <li><strong>Weatherproof Enclosures:</strong> Mount network patch points and camera fly-leads inside sealed 100x100 weatherproof junction boxes to protect copper pins and RJ45 ports from moisture oxidation.</li>
+                <li><strong>PoE Switch Integration:</strong> Connect IP cameras through dedicated Dahua 8-Port PoE switches, ensuring total power budgets comfortably accommodate all connected IR bullet cameras.</li>
+                <li><strong>NVR Storage & Remote Setup:</strong> Install matched surveillance-grade hard drives (1TB or 2TB) and connect the NVR to the internet to enable high-definition mobile surveillance streaming via the DMSS application.</li>
+            </ol>
+
+            <div class="pro-tip-box">
+                <h4><i class="fas fa-check-circle"></i> Professional Deployment Tip</h4>
+                <p>Always assign static IP addresses or configure DHCP reservation on the NVR for all connected IP cameras to maintain stable device discovery and prevent network conflicts during power resets.</p>
+            </div>
+        </div>
+
+        <div class="sidebar-kits">
+            
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-8ch-ip">
+                    <div class="pdf-card-title">
+                        <h3>8-Channel IP CCTV Kit</h3>
+                        <span>Dahua 2MP Digital Network Surveillance System</span>
+                    </div>
+                    <div class="pdf-badge">Kit Ref: DAHUA-IP-8CH</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dahua NVR 8 channel</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Hard drive 1TB</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dahua IP Bullet 2MP 30m IR</span><span class="item-qty">x 8</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dahua 8-Port PoE switch</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dahua Cat5 cable 100m</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> RJ45 connectors</span><span class="item-qty">x 16</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> RJ45 boots</span><span class="item-qty">x 16</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 100x100 enclosures</span><span class="item-qty">x 8</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-16ch-ip">
+                    <div class="pdf-card-title">
+                        <h3>16-Channel IP CCTV Kit</h3>
+                        <span>Dahua 2MP Digital Network Surveillance System</span>
+                    </div>
+                    <div class="pdf-badge">Kit Ref: DAHUA-IP-16CH</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dahua NVR 16 channel</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Hard drive 2TB</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dahua IP Bullet 2MP 30m IR</span><span class="item-qty">x 16</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dahua 8-Port PoE switch</span><span class="item-qty">x 2</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dahua Cat5 cable 100m</span><span class="item-qty">x 2</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> RJ45 connectors</span><span class="item-qty">x 32</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> RJ45 boots</span><span class="item-qty">x 32</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 100x100 enclosures</span><span class="item-qty">x 16</span></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; 2026 NexPak Security Solutions. All rights reserved. Dahua IP CCTV Surveillance & Networking Distribution Division.
+    </footer>
+
+</body>
+</html>
+
