@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexPak Security Solutions | Dahua HD Cooper CCTV Series & Engineering Manual</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --obsidian: #0f0e0e;
+            --slate-dark: #1c1917;
+            --slate-light: #fafaf9;
+            --copper-accent: #d97706;
+            --amber-glow: #f59e0b;
+            --bronze-accent: #b45309;
+            --border-color: #e7e5e4;
+            --text-main: #292524;
+            --text-muted: #78716c;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: #f5f5f4; color: var(--text-main); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+        /* Stunning Modern Header - Distinct Copper & Obsidian Theme */
+        header {
+            background: linear-gradient(135deg, var(--obsidian) 0%, var(--slate-dark) 100%);
+            color: white;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--copper-accent);
+            box-shadow: 0 10px 25px -5px rgba(15, 14, 14, 0.4);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo-area h1 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(90deg, #ffffff, #fde68a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo-area span { color: var(--amber-glow); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; display: block; margin-top: 2px; }
+        
+        .back-btn {
+            background: rgba(217, 119, 6, 0.15);
+            border: 1px solid rgba(217, 119, 6, 0.4);
+            color: white;
+            padding: 0.6rem 1.4rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .back-btn:hover { background: var(--copper-accent); border-color: var(--copper-accent); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(217, 119, 6, 0.4); }
+
+        /* Layout Grid */
+        .container {
+            max-width: 1450px;
+            margin: 2.5rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1.3fr 1.1fr;
+            gap: 2.5rem;
+        }
+
+        @media (max-width: 1100px) {
+            .container { grid-template-columns: 1fr; padding: 0 1rem; }
+        }
+
+        /* Technical Manual Column (Left) */
+        .manual-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+        .manual-container h2 { font-size: 2rem; font-weight: 800; color: var(--obsidian); margin-bottom: 1.5rem; letter-spacing: -0.5px; }
+        .manual-container h3 { font-size: 1.25rem; font-weight: 700; color: var(--bronze-accent); margin: 2rem 0 1rem 0; display: flex; align-items: center; gap: 12px; border-bottom: 2px solid #f5f5f4; padding-bottom: 0.5rem; }
+        .manual-container h3 i { color: var(--copper-accent); }
+        .manual-container p { color: #44403c; margin-bottom: 1.2rem; font-size: 1rem; text-align: justify; }
+        .manual-container ul, .manual-container ol { margin-left: 1.5rem; margin-bottom: 1.5rem; color: #44403c; }
+        .manual-container li { margin-bottom: 0.7rem; font-size: 0.95rem; }
+        .manual-container li strong { color: var(--obsidian); }
+
+        .pro-tip-box {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border-left: 5px solid var(--copper-accent);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 2rem 0;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .pro-tip-box h4 { color: var(--obsidian); font-weight: 700; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 8px; font-size: 1rem; }
+        .pro-tip-box h4 i { color: var(--copper-accent); }
+        .pro-tip-box p { margin-bottom: 0; font-size: 0.95rem; color: #292524; }
+
+        /* Kit Sidebar (Right - PDF Document Style Cards) */
+        .sidebar-kits {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .pdf-kit-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .pdf-kit-card:hover { transform: translateY(-4px); }
+
+        .pdf-card-header {
+            padding: 1.3rem 2rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-8ch { background: linear-gradient(135deg, #0f0e0e 0%, #1c1917 100%); border-top: 5px solid #d97706; }
+        .header-16ch { background: linear-gradient(135deg, #0f0e0e 0%, #292524 100%); border-top: 5px solid #b45309; }
+        .header-32ch { background: linear-gradient(135deg, #0f0e0e 0%, #3f3f46 100%); border-top: 5px solid #f59e0b; }
+
+        .pdf-card-title h3 { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.3px; }
+        .pdf-card-title span { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; color: #d6d3d1; display: block; margin-top: 2px; }
+        
+        .pdf-badge {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pdf-card-body {
+            padding: 1.3rem 2rem;
+            background: #ffffff;
+        }
+        .pdf-table-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            border-bottom: 2px solid #f5f5f4;
+            padding-bottom: 6px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .pdf-bom-list {
+            list-style: none;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .pdf-bom-list::-webkit-scrollbar { width: 5px; }
+        .pdf-bom-list::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 3px; }
+
+        .pdf-bom-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 7px 0;
+            border-bottom: 1px solid #fafaf9;
+            font-size: 0.88rem;
+            transition: background 0.2s;
+        }
+        .pdf-bom-item:hover { background: #fafaf9; padding-left: 4px; padding-right: 4px; border-radius: 4px; }
+        
+        .item-name { color: var(--text-main); font-weight: 500; display: flex; align-items: center; gap: 8px; }
+        .item-name i { font-size: 0.65rem; color: var(--copper-accent); }
+        
+        .item-qty {
+            background: #f5f5f4;
+            color: var(--obsidian);
+            font-family: monospace;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            border: 1px solid #e7e5e4;
+        }
+
+        footer {
+            background: white;
+            text-align: center;
+            padding: 2.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <h1>NexPak Security Solutions</h1>
+            <span>Dahua HD Cooper CCTV Range & Engineering Compliance Manual</span>
+        </div>
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Store</a>
+    </header>
+
+    <div class="container">
+        
+        <div class="manual-container">
+            <h2>Dahua HD Cooper Range Architecture</h2>
+            <p>The Dahua Cooper Series offers reliable, high-definition analog and digital surveillance performance across 8, 16, and 32-channel arrays. Utilizing 2MP 1080P infrared bullet cameras, robust coaxial transmission (Paox cable), and centralized 9-way power supplies, these systems deliver crystal-clear day/night security.</p>
+
+            <h3><i class="fas fa-gavel"></i> Intensified South African Legal & Regulatory Framework</h3>
+            <p>CCTV surveillance installations in South Africa are heavily legislated under data privacy and workplace regulations. Compliance is mandatory for all professional integrations:</p>
+            <ul>
+                <li><strong>Protection of Personal Information Act (POPIA):</strong> Camera systems capturing public spaces, common property boundaries, or workspaces must display clear, visible warning notices stating that video surveillance is active. Data subjects have statutory rights regarding footage access, and video logs must not be retained indefinitely without lawful justification.</li>
+                <li><strong>Constitutional Right to Privacy:</strong> Cameras must be positioned to cover targeted perimeter lines and assets exclusively. Pointing lenses directly into private neighboring windows or non-consenting private zones constitutes a civil infringement of privacy rights.</li>
+                <li><strong>Workplace Monitoring Compliance:</strong> In commercial or industrial deployments, audio or video monitoring in employee-restricted areas (such as restrooms or change rooms) is strictly prohibited. Surveillance must be disclosed in employee policy handbooks.</li>
+                <li><strong>Electrical & Surge Compliance:</strong> Outdoor camera installations must be housed in weather-resistant 100x100 enclosures with proper grounding to protect XVRs and power supplies against high-voltage lightning surges common in South African summers.</li>
+            </ul>
+
+            <h3><i class="fas fa-graduation-cap"></i> Professional Installation & Training Training Methodology</h3>
+            <p>Deploying Dahua HD Cooper CCTV systems requires clean cabling architecture and precise hardware configuration:</p>
+            <ol>
+                <li><strong>Coaxial & Power Run Routing:</strong> Run Paox (RG59 + 2-core power) cables carefully, maintaining safe separation distances from high-voltage AC electrical lines to eliminate ground-loop hum and video interference.</li>
+                <li><strong>Precision BNC Crimping:</strong> Terminate all coaxial ends using professional BNC crimp-on connectors. Ensure copper center pins and braided shields do not touch, as short circuits cause signal loss or complete video failure.</li>
+                <li><strong>Weatherproof Termination:</strong> Mount camera video/power joints inside 100x100 outdoor junction enclosures to prevent moisture ingress and oxidation on copper connections.</li>
+                <li><strong>PSU Distribution & DC Leads:</strong> Connect cameras to dedicated 9-way CCTV power supply units using standard DC leads. Verify output voltage at the camera end to prevent voltage drop over long cable runs.</li>
+                <li><strong>Storage Optimization & XVR Setup:</strong> Install matched hard drives (1TB, 2TB, or 4TB) and configure H.265+ stream compression on Dahua XVRs to maximize video retention windows and enable remote mobile viewing via DMSS.</li>
+            </ol>
+
+            <div class="pro-tip-box">
+                <h4><i class="fas fa-shield-alt"></i> Professional Integration Tip</h4>
+                <p>Always connect the Dahua XVR and 9-way PSU through an online UPS or surge-protected power strip to safeguard hard drives and motherboard components against frequent load-shedding voltage spikes.</p>
+            </div>
+        </div>
+
+        <div class="sidebar-kits">
+            
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-8ch">
+                    <div class="pdf-card-title">
+                        <h3>8-Channel CCTV Kit</h3>
+                        <span>Dahua Cooper 2MP Surveillance System</span>
+                    </div>
+                    <div class="pdf-badge">Kit Ref: DAHUA-8CH</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dahua Cooper DVR 8 channel</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Hard drive 1TB</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dahua Bullet 2MP 20m IR</span><span class="item-qty">x 8</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Paox cable 100m</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 9-way CCTV PSU</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> DC leads</span><span class="item-qty">x 8</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> BNC crimp-on connectors</span><span class="item-qty">x 16</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 100x100 enclosures</span><span class="item-qty">x 8</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-16ch">
+                    <div class="pdf-card-title">
+                        <h3>16-Channel CCTV Kit</h3>
+                        <span>Dahua Cooper 2MP Surveillance System</span>
+                    </div>
+                    <div class="pdf-badge">Kit Ref: DAHUA-16CH</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dahua Cooper DVR 16 channel</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Hard drive 2TB</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dahua Bullet 2MP 20m IR</span><span class="item-qty">x 16</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Paox cable 100m</span><span class="item-qty">x 2</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 9-way CCTV PSU</span><span class="item-qty">x 2</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> DC leads</span><span class="item-qty">x 16</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> BNC crimp-on connectors</span><span class="item-qty">x 32</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 100x100 enclosures</span><span class="item-qty">x 16</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-32ch">
+                    <div class="pdf-card-title">
+                        <h3>32-Channel CCTV Kit</h3>
+                        <span>Dahua HD 2MP Enterprise Surveillance System</span>
+                    </div>
+                    <div class="pdf-badge">Kit Ref: DAHUA-32CH</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dahua DVR 32 channel</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Hard drive 4TB</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dahua Bullet 2MP 20m IR</span><span class="item-qty">x 32</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Paox cable 100m</span><span class="item-qty">x 4</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 9-way CCTV PSU</span><span class="item-qty">x 4</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> DC leads</span><span class="item-qty">x 32</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> BNC crimp-on connectors</span><span class="item-qty">x 64</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 100x100 enclosures</span><span class="item-qty">x 32</span></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; 2026 NexPak Security Solutions. All rights reserved. Dahua HD Cooper CCTV Surveillance Hardware Distribution Division.
+    </footer>
+
+</body>
+</html>
+
