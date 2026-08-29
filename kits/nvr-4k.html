@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexPak Security Solutions | Dahua 4K NVR & AI Surveillance Engineering Manual</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --obsidian: #090d16;
+            --slate-dark: #111c33;
+            --slate-light: #f8fafc;
+            --cctv-blue: #0ea5e9;
+            --cyan-glow: #38bdf8;
+            --blue-accent: #0284c7;
+            --border-color: #7dd3fc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: #f1f5f9; color: var(--text-main); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+        /* Sleek Technical Surveillance Header */
+        header {
+            background: linear-gradient(135deg, var(--obsidian) 0%, var(--slate-dark) 100%);
+            color: white;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--cctv-blue);
+            box-shadow: 0 10px 25px -5px rgba(9, 13, 22, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo-area h1 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(90deg, #ffffff, #7dd3fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo-area span { color: var(--cctv-blue); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; display: block; margin-top: 2px; }
+        
+        .back-btn {
+            background: rgba(14, 165, 233, 0.15);
+            border: 1px solid rgba(14, 165, 233, 0.4);
+            color: white;
+            padding: 0.6rem 1.4rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .back-btn:hover { background: var(--cctv-blue); border-color: var(--cctv-blue); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4); }
+
+        /* Layout Grid */
+        .container {
+            max-width: 1450px;
+            margin: 2.5rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1.3fr 1.1fr;
+            gap: 2.5rem;
+        }
+
+        @media (max-width: 1100px) {
+            .container { grid-template-columns: 1fr; padding: 0 1rem; }
+        }
+
+        /* Technical Manual Column (Left) */
+        .manual-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+            border: 1px solid #bae6fd;
+        }
+        .manual-container h2 { font-size: 2rem; font-weight: 800; color: var(--obsidian); margin-bottom: 1.5rem; letter-spacing: -0.5px; }
+        .manual-container h3 { font-size: 1.25rem; font-weight: 700; color: var(--cctv-blue); margin: 2rem 0 1rem 0; display: flex; align-items: center; gap: 12px; border-bottom: 2px solid #f0f9ff; padding-bottom: 0.5rem; }
+        .manual-container h3 i { color: var(--cyan-glow); }
+        .manual-container p { color: #334155; margin-bottom: 1.2rem; font-size: 1rem; text-align: justify; }
+        .manual-container ul, .manual-container ol { margin-left: 1.5rem; margin-bottom: 1.5rem; color: #334155; }
+        .manual-container li { margin-bottom: 0.7rem; font-size: 0.95rem; }
+        .manual-container li strong { color: var(--obsidian); }
+
+        .pro-tip-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 5px solid var(--cctv-blue);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 2rem 0;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .pro-tip-box h4 { color: var(--obsidian); font-weight: 700; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 8px; font-size: 1rem; }
+        .pro-tip-box h4 i { color: var(--cctv-blue); }
+        .pro-tip-box p { margin-bottom: 0; font-size: 0.95rem; color: #1e293b; }
+
+        /* Kit Sidebar (Right - PDF Document Style Cards) */
+        .sidebar-kits {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .pdf-kit-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+            border: 1px solid #bae6fd;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .pdf-kit-card:hover { transform: translateY(-4px); }
+
+        .pdf-card-header {
+            padding: 1.3rem 2rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-lite { background: linear-gradient(135deg, #090d16 0%, #111c33 100%); border-top: 5px solid #0ea5e9; }
+        .header-pro { background: linear-gradient(135deg, #090d16 0%, #1e3a8a 100%); border-top: 5px solid #0284c7; }
+        .header-ultra { background: linear-gradient(135deg, #090d16 0%, #172554 100%); border-top: 5px solid #38bdf8; }
+
+        .pdf-card-title h3 { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.3px; }
+        .pdf-card-title span { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; color: #bae6fd; display: block; margin-top: 2px; }
+        
+        .pdf-badge {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pdf-card-body {
+            padding: 1.3rem 2rem;
+            background: #ffffff;
+        }
+        .pdf-table-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            border-bottom: 2px solid #f0f9ff;
+            padding-bottom: 6px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .pdf-bom-list {
+            list-style: none;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .pdf-bom-list::-webkit-scrollbar { width: 5px; }
+        .pdf-bom-list::-webkit-scrollbar-thumb { background: #7dd3fc; border-radius: 3px; }
+
+        .pdf-bom-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 7px 0;
+            border-bottom: 1px solid #f0f9ff;
+            font-size: 0.88rem;
+            transition: background 0.2s;
+        }
+        .pdf-bom-item:hover { background: #f0f9ff; padding-left: 4px; padding-right: 4px; border-radius: 4px; }
+        
+        .item-name { color: var(--text-main); font-weight: 500; display: flex; align-items: center; gap: 8px; }
+        .item-name i { font-size: 0.65rem; color: var(--cctv-blue); }
+        
+        .item-qty {
+            background: #f0f9ff;
+            color: var(--obsidian);
+            font-family: monospace;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            border: 1px solid #bae6fd;
+        }
+
+        footer {
+            background: white;
+            text-align: center;
+            padding: 2.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 4rem;
+            border-top: 1px solid #bae6fd;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <h1>NexPak Security Solutions</h1>
+            <span>Dahua 4K NVR & AI Surveillance Engineering Manual</span>
+        </div>
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Store</a>
+    </header>
+
+    <div class="container">
+        
+        <div class="manual-container">
+            <h2>Dahua 4K NVR Architecture & Deep Learning AI</h2>
+            <p>Dahua 4K Network Video Recorders (NVRs) are high-performance surveillance hubs designed to process, record, and display Ultra HD video feeds up to 3840 x 2160 resolution. Within Dahua's ecosystem, traditional 4K recorders carry "-4KS2" or "-4KS3" suffixes, while modern deployments leverage "-EI" (WizSense) and "-XI" (WizMind) lines that natively output 4K resolution while managing advanced neural-network AI processing.</p>
+
+            <h3><i class="fas fa-microchip"></i> Structural Tiers & Analytics Integration</h3>
+            <ul>
+                <li><strong>Lite Series (Cost-Effective 4K Benchmark):</strong> Ideal for residential properties and retail storefronts. Features 4K HDMI output, built-in PoE switch ports, and H.265+ smart compression to slash storage bandwidth requirements by up to 80%.</li>
+                <li><strong>Pro / WizSense Series (Mid-Range Smart AI):</strong> Balances 4K clarity with onboard NVR intelligence. Provides SMD Plus (Smart Motion Detection) and perimeter boundary protection filtering out false alarms caused by rain, wind, or animals.</li>
+                <li><strong>Ultra / WizMind Series (Enterprise Infrastructure):</strong> Engineered for corporate campuses and industrial parks. Offers massive input bandwidth, multi-bay SATA hard drive arrays with RAID 0/1/5/6/10 data protection, ANPR, and crowd density heat mapping.</li>
+            </ul>
+
+            <h3><i class="fas fa-video"></i> Professional Installation & Storage Architecture</h3>
+            <ol>
+                <li><strong>PoE Integration:</strong> Utilize built-in PoE ports for plug-and-play camera provisioning or uplink via core network switches for distributed IP camera topologies.</li>
+                <li><strong>Storage Sizing & H.265+:</strong> Calculate required SATA hard drive capacity (up to 20TB per bay) based on continuous 4K bitrates, frame rates, and retention day targets.</li>
+                <li><strong>AI Search Optimization:</strong> Leverage WizSense and WizMind metadata search filters (AcuPick) to instantly pinpoint human or vehicle events across massive recorded footage timelines.</li>
+            </ol>
+
+            <div class="pro-tip-box">
+                <h4><i class="fas fa-bolt"></i> Professional Commissioning Tip</h4>
+                <p>Always deploy uninterruptible power supply (UPS) units to NVRs and PoE switches to prevent file corruption during local municipal power outages or grid voltage fluctuations.</p>
+            </div>
+        </div>
+
+        <div class="sidebar-kits">
+            
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-lite">
+                    <div class="pdf-card-title">
+                        <h3>Lite Series 4K NVRs</h3>
+                        <span>Cost-Effective Benchmark (-4KS2 / -4KS3)</span>
+                    </div>
+                    <div class="pdf-badge">Series: DAHUA-LITE</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dahua NVR4108HS-8P / NVR4216-16P</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Surveillance-Grade HDD (4TB / 8TB)</span><span class="item-qty">x 1-2</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Built-in PoE Switch Ports</span><span class="item-qty">8 / 16</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> HDMI 4K Output & Mouse Kit</span><span class="item-qty">x 1</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-pro">
+                    <div class="pdf-card-title">
+                        <h3>Pro / WizSense Series</h3>
+                        <span>Smart AI Analytics (NVR4116HS-EI / 5216)</span>
+                    </div>
+                    <div class="pdf-badge">Series: DAHUA-WIZSENSE</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dahua WizSense NVR (EI Series)</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Surveillance HDD (8TB Enterprise)</span><span class="item-qty">x 2</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> SMD Plus / Perimeter Protection License</span><span class="item-qty">Incl.</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Gigabit Network Uplink Cable</span><span class="item-qty">x 1</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-ultra">
+                    <div class="pdf-card-title">
+                        <h3>Ultra / WizMind Series</h3>
+                        <span>Enterprise Infrastructure (-XI Series)</span>
+                    </div>
+                    <div class="pdf-badge">Series: DAHUA-WIZMIND</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dahua WizMind NVR (32CH / 64CH)</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Enterprise SATA HDDs (up to 20TB)</span><span class="item-qty">x 4-8</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> RAID Hardware Array Controller</span><span class="item-qty">Built-in</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> ANPR & Heat Map Analytics Suite</span><span class="item-qty">Active</span></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; 2026 NexPak Security Solutions. All rights reserved. Dahua 4K Surveillance Distribution & Engineering Division.
+    </footer>
+
+</body>
+</html>
+
