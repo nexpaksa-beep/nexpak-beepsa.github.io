@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexPak Security Solutions | 6-Line Electric Fence Technical & Kit Specification Manual</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --obsidian: #0a0f1d;
+            --slate-dark: #1e293b;
+            --slate-light: #f8fafc;
+            --primary-blue: #2563eb;
+            --cyan-accent: #00f2fe;
+            --teal-accent: #0d9488;
+            --border-color: #e2e8f0;
+            --text-main: #334155;
+            --text-muted: #64748b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: #f1f5f9; color: var(--text-main); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+        /* Stunning Modern Header */
+        header {
+            background: linear-gradient(135deg, var(--obsidian) 0%, var(--slate-dark) 100%);
+            color: white;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--primary-blue);
+            box-shadow: 0 10px 25px -5px rgba(10, 15, 29, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo-area h1 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(90deg, #ffffff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo-area span { color: #38bdf8; font-size: 0.85rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; display: block; margin-top: 2px; }
+        
+        .back-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 0.6rem 1.4rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .back-btn:hover { background: var(--primary-blue); border-color: var(--primary-blue); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
+
+        /* Layout Grid */
+        .container {
+            max-width: 1400px;
+            margin: 2.5rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 2.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .container { grid-template-columns: 1fr; padding: 0 1rem; }
+        }
+
+        /* Technical Manual Column (Left) */
+        .manual-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+        .manual-container h2 { font-size: 2rem; font-weight: 800; color: var(--obsidian); margin-bottom: 1.5rem; letter-spacing: -0.5px; }
+        .manual-container h3 { font-size: 1.25rem; font-weight: 700; color: var(--primary-blue); margin: 2rem 0 1rem 0; display: flex; align-items: center; gap: 12px; border-bottom: 2px solid #f1f5f9; padding-bottom: 0.5rem; }
+        .manual-container h3 i { color: var(--teal-accent); }
+        .manual-container p { color: #475569; margin-bottom: 1.2rem; font-size: 1rem; text-align: justify; }
+        .manual-container ul, .manual-container ol { margin-left: 1.5rem; margin-bottom: 1.5rem; color: #475569; }
+        .manual-container li { margin-bottom: 0.7rem; font-size: 0.95rem; }
+        .manual-container li strong { color: var(--obsidian); }
+
+        .pro-tip-box {
+            background: linear-gradient(135deg, #eff6ff 0%, #f0fdfa 100%);
+            border-left: 5px solid var(--primary-blue);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 2rem 0;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .pro-tip-box h4 { color: var(--obsidian); font-weight: 700; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 8px; font-size: 1rem; }
+        .pro-tip-box h4 i { color: #eab308; }
+        .pro-tip-box p { margin-bottom: 0; font-size: 0.95rem; color: #1e293b; }
+
+        /* Kit Sidebar (Right - PDF Document Style) */
+        .sidebar-kits {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* PDF Document Box Style */
+        .pdf-kit-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .pdf-kit-card:hover { transform: translateY(-4px); }
+
+        .pdf-card-header {
+            padding: 1.5rem 2rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .pdf-card-header.kit-100 { background: linear-gradient(135deg, #0f172a 0%, #334155 100%); border-top: 5px solid #38bdf8; }
+        .pdf-card-header.kit-200 { background: linear-gradient(135deg, #0f172a 0%, #0f766e 100%); border-top: 5px solid #2dd4bf; }
+
+        .pdf-card-title h3 { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.3px; }
+        .pdf-card-title span { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; display: block; margin-top: 2px; }
+        
+        .pdf-badge {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pdf-card-body {
+            padding: 1.5rem 2rem;
+            background: #ffffff;
+        }
+        .pdf-table-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .pdf-bom-list {
+            list-style: none;
+            max-height: 480px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .pdf-bom-list::-webkit-scrollbar { width: 6px; }
+        .pdf-bom-list::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+        .pdf-bom-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 9px 0;
+            border-bottom: 1px solid #f8fafc;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+        .pdf-bom-item:hover { background: #f8fafc; padding-left: 4px; padding-right: 4px; border-radius: 4px; }
+        
+        .item-name { color: var(--text-main); font-weight: 500; display: flex; align-items: center; gap: 8px; }
+        .item-name i { font-size: 0.7rem; color: var(--primary-blue); }
+        
+        .item-qty {
+            background: #f1f5f9;
+            color: var(--obsidian);
+            font-family: monospace;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Footer */
+        footer {
+            background: white;
+            text-align: center;
+            padding: 2.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <h1>NexPak Security Solutions</h1>
+            <span>Official Engineering Data & Kit Specification Sheet</span>
+        </div>
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Store</a>
+    </header>
+
+    <div class="container">
+        
+        <div class="manual-container">
+            <h2>6-Line Perimeter Protection Systems</h2>
+            <p>Engineered for high-risk residential and commercial perimeters, the NexPak 6-Line configuration is built around the intelligent <strong>JVA Z14 Energizer</strong> platform. It provides active high-voltage deterrence paired with real-time zone monitoring and compliance readiness.</p>
+
+            <h3><i class="fas fa-balance-scale"></i> South African Legal & Regulatory Framework</h3>
+            <p>In terms of the <strong>Occupational Health and Safety Act (OHSA)</strong> and the Electrical Machinery Regulations governed by <strong>SANS 10222-3</strong>, all electric fence installations in South Africa must meet uncompromising statutory requirements:</p>
+            <ul>
+                <li><strong>Mandatory Certificate of Compliance (CoC):</strong> Every new installation requires a valid CoC issued by a registered electric fence installer. This document is legally required for property transfer or insurance compliance.</li>
+                <li><strong>Warning Signage Interval Regulations:</strong> High-visibility yellow warning signs ("CAUTION - ELECTRIC FENCE") must be securely displayed at all gates, access points, and at intervals <strong>not exceeding 10 meters</strong> along public thoroughfares.</li>
+                <li><strong>Physical Height Clearances:</strong> Brackets must maintain legal vertical or angled clearances over pedestrian pathways (minimum 2.2 meters from walking surfaces if uninsulated or accessible).</li>
+                <li><strong>Independent Earthing Grid:</strong> The system must feature dedicated copper-plated earth spikes coupled with high-voltage cable, completely separate from the primary household electrical earth.</li>
+            </ul>
+
+            <h3><i class="fas fa-graduation-cap"></i> Professional Installation & Training Guide</h3>
+            <p>Achieving system reliability and eliminating false triggers requires precise mechanical and electrical execution:</p>
+            <ol>
+                <li><strong>Bracket Layout & Alignment:</strong> Space 6-line square tube brackets at maximum 3-meter intervals. Reinforce all corners, end-posts, and gate pillars using 750mm stays and stay sleeves to counteract high wire tension loads.</li>
+                <li><strong>Solid Anchoring:</strong> Fasten brackets securely into concrete or brick structures using 8x80mm nail-in anchors. Ensure zero structural flex under extreme wind conditions.</li>
+                <li><strong>Wire Stringing & Termination:</strong> Thread the 1.2mm braided galvanized wire smoothly through the lugs. Maintain correct line tension using tweaker combos and S-hooks, crimping ends tightly with 6mm ferrules to prevent slippage.</li>
+                <li><strong>Surge & Lightning Mitigation:</strong> Install a Dual Lightning Divertor at the perimeter entry point before the energizer, bonded directly to dedicated copper-plated earth spikes to safeguard against electrostatic discharge and lightning surges.</li>
+                <li><strong>Power & Accessory Integration:</strong> Wire the 16 VA PSU, 7 Amp backup battery, 15W siren, red strobe, nite light, and single gate contact. Configure the JVA Z14 parameters for gate delay and alarm response thresholds.</li>
+            </ol>
+
+            <div class="pro-tip-box">
+                <h4><i class="fas fa-lightbulb"></i> Installer Best Practice</h4>
+                <p>Always verify loop resistance and conduct an end-to-end Joule output sweep using a digital fence scope before issuing the final CoC documentation and client handover.</p>
+            </div>
+        </div>
+
+        <div class="sidebar-kits">
+            
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header kit-100">
+                    <div class="pdf-card-title">
+                        <h3>6-Line 100m Kit</h3>
+                        <span>Standard Residential Perimeter</span>
+                    </div>
+                    <div class="pdf-badge">BOM Ref: 100M-6L</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Square tube 6-line Bracket</span><span class="item-qty">x 34</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Stay 750mm</span><span class="item-qty">x 8</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Stay sleeve 750mm</span><span class="item-qty">x 8</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Lug 6 x 35mm</span><span class="item-qty">x 16</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Nail in anchors 8x80mm</span><span class="item-qty">x 100</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Tweaker combo</span><span class="item-qty">x 30</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> S-hook</span><span class="item-qty">x 30</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Ferrules 6mm</span><span class="item-qty">x 100</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Braided galv wire 1.2mm (680m)</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Earth spike copper plated 1.2m</span><span class="item-qty">x 6</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Warning signs</span><span class="item-qty">x 10</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> HT cable soft 100m</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Single gate contact</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Nite light</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> JVA Z14 Energizer</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> 7 Amp battery</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> 16 VA PSU</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> 15 Watt siren</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Red strobe</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Dual lightning divertor</span><span class="item-qty">x 1</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header kit-200">
+                    <div class="pdf-card-title">
+                        <h3>6-Line 200m Kit</h3>
+                        <span>Extended Perimeter Bundle</span>
+                    </div>
+                    <div class="pdf-badge">BOM Ref: 200M-6L</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Square tube 6-line Bracket</span><span class="item-qty">x 68</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Stay 750mm</span><span class="item-qty">x 12</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Stay sleeve 750mm</span><span class="item-qty">x 12</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Lug 6 x 35mm</span><span class="item-qty">x 24</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Nail in anchors 8x80mm</span><span class="item-qty">x 200</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Tweaker combo</span><span class="item-qty">x 60</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> S-hook</span><span class="item-qty">x 60</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Ferrules 6mm</span><span class="item-qty">x 100</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Braided galv wire 1.2mm (680m)</span><span class="item-qty">x 2</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Earth spike copper plated 1.2m</span><span class="item-qty">x 12</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Warning signs</span><span class="item-qty">x 20</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> HT cable soft 100m</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Single gate contact</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> Nite light</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> JVA Z14 Energizer</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-chevron-right"></i> 7 Amp battery</span><span class="item-qty">x 1</span></li>
+                        <li 
