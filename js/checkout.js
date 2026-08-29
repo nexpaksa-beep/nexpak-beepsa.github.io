@@ -225,10 +225,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // PayFast Configuration (Sandbox Endpoint)
-            const payfastMerchantId = '10004002';   
-            const payfastMerchantKey = 'q1cd2rdny4a53'; 
-            const payfastUrl = 'https://sandbox.payfast.co.za/eng/process'; 
+                        // =========================================================================
+            // 5. SECURE CHECKOUT & PAYFAST SUBMISSION HANDLER (LIVE PRODUCTION)
+            // =========================================================================
+            
+            // ✅ YOUR REAL LIVE CREDENTIALS GO HERE
+            const payfastMerchantId = '36692313';   
+            const payfastMerchantKey = 'cmvr2h6hmum6e'; 
+            
+            // ✅ LIVE PRODUCTION URL
+            const payfastUrl = 'https://www.payfast.co.za/eng/process'; 
             
             const nameParts = customerName.split(' ');
             const firstName = nameParts[0] || 'Valued'; 
