@@ -14,12 +14,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const shippingAddress = document.getElementById('shippingAddress')?.value.trim();
             const paymentMethodInput = document.querySelector('input[name="paymentMethod"]:checked');
             
-            // DELIVERY GATEKEEPER CHECK: Inspect what is actively showing on the screen element
+            // 2. STRENGTHENED DELIVERY GATEKEEPER CHECK
             const deliveryEl = document.getElementById('chkDelivery');
             const deliveryText = deliveryEl ? deliveryEl.textContent.trim().toLowerCase() : '';
 
-            // ABSOLUTE PROTECTION: Block checkout if delivery hasn't been actively resolved
-            if (!deliveryEl || deliveryText === '' || deliveryText === 'r 0.00' || deliveryText === 'r 0') {
+            // Clean the delivery text to look for a pure number
+            const deliveryDigitsOnly = deliveryText.replace(/[^0-9]/g, '');
+            const parsedDeliveryFee = parseFloat(deliveryEl ? deliveryEl.textContent.replace(/[^0-9.]/g, '') : '0') || 0;
+
+            // STRICT GATE: If the element is empty, only has zeros, contains placeholder text, 
+            // or hasn't been updated by the calculator, stop checkout completely!
+            if (!deliveryEl || deliveryText === '' || deliveryDigitsOnly === '000' || deliveryDigitsOnly === '0' || parsedDeliveryFee === 0) {
+                // Allow checkout only if it explicitly says 'free' for high-value orders
                 if (!deliveryText.includes('free')) {
                     alert('Please calculate your delivery charges using your address/distance before completing your order.');
                     document.getElementById('btnCalculateDelivery')?.focus();
@@ -35,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const paymentMethod = paymentMethodInput ? paymentMethodInput.value : 'payfast';
 
-            // 2. Handle Instant EFT vs PayFast
+            // 3. Handle Instant EFT vs PayFast
             if (paymentMethod === 'eft') {
                 alert('Order placed successfully! Please use the Capitec bank details provided on screen to complete your EFT payment using your order number as reference.');
                 localStorage.clear(); 
@@ -44,56 +50,49 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // =========================================================================
-            // 3. SECURE MATHEMATICAL RE-CALCULATION BLOCK (FORCED FLOAT FIX)
+            // 4. BULLETPROOF PRICING EXTRACTION (FINANCIAL LOCK DOWN)
             // =========================================================================
             
-            // Pull raw numeric values straight out of your browser local cache states
-            const rawCartStorage = localStorage.getItem('nexpak_cart_total') || localStorage.getItem('nexpak_cart_subtotal') || '0';
-            const subtotalNet = parseFloat(rawCartStorage) || 0;
+            // Pull the raw numeric base total directly from the browser's storage array keys
+            const cartTotal = parseFloat(localStorage.getItem('nexpak_cart_total')) || 
+                              parseFloat(localStorage.getItem('nexpak_cart_subtotal')) || 0;
 
-            if (subtotalNet <= 0) {
+            if (cartTotal <= 0) {
                 alert('Your order total cannot be R0.00. Please add items to your cart.');
                 return;
             }
 
-            // Clean the delivery display text using a strict regex that isolates numbers and periods
+            // Safely isolate the delivery fee by splitting away any extra text or units
             let deliveryFee = 0;
-            if (deliveryEl) {
-                if (!deliveryText.includes('free')) {
-                    const globalSanitizedString = deliveryEl.textContent.replace(/[^0-9.]/g, '');
-                    deliveryFee = parseFloat(globalSanitizedString) || 0;
-                }
+            if (deliveryEl && !deliveryText.includes('free')) {
+                // If text contains a slash or comma from status text, grab only the last currency block
+                const textParts = deliveryEl.textContent.split('/');
+                const pricePart = textParts[textParts.length - 1]; // Focuses strictly on the trailing price string
+                const cleanPriceString = pricePart.replace(/[^0-9.]/g, '');
+                deliveryFee = parseFloat(cleanPriceString) || 0;
             }
 
-            // Execute the single-VAT ledger equation matching your checkout summary display logic
+            // Calculations
+            const subtotalNet = cartTotal;
             const vatAmount = subtotalNet * 0.15; // 15% Standard SA VAT
             const absoluteGrandTotal = subtotalNet + vatAmount + deliveryFee;
 
-            // Format to a clean string layout for PayFast payload ingestion (e.g., "731.00")
+            // Format to a clean string layout for PayFast payload ingestion (e.g. "731.00")
             const finalPayfastAmount = Number(absoluteGrandTotal).toFixed(2);
 
             console.log("🔒 PURE PAYFAST PAYLOAD LOCK -> Net:", subtotalNet, " | VAT:", vatAmount, " | Delivery:", deliveryFee, " | Sent total:", finalPayfastAmount);
 
             // =========================================================================
-            // 4. CONFIGURATION CONTROLLER & FORM SUBMISSION
+            // 5. CONFIGURATION CONTROLLER & FORM SUBMISSION
             // =========================================================================
-            
-            // --- MODE A: TESTING MODE (Active Now) ---
             const payfastMerchantId = '10004002';   // Universal test Merchant ID
             const payfastMerchantKey = 'q1cd2rdny4a53'; // Universal test Merchant Key
-            const payfastUrl = 'https://sandbox.payfast.co.za/eng/process'; // FIXED: Strict sandbox processing link
+            const payfastUrl = 'https://payfast.co.za'; // Strict sandbox processing link
             
-            /* 
-            // --- MODE B: LIVE PRODUCTION MODE (Uncomment this block and comment out Mode A to go live) ---
-            const payfastMerchantId = 'YOUR_LIVE_ID';   
-            const payfastMerchantKey = 'YOUR_LIVE_KEY'; 
-            const payfastUrl = 'https://www.payfast.co.za/eng/process'; 
-            */
-            
-            // FIXED TRIPLE-CHECK: Parse names safely into explicit strings to avoid array object errors
+            // Parse name strings explicitly into separate structures
             const nameParts = customerName.split(' ');
-            const firstName = nameParts[0] ? nameParts[0] : 'Valued'; 
-            const lastName = nameParts.slice(1).join(' ') ? nameParts.slice(1).join(' ') : 'Customer';
+            const firstName = nameParts[0] || 'Valued'; 
+            const lastName = nameParts.slice(1).join(' ') || 'Customer';
 
             // Gather cart items for description log mapping
             const cartItems = JSON.parse(localStorage.getItem('nexpak_cart_items')) || [];
@@ -134,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // Wipe local storage cart metrics completely to restore clean checkout state upon return route
+            // Wipe cart values cleanly right before jumping off-site
             localStorage.removeItem('nexpak_cart_count');
             localStorage.removeItem('nexpak_cart_total');
             localStorage.removeItem('nexpak_cart_subtotal');
@@ -147,4 +146,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-                
+            
