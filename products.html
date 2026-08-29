@@ -1,244 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexpak Security Solutions | Product Categories</title>
+<meta name="description" content="Browse professional CCTV, electric fencing, alarms, gate automation and security solutions from Nexpak Security Solutions.">
 
-<title>NEXPAK Security Solutions | Product Catalogue</title>
+<link rel="canonical" href="https://yourdomain.co.za/products.html">
+<meta property="og:site_name" content="Nexpak Security Solutions">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_ZA">
+<meta property="og:url" content="https://yourdomain.co.za/products.html">
+<meta property="og:title" content="Security Product Ranges — Nexpak Security Solutions">
+<meta property="og:description" content="Professional CCTV, electric fencing, gate automation, and alarm systems.">
+<meta property="og:image" content="https://yourdomain.co.za/images/products/cctv-system-1.jpg">
 
-<meta name="description" content="Browse the official NEXPAK Security Solutions Product Catalogue featuring Gate Automation, Electric Fencing, Alarm Systems, CCTV, Access Control and Security Products.">
+<link rel="stylesheet" href="CSS/style.css">
+<link rel="stylesheet" href="shop-styles.css">
+<link rel="stylesheet" href="css/shop-enhancements.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,Helvetica,sans-serif;
+/* Custom styling for the product category grid buttons */
+.categories-hero {
+    padding: 60px 20px 30px;
+    text-align: center;
+    background: #f9fafb;
 }
 
-body{
-background:#111;
-color:#fff;
+.categories-hero h1 {
+    font-size: 2.5rem;
+    color: #111827;
+    margin-bottom: 10px;
 }
 
-header{
-position:fixed;
-top:0;
-left:0;
-right:0;
-height:80px;
-background:#031b38;
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:0 20px;
-z-index:1000;
-box-shadow:0 4px 12px rgba(0,0,0,.4);
+.categories-hero p {
+    font-size: 1.1rem;
+    color: #4b5563;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-.logo{
-display:flex;
-align-items:center;
-gap:15px;
+.product-grid-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
 }
 
-.logo img{
-height:55px;
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
 }
 
-.logo h1{
-font-size:26px;
-color:#fff;
+.category-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 30px 20px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-nav a{
-color:#fff;
-text-decoration:none;
-margin-left:25px;
-font-weight:bold;
-transition:.3s;
+.category-card:hover {
+    transform: translateY(-5px);
+    border-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    border-color: #2563eb;
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.1);
 }
 
-nav a:hover{
-color:#0099ff;
+.category-icon {
+    font-size: 2.8rem;
+    color: #2563eb;
+    margin-bottom: 20px;
+    background: #eff6ff;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.3s ease;
 }
 
-.catalogue{
-margin-top:100px;
-max-width:1100px;
-margin-left:auto;
-margin-right:auto;
-padding:20px;
+.category-card:hover .category-icon {
+    background: #2563eb;
+    color: #ffffff;
 }
 
-.page{
-margin-bottom:35px;
-background:#fff;
-border-radius:10px;
-overflow:hidden;
-box-shadow:0 8px 25px rgba(0,0,0,.35);
+.category-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 10px;
 }
 
-.page img{
-width:100%;
-display:block;
-}
-
-footer{
-background:#031b38;
-padding:30px;
-text-align:center;
-font-size:15px;
-}
-
-.whatsapp{
-position:fixed;
-bottom:20px;
-right:20px;
-width:65px;
-height:65px;
-background:#25D366;
-color:#fff;
-border-radius:50%;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:36px;
-text-decoration:none;
-box-shadow:0 8px 20px rgba(0,0,0,.4);
-z-index:9999;
-transition:.3s;
-}
-
-.whatsapp:hover{
-transform:scale(1.1);
-background:#1EBE5D;
-}
-
-.social-icons{
-margin-top:20px;
-display:flex;
-justify-content:center;
-gap:25px;
-}
-
-.social-icons a{
-width:55px;
-height:55px;
-background:#ffffff;
-color:#031b38;
-border-radius:50%;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:28px;
-text-decoration:none;
-transition:.3s;
-}
-
-.social-icons a:hover{
-background:#0099ff;
-color:#fff;
-transform:translateY(-5px);
+.category-desc {
+    font-size: 0.95rem;
+    color: #6b7280;
+    line-height: 1.5;
 }
 </style>
-
 </head>
 
 <body>
 
+<!-- =========================================
+HEADER
+========================================= -->
 <header>
-
-<div class="logo">
-
-<img src="images/logo.png" alt="NEXPAK Logo">
-
-<h1>NEXPAK Security Solutions</h1>
-
-</div>
-
-<nav>
-
-<a href="index.html">Home</a>
-
-<a href="about.html">About</a>
-
-<a href="contact.html">Contact</a>
-
-</nav>
-
+    <div class="logo">
+        NEXPAK SECURITY SOLUTIONS
+    </div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="products.html" class="active">Products</a>
+        <a href="shop.html">Shop</a>
+        <a href="contact.html">Contact</a>
+    </nav>
+    <div class="cart-button">
+        <a href="cart.html">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count">0</span>
+        </a>
+    </div>
 </header>
 
-<div class="catalogue">
+<!-- =========================================
+CATEGORIES HERO SECTION
+========================================= -->
+<section class="categories-hero">
+    <h1>Our Security Product Ranges</h1>
+    <p>Select a category below to explore professional hardware, view specifications, and configure your custom security solution.</p>
+</section>
 
-<div class="page">
-<img src="images/p1.png" alt="Catalogue Page 1">
-</div>
+<!-- =========================================
+PRODUCT BUTTONS GRID
+========================================= -->
+<main class="product-grid-section">
+    <div class="category-grid">
 
-<div class="page">
-<img src="images/p2.png" alt="Catalogue Page 2">
-</div>
+        <!-- CCTV Systems -->
+        <a href="products/cctv.html" class="category-card">
+            <div class="category-icon">
+                <i class="fas fa-video"></i>
+            </div>
+            <h2 class="category-title">CCTV Systems</h2>
+            <p class="category-desc">High-definition analog and digital surveillance kits for residential and commercial monitoring.</p>
+        </a>
 
-<div class="page">
-<img src="images/p3.png" alt="Catalogue Page 3">
-</div>
+        <!-- IP CCTV -->
+        <a href="products/ip-cctv.html" class="category-card">
+            <div class="category-icon">
+                <i class="fas fa-network-wired"></i>
+            </div>
+            <h2 class="category-title">IP CCTV Systems</h2>
+            <p class="category-desc">Advanced network camera solutions featuring crystal-clear digital transmission and remote viewing.</p>
+        </a>
 
-<div class="page">
-<img src="images/p4.png" alt="Catalogue Page 4">
-</div>
+        <!-- Gate Motors -->
+        <a href="products/gate-motors.html" class="category-card">
+            <div class="category-icon">
+                <i class="fas fa-door-open"></i>
+            </div>
+            <h2 class="category-title">Gate & Garage Motors</h2>
+            <p class="category-desc">Reliable automated sliding, swing, and garage door motors built for high security and performance.</p>
+        </a>
 
-<div class="page">
-<img src="images/p5.png" alt="Catalogue Page 5">
-</div>
+        <!-- Electric Fencing -->
+        <a href="products/electric-fencing.html" class="category-card">
+            <div class="category-icon">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <h2 class="category-title">Electric Fencing</h2>
+            <p class="category-desc">Energizers, brackets, wires, and complete perimeter security kits to deter unauthorized access.</p>
+        </a>
 
+        <!-- Roboguard Beams -->
+        <a href="products/roboguard.html" class="category-card">
+            <div class="category-icon">
+                <i class="fas fa-shield-halved"></i>
+            </div>
+            <h2 class="category-title">Roboguard Beams</h2>
+            <p class="category-desc">Wireless outdoor perimeter intrusion detection beams designed to react before intruders reach your doors.</p>
+        </a>
 
-</div>
+        <!-- Alarm Systems -->
+        <a href="products/alarms.html" class="category-card">
+            <div class="category-icon">
+                <i class="fas fa-bell"></i>
+            </div>
+            <h2 class="category-title">Alarm Systems</h2>
+            <p class="category-desc">Smart intrusion alarm panels, keypads, and detectors to safeguard your property interior.</p>
+        </a>
 
+        <!-- Access Control -->
+        <a href="products/access-control.html" class="category-card">
+            <div class="category-icon">
+                <i class="fas fa-id-card"></i>
+            </div>
+            <h2 class="category-title">Access Control</h2>
+            <p class="category-desc">Biometric readers, tag systems, magnetic locks, and intercom controllers for managed entry.</p>
+        </a>
+
+    </div>
+</main>
+
+<!-- =========================================
+TRUST SECTION
+========================================= -->
+<section class="trust-section">
+    <div class="trust-container">
+        <div class="trust-box">
+            <i class="fas fa-shield-halved"></i>
+            <h3>Professional Security</h3>
+            <p>Reliable security equipment for homes, businesses and industrial sites.</p>
+        </div>
+        <div class="trust-box">
+            <i class="fas fa-user-shield"></i>
+            <h3>Expert Solutions</h3>
+            <p>Custom security systems designed around your requirements.</p>
+        </div>
+        <div class="trust-box">
+            <i class="fas fa-headset"></i>
+            <h3>Support & Service</h3>
+            <p>Assistance from quotation to installation.</p>
+        </div>
+    </div>
+</section>
+
+<!-- =========================================
+FOOTER
+========================================= -->
 <footer>
-
-<h2>NEXPAK Security Solutions</h2>
-
-<p>
-Professional Security Products • CCTV • Electric Fencing • Gate Automation • Alarm Systems • Access Control
-</p>
-
-<div class="social-icons">
-
-<a href="https://facebook.com" target="_blank">
-<i class="fa-brands fa-facebook-f"></i>
-</a>
-
-<a href="https://instagram.com" target="_blank">
-<i class="fa-brands fa-instagram"></i>
-</a>
-
-<a href="https://tiktok.com" target="_blank">
-<i class="fa-brands fa-tiktok"></i>
-</a>
-
-</div>
-
-<p style="margin-top:20px;">
-© 2024 NEXPAK Security Solutions. All Rights Reserved.
-</p>
-
+    <div class="footer-container">
+        <div class="footer-column">
+            <h3>Nexpak Security Solutions</h3>
+            <p>Security equipment supplier providing CCTV, electric fencing, alarms, gate automation and access control.</p>
+        </div>
+        <div class="footer-column">
+            <h3>Quick Links</h3>
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="shop.html">Shop</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer-column">
+            <h3>Contact</h3>
+            <p>WhatsApp: 083 630 8249</p>
+            <p>Email: info@nexpaksecurity.co.za</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        © Nexpak Security Solutions. All Rights Reserved.
+    </div>
 </footer>
 
-
-<a
-class="whatsapp"
-href="https://wa.me/27836308249"
-target="_blank"
-aria-label="WhatsApp">
-
-<i class="fa-brands fa-whatsapp"></i>
-
-</a>
-
 </body>
-</html>
+  </html>
+              
