@@ -195,7 +195,7 @@ footer a {
 .whatsapp {
   position: fixed;
   right: 20px;
-  bottom: 20px;
+  bottom: 85px; /* Moves it safely above a bottom-right chat widget */
   width: 54px;
   height: 54px;
   border-radius: 50%;
@@ -204,8 +204,8 @@ footer a {
   display: grid;
   place-items: center;
   font-size: 28px;
-  z-index: 1200;
-  box-shadow: 0 10px 25px rgba(0,0,0,.2);
+  z-index: 9999 !important; /* Forces it to float above all other widgets */
+  box-shadow: 0 10px 25px rgba(0,0,0,.3);
   transition: transform .2s;
 }
 
@@ -217,7 +217,8 @@ footer a {
 
 .whatsapp i {
   color: #fff !important;
-  }
+}
+
   
 
 .overlay{position:fixed;inset:0;background:rgba(5,20,13,.55);z-index:1500;display:none}
