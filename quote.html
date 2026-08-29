@@ -8492,6 +8492,1600 @@ Security Team
     border:
         1px solid
 
+             rgba(57,168,255,0.35);
+
+    color:
+        var(--nx-blue-bright);
+
+    font-size:
+        12px;
+
+    font-weight:
+        800;
+
+}
+
+
+/* =========================================================
+ CCTV NETWORK CONNECTION LINES
+========================================================= */
+
+.nx-cctv-lines {
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+}
+
+
+.nx-cctv-lines i {
+
+    position:
+        absolute;
+
+    display:
+        block;
+
+    height:
+        1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--nx-blue),
+            var(--nx-cyan)
+        );
+
+    transform-origin:
+        left center;
+
+    box-shadow:
+        0 0 8px
+        rgba(57,168,255,0.25);
+
+}
+
+
+.nx-cctv-lines i:nth-child(1) {
+
+    left:
+        24%;
+
+    top:
+        36%;
+
+    width:
+        170px;
+
+}
+
+
+.nx-cctv-lines i:nth-child(2) {
+
+    left:
+        47%;
+
+    top:
+        48%;
+
+    width:
+        100px;
+
+    transform:
+        rotate(18deg);
+
+}
+
+
+.nx-cctv-lines i:nth-child(3) {
+
+    left:
+        58%;
+
+    top:
+        36%;
+
+    width:
+        100px;
+
+}
+
+
+/* =========================================================
+ LOW-VOLTAGE MONITOR VISUAL
+========================================================= */
+
+.nx-monitor-system {
+
+    position:
+        absolute;
+
+    left:
+        50%;
+
+    top:
+        50%;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+}
+
+
+/* =========================================================
+ MONITOR SCREEN
+========================================================= */
+
+.nx-monitor-screen {
+
+    position:
+        relative;
+
+    width:
+        310px;
+
+    height:
+        200px;
+
+    border:
+        1px solid
+        rgba(57,168,255,0.55);
+
+    background:
+        #03070c;
+
+    box-shadow:
+        0 0 50px
+        rgba(22,140,255,0.10);
+
+}
+
+
+/* =========================================================
+ MONITOR GRID
+========================================================= */
+
+.nx-screen-grid {
+
+    position:
+        absolute;
+
+    inset:
+        20px;
+
+    background-image:
+
+        linear-gradient(
+            rgba(57,168,255,0.08) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(57,168,255,0.08) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        25px 25px;
+
+}
+
+
+/* =========================================================
+ MONITOR ZONE
+========================================================= */
+
+.nx-screen-zone {
+
+    position:
+        absolute;
+
+    left:
+        25px;
+
+    top:
+        25px;
+
+    color:
+        var(--nx-blue-bright);
+
+    font-size:
+        10px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        0.08em;
+
+}
+
+
+/* =========================================================
+ MONITOR STATUS
+========================================================= */
+
+.nx-screen-status {
+
+    position:
+        absolute;
+
+    right:
+        25px;
+
+    top:
+        25px;
+
+    color:
+        var(--nx-cyan);
+
+    font-size:
+        8px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        0.08em;
+
+}
+
+
+/* =========================================================
+ MONITOR PULSE
+========================================================= */
+
+.nx-screen-pulse {
+
+    position:
+        absolute;
+
+    left:
+        25px;
+
+    right:
+        25px;
+
+    bottom:
+        45px;
+
+    height:
+        30px;
+
+    border-bottom:
+        1px solid
+        var(--nx-blue);
+
+    clip-path:
+        polygon(
+            0 70%,
+            15% 70%,
+            20% 20%,
+            25% 90%,
+            30% 55%,
+            50% 55%,
+            55% 30%,
+            60% 80%,
+            65% 40%,
+            100% 40%,
+            100% 100%,
+            0 100%
+        );
+
+}
+
+
+/* =========================================================
+ MONITOR BASE
+========================================================= */
+
+.nx-monitor-base {
+
+    width:
+        100px;
+
+    height:
+        12px;
+
+    margin:
+        0 auto;
+
+    background:
+        rgba(255,255,255,0.08);
+
+}
+
+
+/* =========================================================
+ INTEGRATION VISUAL
+========================================================= */
+
+.nx-integration-map {
+
+    position:
+        absolute;
+
+    inset:
+        0;
+
+}
+
+
+/* =========================================================
+ INTEGRATION CORE
+========================================================= */
+
+.nx-map-core {
+
+    position:
+        absolute;
+
+    left:
+        50%;
+
+    top:
+        50%;
+
+    width:
+        100px;
+
+    height:
+        100px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    border:
+        1px solid
+        var(--nx-blue-bright);
+
+    border-radius:
+        50%;
+
+    color:
+        var(--nx-blue-bright);
+
+    font-size:
+        10px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        0.08em;
+
+    box-shadow:
+        0 0 35px
+        rgba(22,140,255,0.15);
+
+}
+
+
+/* =========================================================
+ INTEGRATION NODES
+========================================================= */
+
+.nx-map-node {
+
+    position:
+        absolute;
+
+    min-width:
+        90px;
+
+    padding:
+        10px;
+
+    text-align:
+        center;
+
+    border:
+        1px solid
+        rgba(57,168,255,0.30);
+
+    background:
+        rgba(5,12,20,0.80);
+
+    color:
+        #a9b8c8;
+
+    font-size:
+        8px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        0.06em;
+
+}
+
+
+.map-fence {
+
+    left:
+        12%;
+
+    top:
+        25%;
+
+}
+
+
+.map-cctv {
+
+    right:
+        12%;
+
+    top:
+        25%;
+
+}
+
+
+.map-network {
+
+    left:
+        12%;
+
+    bottom:
+        25%;
+
+}
+
+
+.map-access {
+
+    right:
+        12%;
+
+    bottom:
+        25%;
+
+}
+
+
+/* =========================================================
+ INTEGRATION LINKS
+========================================================= */
+
+.nx-map-link {
+
+    position:
+        absolute;
+
+    left:
+        50%;
+
+    top:
+        50%;
+
+    width:
+        150px;
+
+    height:
+        1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--nx-blue),
+            transparent
+        );
+
+    transform-origin:
+        left center;
+
+}
+
+
+.link-fence {
+
+    transform:
+        translateY(-50%)
+        rotate(205deg);
+
+}
+
+
+.link-cctv {
+
+    transform:
+        translateY(-50%)
+        rotate(-25deg);
+
+}
+
+
+.link-network {
+
+    transform:
+        translateY(-50%)
+        rotate(155deg);
+
+}
+
+
+.link-access {
+
+    transform:
+        translateY(-50%)
+        rotate(25deg);
+
+}
+
+
+/* =========================================================
+ FEATURE CONTENT
+========================================================= */
+
+.nx-feature-content {
+
+    padding:
+        75px 65px;
+
+}
+
+
+.nx-feature-kicker {
+
+    margin-bottom:
+        15px;
+
+    color:
+        var(--nx-blue-bright);
+
+    font-size:
+        9px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        0.18em;
+
+}
+
+
+/* =========================================================
+ FEATURE HEADING
+========================================================= */
+
+.nx-feature-content h3 {
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size:
+        clamp(
+            38px,
+            4vw,
+            60px
+        );
+
+    line-height:
+        0.98;
+
+    letter-spacing:
+        -0.05em;
+
+}
+
+
+/* =========================================================
+ FEATURE PARAGRAPHS
+========================================================= */
+
+.nx-feature-content p {
+
+    max-width:
+        650px;
+
+    margin-top:
+        22px;
+
+    color:
+        var(--nx-text);
+
+    font-size:
+        14px;
+
+    line-height:
+        1.85;
+
+}
+
+
+/* =========================================================
+ FEATURE LIST
+========================================================= */
+
+.nx-feature-list {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap:
+        12px;
+
+    margin-top:
+        35px;
+
+}
+
+
+.nx-feature-list div {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        12px;
+
+    padding:
+        13px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.06);
+
+    background:
+        rgba(255,255,255,0.015);
+
+}
+
+
+.nx-feature-list span {
+
+    color:
+        var(--nx-blue-bright);
+
+    font-size:
+        8px;
+
+    font-weight:
+        800;
+
+}
+
+
+.nx-feature-list strong {
+
+    color:
+        #c3cfda;
+
+    font-size:
+        10px;
+
+}
+
+
+/* =========================================================
+ TECHNICAL NOTE
+========================================================= */
+
+.nx-technical-note {
+
+    margin-top:
+        30px;
+
+    padding:
+        15px;
+
+    border-left:
+        2px solid
+        var(--nx-blue);
+
+    background:
+        rgba(22,140,255,0.035);
+
+    color:
+        var(--nx-blue-bright);
+
+    font-size:
+        8px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        0.08em;
+
+}
+
+
+.nx-technical-note span {
+
+    display:
+        block;
+
+    margin-top:
+        8px;
+
+    color:
+        #77879a;
+
+    font-size:
+        10px;
+
+    font-weight:
+        400;
+
+    line-height:
+        1.6;
+
+    letter-spacing:
+        normal;
+
+}
+
+
+/* =========================================================
+ SYSTEM EXAMPLE
+========================================================= */
+
+.nx-system-example {
+
+    padding:
+        150px 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            #05090f,
+            #07101a
+        );
+
+    border-top:
+        1px solid
+        var(--nx-line);
+
+}
+
+
+.nx-example-header {
+
+    max-width:
+        850px;
+
+    margin-bottom:
+        75px;
+
+}
+
+
+.nx-example-header h2 {
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size:
+        clamp(
+            44px,
+            5vw,
+            72px
+        );
+
+    line-height:
+        0.98;
+
+    letter-spacing:
+        -0.05em;
+
+}
+
+
+.nx-example-header h2 span {
+
+    color:
+        var(--nx-blue-bright);
+
+}
+
+
+.nx-example-header p {
+
+    max-width:
+        700px;
+
+    margin-top:
+        22px;
+
+    color:
+        var(--nx-text);
+
+    font-size:
+        15px;
+
+    line-height:
+        1.8;
+
+}
+
+
+/* =========================================================
+ PROJECT DIAGRAM
+========================================================= */
+
+.nx-project-diagram {
+
+    position:
+        relative;
+
+    min-height:
+        550px;
+
+    border:
+        1px solid
+        rgba(57,168,255,0.15);
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(22,140,255,0.07),
+            transparent 42%
+        );
+
+    overflow:
+        hidden;
+
+}
+
+
+/* =========================================================
+ PROJECT CORE
+========================================================= */
+
+.nx-project-core {
+
+    position:
+        absolute;
+
+    left:
+        50%;
+
+    top:
+        50%;
+
+    width:
+        145px;
+
+    height:
+        145px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    transform:
+        translate(
+            -50%,
+            -50%
+        );
+
+    border:
+        1px solid
+        var(--nx-blue-bright);
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(4,10,16,0.95);
+
+    box-shadow:
+        0 0 50px
+        rgba(22,140,255,0.12);
+
+    z-index:
+        4;
+
+}
+
+
+.nx-project-core-ring {
+
+    position:
+        absolute;
+
+    inset:
+        -18px;
+
+    border:
+        1px solid
+        rgba(57,168,255,0.15);
+
+    border-radius:
+        50%;
+
+}
+
+
+.nx-project-core strong {
+
+    color:
+        white;
+
+    font-size:
+        15px;
+
+    letter-spacing:
+        0.1em;
+
+}
+
+
+.nx-project-core span {
+
+    margin-top:
+        5px;
+
+    color:
+        var(--nx-blue-bright);
+
+    font-size:
+        7px;
+
+    text-align:
+        center;
+
+    letter-spacing:
+        0.15em;
+
+}
+
+
+/* =========================================================
+ PROJECT NODES
+========================================================= */
+
+.nx-project-node {
+
+    position:
+        absolute;
+
+    width:
+        190px;
+
+    padding:
+        20px;
+
+    border:
+        1px solid
+        rgba(57,168,255,0.25);
+
+    background:
+        rgba(5,12,19,0.88);
+
+    z-index:
+        5;
+
+}
+
+
+.project-fence {
+
+    left:
+        7%;
+
+    top:
+        17%;
+
+}
+
+
+.project-cctv {
+
+    right:
+        7%;
+
+    top:
+        17%;
+
+}
+
+
+.project-network {
+
+    left:
+        7%;
+
+    bottom:
+        17%;
+
+}
+
+
+.project-access {
+
+    right:
+        7%;
+
+    bottom:
+        17%;
+
+}
+
+
+/* =========================================================
+ PROJECT ICON
+========================================================= */
+
+.nx-project-icon {
+
+    margin-bottom:
+        10px;
+
+    color:
+        var(--nx-blue-bright);
+
+    font-size:
+        9px;
+
+    font-weight:
+        800;
+
+}
+
+
+/* =========================================================
+ PROJECT NODE TEXT
+========================================================= */
+
+.nx-project-node strong {
+
+    display:
+        block;
+
+    font-size:
+        11px;
+
+    letter-spacing:
+        0.08em;
+
+}
+
+
+.nx-project-node span {
+
+    display:
+        block;
+
+    margin-top:
+        6px;
+
+    color:
+        var(--nx-muted);
+
+    font-size:
+        8px;
+
+}
+
+
+/* =========================================================
+ PROJECT CONNECTIONS
+========================================================= */
+
+.nx-project-connection {
+
+    position:
+        absolute;
+
+    left:
+        50%;
+
+    top:
+        50%;
+
+    width:
+        270px;
+
+    height:
+        1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--nx-blue),
+            transparent
+        );
+
+    transform-origin:
+        left center;
+
+    z-index:
+        1;
+
+}
+
+
+.connection-a {
+
+    transform:
+        translateY(-50%)
+        rotate(205deg);
+
+}
+
+
+.connection-b {
+
+    transform:
+        translateY(-50%)
+        rotate(-25deg);
+
+}
+
+
+.connection-c {
+
+    transform:
+        translateY(-50%)
+        rotate(155deg);
+
+}
+
+
+.connection-d {
+
+    transform:
+        translateY(-50%)
+        rotate(25deg);
+
+}
+
+
+/* =========================================================
+ PROJECT FLOW
+========================================================= */
+
+.nx-project-flow {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        20px;
+
+    margin-top:
+        35px;
+
+}
+
+
+.nx-project-flow > div:not(.nx-project-arrow) {
+
+    min-width:
+        150px;
+
+    padding:
+        16px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.07);
+
+    text-align:
+        center;
+
+}
+
+
+.nx-project-flow span {
+
+    display:
+        block;
+
+    color:
+        var(--nx-blue-bright);
+
+    font-size:
+        7px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        0.12em;
+
+}
+
+
+.nx-project-flow strong {
+
+    display:
+        block;
+
+    margin-top:
+        7px;
+
+    font-size:
+        10px;
+
+}
+
+
+.nx-project-arrow {
+
+    color:
+        var(--nx-blue-bright);
+
+    font-size:
+        20px;
+
+}
+
+
+/* =========================================================
+ TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .nx-technical-feature,
+    .nx-feature-reverse {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .nx-feature-visual,
+    .nx-feature-reverse .nx-feature-visual {
+
+        order:
+            1;
+
+        min-height:
+            500px;
+
+        border:
+            none;
+
+        border-bottom:
+            1px solid
+            var(--nx-line);
+
+    }
+
+
+    .nx-feature-content,
+    .nx-feature-reverse .nx-feature-content {
+
+        order:
+            2;
+
+    }
+
+
+    .nx-project-node {
+
+        width:
+            160px;
+
+    }
+
+
+    .nx-project-connection {
+
+        width:
+            220px;
+
+    }
+
+}
+
+
+/* =========================================================
+ MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .nx-technical-section,
+    .nx-system-example {
+
+        padding:
+            90px 0;
+
+    }
+
+
+    .nx-technical-heading {
+
+        margin-bottom:
+            70px;
+
+    }
+
+
+    .nx-technical-feature {
+
+        margin-bottom:
+            60px;
+
+    }
+
+
+    .nx-feature-visual,
+    .nx-feature-reverse .nx-feature-visual {
+
+        min-height:
+            390px;
+
+    }
+
+
+    .nx-feature-content {
+
+        padding:
+            55px 25px;
+
+    }
+
+
+    .nx-feature-content h3 {
+
+        font-size:
+            40px;
+
+    }
+
+
+    .nx-feature-list {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .nx-feature-number {
+
+        left:
+            18px;
+
+    }
+
+
+    .nx-jva-rack {
+
+        width:
+            220px;
+
+    }
+
+
+    .nx-cctv-switch {
+
+        width:
+            120px;
+
+    }
+
+
+    .nx-cctv-nvr {
+
+        right:
+            5%;
+
+        width:
+            75px;
+
+    }
+
+
+    .nx-project-diagram {
+
+        min-height:
+            650px;
+
+    }
+
+
+    .nx-project-node {
+
+        width:
+            135px;
+
+    }
+
+
+    .project-fence {
+
+        left:
+            15px;
+
+        top:
+            40px;
+
+    }
+
+
+    .project-cctv {
+
+        right:
+            15px;
+
+        top:
+            40px;
+
+    }
+
+
+    .project-network {
+
+        left:
+            15px;
+
+        bottom:
+            40px;
+
+    }
+
+
+    .project-access {
+
+        right:
+            15px;
+
+        bottom:
+            40px;
+
+    }
+
+
+    .nx-project-core {
+
+        width:
+            110px;
+
+        height:
+            110px;
+
+    }
+
+
+    .nx-project-connection {
+
+        width:
+            155px;
+
+    }
+
+
+    .nx-project-flow {
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .nx-project-arrow {
+
+        transform:
+            rotate(90deg);
+
+    }
+
+
+    .nx-project-flow > div:not(.nx-project-arrow) {
+
+        width:
+            100%;
+
+    }
+
+}
+
+
+/* =========================================================
+ SMALL MOBILE
+========================================================= */
+
+@media (max-width: 430px) {
+
+    .nx-feature-content h3 {
+
+        font-size:
+            36px;
+
+    }
+
+
+    .nx-feature-visual,
+    .nx-feature-reverse .nx-feature-visual {
+
+        min-height:
+            350px;
+
+    }
+
+
+    .nx-monitor-screen {
+
+        width:
+            270px;
+
+        height:
+            175px;
+
+    }
+
+
+    .nx-project-node {
+
+        width:
+            120px;
+
+    }
+
+
+    .nx-project-node strong {
+
+        font-size:
+            9px;
+
+    }
+
+
+    .nx-project-node span {
+
+        font-size:
+            7px;
+
+    }
+
+}
+
+
+/* =========================================================
+ PART 3 CSS COMPLETE
+========================================================= */
+
 
 <!-- =========================================================
  PART 1 COMPLETE
