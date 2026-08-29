@@ -614,8 +614,8 @@
             if (subtotal >= 10000 || subtotal === 0) {
                 return 0.00;
             }
-            let baseFee = 150.00;
-            let ratePerKg = 18.00;
+            let baseFee = 80.00;
+            let ratePerKg = 7.00;
             if (weight <= 5) {
                 return baseFee;
             } else {
@@ -695,7 +695,6 @@
             }
 
             const btnCart = card.querySelector('.custom-app-btn:not(.btn-info):not(.btn-quote)') || card.querySelector('.btn-add-to-cart');
-            const btnInfo = card.querySelector('.btn-info');
             const btnQuote = card.querySelector('.btn-quote') || card.querySelector('.btn-add-to-quote');
             const productName = titleElement?.textContent || 'Security Item';
 
@@ -729,7 +728,7 @@
                     });
 
                     localStorage.setItem('nexpak_cart_count', cartCount);
-                    localStorage.setItem('nexpak_cart_total', cartSubtotal); // Fixed: Write matching storage variable name
+                    localStorage.setItem('nexpak_cart_total', cartSubtotal);
                     localStorage.setItem('nexpak_cart_weight', totalWeight);
                     localStorage.setItem('nexpak_cart_items', JSON.stringify(cartItems));
 
@@ -738,11 +737,7 @@
                 });
             }
 
-            if (btnInfo) {
-                btnInfo.addEventListener('click', () => {
-                    alert(`More information for: ${productName}\nContact Nexpak Support for technical datasheets.`);
-                });
-            }
+            // btnInfo listener removed entirely so anchor tags navigate naturally!
 
             if (btnQuote) {
                 btnQuote.addEventListener('click', () => {
@@ -757,7 +752,7 @@
             clearCartBtn.addEventListener('click', () => {
                 if (confirm('Are you sure you want to clear your cart?')) {
                     localStorage.removeItem('nexpak_cart_count');
-                    localStorage.removeItem('nexpak_cart_total'); // Clean matching variables
+                    localStorage.removeItem('nexpak_cart_total');
                     localStorage.removeItem('nexpak_cart_weight');
                     localStorage.removeItem('nexpak_cart_items');
 
