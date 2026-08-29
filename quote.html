@@ -4323,8 +4323,1128 @@ Integrated System
     width:
         65px;
 
+        transform:
+        rotate(125deg);
+
+}
+
+
+.network-c {
+
+    left:
+        98px;
+
+    top:
+        110px;
+
+    width:
+        100px;
+
+}
+
+
+/* =========================================================
+ INTEGRATION CORE
+========================================================= */
+
+.nx-core-ring {
+
+    position:
+        absolute;
+
+    left:
+        80px;
+
+    top:
+        70px;
+
+    border:
+        1px solid
+        rgba(57,168,255,0.4);
+
+    border-radius:
+        50%;
+
     transform:
-        rotate(125
+        translate(-50%, -50%);
+
+}
+
+
+.ring-one {
+
+    width:
+        45px;
+
+    height:
+        45px;
+
+}
+
+
+.ring-two {
+
+    width:
+        90px;
+
+    height:
+        90px;
+
+}
+
+
+.ring-three {
+
+    width:
+        140px;
+
+    height:
+        140px;
+
+    opacity:
+        0.45;
+
+}
+
+
+.nx-core-point {
+
+    position:
+        absolute;
+
+    left:
+        80px;
+
+    top:
+        70px;
+
+    width:
+        12px;
+
+    height:
+        12px;
+
+    transform:
+        translate(-50%, -50%);
+
+    border-radius:
+        50%;
+
+    background:
+        var(--nx-cyan);
+
+    box-shadow:
+        0 0 25px
+        var(--nx-cyan);
+
+}
+
+
+/* =========================================================
+ CARD TYPOGRAPHY
+========================================================= */
+
+.nx-capability-card h3 {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size:
+        28px;
+
+    line-height:
+        1;
+
+    letter-spacing:
+        -0.04em;
+
+}
+
+
+.nx-capability-card p {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    margin-top:
+        18px;
+
+    color:
+        var(--nx-text);
+
+    font-size:
+        13px;
+
+    line-height:
+        1.7;
+
+}
+
+
+.nx-capability-card ul {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    margin-top:
+        20px;
+
+    padding:
+        0;
+
+    list-style:
+        none;
+
+}
+
+
+.nx-capability-card li {
+
+    padding:
+        6px 0;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,0.045);
+
+    color:
+        #9caabb;
+
+    font-size:
+        11px;
+
+}
+
+
+.nx-capability-card li::before {
+
+    content:
+        "＋";
+
+    margin-right:
+        8px;
+
+    color:
+        var(--nx-blue-bright);
+
+}
+
+
+.nx-card-link {
+
+    position:
+        absolute;
+
+    left:
+        30px;
+
+    right:
+        30px;
+
+    bottom:
+        27px;
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    color:
+        var(--nx-blue-bright);
+
+    font-size:
+        9px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        0.1em;
+
+}
+
+
+.nx-card-link span {
+
+    transition:
+        transform 0.25s ease;
+
+}
+
+
+.nx-capability-card:hover
+.nx-card-link span {
+
+    transform:
+        translateX(6px);
+
+}
+
+
+/* =========================================================
+ STATEMENT SECTION
+========================================================= */
+
+.nx-statement-section {
+
+    padding:
+        130px 0;
+
+    border-top:
+        1px solid
+        var(--nx-line);
+
+    border-bottom:
+        1px solid
+        var(--nx-line);
+
+    background:
+        rgba(255,255,255,0.015);
+
+}
+
+
+.nx-statement-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        0.35fr 1fr;
+
+    gap:
+        80px;
+
+}
+
+
+.nx-statement-label {
+
+    color:
+        var(--nx-blue-bright);
+
+    font-size:
+        10px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        0.18em;
+
+}
+
+
+.nx-statement-content h2 {
+
+    max-width:
+        900px;
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size:
+        clamp(42px, 5vw, 78px);
+
+    line-height:
+        0.98;
+
+    letter-spacing:
+        -0.05em;
+
+}
+
+
+.nx-statement-content h2 span {
+
+    color:
+        var(--nx-blue-bright);
+
+}
+
+
+.nx-statement-content p {
+
+    max-width:
+        750px;
+
+    margin-top:
+        28px;
+
+    color:
+        var(--nx-text);
+
+    font-size:
+        16px;
+
+    line-height:
+        1.85;
+
+}
+
+
+/* =========================================================
+ PROCESS SECTION
+========================================================= */
+
+.nx-process-section {
+
+    padding:
+        140px 0;
+
+}
+
+
+.nx-process-intro {
+
+    margin-bottom:
+        100px;
+
+}
+
+
+/* =========================================================
+ TIMELINE
+========================================================= */
+
+.nx-process-timeline {
+
+    position:
+        relative;
+
+    max-width:
+        1050px;
+
+    margin:
+        auto;
+
+}
+
+
+.nx-process-line {
+
+    position:
+        absolute;
+
+    left:
+        31px;
+
+    top:
+        0;
+
+    bottom:
+        0;
+
+    width:
+        1px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+}
+
+
+.nx-process-progress {
+
+    width:
+        100%;
+
+    height:
+        45%;
+
+    background:
+        linear-gradient(
+            var(--nx-blue),
+            var(--nx-cyan),
+            transparent
+        );
+
+    box-shadow:
+        0 0 15px
+        rgba(22,140,255,0.3);
+
+}
+
+
+.nx-process-step {
+
+    position:
+        relative;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        64px 1fr;
+
+    gap:
+        50px;
+
+    min-height:
+        230px;
+
+}
+
+
+.nx-process-marker {
+
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    width:
+        64px;
+
+    height:
+        64px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    border:
+        1px solid
+        rgba(57,168,255,0.5);
+
+    background:
+        var(--nx-black);
+
+    color:
+        var(--nx-blue-bright);
+
+    font-size:
+        11px;
+
+    font-weight:
+        800;
+
+    box-shadow:
+        0 0 25px
+        rgba(22,140,255,0.08);
+
+}
+
+
+.nx-process-content {
+
+    padding:
+        3px 0 65px;
+
+    border-bottom:
+        1px solid
+        var(--nx-line);
+
+}
+
+
+.nx-process-tag {
+
+    margin-bottom:
+        8px;
+
+    color:
+        var(--nx-blue-bright);
+
+    font-size:
+        9px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        0.18em;
+
+}
+
+
+.nx-process-content h3 {
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size:
+        31px;
+
+    letter-spacing:
+        -0.035em;
+
+}
+
+
+.nx-process-content p {
+
+    max-width:
+        760px;
+
+    margin-top:
+        14px;
+
+    color:
+        var(--nx-text);
+
+    font-size:
+        14px;
+
+    line-height:
+        1.8;
+
+}
+
+
+.nx-process-points {
+
+    display:
+        flex;
+
+    flex-wrap:
+        wrap;
+
+    gap:
+        8px;
+
+    margin-top:
+        22px;
+
+}
+
+
+.nx-process-points span {
+
+    padding:
+        6px 10px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.08);
+
+    color:
+        #8795a6;
+
+    font-size:
+        8px;
+
+    font-weight:
+        800;
+
+    letter-spacing:
+        0.1em;
+
+}
+
+
+/* =========================================================
+ PRINCIPLE SECTION
+========================================================= */
+
+.nx-principle-section {
+
+    padding:
+        100px 0 140px;
+
+}
+
+
+.nx-principle-box {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        0.7fr 1.3fr;
+
+    border:
+        1px solid
+        rgba(57,168,255,0.2);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(22,140,255,0.07),
+            rgba(8,14,22,0.75)
+        );
+
+}
+
+
+.nx-principle-left {
+
+    padding:
+        55px;
+
+    border-right:
+        1px solid
+        rgba(57,168,255,0.15);
+
+}
+
+
+.nx-principle-left h2 {
+
+    margin-top:
+        40px;
+
+    font-family:
+        "Space Grotesk",
+        sans-serif;
+
+    font-size:
+        clamp(40px, 4vw, 65px);
+
+    line-height:
+        0.98;
+
+    letter-spacing:
+        -0.05em;
+
+}
+
+
+.nx-principle-left h2 span {
+
+    color:
+        var(--nx-blue-bright);
+
+}
+
+
+.nx-principle-right {
+
+    padding:
+        55px;
+
+}
+
+
+.nx-principle-lead {
+
+    max-width:
+        680px;
+
+    color:
+        #c3cfdb;
+
+    font-size:
+        18px;
+
+    line-height:
+        1.8;
+
+}
+
+
+.nx-principle-flow {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        14px;
+
+    margin-top:
+        45px;
+
+}
+
+
+.nx-flow-item {
+
+    min-width:
+        105px;
+
+    padding:
+        14px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.08);
+
+    background:
+        rgba(0,0,0,0.18);
+
+}
+
+
+.nx-flow-item span {
+
+    display:
+        block;
+
+    color:
+        var(--nx-blue-bright);
+
+    font-size:
+        8px;
+
+    font-weight:
+        800;
+
+}
+
+
+.nx-flow-item strong {
+
+    display:
+        block;
+
+    margin-top:
+        6px;
+
+    font-size:
+        10px;
+
+    letter-spacing:
+        0.08em;
+
+}
+
+
+.nx-flow-item small {
+
+    display:
+        block;
+
+    margin-top:
+        3px;
+
+    color:
+        var(--nx-muted);
+
+    font-size:
+        8px;
+
+}
+
+
+.nx-flow-arrow {
+
+    color:
+        var(--nx-blue-bright);
+
+    font-size:
+        18px;
+
+}
+
+
+/* =========================================================
+ TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .nx-architecture-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+
+    .nx-capability-card:nth-child(2) {
+
+        border-right:
+            none;
+
+    }
+
+
+    .nx-capability-card:nth-child(1),
+    .nx-capability-card:nth-child(2) {
+
+        border-bottom:
+            1px solid
+            var(--nx-line);
+
+    }
+
+
+    .nx-statement-grid {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            25px;
+
+    }
+
+
+    .nx-principle-box {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .nx-principle-left {
+
+        border-right:
+            none;
+
+        border-bottom:
+            1px solid
+            rgba(57,168,255,0.15);
+
+    }
+
+}
+
+
+/* =========================================================
+ MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .nx-architecture-section,
+    .nx-process-section {
+
+        padding:
+            90px 0;
+
+    }
+
+
+    .nx-statement-section {
+
+        padding:
+            90px 0;
+
+    }
+
+
+    .nx-architecture-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .nx-capability-card {
+
+        min-height:
+            500px;
+
+        border-right:
+            none;
+
+        border-bottom:
+            1px solid
+            var(--nx-line);
+
+    }
+
+
+    .nx-capability-card:last-child {
+
+        border-bottom:
+            none;
+
+    }
+
+
+    .nx-section-intro {
+
+        margin-bottom:
+            50px;
+
+    }
+
+
+    .nx-section-intro h2 {
+
+        font-size:
+            clamp(
+                38px,
+                12vw,
+                55px
+            );
+
+    }
+
+
+    .nx-process-intro {
+
+        margin-bottom:
+            70px;
+
+    }
+
+
+    .nx-process-step {
+
+        grid-template-columns:
+            48px 1fr;
+
+        gap:
+            22px;
+
+    }
+
+
+    .nx-process-marker {
+
+        width:
+            48px;
+
+        height:
+            48px;
+
+        font-size:
+            9px;
+
+    }
+
+
+    .nx-process-line {
+
+        left:
+            23px;
+
+    }
+
+
+    .nx-process-content {
+
+        padding-bottom:
+            55px;
+
+    }
+
+
+    .nx-process-content h3 {
+
+        font-size:
+            25px;
+
+    }
+
+
+    .nx-principle-box {
+
+        display:
+            block;
+
+    }
+
+
+    .nx-principle-left,
+    .nx-principle-right {
+
+        padding:
+            35px 25px;
+
+    }
+
+
+    .nx-principle-flow {
+
+        align-items:
+            stretch;
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .nx-flow-item {
+
+        width:
+            100%;
+
+    }
+
+
+    .nx-flow-arrow {
+
+        display:
+            none;
+
+    }
+
+}
+
+
+/* =========================================================
+ SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+
+    .nx-capability-card {
+
+        padding:
+            24px;
+
+    }
+
+
+    .nx-card-link {
+
+        left:
+            24px;
+
+        right:
+            24px;
+
+    }
+
+
+    .nx-statement-content h2 {
+
+        font-size:
+            39px;
+
+    }
+
+
+    .nx-principle-left h2 {
+
+        font-size:
+            40px;
+
+    }
+
+}
+
+</style>
+
+
+<!-- =========================================================
+ PART 2 COMPLETE
+
+ PART 3 WILL CONTINUE DIRECTLY AFTER THIS.
+
+ IMPORTANT:
+ DO NOT ADD </main>, </body> OR </html> HERE.
+
+========================================================= -->
 
 
 
