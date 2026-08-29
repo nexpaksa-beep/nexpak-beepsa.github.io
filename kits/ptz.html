@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexPak Security Solutions | Dahua 25x Starlight PTZ & AI Speed Dome Engineering Manual</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --obsidian: #090d16;
+            --slate-dark: #111c33;
+            --slate-light: #f8fafc;
+            --cctv-blue: #0ea5e9;
+            --cyan-glow: #38bdf8;
+            --blue-accent: #0284c7;
+            --border-color: #7dd3fc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: #f1f5f9; color: var(--text-main); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+        header {
+            background: linear-gradient(135deg, var(--obsidian) 0%, var(--slate-dark) 100%);
+            color: white;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--cctv-blue);
+            box-shadow: 0 10px 25px -5px rgba(9, 13, 22, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo-area h1 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(90deg, #ffffff, #7dd3fc); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo-area span { color: var(--cctv-blue); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; display: block; margin-top: 2px; }
+        
+        .back-btn {
+            background: rgba(14, 165, 233, 0.15);
+            border: 1px solid rgba(14, 165, 233, 0.4);
+            color: white;
+            padding: 0.6rem 1.4rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .back-btn:hover { background: var(--cctv-blue); border-color: var(--cctv-blue); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4); }
+
+        .container {
+            max-width: 1450px;
+            margin: 2.5rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1.3fr 1.1fr;
+            gap: 2.5rem;
+        }
+
+        @media (max-width: 1100px) {
+            .container { grid-template-columns: 1fr; padding: 0 1rem; }
+        }
+
+        .manual-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+            border: 1px solid #bae6fd;
+        }
+        .manual-container h2 { font-size: 2rem; font-weight: 800; color: var(--obsidian); margin-bottom: 1.5rem; letter-spacing: -0.5px; }
+        .manual-container h3 { font-size: 1.25rem; font-weight: 700; color: var(--cctv-blue); margin: 2rem 0 1rem 0; display: flex; align-items: center; gap: 12px; border-bottom: 2px solid #f0f9ff; padding-bottom: 0.5rem; }
+        .manual-container h3 i { color: var(--cyan-glow); }
+        .manual-container p { color: #334155; margin-bottom: 1.2rem; font-size: 1rem; text-align: justify; }
+        .manual-container ul, .manual-container ol { margin-left: 1.5rem; margin-bottom: 1.5rem; color: #334155; }
+        .manual-container li { margin-bottom: 0.7rem; font-size: 0.95rem; }
+        .manual-container li strong { color: var(--obsidian); }
+
+        .pro-tip-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 5px solid var(--cctv-blue);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 2rem 0;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .pro-tip-box h4 { color: var(--obsidian); font-weight: 700; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 8px; font-size: 1rem; }
+        .pro-tip-box h4 i { color: var(--cctv-blue); }
+        .pro-tip-box p { margin-bottom: 0; font-size: 0.95rem; color: #1e293b; }
+
+        .sidebar-kits {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .pdf-kit-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+            border: 1px solid #bae6fd;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .pdf-kit-card:hover { transform: translateY(-4px); }
+
+        .pdf-card-header {
+            padding: 1.3rem 2rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-sd49 { background: linear-gradient(135deg, #090d16 0%, #111c33 100%); border-top: 5px solid #0ea5e9; }
+        .header-sd5a { background: linear-gradient(135deg, #090d16 0%, #1e3a8a 100%); border-top: 5px solid #0284c7; }
+        .header-hdcvi { background: linear-gradient(135deg, #090d16 0%, #172554 100%); border-top: 5px solid #38bdf8; }
+
+        .pdf-card-title h3 { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.3px; }
+        .pdf-card-title span { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; color: #bae6fd; display: block; margin-top: 2px; }
+        
+        .pdf-badge {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pdf-card-body {
+            padding: 1.3rem 2rem;
+            background: #ffffff;
+        }
+        .pdf-table-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            border-bottom: 2px solid #f0f9ff;
+            padding-bottom: 6px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .pdf-bom-list {
+            list-style: none;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .pdf-bom-list::-webkit-scrollbar { width: 5px; }
+        .pdf-bom-list::-webkit-scrollbar-thumb { background: #7dd3fc; border-radius: 3px; }
+
+        .pdf-bom-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 7px 0;
+            border-bottom: 1px solid #f0f9ff;
+            font-size: 0.88rem;
+            transition: background 0.2s;
+        }
+        .pdf-bom-item:hover { background: #f0f9ff; padding-left: 4px; padding-right: 4px; border-radius: 4px; }
+        
+        .item-name { color: var(--text-main); font-weight: 500; display: flex; align-items: center; gap: 8px; }
+        .item-name i { font-size: 0.65rem; color: var(--cctv-blue); }
+        
+        .item-qty {
+            background: #f0f9ff;
+            color: var(--obsidian);
+            font-family: monospace;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            border: 1px solid #bae6fd;
+        }
+
+        footer {
+            background: white;
+            text-align: center;
+            padding: 2.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 4rem;
+            border-top: 1px solid #bae6fd;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <h1>NexPak Security Solutions</h1>
+            <span>Dahua 25x Starlight PTZ & AI Speed Dome Engineering Manual</span>
+        </div>
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Store</a>
+    </header>
+
+    <div class="container">
+        
+        <div class="manual-container">
+            <h2>Dahua 25x Starlight PTZ Architecture & Deep-Learning Tracking</h2>
+            <p>Dahua 25x Starlight PTZ (Pan-Tilt-Zoom) cameras are heavy-duty, high-performance speed dome cameras designed for tracking subjects over large, open expansive properties like car dealerships, agricultural farms, estate perimeters, and industrial yards. The defining core technology is the Starlight sensor (Sony STARVIS CMOS), which utilizes large sensor pixels and wide apertures to capture crystal-clear, color video in near-total darkness where normal cameras would have to switch to black-and-white infrared night vision.</p>
+            <p>The 25x optical zoom lens (4.8mm to 120mm varifocal range) allows you to cleanly read a vehicle licence plate or identify an intruder's facial features from over 100 to 150 metres away without digital pixelation.</p>
+
+            <h3><i class="fas fa-video"></i> Core Hardware Housings & Series Options</h3>
+            <ul>
+                <li><strong>SD49 Series (Compact Field Standard):</strong> Teardrop-shaped wall-mounted domes like the DH-SD49425GB-HNR or DH-SD49225DB-HNY. Popular for commercial and residential use with IP66 weatherproofing and up to 100m IR night-vision illumination.</li>
+                <li><strong>SD5A Series (Heavy-Duty Armor Dome):</strong> Massive speed domes like the DH-SD5A225GB-HNR featuring an IK10 vandal-proof armor housing, extended 150-metre IR laser illumination, and an integrated mechanical wiper blade to clear rainwater and morning dew.</li>
+                <li><strong>Analog HDCVI Variant:</strong> Models like the DH-SD59225DB-HC deliver 25x Starlight processing over standard copper coaxial links straight to an HDCVI DVR without IP network setup complexity.</li>
+            </ul>
+
+            <h3><i class="fas fa-brain"></i> Advanced WizSense Intelligence & Analytics</h3>
+            <ol>
+                <li><strong>Auto-Tracking 3.0:</strong> Automatically locks crosshairs onto intruders crossing perimeter fences, mechanically panning, tilting, and zooming to follow them across the property without human operator intervention.</li>
+                <li><strong>Smart Motion Detection (SMD 4.0):</strong> Filters out 99% of false alarms caused by swaying trees, heavy rain, or animals, alerting your NVR or smartphone only when human shapes or vehicles enter active zones.</li>
+                <li><strong>Perimeter Protection & Tripwires:</strong> Draw digital line-boundaries inside the camera interface to instantly trigger sirens, flash warning lights, or notify off-site control rooms upon unauthorized crossings.</li>
+            </ol>
+
+            <div class="pro-tip-box">
+                <h4><i class="fas fa-bolt"></i> Professional Mounting & Power Tip</h4>
+                <p>Ensure proper mounting via dedicated corner wall brackets, parapet mounts, or rigid poles. Verify that your power source supplies a stable PoE+ (802.3at) budget or 24V AC/12V DC, especially when PTZ motors and IR lasers operate concurrently.</p>
+            </div>
+        </div>
+
+        <div class="sidebar-kits">
+            
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-sd49">
+                    <div class="pdf-card-title">
+                        <h3>SD49 Compact Series</h3>
+                        <span>DH-SD49425GB-HNR / DH-SD49225DB-HNY</span>
+                    </div>
+                    <div class="pdf-badge">Series: DAHUA-SD49</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dahua 25x Starlight PTZ Camera (SD49)</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Wall Mount Bracket (PFB305W)</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Power Supply Unit (PoE+ Injector / 12V DC)</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Waterproof Junction Box & Hardware</span><span class="item-qty">x 1</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-sd5a">
+                    <div class="pdf-card-title">
+                        <h3>SD5A Heavy-Duty Armor</h3>
+                        <span>DH-SD5A225GB-HNR (IK10 & Wiper)</span>
+                    </div>
+                    <div class="pdf-badge">Series: DAHUA-SD5A</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dahua 25x Armor PTZ Dome (SD5A)</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Heavy-Duty Corner/Pole Mount Adapter</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Integrated Mechanical Wiper & Laser IR</span><span class="item-qty">Incl.</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> MicroSD Card (256GB / 512GB Edge Storage)</span><span class="item-qty">x 1</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-hdcvi">
+                    <div class="pdf-card-title">
+                        <h3>Analog HDCVI Variant</h3>
+                        <span>DH-SD59225DB-HC (Coax Link)</span>
+                    </div>
+                    <div class="pdf-badge">Series: DAHUA-HDCVI</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dahua 25x Starlight HDCVI PTZ Camera</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> RG59 Siamese Copper Coax Cable Roll</span><span class="item-qty">100m</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 24V AC / 12V DC Heavy-Duty Power Supply</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> BNC Connectors & RS485 Control Leads</span><span class="item-qty">Set</span></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; 2026 NexPak Security Solutions. All rights reserved. Dahua PTZ Speed Dome & AI Surveillance Distribution Division.
+    </footer>
+
+</body>
+</html>
+
