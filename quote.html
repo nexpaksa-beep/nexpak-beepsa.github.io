@@ -1522,4 +1522,977 @@ a {
         8%;
 
     top:
+        20%;
+
+}
+
+
+.nx-node-cctv {
+
+    right:
+        8%;
+
+    top:
+        20%;
+
+}
+
+
+.nx-node-wireless {
+
+    left:
+        8%;
+
+    bottom:
+        18%;
+
+}
+
+
+.nx-node-access {
+
+    right:
+        8%;
+
+    bottom:
+        18%;
+
+}
+
+
+/* =========================================================
+ HERO BOTTOM INDICATOR
+========================================================= */
+
+.nx-scroll-indicator {
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 25px;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 5;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    gap: 8px;
+
+    color:
+        var(--nx-muted);
+
+    font-size:
+        8px;
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        0.2em;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+.nx-scroll-line {
+
+    width: 1px;
+
+    height: 34px;
+
+    background:
+        linear-gradient(
+            var(--nx-blue),
+            transparent
+        );
+
+    animation:
+        nxScroll 1.8s infinite;
+
+}
+
+
+@keyframes nxScroll {
+
+    0%,
+    100% {
+
+        opacity:
+            0.25;
+
+        transform:
+            translateY(0);
+
+    }
+
+    50% {
+
+        opacity:
+            1;
+
+        transform:
+            translateY(6px);
+
+    }
+
+}
+
+
+/* =========================================================
+ RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .nx-nav {
+
+        gap:
+            18px;
+
+    }
+
+
+    .nx-hero-inner {
+
+        grid-template-columns:
+            1fr;
+
+        padding-top:
+            70px;
+
+    }
+
+
+    .nx-architecture {
+
+        min-height:
+            500px;
+
+    }
+
+}
+
+
+/* =========================================================
+ TABLET / MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+
+    .nx-container {
+
+        width:
+            min(
+                calc(100% - 30px),
+                var(--nx-container)
+            );
+
+    }
+
+
+    .nx-header {
+
+        height:
+            70px;
+
+    }
+
+
+    .nx-header-inner {
+
+        gap:
+            15px;
+
+    }
+
+
+    .nx-nav {
+
+        display:
+            none;
+
+    }
+
+
+    .nx-header-cta {
+
+        padding:
+            9px 12px;
+
+        font-size:
+            9px;
+
+    }
+
+
+    .nx-hero {
+
+        padding-top:
+            70px;
+
+    }
+
+
+    .nx-hero-inner {
+
+        gap:
+            45px;
+
+        padding:
+            65px 0 80px;
+
+    }
+
+
+    .nx-hero h1 {
+
+        font-size:
+            clamp(
+                45px,
+                14vw,
+                68px
+            );
+
+    }
+
+
+    .nx-hero-description {
+
+        font-size:
+            15px;
+
+    }
+
+
+    .nx-hero-actions {
+
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+
+    }
+
+
+    .nx-btn {
+
+        width:
+            100%;
+
+    }
+
+
+    .nx-system-display {
+
+        width:
+            100%;
+
+    }
+
+
+    .nx-node {
+
+        width:
+            105px;
+
+        min-height:
+            66px;
+
+        padding:
+            9px;
+
+    }
+
+
+    .nx-node-name {
+
+        font-size:
+            10px;
+
+    }
+
+
+    .nx-node-fence,
+    .nx-node-wireless {
+
+        left:
+            4%;
+
+    }
+
+
+    .nx-node-cctv,
+    .nx-node-access {
+
+        right:
+            4%;
+
+    }
+
+
+    .nx-system-core {
+
+        width:
+            115px;
+
+        height:
+            115px;
+
+    }
+
+
+    .nx-line-one,
+    .nx-line-two,
+    .nx-line-three,
+    .nx-line-four {
+
+        width:
+            110px;
+
+    }
+
+}
+
+
+/* =========================================================
+ SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .nx-brand-sub {
+
+        display:
+            none;
+
+    }
+
+
+    .nx-brand-name {
+
+        font-size:
+            12px;
+
+    }
+
+
+    .nx-brand-mark {
+
+        width:
+            35px;
+
+        height:
+            35px;
+
+    }
+
+
+    .nx-architecture {
+
+        min-height:
+            420px;
+
+    }
+
+
+    .nx-display-header {
+
+        height:
+            45px;
+
+    }
+
+
+    .nx-node {
+
+        width:
+            92px;
+
+    }
+
+
+    .nx-node-label {
+
+        font-size:
+            7px;
+
+    }
+
+
+    .nx-node-name {
+
+        font-size:
+            9px;
+
+    }
+
+}
+
+
+/* =========================================================
+ REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        animation-duration:
+            0.01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        scroll-behavior:
+            auto !important;
+
+    }
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+ HEADER
+========================================================= -->
+
+<header class="nx-header">
+
+<div class="nx-container nx-header-inner">
+
+
+<!-- =====================================================
+ BRAND
+===================================================== -->
+
+<a
+href="index.html"
+class="nx-brand"
+aria-label="Nexpak Security Solutions Home"
+>
+
+<div class="nx-brand-mark">
+
+<span></span>
+
+</div>
+
+
+<div class="nx-brand-text">
+
+<span class="nx-brand-name">
+NEXPAK
+</span>
+
+<span class="nx-brand-sub">
+SECURITY SOLUTIONS
+</span>
+
+</div>
+
+</a>
+
+
+
+<!-- =====================================================
+ NAVIGATION
+===================================================== -->
+
+<nav
+class="nx-nav"
+aria-label="Main navigation"
+>
+
+<a href="index.html">
+Home
+</a>
+
+<a href="products.html">
+Solutions
+</a>
+
+<a href="shop.html">
+Equipment
+</a>
+
+<a href="aboutus.html">
+About
+</a>
+
+<a href="#technical-project">
+Technical Projects
+</a>
+
+</nav>
+
+
+
+<!-- =====================================================
+ HEADER CTA
+===================================================== -->
+
+<a
+href="#technical-project"
+class="nx-header-cta"
+>
+
+START A PROJECT
+
+</a>
+
+
+</div>
+
+</header>
+
+
+
+<!-- =========================================================
+ MAIN CONTENT
+========================================================= -->
+
+<main>
+
+
+<!-- =========================================================
+ HERO
+========================================================= -->
+
+<section
+class="nx-hero"
+id="technical-project"
+>
+
+
+<div class="nx-container nx-hero-inner">
+
+
+<!-- =====================================================
+ HERO COPY
+===================================================== -->
+
+<div class="nx-hero-copy">
+
+
+<div class="nx-eyebrow">
+
+TECHNICAL SECURITY ENGINEERING
+
+</div>
+
+
+
+<h1>
+
+SECURITY
+ISN'T A PRODUCT.
+
+<span>
+IT'S A SYSTEM.
+</span>
+
+</h1>
+
+
+
+<p class="nx-hero-description">
+
+<strong>
+Nexpak Security Solutions
+</strong>
+
+designs, supplies, integrates and supports advanced security systems around the environment they are protecting.
+
+From perimeter detection and
+
+<strong>
+sectorised electric fencing
+</strong>
+
+to
+
+<strong>
+Dahua IP surveillance
+</strong>
+
+and
+
+<strong>
+long-distance Ubiquiti wireless networks
+</strong>,
+
+we engineer solutions for complex residential, agricultural, commercial and industrial environments.
+
+</p>
+
+
+
+<!-- =====================================================
+ HERO ACTIONS
+===================================================== -->
+
+<div class="nx-hero-actions">
+
+
+<a
+href="#technical-project"
+class="nx-btn nx-btn-primary"
+>
+
+START A PROJECT
+
+<span>
+→
+</span>
+
+</a>
+
+
+
+<a
+href="mailto:technical@nexpaksolutions.co.za"
+class="nx-btn nx-btn-secondary"
+>
+
+SPEAK TO TECHNICAL TEAM
+
+</a>
+
+
+</div>
+
+
+
+<!-- =====================================================
+ TECHNICAL EMAIL
+===================================================== -->
+
+<div class="nx-hero-contact">
+
+<span
+class="nx-hero-contact-dot"
+></span>
+
+
+<span>
+Technical enquiries
+</span>
+
+
+<a
+href="mailto:technical@nexpaksolutions.co.za"
+>
+
+technical@nexpaksolutions.co.za
+
+</a>
+
+</div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+ SECURITY ARCHITECTURE VISUAL
+===================================================== -->
+
+<div class="nx-architecture">
+
+
+<div class="nx-system-display">
+
+
+<!-- =================================================
+ DISPLAY HEADER
+================================================= -->
+
+<div class="nx-display-header">
+
+
+<span class="nx-display-title">
+
+NEXPAK SECURITY ARCHITECTURE
+
+</span>
+
+
+
+<span class="nx-display-status">
+
+<span class="nx-status-dot"></span>
+
+SYSTEM DESIGN
+
+</span>
+
+
+</div>
+
+
+
+<!-- =================================================
+ CONNECTION LINES
+================================================= -->
+
+<div
+class="nx-line nx-line-one"
+></div>
+
+
+<div
+class="nx-line nx-line-two"
+></div>
+
+
+<div
+class="nx-line nx-line-three"
+></div>
+
+
+<div
+class="nx-line nx-line-four"
+></div>
+
+
+
+<!-- =================================================
+ SYSTEM CORE
+================================================= -->
+
+<div class="nx-system-core">
+
+
+<div class="nx-core-inner">
+
+
+<div class="nx-core-label">
+
+NEXPAK
+
+</div>
+
+
+<div class="nx-core-name">
+
+INTEGRATION
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<!-- =================================================
+ PERIMETER NODE
+================================================= -->
+
+<div class="nx-node nx-node-fence">
+
+
+<div class="nx-node-label">
+
+PERIMETER
+
+</div>
+
+
+<div class="nx-node-name">
+
+Electric Fencing
+
+</div>
+
+
+<div class="nx-node-status">
+
+ZONE ARCHITECTURE
+
+</div>
+
+
+</div>
+
+
+
+<!-- =================================================
+ CCTV NODE
+================================================= -->
+
+<div class="nx-node nx-node-cctv">
+
+
+<div class="nx-node-label">
+
+SURVEILLANCE
+
+</div>
+
+
+<div class="nx-node-name">
+
+Dahua IP CCTV
+
+</div>
+
+
+<div class="nx-node-status">
+
+VIDEO NETWORK
+
+</div>
+
+
+</div>
+
+
+
+<!-- =================================================
+ WIRELESS NODE
+================================================= -->
+
+<div class="nx-node nx-node-wireless">
+
+
+<div class="nx-node-label">
+
+CONNECTIVITY
+
+</div>
+
+
+<div class="nx-node-name">
+
+Ubiquiti Wireless
+
+</div>
+
+
+<div class="nx-node-status">
+
+LINK ARCHITECTURE
+
+</div>
+
+
+</div>
+
+
+
+<!-- =================================================
+ ACCESS NODE
+================================================= -->
+
+<div class="nx-node nx-node-access">
+
+
+<div class="nx-node-label">
+
+INTEGRATION
+
+</div>
+
+
+<div class="nx-node-name">
+
+Access &amp; Control
+
+</div>
+
+
+<div class="nx-node-status">
+
+SYSTEM READY
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+ SCROLL INDICATOR
+===================================================== -->
+
+<div class="nx-scroll-indicator">
+
+<span>
+EXPLORE CAPABILITIES
+</span>
+
+<span class="nx-scroll-line"></span>
+
+</div>
+
+
+</section>
+
+
+</main>
+
+
+
+<!-- =========================================================
+ PART 1 COMPLETE
+=========================================================
+
+ PART 2/5 WILL CONTINUE WITH:
+
+ SECURITY ARCHITECTURE
+
+ 01 PERIMETER
+ 02 SURVEILLANCE
+ 03 CONNECTIVITY
+ 04 INTEGRATION
+
+ ENGINEERING PROCESS
+
+ ASSESS
+ DESIGN
+ INTEGRATE
+ DEPLOY
+ SUPPORT
+
+========================================================= -->
+
+
+</body>
+
+</html>
  
