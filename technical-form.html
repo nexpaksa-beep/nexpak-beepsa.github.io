@@ -2029,4 +2029,860 @@ a {
 
 
 
-<!-- ========================
+<!-- =========================================================
+ MAIN FORM
+========================================================= -->
+
+
+<main
+    class="nx-form-main">
+
+
+    <div
+        class="nx-form-introduction">
+
+
+        <div>
+
+
+            <h2>
+
+                Tell us about the project.
+
+            </h2>
+
+
+            <p>
+
+                The more technical information you provide,
+                the more accurately our team can understand
+                the project before contacting you. You do
+                not need to know the exact equipment required.
+                Describe the problem, environment and desired
+                outcome — our technical team can work from there.
+
+            </p>
+
+
+        </div>
+
+
+
+        <div
+            class="nx-form-reference">
+
+
+            <span>
+
+                Technical Request Reference
+
+            </span>
+
+
+            <strong
+                data-quote-reference>
+
+                Generating...
+
+            </strong>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+     FORM WRAPPER
+    ====================================================== -->
+
+
+    <div
+        class="nx-form-wrapper">
+
+
+        <div
+            class="nx-form-topbar">
+
+
+            <span>
+
+                NEXPAK TECHNICAL QUOTATION
+
+            </span>
+
+
+            <div
+                class="nx-form-status">
+
+                Secure Request
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+         FORM START
+        ================================================== -->
+
+
+        <form
+            id="technicalQuoteForm">
+
+
+
+            <!-- =================================================
+             PROJECT IDENTIFICATION
+            ================================================== -->
+
+
+            <fieldset
+                class="nx-form-section">
+
+
+                <div
+                    class="nx-section-heading">
+
+
+                    <div
+                        class="nx-section-number">
+
+                        01
+
+                    </div>
+
+
+                    <div>
+
+
+                        <span>
+                            PROJECT IDENTIFICATION
+                        </span>
+
+
+                        <h3>
+
+                            What are you looking to secure?
+
+                        </h3>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div
+                    class="nx-form-grid">
+
+
+                    <div
+                        class="nx-field">
+
+
+                        <label
+                            for="projectType">
+
+                            Project Type
+
+                            <span
+                                class="nx-required">
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <select
+                            id="projectType"
+                            name="projectType"
+                            required>
+
+
+                            <option value="">
+
+                                Select project type
+
+                            </option>
+
+
+                            <option value="residential">
+
+                                Residential / Home
+
+                            </option>
+
+
+                            <option value="estate">
+
+                                Estate / Complex
+
+                            </option>
+
+
+                            <option value="commercial">
+
+                                Commercial Property
+
+                            </option>
+
+
+                            <option value="industrial">
+
+                                Industrial Facility
+
+                            </option>
+
+
+                            <option value="agricultural">
+
+                                Agricultural / Farm
+
+                            </option>
+
+
+                            <option value="game">
+
+                                Game / Wildlife Property
+
+                            </option>
+
+
+                            <option value="school">
+
+                                School / Educational Facility
+
+                            </option>
+
+
+                            <option value="public">
+
+                                Public / Municipal Facility
+
+                            </option>
+
+
+                            <option value="construction">
+
+                                Construction Site
+
+                            </option>
+
+
+                            <option value="tender">
+
+                                Tender / RFQ
+
+                            </option>
+
+
+                            <option value="bulk">
+
+                                Bulk Equipment Supply
+
+                            </option>
+
+
+                            <option value="other">
+
+                                Other
+
+                            </option>
+
+
+                        </select>
+
+
+                    </div>
+
+
+
+                    <div
+                        class="nx-field">
+
+
+                        <label
+                            for="clientRole">
+
+                            Your Role
+
+                            <span
+                                class="nx-required">
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <select
+                            id="clientRole"
+                            name="clientRole"
+                            required>
+
+
+                            <option value="">
+
+                                Select your role
+
+                            </option>
+
+
+                            <option value="property-owner">
+
+                                Property Owner
+
+                            </option>
+
+
+                            <option value="business-owner">
+
+                                Business Owner
+
+                            </option>
+
+
+                            <option value="facilities-manager">
+
+                                Facilities Manager
+
+                            </option>
+
+
+                            <option value="security-manager">
+
+                                Security Manager
+
+                            </option>
+
+
+                            <option value="procurement">
+
+                                Procurement
+
+                            </option>
+
+
+                            <option value="contractor">
+
+                                Contractor
+
+                            </option>
+
+
+                            <option value="developer">
+
+                                Developer
+
+                            </option>
+
+
+                            <option value="government">
+
+                                Government / Municipal
+
+                            </option>
+
+
+                            <option value="consultant">
+
+                                Security Consultant
+
+                            </option>
+
+
+                            <option value="installer">
+
+                                Installer / Security Company
+
+                            </option>
+
+
+                            <option value="architect">
+
+                                Architect / Engineer
+
+                            </option>
+
+
+                            <option value="other">
+
+                                Other
+
+                            </option>
+
+
+                        </select>
+
+
+                    </div>
+
+
+
+                    <div
+                        class="nx-field nx-field-full">
+
+
+                        <label
+                            for="technicalScope">
+
+                            Briefly describe what you need
+
+                            <span
+                                class="nx-required">
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <textarea
+                            id="technicalScope"
+                            name="technicalScope"
+                            required
+                            placeholder="For example: We need to secure a warehouse perimeter with electric fencing and CCTV, including remote monitoring and access control..."></textarea>
+
+
+                        <div
+                            class="nx-field-note">
+
+                            You do not need to know the exact
+                            equipment required. Describe the
+                            security problem, site and desired
+                            outcome. Our technical team can
+                            assess the solution.
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </fieldset>
+
+
+
+            <!-- =================================================
+             CLIENT DETAILS
+            ================================================== -->
+
+
+            <fieldset
+                class="nx-form-section">
+
+
+                <div
+                    class="nx-section-heading">
+
+
+                    <div
+                        class="nx-section-number">
+
+                        02
+
+                    </div>
+
+
+                    <div>
+
+
+                        <span>
+                            CLIENT INFORMATION
+                        </span>
+
+
+                        <h3>
+
+                            Who are we preparing this project for?
+
+                        </h3>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div
+                    class="nx-form-grid">
+
+
+                    <div
+                        class="nx-field">
+
+
+                        <label
+                            for="fullName">
+
+                            Full Name
+
+                            <span
+                                class="nx-required">
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="fullName"
+                            name="fullName"
+                            autocomplete="name"
+                            placeholder="Your full name"
+                            required>
+
+
+                    </div>
+
+
+
+                    <div
+                        class="nx-field">
+
+
+                        <label
+                            for="companyName">
+
+                            Company / Organisation
+
+                            <span>
+                                Optional
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="companyName"
+                            name="companyName"
+                            autocomplete="organization"
+                            placeholder="Company or organisation name">
+
+
+                    </div>
+
+
+
+                    <div
+                        class="nx-field">
+
+
+                        <label
+                            for="emailAddress">
+
+                            Email Address
+
+                            <span
+                                class="nx-required">
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="email"
+                            id="emailAddress"
+                            name="emailAddress"
+                            autocomplete="email"
+                            placeholder="name@company.co.za"
+                            required>
+
+
+                    </div>
+
+
+
+                    <div
+                        class="nx-field">
+
+
+                        <label
+                            for="phoneNumber">
+
+                            Phone / WhatsApp
+
+                            <span
+                                class="nx-required">
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="tel"
+                            id="phoneNumber"
+                            name="phoneNumber"
+                            autocomplete="tel"
+                            placeholder="082 000 0000"
+                            required>
+
+
+                    </div>
+
+
+
+                    <div
+                        class="nx-field">
+
+
+                        <label
+                            for="companyRegistration">
+
+                            Company Registration Number
+
+                            <span>
+                                Optional
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="companyRegistration"
+                            name="companyRegistration"
+                            placeholder="If applicable">
+
+
+                    </div>
+
+
+
+                    <div
+                        class="nx-field">
+
+
+                        <label
+                            for="vatNumber">
+
+                            VAT Number
+
+                            <span>
+                                Optional
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="vatNumber"
+                            name="vatNumber"
+                            placeholder="If applicable">
+
+
+                    </div>
+
+
+                </div>
+
+
+            </fieldset>
+
+
+
+            <!-- =================================================
+             SITE INFORMATION
+            ================================================== -->
+
+
+            <fieldset
+                class="nx-form-section">
+
+
+                <div
+                    class="nx-section-heading">
+
+
+                    <div
+                        class="nx-section-number">
+
+                        03
+
+                    </div>
+
+
+                    <div>
+
+
+                        <span>
+                            SITE & LOCATION
+                        </span>
+
+
+                        <h3>
+
+                            Tell us about the property.
+
+                        </h3>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div
+                    class="nx-form-grid">
+
+
+                    <div
+                        class="nx-field nx-field-full">
+
+
+                        <label
+                            for="siteAddress">
+
+                            Installation / Project Address
+
+                            <span
+                                class="nx-required">
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <textarea
+                            id="siteAddress"
+                            name="siteAddress"
+                            placeholder="Street address, suburb, city and province"
+                            required></textarea>
+
+
+                    </div>
+
+
+
+                    <div
+                        class="nx-field">
+
+
+                        <label
+                            for="siteProvince">
+
+                            Province
+
+                            <span
+                                class="nx-required">
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <select
+                            id="siteProvince"
+                            name="siteProvince"
+                            required>
+
+
+                            <option value="">
+
+                                Select province
+
+                            </option>
+
+
+                            <option value="gauteng">
+
+                                Gauteng
+
+                            </option>
+
+
+                            <option value="mpumalanga">
+
+                                Mpumalanga
+
+                            </option>
+
+
+                            <option value="limpopo">
+
+                                Limpopo
+
+                            </option>
+
+
+                            <option value="north-west">
+
+                                North West
+
+                            </option>
+
+
+                            <option value="free-state">
+
+                                Free State
+
+                            </option>
+
+
+                            <option value="kwazulu-natal">
+
+                                KwaZulu-Natal
+
+                            </option>
+
+
+                            <option value="eastern-cape">
+
+                                Eastern Cape
+
+                            </option>
+
+
+                            <option value="western-cape">
+
+                                Western Cape
+
+                            </option>
+
+
+                            <option value="northern-cape">
+
+                                Northern Cape
+
+                            </option>
+
+
+                        </select>
+
+
+                    </div>
+
+
+
+                    <div
+                        class="nx-field">
+
+
+                        <label
+                            for="siteEnvironment">
+
+                            Site Environment
+
+                            <span
+                                class="nx-required">
+                                *
+                            </span>
+
+                        </
