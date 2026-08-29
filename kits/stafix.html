@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexPak Security Solutions | Stafix Agricultural & Game Fencing Engineering Manual</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --obsidian: #0f2e21;
+            --slate-dark: #195e3f;
+            --slate-light: #f4fbf7;
+            --earth-gold: #b45309;
+            --amber-accent: #d97706;
+            --forest-accent: #15803d;
+            --border-color: #bbf7d0;
+            --text-main: #1c1917;
+            --text-muted: #57534e;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: #f7fee7; color: var(--text-main); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+        /* Agricultural Earthy Green & Gold Header */
+        header {
+            background: linear-gradient(135deg, var(--obsidian) 0%, var(--slate-dark) 100%);
+            color: white;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--amber-accent);
+            box-shadow: 0 10px 25px -5px rgba(15, 46, 33, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo-area h1 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(90deg, #ffffff, #fef08a); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo-area span { color: var(--amber-accent); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; display: block; margin-top: 2px; }
+        
+        .back-btn {
+            background: rgba(217, 119, 6, 0.2);
+            border: 1px solid rgba(217, 119, 6, 0.5);
+            color: white;
+            padding: 0.6rem 1.4rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .back-btn:hover { background: var(--amber-accent); border-color: var(--amber-accent); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(217, 119, 6, 0.4); }
+
+        /* Layout Grid */
+        .container {
+            max-width: 1450px;
+            margin: 2.5rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1.3fr 1.1fr;
+            gap: 2.5rem;
+        }
+
+        @media (max-width: 1100px) {
+            .container { grid-template-columns: 1fr; padding: 0 1rem; }
+        }
+
+        /* Technical Manual Column (Left) */
+        .manual-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+            border: 1px solid #d9f99d;
+        }
+        .manual-container h2 { font-size: 2rem; font-weight: 800; color: var(--obsidian); margin-bottom: 1.5rem; letter-spacing: -0.5px; }
+        .manual-container h3 { font-size: 1.25rem; font-weight: 700; color: var(--forest-accent); margin: 2rem 0 1rem 0; display: flex; align-items: center; gap: 12px; border-bottom: 2px solid #f7fee7; padding-bottom: 0.5rem; }
+        .manual-container h3 i { color: var(--amber-accent); }
+        .manual-container p { color: #44403c; margin-bottom: 1.2rem; font-size: 1rem; text-align: justify; }
+        .manual-container ul, .manual-container ol { margin-left: 1.5rem; margin-bottom: 1.5rem; color: #44403c; }
+        .manual-container li { margin-bottom: 0.7rem; font-size: 0.95rem; }
+        .manual-container li strong { color: var(--obsidian); }
+
+        .pro-tip-box {
+            background: linear-gradient(135deg, #ecfccb 0%, #d9f99d 100%);
+            border-left: 5px solid var(--earth-gold);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 2rem 0;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .pro-tip-box h4 { color: var(--obsidian); font-weight: 700; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 8px; font-size: 1rem; }
+        .pro-tip-box h4 i { color: var(--earth-gold); }
+        .pro-tip-box p { margin-bottom: 0; font-size: 0.95rem; color: #1c1917; }
+
+        /* Kit Sidebar (Right - PDF Document Style Cards) */
+        .sidebar-kits {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .pdf-kit-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+            border: 1px solid #d9f99d;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .pdf-kit-card:hover { transform: translateY(-4px); }
+
+        .pdf-card-header {
+            padding: 1.3rem 2rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-xseries { background: linear-gradient(135deg, #0f2e21 0%, #195e3f 100%); border-top: 5px solid #15803d; }
+        .header-mains { background: linear-gradient(135deg, #0f2e21 0%, #164e63 100%); border-top: 5px solid #0284c7; }
+        .header-battery { background: linear-gradient(135deg, #0f2e21 0%, #78350f 100%); border-top: 5px solid #d97706; }
+
+        .pdf-card-title h3 { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.3px; }
+        .pdf-card-title span { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; color: #fef08a; display: block; margin-top: 2px; }
+        
+        .pdf-badge {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pdf-card-body {
+            padding: 1.3rem 2rem;
+            background: #ffffff;
+        }
+        .pdf-table-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            border-bottom: 2px solid #f7fee7;
+            padding-bottom: 6px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .pdf-bom-list {
+            list-style: none;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .pdf-bom-list::-webkit-scrollbar { width: 5px; }
+        .pdf-bom-list::-webkit-scrollbar-thumb { background: #bbf7d0; border-radius: 3px; }
+
+        .pdf-bom-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 7px 0;
+            border-bottom: 1px solid #f7fee7;
+            font-size: 0.88rem;
+            transition: background 0.2s;
+        }
+        .pdf-bom-item:hover { background: #f7fee7; padding-left: 4px; padding-right: 4px; border-radius: 4px; }
+        
+        .item-name { color: var(--text-main); font-weight: 500; display: flex; align-items: center; gap: 8px; }
+        .item-name i { font-size: 0.65rem; color: var(--forest-accent); }
+        
+        .item-qty {
+            background: #f7fee7;
+            color: var(--obsidian);
+            font-family: monospace;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            border: 1px solid #d9f99d;
+        }
+
+        footer {
+            background: white;
+            text-align: center;
+            padding: 2.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 4rem;
+            border-top: 1px solid #d9f99d;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <h1>NexPak Security Solutions</h1>
+            <span>Stafix Agricultural & Game Fencing Series & Engineering Manual</span>
+        </div>
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Store</a>
+    </header>
+
+    <div class="container">
+        
+        <div class="manual-container">
+            <h2>Stafix Agricultural & Wildlife Fence Architecture</h2>
+            <p>While Stafix Security Centres distribute high-security perimeter equipment, the Stafix-branded agricultural energizer line is renowned worldwide for cutting-edge engineering in farm, equestrian, and wildlife fence management. Defining hallmarks include <strong>Cyclic Wave™ technology</strong> (delivering clean, continuous pulses right to the end of long wire loops) and <strong>Bi-polar technology</strong>, guaranteeing high shocking performance even in bone-dry, non-conductive soils.</p>
+
+            <h3><i class="fas fa-tractor"></i> Core Stafix Product Tiers & Capabilities</h3>
+            <ul>
+                <li><strong>X-Series Unigizers (Cross-Over Range):</strong> Versatile dual-power units running on either 220V mains or 12V deep-cycle batteries. Models range from the entry-level X1 (1.0J) to heavy-duty X18i (18 Joules) featuring isolated digital display screens monitoring real-time output voltage and battery health.</li>
+                <li><strong>High-Power Mains Series (Massive Perimeters):</strong> Built for multi-kilometer cattle grids, massive game reserves, and wild animal boundaries. The flagship <strong>Stafix M46</strong> replaces the legacy M36R, offering 20% more power, built-in Bluetooth and Wi-Fi, and full integration with the Datamars Livestock Farm App for smartphone monitoring and remote power control.</li>
+                <li><strong>Portable & Battery-Powered Strip Grazers:</strong> Lightweight, compact units (AN20, AN90) designed for rotational strip grazing, temporary cell division, and horse show camps, with options for clip-on solar panels to create autonomous remote stations.</li>
+            </ul>
+
+            <h3><i class="fas fa-seedling"></i> Professional Farm Deployment Methodology</h3>
+            <ol>
+                <li><strong>Grounding Infrastructure:</strong> Agricultural systems rely heavily on earth return. Drive multiple galvanized earth stakes deep into damp soil away from dairy or structural earth paths to ensure maximum energy transfer.</li>
+                <li><strong>Vegetation Management & Cyclic Wave:</strong> Use Cyclic Wave™ energizers to push past light foliage, but routinely clear high-growth brush along fence lines to prevent voltage drop and power leakage.</li>
+                <li><strong>Smart App & Remote Telemetry:</strong> Leverage Bluetooth and Wi-Fi enabled mains energizers (like the M46) to inspect farm boundary status and isolate faults instantly via mobile devices across vast acreage.</li>
+            </ol>
+
+            <div class="pro-tip-box">
+                <h4><i class="fas fa-bolt"></i> Agricultural Grounding Tip</h4>
+                <p>In dry sandy or arid soils, use a Bi-polar wiring configuration and alternate live and earth wires to guarantee an effective shock when animals make contact with the fence.</p>
+            </div>
+        </div>
+
+        <div class="sidebar-kits">
+            
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-xseries">
+                    <div class="pdf-card-title">
+                        <h3>X-Series Unigizers</h3>
+                        <span>Dual-Power Cross-Over (X1 to X18i)</span>
+                    </div>
+                    <div class="pdf-badge">Series: STAFIX-X</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Stafix X-Series Unigizer (X1 / X2 / X3 / X18i)</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 12V Deep-Cycle Battery Lead Set</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 220V Power Adaptor Unit</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Isolated Digital Screen / LED Module</span><span class="item-qty">x 1</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-mains">
+                    <div class="pdf-card-title">
+                        <h3>High-Power Mains Series</h3>
+                        <span>Massive Game & Farm Reserves (M36R, M46)</span>
+                    </div>
+                    <div class="pdf-badge">Series: STAFIX-MAINS</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Stafix M46 / M36R Mains Energizer</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Heavy-Duty Lightning Arrestor / Choke Kit</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Wi-Fi & Bluetooth Telemetry Module</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Datamars Livestock App Integration Kit</span><span class="item-qty">x 1</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-battery">
+                    <div class="pdf-card-title">
+                        <h3>AN Battery & Strip Grazer Series</h3>
+                        <span>Portable Livestock Units (AN20, AN90)</span>
+                    </div>
+                    <div class="pdf-badge">Series: STAFIX-AN</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Stafix AN20 / AN90 Battery Energizer</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Clip-On Monocrystalline Solar Panel</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Earth Stand Mounting Bracket</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Fence Lead-Out & Crocodile Clip Set</span><span class="item-qty">x 1</span></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; 2026 NexPak Security Solutions. All rights reserved. Stafix Agricultural & Game Fencing Distribution Division.
+    </footer>
+
+</body>
+</html>
+
