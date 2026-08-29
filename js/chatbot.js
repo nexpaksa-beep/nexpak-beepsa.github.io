@@ -2175,4 +2175,275 @@ function createChatbotUI() {
         }
 
         response +=
-            '\nThese are guide prices only. A custom quote will give you the exact cost for your property.'
+                    response +=
+            '\nThese are guide prices only. A custom quote will give you the exact cost for your property.';
+
+        return response;
+    }
+
+    function handleQuickAction(action) {
+        switch (action) {
+
+            case 'quote':
+
+                addMessage(
+                    "I'd like to get a quote",
+                    'user'
+                );
+
+                setTimeout(() => {
+
+                    addMessage(
+                        "Great! I'll help you get a quote. " +
+                        "What type of security solution are you interested in?",
+                        'bot'
+                    );
+
+                    showLeadForm();
+
+                }, 500);
+
+                break;
+
+
+            case 'products':
+
+                addMessage(
+                    "Show me your products",
+                    'user'
+                );
+
+                setTimeout(() => {
+
+                    addMessage(
+                        "We offer a range of security solutions:\n\n" +
+                        "• Electric Fencing from R350/m\n" +
+                        "• CCTV Systems from R4,500\n" +
+                        "• Access Control from R8,000\n" +
+                        "• Gate Automation from R12,000\n" +
+                        "• Equestrian Fencing\n\n" +
+                        "Which one interests you?",
+                        'bot'
+                    );
+
+                }, 500);
+
+                break;
+
+
+            case 'contact':
+
+                addMessage(
+                    "I want to contact you",
+                    'user'
+                );
+
+                setTimeout(() => {
+
+                    addMessage(
+                        `Phone: ${CHATBOT_CONFIG.companyPhone}\n` +
+                        `Email: ${CHATBOT_CONFIG.companyEmail}\n` +
+                        `WhatsApp: ${CHATBOT_CONFIG.companyWhatsApp}\n\n` +
+                        `We're open ${CHATBOT_CONFIG.businessHours}`,
+                        'bot'
+                    );
+
+                }, 500);
+
+                break;
+        }
+    }
+
+    function showLeadForm() {
+
+        const form =
+            document.getElementById('lead-form');
+
+        if (form) {
+            form.style.display = 'block';
+        }
+    }
+
+    function skipLeadForm() {
+
+        const form =
+            document.getElementById('lead-form');
+
+        if (form) {
+            form.style.display = 'none';
+        }
+    }
+
+    function submitLeadForm() {
+
+        const name =
+            document.getElementById('lead-name').value.trim();
+
+        const email =
+            document.getElementById('lead-email').value.trim();
+
+        const phone =
+            document.getElementById('lead-phone').value.trim();
+
+        const message =
+            document.getElementById('lead-message').value.trim();
+
+
+        if (!name || !email) {
+
+            alert(
+                'Please enter your name and email.'
+            );
+
+            return;
+        }
+
+
+        chatState.userInfo = {
+            name: name,
+            email: email,
+            phone: phone,
+            message: message
+        };
+
+        chatState.leadCaptured = true;
+
+
+        document.getElementById(
+            'lead-form'
+        ).style.display = 'none';
+
+
+        addMessage(
+            `Thanks ${name}! We'll be in touch soon.`,
+            'bot'
+        );
+
+
+        console.log(
+            'New Lead Captured:',
+            chatState.userInfo
+        );
+    }
+
+
+    function formatTime(date) {
+
+        return date.toLocaleTimeString(
+            'en-US',
+            {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            }
+        );
+    }
+
+
+    function saveChatHistory() {
+
+        localStorage.setItem(
+            'nexpak_chat_history',
+            JSON.stringify(chatState.messages)
+        );
+    }
+
+
+    function loadChatHistory() {
+
+        const saved =
+            localStorage.getItem(
+                'nexpak_chat_history'
+            );
+
+        if (saved) {
+
+            try {
+
+                chatState.messages =
+                    JSON.parse(saved);
+
+            } catch (error) {
+
+                console.warn(
+                    'Could not load chat history.',
+                    error
+                );
+
+                chatState.messages = [];
+            }
+        }
+    }
+
+
+    /* ==========================================================
+       START CHATBOT
+       ========================================================== */
+
+    if (
+        document.readyState === 'loading'
+    ) {
+
+        document.addEventListener(
+            'DOMContentLoaded',
+            init
+        );
+
+    } else {
+
+        init();
+    }
+
+
+    /* ==========================================================
+       PUBLIC API
+       ========================================================== */
+
+    window.NexpakChatbot = {
+
+        open: function() {
+
+            if (!chatState.isOpen) {
+                toggleChat();
+            }
+
+        },
+
+        close: function() {
+
+            if (chatState.isOpen) {
+                toggleChat();
+            }
+
+        },
+
+        send: function(message) {
+
+            if (!message) return;
+
+            addMessage(
+                message,
+                'user'
+            );
+
+            showTypingIndicator();
+
+            setTimeout(() => {
+
+                hideTypingIndicator();
+
+                const response =
+                    generateResponse(message);
+
+                addMessage(
+                    response,
+                    'bot'
+                );
+
+            }, 500);
+
+        }
+
+    };
+
+})();
