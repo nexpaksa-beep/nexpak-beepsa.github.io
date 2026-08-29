@@ -1110,11 +1110,16 @@ function toast(msg) {
   window._toast = setTimeout(() => t.classList.remove("show"), 2500);
 }
 
-document.getElementById("year").textContent = new Date().getFullYear();
+const yearEl = document.getElementById("year");
+if (yearEl) {
+  yearEl.textContent = new Date().getFullYear();
+}
+
 categories();
 renderProducts();
 updateCounts();
 renderCart();
+  
 </script>
 
 <!-- External Modules JavaScript Folder Integration -->
