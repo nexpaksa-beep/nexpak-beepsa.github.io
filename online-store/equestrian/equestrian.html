@@ -1104,12 +1104,14 @@ function proceedToCheckoutModal() {
 
 function toast(msg) {
   const t = document.getElementById("toast");
+  if (!t) return;
   t.textContent = msg;
   t.classList.add("show");
   clearTimeout(window._toast);
   window._toast = setTimeout(() => t.classList.remove("show"), 2500);
 }
 
+// Safe initialization
 const yearEl = document.getElementById("year");
 if (yearEl) {
   yearEl.textContent = new Date().getFullYear();
@@ -1119,8 +1121,9 @@ categories();
 renderProducts();
 updateCounts();
 renderCart();
-  
 </script>
+  
+  
 
 <!-- External Modules JavaScript Folder Integration -->
 <script src="../../js/delivery-calculator.js"></script>
