@@ -9508,5 +9508,1355 @@ a {
 
  THE SUBMISSION ENGINE WILL BE ADDED IN THE NEXT PART.
 ========================================================= -->
+<script>
 
+/* =========================================================
+   NEXPAK SECURITY SOLUTIONS
+   TECHNICAL QUOTATION ENGINE
+
+   technical-form.html
+   PART 7
+
+   FUNCTIONS:
+
+   - Form validation
+   - Generate technical reference
+   - Collect all technical information
+   - Build professional quotation request
+   - Email submission
+   - WhatsApp backup submission
+   - Submission status
+   - Prevent accidental duplicate submissions
+
+========================================================= */
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        initialiseTechnicalForm();
+
+
+    }
+);
+
+
+
+/* =========================================================
+   INITIALISE FORM
+========================================================= */
+
+
+function initialiseTechnicalForm() {
+
+
+    const form =
+        document.getElementById(
+            "technicalQuoteForm"
+        );
+
+
+    if (!form) {
+
+        console.error(
+            "Nexpak Technical Quote Form was not found."
+        );
+
+        return;
+
+    }
+
+
+    generateTechnicalReference();
+
+
+    form.addEventListener(
+        "submit",
+        handleTechnicalSubmission
+    );
+
+
+}
+
+
+
+/* =========================================================
+   GENERATE TECHNICAL REFERENCE
+========================================================= */
+
+
+function generateTechnicalReference() {
+
+
+    const date =
+        new Date();
+
+
+    const year =
+        date.getFullYear();
+
+
+    const month =
+        String(
+            date.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    const day =
+        String(
+            date.getDate()
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+    const random =
+        Math.floor(
+            1000 +
+            Math.random() * 9000
+        );
+
+
+    const reference =
+        "NXS-" +
+        year +
+        month +
+        day +
+        "-" +
+        random;
+
+
+    localStorage.setItem(
+        "nexpak_technical_reference",
+        reference
+    );
+
+
+    return reference;
+
+
+}
+
+
+
+/* =========================================================
+   GET TECHNICAL REFERENCE
+========================================================= */
+
+
+function getTechnicalReference() {
+
+
+    let reference =
+        localStorage.getItem(
+            "nexpak_technical_reference"
+        );
+
+
+    if (!reference) {
+
+        reference =
+            generateTechnicalReference();
+
+    }
+
+
+    return reference;
+
+
+}
+
+
+
+/* =========================================================
+   READ FIELD VALUE
+========================================================= */
+
+
+function getFieldValue(id) {
+
+
+    const field =
+        document.getElementById(id);
+
+
+    if (!field) {
+
+        return "";
+
+    }
+
+
+    return field.value.trim();
+
+
+}
+
+
+
+/* =========================================================
+   READ CHECKBOXES
+========================================================= */
+
+
+function getCheckedValues(name) {
+
+
+    const fields =
+        document.querySelectorAll(
+            'input[name="' +
+            name +
+            '"]:checked'
+        );
+
+
+    return Array.from(
+        fields
+    ).map(
+        function (field) {
+
+            return field.value;
+
+        }
+    );
+
+
+}
+
+
+
+/* =========================================================
+   COLLECT CUSTOMER INFORMATION
+========================================================= */
+
+
+function collectCustomerInformation() {
+
+
+    return {
+
+
+        fullName:
+            getFieldValue(
+                "fullName"
+            ),
+
+
+        companyName:
+            getFieldValue(
+                "companyName"
+            ),
+
+
+        email:
+            getFieldValue(
+                "email"
+            ),
+
+
+        phone:
+            getFieldValue(
+                "phone"
+            ),
+
+
+        position:
+            getFieldValue(
+                "position"
+            ),
+
+
+        preferredContact:
+            getFieldValue(
+                "preferredContact"
+            ),
+
+
+        contactTime:
+            getFieldValue(
+                "contactTime"
+            )
+
+
+    };
+
+
+}
+
+
+
+/* =========================================================
+   COLLECT SITE INFORMATION
+========================================================= */
+
+
+function collectSiteInformation() {
+
+
+    return {
+
+
+        siteAddress:
+            getFieldValue(
+                "siteAddress"
+            ),
+
+
+        siteEnvironment:
+            getFieldValue(
+                "siteEnvironment"
+            ),
+
+
+        siteAccess:
+            getFieldValue(
+                "siteAccess"
+            ),
+
+
+        siteOccupation:
+            getFieldValue(
+                "siteOccupation"
+            ),
+
+
+        sitePlan:
+            getFieldValue(
+                "sitePlan"
+            ),
+
+
+        siteChallenges:
+            getFieldValue(
+                "siteChallenges"
+            )
+
+
+    };
+
+
+}
+
+
+
+/* =========================================================
+   COLLECT SECURITY INFORMATION
+========================================================= */
+
+
+function collectSecurityInformation() {
+
+
+    return {
+
+
+        securityScope:
+            getFieldValue(
+                "securityScope"
+            ),
+
+
+        perimeterSecurity:
+            getFieldValue(
+                "perimeterSecurity"
+            ),
+
+
+        cctvRequirement:
+            getFieldValue(
+                "cctvRequirement"
+            ),
+
+
+        networkRequirement:
+            getFieldValue(
+                "networkRequirement"
+            ),
+
+
+        accessControl:
+            getFieldValue(
+                "accessControl"
+            )
+
+
+    };
+
+
+}
+
+
+
+/* =========================================================
+   COLLECT FENCING INFORMATION
+========================================================= */
+
+
+function collectFenceInformation() {
+
+
+    return {
+
+
+        fenceType:
+            getFieldValue(
+                "fenceType"
+            ),
+
+
+        fenceHeight:
+            getFieldValue(
+                "fenceHeight"
+            ),
+
+
+        fenceLength:
+            getFieldValue(
+                "fenceLength"
+            ),
+
+
+        fenceCondition:
+            getFieldValue(
+                "fenceCondition"
+            ),
+
+
+        energizerRequirement:
+            getFieldValue(
+                "energizerRequirement"
+            ),
+
+
+        sectorCount:
+            getFieldValue(
+                "sectorCount"
+            ),
+
+
+        fenceTechnicalNotes:
+            getFieldValue(
+                "fenceTechnicalNotes"
+            ),
+
+
+        monitoringRequirement:
+            getFieldValue(
+                "monitoringRequirement"
+            ),
+
+
+        zonePurpose:
+            getFieldValue(
+                "zonePurpose"
+            ),
+
+
+        monitoringNotes:
+            getFieldValue(
+                "monitoringNotes"
+            )
+
+
+    };
+
+
+}
+
+
+
+/* =========================================================
+   COLLECT PUBLIC ACCESS INFORMATION
+========================================================= */
+
+
+function collectPublicAccessInformation() {
+
+
+    return {
+
+
+        publicAccess:
+            getFieldValue(
+                "publicAccess"
+            ),
+
+
+        lowVoltageMonitoring:
+            getFieldValue(
+                "lowVoltageMonitoring"
+            ),
+
+
+        publicAccessDetails:
+            getFieldValue(
+                "publicAccessDetails"
+            )
+
+
+    };
+
+
+}
+
+
+
+/* =========================================================
+   COLLECT CCTV INFORMATION
+========================================================= */
+
+
+function collectCCTVInformation() {
+
+
+    return {
+
+
+        cctvPlatform:
+            getFieldValue(
+                "cctvPlatform"
+            ),
+
+
+        cameraQuantity:
+            getFieldValue(
+                "cameraQuantity"
+            ),
+
+
+        cameraApplication:
+            getFieldValue(
+                "cameraApplication"
+            ),
+
+
+        cameraResolution:
+            getFieldValue(
+                "cameraResolution"
+            ),
+
+
+        nightVision:
+            getFieldValue(
+                "nightVision"
+            ),
+
+
+        nvrRequirement:
+            getFieldValue(
+                "nvrRequirement"
+            ),
+
+
+        retentionPeriod:
+            getFieldValue(
+                "retentionPeriod"
+            ),
+
+
+        remoteViewing:
+            getFieldValue(
+                "remoteViewing"
+            ),
+
+
+        cctvDetails:
+            getFieldValue(
+                "cctvDetails"
+            )
+
+
+    };
+
+
+}
+
+
+
+/* =========================================================
+   COLLECT NETWORK INFORMATION
+========================================================= */
+
+
+function collectNetworkInformation() {
+
+
+    return {
+
+
+        networkPlatform:
+            getFieldValue(
+                "networkPlatform"
+            ),
+
+
+        wirelessRequirement:
+            getFieldValue(
+                "wirelessRequirement"
+            ),
+
+
+        wirelessDistance:
+            getFieldValue(
+                "wirelessDistance"
+            ),
+
+
+        lineOfSight:
+            getFieldValue(
+                "lineOfSight"
+            ),
+
+
+        poeRequirement:
+            getFieldValue(
+                "poeRequirement"
+            ),
+
+
+        networkCabinet:
+            getFieldValue(
+                "networkCabinet"
+            ),
+
+
+        networkDetails:
+            getFieldValue(
+                "networkDetails"
+            )
+
+
+    };
+
+
+}
+
+
+
+/* =========================================================
+   COLLECT INTEGRATION INFORMATION
+========================================================= */
+
+
+function collectIntegrationInformation() {
+
+
+    return {
+
+
+        integrationLevel:
+            getFieldValue(
+                "integrationLevel"
+            ),
+
+
+        cctvFenceIntegration:
+            getFieldValue(
+                "cctvFenceIntegration"
+            ),
+
+
+        alarmIntegration:
+            getFieldValue(
+                "alarmIntegration"
+            ),
+
+
+        accessIntegration:
+            getFieldValue(
+                "accessIntegration"
+            ),
+
+
+        integrationDetails:
+            getFieldValue(
+                "integrationDetails"
+            )
+
+
+    };
+
+
+}
+
+
+
+/* =========================================================
+   COLLECT ACCESS INFORMATION
+========================================================= */
+
+
+function collectAccessInformation() {
+
+
+    return {
+
+
+        gateAutomation:
+            getFieldValue(
+                "gateAutomation"
+            ),
+
+
+        gateType:
+            getFieldValue(
+                "gateType"
+            ),
+
+
+        accessMethod:
+            getFieldValue(
+                "accessMethod"
+            ),
+
+
+        intercomRequirement:
+            getFieldValue(
+                "intercomRequirement"
+            ),
+
+
+        accessUsers:
+            getFieldValue(
+                "accessUsers"
+            ),
+
+
+        vehicleTraffic:
+            getFieldValue(
+                "vehicleTraffic"
+            ),
+
+
+        accessDetails:
+            getFieldValue(
+                "accessDetails"
+            )
+
+
+    };
+
+
+}
+
+
+
+/* =========================================================
+   COLLECT ALARM INFORMATION
+========================================================= */
+
+
+function collectAlarmInformation() {
+
+
+    return {
+
+
+        alarmSystem:
+            getFieldValue(
+                "alarmSystem"
+            ),
+
+
+        intrusionDetection:
+            getFieldValue(
+                "intrusionDetection"
+            ),
+
+
+        alarmDetails:
+            getFieldValue(
+                "alarmDetails"
+            )
+
+
+    };
+
+
+}
+
+
+
+/* =========================================================
+   COLLECT PROJECT DELIVERY
+========================================================= */
+
+
+function collectProjectDelivery() {
+
+
+    return {
+
+
+        installationRequirement:
+            getFieldValue(
+                "installationRequirement"
+            ),
+
+
+        siteSurvey:
+            getFieldValue(
+                "siteSurvey"
+            ),
+
+
+        installationScale:
+            getFieldValue(
+                "installationScale"
+            ),
+
+
+        commissioning:
+            getFieldValue(
+                "commissioning"
+            ),
+
+
+        installationDetails:
+            getFieldValue(
+                "installationDetails"
+            )
+
+
+    };
+
+
+}
+
+
+
+/* =========================================================
+   COLLECT MAINTENANCE
+========================================================= */
+
+
+function collectMaintenanceInformation() {
+
+
+    return {
+
+
+        maintenanceContract:
+            getFieldValue(
+                "maintenanceContract"
+            ),
+
+
+        maintenanceScope:
+            getFieldValue(
+                "maintenanceScope"
+            ),
+
+
+        responseRequirement:
+            getFieldValue(
+                "responseRequirement"
+            ),
+
+
+        warrantyRequirement:
+            getFieldValue(
+                "warrantyRequirement"
+            ),
+
+
+        maintenanceDetails:
+            getFieldValue(
+                "maintenanceDetails"
+            )
+
+
+    };
+
+
+}
+
+
+
+/* =========================================================
+   COLLECT COMMERCIAL INFORMATION
+========================================================= */
+
+
+function collectCommercialInformation() {
+
+
+    return {
+
+
+        projectType:
+            getFieldValue(
+                "projectType"
+            ),
+
+
+        procurementStage:
+            getFieldValue(
+                "procurementStage"
+            ),
+
+
+        bulkSupply:
+            getFieldValue(
+                "bulkSupply"
+            ),
+
+
+        boqAvailable:
+            getFieldValue(
+                "boqAvailable"
+            ),
+
+
+        budgetRange:
+            getFieldValue(
+                "budgetRange"
+            ),
+
+
+        requiredDate:
+            getFieldValue(
+                "requiredDate"
+            ),
+
+
+        commercialDetails:
+            getFieldValue(
+                "commercialDetails"
+            )
+
+
+    };
+
+
+}
+
+
+
+/* =========================================================
+   COLLECT PROJECT BRIEF
+========================================================= */
+
+
+function collectProjectBrief() {
+
+
+    return {
+
+
+        projectBrief:
+            getFieldValue(
+                "projectBrief"
+            ),
+
+
+        existingSystem:
+            getFieldValue(
+                "existingSystem"
+            ),
+
+
+        systemCondition:
+            getFieldValue(
+                "systemCondition"
+            ),
+
+
+        siteChallenges:
+            getFieldValue(
+                "siteChallenges"
+            ),
+
+
+        desiredOutcome:
+            getFieldValue(
+                "desiredOutcome"
+            ),
+
+
+        technicalDrawings:
+            getFieldValue(
+                "technicalDrawings"
+            ),
+
+
+        photosAvailable:
+            getFieldValue(
+                "photosAvailable"
+            ),
+
+
+        documentType:
+            getFieldValue(
+                "documentType"
+            ),
+
+
+        documentNotes:
+            getFieldValue(
+                "documentNotes"
+            )
+
+
+    };
+
+
+}
+
+
+
+/* =========================================================
+   COLLECT PRIORITIES
+========================================================= */
+
+
+function collectPriorities() {
+
+
+    return getCheckedValues(
+        "priority"
+    );
+
+
+}
+
+
+
+/* =========================================================
+   VALIDATE FORM
+========================================================= */
+
+
+function validateTechnicalForm(
+    form
+) {
+
+
+    if (!form.checkValidity()) {
+
+
+        form.reportValidity();
+
+
+        return false;
+
+
+    }
+
+
+    return true;
+
+
+}
+
+
+
+/* =========================================================
+   BUILD TECHNICAL REQUEST
+========================================================= */
+
+
+function collectTechnicalRequest() {
+
+
+    return {
+
+
+        reference:
+            getTechnicalReference(),
+
+
+        submittedAt:
+            new Date()
+                .toLocaleString(
+                    "en-ZA"
+                ),
+
+
+        customer:
+            collectCustomerInformation(),
+
+
+        site:
+            collectSiteInformation(),
+
+
+        security:
+            collectSecurityInformation(),
+
+
+        fencing:
+            collectFenceInformation(),
+
+
+        publicAccess:
+            collectPublicAccessInformation(),
+
+
+        cctv:
+            collectCCTVInformation(),
+
+
+        network:
+            collectNetworkInformation(),
+
+
+        integration:
+            collectIntegrationInformation(),
+
+
+        access:
+            collectAccessInformation(),
+
+
+        alarm:
+            collectAlarmInformation(),
+
+
+        projectDelivery:
+            collectProjectDelivery(),
+
+
+        maintenance:
+            collectMaintenanceInformation(),
+
+
+        commercial:
+            collectCommercialInformation(),
+
+
+        project:
+            collectProjectBrief(),
+
+
+        priorities:
+            collectPriorities()
+
+
+    };
+
+
+}
+
+
+
+/* =========================================================
+   FORMAT VALUE
+========================================================= */
+
+
+function formatValue(
+    value
+) {
+
+
+    if (
+        value === null ||
+        value === undefined ||
+        value === ""
+    ) {
+
+        return "Not specified";
+
+    }
+
+
+    if (
+        Array.isArray(value)
+    ) {
+
+
+        if (
+            value.length === 0
+        ) {
+
+            return "None specified";
+
+        }
+
+
+        return value.join(
+            ", "
+        );
+
+
+    }
+
+
+    return String(
+        value
+    );
+
+
+}
+
+
+
+/* =========================================================
+   BUILD EMAIL MESSAGE
+========================================================= */
+
+
+function buildTechnicalEmail(
+    request
+) {
+
+
+    const c =
+        request.customer;
+
+
+    const s =
+        request.site;
+
+
+    const sec =
+        request.security;
+
+
+    const f =
+        request.fencing;
+
+
+    const p =
+        request.publicAccess;
+
+
+    const cam =
+        request.cctv;
+
+
+    const net =
+        request.network;
+
+
+    const integration =
+        request.integration;
+
+
+    const access =
+        request.access;
+
+
+    const alarm =
+        request.alarm;
+
+
+    const delivery =
+        request.projectDelivery;
+
+
+    const maintenance =
+        request.maintenance;
+
+
+    const commercial =
+        request.commercial;
+
+
+    const project =
+        request.project;
+
+
+
+    return `
+
+NEXPAK SECURITY SOLUTIONS
+
+TECHNICAL QUOTATION REQUEST
+========================================
+
+REFERENCE:
+${request.reference}
+
+SUBMITTED:
+${request.submittedAt}
+
+
+CUSTOMER INFORMATION
+========================================
+
+Name:
+${formatValue(c.fullName)}
+
+Company:
+${formatValue(c.companyName)}
+
+Position:
+${formatValue(c.position)}
+
+Email:
+${formatValue(c.email)}
+
+Phone:
+${formatValue(c.phone)}
+
+Preferred Contact:
+${formatValue(c.preferredContact)}
+
+Preferred Time:
+${formatValue(c.contactTime)}
+
+
+SITE INFORMATION
+========================================
+
+Site Address:
+${formatValue(s.siteAddress)}
+
+Environment:
+${formatValue(s.siteEnvironment)}
+
+Site Access:
+${formatValue(s.siteAccess)}
+
+Site Occupation:
+${formatValue(s.siteOccupation)}
+
+Site Plan:
+${formatValue(s.sitePlan)}
+
+Known Site Challenges:
+${formatValue(s.siteChallenges)}
+
+
+SECURITY SCOPE
+========================================
+
+Primary Requirements:
+${formatValue(sec.securityScope)}
+
+Perimeter Security:
+${formatValue(sec.perimeterSecurity)}
+
+CCTV Requirement:
+${formatValue(sec.cctvRequirement)}
+
+Network Requirement:
+${formatValue(sec.networkRequirement)}
+
+Access Control:
+${formatValue(sec.accessControl)}
+
+
+ELECTRIC FENCING
+========================================
+
+Fence Configuration:
+${formatValue(f.fenceType)}
+
+Fence Height:
+${formatValue(f.fenceHeight)}
+
+Approximate Length:
+${formatValue(f.fenceLength)}
+
+Existing Fence Condition:
+${formatValue(f.fenceC
    
