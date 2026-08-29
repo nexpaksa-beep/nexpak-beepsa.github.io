@@ -194,8 +194,8 @@ footer a {
 
 .whatsapp {
   position: fixed;
-  right: 20px;
-  bottom: 85px; /* Moves it safely above a bottom-right chat widget */
+  left: 20px; /* Moves it to the bottom-left corner */
+  bottom: 20px;
   width: 54px;
   height: 54px;
   border-radius: 50%;
@@ -204,7 +204,7 @@ footer a {
   display: grid;
   place-items: center;
   font-size: 28px;
-  z-index: 9999 !important; /* Forces it to float above all other widgets */
+  z-index: 9999 !important;
   box-shadow: 0 10px 25px rgba(0,0,0,.3);
   transition: transform .2s;
 }
@@ -217,7 +217,9 @@ footer a {
 
 .whatsapp i {
   color: #fff !important;
-}
+  }
+  
+
 
   
 
