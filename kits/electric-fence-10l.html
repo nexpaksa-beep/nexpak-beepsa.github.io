@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexPak Security Solutions | 8-Line High-Security Electric Fence Masterclass & BOM</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --obsidian: #090d16;
+            --slate-dark: #111827;
+            --slate-light: #f9fafb;
+            --gold-accent: #f59e0b;
+            --amber-glow: #d97706;
+            --violet-accent: #7c3aed;
+            --border-color: #e5e7eb;
+            --text-main: #374151;
+            --text-muted: #6b7280;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: #f3f4f6; color: var(--text-main); line-height: 1.8; -webkit-font-smoothing: antialiased; }
+
+        /* Stunning Modern Header - Distinct Gold & Indigo Theme */
+        header {
+            background: linear-gradient(135deg, var(--obsidian) 0%, var(--slate-dark) 100%);
+            color: white;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--gold-accent);
+            box-shadow: 0 10px 25px -5px rgba(9, 13, 22, 0.4);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo-area h1 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(90deg, #ffffff, #fbbf24); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo-area span { color: var(--gold-accent); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; display: block; margin-top: 2px; }
+        
+        .back-btn {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: white;
+            padding: 0.6rem 1.4rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .back-btn:hover { background: var(--gold-accent); color: var(--obsidian); border-color: var(--gold-accent); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4); }
+
+        /* Layout Grid */
+        .container {
+            max-width: 1400px;
+            margin: 2.5rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 2.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .container { grid-template-columns: 1fr; padding: 0 1rem; }
+        }
+
+        /* Technical Manual Column (Left) */
+        .manual-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+        .manual-container h2 { font-size: 2rem; font-weight: 800; color: var(--obsidian); margin-bottom: 1.5rem; letter-spacing: -0.5px; }
+        .manual-container h3 { font-size: 1.25rem; font-weight: 700; color: var(--amber-glow); margin: 2rem 0 1rem 0; display: flex; align-items: center; gap: 12px; border-bottom: 2px solid #f3f4f6; padding-bottom: 0.5rem; }
+        .manual-container h3 i { color: var(--gold-accent); }
+        .manual-container p { color: #4b5563; margin-bottom: 1.2rem; font-size: 1rem; text-align: justify; }
+        .manual-container ul, .manual-container ol { margin-left: 1.5rem; margin-bottom: 1.5rem; color: #4b5563; }
+        .manual-container li { margin-bottom: 0.7rem; font-size: 0.95rem; }
+        .manual-container li strong { color: var(--obsidian); }
+
+        .pro-tip-box {
+            background: linear-gradient(135deg, #fffbeb 100%, #fef3c7 0%);
+            border-left: 5px solid var(--gold-accent);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 2rem 0;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .pro-tip-box h4 { color: var(--obsidian); font-weight: 700; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 8px; font-size: 1rem; }
+        .pro-tip-box h4 i { color: var(--amber-glow); }
+        .pro-tip-box p { margin-bottom: 0; font-size: 0.95rem; color: #1f2937; }
+
+        /* Kit Sidebar (Right - PDF Document Style with Golden/Amber Accents) */
+        .sidebar-kits {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .pdf-kit-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .pdf-kit-card:hover { transform: translateY(-4px); }
+
+        .pdf-card-header {
+            padding: 1.5rem 2rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .pdf-card-header.kit-100 { background: linear-gradient(135deg, #090d16 0%, #1f2937 100%); border-top: 5px solid var(--gold-accent); }
+        .pdf-card-header.kit-200 { background: linear-gradient(135deg, #090d16 0%, #311042 100%); border-top: 5px solid var(--violet-accent); }
+
+        .pdf-card-title h3 { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.3px; }
+        .pdf-card-title span { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; display: block; margin-top: 2px; }
+        
+        .pdf-badge {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pdf-card-body {
+            padding: 1.5rem 2rem;
+            background: #ffffff;
+        }
+        .pdf-table-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            border-bottom: 2px solid #f3f4f6;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .pdf-bom-list {
+            list-style: none;
+            max-height: 480px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .pdf-bom-list::-webkit-scrollbar { width: 6px; }
+        .pdf-bom-list::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+
+        .pdf-bom-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 9px 0;
+            border-bottom: 1px solid #f9fafb;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+        .pdf-bom-item:hover { background: #f9fafb; padding-left: 4px; padding-right: 4px; border-radius: 4px; }
+        
+        .item-name { color: var(--text-main); font-weight: 500; display: flex; align-items: center; gap: 8px; }
+        .item-name i { font-size: 0.7rem; color: var(--amber-glow); }
+        
+        .item-qty {
+            background: #f3f4f6;
+            color: var(--obsidian);
+            font-family: monospace;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            border: 1px solid #e5e7eb;
+        }
+
+        footer {
+            background: white;
+            text-align: center;
+            padding: 2.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <h1>NexPak Security Solutions</h1>
+            <span>10-Line High-Security Engineering & Regulatory Specification Manual</span>
+        </div>
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Store</a>
+    </header>
+
+    <div class="container">
+        
+        <div class="manual-container">
+            <h2>10-Line High-Security Perimeter Architecture</h2>
+            <p>Designed for high-threat commercial, industrial, and premium residential estates, the NexPak 10-line array increases vertical barrier density and height. Powered by the high-output <strong>JVA Z14 Energizer</strong>, this system establishes multi-tiered zone protection, making unauthorized scaling or intrusion significantly more difficult.</p>
+
+            <h3><i class="fas fa-shield-alt"></i> Intensified South African Legal & Regulatory Framework</h3>
+            <p>Electric fence security in South Africa is heavily legislated under the <strong>Occupational Health and Safety Act (OHSA)</strong>, specifically governed by the Electrical Machinery Regulations and <strong>SANS 10222-3</strong> standards. For 8-line high-density barriers, compliance scrutiny is strict:</p>
+            <ul>
+                <li><strong>Strict Statutory Certification (CoC):</strong> Any modification or fresh installation of an 10-line perimeter fence requires a legally binding Certificate of Compliance issued exclusively by a registered, competent electric fence installer. Failure to produce a CoC upon property transfer invalidates insurance policies.</li>
+                <li><strong>Mandatory Warning Sign Placement:</strong> Yellow, UV-resistant warning signs bearing the text "CAUTION - ELECTRIC FENCE" in bold black lettering must be prominently displayed. SANS regulations dictate they must be attached at all access gates, corner posts, and at intervals <strong>not exceeding 10 meters</strong> along public thoroughfares or common boundaries.</li>
+                <li><strong>Height, Angle, and Encroachment Limits:</strong> Brackets mounted on common boundary walls must not cross property boundary planes without explicit municipal or neighbor consent. Angled brackets pointing inward must maintain clear vertical clearance above interior ground levels, while outward brackets over public walk-paths must respect legal height limits (minimum 2.2 meters from walking surfaces).</li>
+                <li><strong>Isolated High-Performance Earthing Grid:</strong> Because 8-line systems carry extended wire loads and higher capacitance, a robust earthing grid consisting of multiple copper-plated earth spikes coupled with high-voltage cable is legally mandatory and must be completely segregated from municipal electrical and lightning protection grounds.</li>
+            </ul>
+
+            <h3><i class="fas fa-graduation-cap"></i> Advanced Installation & Training Masterclass</h3>
+            <p>Deploying an 8-line system requires absolute mechanical precision to handle higher structural loads, wire tension management, and complex zoning:</p>
+            <ol>
+                <li><strong>High-Load Bracket Positioning:</strong> Space 10-line square tube brackets precisely at 3-meter intervals. Due to the extra downward and lateral pull of 10 active tiers, 750mm stays and stay sleeves must be welded or heavily bolted on every corner, end-strainer, and gate pillar.</li>
+                <li><strong>Deep Structural Anchoring:</strong> Secure brackets using high-grade 8x80mm nail-in anchors or masonry sleeve anchors driven into solid concrete rings or reinforced boundary pillars. Structural flex under heavy wind shear can cause wire slack or shorting.</li>
+                <li><strong>Complex Wire Stringing & Crimp Integrity:</strong> Thread the 1.2mm braided galvanized wire across all 8 tiers. Alternate live and earth strands to optimize intrusion detection sensitivity. Apply tweaker combos and S-hooks for fine tension tuning, and secure all terminal loops using heavy-duty 6mm ferrules to prevent slip under thermal expansion.</li>
+                <li><strong>Surge Suppression & Lightning Diversion:</strong> Mount a Dual Lightning Divertor directly at the boundary entry point ahead of the energizer. Tie the divertor's arrestor block straight into dedicated copper earth spikes to safely shunt high-voltage atmospheric strikes away from the JVA Z18 mainboard.</li>
+                <li><strong>System Power & Peripheral Configuration:</strong> Wire the 16 VA PSU, 7 Amp backup battery, 15W siren, red strobe, nite light, and single gate contact. Configure the JVA Z18 internal jumpers and LCD settings for gate auto-close timers, voltage thresholds, and alarm cut-off durations.</li>
+            </ol>
+
+            <div class="pro-tip-box">
+                <h4><i class="fas fa-bolt"></i> Professional Installer Masterclass Tip</h4>
+                <p>On 10-line runs exceeding 200 meters, verify that the total line resistance does not exceed manufacturer thresholds. Perform a comprehensive voltage and Joule drop analysis using a digital fence scope across all 8 tiers prior to issuing the client's official CoC document.</p>
+            </div>
+        </div>
+
+        <div class="sidebar-kits">
+            
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header kit-100">
+                    <div class="pdf-card-title">
+                        <h3>10-Line 100m Kit</h3>
+                        <span>High-Security Residential / Commercial</span>
+                    </div>
+                    <div class="pdf-badge">BOM Ref: 100M-10L</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Square tube 10 line Bracket</span><span class="item-qty">x 34</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Stay 750mm</span><span class="item-qty">x 8</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Stay sleeve 750mm</span><span class="item-qty">x 8</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Lug 6 X 35mm</span><span class="item-qty">x 16</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Nail in anchors 8x80mm</span><span class="item-qty">x 100</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Tweaker combo</span><span class="item-qty">x 60</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> S-hook</span><span class="item-qty">x 60</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Ferrules 6mm</span><span class="item-qty">x 100</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Braided galv wire 1.2mm (680m)</span><span class="item-qty">x 2</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Earth spike copper plated 1.2m</span><span class="item-qty">x 6</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Warning signs</span><span class="item-qty">x 10</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> HT cable soft 100m</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Single gate contact</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Nite light</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> JVA Z18 energizer</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 7 amp battery</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 16 VA PSU</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 15 watt siren</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Red strobe</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dual lightning divertor</span><span class="item-qty">x 1</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header kit-200">
+                    <div class="pdf-card-title">
+                        <h3>10-Line 200m Kit</h3>
+                        <span>Extended Perimeter High-Security Bundle</span>
+                    </div>
+                    <div class="pdf-badge">BOM Ref: 200M-10L</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Square tube 10 line Bracket</span><span class="item-qty">x 68</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Stay 750mm</span><span class="item-qty">x 12</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Stay sleeve 750mm</span><span class="item-qty">x 12</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Lug 6 X 35mm</span><span class="item-qty">x 24</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Nail in anchors 8x80mm</span><span class="item-qty">x 120</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Tweaker combo</span><span class="item-qty">x 120</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> S-hook</span><span class="item-qty">x 80</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Ferrules 6mm</span><span class="item-qty">x 200</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Braided galv wire 1.2mm (680m)</span><span class="item-qty">x 3</span></li>
+                          <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Earth spike copper plated 1.2m</span><span class="item-qty">x 9</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Warning signs</span><span class="item-qty">x 20</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> HT cable soft 100m</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Single gate contact</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Nite light</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> JVA Z18 energizer</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 7 amp battery</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 16 VA PSU</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> 15 watt siren</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Red strobe</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dual lightning divertor</span><span class="item-qty">x 1</span></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; 2026 NexPak Security Solutions. All rights reserved. High-Security Electronic Fencing Hardware Distribution & Technical Engineering Division.
+    </footer>
+
+</body>
+</html>
