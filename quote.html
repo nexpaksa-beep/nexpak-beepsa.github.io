@@ -14514,7 +14514,983 @@ function showSubmissionStatus(
             "nx-submission-status";
 
 
-        const form =
+                const form =
+            document.getElementById(
+                "technicalQuoteForm"
+            );
+
+
+        if (form) {
+
+
+            form.parentNode.insertBefore(
+                status,
+                form
+            );
+
+
+        }
+
+
+    }
+
+
+    status.className =
+        "nx-submission-status " +
+        type;
+
+
+    status.innerHTML = `
+
+        <div class="nx-status-icon">
+
+            ${
+                type === "success"
+                    ? "✓"
+                    : "!"
+            }
+
+        </div>
+
+
+        <div>
+
+            <strong>
+                ${title}
+            </strong>
+
+
+            <p>
+                ${message}
+            </p>
+
+        </div>
+
+    `;
+
+
+    status.scrollIntoView({
+
+        behavior:
+            "smooth",
+
+        block:
+            "center"
+
+    });
+
+
+}
+
+
+/* =========================================================
+ DISABLE / ENABLE SUBMIT BUTTON
+========================================================= */
+
+
+function setSubmitState(
+    loading
+) {
+
+
+    const button =
+        document.getElementById(
+            "technicalQuoteSubmit"
+        );
+
+
+    if (!button) {
+
+        return;
+
+    }
+
+
+    if (loading) {
+
+
+        button.disabled =
+            true;
+
+
+        button.classList.add(
+            "is-loading"
+        );
+
+
+        button.innerHTML = `
+
+            <span>
+                PREPARING TECHNICAL REQUEST...
+            </span>
+
+            <strong>
+                ...
+            </strong>
+
+        `;
+
+
+    } else {
+
+
+        button.disabled =
+            false;
+
+
+        button.classList.remove(
+            "is-loading"
+        );
+
+
+        button.innerHTML = `
+
+            <span>
+                REQUEST TECHNICAL QUOTATION
+            </span>
+
+            <strong>
+                →
+            </strong>
+
+        `;
+
+
+    }
+
+
+}
+
+
+/* =========================================================
+ TECHNICAL FORM SUBMISSION
+========================================================= */
+
+
+function setupSubmission() {
+
+
+    const form =
+        document.getElementById(
+            "technicalQuoteForm"
+        );
+
+
+    if (!form) {
+
+        console.error(
+            "Technical quotation form not found."
+        );
+
+        return;
+
+    }
+
+
+    form.addEventListener(
+        "submit",
+        function (event) {
+
+
+            event.preventDefault();
+
+
+            if (
+                !validateTechnicalForm()
+            ) {
+
+                return;
+
+            }
+
+
+            setSubmitState(
+                true
+            );
+
+
+            const request =
+                collectTechnicalRequest();
+
+
+            saveLocalRequest(
+                request
+            );
+
+
+            sessionStorage.setItem(
+
+                "nexpak_last_technical_request",
+
+                JSON.stringify(
+                    request
+                )
+
+            );
+
+
+            setTimeout(
+                function () {
+
+
+                    showSubmissionStatus(
+
+                        "success",
+
+                        "Technical quotation request prepared",
+
+                        "Your request reference is " +
+                        request.reference +
+                        ". Choose your preferred submission method below."
+
+                    );
+
+
+                    setSubmitState(
+                        false
+                    );
+
+
+                    revealSubmissionOptions(
+                        request
+                    );
+
+
+                },
+                600
+            );
+
+
+        }
+    );
+
+
+}
+
+
+/* =========================================================
+ SUBMISSION OPTIONS
+========================================================= */
+
+
+function revealSubmissionOptions(
+    request
+) {
+
+
+    let panel =
+        document.getElementById(
+            "nxSubmissionOptions"
+        );
+
+
+    if (panel) {
+
+        panel.remove();
+
+    }
+
+
+    panel =
+        document.createElement(
+            "div"
+        );
+
+
+    panel.id =
+        "nxSubmissionOptions";
+
+
+    panel.className =
+        "nx-submission-options";
+
+
+    panel.innerHTML = `
+
+        <div class="nx-submission-heading">
+
+
+            <span>
+                REQUEST READY
+            </span>
+
+
+            <h3>
+                How would you like to send it?
+            </h3>
+
+
+            <p>
+
+                Reference:
+
+                <strong>
+                    ${request.reference}
+                </strong>
+
+            </p>
+
+
+        </div>
+
+
+
+        <div class="nx-submission-actions">
+
+
+            <button
+                type="button"
+                class="nx-send-email"
+                id="nxSendTechnicalEmail">
+
+
+                <span>
+                    ✉
+                </span>
+
+
+                <strong>
+                    Email Technical Request
+                </strong>
+
+
+            </button>
+
+
+
+            <button
+                type="button"
+                class="nx-send-whatsapp"
+                id="nxSendTechnicalWhatsApp">
+
+
+                <span>
+                    ☎
+                </span>
+
+
+                <strong>
+                    Send via WhatsApp
+                </strong>
+
+
+            </button>
+
+
+        </div>
+
+
+
+        <p class="nx-submission-note">
+
+            For drawings, BOQs, plans and site photographs,
+            use the document upload field above when a connected
+            form-processing service is enabled.
+
+        </p>
+
+    `;
+
+
+    const form =
+        document.getElementById(
+            "technicalQuoteForm"
+        );
+
+
+    if (form) {
+
+
+        form.parentNode.insertBefore(
+            panel,
+            form.nextSibling
+        );
+
+
+    }
+
+
+    const emailButton =
+        document.getElementById(
+            "nxSendTechnicalEmail"
+        );
+
+
+    const whatsappButton =
+        document.getElementById(
+            "nxSendTechnicalWhatsApp"
+        );
+
+
+    if (emailButton) {
+
+
+        emailButton.addEventListener(
+            "click",
+            function () {
+
+
+                sendTechnicalEmail(
+                    request
+                );
+
+
+            }
+        );
+
+
+    }
+
+
+    if (whatsappButton) {
+
+
+        whatsappButton.addEventListener(
+            "click",
+            function () {
+
+
+                sendTechnicalWhatsApp(
+                    request
+                );
+
+
+            }
+        );
+
+
+    }
+
+
+}
+
+
+/* =========================================================
+ SEND TECHNICAL EMAIL
+========================================================= */
+
+
+function sendTechnicalEmail(
+    request
+) {
+
+
+    const body =
+        buildTechnicalEmail(
+            request
+        );
+
+
+    const subject =
+
+        "Technical Quotation Request - " +
+        request.reference;
+
+
+    const mailto =
+
+        "mailto:" +
+        NX_QUOTE_CONFIG.technicalEmail +
+        "?subject=" +
+        encodeURIComponent(
+            subject
+        ) +
+        "&body=" +
+        encodeURIComponent(
+            body
+        );
+
+
+    window.location.href =
+        mailto;
+
+
+}
+
+
+/* =========================================================
+ SEND TECHNICAL WHATSAPP
+========================================================= */
+
+
+function sendTechnicalWhatsApp(
+    request
+) {
+
+
+    const message =
+        buildTechnicalEmail(
+            request
+        );
+
+
+    const url =
+
+        "https://wa.me/" +
+        NX_QUOTE_CONFIG.whatsappNumber +
+        "?text=" +
+        encodeURIComponent(
+            message
+        );
+
+
+    window.open(
+        url,
+        "_blank",
+        "noopener,noreferrer"
+    );
+
+
+}
+
+
+/* =========================================================
+ FILE INFORMATION
+========================================================= */
+
+
+function getSelectedFileInformation() {
+
+
+    const input =
+        document.getElementById(
+            "technicalDocuments"
+        );
+
+
+    if (
+        !input ||
+        !input.files.length
+    ) {
+
+
+        return [];
+
+
+    }
+
+
+    return Array.from(
+        input.files
+    ).map(
+        function (file) {
+
+
+            return {
+
+                name:
+                    file.name,
+
+                size:
+                    file.size,
+
+                type:
+                    file.type
+
+            };
+
+
+        }
+    );
+
+
+}
+
+
+/* =========================================================
+ SAVE LOCAL REQUEST BACKUP
+========================================================= */
+
+
+function saveLocalRequest(
+    request
+) {
+
+
+    const payload = {
+
+        request:
+            request,
+
+        files:
+            getSelectedFileInformation(),
+
+        savedAt:
+            new Date().toISOString()
+
+    };
+
+
+    try {
+
+
+        localStorage.setItem(
+
+            "nexpak_technical_quote_backup",
+
+            JSON.stringify(
+                payload
+            )
+
+        );
+
+
+    } catch (error) {
+
+
+        console.warn(
+
+            "Could not save local quotation backup.",
+
+            error
+
+        );
+
+
+    }
+
+
+}
+
+
+</script>
+
+
+<!-- =========================================================
+ FINAL TECHNICAL CTA
+========================================================= -->
+
+
+<section
+    class="nx-final-cta">
+
+
+    <div class="nx-final-cta-inner">
+
+
+        <div class="nx-final-cta-content">
+
+
+            <span class="nx-eyebrow">
+
+                NEXPAK TECHNICAL DEPARTMENT
+
+            </span>
+
+
+            <h2>
+
+                From perimeter to network —
+                engineer the complete
+                security system.
+
+            </h2>
+
+
+            <p>
+
+                Whether the requirement is a residential
+                installation, agricultural perimeter, estate,
+                commercial facility, industrial site, public
+                access environment, tender or multi-kilometre
+                distributed security network, Nexpak can assess
+                the technical requirements and develop the
+                appropriate solution.
+
+            </p>
+
+
+        </div>
+
+
+
+        <div class="nx-final-cta-contact">
+
+
+            <span>
+
+                TECHNICAL ENQUIRIES
+
+            </span>
+
+
+            <a
+                href="mailto:technical@nexpaksolutions.co.za">
+
+                technical@nexpaksolutions.co.za
+
+            </a>
+
+
+            <small>
+
+                Technical quotations • Site assessments •
+                System design • Installation • Maintenance
+
+            </small>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+<!-- =========================================================
+ FOOTER
+========================================================= -->
+
+
+<footer
+    class="nx-footer">
+
+
+    <div class="nx-footer-container">
+
+
+        <div class="nx-footer-brand">
+
+
+            <div class="nx-footer-logo">
+
+                NEXPAK
+
+            </div>
+
+
+            <h3>
+
+                SECURITY SOLUTIONS
+
+            </h3>
+
+
+            <p>
+
+                Technical security equipment,
+                integrated systems and professional
+                installation solutions.
+
+            </p>
+
+
+        </div>
+
+
+
+        <div class="nx-footer-column">
+
+
+            <h4>
+                SECURITY SYSTEMS
+            </h4>
+
+
+            <a href="products.html">
+                Electric Fencing
+            </a>
+
+
+            <a href="products.html">
+                CCTV &amp; IP Surveillance
+            </a>
+
+
+            <a href="products.html">
+                Alarm Systems
+            </a>
+
+
+            <a href="products.html">
+                Access Control
+            </a>
+
+
+            <a href="products.html">
+                Gate Automation
+            </a>
+
+
+        </div>
+
+
+
+        <div class="nx-footer-column">
+
+
+            <h4>
+                TECHNICAL
+            </h4>
+
+
+            <a href="quote.html">
+                Technical Quotations
+            </a>
+
+
+            <a href="aboutus.html">
+                About Nexpak
+            </a>
+
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+
+            <a href="shop.html">
+                Security Equipment
+            </a>
+
+
+        </div>
+
+
+
+        <div class="nx-footer-column">
+
+
+            <h4>
+                TECHNICAL CONTACT
+            </h4>
+
+
+            <p>
+                Email
+            </p>
+
+
+            <a
+                href="mailto:technical@nexpaksolutions.co.za">
+
+                technical@nexpaksolutions.co.za
+
+            </a>
+
+
+            <p>
+                Technical Department
+            </p>
+
+
+            <p>
+                South Africa
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="nx-footer-bottom">
+
+
+        <span>
+
+            © 2026 Nexpak Security Solutions.
+            All Rights Reserved.
+
+        </span>
+
+
+        <span>
+
+            Technical Security • Integrated Solutions •
+            Professional Installation
+
+        </span>
+
+
+    </div>
+
+
+</footer>
+
+
+<!-- =========================================================
+ SEO STRUCTURED DATA
+========================================================= -->
+
+
+<script
+    type="application/ld+json">
+
+{
+    "@context":
+        "https://schema.org",
+
+    "@type":
+        "LocalBusiness",
+
+    "name":
+        "Nexpak Security Solutions",
+
+    "description":
+        "Technical security solutions including electric fencing, CCTV, IP surveillance, alarm systems, access control, gate automation, integrated security systems, technical installation and maintenance contracts.",
+
+    "email":
+        "technical@nexpaksolutions.co.za",
+
+    "serviceType": [
+
+        "Electric Fencing",
+
+        "Free Standing Electric Fencing",
+
+        "Large Game Fencing",
+
+        "JVA ZM20 Sector Systems",
+
+        "Electric Fence Monitoring",
+
+        "WiFi Security Monitoring",
+
+        "Dahua IP CCTV",
+
+        "Ubiquiti Wireless Networking",
+
+        "Long Distance Wireless CCTV",
+
+        "Integrated Security Systems",
+
+        "Low Voltage Monitoring",
+
+        "Access Control",
+
+        "Security System Installation",
+
+        "Security System Maintenance"
+
+    ]
+}
+
+</script>
+
+
+<!-- =========================================================
+ IMPORTANT:
+
+ THIS PAGE DOES NOT LOAD:
+
+ cart.js
+ configurator.js
+ product.js
+ shop-data.js
+
+ THIS IS A TECHNICAL QUOTATION PAGE ONLY.
+========================================================= -->
+
+
+</body>
+
+
+ </html>
  
 <!-- =========================================================
  PART 1 COMPLETE
