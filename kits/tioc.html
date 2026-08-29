@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexPak Security Solutions | Dahua TiOC (Three-in-One) Active Deterrence Engineering Manual</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --obsidian: #090d16;
+            --slate-dark: #111c33;
+            --slate-light: #f8fafc;
+            --cctv-blue: #0ea5e9;
+            --cyan-glow: #38bdf8;
+            --deterrence-red: #f43f5e;
+            --border-color: #7dd3fc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: #f1f5f9; color: var(--text-main); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+        header {
+            background: linear-gradient(135deg, var(--obsidian) 0%, var(--slate-dark) 100%);
+            color: white;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--deterrence-red);
+            box-shadow: 0 10px 25px -5px rgba(9, 13, 22, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo-area h1 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(90deg, #ffffff, #fca5a5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo-area span { color: var(--deterrence-red); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; display: block; margin-top: 2px; }
+        
+        .back-btn {
+            background: rgba(244, 63, 94, 0.15);
+            border: 1px solid rgba(244, 63, 94, 0.4);
+            color: white;
+            padding: 0.6rem 1.4rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .back-btn:hover { background: var(--deterrence-red); border-color: var(--deterrence-red); transform: translateY(-2px); box-shadow: 0 4px 15px rgba(244, 63, 94, 0.4); }
+
+        .container {
+            max-width: 1450px;
+            margin: 2.5rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1.3fr 1.1fr;
+            gap: 2.5rem;
+        }
+
+        @media (max-width: 1100px) {
+            .container { grid-template-columns: 1fr; padding: 0 1rem; }
+        }
+
+        .manual-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+            border: 1px solid #fecdd3;
+        }
+        .manual-container h2 { font-size: 2rem; font-weight: 800; color: var(--obsidian); margin-bottom: 1.5rem; letter-spacing: -0.5px; }
+        .manual-container h3 { font-size: 1.25rem; font-weight: 700; color: var(--deterrence-red); margin: 2rem 0 1rem 0; display: flex; align-items: center; gap: 12px; border-bottom: 2px solid #fff1f2; padding-bottom: 0.5rem; }
+        .manual-container h3 i { color: var(--deterrence-red); }
+        .manual-container p { color: #334155; margin-bottom: 1.2rem; font-size: 1rem; text-align: justify; }
+        .manual-container ul, .manual-container ol { margin-left: 1.5rem; margin-bottom: 1.5rem; color: #334155; }
+        .manual-container li { margin-bottom: 0.7rem; font-size: 0.95rem; }
+        .manual-container li strong { color: var(--obsidian); }
+
+        .pro-tip-box {
+            background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);
+            border-left: 5px solid var(--deterrence-red);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 2rem 0;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .pro-tip-box h4 { color: var(--obsidian); font-weight: 700; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 8px; font-size: 1rem; }
+        .pro-tip-box h4 i { color: var(--deterrence-red); }
+        .pro-tip-box p { margin-bottom: 0; font-size: 0.95rem; color: #1e293b; }
+
+        .sidebar-kits {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .pdf-kit-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
+            border: 1px solid #fecdd3;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .pdf-kit-card:hover { transform: translateY(-4px); }
+
+        .pdf-card-header {
+            padding: 1.3rem 2rem;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header-tioc2 { background: linear-gradient(135deg, #090d16 0%, #111c33 100%); border-top: 5px solid #f43f5e; }
+        .header-tioc3 { background: linear-gradient(135deg, #090d16 0%, #1e1b4b 100%); border-top: 5px solid #fb7185; }
+        .header-tiocpro { background: linear-gradient(135deg, #090d16 0%, #4c0519 100%); border-top: 5px solid #e11d48; }
+
+        .pdf-card-title h3 { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.3px; }
+        .pdf-card-title span { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; color: #fecdd3; display: block; margin-top: 2px; }
+        
+        .pdf-badge {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pdf-card-body {
+            padding: 1.3rem 2rem;
+            background: #ffffff;
+        }
+        .pdf-table-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            border-bottom: 2px solid #fff1f2;
+            padding-bottom: 6px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .pdf-bom-list {
+            list-style: none;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .pdf-bom-list::-webkit-scrollbar { width: 5px; }
+        .pdf-bom-list::-webkit-scrollbar-thumb { background: #fda4af; border-radius: 3px; }
+
+        .pdf-bom-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 7px 0;
+            border-bottom: 1px solid #fff1f2;
+            font-size: 0.88rem;
+            transition: background 0.2s;
+        }
+        .pdf-bom-item:hover { background: #fff1f2; padding-left: 4px; padding-right: 4px; border-radius: 4px; }
+        
+        .item-name { color: var(--text-main); font-weight: 500; display: flex; align-items: center; gap: 8px; }
+        .item-name i { font-size: 0.65rem; color: var(--deterrence-red); }
+        
+        .item-qty {
+            background: #fff1f2;
+            color: var(--obsidian);
+            font-family: monospace;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            border: 1px solid #fecdd3;
+        }
+
+        footer {
+            background: white;
+            text-align: center;
+            padding: 2.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 4rem;
+            border-top: 1px solid #fecdd3;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <h1>NexPak Security Solutions</h1>
+            <span>Dahua TiOC (Three-in-One) Active Deterrence Engineering Manual</span>
+        </div>
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Store</a>
+    </header>
+
+    <div class="container">
+        
+        <div class="manual-container">
+            <h2>Dahua TiOC Architecture & Active Deterrence Ecosystem</h2>
+            <p>Dahua TiOC (Three-in-One Camera) security cameras are premium, pro-grade surveillance units engineered for proactive crime prevention rather than passive recording. The "Three-in-One" name comes from the seamless integration of three distinct technologies into a single hardware housing: full-color 24/7 imaging, WizSense AI analytics, and active police-style deterrence strobe lights and audio sirens.</p>
+
+            <h3><i class="fas fa-shield-alt"></i> Core Integrated Technologies</h3>
+            <ul>
+                <li><strong>24/7 Full-Colour Imaging:</strong> Employs ultra-wide F1.0 apertures and built-in warm white LEDs to capture vibrant color video in pitch-black conditions.</li>
+                <li><strong>WizSense AI Analytics:</strong> Powered by deep-learning chips running Smart Motion Detection (SMD 4.0) to accurately classify human and vehicle targets, reducing false alarms from rain, foliage, or animals to under 2%.</li>
+                <li><strong>Active Deterrence:</strong> Immediately fires flashing red and blue strobe lights and customizable audio sirens the moment a real human or vehicle crosses a digital tripwire.</li>
+            </ul>
+
+            <h3><i class="fas fa-microchip"></i> Product Generations & Form Factors</h3>
+            <ol>
+                <li><strong>TiOC 2.0 Series:</strong> Introduces Smart Dual Light Technology (recording via discreet IR and switching to warm light upon intrusion to reduce light pollution) and VoiceCatcher dual-microphone noise filtering.</li>
+                <li><strong>TiOC 3.0 Series:</strong> Upgrades AI processors, speaker clarity for two-way talk, scheduled arming profiles, and adjustable siren volume controls.</li>
+                <li><strong>TiOC PRO & Duo Series:</strong> Flagship hardware utilizing massive 1/1.8" image sensors, WizColour low-light ISP optimization, AcuPick search compatibility, and 180-degree dual-lens panoramic coverage.</li>
+            </ol>
+
+            <div class="pro-tip-box">
+                <h4><i class="fas fa-mobile-alt"></i> Mobile Ecosystem & One-Tap Disarm</h4>
+                <p>Seamlessly integrated with the Dahua DMSS Mobile App. Push notifications deliver instant video clips upon intrusion, while the One-Tap Disarm button lets you temporarily silence sirens and lights during garden work or social gatherings without missing regular background recordings.</p>
+            </div>
+        </div>
+
+        <div class="sidebar-kits">
+            
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-tioc2">
+                    <div class="pdf-card-title">
+                        <h3>TiOC 2.0 Series</h3>
+                        <span>Smart Dual Light & VoiceCatcher</span>
+                    </div>
+                    <div class="pdf-badge">Series: DAHUA-TIOC2</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dahua TiOC 2.0 Turret / Bullet (5MP/8MP)</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Waterproof Junction Box (PFA130-E)</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> PoE Injector / Switch Connection Cable</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> DMSS App Push Notification License</span><span class="item-qty">Free</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-tioc3">
+                    <div class="pdf-card-title">
+                        <h3>TiOC 3.0 Series</h3>
+                        <span>Advanced Speaker & Scheduled Arming</span>
+                    </div>
+                    <div class="pdf-badge">Series: DAHUA-TIOC3</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dahua TiOC 3.0 Active Deterrence Camera</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Upgraded Dual-Mic VoiceCatcher Setup</span><span class="item-qty">Built-in</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> MicroSD Card (128GB / 256GB Edge Backup)</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Custom Audio Voice File Upload Tool</span><span class="item-qty">Incl.</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pdf-kit-card">
+                <div class="pdf-card-header header-tiocpro">
+                    <div class="pdf-card-title">
+                        <h3>TiOC PRO & Duo Series</h3>
+                        <span>1/1.8" Sensor, WizColour & 180° Panoramic</span>
+                    </div>
+                    <div class="pdf-badge">Series: DAHUA-TIOCPRO</div>
+                </div>
+                <div class="pdf-card-body">
+                    <div class="pdf-table-header">
+                        <span>Component Description</span>
+                        <span>Quantity</span>
+                    </div>
+                    <ul class="pdf-bom-list">
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Dahua TiOC PRO / Duo Panoramic Camera</span><span class="item-qty">x 1</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Large 1/1.8" Sensor & F1.0 Lens Optics</span><span class="item-qty">Built-in</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> AcuPick & WizSense AI NVR Linkage Suite</span><span class="item-qty">Active</span></li>
+                        <li class="pdf-bom-item"><span class="item-name"><i class="fas fa-circle"></i> Heavy-Duty Mounting Bracket & Hardware</span><span class="item-qty">x 1</span></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+        &copy; 2026 NexPak Security Solutions. All rights reserved. Dahua TiOC Active Deterrence & Surveillance Distribution Division.
+    </footer>
+
+</body>
+</html>
+
