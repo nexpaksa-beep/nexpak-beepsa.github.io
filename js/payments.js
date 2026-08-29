@@ -1,4 +1,4 @@
-Document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
     'use strict';
 
     const completeCheckoutBtn = document.getElementById('btnCompleteCheckout');
@@ -14,19 +14,19 @@ Document.addEventListener('DOMContentLoaded', () => {
             const shippingAddress = document.getElementById('shippingAddress')?.value.trim();
             const paymentMethodInput = document.querySelector('input[name="paymentMethod"]:checked');
             
-            // 2. STRENGTHENED DELIVERY GATEKEEPER CHECK
+            // 2. ROBUST DELIVERY GATEKEEPER CHECK (Handles both text elements and input values)
             const deliveryEl = document.getElementById('chkDelivery');
-            const deliveryText = deliveryEl ? deliveryEl.textContent.trim().toLowerCase() : '';
+            const deliveryRawText = deliveryEl ? (deliveryEl.value || deliveryEl.textContent || '') : '';
+            const deliveryText = deliveryRawText.trim().toLowerCase();
 
             const deliveryDigitsOnly = deliveryText.replace(/[^0-9]/g, '');
-            const parsedDeliveryFee = parseFloat(deliveryEl ? deliveryEl.textContent.replace(/[^0-9.]/g, '') : '0') || 0;
+            const matchDelivery = deliveryText.match(/R\s*([0-9]+(?:\.[0-9]+)?)/i);
+            const parsedDeliveryFee = matchDelivery ? parseFloat(matchDelivery[1]) : (parseFloat(deliveryText.replace(/[^0-9.]/g, '')) || 0);
 
-            if (!deliveryEl || deliveryText === '' || deliveryDigitsOnly === '000' || deliveryDigitsOnly === '0' || parsedDeliveryFee === 0) {
-                if (!deliveryText.includes('free')) {
-                    alert('Please calculate your delivery charges using your address/distance before completing your order.');
-                    document.getElementById('btnCalculateDelivery')?.focus();
-                    return;
-                }
+            if (!deliveryEl || deliveryText === '' || deliveryDigitsOnly === '000' || deliveryDigitsOnly === '0' || (parsedDeliveryFee === 0 && !deliveryText.includes('free'))) {
+                alert('Please calculate your delivery charges using your address/distance before completing your order.');
+                document.getElementById('btnCalculateDelivery')?.focus();
+                return;
             }
 
             if (!customerName || !customerEmail || !customerPhone || !shippingAddress) {
@@ -57,12 +57,7 @@ Document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Safely isolate the delivery fee by matching the 'R' currency amount specifically
-            let deliveryFee = 0;
-            if (deliveryEl && !deliveryText.includes('free')) {
-                const match = deliveryEl.textContent.match(/R\s*([0-9]+(?:\.[0-9]+)?)/i);
-                deliveryFee = match ? parseFloat(match[1]) : 0;
-            }
+            let deliveryFee = parsedDeliveryFee;
 
             // Calculations
             const subtotalNet = cartTotal;
@@ -78,9 +73,7 @@ Document.addEventListener('DOMContentLoaded', () => {
             // =========================================================================
             const payfastMerchantId = '10004002';   // Universal test Merchant ID
             const payfastMerchantKey = 'q1cd2rdny4a53'; // Universal test Merchant Key
-            
-            // ✅ FIXED: Pointing strictly to the sandbox URL endpoint
-            const payfastUrl = 'https://sandbox.payfast.co.za/eng/process'; 
+            const payfastUrl = 'https://sandbox.payfast.co.za/eng/process'; // Sandbox Endpoint
             
             const nameParts = customerName.split(' ');
             const firstName = nameParts[0] || 'Valued'; 
@@ -133,4 +126,4 @@ Document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-                                                              
+                                             
