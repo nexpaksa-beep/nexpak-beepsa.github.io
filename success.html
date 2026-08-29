@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Successful | Nexpak Security Solutions</title>
-    <!-- FontAwesome for the checkmark visual icon anchor -->
-    <link rel="stylesheet" href="https://cloudflare.com">
+    <!-- ✅ FIXED: FontAwesome CDN stylesheet properly linked so icons display -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
@@ -175,20 +175,18 @@
         document.addEventListener('DOMContentLoaded', () => {
             'use strict';
 
-            // 1. DUAL-WIPE SECURITY SAFETY NET: 
-            // Although payment.js clears the cart upon form submission, if a client 
-            // closes their tab mid-processing, this serves as an absolute guarantee 
-            // that returning users find a clean basket.
+            // Complete sweep to ensure all localStorage cart keys are completely wiped
             localStorage.removeItem('nexpak_cart_items');
             localStorage.removeItem('nexpak_cart_total');
+            localStorage.removeItem('nexpak_cart_subtotal');
             localStorage.removeItem('nexpak_cart_count');
+            localStorage.removeItem('nexpak_cart_weight');
 
-            // 2. OPTIONAL: Create a fresh look for the user tracking numbers on screen
+            // Generate tracking ID reference for visual confirmation
             const orderField = document.getElementById('orderNumberField');
             const container = document.getElementById('orderRefContainer');
             
             if (orderField && container) {
-                // Generate a random numeric sequence placeholder for visual satisfaction
                 const trackingId = 'NEX-' + Math.floor(100000 + Math.random() * 900000);
                 orderField.textContent = trackingId;
                 container.style.display = 'block';
@@ -197,4 +195,3 @@
     </script>
 </body>
 </html>
-
