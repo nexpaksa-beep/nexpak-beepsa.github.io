@@ -218,10 +218,32 @@ footer a {
 .whatsapp i {
   color: #fff !important;
   }
+
+  /* Professional Chatbot Button Override */
+#chatbot-toggle, 
+.chatbot-btn, 
+.chat-widget-button,
+div[id*="chatbot"] button {
+  background: #123d2a !important; /* Matches Nexpak corporate green */
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 10px 25px rgba(18, 61, 42, 0.3) !important;
+  border-radius: 50% !important;
+  width: 54px !important;
+  height: 54px !important;
+  display: grid !important;
+  place-items: center !important;
+}
+
+#chatbot-toggle:hover, 
+.chatbot-btn:hover, 
+.chat-widget-button:hover {
+  background: #1d5a3d !important;
+  transform: scale(1.05);
+}
+  
   
 
-
-  
 
 .overlay{position:fixed;inset:0;background:rgba(5,20,13,.55);z-index:1500;display:none}
 .overlay.show{display:block}
