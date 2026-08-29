@@ -13076,7 +13076,1446 @@ Security Team
 
 -->
          
+<!-- =========================================================
+ NEXPAK SECURITY SOLUTIONS V15
 
+ QUOTE.HTML
+
+ PART 5/5
+
+ TECHNICAL QUOTATION ENGINE
+
+ FEATURES:
+
+ - No cart dependency
+ - No product cart
+ - No configurator dependency
+ - Technical quotation reference
+ - Form validation
+ - Technical requirement collection
+ - Service selection
+ - Integration selection
+ - Tender / RFQ information
+ - WhatsApp quotation request
+ - Email quotation request
+ - Submission protection
+ - Success interface
+ - Error interface
+ - File information collection
+ - Final page closing
+
+========================================================= -->
+
+
+<script>
+
+
+/* =========================================================
+ GLOBAL TECHNICAL QUOTATION CONFIGURATION
+========================================================= */
+
+
+const NX_QUOTE_CONFIG = {
+
+
+    technicalEmail:
+        "technical@nexpaksolutions.co.za",
+
+
+    whatsappNumber:
+        "27820000000",
+
+
+    companyName:
+        "Nexpak Security Solutions",
+
+
+    referencePrefix:
+        "NEX-TECH"
+
+
+};
+
+
+
+/* =========================================================
+ DOM READY
+========================================================= */
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        initialiseTechnicalQuote();
+
+
+    }
+);
+
+
+
+/* =========================================================
+ INITIALISE PAGE
+========================================================= */
+
+
+function initialiseTechnicalQuote() {
+
+
+    const form =
+        document.getElementById(
+            "technicalQuoteForm"
+        );
+
+
+    if (!form) {
+
+
+        console.error(
+            "Nexpak technical quotation form not found."
+        );
+
+
+        return;
+
+    }
+
+
+
+    generateTechnicalReference();
+
+
+    setupCharacterCounter();
+
+
+    setupFileDisplay();
+
+
+    setupFormInteractions();
+
+
+    setupSubmission();
+
+
+}
+
+
+
+/* =========================================================
+ GENERATE TECHNICAL QUOTE REFERENCE
+========================================================= */
+
+
+function generateTechnicalReference() {
+
+
+    const now =
+        new Date();
+
+
+
+    const year =
+        now.getFullYear();
+
+
+
+    const month =
+        String(
+            now.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+
+    const day =
+        String(
+            now.getDate()
+        ).padStart(
+            2,
+            "0"
+        );
+
+
+
+    const random =
+        Math.floor(
+            10000 +
+            Math.random() *
+            90000
+        );
+
+
+
+    const reference =
+
+        NX_QUOTE_CONFIG.referencePrefix +
+        "-" +
+        year +
+        month +
+        day +
+        "-" +
+        random;
+
+
+
+    const referenceElements =
+        document.querySelectorAll(
+            "[data-quote-reference]"
+        );
+
+
+
+    referenceElements.forEach(
+        function (element) {
+
+
+            element.textContent =
+                reference;
+
+
+        }
+    );
+
+
+
+    sessionStorage.setItem(
+        "nexpak_technical_reference",
+        reference
+    );
+
+
+}
+
+
+
+/* =========================================================
+ GET CURRENT REFERENCE
+========================================================= */
+
+
+function getTechnicalReference() {
+
+
+    let reference =
+        sessionStorage.getItem(
+            "nexpak_technical_reference"
+        );
+
+
+
+    if (!reference) {
+
+
+        generateTechnicalReference();
+
+
+
+        reference =
+            sessionStorage.getItem(
+                "nexpak_technical_reference"
+            );
+
+
+    }
+
+
+
+    return reference;
+
+
+}
+
+
+
+/* =========================================================
+ FORM INTERACTIONS
+========================================================= */
+
+
+function setupFormInteractions() {
+
+
+    const cards =
+        document.querySelectorAll(
+            ".nx-service-card, .nx-integration-card"
+        );
+
+
+
+    cards.forEach(
+        function (card) {
+
+
+            const checkbox =
+                card.querySelector(
+                    "input[type='checkbox']"
+                );
+
+
+
+            if (!checkbox) {
+                return;
+            }
+
+
+
+            function updateCard() {
+
+
+                if (checkbox.checked) {
+
+
+                    card.classList.add(
+                        "selected"
+                    );
+
+
+                } else {
+
+
+                    card.classList.remove(
+                        "selected"
+                    );
+
+
+                }
+
+
+            }
+
+
+
+            checkbox.addEventListener(
+                "change",
+                updateCard
+            );
+
+
+
+            updateCard();
+
+
+        }
+    );
+
+
+}
+
+
+
+/* =========================================================
+ CHARACTER COUNTER
+========================================================= */
+
+
+function setupCharacterCounter() {
+
+
+    const textarea =
+        document.getElementById(
+            "technicalScope"
+        );
+
+
+
+    if (!textarea) {
+        return;
+    }
+
+
+
+    const counter =
+        document.createElement(
+            "div"
+        );
+
+
+
+    counter.className =
+        "nx-live-character-count";
+
+
+
+    textarea.parentNode.appendChild(
+        counter
+    );
+
+
+
+    function updateCounter() {
+
+
+        const length =
+            textarea.value.length;
+
+
+
+        counter.textContent =
+            length +
+            " characters";
+
+
+    }
+
+
+
+    textarea.addEventListener(
+        "input",
+        updateCounter
+    );
+
+
+
+    updateCounter();
+
+
+}
+
+
+
+/* =========================================================
+ FILE DISPLAY
+========================================================= */
+
+
+function setupFileDisplay() {
+
+
+    const input =
+        document.getElementById(
+            "technicalDocuments"
+        );
+
+
+
+    if (!input) {
+        return;
+    }
+
+
+
+    const uploadBox =
+        input.closest(
+            ".nx-upload-box"
+        );
+
+
+
+    if (!uploadBox) {
+        return;
+    }
+
+
+
+    const content =
+        uploadBox.querySelector(
+            ".nx-upload-content"
+        );
+
+
+
+    input.addEventListener(
+        "change",
+        function () {
+
+
+            if (!input.files.length) {
+
+
+                return;
+
+            }
+
+
+
+            let totalSize =
+                0;
+
+
+
+            const names = [];
+
+
+
+            Array.from(
+                input.files
+            ).forEach(
+                function (file) {
+
+
+                    totalSize +=
+                        file.size;
+
+
+                    names.push(
+                        file.name
+                    );
+
+
+                }
+            );
+
+
+
+            const sizeMB =
+                (
+                    totalSize /
+                    1024 /
+                    1024
+                ).toFixed(2);
+
+
+
+            if (content) {
+
+
+                content.innerHTML = `
+
+                    <div class="nx-upload-icon">
+                        ✓
+                    </div>
+
+                    <strong>
+                        ${input.files.length}
+                        file(s) selected
+                    </strong>
+
+                    <span>
+                        ${sizeMB} MB total
+                    </span>
+
+                `;
+
+
+            }
+
+
+        }
+    );
+
+
+}
+
+
+
+/* =========================================================
+ COLLECT CHECKBOX VALUES
+========================================================= */
+
+
+function getCheckedValues(
+    selector
+) {
+
+
+    const checked =
+        document.querySelectorAll(
+            selector +
+            ":checked"
+        );
+
+
+
+    return Array.from(
+        checked
+    ).map(
+        function (input) {
+
+
+            const label =
+                input.closest(
+                    "label"
+                );
+
+
+
+            if (label) {
+
+
+                const strong =
+                    label.querySelector(
+                        "strong"
+                    );
+
+
+                if (strong) {
+
+
+                    return strong.textContent.trim();
+
+
+                }
+
+
+            }
+
+
+
+            return input.value;
+
+
+        }
+    );
+
+
+}
+
+
+
+/* =========================================================
+ GET FIELD VALUE
+========================================================= */
+
+
+function getField(
+    id
+) {
+
+
+    const element =
+        document.getElementById(
+            id
+        );
+
+
+
+    if (!element) {
+
+
+        return "";
+
+
+    }
+
+
+
+    return element.value.trim();
+
+
+}
+
+
+
+/* =========================================================
+ COLLECT COMPLETE FORM
+========================================================= */
+
+
+function collectTechnicalRequest() {
+
+
+    return {
+
+
+        reference:
+            getTechnicalReference(),
+
+
+        submitted:
+            new Date().toLocaleString(
+                "en-ZA"
+            ),
+
+
+
+        client: {
+
+
+            name:
+                getField(
+                    "clientName"
+                ),
+
+
+            company:
+                getField(
+                    "companyName"
+                ),
+
+
+            email:
+                getField(
+                    "clientEmail"
+                ),
+
+
+            phone:
+                getField(
+                    "clientPhone"
+                ),
+
+
+            role:
+                getField(
+                    "clientRole"
+                ),
+
+
+            preferredContact:
+                getField(
+                    "preferredContact"
+                )
+
+
+        },
+
+
+
+        site: {
+
+
+            address:
+                getField(
+                    "siteAddress"
+                )
+
+
+        },
+
+
+
+        project: {
+
+
+            type:
+                getField(
+                    "projectType"
+                ),
+
+
+            urgency:
+                getField(
+                    "projectUrgency"
+                ),
+
+
+            deadline:
+                getField(
+                    "projectDeadline"
+                ),
+
+
+            surveyDate:
+                getField(
+                    "preferredSurveyDate"
+                ),
+
+
+            timeline:
+                getField(
+                    "timelineDetails"
+                )
+
+
+        },
+
+
+
+        perimeter: {
+
+
+            requirement:
+                getField(
+                    "fenceRequirement"
+                ),
+
+
+            length:
+                getField(
+                    "fenceLength"
+                ),
+
+
+            energizer:
+                getField(
+                    "energizerRequirement"
+                ),
+
+
+            details:
+                getField(
+                    "fenceDetails"
+                )
+
+
+        },
+
+
+
+        cctv: {
+
+
+            cameraCount:
+                getField(
+                    "cameraCount"
+                ),
+
+
+            cameraType:
+                getField(
+                    "cameraType"
+                ),
+
+
+            networkType:
+                getField(
+                    "networkType"
+                ),
+
+
+            wirelessDistance:
+                getField(
+                    "wirelessDistance"
+                ),
+
+
+            details:
+                getField(
+                    "cctvDetails"
+                ),
+
+
+            networkFeatures:
+                getCheckedValues(
+                    "input[name='networkFeature']"
+                )
+
+
+        },
+
+
+
+        publicAccess: {
+
+
+            environment:
+                getCheckedValues(
+                    "input[name='publicEnvironment']"
+                ),
+
+
+            monitoring:
+                getField(
+                    "monitoringRequirement"
+                ),
+
+
+            access:
+                getField(
+                    "accessRequirement"
+                ),
+
+
+            details:
+                getField(
+                    "publicAreaDetails"
+                )
+
+
+        },
+
+
+
+        services:
+            getCheckedValues(
+                "input[name='service']"
+            ),
+
+
+
+        integrations:
+            getCheckedValues(
+                "input[name='integration']"
+            ),
+
+
+
+        procurement: {
+
+
+            type:
+                getField(
+                    "procurementType"
+                ),
+
+
+            reference:
+                getField(
+                    "tenderReference"
+                ),
+
+
+            quantity:
+                getField(
+                    "estimatedQuantity"
+                ),
+
+
+            details:
+                getField(
+                    "tenderDetails"
+                )
+
+
+        },
+
+
+
+        technicalScope:
+            getField(
+                "technicalScope"
+            )
+
+
+    };
+
+
+}
+
+
+
+/* =========================================================
+ FORMAT ARRAY
+========================================================= */
+
+
+function formatArray(
+    array
+) {
+
+
+    if (
+        !array ||
+        array.length === 0
+    ) {
+
+
+        return "None specified";
+
+
+    }
+
+
+
+    return array
+        .map(
+            function (item) {
+
+
+                return "• " + item;
+
+
+            }
+        )
+        .join(
+            "\n"
+        );
+
+
+}
+
+
+
+/* =========================================================
+ BUILD TECHNICAL EMAIL
+========================================================= */
+
+
+function buildTechnicalEmail(
+    request
+) {
+
+
+    let message = "";
+
+
+
+    message +=
+        "NEXPAK SECURITY SOLUTIONS\n";
+
+
+    message +=
+        "TECHNICAL QUOTATION REQUEST\n";
+
+
+    message +=
+        "========================================\n\n";
+
+
+
+    message +=
+        "REFERENCE: " +
+        request.reference +
+        "\n";
+
+
+    message +=
+        "SUBMITTED: " +
+        request.submitted +
+        "\n\n";
+
+
+
+    message +=
+        "CLIENT INFORMATION\n";
+
+
+    message +=
+        "----------------------------------------\n";
+
+
+    message +=
+        "Name: " +
+        request.client.name +
+        "\n";
+
+
+    message +=
+        "Company: " +
+        request.client.company +
+        "\n";
+
+
+    message +=
+        "Email: " +
+        request.client.email +
+        "\n";
+
+
+    message +=
+        "Phone / WhatsApp: " +
+        request.client.phone +
+        "\n";
+
+
+    message +=
+        "Role: " +
+        request.client.role +
+        "\n";
+
+
+    message +=
+        "Preferred Contact: " +
+        request.client.preferredContact +
+        "\n\n";
+
+
+
+    message +=
+        "SITE INFORMATION\n";
+
+
+    message +=
+        "----------------------------------------\n";
+
+
+    message +=
+        "Site / Delivery Address:\n" +
+        request.site.address +
+        "\n\n";
+
+
+
+    message +=
+        "PROJECT INFORMATION\n";
+
+
+    message +=
+        "----------------------------------------\n";
+
+
+    message +=
+        "Project Type: " +
+        request.project.type +
+        "\n";
+
+
+    message +=
+        "Priority: " +
+        request.project.urgency +
+        "\n";
+
+
+    message +=
+        "Completion Date: " +
+        request.project.deadline +
+        "\n";
+
+
+    message +=
+        "Preferred Survey Date: " +
+        request.project.surveyDate +
+        "\n";
+
+
+    message +=
+        "Timeline Notes:\n" +
+        request.project.timeline +
+        "\n\n";
+
+
+
+    message +=
+        "ELECTRIC FENCING / PERIMETER\n";
+
+
+    message +=
+        "----------------------------------------\n";
+
+
+    message +=
+        "Requirement: " +
+        request.perimeter.requirement +
+        "\n";
+
+
+    message +=
+        "Approx. Length: " +
+        request.perimeter.length +
+        "\n";
+
+
+    message +=
+        "Energizer / Monitoring: " +
+        request.perimeter.energizer +
+        "\n";
+
+
+    message +=
+        "Perimeter Details:\n" +
+        request.perimeter.details +
+        "\n\n";
+
+
+
+    message +=
+        "CCTV / IP NETWORK\n";
+
+
+    message +=
+        "----------------------------------------\n";
+
+
+    message +=
+        "Camera Quantity: " +
+        request.cctv.cameraCount +
+        "\n";
+
+
+    message +=
+        "Camera Architecture: " +
+        request.cctv.cameraType +
+        "\n";
+
+
+    message +=
+        "Network Architecture: " +
+        request.cctv.networkType +
+        "\n";
+
+
+    message +=
+        "Wireless Distance: " +
+        request.cctv.wirelessDistance +
+        " km\n";
+
+
+    message +=
+        "Infrastructure:\n" +
+        formatArray(
+            request.cctv.networkFeatures
+        ) +
+        "\n";
+
+
+    message +=
+        "CCTV / Network Details:\n" +
+        request.cctv.details +
+        "\n\n";
+
+
+
+    message +=
+        "PUBLIC ACCESS / LOW VOLTAGE\n";
+
+
+    message +=
+        "----------------------------------------\n";
+
+
+    message +=
+        "Environment:\n" +
+        formatArray(
+            request.publicAccess.environment
+        ) +
+        "\n";
+
+
+    message +=
+        "Monitoring: " +
+        request.publicAccess.monitoring +
+        "\n";
+
+
+    message +=
+        "Access Requirement: " +
+        request.publicAccess.access +
+        "\n";
+
+
+    message +=
+        "Details:\n" +
+        request.publicAccess.details +
+        "\n\n";
+
+
+
+    message +=
+        "SERVICES REQUESTED\n";
+
+
+    message +=
+        "----------------------------------------\n";
+
+
+    message +=
+        formatArray(
+            request.services
+        ) +
+        "\n\n";
+
+
+
+    message +=
+        "SYSTEM INTEGRATION\n";
+
+
+    message +=
+        "----------------------------------------\n";
+
+
+    message +=
+        formatArray(
+            request.integrations
+        ) +
+        "\n\n";
+
+
+
+    message +=
+        "COMMERCIAL / TENDER\n";
+
+
+    message +=
+        "----------------------------------------\n";
+
+
+    message +=
+        "Procurement Type: " +
+        request.procurement.type +
+        "\n";
+
+
+    message +=
+        "Tender / RFQ Reference: " +
+        request.procurement.reference +
+        "\n";
+
+
+    message +=
+        "Estimated Quantity: " +
+        request.procurement.quantity +
+        "\n";
+
+
+    message +=
+        "Procurement Details:\n" +
+        request.procurement.details +
+        "\n\n";
+
+
+
+    message +=
+        "DETAILED TECHNICAL SCOPE\n";
+
+
+    message +=
+        "----------------------------------------\n";
+
+
+    message +=
+        request.technicalScope +
+        "\n\n";
+
+
+
+    message +=
+        "========================================\n";
+
+
+    message +=
+        "Nexpak Security Solutions\n";
+
+
+    message +=
+        "Technical Department\n";
+
+
+    message +=
+        NX_QUOTE_CONFIG.technicalEmail +
+        "\n";
+
+
+
+    return message;
+
+
+}
+
+
+
+/* =========================================================
+ VALIDATE EMAIL
+========================================================= */
+
+
+function isValidEmail(
+    email
+) {
+
+
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        .test(
+            email
+        );
+
+
+}
+
+
+
+/* =========================================================
+ VALIDATE FORM
+========================================================= */
+
+
+function validateTechnicalForm() {
+
+
+    const form =
+        document.getElementById(
+            "technicalQuoteForm"
+        );
+
+
+
+    if (!form) {
+
+
+        return false;
+
+
+    }
+
+
+
+    if (!form.checkValidity()) {
+
+
+        form.reportValidity();
+
+
+        return false;
+
+
+    }
+
+
+
+    const email =
+        getField(
+            "clientEmail"
+        );
+
+
+
+    if (
+        email &&
+        !isValidEmail(
+            email
+        )
+    ) {
+
+
+        alert(
+            "Please enter a valid email address."
+        );
+
+
+        document
+            .getElementById(
+                "clientEmail"
+            )
+            ?.focus();
+
+
+
+        return false;
+
+
+    }
+
+
+
+    return true;
+
+
+}
+
+
+
+/* =========================================================
+ SHOW SUBMISSION STATUS
+========================================================= */
+
+
+function showSubmissionStatus(
+    type,
+    title,
+    message
+) {
+
+
+    let status =
+        document.getElementById(
+            "nxSubmissionStatus"
+        );
+
+
+
+    if (!status) {
+
+
+        status =
+            document.createElement(
+                "div"
+            );
+
+
+        status.id =
+            "nxSubmissionStatus";
+
+
+        status.className =
+            "nx-submission-status";
+
+
+        const form =
+ 
 <!-- =========================================================
  PART 1 COMPLETE
 =========================================================
