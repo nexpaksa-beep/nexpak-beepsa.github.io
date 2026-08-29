@@ -1263,4 +1263,916 @@ function createChatbotUI() {
 
         font-size: 11px;
 
-        font-family:
+        font-family:             -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Roboto,
+            Arial,
+            sans-serif;
+        resize: vertical;
+        min-height: 55px;
+    }
+
+    .submit-lead-btn {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 9px;
+        background: linear-gradient(
+            135deg,
+            #007bff,
+            #0056b3
+        );
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: .25s ease;
+    }
+
+    .submit-lead-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 5px 14px rgba(0,123,255,.25);
+    }
+
+    .chat-input-area {
+        display: flex;
+        gap: 7px;
+        padding: 10px 12px;
+        border-top: 1px solid #e5e7eb;
+        background: #ffffff;
+    }
+
+    #chat-input {
+        flex: 1;
+        min-width: 0;
+        padding: 10px 13px;
+        border: 1px solid #dbe1e8;
+        border-radius: 22px;
+        outline: none;
+        background: #ffffff;
+        color: #111827;
+        font-size: 12px;
+        box-sizing: border-box;
+    }
+
+    #chat-input:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 2px rgba(0,123,255,.08);
+    }
+
+    .send-btn {
+        flex-shrink: 0;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 22px;
+        background: linear-gradient(
+            135deg,
+            #007bff,
+            #0056b3
+        );
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: .25s ease;
+    }
+
+    .send-btn:hover {
+        background: linear-gradient(
+            135deg,
+            #0056b3,
+            #003f88
+        );
+    }
+
+    /* ==============================
+       TYPING INDICATOR
+       ============================== */
+
+    .typing-indicator {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        width: fit-content;
+        padding: 10px 13px;
+        background: #f1f3f4;
+        border-radius: 15px;
+        border-bottom-left-radius: 4px;
+    }
+
+    .typing-indicator span {
+        width: 7px;
+        height: 7px;
+        background: #9ca3af;
+        border-radius: 50%;
+        animation: chatbotBounce 1.4s infinite ease-in-out;
+    }
+
+    .typing-indicator span:nth-child(1) {
+        animation-delay: 0s;
+    }
+
+    .typing-indicator span:nth-child(2) {
+        animation-delay: .2s;
+    }
+
+    .typing-indicator span:nth-child(3) {
+        animation-delay: .4s;
+    }
+
+    @keyframes chatbotBounce {
+        0%,
+        80%,
+        100% {
+            transform: translateY(0);
+        }
+
+        40% {
+            transform: translateY(-6px);
+        }
+    }
+
+    /* ==============================
+       MOBILE
+       ============================== */
+
+    @media (max-width: 480px) {
+
+        .nexpak-chatbot {
+            right: 12px;
+            bottom: 12px;
+            left: 12px;
+        }
+
+        .chat-toggle-btn {
+            margin-left: auto;
+            padding: 12px 18px;
+            font-size: 14px;
+        }
+
+        .chat-window {
+            width: calc(100vw - 24px);
+            right: 0;
+            bottom: 68px;
+            height: min(560px, calc(100vh - 95px));
+            border-radius: 14px;
+        }
+
+        .chat-messages {
+            padding: 12px;
+        }
+
+        .chat-message {
+            max-width: 88%;
+            font-size: 13px;
+        }
+
+        .quick-actions {
+            padding: 7px 10px;
+        }
+
+        .quick-btn {
+            font-size: 11px;
+            padding: 7px 10px;
+        }
+
+        .lead-form {
+            padding: 10px 12px;
+        }
+    }
+        </style>`;
+
+        document.body.insertAdjacentHTML(
+            'beforeend',
+            chatbotHTML
+        );
+    }
+
+    /* ==============================
+       EVENT LISTENERS
+       ============================== */
+
+    function setupEventListeners() {
+
+        const toggleButton =
+            document.getElementById(
+                'chat-toggle-btn'
+            );
+
+        const minimizeButton =
+            document.getElementById(
+                'chat-minimize-btn'
+            );
+
+        const sendButton =
+            document.getElementById(
+                'send-message-btn'
+            );
+
+        const chatInput =
+            document.getElementById(
+                'chat-input'
+            );
+
+        const skipButton =
+            document.getElementById(
+                'skip-lead'
+            );
+
+        const submitButton =
+            document.getElementById(
+                'submit-lead'
+            );
+
+        if (!toggleButton) return;
+
+        toggleButton.addEventListener(
+            'click',
+            toggleChat
+        );
+
+        minimizeButton.addEventListener(
+            'click',
+            toggleChat
+        );
+
+        sendButton.addEventListener(
+            'click',
+            sendMessage
+        );
+
+        chatInput.addEventListener(
+            'keypress',
+            function(e) {
+
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    sendMessage();
+                }
+
+            }
+        );
+
+        document
+            .querySelectorAll('.quick-btn')
+            .forEach(function(btn) {
+
+                btn.addEventListener(
+                    'click',
+                    function() {
+
+                        handleQuickAction(
+                            this.dataset.action
+                        );
+
+                    }
+                );
+
+            });
+
+        skipButton.addEventListener(
+            'click',
+            skipLeadForm
+        );
+
+        submitButton.addEventListener(
+            'click',
+            submitLeadForm
+        );
+
+        setTimeout(function() {
+
+            if (
+                CHATBOT_CONFIG.captureLeads &&
+                !chatState.leadCaptured
+            ) {
+
+                showLeadForm();
+
+            }
+
+        }, 15000);
+    }
+
+    /* ==============================
+       OPEN / CLOSE CHAT
+       ============================== */
+
+    function toggleChat() {
+
+        const chatWindow =
+            document.getElementById(
+                'chat-window'
+            );
+
+        const chatButton =
+            document.getElementById(
+                'chat-toggle-btn'
+            );
+
+        chatState.isOpen =
+            !chatState.isOpen;
+
+        if (chatState.isOpen) {
+
+            chatWindow.classList.add('open');
+
+            chatButton.style.display =
+                'none';
+
+            const input =
+                document.getElementById(
+                    'chat-input'
+                );
+
+            if (input) {
+                input.focus();
+            }
+
+        } else {
+
+            chatWindow.classList.remove(
+                'open'
+            );
+
+            chatButton.style.display =
+                'flex';
+        }
+    }
+
+    /* ==============================
+       SEND MESSAGE
+       ============================== */
+
+    function sendMessage() {
+
+        const input =
+            document.getElementById(
+                'chat-input'
+            );
+
+        const message =
+            input.value.trim();
+
+        if (!message) return;
+
+        addMessage(
+            message,
+            'user'
+        );
+
+        input.value = '';
+
+        showTypingIndicator();
+
+        setTimeout(function() {
+
+            hideTypingIndicator();
+
+            const response =
+                generateResponse(message);
+
+            addMessage(
+                response,
+                'bot'
+            );
+
+        }, 900 + Math.random() * 900);
+    }
+
+    /* ==============================
+       ADD MESSAGE
+       ============================== */
+
+    function addMessage(
+        content,
+        sender
+    ) {
+
+        const container =
+            document.getElementById(
+                'chat-messages'
+            );
+
+        if (!container) return;
+
+        const messageDiv =
+            document.createElement(
+                'div'
+            );
+
+        messageDiv.className =
+            'chat-message ' +
+            sender +
+            '-message';
+
+        /*
+         * Use textContent instead of
+         * innerHTML for user messages.
+         * This prevents HTML/script injection.
+         */
+
+        const contentDiv =
+            document.createElement(
+                'div'
+            );
+
+        contentDiv.className =
+            'message-content';
+
+        contentDiv.textContent =
+            content;
+
+        const timeDiv =
+            document.createElement(
+                'div'
+            );
+
+        timeDiv.className =
+            'message-time';
+
+        timeDiv.textContent =
+            formatTime(
+                new Date()
+            );
+
+        messageDiv.appendChild(
+            contentDiv
+        );
+
+        messageDiv.appendChild(
+            timeDiv
+        );
+
+        container.appendChild(
+            messageDiv
+        );
+
+        container.scrollTop =
+            container.scrollHeight;
+
+        chatState.messages.push({
+            content: content,
+            sender: sender,
+            time: Date.now()
+        });
+
+        saveChatHistory();
+    }
+
+    /* ==============================
+       TYPING INDICATOR
+       ============================== */
+
+    function showTypingIndicator() {
+
+        const container =
+            document.getElementById(
+                'chat-messages'
+            );
+
+        if (!container) return;
+
+        if (
+            document.getElementById(
+                'typing-indicator'
+            )
+        ) return;
+
+        const typing =
+            document.createElement(
+                'div'
+            );
+
+        typing.className =
+            'typing-indicator';
+
+        typing.id =
+            'typing-indicator';
+
+        typing.innerHTML =
+            '<span></span>' +
+            '<span></span>' +
+            '<span></span>';
+
+        container.appendChild(
+            typing
+        );
+
+        container.scrollTop =
+            container.scrollHeight;
+    }
+
+    function hideTypingIndicator() {
+
+        const typing =
+            document.getElementById(
+                'typing-indicator'
+            );
+
+        if (typing) {
+            typing.remove();
+        }
+    }
+
+    /* ==============================
+       RESPONSE ENGINE
+       ============================== */
+
+    function generateResponse(
+        userMessage
+    ) {
+
+        const message =
+            userMessage
+                .toLowerCase()
+                .trim();
+
+        /* FAQs */
+
+        for (
+            const [key, value]
+            of Object.entries(
+                CHATBOT_CONFIG.faqs
+            )
+        ) {
+
+            if (
+                message.includes(
+                    key
+                )
+            ) {
+
+                return value;
+            }
+        }
+
+        /* Pricing */
+
+        if (
+            message.includes('price') ||
+            message.includes('cost') ||
+            message.includes('how much') ||
+            message.includes('pricing')
+        ) {
+
+            return getPricingResponse(
+                message
+            );
+        }
+
+        /* Electric fencing */
+
+        if (
+            message.includes(
+                'electric fence'
+            ) ||
+            message.includes(
+                'electric fencing'
+            )
+        ) {
+
+            const product =
+                CHATBOT_CONFIG
+                    .knowledgeBase
+                    .products[
+                        'electric fencing'
+                    ];
+
+            return product.description +
+                '\n\n' +
+                product.price +
+                '\n\nFeatures: ' +
+                product.features.join(
+                    ', '
+                );
+        }
+
+        /* CCTV */
+
+        if (
+            message.includes('cctv') ||
+            message.includes('camera') ||
+            message.includes('cameras') ||
+            message.includes(
+                'surveillance'
+            )
+        ) {
+
+            const product =
+                CHATBOT_CONFIG
+                    .knowledgeBase
+                    .products[
+                        'cctv'
+                    ];
+
+            return product.description +
+                '\n\n' +
+                product.price +
+                '\n\nFeatures: ' +
+                product.features.join(
+                    ', '
+                );
+        }
+
+        /* Access control */
+
+        if (
+            message.includes(
+                'access control'
+            ) ||
+            message.includes(
+                'biometric'
+            ) ||
+            message.includes(
+                'fingerprint'
+            ) ||
+            message.includes(
+                'facial recognition'
+            )
+        ) {
+
+            const product =
+                CHATBOT_CONFIG
+                    .knowledgeBase
+                    .products[
+                        'access control'
+                    ];
+
+            return product.description +
+                '\n\n' +
+                product.price +
+                '\n\nFeatures: ' +
+                product.features.join(
+                    ', '
+                );
+        }
+
+        /* Gate automation */
+
+        if (
+            message.includes('gate') ||
+            message.includes(
+                'automation'
+            ) ||
+            message.includes(
+                'gate motor'
+            )
+        ) {
+
+            const product =
+                CHATBOT_CONFIG
+                    .knowledgeBase
+                    .products[
+                        'gate automation'
+                    ];
+
+            return product.description +
+                '\n\n' +
+                product.price +
+                '\n\nFeatures: ' +
+                product.features.join(
+                    ', '
+                );
+        }
+
+        /* Intercom */
+
+        if (
+            message.includes(
+                'intercom'
+            ) ||
+            message.includes(
+                'door phone'
+            ) ||
+            message.includes(
+                'video door'
+            )
+        ) {
+
+            const product =
+                CHATBOT_CONFIG
+                    .knowledgeBase
+                    .products[
+                        'intercom'
+                    ];
+
+            return product.description +
+                '\n\n' +
+                product.price +
+                '\n\nFeatures: ' +
+                product.features.join(
+                    ', '
+                );
+        }
+
+        /* Equestrian */
+
+        if (
+            message.includes(
+                'equestrian'
+            ) ||
+            message.includes(
+                'horse'
+            ) ||
+            message.includes(
+                'paddock'
+            ) ||
+            message.includes(
+                'horse fence'
+            )
+        ) {
+
+            const product =
+                CHATBOT_CONFIG
+                    .knowledgeBase
+                    .products[
+                        'equestrian'
+                    ];
+
+            return product.description +
+                '\n\n' +
+                product.price +
+                '\n\nFeatures: ' +
+                product.features.join(
+                    ', '
+                ) +
+                '\n\nWould you like me to show you our equestrian products?';
+        }
+
+        /* Contact */
+
+        if (
+            message.includes(
+                'contact'
+            ) ||
+            message.includes(
+                'phone'
+            ) ||
+            message.includes(
+                'call'
+            ) ||
+            message.includes(
+                'whatsapp'
+            )
+        ) {
+
+            return (
+                'You can reach Nexpak Security Solutions at:' +
+                '\n\n' +
+                'Phone: ' +
+                CHATBOT_CONFIG.companyPhone +
+                '\n' +
+                'Email: ' +
+                CHATBOT_CONFIG.companyEmail +
+                '\n' +
+                'WhatsApp: ' +
+                CHATBOT_CONFIG.companyWhatsApp +
+                '\n\n' +
+                'Business hours: ' +
+                CHATBOT_CONFIG.businessHours
+            );
+        }
+
+        /* Quote */
+
+        if (
+            message.includes(
+                'quote'
+            ) ||
+            message.includes(
+                'quotation'
+            )
+        ) {
+
+            return (
+                'Absolutely! I can help you get a quote.' +
+                '\n\n' +
+                'Please tell me:' +
+                '\n1. What security solution you need' +
+                '\n2. Your approximate property size' +
+                '\n3. Your location' +
+                '\n\n' +
+                'You can also leave your contact details in the form and our team will contact you.'
+            );
+        }
+
+        /* Thanks */
+
+        if (
+            message.includes(
+                'thank'
+            ) ||
+            message.includes(
+                'thanks'
+            )
+        ) {
+
+            return (
+                "You're welcome! 😊 Is there anything else I can help you with?"
+            );
+        }
+
+        /* Default */
+
+        return (
+            'I understand you are asking about "' +
+            userMessage +
+            '".\n\n' +
+            'I can help you with:' +
+            '\n• Electric Fencing' +
+            '\n• CCTV Cameras' +
+            '\n• Access Control' +
+            '\n• Gate Automation' +
+            '\n• Intercom Systems' +
+            '\n• Equestrian Fencing' +
+            '\n• Free Quotes' +
+            '\n\nWhat would you like to know more about?'
+        );
+    }
+
+    /* ==============================
+       PRICING
+       ============================== */
+
+    function getPricingResponse(
+        message
+    ) {
+
+        /*
+         * Give a specific product price
+         * when the customer mentions one.
+         */
+
+        if (
+            message.includes(
+                'electric'
+            )
+        ) {
+
+            return (
+                'Electric fencing starts from approximately R350 per metre, depending on the system and installation requirements.\n\nFor an accurate price, we can provide a custom quote after assessing your property.'
+            );
+        }
+
+        if (
+            message.includes(
+                'cctv'
+            ) ||
+            message.includes(
+                'camera'
+            )
+        ) {
+
+            return (
+                'CCTV systems start from approximately R4,500 for a 4-camera system. The final price depends on camera type, storage, cabling and installation.'
+            );
+        }
+
+        if (
+            message.includes(
+                'access'
+            )
+        ) {
+
+            return (
+                'Access control systems start from approximately R8,000. Pricing depends on the number of users, doors and equipment required.'
+            );
+        }
+
+        if (
+            message.includes(
+                'gate'
+            )
+        ) {
+
+            return (
+                'Gate automation starts from approximately R12,000. The final price depends on the gate type, size and motor requirements.'
+            );
+        }
+
+        let response =
+            'Here is our general pricing guide:\n\n';
+
+        for (
+            const [product, price]
+            of Object.entries(
+                CHATBOT_CONFIG
+                    .knowledgeBase
+                    .pricing
+            )
+        ) {
+
+            response +=
+                product
+                    .charAt(0)
+                    .toUpperCase() +
+                product.slice(1) +
+                ': ' +
+                price +
+                '\n';
+        }
+
+        response +=
+            '\nThese are guide prices only. A custom quote will give you the exact cost for your property.'
