@@ -2729,65 +2729,88 @@ color:#94A3B8;
 
 }
 
+
 /*=========================================================
- WHATSAPP BUTTON
+  NEXPAK WHATSAPP FLOATING BUTTON
 =========================================================*/
 
-.whatsapp{
+.nx-whatsapp-float {
 
-position:fixed;
+    position: fixed;
 
-bottom:25px;
+    right: 22px;
 
-right:25px;
+    bottom: 22px;
 
-width:68px;
+    width: 58px;
 
-height:68px;
+    height: 58px;
 
-display:flex;
+    display: flex;
 
-justify-content:center;
+    align-items: center;
 
-align-items:center;
+    justify-content: center;
 
-border-radius:50%;
+    background: #25D366;
 
-background:#25D366;
+    color: #ffffff;
 
-color:white;
+    border-radius: 50%;
 
-font-size:30px;
+    text-decoration: none;
 
-box-shadow:0 15px 35px rgba(0,0,0,.35);
+    font-size: 31px;
 
-z-index:9999;
+    z-index: 9999;
 
-transition:.35s;
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,0.30);
 
-animation:floatWhatsapp 3s infinite;
-
-}
-
-.whatsapp:hover{
-
-transform:scale(1.1);
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
 
 }
 
-@keyframes floatWhatsapp{
 
-0%,100%{
+.nx-whatsapp-float:hover {
 
-transform:translateY(0);
+    transform:
+        translateY(-4px)
+        scale(1.05);
+
+    box-shadow:
+        0 12px 32px
+        rgba(0,0,0,0.40);
 
 }
 
-50%{
 
-transform:translateY(-8px);
+.nx-whatsapp-float:active {
+
+    transform:
+        scale(.95);
 
 }
+
+
+@media(max-width:600px){
+
+    .nx-whatsapp-float {
+
+        width:54px;
+
+        height:54px;
+
+        right:16px;
+
+        bottom:16px;
+
+        font-size:28px;
+
+    }
 
 }
 
