@@ -11908,3 +11908,408 @@ console.log(
 
 
 </script>
+
+
+        </script>
+
+
+<!-- =========================================================
+   TECHNICAL QUOTATION PAGE FOOTER SECTION
+========================================================= -->
+
+
+<section
+    class="nx-technical-contact"
+    id="technical-contact">
+
+
+    <div class="nx-technical-contact-container">
+
+
+        <div class="nx-technical-contact-content">
+
+
+            <span class="nx-section-kicker">
+                NEXPAK TECHNICAL DIVISION
+            </span>
+
+
+            <h2>
+                Let's Engineer the Right Security Solution.
+            </h2>
+
+
+            <p>
+                From advanced perimeter protection and zoned
+                electric fencing to IP surveillance, wireless
+                networks and integrated security platforms,
+                our technical team can assess your requirements
+                and develop a solution around the site.
+            </p>
+
+
+            <p>
+                We support residential, commercial,
+                industrial, agricultural, estate, public-sector,
+                infrastructure and large-scale security projects.
+            </p>
+
+
+        </div>
+
+
+        <div class="nx-technical-contact-panel">
+
+
+            <div class="nx-contact-item">
+
+
+                <span class="nx-contact-label">
+                    TECHNICAL QUOTATIONS
+                </span>
+
+
+                <a
+                    href="mailto:technical@nexpaksolutions.co.za">
+
+
+                    technical@nexpaksolutions.co.za
+
+
+                </a>
+
+
+            </div>
+
+
+
+            <div class="nx-contact-item">
+
+
+                <span class="nx-contact-label">
+                    PROJECT TYPES
+                </span>
+
+
+                <strong>
+                    Residential · Commercial · Industrial
+                    · Agricultural · Tenders
+                </strong>
+
+
+            </div>
+
+
+
+            <div class="nx-contact-item">
+
+
+                <span class="nx-contact-label">
+                    DELIVERY
+                </span>
+
+
+                <strong>
+                    Supply · Installation · Commissioning
+                    · Maintenance
+                </strong>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+   FOOTER
+========================================================= -->
+
+
+<footer
+    class="nx-footer">
+
+
+    <div
+        class="nx-footer-container">
+
+
+        <div
+            class="nx-footer-brand">
+
+
+            <div
+                class="nx-footer-logo">
+
+                NEXPAK
+
+            </div>
+
+
+            <h3>
+                SECURITY SOLUTIONS
+            </h3>
+
+
+            <p>
+                Technical security systems engineered
+                for real-world environments.
+            </p>
+
+
+        </div>
+
+
+
+        <div
+            class="nx-footer-column">
+
+
+            <h4>
+                Solutions
+            </h4>
+
+
+            <a href="products.html">
+                Security Products
+            </a>
+
+
+            <a href="quote.html">
+                Technical Projects
+            </a>
+
+
+            <a href="technical-form.html">
+                Request a Technical Quote
+            </a>
+
+
+            <a href="contact.html">
+                Contact
+            </a>
+
+
+        </div>
+
+
+
+        <div
+            class="nx-footer-column">
+
+
+            <h4>
+                Technical
+            </h4>
+
+
+            <a href="technical-form.html">
+                Project Assessment
+            </a>
+
+
+            <a href="technical-form.html">
+                Tender &amp; BOQ Requests
+            </a>
+
+
+            <a href="technical-form.html">
+                Bulk Supply
+            </a>
+
+
+            <a href="technical-form.html">
+                Installation &amp; Maintenance
+            </a>
+
+
+        </div>
+
+
+
+        <div
+            class="nx-footer-column">
+
+
+            <h4>
+                Contact
+            </h4>
+
+
+            <a
+                href="mailto:technical@nexpaksolutions.co.za">
+
+                technical@nexpaksolutions.co.za
+
+            </a>
+
+
+            <a
+                href="tel:+27820000000">
+
+                082 000 0000
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <div
+        class="nx-footer-bottom">
+
+
+        <span>
+
+            © 2026 Nexpak Security Solutions.
+            All Rights Reserved.
+
+        </span>
+
+
+        <span>
+
+            Technical security solutions.
+            Professionally engineered.
+
+        </span>
+
+
+    </div>
+
+
+</footer>
+
+
+
+<!-- =========================================================
+   FINAL PAGE SCRIPTS
+========================================================= -->
+
+
+<script>
+
+/* =========================================================
+   NEXPAK TECHNICAL FORM
+   FINAL UI ENHANCEMENTS
+========================================================= */
+
+
+/* =========================================================
+   SMOOTH FORM FEEDBACK
+========================================================= */
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+
+        const form =
+            document.getElementById(
+                "technicalQuoteForm"
+            );
+
+
+        if (!form) {
+
+            return;
+
+        }
+
+
+        /* ================================================
+           ADD FOCUS STATE TO FORM FIELDS
+        ================================================ */
+
+
+        const fields =
+            form.querySelectorAll(
+                "input, select, textarea"
+            );
+
+
+        fields.forEach(
+            function (field) {
+
+
+                field.addEventListener(
+                    "focus",
+                    function () {
+
+
+                        const parent =
+                            field.closest(
+                                ".nx-field"
+                            );
+
+
+                        if (parent) {
+
+                            parent.classList.add(
+                                "is-focused"
+                            );
+
+                        }
+
+
+                    }
+                );
+
+
+                field.addEventListener(
+                    "blur",
+                    function () {
+
+
+                        const parent =
+                            field.closest(
+                                ".nx-field"
+                            );
+
+
+                        if (parent) {
+
+                            parent.classList.remove(
+                                "is-focused"
+                            );
+
+                        }
+
+
+                    }
+                );
+
+
+            }
+        );
+
+
+    }
+);
+
+
+</script>
+
+
+
+<!-- =========================================================
+   FINAL HTML CLOSURE
+========================================================= -->
+
+
+</body>
+
+
+        </html>
