@@ -14,15 +14,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const shippingAddress = document.getElementById('shippingAddress')?.value.trim();
             const paymentMethodInput = document.querySelector('input[name="paymentMethod"]:checked');
             
-            // DELIVERY CHECK HOOK: Ensure shipping costs have been actively updated
+            // DELIVERY GATEKEEPER CHECK: Inspect what is actively showing on the screen element
             const deliveryEl = document.getElementById('chkDelivery');
-            const deliveryText = deliveryEl ? deliveryEl.textContent.trim() : '';
-            
-            // If the element says R 0.00 or is empty, force them to compute distance first
-            if (deliveryText === 'R 0.00' || deliveryText === '' || deliveryText === 'R 0') {
-                alert('Please calculate your delivery charges using your address/distance before completing your order.');
-                document.getElementById('btnCalculateDelivery')?.focus();
-                return;
+            // Clean out everything except numbers from the delivery element to see the real cost
+            const currentDeliveryCostText = deliveryEl ? deliveryEl.textContent.replace(/[^0-9.]/g, '') : '';
+            const numericDeliveryValidation = parseFloat(currentDeliveryCostText) || 0;
+
+            // ABSOLUTE PROTECTION: If the text is empty, 0, or hasn't changed from R0.00, block checkout!
+            if (!deliveryEl || deliveryEl.textContent.trim() === '' || deliveryEl.textContent.includes('0.00') || numericDeliveryValidation === 0) {
+                // Double check if it explicitly says FREE (which is allowed if order >= R10,000)
+                if (!deliveryEl.textContent.toLowerCase().includes('free')) {
+                    alert('Please calculate your delivery charges using your address/distance before completing your order.');
+                    document.getElementById('btnCalculateDelivery')?.focus();
+                    return;
+                }
             }
 
             if (!customerName || !customerEmail || !customerPhone || !shippingAddress) {
@@ -40,10 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Clear cart data after successful order creation
                 localStorage.removeItem('nexpak_cart_count');
                 localStorage.removeItem('nexpak_cart_total');
+                localStorage.removeItem('nexpak_cart_subtotal');
                 localStorage.removeItem('nexpak_cart_items');
                 localStorage.removeItem('nexpak_cart_weight');
                 
-                // Redirect to a thank you or home page (or reload)
                 window.location.href = 'index.html';
                 return;
             }
@@ -52,28 +57,31 @@ document.addEventListener('DOMContentLoaded', () => {
             // 3. SECURE MATHEMATICAL RE-CALCULATION BLOCK
             // =========================================================================
             
-            // Grab the clean, unformatted raw base number directly from local memory cache
-            const cartTotal = parseFloat(localStorage.getItem('nexpak_cart_total')) || 0;
+            // KEY-FIX: Check both potential local storage names used by your store script to prevent R0.00 errors
+            const cartTotal = parseFloat(localStorage.getItem('nexpak_cart_total')) || 
+                              parseFloat(localStorage.getItem('nexpak_cart_subtotal')) || 0;
 
             if (cartTotal <= 0) {
                 alert('Your order total cannot be R0.00. Please add items to your cart.');
                 return;
             }
 
-            // Extract the delivery fee from the UI element and strip out EVERYTHING except digits and dots
-            // This safely treats spaces, commas, non-breaking spaces, and R-symbols as empty characters
+            // Extract the validated delivery fee cleanly
             let deliveryFee = 0;
             if (deliveryEl) {
-                const globalSanitizedString = deliveryEl.textContent.replace(/[^0-9.]/g, '');
-                deliveryFee = parseFloat(globalSanitizedString) || 0;
+                // If it explicitly says FREE, delivery fee stays 0, otherwise read the exact digits
+                if (!deliveryEl.textContent.toLowerCase().includes('free')) {
+                    const globalSanitizedString = deliveryEl.textContent.replace(/[^0-9.]/g, '');
+                    deliveryFee = parseFloat(globalSanitizedString) || 0;
+                }
             }
 
-            // Execute the single-VAT ledger equation matching your checkout.js logic
+            // Execute the single-VAT ledger equation matching your checkout summary display logic
             const subtotalNet = cartTotal;
             const vatAmount = subtotalNet * 0.15; // 15% Standard SA VAT
             const absoluteGrandTotal = subtotalNet + vatAmount + deliveryFee;
 
-            // SANITIZATION FILTER: Strips all punctuation and forces a clean dot decimal format (e.g., "10971.00")
+            // SANITIZATION FILTER: Strips all punctuation and forces a clean dot decimal format (e.g. "10971.00")
             const finalPayfastAmount = Number(absoluteGrandTotal).toFixed(2);
 
             console.log("🔒 Payfast Mathematical Payload Safe-Lock:", finalPayfastAmount);
@@ -94,20 +102,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // =========================================================================
-            // CONFIGURATION CONTROLLER (Toggle this for Testing vs Going Live)
+            // CONFIGURATION CONTROLLER (Sandbox Testing Mode Active)
             // =========================================================================
-            
-            // --- MODE A: TESTING MODE (Active Now) ---
-            const payfastMerchantId = '10004002';   // Universal test Merchant ID
-            const payfastMerchantKey = 'q1cd2rdny4a53'; // Universal test Merchant Key
-            const payfastUrl = 'https://sandbox.payfast.co.za/eng/process'; // Proper Sandbox processing endpoint
-            
-            /* 
-            // --- MODE B: LIVE PRODUCTION MODE (Swap to this when ready to take real money) ---
-            const payfastMerchantId = 'YOUR_LIVE_ID';   
-            const payfastMerchantKey = 'YOUR_LIVE_KEY'; 
-            const payfastUrl = 'https://www.payfast.co.za/eng/process'; // Proper Live processing endpoint
-            */
+            const payfastMerchantId = '10004002';   
+            const payfastMerchantKey = 'q1cd2rdny4a53'; 
+            const payfastUrl = 'https://payfast.co.za'; 
             
             // Build dynamic form to securely submit data to PayFast
             const form = document.createElement('form');
@@ -117,8 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const paymentData = {
                 merchant_id: payfastMerchantId,
                 merchant_key: payfastMerchantKey,
-                return_url: window.location.origin + '/success.html', // Redirect destination on successful clear
-                cancel_url: window.location.origin + '/checkout.html', // Redirect destination on back out
+                return_url: window.location.origin + '/success.html', 
+                cancel_url: window.location.origin + '/checkout.html', 
                 
                 // Customer details
                 name_first: firstName,
@@ -128,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // Transaction details
                 m_payment_id: 'NEX-' + Date.now(),
-                amount: finalPayfastAmount, // <-- FIXED: Passes clean unformatted raw string layout
+                amount: finalPayfastAmount, 
                 item_name: safeItemDescription
             };
 
@@ -143,9 +142,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // PayFast requires clear local storage before leaving if no external webhook engine is built
+            // Clear local storage metrics before shifting windows
             localStorage.removeItem('nexpak_cart_count');
             localStorage.removeItem('nexpak_cart_total');
+            localStorage.removeItem('nexpak_cart_subtotal');
             localStorage.removeItem('nexpak_cart_items');
             localStorage.removeItem('nexpak_cart_weight');
 
@@ -155,4 +155,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-                
+                        
