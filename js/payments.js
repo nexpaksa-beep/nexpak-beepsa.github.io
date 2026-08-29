@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const deliveryEl = document.getElementById('chkDelivery');
             const deliveryText = deliveryEl ? deliveryEl.textContent.trim().toLowerCase() : '';
 
-            // ABSOLUTE PROTECTION: Block checkout if delivery hasn't been handled
+            // ABSOLUTE PROTECTION: Block checkout if delivery hasn't been actively resolved
             if (!deliveryEl || deliveryText === '' || deliveryText === 'r 0.00' || deliveryText === 'r 0') {
                 if (!deliveryText.includes('free')) {
                     alert('Please calculate your delivery charges using your address/distance before completing your order.');
@@ -39,25 +39,24 @@ document.addEventListener('DOMContentLoaded', () => {
             if (paymentMethod === 'eft') {
                 alert('Order placed successfully! Please use the Capitec bank details provided on screen to complete your EFT payment using your order number as reference.');
                 localStorage.clear(); 
-                window.location.href = 'index.html';
+                window.location.href = '/index.html';
                 return;
             }
 
             // =========================================================================
-            // 3. PURE RAW CACHE EXTRACTION (NO ROOM FOR STRING BUG INTERPRETATIONS)
+            // 3. SECURE MATHEMATICAL RE-CALCULATION BLOCK (FORCED FLOAT FIX)
             // =========================================================================
             
-            // Pull the raw base number value directly from the browser's storage array cache keys
-            const cartTotal = parseFloat(localStorage.getItem('nexpak_cart_total')) || 
-                              parseFloat(localStorage.getItem('nexpak_cart_subtotal')) || 0;
+            // Pull raw numeric values straight out of your browser local cache states
+            const rawCartStorage = localStorage.getItem('nexpak_cart_total') || localStorage.getItem('nexpak_cart_subtotal') || '0';
+            const subtotalNet = parseFloat(rawCartStorage) || 0;
 
-            if (cartTotal <= 0) {
+            if (subtotalNet <= 0) {
                 alert('Your order total cannot be R0.00. Please add items to your cart.');
                 return;
             }
 
-            // Clean the delivery text using a strict regular expression that leaves ONLY numbers and periods
-            // This treats commas, standard spaces, currency signs, and non-breaking spaces as empty text
+            // Clean the delivery display text using a strict regex that isolates numbers and periods
             let deliveryFee = 0;
             if (deliveryEl) {
                 if (!deliveryText.includes('free')) {
@@ -66,30 +65,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // THE MATHEMATICAL LOCKDOWN:
-            // This runs the exact logic without any screen text string interference
-            const subtotalNet = cartTotal;
+            // Execute the single-VAT ledger equation matching your checkout summary display logic
             const vatAmount = subtotalNet * 0.15; // 15% Standard SA VAT
             const absoluteGrandTotal = subtotalNet + vatAmount + deliveryFee;
 
-            // Format to a clean string layout for PayFast payload ingestion (e.g. "731.00" or with its VAT)
+            // Format to a clean string layout for PayFast payload ingestion (e.g., "731.00")
             const finalPayfastAmount = Number(absoluteGrandTotal).toFixed(2);
 
             console.log("🔒 PURE PAYFAST PAYLOAD LOCK -> Net:", subtotalNet, " | VAT:", vatAmount, " | Delivery:", deliveryFee, " | Sent total:", finalPayfastAmount);
 
             // =========================================================================
-            // CONFIGURATION CONTROLLER & FORM GENERATION
+            // 4. CONFIGURATION CONTROLLER & FORM SUBMISSION
             // =========================================================================
+            
+            // --- MODE A: TESTING MODE (Active Now) ---
             const payfastMerchantId = '10004002';   // Universal test Merchant ID
             const payfastMerchantKey = 'q1cd2rdny4a53'; // Universal test Merchant Key
-            const payfastUrl = 'https://payfast.co.za'; 
+            const payfastUrl = 'https://sandbox.payfast.co.za/eng/process'; // FIXED: Strict sandbox processing link
             
-            // FIXED: Added missing index pointer [0] to extract the text string correctly
+            /* 
+            // --- MODE B: LIVE PRODUCTION MODE (Uncomment this block and comment out Mode A to go live) ---
+            const payfastMerchantId = 'YOUR_LIVE_ID';   
+            const payfastMerchantKey = 'YOUR_LIVE_KEY'; 
+            const payfastUrl = 'https://www.payfast.co.za/eng/process'; 
+            */
+            
+            // FIXED TRIPLE-CHECK: Parse names safely into explicit strings to avoid array object errors
             const nameParts = customerName.split(' ');
-            const firstName = nameParts[0] || 'Valued'; 
-            const lastName = nameParts.slice(1).join(' ') || 'Customer';
+            const firstName = nameParts[0] ? nameParts[0] : 'Valued'; 
+            const lastName = nameParts.slice(1).join(' ') ? nameParts.slice(1).join(' ') : 'Customer';
 
-            // Gather cart items for description
+            // Gather cart items for description log mapping
             const cartItems = JSON.parse(localStorage.getItem('nexpak_cart_items')) || [];
             const itemNames = cartItems.map(item => item.name).join(', ') || 'Security Hardware';
             
@@ -98,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 safeItemDescription = safeItemDescription.substring(0, 92) + '...';
             }
             
-            // Build dynamic form to securely submit data to PayFast
+            // Build dynamic hidden form element to securely dispatch fields straight to PayFast
             const form = document.createElement('form');
             form.method = 'POST';
             form.action = payfastUrl;
@@ -113,10 +119,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 email_address: customerEmail,
                 cell_number: customerPhone,
                 m_payment_id: 'NEX-' + Date.now(),
-                amount: finalPayfastAmount, // Completely clean numeric string structure (e.g. 731.00)
+                amount: finalPayfastAmount, // Fully standardized clean decimal string
                 item_name: safeItemDescription
             };
 
+            // Map keys into form parameters safely
             for (const key in paymentData) {
                 if (paymentData.hasOwnProperty(key)) {
                     const input = document.createElement('input');
@@ -127,17 +134,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // Wipe cart values cleanly right before jumping off-site
+            // Wipe local storage cart metrics completely to restore clean checkout state upon return route
             localStorage.removeItem('nexpak_cart_count');
             localStorage.removeItem('nexpak_cart_total');
             localStorage.removeItem('nexpak_cart_subtotal');
             localStorage.removeItem('nexpak_cart_items');
             localStorage.removeItem('nexpak_cart_weight');
 
-            // Append to body and submit to PayFast
+            // Inject structural form data and push execution off-site to gateway
             document.body.appendChild(form);
             form.submit();
         });
     }
 });
-                    
+                
