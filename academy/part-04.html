@@ -1,463 +1,1450 @@
-<!DOCTYPE html>
+/* =========================================================
+   NEXPAK SECURITY ACADEMY
+   MODULE 04 — PRACTICAL FENCE CONSTRUCTION
+   PREMIUM PAGE-SPECIFIC CSS
+========================================================= */
 
-<html lang="en">
 
-<head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>
-        Advanced Electric Fencing Course | Module 04 | Practical Fence Construction
-    </title>
-
-    <meta
-        name="description"
-        content="Nexpak Security Academy Electric Fencing Course Part 04 - Practical Fence Construction. Learn professional fence construction principles, components, physical installation and practical installation methods."
-    >
-
-    <meta
-        name="keywords"
-        content="electric fencing course, practical fence construction, electric fence installation, electric fencing training South Africa, Nexpak Security Academy"
-    >
+/* =========================================================
+   GLOBAL VARIABLES
+========================================================= */
 
-    <meta
-        name="author"
-        content="Nexpak Security Academy"
-    >
+:root {
 
-    <meta
-        name="robots"
-        content="index, follow"
-    >
+    --academy-bg: #071018;
+    --academy-bg-deep: #03070b;
 
-    <link
-        rel="canonical"
-        href="https://www.nexpak.co.za/academy/part-04.html"
-    >
+    --academy-panel: #0c1720;
+    --academy-panel-light: #12222d;
+    --academy-panel-soft: #101d27;
 
+    --academy-border: rgba(255,255,255,.09);
+    --academy-border-strong: rgba(255,255,255,.16);
 
-    <!-- =====================================================
-         OPEN GRAPH
-    ====================================================== -->
+    --academy-text: #eef5f8;
+    --academy-text-soft: #b7c7ce;
+    --academy-text-muted: #81959f;
 
-    <meta
-        property="og:type"
-        content="website"
-    >
+    --academy-accent: #f59e0b;
+    --academy-accent-light: #fbbf24;
+    --academy-accent-dark: #b45309;
 
-    <meta
-        property="og:title"
-        content="Practical Fence Construction | Nexpak Security Academy"
-    >
+    --academy-green: #22c55e;
+    --academy-red: #ef4444;
+    --academy-blue: #38bdf8;
+    --academy-purple: #a78bfa;
 
-    <meta
-        property="og:description"
-        content="Electric fencing training covering practical fence construction and professional installation principles."
-    >
+    --academy-radius: 20px;
+    --academy-radius-small: 13px;
 
-    <meta
-        property="og:url"
-        content="https://www.nexpak.co.za/academy/part-04.html"
-    >
+    --academy-shadow:
+        0 25px 70px rgba(0,0,0,.35);
 
-    <meta
-        property="og:site_name"
-        content="Nexpak Security Academy"
-    >
+    --academy-transition:
+        .3s ease;
+}
 
 
-    <!-- =====================================================
-         TWITTER / SOCIAL
-    ====================================================== -->
+/* =========================================================
+   RESET
+========================================================= */
 
-    <meta
-        name="twitter:card"
-        content="summary"
-    >
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-    <meta
-        name="twitter:title"
-        content="Practical Fence Construction | Nexpak Security Academy"
-    >
+html {
+    scroll-behavior: smooth;
+}
 
-    <meta
-        name="twitter:description"
-        content="Professional electric-fencing training focused on practical fence construction."
-    >
+body {
 
+    min-height: 100vh;
 
-    <!-- =====================================================
-         STRUCTURED DATA
-    ====================================================== -->
+    background:
 
-    <script type="application/ld+json">
+        radial-gradient(
+            circle at 15% 5%,
+            rgba(245,158,11,.10),
+            transparent 28%
+        ),
 
-    {
-        "@context": "https://schema.org",
-        "@type": "Course",
-        "name": "Electric Fencing Course - Part 04: Practical Fence Construction",
-        "description": "Professional electric-fencing training covering practical fence construction and installation principles.",
-        "provider": {
-            "@type": "Organization",
-            "name": "Nexpak Security Academy",
-            "url": "https://www.nexpak.co.za/"
-        },
-        "educationalLevel": "Professional",
-        "inLanguage": "en-ZA",
-        "isAccessibleForFree": true,
-        "courseCode": "NEXPAK-EF-P04"
-    }
+        radial-gradient(
+            circle at 90% 18%,
+            rgba(56,189,248,.07),
+            transparent 25%
+        ),
 
-    </script>
+        radial-gradient(
+            circle at 50% 80%,
+            rgba(34,197,94,.035),
+            transparent 30%
+        ),
 
+        linear-gradient(
+            180deg,
+            var(--academy-bg),
+            var(--academy-bg-deep)
+        );
 
-    <!-- =====================================================
-         PART 04 — PRACTICAL FENCE CONSTRUCTION
-         PAGE-SPECIFIC CSS
-    ====================================================== -->
+    color: var(--academy-text);
 
-    <style>
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
 
+    line-height: 1.75;
 
-        /* =====================================================
-           GLOBAL VARIABLES
-        ====================================================== */
+    overflow-x: hidden;
+}
 
-        :root {
 
-            --academy-bg:
-                #071018;
+/* =========================================================
+   BASIC ELEMENTS
+========================================================= */
 
-            --academy-bg-deep:
-                #03070b;
+a {
+    color: inherit;
+    text-decoration: none;
+}
 
-            --academy-panel:
-                #0c1720;
+img {
+    max-width: 100%;
+    display: block;
+}
 
-            --academy-panel-light:
-                #12222d;
+button,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
 
-            --academy-border:
-                rgba(255,255,255,.09);
+strong {
+    color: #ffffff;
+}
 
-            --academy-border-strong:
-                rgba(255,255,255,.16);
+::selection {
+    background: rgba(245,158,11,.30);
+    color: #ffffff;
+}
 
-            --academy-text:
-                #eef5f8;
 
-            --academy-text-soft:
-                #b7c7ce;
+/* =========================================================
+   PAGE CONTAINERS
+========================================================= */
 
-            --academy-text-muted:
-                #81959f;
+.container,
+.section,
+main {
 
-            --academy-accent:
-                #f59e0b;
+    width:
+        min(
+            1180px,
+            calc(100% - 40px)
+        );
 
-            --academy-accent-light:
-                #fbbf24;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-            --academy-accent-dark:
-                #b45309;
 
-            --academy-green:
-                #22c55e;
+/* =========================================================
+   ACADEMY HEADER
+========================================================= */
 
-            --academy-red:
-                #ef4444;
+.academy-header {
 
-            --academy-blue:
-                #38bdf8;
+    position: relative;
 
-            --academy-radius:
-                18px;
+    padding: 22px 0;
 
-            --academy-radius-small:
-                12px;
+    border-bottom:
+        1px solid
+        var(--academy-border);
 
-            --academy-shadow:
-                0 25px 70px
-                rgba(0,0,0,.35);
+    background:
+        rgba(3,7,11,.86);
 
-            --academy-transition:
-                .3s ease;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 
-        }
+    z-index: 20;
+}
 
 
-        /* =====================================================
-           RESET
-        ====================================================== */
+.academy-header-inner {
 
-        * {
+    width:
+        min(
+            1180px,
+            calc(100% - 40px)
+        );
 
-            box-sizing:
-                border-box;
+    margin: auto;
 
-            margin:
-                0;
+    display: flex;
 
-            padding:
-                0;
+    align-items: center;
 
-        }
+    justify-content: space-between;
 
+    gap: 25px;
+}
 
-        html {
 
-            scroll-behavior:
-                smooth;
+.academy-brand {
 
-        }
+    display: flex;
 
+    align-items: center;
 
-        body {
+    gap: 14px;
+}
 
-            min-height:
-                100vh;
 
-            background:
+.academy-logo {
 
-                radial-gradient(
-                    circle at 15% 10%,
-                    rgba(245,158,11,.08),
-                    transparent 30%
-                ),
+    width: 48px;
+    height: 48px;
 
-                radial-gradient(
-                    circle at 85% 20%,
-                    rgba(56,189,248,.06),
-                    transparent 28%
-                ),
+    display: grid;
 
-                linear-gradient(
-                    180deg,
-                    var(--academy-bg),
-                    var(--academy-bg-deep)
-                );
+    place-items: center;
 
-            color:
-                var(--academy-text);
+    border-radius: 14px;
 
-            font-family:
-                Inter,
-                system-ui,
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                sans-serif;
+    background:
+        linear-gradient(
+            135deg,
+            var(--academy-accent),
+            var(--academy-accent-dark)
+        );
 
-            line-height:
-                1.7;
+    color: #111;
 
-        }
+    font-size: 21px;
 
+    font-weight: 900;
 
-        /* =====================================================
-           LINKS
-        ====================================================== */
+    box-shadow:
+        0 10px 30px
+        rgba(245,158,11,.25);
+}
 
-        a {
 
-            color:
-                inherit;
+.academy-brand-text {
 
-            text-decoration:
-                none;
+    display: flex;
 
-        }
+    flex-direction: column;
+}
 
 
-        button,
-        a {
+.academy-brand-text strong {
 
-            -webkit-tap-highlight-color:
-                transparent;
+    font-size: 16px;
 
-        }
+    letter-spacing: .08em;
 
+    text-transform: uppercase;
+}
 
-        /* =====================================================
-           PAGE CONTAINER
-        ====================================================== */
 
-        .container,
-        .section,
-        main {
+.academy-brand-text span {
 
-            width:
-                min(
-                    1180px,
-                    calc(100% - 40px)
-                );
+    font-size: 12px;
 
-            margin-left:
-                auto;
+    color:
+        var(--academy-text-muted);
+}
 
-            margin-right:
-                auto;
 
-        }
+/* =========================================================
+   MODULE HERO
+========================================================= */
 
+.module-hero {
 
-        /* =====================================================
-           ACADEMY HEADER
-        ====================================================== */
+    position: relative;
 
-        .academy-header {
+    margin: 45px auto 35px;
 
-            position:
-                relative;
+    padding: 60px 55px;
 
-            padding:
-                22px 0;
+    border:
+        1px solid
+        var(--academy-border);
 
-            border-bottom:
-                1px solid
-                var(--academy-border);
+    border-radius:
+        28px;
 
-            background:
-                rgba(3,7,11,.82);
+    overflow: hidden;
 
-            backdrop-filter:
-                blur(18px);
+    background:
 
-            -webkit-backdrop-filter:
-                blur(18px);
+        linear-gradient(
+            135deg,
+            rgba(245,158,11,.14),
+            rgba(12,23,32,.96) 45%,
+            rgba(3,7,11,.98)
+        );
 
-            z-index:
-                20;
+    box-shadow:
+        var(--academy-shadow);
+}
 
-        }
 
+.module-hero::before {
 
-        .academy-header-inner {
+    content: "";
 
-            width:
-                min(
-                    1180px,
-                    calc(100% - 40px)
-                );
+    position: absolute;
 
-            margin:
-                auto;
+    width: 280px;
+    height: 280px;
 
-            display:
-                flex;
+    right: -90px;
+    top: -110px;
 
-            align-items:
-                center;
+    border-radius: 50%;
 
-            justify-content:
-                space-between;
+    background:
+        rgba(245,158,11,.10);
 
-            gap:
-                25px;
+    filter: blur(10px);
+}
 
-        }
 
+.module-hero::after {
 
-        .academy-brand {
+    content: "";
 
-            display:
-                flex;
+    position: absolute;
 
-            align-items:
-                center;
+    left: 0;
+    bottom: 0;
 
-            gap:
-                14px;
+    width: 100%;
+    height: 3px;
 
-        }
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--academy-accent),
+            transparent
+        );
+}
 
 
-        .academy-logo {
+.module-label {
 
-            width:
-                46px;
+    display: inline-flex;
 
-            height:
-                46px;
+    align-items: center;
 
-            display:
-                grid;
+    gap: 8px;
 
-            place-items:
-                center;
+    margin-bottom: 18px;
 
-            border-radius:
-                14px;
+    padding: 8px 14px;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--academy-accent),
-                    var(--academy-accent-dark)
-                );
+    border:
+        1px solid
+        rgba(245,158,11,.28);
 
-            color:
-                #111;
+    border-radius: 999px;
 
-            font-size:
-                21px;
+    background:
+        rgba(245,158,11,.08);
 
-            font-weight:
-                900;
+    color:
+        var(--academy-accent-light);
 
-            box-shadow:
-                0 10px 30px
-                rgba(245,158,11,.25);
+    font-size: 12px;
 
-        }
+    font-weight: 800;
 
+    letter-spacing: .10em;
 
-        .academy-brand-text {
+    text-transform: uppercase;
+}
 
-            display:
-                flex;
 
-            flex-direction:
-                column;
+.module-hero h1 {
 
-        }
+    position: relative;
 
+    margin-bottom: 18px;
 
-        .academy-brand-text strong {
+    max-width: 850px;
 
-            font-size:
-                16px;
+    font-size:
+        clamp(
+            32px,
+            5vw,
+            58px
+        );
 
-            letter-spacing:
-                .08em;
+    line-height: 1.08;
 
-            text-transform:
-                uppercase;
+    letter-spacing: -.035em;
 
-        }
+    color: #ffffff;
+}
 
 
-        .academy-brand-text span {
+.module-hero p {
 
-            font-size:
-                12px;
+    max-width: 780px;
 
-            color:
-                var(--academy-text-muted);
+    color:
+        var(--academy-text-soft);
 
-        }
+    font-size: 18px;
+}
 
 
-        /* =====================================================
-           END OF THIS P04 SECTION
-           ===================================================== */
+/* =========================================================
+   COURSE PROGRESS
+========================================================= */
 
-    </style>
+.course-progress {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin: 0 auto 40px;
+
+    padding: 18px 22px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius-small);
+
+    background:
+        rgba(12,23,32,.72);
+}
+
+
+.course-progress span {
+
+    color:
+        var(--academy-text-muted);
+
+    font-size: 13px;
+
+    white-space: nowrap;
+}
+
+
+.course-progress-bar {
+
+    flex: 1;
+
+    height: 7px;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,255,255,.08);
+}
+
+
+.course-progress-bar div {
+
+    height: 100%;
+
+    width: 25%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--academy-accent-dark),
+            var(--academy-accent-light)
+        );
+}
+
+
+/* =========================================================
+   CONTENT SECTIONS
+========================================================= */
+
+.training-section {
+
+    margin:
+        0 auto 34px;
+
+    padding:
+        38px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,34,45,.94),
+            rgba(8,17,24,.96)
+        );
+
+    box-shadow:
+        0 15px 45px
+        rgba(0,0,0,.20);
+
+    transition:
+        transform var(--academy-transition),
+        border-color var(--academy-transition);
+}
+
+
+.training-section:hover {
+
+    transform:
+        translateY(-2px);
+
+    border-color:
+        var(--academy-border-strong);
+}
+
+
+.training-section h2 {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    margin-bottom: 22px;
+
+    color: #ffffff;
+
+    font-size:
+        clamp(
+            24px,
+            3vw,
+            34px
+        );
+
+    line-height: 1.2;
+
+    letter-spacing: -.02em;
+}
+
+
+.training-section h2::before {
+
+    content: "";
+
+    width: 5px;
+
+    height: 34px;
+
+    flex-shrink: 0;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--academy-accent-light),
+            var(--academy-accent-dark)
+        );
+}
+
+
+.training-section h3 {
+
+    margin:
+        28px 0 12px;
+
+    color:
+        var(--academy-accent-light);
+
+    font-size: 21px;
+}
+
+
+.training-section p {
+
+    margin-bottom: 17px;
+
+    color:
+        var(--academy-text-soft);
+
+    font-size: 16px;
+}
+
+
+.training-section p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   INTRODUCTION CARD
+========================================================= */
+
+.introduction-card {
+
+    position: relative;
+
+    margin-bottom: 35px;
+
+    padding: 30px 34px;
+
+    border:
+        1px solid
+        rgba(56,189,248,.18);
+
+    border-radius:
+        var(--academy-radius);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(56,189,248,.09),
+            rgba(12,23,32,.85)
+        );
+}
+
+
+.introduction-card::before {
+
+    content: "MODULE OVERVIEW";
+
+    display: block;
+
+    margin-bottom: 12px;
+
+    color:
+        var(--academy-blue);
+
+    font-size: 11px;
+
+    font-weight: 900;
+
+    letter-spacing: .14em;
+}
+
+
+/* =========================================================
+   LEARNING OBJECTIVES
+========================================================= */
+
+.learning-objectives {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(220px, 1fr)
+        );
+
+    gap: 18px;
+
+    margin:
+        25px 0;
+}
+
+
+.objective-card {
+
+    padding: 24px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius-small);
+
+    background:
+        rgba(3,7,11,.42);
+
+    transition:
+        .3s ease;
+}
+
+
+.objective-card:hover {
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(245,158,11,.35);
+}
+
+
+.objective-number {
+
+    width: 38px;
+    height: 38px;
+
+    display: grid;
+
+    place-items: center;
+
+    margin-bottom: 15px;
+
+    border-radius: 11px;
+
+    background:
+        rgba(245,158,11,.12);
+
+    color:
+        var(--academy-accent-light);
+
+    font-weight: 900;
+}
+
+
+.objective-card h3 {
+
+    margin:
+        0 0 8px;
+
+    color: #ffffff;
+
+    font-size: 17px;
+}
+
+
+.objective-card p {
+
+    margin: 0;
+
+    color:
+        var(--academy-text-muted);
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   INFORMATION BOX
+========================================================= */
+
+.info-box {
+
+    margin:
+        25px 0;
+
+    padding:
+        24px 26px;
+
+    border-left:
+        4px solid
+        var(--academy-blue);
+
+    border-radius:
+        0 var(--academy-radius-small)
+        var(--academy-radius-small) 0;
+
+    background:
+        rgba(56,189,248,.07);
+}
+
+
+.info-box strong {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color:
+        var(--academy-blue);
+
+    font-size: 14px;
+
+    letter-spacing: .04em;
+
+    text-transform: uppercase;
+}
+
+
+.info-box p {
+
+    margin: 0;
+
+    color:
+        var(--academy-text-soft);
+}
+
+
+/* =========================================================
+   PROFESSIONAL TECHNICIAN TIP
+========================================================= */
+
+.tip-box {
+
+    margin:
+        25px 0;
+
+    padding:
+        25px 27px;
+
+    border:
+        1px solid
+        rgba(34,197,94,.20);
+
+    border-radius:
+        var(--academy-radius-small);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(34,197,94,.08),
+            rgba(3,7,11,.35)
+        );
+}
+
+
+.tip-box strong {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    color:
+        var(--academy-green);
+
+    font-size: 14px;
+
+    text-transform: uppercase;
+
+    letter-spacing: .06em;
+}
+
+
+.tip-box p {
+
+    margin: 0;
+
+    color:
+        var(--academy-text-soft);
+}
+
+
+/* =========================================================
+   SAFETY WARNING
+========================================================= */
+
+.warning-box {
+
+    margin:
+        25px 0;
+
+    padding:
+        25px 27px;
+
+    border:
+        1px solid
+        rgba(239,68,68,.25);
+
+    border-left:
+        5px solid
+        var(--academy-red);
+
+    border-radius:
+        var(--academy-radius-small);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(239,68,68,.10),
+            rgba(3,7,11,.40)
+        );
+}
+
+
+.warning-box strong {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    color:
+        #f87171;
+
+    font-size: 14px;
+
+    text-transform: uppercase;
+
+    letter-spacing: .06em;
+}
+
+
+.warning-box p {
+
+    margin: 0;
+
+    color:
+        var(--academy-text-soft);
+}
+
+
+/* =========================================================
+   IMPORTANT BOX
+========================================================= */
+
+.important-box {
+
+    margin:
+        25px 0;
+
+    padding:
+        26px;
+
+    border:
+        1px solid
+        rgba(167,139,250,.20);
+
+    border-radius:
+        var(--academy-radius-small);
+
+    background:
+        rgba(167,139,250,.07);
+}
+
+
+.important-box strong {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    color:
+        var(--academy-purple);
+
+    text-transform: uppercase;
+
+    font-size: 13px;
+
+    letter-spacing: .07em;
+}
+
+
+/* =========================================================
+   COMPONENT GRID
+========================================================= */
+
+.component-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(230px, 1fr)
+        );
+
+    gap: 18px;
+
+    margin:
+        25px 0;
+}
+
+
+.component-card {
+
+    padding:
+        25px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius-small);
+
+    background:
+        rgba(3,7,11,.40);
+
+    transition:
+        .3s ease;
+}
+
+
+.component-card:hover {
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(245,158,11,.30);
+
+    box-shadow:
+        0 15px 35px
+        rgba(0,0,0,.22);
+}
+
+
+.component-card h3 {
+
+    margin:
+        0 0 10px;
+
+    color:
+        var(--academy-accent-light);
+
+    font-size: 18px;
+}
+
+
+.component-card p {
+
+    margin: 0;
+
+    color:
+        var(--academy-text-muted);
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   STEP-BY-STEP INSTALLATION
+========================================================= */
+
+.installation-steps {
+
+    display: grid;
+
+    gap: 18px;
+
+    margin:
+        30px 0;
+}
+
+
+.installation-step {
+
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns:
+        55px 1fr;
+
+    gap: 20px;
+
+    padding:
+        24px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius-small);
+
+    background:
+        rgba(3,7,11,.40);
+}
+
+
+.installation-step-number {
+
+    width: 48px;
+    height: 48px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--academy-accent),
+            var(--academy-accent-dark)
+        );
+
+    color:
+        #111;
+
+    font-weight: 900;
+
+    box-shadow:
+        0 8px 20px
+        rgba(245,158,11,.20);
+}
+
+
+.installation-step h3 {
+
+    margin:
+        0 0 6px;
+
+    color: #ffffff;
+
+    font-size: 19px;
+}
+
+
+.installation-step p {
+
+    margin: 0;
+
+    color:
+        var(--academy-text-muted);
+}
+
+
+/* =========================================================
+   CHECKLIST
+========================================================= */
+
+.checklist {
+
+    display: grid;
+
+    gap: 12px;
+
+    margin:
+        22px 0;
+}
+
+
+.checklist-item {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 13px;
+
+    padding:
+        15px 18px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        12px;
+
+    background:
+        rgba(255,255,255,.025);
+}
+
+
+.checklist-item::before {
+
+    content: "✓";
+
+    width: 24px;
+    height: 24px;
+
+    display: grid;
+
+    place-items: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background:
+        rgba(34,197,94,.12);
+
+    color:
+        var(--academy-green);
+
+    font-weight: 900;
+}
+
+
+.checklist-item span {
+
+    color:
+        var(--academy-text-soft);
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   TECHNICAL TABLE
+========================================================= */
+
+.table-wrapper {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+    margin:
+        25px 0;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius-small);
+}
+
+
+.technical-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 600px;
+}
+
+
+.technical-table th {
+
+    padding:
+        16px 18px;
+
+    text-align: left;
+
+    background:
+        rgba(245,158,11,.09);
+
+    color:
+        var(--academy-accent-light);
+
+    font-size: 13px;
+
+    text-transform: uppercase;
+
+    letter-spacing: .05em;
+}
+
+
+.technical-table td {
+
+    padding:
+        16px 18px;
+
+    border-top:
+        1px solid
+        var(--academy-border);
+
+    color:
+        var(--academy-text-soft);
+
+    font-size: 14px;
+}
+
+
+.technical-table tr:hover td {
+
+    background:
+        rgba(255,255,255,.025);
+}
+
+
+/* =========================================================
+   PRACTICAL KNOWLEDGE CARD
+========================================================= */
+
+.practical-card {
+
+    position: relative;
+
+    margin:
+        30px 0;
+
+    padding:
+        32px;
+
+    border:
+        1px solid
+        rgba(245,158,11,.22);
+
+    border-radius:
+        var(--academy-radius);
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(245,158,11,.10),
+            rgba(12,23,32,.80)
+        );
+}
+
+
+.practical-card h3 {
+
+    margin:
+        0 0 12px;
+
+    color:
+        var(--academy-accent-light);
+
+    font-size: 22px;
+}
+
+
+.practical-card p {
+
+    color:
+        var(--academy-text-soft);
+}
+
+
+/* =========================================================
+   KNOWLEDGE CHECK
+========================================================= */
+
+.knowledge-check {
+
+    margin:
+        40px 0;
+
+    padding:
+        34px;
+
+    border:
+        1px solid
+        rgba(167,139,250,.25);
+
+    border-radius:
+        var(--academy-radius);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(167,139,250,.09),
+            rgba(8,17,24,.95)
+        );
+}
+
+
+.knowledge-check h2 {
+
+    margin-bottom:
+        15px;
+}
+
+
+.knowledge-check h2::before {
+
+    background:
+        linear-gradient(
+            180deg,
+            #c4b5fd,
+            #7c3aed
+        );
+}
+
+
+.question {
+
+    margin:
+        20px 0;
+
+    padding:
+        20px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        13px;
+
+    background:
+        rgba(3,7,11,.35);
+}
+
+
+.question strong {
+
+    display: block;
+
+    margin-bottom:
+        8px;
+
+    color: #ffffff;
+}
+
+
+.question p {
+
+    margin: 0;
+
+    color:
+        var(--academy-text-muted);
+}
+
+
+/* =========================================================
+   MODULE SUMMARY
+========================================================= */
+
+.module-summary {
+
+    margin:
+        40px 0;
+
+    padding:
+        38px;
+
+    border:
+        1px solid
+        rgba(34,197,94,.20);
+
+    border-radius:
+        var(--academy-radius);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(34,197,94,.07),
+            rgba(8,17,24,.90)
+        );
+}
+
+
+.module-summary h2 {
+
+    margin-bottom:
+        20px;
+}
+
+
+.module-summary ul {
+
+    display: grid;
+
+    gap: 12px;
+
+    list-style: none;
+}
+
+
+.module-s
 
 </head>
 
