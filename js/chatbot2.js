@@ -1,244 +1,864 @@
-
 /**
- * Nexpak Security Solutions - AI Chatbot & Google Analytics Integration[span_0](start_span)[span_0](end_span)
+ * ============================================================
+ * NEXPAK SECURITY SOLUTIONS
+ * AI CUSTOMER ASSISTANT
+ * PART 1 — CORE, KNOWLEDGE BASE & AI RESPONSE ENGINE
+ * ============================================================
  */
-(function() {
-  'use strict';
 
-  // ====== GOOGLE ANALYTICS ======
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+(function () {
 
-  ga('create', 'UA-00f00e5ed65d35fc2d5d524170097219675283e9', 'auto');
-  ga('send', 'pageview');
+    "use strict";
 
-  // ====== COMPANY CONFIG ======
-  const CONFIG = {
-    companyName: 'Nexpak Security Solutions',
-    companyPhone: '+27 82 123 4567',
-    companyEmail: 'info@nexpaksolutions.co.za',
-    businessHours: 'Mon-Fri: 8am-5pm, Sat: 8am-1pm'
-  };
+    /* =========================================================
+       CONFIGURATION
+    ========================================================= */
 
-  let chatOpen = false;
-  let leadCaptured = false;
-  let messageCount = 0;
+    const CONFIG = {
 
-  function init() {
-    const html = `
-    <div id="nexpak-chatbot">
-      <button id="chat-toggle" class="chat-toggle">
-        <span class="chat-icon">💬</span>
-        <span>Chat with us</span>
-      </button>
-      <div id="chat-window" class="chat-window">
-        <div class="chat-header">
-          <div class="chat-header-info">
-            <div class="chat-avatar">🤖</div>
-            <div>
-              <h4>${CONFIG.companyName}</h4>
-              <span class="chat-status">Online</span>
-            </div>
-          </div>
-          <button id="chat-minimize">-</button>
-        </div>
-        <div id="chat-messages" class="chat-messages">
-          <div class="message bot-message">
-            <div class="message-content">
-              Hi there! Welcome to <strong>${CONFIG.companyName}</strong>.<br><br>
-              I'm here to help you find the right security solution for your home or business.
-              <div class="quick-actions">
-                <button onclick="nexpakChat.send('I want a quote')">Get a Quote</button>
-                <button onclick="nexpakChat.send('Show me products')">View Products</button>
-                <button onclick="nexpakChat.send('Contact details')">Contact Us</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="lead-form" class="lead-form" style="display:none;">
-          <h4>Get Your Free Quote</h4>
-          <input type="text" id="lead-name" placeholder="Your Name *">
-          <input type="email" id="lead-email" placeholder="Email Address *">
-          <input type="tel" id="lead-phone" placeholder="Phone Number">
-          <select id="lead-interest">
-            <option value="">What are you interested in?</option>
-            <option value="electric_fencing">Electric Fencing</option>
-            <option value="cctv">CCTV Surveillance</option>
-            <option value="access-control">Access Control</option>
-            <option value="gate-automation">Gate Automation</option>
-            <option value="equestrian">Equestrian Fencing</option>
-          </select>
-          <button onclick="nexpakChat.submitLead()">Get My Free Quote</button>
-        </div>
-        <div class="chat-input-area">
-          <input type="text" id="chat-input" placeholder="Type your message...">
-          <button id="send-btn">Send</button>
-        </div>
-      </div>
-    </div>
-    <style>
-      #nexpak-chatbot { position: fixed; bottom: 20px; right: 20px; z-index: 9999; font-family: 'Segoe UI', Arial, sans-serif; }
-      .chat-toggle { background: linear-gradient(135deg, #1a5f2a 0%, #2d8b3f 100%); color: white; border: none; padding: 14px 24px; border-radius: 50px; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 20px rgba(26,95,42,0.4); transition: all 0.3s; }
-      .chat-toggle:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(26,95,42,0.5); }
-      .chat-window { position: absolute; bottom: 80px; right: 0; width: 380px; height: 550px; background: white; border-radius: 16px; box-shadow: 0 10px 50px rgba(0,0,0,0.25); display: none; flex-direction: column; overflow: hidden; }
-      .chat-window.open { display: flex; animation: slideUp 0.3s ease; }
-      @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-      .chat-header { background: linear-gradient(135deg, #1a5f2a 0%, #2d8b3f 100%); color: white; padding: 16px; display: flex; justify-content: space-between; align-items: center; }
-      .chat-header-info { display: flex; align-items: center; gap: 12px; }
-      .chat-avatar { width: 45px; height: 45px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; }
-      .chat-header h4 { margin: 0; font-size: 16px; }
-      .chat-status { font-size: 12px; opacity: 0.9; }
-      .chat-status::before { content: '● '; color: #4ade80; margin-right: 4px; }
-      #chat-minimize { background: rgba(255,255,255,0.2); border: none; color: white; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-size: 20px; }
-      .chat-messages { flex: 1; display: flex; overflow-y: auto; padding: 16px; flex-direction: column; gap: 12px; background: #f8f9fa; }
-      .message { max-width: 88%; padding: 12px 16px; border-radius: 16px; font-size: 14px; line-height: 1.5; }
-      .bot-message { background: white; align-self: flex-start; border-bottom-left-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-      .user-message { background: linear-gradient(135deg, #1a5f2a 0%, #2d8b3f 100%); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
-      .quick-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
-      .quick-actions button { background: #e8f5e9; color: #1a5f2a; border: 1px solid #1a5f2a; padding: 6px 12px; border-radius: 20px; font-size: 12px; cursor: pointer; transition: all 0.2s; }
-      .quick-actions button:hover { background: #1a5f2a; color: white; }
-      .lead-form { padding: 12px 16px; background: white; border-top: 1px solid #eee; }
-      .lead-form h4 { margin: 0 0 10px 0; font-size: 14px; color: #1a5f2a; }
-      .lead-form input, .lead-form select { width: 100%; padding: 10px; margin-bottom: 8px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; box-sizing: border-box; }
-      .lead-form button { width: 100%; background: linear-gradient(135deg, #1a5f2a 0%, #2d8b3f 100%); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px; }
-      .chat-input-area { display: flex; gap: 8px; padding: 12px 16px; border-top: 1px solid #eee; background: white; }
-      #chat-input { flex: 1; padding: 12px 16px; border: 1px solid #ddd; border-radius: 24px; outline: none; font-size: 14px; }
-      #chat-input:focus { border-color: #1a5f2a; }
-      #send-btn { background: #1a5f2a; color: white; border: none; padding: 12px 20px; border-radius: 24px; cursor: pointer; font-weight: 600; }
-      #send-btn:hover { background: #2d8b3f; }
-      @media (max-width: 480px) {
-        .chat-window { width: calc(100vw - 30px); right: -5px; height: calc(100vh - 140px); }
-      }
-    </style>`;
+        companyName:
+            "Nexpak Security Solutions",
 
-    document.body.insertAdjacentHTML('beforeend', html);
+        phone:
+            "0836308249",
 
-    document.getElementById('chat-toggle').addEventListener('click', toggleChat);
-    document.getElementById('chat-minimize').addEventListener('click', toggleChat);
-    document.getElementById('send-btn').addEventListener('click', () => sendMessage());
-    document.getElementById('chat-input').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        sendMessage();
-      }
-    });
-  }
+        whatsapp:
+            "27836308249",
 
-  function toggleChat() {
-    chatOpen = !chatOpen;
-    document.getElementById('chat-window').classList.toggle('open', chatOpen);
-    document.getElementById('chat-toggle').style.display = chatOpen ? 'none' : 'flex';
-    if (chatOpen) {
-      document.getElementById('chat-input').focus();
-      ga('send', 'event', 'Chat', 'Chat Opened');
+        email:
+            "info@nexpaksolutions.co.za",
+
+        businessHours:
+            "Mon-Fri: 8am-5pm | Sat: 8am-1pm",
+
+        greeting:
+            "Hi! 👋 I'm the Nexpak AI Assistant. " +
+            "I can help you with security products, " +
+            "pricing, installations and quotes. " +
+            "What can I help you with?",
+
+        storageKey:
+            "nexpak_ai_chat"
+
+    };
+
+
+    /* =========================================================
+       PRODUCT KNOWLEDGE
+    ========================================================= */
+
+    const PRODUCTS = {
+
+        electricFencing: {
+
+            keywords: [
+                "electric fence",
+                "electric fencing",
+                "electric fence",
+                "perimeter fence",
+                "security fence",
+                "fence"
+            ],
+
+            name:
+                "Electric Fencing",
+
+            description:
+                "Electric fencing provides an active perimeter " +
+                "security layer for homes, businesses, farms " +
+                "and other properties.",
+
+            price:
+                "Guide pricing starts from approximately " +
+                "R350 per metre.",
+
+            features: [
+                "Perimeter protection",
+                "Energizers",
+                "Electric fence accessories",
+                "Professional installation",
+                "Maintenance and repairs"
+            ]
+
+        },
+
+
+        cctv: {
+
+            keywords: [
+                "cctv",
+                "camera",
+                "cameras",
+                "security camera",
+                "surveillance",
+                "video surveillance",
+                "ip camera",
+                "ip cameras"
+            ],
+
+            name:
+                "CCTV Surveillance",
+
+            description:
+                "CCTV systems provide video surveillance " +
+                "for residential, commercial and agricultural " +
+                "properties.",
+
+            price:
+                "Systems start from approximately R4,500 " +
+                "depending on the number and type of cameras.",
+
+            features: [
+                "HD and 4K cameras",
+                "Night vision",
+                "Remote viewing",
+                "Motion detection",
+                "Recording"
+            ]
+
+        },
+
+
+        accessControl: {
+
+            keywords: [
+                "access control",
+                "biometric",
+                "fingerprint",
+                "facial recognition",
+                "card access",
+                "access system"
+            ],
+
+            name:
+                "Access Control",
+
+            description:
+                "Access control systems help manage and " +
+                "restrict who can enter a property or building.",
+
+            price:
+                "Systems start from approximately R8,000 " +
+                "depending on requirements.",
+
+            features: [
+                "Fingerprint access",
+                "Card access",
+                "Biometric systems",
+                "Entry management",
+                "Audit records"
+            ]
+
+        },
+
+
+        gateAutomation: {
+
+            keywords: [
+                "gate automation",
+                "gate motor",
+                "gate motors",
+                "automated gate",
+                "automatic gate",
+                "sliding gate",
+                "swing gate"
+            ],
+
+            name:
+                "Gate Automation",
+
+            description:
+                "Gate automation provides convenient and " +
+                "secure automatic opening and closing for " +
+                "sliding and swing gates.",
+
+            price:
+                "Systems start from approximately R12,000 " +
+                "depending on the gate and motor requirements.",
+
+            features: [
+                "Sliding gate motors",
+                "Swing gate motors",
+                "Remote controls",
+                "Battery backup",
+                "Safety sensors"
+            ]
+
+        },
+
+
+        intercom: {
+
+            keywords: [
+                "intercom",
+                "video intercom",
+                "door phone",
+                "video door phone",
+                "visitor system"
+            ],
+
+            name:
+                "Video Intercom",
+
+            description:
+                "Video intercom systems allow you to see " +
+                "and communicate with visitors before granting access.",
+
+            price:
+                "Systems start from approximately R3,500.",
+
+            features: [
+                "Video communication",
+                "Visitor identification",
+                "Remote unlocking",
+                "Multiple units",
+                "Recording options"
+            ]
+
+        },
+
+
+        equestrian: {
+
+            keywords: [
+                "equestrian",
+                "horse fencing",
+                "horse fence",
+                "horse",
+                "horses",
+                "paddock",
+                "paddocks",
+                "horse paddock",
+                "polytape",
+                "fence rope",
+                "horse tape"
+            ],
+
+            name:
+                "Equestrian Fencing",
+
+            description:
+                "Nexpak supplies specialist equestrian fencing " +
+                "products for horse paddocks, arenas and stable " +
+                "environments.",
+
+            price:
+                "Pricing varies according to the product " +
+                "and quantity required.",
+
+            features: [
+                "Horse-safe fencing",
+                "Polytape",
+                "Electric fencing rope",
+                "Energizers",
+                "Accessories"
+            ]
+
+        }
+
+    };
+
+
+    /* =========================================================
+       SERVICE KNOWLEDGE
+    ========================================================= */
+
+    const SERVICES = {
+
+        installation: {
+
+            keywords: [
+                "installation",
+                "install",
+                "installer",
+                "installers",
+                "fit",
+                "fitting"
+            ],
+
+            response:
+                "Yes. Nexpak can assist with professional " +
+                "security system installation. The exact " +
+                "installation requirements depend on the " +
+                "property and system selected."
+
+        },
+
+
+        maintenance: {
+
+            keywords: [
+                "maintenance",
+                "service",
+                "servicing",
+                "maintain"
+            ],
+
+            response:
+                "We can assist with security system maintenance " +
+                "and help keep your equipment operating correctly."
+
+        },
+
+
+        repairs: {
+
+            keywords: [
+                "repair",
+                "repairs",
+                "broken",
+                "fault",
+                "faulty",
+                "not working"
+            ],
+
+            response:
+                "We can assist with security system repairs " +
+                "and fault finding. Tell me which system is " +
+                "giving you trouble and I can guide you."
+
+        },
+
+
+        consultation: {
+
+            keywords: [
+                "consultation",
+                "assessment",
+                "site visit",
+                "security assessment",
+                "inspect my property"
+            ],
+
+            response:
+                "We can help assess your property's security " +
+                "requirements and recommend a suitable solution."
+
+        }
+
+    };
+
+
+    /* =========================================================
+       PRICE KNOWLEDGE
+    ========================================================= */
+
+    const PRICES = [
+
+        {
+            keywords: [
+                "electric fence price",
+                "electric fencing price",
+                "electric fence cost",
+                "fence cost"
+            ],
+
+            answer:
+                "Electric fencing guide pricing starts " +
+                "from approximately R350 per metre. " +
+                "The final price depends on the property, " +
+                "materials and installation requirements."
+        },
+
+        {
+            keywords: [
+                "cctv price",
+                "cctv cost",
+                "camera price",
+                "camera cost"
+            ],
+
+            answer:
+                "CCTV systems start from approximately R4,500. " +
+                "The final price depends on the number of cameras, " +
+                "camera type, recording equipment and installation."
+        },
+
+        {
+            keywords: [
+                "access control price",
+                "access control cost",
+                "biometric price"
+            ],
+
+            answer:
+                "Access control systems start from approximately " +
+                "R8,000. The exact price depends on the number " +
+                "of users, doors and equipment required."
+        },
+
+        {
+            keywords: [
+                "gate motor price",
+                "gate motor cost",
+                "gate automation price",
+                "gate automation cost"
+            ],
+
+            answer:
+                "Gate automation starts from approximately R12,000. " +
+                "The final price depends on the gate type, size, " +
+                "motor capacity and installation requirements."
+        },
+
+        {
+
+            keywords: [
+                "intercom price",
+                "intercom cost"
+            ],
+
+            answer:
+                "Video intercom systems start from approximately " +
+                "R3,500 depending on the system selected."
+        }
+
+    ];
+
+
+    /* =========================================================
+       FAQ KNOWLEDGE
+    ========================================================= */
+
+    const FAQS = [
+
+        {
+
+            keywords: [
+                "free quote",
+                "free quotation",
+                "free estimate",
+                "quote"
+            ],
+
+            answer:
+                "Absolutely! 😊 Nexpak can assist with a quote. " +
+                "Tell me which security solution you are interested " +
+                "in and a few details about your property."
+
+        },
+
+        {
+
+            keywords: [
+                "where are you",
+                "where do you operate",
+                "service areas",
+                "areas do you serve",
+                "where do you work"
+            ],
+
+            answer:
+                "Nexpak primarily serves Gauteng and surrounding " +
+                "areas. For projects outside the area, contact us " +
+                "and we can discuss your requirements."
+
+        },
+
+        {
+
+            keywords: [
+                "warranty",
+                "warranties"
+            ],
+
+            answer:
+                "Warranty coverage depends on the manufacturer " +
+                "and specific product. We can confirm the warranty " +
+                "for the product you're interested in."
+
+        },
+
+        {
+
+            keywords: [
+                "payment methods",
+                "how can i pay",
+                "payment",
+                "payfast",
+                "eft"
+            ],
+
+            answer:
+                "Payment options can include EFT and online payment " +
+                "methods where available. For a specific order, " +
+                "we can confirm the available payment options."
+
+        },
+
+        {
+
+            keywords: [
+                "business hours",
+                "opening hours",
+                "open",
+                "hours"
+            ],
+
+            answer:
+                "Our business hours are " +
+                CONFIG.businessHours + "."
+
+        }
+
+    ];
+
+
+    /* =========================================================
+       CHAT STATE
+    ========================================================= */
+
+    const STATE = {
+
+        open:
+            false,
+
+        messages:
+            [],
+
+        lead:
+            null,
+
+        started:
+            Date.now()
+
+    };
+
+
+    /* =========================================================
+       TEXT NORMALISATION
+    ========================================================= */
+
+    function normalise(text) {
+
+        return String(text || "")
+            .toLowerCase()
+            .replace(/[!?.,]/g, " ")
+            .replace(/\s+/g, " ")
+            .trim();
+
     }
-  }
 
-  function sendMessage(input) {
-    const messageInput = document.getElementById('chat-input');
-    const message = input || messageInput.value.trim();
-    if (!message) return;
 
-    addMessage(message, 'user');
-    if (!input) messageInput.value = '';
-    messageCount++;
+    /* =========================================================
+       KEYWORD MATCHING
+    ========================================================= */
 
-    ga('send', 'event', 'Chat', 'Message Sent', message);
+    function containsKeyword(
+        message,
+        keywords
+    ) {
 
-    setTimeout(() => {
-      addMessage(getResponse(message), 'bot');
-    }, 600);
-  }
+        return keywords.some(
+            function (keyword) {
 
-  function addMessage(content, sender) {
-    const container = document.getElementById('chat-messages');
-    const div = document.createElement('div');
-    div.className = `message ${sender}-message`;
-    div.innerHTML = `<div class="message-content">${content}</div>`;
-    container.appendChild(div);
-    container.scrollTop = container.scrollHeight;
-  }
+                return message.includes(
+                    normalise(keyword)
+                );
 
-  function getResponse(msg) {
-    const m = msg.toLowerCase();
+            }
+        );
 
-    if (m.includes('quote') || m.includes('price') || m.includes('cost')) {
-      ga('send', 'event', 'Chat', 'Quote Requested');
-      if (!leadCaptured) {
-        document.getElementById('lead-form').style.display = 'block';
-        return "I'd be happy to help you get a <strong>FREE quote</strong>! Please fill in your details below:";
-      }
-      return "Our team will contact you within 24 hours with your custom quote.";
     }
 
-    if (m.includes('product') || m.includes('service')) {
-      ga('send', 'event', 'Chat', 'Products Viewed');
-      return `We offer complete security solutions:<br><br>
-        <strong>Electric Fencing</strong> - From R350/m | SAID Approved<br>
-        <strong>CCTV Systems</strong> - From R4,500 | HD/4K Cameras<br>
-        <strong>Access Control</strong> - From R8,000 | Biometric<br>
-        <strong>Gate Automation</strong> - From R12,000 | Smart Ready<br>
-        <strong>Equestrian Fencing</strong> - Full Range Available`;
+
+    /* =========================================================
+       PRODUCT RESPONSE
+    ========================================================= */
+
+    function productResponse(product) {
+
+        return (
+            "🔐 " +
+            product.name +
+            "\n\n" +
+
+            product.description +
+            "\n\n" +
+
+            "💰 " +
+            product.price +
+            "\n\n" +
+
+            "Key features:\n" +
+
+            product.features
+                .map(function (feature) {
+                    return "• " + feature;
+                })
+                .join("\n") +
+
+            "\n\nWould you like help choosing " +
+            "the right option?"
+        );
+
     }
 
-    if (m.includes('electric') || m.includes('fencing')) {
-      return "Our <strong>electric fencing</strong> is SAID approved with 12-month warranty. Price starts from R350/m. Would you like a free quote?";
+
+    /* =========================================================
+       MAIN AI-STYLE RESPONSE ENGINE
+    ========================================================= */
+
+    function generateResponse(
+        userMessage
+    ) {
+
+        const message =
+            normalise(userMessage);
+
+
+        if (!message) {
+
+            return CONFIG.greeting;
+
+        }
+
+
+        /* GREETINGS */
+
+        if (
+            message === "hi" ||
+            message === "hello" ||
+            message === "hey" ||
+            message.includes("good morning") ||
+            message.includes("good afternoon") ||
+            message.includes("good evening")
+        ) {
+
+            return (
+                "Hi! 👋 Welcome to Nexpak Security Solutions. " +
+                "What security solution can I help you with today?"
+            );
+
+        }
+
+
+        /* THANK YOU */
+
+        if (
+            message.includes("thank you") ||
+            message.includes("thanks") ||
+            message === "thank"
+        ) {
+
+            return (
+                "You're very welcome! 😊 " +
+                "If you need anything else, just ask."
+            );
+
+        }
+
+
+        /* CONTACT */
+
+        if (
+            message.includes("contact") ||
+            message.includes("phone") ||
+            message.includes("call me") ||
+            message.includes("whatsapp")
+        ) {
+
+            return (
+                "📞 Nexpak Security Solutions\n\n" +
+
+                "Phone / WhatsApp: " +
+                CONFIG.phone +
+                "\n\n" +
+
+                "📧 " +
+                CONFIG.email +
+                "\n\n" +
+
+                "🕐 " +
+                CONFIG.businessHours
+            );
+
+        }
+
+
+        /* PRICE QUESTIONS */
+
+        for (
+            let i = 0;
+            i < PRICES.length;
+            i++
+        ) {
+
+            if (
+                containsKeyword(
+                    message,
+                    PRICES[i].keywords
+                )
+            ) {
+
+                return PRICES[i].answer;
+
+            }
+
+        }
+
+
+        /* GENERAL PRICE REQUEST */
+
+        if (
+            message.includes("price") ||
+            message.includes("prices") ||
+            message.includes("cost") ||
+            message.includes("how much")
+        ) {
+
+            return (
+                "Here are our guide prices:\n\n" +
+
+                "⚡ Electric Fencing: From R350/m\n" +
+                "📹 CCTV: From R4,500\n" +
+                "🚪 Access Control: From R8,000\n" +
+                "⚙️ Gate Automation: From R12,000\n" +
+                "📞 Video Intercom: From R3,500\n" +
+                "🐴 Equestrian: Pricing varies\n\n" +
+
+                "These are guide prices only. " +
+                "A custom quote gives you the exact cost."
+            );
+
+        }
+
+
+        /* PRODUCTS */
+
+        const productList =
+            Object.values(PRODUCTS);
+
+        for (
+            let i = 0;
+            i < productList.length;
+            i++
+        ) {
+
+            const product =
+                productList[i];
+
+            if (
+                containsKeyword(
+                    message,
+                    product.keywords
+                )
+            ) {
+
+                return productResponse(
+                    product
+                );
+
+            }
+
+        }
+
+
+        /* SERVICES */
+
+        const serviceList =
+            Object.values(SERVICES);
+
+        for (
+            let i = 0;
+            i < serviceList.length;
+            i++
+        ) {
+
+            const service =
+                serviceList[i];
+
+            if (
+                containsKeyword(
+                    message,
+                    service.keywords
+                )
+            ) {
+
+                return service.response;
+
+            }
+
+        }
+
+
+        /* FAQ */
+
+        for (
+            let i = 0;
+            i < FAQS.length;
+            i++
+        ) {
+
+            if (
+                containsKeyword(
+                    message,
+                    FAQS[i].keywords
+                )
+            ) {
+
+                return FAQS[i].answer;
+
+            }
+
+        }
+
+
+        /* QUOTE REQUEST */
+
+        if (
+            message.includes("quote") ||
+            message.includes("quotation") ||
+            message.includes("estimate")
+        ) {
+
+            return (
+                "I'd be happy to help you with a quote. 👍\n\n" +
+
+                "Please tell me:\n" +
+                "1. What security system you need\n" +
+                "2. Your property type\n" +
+                "3. Your approximate requirements\n\n" +
+
+                "You can also contact us directly on " +
+                CONFIG.phone + "."
+            );
+
+        }
+
+
+        /* DEFAULT AI RESPONSE */
+
+        return (
+            "I can help with that. 😊\n\n" +
+
+            "I specialise in:\n" +
+
+            "⚡ Electric Fencing\n" +
+            "📹 CCTV & IP CCTV\n" +
+            "🚪 Access Control\n" +
+            "⚙️ Gate Automation\n" +
+            "📞 Intercom Systems\n" +
+            "🐴 Equestrian Fencing\n" +
+            "📋 Quotes & Pricing\n" +
+            "🛠️ Installation & Repairs\n\n" +
+
+            "Tell me what you're looking for and " +
+            "I'll point you in the right direction."
+        );
+
     }
 
-    if (m.includes('cctv') || m.includes('camera')) {
-      return "Our <strong>CCTV systems</strong> offer HD/4K quality with night vision and remote viewing. Starting from R4,500.";
-    }
 
-    if (m.includes('equestrian') || m.includes('horse') || m.includes('paddock')) {
-      return "We have a complete range of <strong>equestrian fencing products</strong>: Polytape, Rope, Insulators, Solar Energizers, Gate Hardware.";
-    }
+    /* =========================================================
+       SAVE CHAT
+    ========================================================= */
 
-    if (m.includes('contact') || m.includes('phone')) {
-      return `<strong>${CONFIG.companyPhone}</strong><br><strong>${CONFIG.companyEmail}</strong><br><br>Hours: ${CONFIG.businessHours}`;
-    }
+    function saveChat() {
 
-    if (m.includes('delivery') || m.includes('shipping')) {
-      return "Delivery rates: Gauteng R200, Durban R650, Cape Town R800. Distance-based calculation also available.";
-    }
+        try {
 
-    return `I can help you with:<br>
-      • Security Systems<br>
-      • Equestrian Products<br>
-      • Free Quotes<br>
-      • Contact Details<br><br>What would you like to know?`;
-  }
-
-  function submitLead() {
-    const name = document.getElementById('lead-name').value.trim();
-    const email = document.getElementById('lead-email').value.trim();
-    const phone = document.getElementById('lead-phone').value.trim();
-    const interest = document.getElementById('lead-interest').value;
-
-    if (!name || !email) {
-      alert('Please enter your name and email');
-      return;
-    }
-
-    leadCaptured = true;
-    document.getElementById('lead-form').style.display = 'none';
-
-    // Track in Google Analytics
-    ga('send', 'event', 'Lead', 'Lead Captured', interest);
-    console.log('NEW LEAD:', { name, email, phone, interest, timestamp: new Date().toISOString() });
-
-    addMessage(`Thank you ${name}! We'll contact you at ${email} within 24 hours.`, 'bot');
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-
-  window.nexpakChat = {
-    send: sendMessage,
-    submitLead: submitLead
-  };
-})();
-     
+            localStorage.setItem(
+                CONFIG.storageKey,
+                JSON.stringify(
+      
