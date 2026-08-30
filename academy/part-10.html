@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electric Fencing Course | Part 10[span_1](start_span)[span_1](end_span)</title>
+    <meta name="description" content="Nexpak Security Academy Electric Fencing Course Part 10 - Maintenance, Servicing and System Performance">[span_2](start_span)[span_2](end_span)
+    
+    <style>
+        /* =========================================
+           NEXPAK SECURITY ACADEMY - PROFESSIONAL CSS
+           Corporate Training Theme
+        ========================================== */
+        :root {
+            --primary-dark: #0f172a;
+            --primary-blue: #2563eb;
+            --accent-blue: #3b82f6;
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --text-main: #334155;
+            --text-heading: #0f172a;
+            --border-color: #e2e8f0;
+            --success-bg: #ecfdf5;
+            --success-border: #10b981;
+            --success-text: #065f46;
+            --warning-bg: #fffbeb;
+            --warning-border: #f59e0b;
+            --warning-text: #92400e;
+            --info-bg: #eff6ff;
+            --info-border: #3b82f6;
+            --info-text: #1e40af;
+            --sidebar-width: 280px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Inter, system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Academy Header */
+        .academy-header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1e293b 100%);
+            color: #ffffff;
+            padding: 1.25rem 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .academy-logo {
+            font-weight: 800;
+            font-size: 1.25rem;
+            letter-spacing: 1px;
+            color: #ffffff;
+        }
+
+        .academy-logo span {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 400;
+            color: #94a3b8;
+            letter-spacing: 2px;
+        }
+
+        .course-label {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            padding: 0.35rem 0.85rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        /* Course Hero */
+        .course-hero {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: #ffffff;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-bottom: 4px solid var(--primary-blue);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .course-badge {
+            display: inline-block;
+            background: var(--primary-blue);
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 0.4rem 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .course-hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        .course-hero h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #94a3b8;
+            margin-bottom: 1.25rem;
+        }
+
+        .course-hero p {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Layout */
+        .course-layout {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: var(--sidebar-width) 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 5rem;
+            max-height: calc(100vh - 6rem);
+            overflow-y: auto;
+        }
+
+        .sidebar-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .lesson-nav {
+            list-style: none;
+        }
+
+        .lesson-nav li {
+            margin-bottom: 0.5rem;
+        }
+
+        .lesson-nav a {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .lesson-nav a:hover {
+            background: var(--info-bg);
+            color: var(--primary-blue);
+            padding-left: 1rem;
+        }
+
+        /* Lesson Content */
+        .lesson-content {
+            background: transparent;
+        }
+
+        .lesson-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .section-number {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #cbd5e1;
+            background: #f1f5f9;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .lesson-section h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            margin-bottom: 1rem;
+            padding-right: 60px;
+        }
+
+        .lesson-section h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-heading);
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .lesson-section p {
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+
+        /* Cards & Boxes */
+        .info-card, .warning-card, .success-card {
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+        }
+
+        .info-card {
+            background: var(--info-bg);
+            border-color: var(--info-border);
+            color: var(--info-text);
+        }
+
+        .info-card h3 {
+            color: var(--info-text);
+            margin-top: 0;
+        }
+
+        .warning-card {
+            background: var(--warning-bg);
+            border-color: var(--warning-border);
+            color: var(--warning-text);
+        }
+
+        .warning-card h3 {
+            color: var(--warning-text);
+            margin-top: 0;
+        }
+
+        .success-card {
+            background: var(--success-bg);
+            border-color: var(--success-border);
+            color: var(--success-text);
+        }
+
+        .success-card h3 {
+            color: var(--success-text);
+            margin-top: 0;
+        }
+
+        /* Lists inside cards */
+        .info-card ul, .info-card ol {
+            margin-left: 1.25rem;
+            margin-top: 0.5rem;
+        }
+
+        .info-card li {
+            margin-bottom: 0.35rem;
+        }
+
+        /* Media / Image Cards for Products & Diagrams */
+        .media-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--primary-blue);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+        }
+
+        .media-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+            object-fit: cover;
+            max-height: 380px;
+            border: 1px solid var(--border-color);
+        }
+
+        .media-card h3 {
+            color: var(--text-heading);
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .media-caption {
+            font-size: 0.85rem;
+            color: #64748b;
+            font-style: italic;
+            text-align: center;
+        }
+
+        /* Part Navigation */
+        .part-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-dark);
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: background 0.2s ease;
+        }
+
+        .nav-button:hover {
+            background: var(--primary-blue);
+        }
+
+        /* Footer */
+        .academy-footer {
+            background: var(--primary-dark);
+            color: #ffffff;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 4px solid var(--primary-blue);
+        }
+
+        .footer-content h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .footer-content p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-copy {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 1rem;
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 1024px) {
+            .course-layout {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                position: relative;
+                top: 0;
+                max-height: none;
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- =========================================
+         ACADEMY HEADER
+    ========================================== -->
+    <header class="academy-header">
+        <div class="header-content">
+            <div class="academy-logo">
+                NEXPAK
+                <span>SECURITY ACADEMY</span>
+            </div>
+            <div class="course-label">
+                ELECTRIC FENCING
+            </div>
+        </div>
+    </header>
+
+    <!-- =========================================
+         COURSE HERO
+    ========================================== -->
+    <section class="course-hero">
+        <div class="hero-content">
+            <span class="course-badge">
+                ELECTRIC FENCING COURSE
+            </span>
+            <h1>
+                Part 10
+            </h1>
+            <h2>
+                Maintenance, Servicing &amp; System Performance
+            </h2>
+            <p>
+                Professional maintenance practices designed to
+                preserve electric-fence reliability, safety,
+                security performance and service life.
+            </p>
+        </div>
+    </section>
+
+    <!-- =========================================
+         COURSE LAYOUT
+    ========================================== -->
+    <div class="course-layout">
+
+        <!-- =====================================
+             SIDEBAR
+        ====================================== -->
+        <aside class="sidebar">
+            <div class="sidebar-box">
+                <div class="sidebar-title">
+                    PART 10 CURRICULUM
+                </div>
+                <ul class="lesson-nav">
+                    <li><a href="#maintenance">01. Maintenance Fundamentals</a></li>
+                    <li><a href="#inspection">02. Routine Inspection</a></li>
+                    <li><a href="#vegetation">03. Vegetation Management</a></li>
+                    <li><a href="#conductors">04. Conductor Maintenance</a></li>
+                    <li><a href="#insulators">05. Insulator Maintenance</a></li>
+                    <li><a href="#connections">06. Connections &amp; Corrosion</a></li>
+                    <li><a href="#earth">07. Earth System Maintenance</a></li>
+                    <li><a href="#energizer">08. Energizer Servicing</a></li>
+                    <li><a href="#backup">09. Backup Power</a></li>
+                    <li><a href="#environment">10. Environmental Conditions</a></li>
+                    <li><a href="#performance">11. Performance Monitoring</a></li>
+                    <li><a href="#service">12. Professional Service Visits</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- =====================================
+             MAIN CONTENT
+        ====================================== -->
+        <main class="lesson-content">
+
+            <!-- =================================
+                 01. MAINTENANCE FUNDAMENTALS
+            ================================== -->
+            <section id="maintenance" class="lesson-section">
+                <div class="section-number">01</div>
+                <h2>Maintenance Fundamentals</h2>
+                <p>An electric-fence system is an outdoor security installation and should not be treated as maintenance-free equipment.</p>
+                <p>Regular inspection and maintenance help identify deterioration before it develops into a major security or reliability problem.</p>
+
+                <div class="info-card">
+                    <h3>Maintenance Objectives</h3>
+                    <ul>
+                        <li>Maintain security performance</li>
+                        <li>Identify deterioration</li>
+                        <li>Reduce avoidable faults</li>
+                        <li>Maintain structural integrity</li>
+                        <li>Maintain electrical performance</li>
+                        <li>Identify safety concerns</li>
+                        <li>Extend equipment service life</li>
+                        <li>Maintain accurate system records</li>
+                    </ul>
+                </div>
+
+                <h3>Preventive Maintenance</h3>
+                <p>Preventive maintenance aims to identify and correct developing problems before they result in system failure.</p>
+                <p>Examples include inspecting vegetation, checking mechanical supports, examining connections and monitoring system performance.</p>
+
+                <h3>Reactive Maintenance</h3>
+                <p>Reactive maintenance occurs after a fault or failure has already developed.</p>
+                <p>Although faults cannot always be prevented, effective preventive maintenance can reduce many avoidable failures.</p>
+
+                <div class="success-card">
+                    <h3>Professional Principle</h3>
+                    <p>The best maintenance problem is the one identified before it becomes a security incident.</p>
+                </div>
+            </section>
+
+            <!-- =================================
+                 02. ROUTINE INSPECTION
+            ================================== -->
+            <section id="inspection" class="lesson-section">
+                <div class="section-number">02</div>
+                <h2>Routine Inspection</h2>
+                <p>Routine inspection provides an opportunity to identify physical and electrical conditions that could affect system performance.</p>
+
+                <div class="media-card">
+                    <h3>Visual Inspection &amp; Perimeter Assessment</h3>
+                    <img src="images/fence-inspection-diagram.jpg" alt="Technician inspecting fence alignment and posts">
+                    <div class="media-caption">Figure 10.1: Comprehensive perimeter walkthrough inspecting physical alignment, brackets, and warning signage.</div>
+                </div>
+
+                <div class="info-card">
+                    <h3>Inspection Areas</h3>
+                    <ul>
+                        <li>Fence alignment</li>
+                        <li>Posts and brackets</li>
+                        <li>Conductors</li>
+                        <li>Insulators</li>
+                        <li>Connections</li>
+                        <li>Vegetation</li>
+                        <li>Gates</li>
+                        <li>High-voltage cable routes</li>
+                        <li>Energizer condition</li>
+                        <li>Earth system</li>
+                        <li>Warning signs</li>
+                        <li>Alarm and monitoring equipment</li>
+                    </ul>
+                </div>
+
+                <h3>Visual Inspection</h3>
+                <p>Begin with a visual inspection before performing detailed electrical testing.</p>
+                <p>Look for broken components, physical impact, corrosion, vegetation contact, damaged insulation and other obvious problems.</p>
+
+                <h3>Walk The Entire Perimeter</h3>
+                <p>A professional inspection should not stop at the energizer or the first section of fence.</p>
+                <p>The complete protected perimeter should be considered according to the scope of the inspection.</p>
+
+                <div class="warning-card">
+                    <h3>Do Not Inspect Only Where The Customer Complained</h3>
+                    <p>A reported fault may be a symptom of a larger maintenance problem elsewhere in the system. Inspect the relevant system as a whole.</p>
+                </div>
+            </section>
+
+            <!-- =================================
+                 03. VEGETATION MANAGEMENT
+            ================================== -->
+            <section id="vegetation" class="lesson-section">
+                <div class="section-number">03</div>
+                <h2>Vegetation Management</h2>
+                <p>Vegetation is one of the most common environmental factors affecting outdoor electric-fence systems.</p>
+                <p>Plants can grow into the fence, contact conductors and create leakage conditions.</p>
+
+                <div class="info-card">
+                    <h3>Vegetation Risks</h3>
+                    <ul>
+                        <li>Electrical leakage</li>
+                        <li>Reduced fence performance</li>
+                        <li>Increased nuisance alarms</li>
+                        <li>Mechanical pressure on conductors</li>
+                        <li>Damage to insulators</li>
+                        <li>Increased maintenance requirements</li>
+                    </ul>
+                </div>
+
+                <h3>Regular Clearance</h3>
+                <p>Vegetation around the fence should be managed according to the design, environmental conditions and applicable requirements.</p>
+
+                <h3>Fast-Growing Areas</h3>
+                <p>Some properties may require more frequent inspection because vegetation growth can change rapidly.</p>
+
+                <div class="warning-card">
+                    <h3>Do Not Ignore Seasonal Growth</h3>
+                    <p>A fence that performs correctl
