@@ -506,3 +506,167 @@
     function handleQuickAction(action) {
         if (action === "quote") {
             addUserMessage(
+                "I'd like to get a quote.");
+        setTimeout(function() {
+            addBotMessage("Absolutely! 👍 I can help start a quote. What security solution are you looking for?");
+            showLeadForm();
+        }, 400);
+    } else if (action === "products") {
+        addUserMessage("Show me your products.");
+        setTimeout(function() {
+            addBotMessage("🛡️ Nexpak offers Electric Fencing, CCTV, Gate Automation, Access Control, Alarm Systems, Intercoms, and Equestrian Fencing. Which one interests you?");
+        }, 400);
+    } else if (action === "contact") {
+        addUserMessage("I want to contact Nexpak.");
+        setTimeout(function() {
+            addBotMessage("📞 Phone: " + CONFIG.phone + "\n💬 WhatsApp: " + CONFIG.whatsapp + "\n✉️ Email: " + CONFIG.email);
+        }, 400);
+    }
+}
+
+function createQuickActions() {
+    const container = document.getElementById("nexpak-quick-actions");
+    if (!container) return;
+    container.innerHTML = "";
+
+    const actions = [
+        { label: "💬 Get a Quote", action: "quote" },
+        { label: "🛡️ Products", action: "products" },
+        { label: "📞 Contact Us", action: "contact" }
+    ];
+
+    actions.forEach(function(item) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "nexpak-quick-button";
+        button.textContent = item.label;
+        button.addEventListener("click", function() { handleQuickAction(item.action); });
+        container.appendChild(button);
+    });
+}
+
+function showLeadForm() {
+    const form = document.getElementById("nexpak-lead-form");
+    if (form) form.classList.add("visible");
+}
+
+function hideLeadForm() {
+    const form = document.getElementById("nexpak-lead-form");
+    if (form) form.classList.remove("visible");
+}
+
+function submitLead() {
+    const nameInput = document.getElementById("nexpak-lead-name");
+    const emailInput = document.getElementById("nexpak-lead-email");
+    const phoneInput = document.getElementById("nexpak-lead-phone");
+    const interestInput = document.getElementById("nexpak-lead-interest");
+
+    if (!nameInput || !emailInput) return;
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+
+    if (!name || !email) {
+        alert("Please enter your name and email address.");
+        return;
+    }
+
+    chatState.userInfo = {
+        name: name,
+        email: email,
+        phone: phoneInput ? phoneInput.value.trim() : "",
+        interest: interestInput ? interestInput.value.trim() : ""
+    };
+    chatState.leadCaptured = true;
+
+    try {
+        localStorage.setItem("nexpak_chat_lead", JSON.stringify(chatState.userInfo));
+    } catch (e) {}
+
+    hideLeadForm();
+    addBotMessage("Thanks, " + name + "! 😊 We've received your details and our team will contact you shortly.");
+}
+
+
+/* =========================================================
+   WINDOW CONTROLS & INITIALIZATION
+========================================================= */
+
+function openChat() {
+    const windowElement = document.getElementById("nexpak-chat-window");
+    if (!windowElement) return;
+    chatState.isOpen = true;
+    windowElement.classList.add("open");
+    
+    const greeting = document.getElementById("nexpak-floating-greeting");
+    if (greeting) greeting.classList.remove("visible");
+
+    const input = document.getElementById("nexpak-chat-input");
+    if (input) setTimeout(function() { input.focus(); }, 200);
+}
+
+function closeChat() {
+    const windowElement = document.getElementById("nexpak-chat-window");
+    if (!windowElement) return;
+    chatState.isOpen = false;
+    windowElement.classList.remove("open");
+}
+
+function toggleChat() {
+    if (chatState.isOpen) closeChat();
+    else openChat();
+}
+
+function setupEvents() {
+    const toggle = document.getElementById("nexpak-chat-toggle");
+    const close = document.getElementById("nexpak-chat-close");
+    const send = document.getElementById("nexpak-chat-send");
+    const input = document.getElementById("nexpak-chat-input");
+    const submit = document.getElementById("nexpak-lead-submit");
+    const skip = document.getElementById("nexpak-lead-skip");
+
+    if (toggle) toggle.addEventListener("click", toggleChat);
+    if (close) close.addEventListener("click", closeChat);
+    if (send) send.addEventListener("click", sendChatMessage);
+    if (input) input.addEventListener("keydown", handleChatKeydown);
+    if (submit) submit.addEventListener("click", submitLead);
+    if (skip) skip.addEventListener("click", function() {
+        hideLeadForm();
+        addBotMessage("No problem! You can continue chatting anytime.");
+    });
+}
+
+function initialize() {
+    createChatbotUI();
+    loadChat();
+    
+    if (chatState.messages.length === 0) {
+        addBotMessage(CONFIG.greeting);
+    }
+
+    createQuickActions();
+    setupEvents();
+
+    // Show floating greeting bubble after 4 seconds if unopened
+    setTimeout(function() {
+        const greeting = document.getElementById("nexpak-floating-greeting");
+        if (greeting && !chatState.isOpen) {
+            greeting.classList.add("visible");
+        }
+    }, 4000);
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initialize);
+} else {
+    initialize();
+}
+
+// Public API
+window.NexpakChatbot = {
+    open: openChat,
+    close: closeChat,
+    toggle: toggleChat
+};
+
+})();
+                   
