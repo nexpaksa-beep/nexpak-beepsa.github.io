@@ -877,3 +877,1300 @@ main {
 /* =========================================================
    END PART 1
    ========================================================= */
+/* =========================================================
+   NEXPAK SECURITY ACADEMY
+   ACADEMY.CSS
+   PART 2 — COURSE HERO & MODULE LAYOUT
+   ========================================================= */
+
+
+/* =========================================================
+   MODULE HERO
+   ========================================================= */
+
+.module-hero {
+
+    position:
+        relative;
+
+    padding:
+        95px 0 85px;
+
+    overflow:
+        hidden;
+
+    border-bottom:
+        1px solid
+        var(--academy-border);
+
+}
+
+
+.module-hero::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        520px;
+
+    height:
+        520px;
+
+    top:
+        -250px;
+
+    right:
+        -180px;
+
+    border-radius:
+        50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(245,158,11,.14),
+            transparent 68%
+        );
+
+    pointer-events:
+        none;
+
+}
+
+
+.module-hero::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        380px;
+
+    height:
+        380px;
+
+    bottom:
+        -230px;
+
+    left:
+        -150px;
+
+    border-radius:
+        50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(56,189,248,.08),
+            transparent 68%
+        );
+
+    pointer-events:
+        none;
+
+}
+
+
+/* =========================================================
+   HERO INNER
+   ========================================================= */
+
+.module-hero-inner {
+
+    position:
+        relative;
+
+    width:
+        min(
+            1180px,
+            calc(100% - 40px)
+        );
+
+    margin:
+        auto;
+
+    z-index:
+        2;
+
+}
+
+
+/* =========================================================
+   HERO GRID
+   ========================================================= */
+
+.module-hero-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        minmax(0, 1.4fr)
+        minmax(300px, .6fr);
+
+    align-items:
+        center;
+
+    gap:
+        70px;
+
+}
+
+
+/* =========================================================
+   HERO CONTENT
+   ========================================================= */
+
+.module-hero-content {
+
+    max-width:
+        760px;
+
+}
+
+
+.module-hero-content
+.module-badge {
+
+    margin-bottom:
+        22px;
+
+}
+
+
+/* =========================================================
+   HERO TITLE
+   ========================================================= */
+
+.module-hero h1 {
+
+    max-width:
+        850px;
+
+    margin-bottom:
+        24px;
+
+    font-size:
+        clamp(
+            38px,
+            6vw,
+            68px
+        );
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        -.045em;
+
+    line-height:
+        1.03;
+
+}
+
+
+.module-hero h1 span {
+
+    display:
+        inline;
+
+    color:
+        var(--academy-accent-light);
+
+}
+
+
+/* =========================================================
+   HERO INTRO
+   ========================================================= */
+
+.module-hero-intro {
+
+    max-width:
+        720px;
+
+    color:
+        var(--academy-text-soft);
+
+    font-size:
+        clamp(
+            16px,
+            2vw,
+            19px
+        );
+
+    line-height:
+        1.8;
+
+}
+
+
+/* =========================================================
+   HERO META
+   ========================================================= */
+
+.module-meta {
+
+    display:
+        flex;
+
+    flex-wrap:
+        wrap;
+
+    align-items:
+        center;
+
+    gap:
+        12px;
+
+    margin-top:
+        30px;
+
+}
+
+
+.module-meta-item {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        8px;
+
+    padding:
+        9px 14px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    color:
+        var(--academy-text-soft);
+
+    font-size:
+        12px;
+
+}
+
+
+.module-meta-item strong {
+
+    color:
+        var(--academy-text);
+
+}
+
+
+/* =========================================================
+   HERO VISUAL PANEL
+   ========================================================= */
+
+.module-hero-visual {
+
+    position:
+        relative;
+
+    min-height:
+        330px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+}
+
+
+/* =========================================================
+   HERO ORBIT
+   ========================================================= */
+
+.hero-orbit {
+
+    position:
+        absolute;
+
+    width:
+        290px;
+
+    height:
+        290px;
+
+    border:
+        1px solid
+        rgba(245,158,11,.18);
+
+    border-radius:
+        50%;
+
+    animation:
+        academyOrbit
+        18s
+        linear
+        infinite;
+
+}
+
+
+.hero-orbit::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    inset:
+        24px;
+
+    border:
+        1px dashed
+        rgba(245,158,11,.13);
+
+    border-radius:
+        50%;
+
+}
+
+
+.hero-orbit::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        10px;
+
+    height:
+        10px;
+
+    top:
+        12px;
+
+    left:
+        50%;
+
+    transform:
+        translateX(-50%);
+
+    border-radius:
+        50%;
+
+    background:
+        var(--academy-accent-light);
+
+    box-shadow:
+        0 0 20px
+        rgba(245,158,11,.75);
+
+}
+
+
+/* =========================================================
+   HERO CORE
+   ========================================================= */
+
+.hero-core {
+
+    position:
+        relative;
+
+    width:
+        145px;
+
+    height:
+        145px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid
+        rgba(245,158,11,.35);
+
+    border-radius:
+        30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(245,158,11,.18),
+            rgba(180,83,9,.08)
+        );
+
+    box-shadow:
+        0 25px 65px
+        rgba(0,0,0,.45),
+
+        inset 0 0 40px
+        rgba(245,158,11,.06);
+
+    transform:
+        rotate(45deg);
+
+}
+
+
+.hero-core-inner {
+
+    width:
+        92px;
+
+    height:
+        92px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid
+        rgba(255,255,255,.1);
+
+    border-radius:
+        22px;
+
+    background:
+        rgba(7,16,24,.92);
+
+    color:
+        var(--academy-accent-light);
+
+    font-size:
+        30px;
+
+    font-weight:
+        900;
+
+    transform:
+        rotate(-45deg);
+
+}
+
+
+/* =========================================================
+   HERO DECORATIVE LINES
+   ========================================================= */
+
+.hero-line {
+
+    position:
+        absolute;
+
+    height:
+        1px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(245,158,11,.4),
+            transparent
+        );
+
+    opacity:
+        .7;
+
+}
+
+
+.hero-line.line-one {
+
+    width:
+        260px;
+
+    top:
+        30px;
+
+    left:
+        10px;
+
+    transform:
+        rotate(-18deg);
+
+}
+
+
+.hero-line.line-two {
+
+    width:
+        220px;
+
+    right:
+        0;
+
+    bottom:
+        25px;
+
+    transform:
+        rotate(22deg);
+
+}
+
+
+/* =========================================================
+   KEYFRAMES
+   ========================================================= */
+
+@keyframes academyOrbit {
+
+    from {
+
+        transform:
+            rotate(0deg);
+
+    }
+
+    to {
+
+        transform:
+            rotate(360deg);
+
+    }
+
+}
+
+
+/* =========================================================
+   COURSE PROGRESS
+   ========================================================= */
+
+.course-progress {
+
+    width:
+        100%;
+
+    height:
+        5px;
+
+    margin-top:
+        38px;
+
+    overflow:
+        hidden;
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(255,255,255,.06);
+
+}
+
+
+.course-progress span {
+
+    display:
+        block;
+
+    width:
+        var(--progress, 25%);
+
+    height:
+        100%;
+
+    border-radius:
+        inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--academy-accent-dark),
+            var(--academy-accent-light)
+        );
+
+    box-shadow:
+        0 0 16px
+        rgba(245,158,11,.25);
+
+}
+
+
+/* =========================================================
+   CONTENT GRID
+   ========================================================= */
+
+.content-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap:
+        24px;
+
+}
+
+
+.content-grid.three {
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
+        );
+
+}
+
+
+/* =========================================================
+   FEATURE CARD
+   ========================================================= */
+
+.feature-card {
+
+    position:
+        relative;
+
+    padding:
+        30px;
+
+    overflow:
+        hidden;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,34,45,.94),
+            rgba(7,16,24,.96)
+        );
+
+    box-shadow:
+        0 20px 55px
+        rgba(0,0,0,.24);
+
+    transition:
+        transform
+        var(--academy-transition),
+
+        border-color
+        var(--academy-transition),
+
+        box-shadow
+        var(--academy-transition);
+
+}
+
+
+.feature-card::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        150px;
+
+    height:
+        150px;
+
+    top:
+        -80px;
+
+    right:
+        -70px;
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(245,158,11,.06);
+
+}
+
+
+.feature-card:hover {
+
+    transform:
+        translateY(-6px);
+
+    border-color:
+        rgba(245,158,11,.24);
+
+    box-shadow:
+        0 28px 65px
+        rgba(0,0,0,.34);
+
+}
+
+
+.feature-card h3 {
+
+    margin-bottom:
+        12px;
+
+    font-size:
+        21px;
+
+}
+
+
+.feature-card p {
+
+    font-size:
+        15px;
+
+}
+
+
+/* =========================================================
+   FEATURE ICON
+   ========================================================= */
+
+.feature-icon {
+
+    width:
+        48px;
+
+    height:
+        48px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    margin-bottom:
+        20px;
+
+    border:
+        1px solid
+        rgba(245,158,11,.2);
+
+    border-radius:
+        14px;
+
+    background:
+        rgba(245,158,11,.08);
+
+    color:
+        var(--academy-accent-light);
+
+    font-size:
+        19px;
+
+    font-weight:
+        900;
+
+}
+
+
+/* =========================================================
+   NUMBERED CONTENT
+   ========================================================= */
+
+.numbered-list {
+
+    display:
+        grid;
+
+    gap:
+        18px;
+
+}
+
+
+.numbered-item {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        48px
+        minmax(0,1fr);
+
+    gap:
+        18px;
+
+    align-items:
+        start;
+
+}
+
+
+.numbered-number {
+
+    width:
+        48px;
+
+    height:
+        48px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    border:
+        1px solid
+        rgba(245,158,11,.25);
+
+    border-radius:
+        14px;
+
+    background:
+        rgba(245,158,11,.07);
+
+    color:
+        var(--academy-accent-light);
+
+    font-weight:
+        900;
+
+}
+
+
+.numbered-content h3 {
+
+    margin-bottom:
+        6px;
+
+    font-size:
+        18px;
+
+}
+
+
+.numbered-content p {
+
+    font-size:
+        14px;
+
+}
+
+
+/* =========================================================
+   CALLOUT
+   ========================================================= */
+
+.academy-callout {
+
+    position:
+        relative;
+
+    margin:
+        35px 0;
+
+    padding:
+        25px 28px 25px 32px;
+
+    border:
+        1px solid
+        rgba(245,158,11,.2);
+
+    border-radius:
+        var(--academy-radius-small);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(245,158,11,.08),
+            rgba(245,158,11,.025)
+        );
+
+}
+
+
+.academy-callout::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    top:
+        0;
+
+    bottom:
+        0;
+
+    left:
+        0;
+
+    width:
+        4px;
+
+    border-radius:
+        4px 0 0 4px;
+
+    background:
+        var(--academy-accent);
+
+}
+
+
+.academy-callout strong {
+
+    display:
+        block;
+
+    margin-bottom:
+        7px;
+
+    color:
+        var(--academy-accent-light);
+
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.academy-table-wrap {
+
+    width:
+        100%;
+
+    overflow-x:
+        auto;
+
+    margin:
+        30px 0;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius-small);
+
+}
+
+
+.academy-table {
+
+    width:
+        100%;
+
+    min-width:
+        620px;
+
+    border-collapse:
+        collapse;
+
+}
+
+
+.academy-table th,
+.academy-table td {
+
+    padding:
+        15px 18px;
+
+    text-align:
+        left;
+
+    border-bottom:
+        1px solid
+        var(--academy-border);
+
+}
+
+
+.academy-table th {
+
+    color:
+        var(--academy-accent-light);
+
+    background:
+        rgba(245,158,11,.06);
+
+    font-size:
+        12px;
+
+    letter-spacing:
+        .08em;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+.academy-table td {
+
+    color:
+        var(--academy-text-soft);
+
+    font-size:
+        14px;
+
+}
+
+
+.academy-table tr:last-child td {
+
+    border-bottom:
+        none;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE HERO
+   ========================================================= */
+
+@media (
+    max-width: 900px
+) {
+
+    .module-hero {
+
+        padding:
+            75px 0 65px;
+
+    }
+
+
+    .module-hero-grid {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            50px;
+
+    }
+
+
+    .module-hero-visual {
+
+        min-height:
+            280px;
+
+    }
+
+
+    .content-grid.three {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            );
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE HERO
+   ========================================================= */
+
+@media (
+    max-width: 640px
+) {
+
+    .module-hero {
+
+        padding:
+            58px 0 52px;
+
+    }
+
+
+    .module-hero-inner {
+
+        width:
+            calc(100% - 28px);
+
+    }
+
+
+    .module-hero h1 {
+
+        font-size:
+            38px;
+
+    }
+
+
+    .module-hero-intro {
+
+        font-size:
+            15px;
+
+    }
+
+
+    .module-meta {
+
+        gap:
+            8px;
+
+    }
+
+
+    .module-meta-item {
+
+        padding:
+            8px 11px;
+
+        font-size:
+            10px;
+
+    }
+
+
+    .module-hero-visual {
+
+        min-height:
+            230px;
+
+    }
+
+
+    .hero-orbit {
+
+        width:
+            220px;
+
+        height:
+            220px;
+
+    }
+
+
+    .hero-core {
+
+        width:
+            110px;
+
+        height:
+            110px;
+
+        border-radius:
+            23px;
+
+    }
+
+
+    .hero-core-inner {
+
+        width:
+            70px;
+
+        height:
+            70px;
+
+        border-radius:
+            17px;
+
+        font-size:
+            23px;
+
+    }
+
+
+    .content-grid,
+    .content-grid.three {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .feature-card {
+
+        padding:
+            23px;
+
+    }
+
+
+    .numbered-item {
+
+        grid-template-columns:
+            40px
+            minmax(0,1fr);
+
+        gap:
+            13px;
+
+    }
+
+
+    .numbered-number {
+
+        width:
+            40px;
+
+        height:
+            40px;
+
+        border-radius:
+            11px;
+
+        font-size:
+            13px;
+
+    }
+
+
+    .academy-callout {
+
+        padding:
+            21px 20px 21px 25px;
+
+    }
+
+}
+
+
+/* =========================================================
+   END PART 2
+   ========================================================= */
