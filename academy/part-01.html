@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<meta name="description"
+      content="Nexpak Security Academy - Part 01: Electric Fence Engineering Principles. Advanced professional electric fencing training.">
+
+<meta name="author"
+      content="Nexpak Security Academy">
+
+<title>
+Nexpak Academy | Part 01 - Electric Fence Engineering Principles
+</title>
+
+
+<style>
+
+/* ==========================================================
+   NEXPAK SECURITY ACADEMY
+   PART 01
+   ELECTRIC FENCE ENGINEERING PRINCIPLES
+   ========================================================== */
+
+:root{
+
+    --navy:#081a2a;
+    --navy2:#102f4b;
+
+    --green:#00c896;
+    --green2:#009b76;
+
+    --gold:#f4b942;
+
+    --white:#ffffff;
+    --light:#f4f7f9;
+
+    --text:#17212b;
+    --muted:#687681;
+
+    --border:#dce5ea;
+
+    --shadow:
+        0 12px 35px rgba(0,0,0,.08);
+
+    --radius:18px;
+
+}
+
+
+*{
+
+    box-sizing:border-box;
+
+    margin:0;
+
+    padding:0;
+
+}
+
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+
+body{
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        var(--light);
+
+    color:
+        var(--text);
+
+    line-height:1.7;
+
+}
+
+
+a{
+
+    color:inherit;
+
+    text-decoration:none;
+
+}
+
+
+button{
+
+    font-family:inherit;
+
+}
+
+
+/* ==========================================================
+   HEADER
+   ========================================================== */
+
+.header{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:1000;
+
+    background:
+        rgba(8,26,42,.97);
+
+    backdrop-filter:
+        blur(12px);
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.08);
+
+}
+
+
+.header-inner{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:
+        14px 22px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+}
+
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:11px;
+
+    color:white;
+
+}
+
+
+.logo-mark{
+
+    width:42px;
+
+    height:42px;
+
+    border-radius:12px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--green),
+            #0085ca
+        );
+
+    font-weight:900;
+
+    font-size:20px;
+
+}
+
+
+.logo-text span{
+
+    display:block;
+
+    font-size:10px;
+
+    letter-spacing:1.5px;
+
+    color:
+        rgba(255,255,255,.55);
+
+}
+
+
+.logo-text strong{
+
+    display:block;
+
+    font-size:16px;
+
+}
+
+
+.header-links{
+
+    display:flex;
+
+    gap:20px;
+
+    align-items:center;
+
+}
+
+
+.header-links a{
+
+    color:
+        rgba(255,255,255,.7);
+
+    font-size:13px;
+
+    font-weight:700;
+
+}
+
+
+.header-links a:hover{
+
+    color:
+        var(--green);
+
+}
+
+
+/* ==========================================================
+   TOP HERO
+   ========================================================== */
+
+.lesson-hero{
+
+    background:
+
+        radial-gradient(
+            circle at 85% 25%,
+            rgba(0,200,150,.2),
+            transparent 32%
+        ),
+
+        linear-gradient(
+            135deg,
+            #06131f,
+            #0b2740,
+            #12395b
+        );
+
+    color:white;
+
+}
+
+
+.lesson-hero-inner{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:
+        75px 22px
+        80px;
+
+}
+
+
+.breadcrumb{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+
+    margin-bottom:22px;
+
+    color:
+        rgba(255,255,255,.55);
+
+    font-size:13px;
+
+}
+
+
+.breadcrumb a:hover{
+
+    color:
+        var(--green);
+
+}
+
+
+.lesson-label{
+
+    display:inline-flex;
+
+    padding:
+        7px 13px;
+
+    border-radius:30px;
+
+    background:
+        rgba(0,200,150,.12);
+
+    border:
+        1px solid
+        rgba(0,200,150,.3);
+
+    color:
+        #65e4c1;
+
+    font-size:12px;
+
+    font-weight:800;
+
+    letter-spacing:1px;
+
+    margin-bottom:20px;
+
+}
+
+
+.lesson-hero h1{
+
+    max-width:900px;
+
+    font-size:
+        clamp(38px,5vw,62px);
+
+    line-height:
+        1.05;
+
+    letter-spacing:
+        -1.5px;
+
+    margin-bottom:20px;
+
+}
+
+
+.lesson-hero h1 span{
+
+    color:
+        var(--green);
+
+}
+
+
+.lesson-intro{
+
+    max-width:800px;
+
+    color:
+        rgba(255,255,255,.7);
+
+    font-size:18px;
+
+    margin-bottom:32px;
+
+}
+
+
+.lesson-meta{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:12px;
+
+}
+
+
+.meta{
+
+    padding:
+        10px 15px;
+
+    border-radius:10px;
+
+    background:
+        rgba(255,255,255,.06);
+
+    border:
+        1px solid
+        rgba(255,255,255,.1);
+
+    font-size:12px;
+
+}
+
+
+/* ==========================================================
+   PAGE LAYOUT
+   ========================================================== */
+
+.page{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:
+        55px 22px
+        90px;
+
+    display:grid;
+
+    grid-template-columns:
+        260px 1fr;
+
+    gap:35px;
+
+}
+
+
+/* ==========================================================
+   SIDEBAR
+   ========================================================== */
+
+.sidebar{
+
+    position:sticky;
+
+    top:90px;
+
+    align-self:start;
+
+}
+
+
+.sidebar-box{
+
+    background:white;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        16px;
+
+    padding:20px;
+
+    box-shadow:
+        var(--shadow);
+
+}
+
+
+.sidebar-title{
+
+    font-size:12px;
+
+    text-transform:uppercase;
+
+    letter-spacing:1.2px;
+
+    font-weight:900;
+
+    color:
+        var(--muted);
+
+    margin-bottom:13px;
+
+}
+
+
+.lesson-nav{
+
+    list-style:none;
+
+}
+
+
+.lesson-nav li{
+
+    border-bottom:
+        1px solid
+        #edf1f3;
+
+}
+
+
+.lesson-nav li:last-child{
+
+    border-bottom:none;
+
+}
+
+
+.lesson-nav a{
+
+    display:block;
+
+    padding:
+        10px 5px;
+
+    color:
+        var(--muted);
+
+    font-size:13px;
+
+    transition:.2s;
+
+}
+
+
+.lesson-nav a:hover{
+
+    color:
+        var(--green2);
+
+    padding-left:9px;
+
+}
+
+
+/* ==========================================================
+   MAIN CONTENT
+   ========================================================== */
+
+.content{
+
+    min-width:0;
+
+}
+
+
+.content-section{
+
+    background:white;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        var(--radius);
+
+    padding:
+        35px;
+
+    margin-bottom:25px;
+
+    box-shadow:
+        var(--shadow);
+
+}
+
+
+.section-number{
+
+    color:
+        var(--green2);
+
+    font-size:12px;
+
+    font-weight:900;
+
+    letter-spacing:1.5px;
+
+    text-transform:uppercase;
+
+    margin-bottom:8px;
+
+}
+
+
+.content-section h2{
+
+    color:
+        var(--navy);
+
+    font-size:
+        clamp(25px,3vw,34px);
+
+    line-height:1.15;
+
+    margin-bottom:16px;
+
+}
+
+
+.content-section h3{
+
+    color:
+        var(--navy);
+
+    font-size:20px;
+
+    margin:
+        28px 0 10px;
+
+}
+
+
+.content-section p{
+
+    color:
+        var(--muted);
+
+    margin-bottom:15px;
+
+}
+
+
+.content-section strong{
+
+    color:
+        var(--text);
+
+}
+
+
+/* ==========================================================
+   LEARNING OBJECTIVES
+   ========================================================== */
+
+.objectives{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:12px;
+
+    margin-top:20px;
+
+}
+
+
+.objective{
+
+    padding:17px;
+
+    border-radius:13px;
+
+    background:
+        #f5fbf9;
+
+    border:
+        1px solid
+        #d8f2e9;
+
+}
+
+
+.objective strong{
+
+    display:block;
+
+    color:
+        var(--navy);
+
+    margin-bottom:4px;
+
+}
+
+
+.objective span{
+
+    color:
+        var(--muted);
+
+    font-size:13px;
+
+}
+
+
+/* ==========================================================
+   TECHNICAL CALLOUT
+   ========================================================== */
+
+.callout{
+
+    margin:
+        24px 0;
+
+    padding:
+        22px;
+
+    border-left:
+        4px solid
+        var(--green);
+
+    background:
+        #effbf7;
+
+    border-radius:
+        10px;
+
+}
+
+
+.callout strong{
+
+    display:block;
+
+    color:
+        var(--navy);
+
+    margin-bottom:5px;
+
+}
+
+
+.callout p{
+
+    margin-bottom:0;
+
+}
+
+
+/* ==========================================================
+   WARNING CALLOUT
+   ========================================================== */
+
+.warning{
+
+    border-left-color:
+        var(--gold);
+
+    background:
+        #fff9ec;
+
+}
+
+
+/* ==========================================================
+   CIRCUIT VISUAL
+   ========================================================== */
+
+.circuit{
+
+    margin:
+        30px 0;
+
+    padding:
+        30px 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #091c2c,
+            #12395b
+        );
+
+    border-radius:
+        18px;
+
+    color:white;
+
+    overflow:hidden;
+
+}
+
+
+.circuit-title{
+
+    text-align:center;
+
+    text-transform:uppercase;
+
+    letter-spacing:1.5px;
+
+    font-size:11px;
+
+    color:
+        rgba(255,255,255,.55);
+
+    margin-bottom:25px;
+
+}
+
+
+.circuit-flow{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:12px;
+
+    flex-wrap:wrap;
+
+}
+
+
+.circuit-node{
+
+    min-width:120px;
+
+    padding:
+        18px 14px;
+
+    text-align:center;
+
+    border-radius:13px;
+
+    background:
+        rgba(255,255,255,.07);
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+}
+
+
+.circuit-node strong{
+
+    display:block;
+
+    color:white;
+
+    font-size:14px;
+
+}
+
+
+.circuit-node span{
+
+    display:block;
+
+    margin-top:4px;
+
+    color:
+        rgba(255,255,255,.5);
+
+    font-size:11px;
+
+}
+
+
+.circuit-arrow{
+
+    color:
+        var(--green);
+
+    font-size:22px;
+
+    font-weight:900;
+
+}
+
+
+/* ==========================================================
+   EQUATION
+   ========================================================== */
+
+.equation{
+
+    padding:
+        25px;
+
+    margin:
+        20px 0;
+
+    text-align:center;
+
+    border-radius:
+        15px;
+
+    background:
+        #f1f5f7;
+
+    font-size:
+        clamp(20px,3vw,30px);
+
+    font-weight:900;
+
+    color:
+        var(--navy);
+
+}
+
+
+.equation small{
+
+    display:block;
+
+    margin-top:8px;
+
+    font-size:12px;
+
+    font-weight:500;
+
+    color:
+        var(--muted);
+
+}
+
+
+/* ==========================================================
+   CONCEPT GRID
+   ========================================================== */
+
+.concept-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:15px;
+
+    margin:
+        22px 0;
+
+}
+
+
+.concept{
+
+    padding:20px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:14px;
+
+}
+
+
+.concept h4{
+
+    color:
+        var(--navy);
+
+    margin-bottom:6px;
+
+}
+
+
+.concept p{
+
+    font-size:13px;
+
+    margin:0;
+
+}
+
+
+/* ==========================================================
+   MEASUREMENT PANEL
+   ========================================================== */
+
+.measurement{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:15px;
+
+}
+
+
+.measurement-card{
+
+    padding:20px;
+
+    border-radius:15px;
+
+    background:
+        #f7fafb;
+
+    border:
+        1px solid
+        var(--border);
+
+}
+
+
+.measurement-card h4{
+
+    color:
+        var(--navy);
+
+    margin-bottom:7px;
+
+}
+
+
+.measurement-card p{
+
+    font-size:13px;
+
+    margin:0;
+
+}
+
+
+/* ==========================================================
+   CASE STUDY
+   ========================================================== */
+
+.case-study{
+
+    background:
+        linear-gradient(
+            135deg,
+            #f0fbf8,
+            #ffffff
+        );
+
+    border:
+        1px solid
+        #cceee3;
+
+}
+
+
+.case-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:18px;
+
+}
+
+
+.case-icon{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:12px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:
+        var(--green);
+
+    color:
+        #05271e;
+
+    font-size:21px;
+
+}
+
+
+.case-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    margin:
+        20px 0;
+
+}
+
+
+.case-table th,
+.case-table td{
+
+    text-align:left;
+
+    padding:12px;
+
+    border-bottom:
+        1px solid
+        var(--border);
+
+    font-size:13px;
+
+}
+
+
+.case-table th{
+
+    color:
+        var(--navy);
+
+}
+
+
+.case-table td{
+
+    color:
+        var(--muted);
+
+}
+
+
+/* ==========================================================
+   KNOWLEDGE CHECK
+   ========================================================== */
+
+.question{
+
+    padding:
+        20px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        14px;
+
+    margin-bottom:14px;
+
+}
+
+
+.question strong{
+
+    display:block;
+
+    margin-bottom:12px;
+
+    color:
+        var(--navy);
+
+}
+
+
+.answers{
+
+    display:grid;
+
+    gap:8px;
+
+}
+
+
+.answer{
+
+    padding:
+        10px 13px;
+
+    border-radius:
+        9px;
+
+    background:
+        #f7f9fa;
+
+    border:
+        1px solid
+        #e4eaed;
+
+    font-size:13px;
+
+}
+
+
+/* ==========================================================
+   COMPLETION
+   ========================================================== */
+
+.completion{
+
+    text-align:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #071a29,
+            #103a58
+        );
+
+    color:white;
+
+}
+
+
+.completion h2{
+
+    color:white;
+
+}
+
+
+.completion p{
+
+    color:
+        rgba(255,255,255,.65);
+
+}
+
+
+.complete-button{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:
+        14px 24px;
+
+    border:none;
+
+    border-radius:
+        12px;
+
+    background:
+        var(--green);
+
+    color:
+        #05271e;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+
+.complete-button:hover{
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 10px 25px
+        rgba(0,200,150,.2);
+
+}
+
+
+.complete-status{
+
+    display:none;
+
+    margin-top:15px;
+
+    color:
+        #72edca;
+
+    font-size:13px;
+
+}
+
+
+/* ==========================================================
+   FOOTER
+   ========================================================== */
+
+.footer{
+
+    background:
+        #06121d;
+
+    color:white;
+
+}
+
+
+.footer-inner{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:
+        45px 22px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:25px;
+
+}
+
+
+.footer p{
+
+    color:
+        rgba(255,255,255,.45);
+
+    font-size:12px;
+
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+@media(max-width:900px){
+
+    .page{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .sidebar{
+
+        position:relative;
+
+        top:auto;
+
+    }
+
+
+    .lesson-nav{
+
+        display:grid;
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+        gap:5px;
+
+    }
+
+
+    .concept-grid{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+}
+
+
+@media(max-width:650px){
+
+    .header-links a:not(:last-child){
+
+        display:none;
+
+    }
+
+
+    .lesson-hero-inner{
+
+        padding:
+            55px 18px
+            60px;
+
+    }
+
+
+    .page{
+
+        padding:
+            35px 15px
+            60px;
+
+    }
+
+
+    .content-section{
+
+        padding:
+            24px 20px;
+
+    }
+
+
+    .objectives,
+    .concept-grid,
+    .measurement{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .lesson-nav{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .circuit-flow{
+
+        flex-direction:column;
+
+    }
+
+
+    .circuit-arrow{
+
+        transform:
+            rotate(90deg);
+
+    }
+
+
+    .footer-inner{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+}
+
+
+/* ==========================================================
+   ACCESSIBILITY
+   ========================================================== */
+
+:focus-visible{
+
+    outline:
+        3px solid
+        var(--green);
+
+    outline-offset:
+        3px;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ========================================================
+     HEADER
+     ======================================================== -->
+
+<header class="header">
+
+    <div class="header-inner">
+
+
+        <a href="../academy.html"
+           class="logo">
+
+            <div class="logo-mark">
+                N
+            </div>
+
+            <div class="logo-text">
+
+                <span>
+                    NEXPAK SECURITY
+                </span>
+
+                <strong>
+                    ACADEMY
+                </strong>
+
+            </div>
+
+        </a>
+
+
+        <nav class="header-links">
+
+            <a href="../academy.html">
+                Academy
+            </a>
+
+            <a href="#assessment">
+                Assessment
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+
+<!-- ========================================================
+     HERO
+     ======================================================== -->
+
+<section class="lesson-hero">
+
+    <div class="lesson-hero-inner">
+
+
+        <div class="breadcrumb">
+
+            <a href="../academy.html">
+                Nexpak Academy
+            </a>
+
+            <span>›</span>
+
+            <span>
+                Part 01
+            </span>
+
+        </div>
+
+
+        <div class="lesson-label">
+
+            PART 01
+
+        </div>
+
+
+        <h1>
+
+            Electric Fence
+            <span>
+                Engineering Principles
+            </span>
+
+        </h1>
+
+
+        <p class="lesson-intro">
+
+            Build the technical foundation required to
+            understand how electric-fence systems operate,
+            how electrical energy moves through a system,
+            why performance changes under load, and how
+            professional technicians approach diagnosis.
+
+        </p>
+
+
+        <div class="lesson-meta">
+
+            <div class="meta">
+                ⚡ Advanced Level
+            </div>
+
+            <div class="meta">
+                📚 20 Lessons
+            </div>
+
+            <div class="meta">
+                🧠 Knowledge Check
+            </div>
+
+            <div class="meta">
+                🧪 Technical Case Study
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ========================================================
+     PAGE
+     ======================================================== -->
+
+<div class="page">
+
+
+<!-- ========================================================
+     SIDEBAR
+     ======================================================== -->
+
+<aside class="sidebar">
+
+    <div class="sidebar-box">
+
+        <div class="sidebar-title">
+            Part 01 Contents
+        </div>
+
+
+        <ul class="lesson-nav">
+
+            <li>
+                <a href="#introduction">
+                    01. Introduction
+                </a>
+            </li>
+
+            <li>
+                <a href="#applications">
+                    02. Applications
+                </a>
+            </li>
+
+            <li>
+                <a href="#architecture">
+                    03. System Architecture
+                </a>
+            </li>
+
+            <li>
+                <a href="#voltage">
+                    04. Voltage
+                </a>
+            </li>
+
+            <li>
+                <a href="#current">
+                    05. Current
+                </a>
+            </li>
+
+            <li>
+                <a href="#resistance">
+                    06. Resistance
+                </a>
+            </li>
+
+            <li>
+                <a href="#ohms">
+                    07. Ohm's Law
+                </a>
+            </li>
+
+            <li>
+                <a href="#energy">
+                    08. Energy & Joules
+                </a>
+            </li>
+
+            <li>
+                <a href="#pulse">
+                    09. Pulsed Operation
+                </a>
+            </li>
+
+            <li>
+                <a href="#loading">
+                    10. Fence Loading
+                </a>
+            </li>
+
+            <li>
+                <a href="#leakage">
+                    11. Leakage
+                </a>
+            </li>
+
+            <li>
+                <a href="#earth">
+                    12. Earth Return
+                </a>
+            </li>
+
+            <li>
+                <a href="#measurement">
+      
