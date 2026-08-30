@@ -1361,3 +1361,520 @@ function quickAction(action) {
 
                                }
     
+/* =========================================================
+   AI RESPONSE ENGINE
+========================================================= */
+
+function generateAIResponse(userMessage) {
+
+    const message =
+        String(userMessage)
+            .toLowerCase()
+            .trim();
+
+
+    /* -----------------------------------------------------
+       GREETINGS
+    ----------------------------------------------------- */
+
+    if (
+        message === 'hi' ||
+        message === 'hello' ||
+        message === 'hey' ||
+        message.includes('good morning') ||
+        message.includes('good afternoon') ||
+        message.includes('good evening')
+    ) {
+
+        return `
+Hi! 👋 Welcome to Nexpak Security Solutions.
+
+I'm your virtual security assistant. I can help you with:
+
+• Electric Fencing
+• CCTV & Surveillance
+• Alarm Systems
+• Gate Automation
+• Access Control
+• Intercom Systems
+• Roboguard
+• Equestrian Fencing
+• Quotes & product information
+
+What can I help you with today?
+        `.trim();
+
+    }
+
+
+    /* -----------------------------------------------------
+       THANK YOU
+    ----------------------------------------------------- */
+
+    if (
+        message.includes('thank you') ||
+        message.includes('thanks') ||
+        message.includes('thx')
+    ) {
+
+        return `
+You're very welcome! 😊
+
+If you need anything else, I'm right here.
+
+I can also help you request a quote or find the right security solution for your property.
+        `.trim();
+
+    }
+
+
+    /* -----------------------------------------------------
+       ELECTRIC FENCING
+    ----------------------------------------------------- */
+
+    if (
+        message.includes('electric fence') ||
+        message.includes('electric fencing') ||
+        message.includes('electric fence')
+    ) {
+
+        return `
+⚡ Electric Fencing
+
+Nexpak Security Solutions supplies electric fencing equipment and security solutions for residential, commercial and agricultural properties.
+
+We can help with:
+
+• Electric fence systems
+• Energizers
+• Fence accessories
+• Insulators
+• High-voltage conductors
+• Gate connections
+• Warning signage
+• Repairs and maintenance
+• Professional installation
+
+If you're looking for a quote, tell me approximately how many metres of fencing you need and your location.
+        `.trim();
+
+    }
+
+
+    /* -----------------------------------------------------
+       CCTV
+    ----------------------------------------------------- */
+
+    if (
+        message.includes('cctv') ||
+        message.includes('camera') ||
+        message.includes('security camera') ||
+        message.includes('surveillance')
+    ) {
+
+        return `
+📹 CCTV & Surveillance
+
+We can help you with CCTV solutions for homes, businesses, farms and other properties.
+
+Options can include:
+
+• HD CCTV
+• IP CCTV
+• Night vision
+• Remote viewing
+• Motion detection
+• Recording
+• Multiple-camera systems
+
+If you tell me how many cameras you think you need, I can help you work out what type of system would suit you.
+        `.trim();
+
+    }
+
+
+    /* -----------------------------------------------------
+       ALARM SYSTEMS
+    ----------------------------------------------------- */
+
+    if (
+        message.includes('alarm') ||
+        message.includes('alarms')
+    ) {
+
+        return `
+🚨 Alarm Systems
+
+Nexpak Security Solutions can assist with alarm security solutions for residential and commercial properties.
+
+We can help with:
+
+• Alarm panels
+• Wireless alarm systems
+• Wired systems
+• Sensors
+• Outdoor detection
+• Remote notifications
+• Integration with other security systems
+
+Tell me whether this is for a house, business, farm or another property and I can guide you further.
+        `.trim();
+
+    }
+
+
+    /* -----------------------------------------------------
+       GATE AUTOMATION
+    ----------------------------------------------------- */
+
+    if (
+        message.includes('gate motor') ||
+        message.includes('gate automation') ||
+        message.includes('automated gate') ||
+        message.includes('automatic gate')
+    ) {
+
+        return `
+🚪 Gate Automation
+
+We supply gate automation solutions for sliding and swing gates.
+
+We can assist with:
+
+• Gate motors
+• Remotes
+• Battery backup
+• Safety beams
+• Access control integration
+• Replacement equipment
+• Installation and maintenance
+
+If you tell me whether your gate is sliding or swing type, I can help you choose the right solution.
+        `.trim();
+
+    }
+
+
+    /* -----------------------------------------------------
+       ACCESS CONTROL
+    ----------------------------------------------------- */
+
+    if (
+        message.includes('access control') ||
+        message.includes('biometric') ||
+        message.includes('fingerprint') ||
+        message.includes('facial recognition') ||
+        message.includes('access system')
+    ) {
+
+        return `
+🔐 Access Control
+
+We provide access control solutions for controlling who can enter your property.
+
+Solutions may include:
+
+• Fingerprint access
+• Facial recognition
+• PIN access
+• Card readers
+• Time attendance
+• Door controllers
+• Exit buttons
+• Access logs
+
+Tell me what type of door or entrance you want to secure and I can help you determine what you need.
+        `.trim();
+
+    }
+
+
+    /* -----------------------------------------------------
+       INTERCOM
+    ----------------------------------------------------- */
+
+    if (
+        message.includes('intercom') ||
+        message.includes('video doorbell') ||
+        message.includes('door phone')
+    ) {
+
+        return `
+📞 Intercom Systems
+
+We can assist with intercom and video communication systems for homes, offices and businesses.
+
+Features can include:
+
+• Video calling
+• Two-way communication
+• Remote door release
+• Multiple indoor stations
+• Visitor identification
+
+If you tell me how many entrances you have, I can help you work out a suitable system.
+        `.trim();
+
+    }
+
+
+    /* -----------------------------------------------------
+       ROBoguard
+    ----------------------------------------------------- */
+
+    if (
+        message.includes('roboguard') ||
+        message.includes('early warning') ||
+        message.includes('perimeter detection')
+    ) {
+
+        return `
+🛡️ Roboguard & Perimeter Detection
+
+Roboguard-style perimeter detection can provide an additional layer of early warning around a property.
+
+It can be particularly useful for larger properties, farms and areas where early detection is important.
+
+If you tell me what type of property you have and approximately how large the area is, I can help you determine what to consider.
+        `.trim();
+
+    }
+
+
+    /* -----------------------------------------------------
+       EQUESTRIAN
+    ----------------------------------------------------- */
+
+    if (
+        message.includes('equestrian') ||
+        message.includes('horse fence') ||
+        message.includes('horse fencing') ||
+        message.includes('paddock') ||
+        message.includes('horse')
+    ) {
+
+        return `
+🐴 Equestrian Fencing
+
+Yes, we also supply equestrian fencing products.
+
+Our range can include:
+
+• Electric polytape
+• Electric rope
+• Energizers
+• Fence accessories
+• Horse-safe fencing solutions
+• Solar options
+
+If you're fencing a paddock, arena or horse property, tell me approximately how many metres you need and I can help you work out what products you may require.
+        `.trim();
+
+    }
+
+
+    /* -----------------------------------------------------
+       REPAIR
+    ----------------------------------------------------- */
+
+    if (
+        message.includes('repair') ||
+        message.includes('not working') ||
+        message.includes('fault') ||
+        message.includes('broken')
+    ) {
+
+        return `
+🔧 Repairs & Maintenance
+
+We can assist with security-system troubleshooting, repairs and maintenance.
+
+This may include:
+
+• Electric fencing
+• CCTV
+• Alarm systems
+• Access control
+• Gate automation
+• Perimeter security
+
+Tell me which system is giving you trouble and what is happening, and I'll help you work through the problem.
+        `.trim();
+
+    }
+
+
+    /* -----------------------------------------------------
+       QUOTE
+    ----------------------------------------------------- */
+
+    if (
+        message.includes('quote') ||
+        message.includes('quotation') ||
+        message.includes('estimate') ||
+        message.includes('pricing') ||
+        message.includes('price') ||
+        message.includes('cost') ||
+        message.includes('how much')
+    ) {
+
+        return `
+💰 I'd be happy to help you with a quote.
+
+Please tell me:
+
+1. What security system do you need?
+2. Is it for a home, business, farm or another property?
+3. Approximately how large is the property?
+4. What area are you located in?
+
+You can also leave your contact details and our team can follow up with you.
+        `.trim();
+
+    }
+
+
+    /* -----------------------------------------------------
+       CONTACT
+    ----------------------------------------------------- */
+
+    if (
+        message.includes('contact') ||
+        message.includes('phone') ||
+        message.includes('whatsapp') ||
+        message.includes('email') ||
+        message.includes('call you')
+    ) {
+
+        return `
+📞 Contact Nexpak Security Solutions
+
+Our team can assist you with product information, quotations, installation and security advice.
+
+📱 Phone / WhatsApp:
+${CONFIG.phone}
+
+📧 Email:
+${CONFIG.email}
+
+We look forward to helping you secure your property. 🛡️
+        `.trim();
+
+    }
+
+
+    /* -----------------------------------------------------
+       INSTALLATION
+    ----------------------------------------------------- */
+
+    if (
+        message.includes('installation') ||
+        message.includes('install') ||
+        message.includes('installer')
+    ) {
+
+        return `
+🔧 Installation
+
+We can assist with professional security-system installation depending on the solution and location.
+
+This can include:
+
+• Electric fencing
+• CCTV
+• Gate automation
+• Access control
+• Alarm systems
+• Intercoms
+• Perimeter security
+
+Tell me what you need installed and your location, and I can guide you on the next step.
+        `.trim();
+
+    }
+
+
+    /* -----------------------------------------------------
+       AREAS
+    ----------------------------------------------------- */
+
+    if (
+        message.includes('where are you') ||
+        message.includes('where do you operate') ||
+        message.includes('areas') ||
+        message.includes('location') ||
+        message.includes('gauteng')
+    ) {
+
+        return `
+📍 Service Areas
+
+Nexpak Security Solutions is based in Gauteng and can assist customers in Gauteng and surrounding areas.
+
+For projects outside our normal service area, contact us so we can confirm availability.
+
+Where are you located?
+        `.trim();
+
+    }
+
+
+    /* -----------------------------------------------------
+       HELP
+    ----------------------------------------------------- */
+
+    if (
+        message.includes('help') ||
+        message.includes('what can you do') ||
+        message.includes('what do you offer')
+    ) {
+
+        return `
+🤖 I'm here to help!
+
+I can answer questions about:
+
+⚡ Electric Fencing
+📹 CCTV
+🚨 Alarm Systems
+🚪 Gate Automation
+🔐 Access Control
+📞 Intercoms
+🛡️ Roboguard
+🐴 Equestrian Fencing
+🔧 Repairs & Maintenance
+💰 Quotes & Pricing
+
+Just type your question in your own words.
+        `.trim();
+
+    }
+
+
+    /* -----------------------------------------------------
+       DEFAULT RESPONSE
+    ----------------------------------------------------- */
+
+    return `
+I can help with that. 😊
+
+I specialise in helping customers find the right Nexpak security solution.
+
+You can ask me about:
+
+• Electric Fencing
+• CCTV
+• Alarm Systems
+• Gate Automation
+• Access Control
+• Intercoms
+• Roboguard
+• Equestrian Fencing
+• Repairs
+• Quotes
+
+What would you like to know?
+    `.trim();
+
+}
+    
