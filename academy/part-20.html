@@ -5295,5 +5295,130 @@
                 }
 
 
+                                /*
+                ========================================
+                RETRY EXAM
+                ========================================
+                */
+
+                if (retryExam) {
+
+                    retryExam.addEventListener(
+                        "click",
+                        function () {
+
+                            examResults.style.display =
+                                "none";
+
+
+                            examForm.style.display =
+                                "block";
+
+
+                            certificateSection.style.display =
+                                "none";
+
+
+                            /*
+                            CLEAR PREVIOUS ANSWERS
+                            */
+
+                            const answers =
+                                examForm.querySelectorAll(
+                                    "input[type='radio']"
+                                );
+
+
+                            answers.forEach(
+                                function (answer) {
+
+                                    answer.checked =
+                                        false;
+
+                                }
+                            );
+
+
+                            /*
+                            RETURN TO TOP
+                            */
+
+                            window.scrollTo({
+                                top: 0,
+                                behavior: "smooth"
+                            });
+
+                        }
+                    );
+
+                }
+
+
                 /*
-                ===============
+                ========================================
+                PREVENT ACCIDENTAL DOUBLE SUBMISSION
+                ========================================
+                */
+
+                let examSubmitted = false;
+
+
+                if (submitExam) {
+
+                    submitExam.addEventListener(
+                        "click",
+                        function () {
+
+                            if (examSubmitted) {
+
+                                return;
+
+                            }
+
+
+                            examSubmitted = true;
+
+                        }
+                    );
+
+                }
+
+
+                /*
+                ========================================
+                EXAM INITIAL STATE
+                ========================================
+                */
+
+                if (examResults) {
+
+                    examResults.style.display =
+                        "none";
+
+                }
+
+
+                if (certificateSection) {
+
+                    certificateSection.style.display =
+                        "none";
+
+                }
+
+
+                /*
+                ========================================
+                END EXAM APPLICATION
+                ========================================
+                */
+
+            }
+
+        );
+
+    </script>
+
+
+</body>
+
+</html>
