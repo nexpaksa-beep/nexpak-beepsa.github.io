@@ -2353,4 +2353,840 @@ if (
 
             }
     
-    
+    /* =========================================================
+   PART 5 — CHAT HISTORY + MESSAGE ENGINE
+========================================================= */
+
+    function saveChat() {
+
+        try {
+
+            localStorage.setItem(
+                CONFIG.storageKey,
+                JSON.stringify(chatState.messages)
+            );
+
+        } catch (error) {
+
+            console.warn(
+                "Nexpak chatbot: unable to save chat history.",
+                error
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       LOAD CHAT
+    ========================================================= */
+
+    function loadChat() {
+
+        try {
+
+            const saved =
+                localStorage.getItem(
+                    CONFIG.storageKey
+                );
+
+            if (!saved) return;
+
+            const history =
+                JSON.parse(saved);
+
+            if (!Array.isArray(history)) return;
+
+            chatState.messages = history;
+
+            history.forEach(function(message) {
+
+                renderMessage(
+                    message.text,
+                    message.sender,
+                    false
+                );
+
+            });
+
+        } catch (error) {
+
+            console.warn(
+                "Nexpak chatbot: unable to load chat history.",
+                error
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       CLEAR CHAT
+    ========================================================= */
+
+    function clearChat() {
+
+        chatState.messages = [];
+
+        try {
+
+            localStorage.removeItem(
+                CONFIG.storageKey
+            );
+
+        } catch (error) {
+
+            console.warn(
+                "Nexpak chatbot: unable to clear history.",
+                error
+            );
+
+        }
+
+        const container =
+            document.getElementById(
+                "nexpak-chat-messages"
+            );
+
+        if (container) {
+
+            container.innerHTML = "";
+
+        }
+
+        addBotMessage(
+            CONFIG.greeting
+        );
+
+    }
+
+
+    /* =========================================================
+       ADD USER MESSAGE
+    ========================================================= */
+
+    function addUserMessage(text) {
+
+        if (!text) return;
+
+        const message = {
+
+            text: text,
+
+            sender: "user",
+
+            time: Date.now()
+
+        };
+
+        chatState.messages.push(message);
+
+        renderMessage(
+            text,
+            "user",
+            true
+        );
+
+        saveChat();
+
+    }
+
+
+    /* =========================================================
+       ADD BOT MESSAGE
+    ========================================================= */
+
+    function addBotMessage(text) {
+
+        if (!text) return;
+
+        const message = {
+
+            text: text,
+
+            sender: "bot",
+
+            time: Date.now()
+
+        };
+
+        chatState.messages.push(message);
+
+        renderMessage(
+            text,
+            "bot",
+            true
+        );
+
+        saveChat();
+
+    }
+
+
+    /* =========================================================
+       RENDER MESSAGE
+    ========================================================= */
+
+    function renderMessage(
+        text,
+        sender,
+        scroll
+    ) {
+
+        const container =
+            document.getElementById(
+                "nexpak-chat-messages"
+            );
+
+        if (!container) return;
+
+
+        const message =
+            document.createElement("div");
+
+
+        message.className =
+            sender === "user"
+                ? "nexpak-message user"
+                : "nexpak-message bot";
+
+
+        const bubble =
+            document.createElement("div");
+
+
+        bubble.className =
+            "nexpak-message-bubble";
+
+
+        /*
+         * Convert line breaks into
+         * readable chat formatting.
+         */
+
+        bubble.innerHTML =
+            formatBotText(text);
+
+
+        message.appendChild(
+            bubble
+        );
+
+
+        container.appendChild(
+            message
+        );
+
+
+        if (scroll !== false) {
+
+            scrollChatToBottom();
+
+        }
+
+    }
+
+
+    /* =========================================================
+       FORMAT CHAT TEXT
+    ========================================================= */
+
+    function formatBotText(text) {
+
+        if (!text) return "";
+
+
+        let formatted =
+            String(text);
+
+
+        /*
+         * Escape HTML first so that
+         * customer messages cannot
+         * inject unwanted HTML.
+         */
+
+        formatted =
+            formatted
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+
+        /*
+         * Convert line breaks.
+         */
+
+        formatted =
+            formatted.replace(
+                /\n/g,
+                "<br>"
+            );
+
+
+        /*
+         * Simple bullet formatting.
+         */
+
+        formatted =
+            formatted.replace(
+                /•/g,
+                "•"
+            );
+
+
+        return formatted;
+
+    }
+
+
+    /* =========================================================
+       SCROLL CHAT
+    ========================================================= */
+
+    function scrollChatToBottom() {
+
+        const container =
+            document.getElementById(
+                "nexpak-chat-messages"
+            );
+
+        if (!container) return;
+
+
+        setTimeout(function() {
+
+            container.scrollTop =
+                container.scrollHeight;
+
+        }, 20);
+
+    }
+
+
+    /* =========================================================
+       TYPING INDICATOR
+    ========================================================= */
+
+    function showTyping() {
+
+        if (
+            document.getElementById(
+                "nexpak-typing"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        const container =
+            document.getElementById(
+                "nexpak-chat-messages"
+            );
+
+        if (!container) return;
+
+
+        const typing =
+            document.createElement("div");
+
+
+        typing.id =
+            "nexpak-typing";
+
+
+        typing.className =
+            "nexpak-message bot";
+
+
+        typing.innerHTML = `
+
+            <div class="nexpak-typing-bubble">
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </div>
+
+        `;
+
+
+        container.appendChild(
+            typing
+        );
+
+
+        scrollChatToBottom();
+
+    }
+
+
+    /* =========================================================
+       HIDE TYPING INDICATOR
+    ========================================================= */
+
+    function hideTyping() {
+
+        const typing =
+            document.getElementById(
+                "nexpak-typing"
+            );
+
+        if (typing) {
+
+            typing.remove();
+
+        }
+
+    }
+
+
+    /* =========================================================
+       SEND MESSAGE
+    ========================================================= */
+
+    function sendChatMessage() {
+
+        const input =
+            document.getElementById(
+                "nexpak-chat-input"
+            );
+
+        if (!input) return;
+
+
+        const text =
+            input.value.trim();
+
+
+        if (!text) return;
+
+
+        /*
+         * Prevent multiple messages
+         * while the bot is responding.
+         */
+
+        if (chatState.processing) {
+
+            return;
+
+        }
+
+
+        addUserMessage(text);
+
+
+        input.value = "";
+
+
+        chatState.processing = true;
+
+
+        showTyping();
+
+
+        /*
+         * Small natural delay so the
+         * chatbot does not feel robotic.
+         */
+
+        const delay =
+            650 +
+            Math.floor(
+                Math.random() * 650
+            );
+
+
+        setTimeout(function() {
+
+            hideTyping();
+
+
+            const response =
+                generateAIResponse(text);
+
+
+            addBotMessage(
+                response
+            );
+
+
+            chatState.processing =
+                false;
+
+
+        }, delay);
+
+    }
+
+
+    /* =========================================================
+       KEYBOARD SEND
+    ========================================================= */
+
+    function handleChatKeydown(event) {
+
+        if (event.key === "Enter") {
+
+            event.preventDefault();
+
+            sendChatMessage();
+
+        }
+
+    }
+
+
+    /* =========================================================
+       AI RESPONSE ENGINE
+    ========================================================= */
+
+    function generateAIResponse(
+        userText
+    ) {
+
+        const message =
+            userText
+                .toLowerCase()
+                .trim();
+
+
+        /*
+         * Greeting detection
+         */
+
+        if (
+            message === "hi" ||
+            message === "hello" ||
+            message === "hey" ||
+            message.includes("good morning") ||
+            message.includes("good afternoon") ||
+            message.includes("good evening")
+        ) {
+
+            return (
+                "Hi! 👋 Welcome to Nexpak Security Solutions." +
+                "\n\n" +
+                "I can help you with electric fencing, CCTV, " +
+                "gate automation, access control, alarms, " +
+                "equestrian fencing and security quotes." +
+                "\n\n" +
+                "What are you looking for?"
+            );
+
+        }
+
+
+        /*
+         * Thank you
+         */
+
+        if (
+            message.includes("thank you") ||
+            message.includes("thanks")
+        ) {
+
+            return (
+                "You're very welcome! 😊" +
+                "\n\n" +
+                "If you need anything else, I'm right here."
+            );
+
+        }
+
+
+        /*
+         * Electric fencing
+         */
+
+        if (
+            message.includes("electric fence") ||
+            message.includes("electric fencing") ||
+            message.includes("perimeter fence") ||
+            message.includes("security fence")
+        ) {
+
+            return (
+                "Absolutely. ⚡" +
+                "\n\n" +
+                "Nexpak supplies electric fencing equipment " +
+                "and can assist with perimeter-security solutions." +
+                "\n\n" +
+                "We can help with energizers, fence wire, " +
+                "insulators, brackets, warning signs, " +
+                "earth systems and accessories." +
+                "\n\n" +
+                "Would you like a quote or help choosing " +
+                "the right system?"
+            );
+
+        }
+
+
+        /*
+         * CCTV
+         */
+
+        if (
+            message.includes("cctv") ||
+            message.includes("camera") ||
+            message.includes("surveillance") ||
+            message.includes("security camera")
+        ) {
+
+            return (
+                "Sure! 📹" +
+                "\n\n" +
+                "We supply CCTV surveillance solutions " +
+                "for homes, businesses and other properties." +
+                "\n\n" +
+                "Options can include HD/IP cameras, " +
+                "night vision, recording and remote viewing." +
+                "\n\n" +
+                "Tell me how many cameras you think you need, " +
+                "and I can help you work out the right solution."
+            );
+
+        }
+
+
+        /*
+         * Gate automation
+         */
+
+        if (
+            message.includes("gate motor") ||
+            message.includes("gate automation") ||
+            message.includes("automated gate") ||
+            message.includes("gate opener")
+        ) {
+
+            return (
+                "Yes, we can help with gate automation. 🚪" +
+                "\n\n" +
+                "We can assist with sliding and swing-gate " +
+                "automation, including suitable accessories " +
+                "and battery-backup requirements." +
+                "\n\n" +
+                "Is your gate sliding or swinging?"
+            );
+
+        }
+
+
+        /*
+         * Access control
+         */
+
+        if (
+            message.includes("access control") ||
+            message.includes("biometric") ||
+            message.includes("fingerprint") ||
+            message.includes("facial recognition")
+        ) {
+
+            return (
+                "We can help with access control. 🔐" +
+                "\n\n" +
+                "Solutions can include biometric, card and " +
+                "other controlled-access systems." +
+                "\n\n" +
+                "Are you looking for access control for a " +
+                "home, office, business or larger site?"
+            );
+
+        }
+
+
+        /*
+         * Equestrian
+         */
+
+        if (
+            message.includes("equestrian") ||
+            message.includes("horse fence") ||
+            message.includes("horse fencing") ||
+            message.includes("paddock") ||
+            message.includes("horse")
+        ) {
+
+            return (
+                "Absolutely! 🐴" +
+                "\n\n" +
+                "Nexpak also has a dedicated equestrian fencing " +
+                "range, including products such as polytape, " +
+                "rope, energizers and fencing accessories." +
+                "\n\n" +
+                "If you're fencing a paddock, arena or stable " +
+                "property, tell me what you're building and " +
+                "I'll help you choose the right products."
+            );
+
+        }
+
+
+        /*
+         * Quote requests
+         */
+
+        if (
+            message.includes("quote") ||
+            message.includes("quotation") ||
+            message.includes("estimate") ||
+            message.includes("price") ||
+            message.includes("cost") ||
+            message.includes("how much")
+        ) {
+
+            chatState.quoteRequested =
+                true;
+
+
+            return (
+                "I'd be happy to help with a quote. 💬" +
+                "\n\n" +
+                "Tell me:" +
+                "\n• What security system you need" +
+                "\n• Your approximate property size" +
+                "\n• Your location" +
+                "\n\n" +
+                "You can also leave your contact details " +
+                "and our team can assist you directly."
+            );
+
+        }
+
+
+        /*
+         * Contact
+         */
+
+        if (
+            message.includes("contact") ||
+            message.includes("phone") ||
+            message.includes("whatsapp") ||
+            message.includes("email") ||
+            message.includes("call you")
+        ) {
+
+            return (
+                "Of course. 📞" +
+                "\n\n" +
+                "You can contact Nexpak Security Solutions " +
+                "for product enquiries, quotes and assistance." +
+                "\n\n" +
+                "Phone: " +
+                CONFIG.phone +
+                "\nWhatsApp: " +
+                CONFIG.whatsapp +
+                "\nEmail: " +
+                CONFIG.email
+            );
+
+        }
+
+
+        /*
+         * Installation
+         */
+
+        if (
+            message.includes("installation") ||
+            message.includes("install") ||
+            message.includes("installer")
+        ) {
+
+            return (
+                "We can assist with security-system installation " +
+                "and related requirements. 🔧" +
+                "\n\n" +
+                "Tell me which system you're interested in " +
+                "and your location, and I can guide you from there."
+            );
+
+        }
+
+
+        /*
+         * Areas
+         */
+
+        if (
+            message.includes("where are you") ||
+            message.includes("area") ||
+            message.includes("gauteng") ||
+            message.includes("benoni") ||
+            message.includes("johannesburg")
+        ) {
+
+            return (
+                "Nexpak Security Solutions is based in Gauteng " +
+                "and assists customers with security products " +
+                "and solutions in the surrounding areas." +
+                "\n\n" +
+                "Tell me your location and what you need, " +
+                "and I'll help you with the next step."
+            );
+
+        }
+
+
+        /*
+         * Product question
+         */
+
+        if (
+            message.includes("product") ||
+            message.includes("what do you sell") ||
+            message.includes("what do you offer") ||
+            message.includes("services")
+        ) {
+
+            return (
+                "We offer a range of security solutions. 🛡️" +
+                "\n\n" +
+                "• Electric Fencing" +
+                "\n• CCTV & Surveillance" +
+                "\n• Gate Automation" +
+                "\n• Access Control" +
+                "\n• Alarm Systems" +
+                "\n• Intercom Systems" +
+                "\n• Equestrian Fencing" +
+                "\n\n" +
+                "Which one would you like to know more about?"
+            );
+
+        }
+
+
+        /*
+         * Default intelligent response
+         */
+
+        return (
+            "I can help with that. 👍" +
+            "\n\n" +
+            "I'm the Nexpak Security Solutions assistant, " +
+            "and I can help you with:" +
+            "\n\n" +
+            "• Electric fencing" +
+            "\n• CCTV" +
+            "\n• Gate automation" +
+            "\n• Access control" +
+            "\n• Alarm systems" +
+            "\n• Equestrian fencing" +
+            "\n• Product information" +
+            "\n• Quotes and enquiries" +
+            "\n\n" +
+            "Tell me a little more about what you need."
+        );
+
+        }
