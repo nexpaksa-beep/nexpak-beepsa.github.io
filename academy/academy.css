@@ -8997,3 +8997,963 @@ main {
 /* =========================================================
    END PART 9
    ========================================================= */
+/* =========================================================
+   NEXPAK SECURITY ACADEMY
+   ACADEMY.CSS
+   PART 10 — ADVANCED FAULT FINDING & TECHNICAL DIAGNOSIS
+   ========================================================= */
+
+
+/* =========================================================
+   ADVANCED DIAGNOSTIC HERO
+   ========================================================= */
+
+.advanced-diagnostic {
+
+    position:
+        relative;
+
+    margin:
+        40px 0;
+
+    padding:
+        40px;
+
+    overflow:
+        hidden;
+
+    border:
+        1px solid
+        rgba(239,68,68,.2);
+
+    border-radius:
+        var(--academy-radius);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(239,68,68,.07),
+            rgba(7,16,24,.98)
+        );
+
+}
+
+
+.advanced-diagnostic::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        330px;
+
+    height:
+        330px;
+
+    right:
+        -170px;
+
+    top:
+        -170px;
+
+    border:
+        1px solid
+        rgba(239,68,68,.13);
+
+    border-radius:
+        50%;
+
+}
+
+
+.advanced-diagnostic-label {
+
+    display:
+        inline-flex;
+
+    margin-bottom:
+        15px;
+
+    padding:
+        7px 12px;
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(239,68,68,.09);
+
+    color:
+        #f87171;
+
+    font-size:
+        10px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .14em;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+.advanced-diagnostic h2 {
+
+    margin:
+        0 0 12px;
+
+    font-size:
+        clamp(
+            27px,
+            4vw,
+            39px
+        );
+
+}
+
+
+.advanced-diagnostic p {
+
+    max-width:
+        840px;
+
+    margin:
+        0;
+
+    color:
+        var(--academy-text-soft);
+
+}
+
+
+/* =========================================================
+   DIAGNOSTIC LEVELS
+   ========================================================= */
+
+.diagnostic-levels {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0,1fr)
+        );
+
+    gap:
+        14px;
+
+    margin:
+        35px 0;
+
+}
+
+
+.diagnostic-level {
+
+    padding:
+        23px 18px;
+
+    text-align:
+        center;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius-small);
+
+    background:
+        var(--academy-panel);
+
+    transition:
+        var(--academy-transition);
+
+}
+
+
+.diagnostic-level:hover {
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(239,68,68,.24);
+
+}
+
+
+.diagnostic-level-number {
+
+    width:
+        42px;
+
+    height:
+        42px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    margin:
+        0 auto 12px;
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(239,68,68,.08);
+
+    color:
+        #f87171;
+
+    font-size:
+        12px;
+
+    font-weight:
+        900;
+
+}
+
+
+.diagnostic-level h3 {
+
+    margin:
+        0 0 6px;
+
+    font-size:
+        16px;
+
+}
+
+
+.diagnostic-level p {
+
+    margin:
+        0;
+
+    color:
+        var(--academy-text-muted);
+
+    font-size:
+        11px;
+
+}
+
+
+/* =========================================================
+   FAULT TREE
+   ========================================================= */
+
+.fault-tree {
+
+    position:
+        relative;
+
+    margin:
+        35px 0;
+
+    padding:
+        30px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius);
+
+    background:
+        var(--academy-panel);
+
+}
+
+
+.fault-tree h3 {
+
+    margin:
+        0 0 25px;
+
+    color:
+        var(--academy-accent-light);
+
+    font-size:
+        21px;
+
+}
+
+
+.fault-tree-root {
+
+    width:
+        min(
+            430px,
+            100%
+        );
+
+    margin:
+        0 auto 30px;
+
+    padding:
+        17px 20px;
+
+    text-align:
+        center;
+
+    border:
+        1px solid
+        rgba(245,158,11,.2);
+
+    border-radius:
+        12px;
+
+    background:
+        rgba(245,158,11,.06);
+
+    color:
+        var(--academy-accent-light);
+
+    font-size:
+        13px;
+
+    font-weight:
+        800;
+
+}
+
+
+.fault-tree-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0,1fr)
+        );
+
+    gap:
+        15px;
+
+}
+
+
+.fault-tree-branch {
+
+    position:
+        relative;
+
+    padding:
+        22px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        12px;
+
+    background:
+        rgba(255,255,255,.025);
+
+}
+
+
+.fault-tree-branch::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    left:
+        50%;
+
+    top:
+        -30px;
+
+    width:
+        1px;
+
+    height:
+        30px;
+
+    background:
+        rgba(245,158,11,.2);
+
+}
+
+
+.fault-tree-branch h4 {
+
+    margin:
+        0 0 8px;
+
+    color:
+        var(--academy-text);
+
+    font-size:
+        15px;
+
+}
+
+
+.fault-tree-branch p {
+
+    margin:
+        0;
+
+    color:
+        var(--academy-text-muted);
+
+    font-size:
+        12px;
+
+}
+
+
+/* =========================================================
+   DIAGNOSTIC CHECKPOINTS
+   ========================================================= */
+
+.diagnostic-checkpoints {
+
+    display:
+        grid;
+
+    gap:
+        10px;
+
+    margin:
+        30px 0;
+
+}
+
+
+.diagnostic-checkpoint {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        38px
+        minmax(0,1fr);
+
+    gap:
+        13px;
+
+    align-items:
+        start;
+
+    padding:
+        16px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        10px;
+
+    background:
+        rgba(255,255,255,.02);
+
+}
+
+
+.diagnostic-checkpoint-number {
+
+    width:
+        38px;
+
+    height:
+        38px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    border-radius:
+        10px;
+
+    background:
+        rgba(239,68,68,.08);
+
+    color:
+        #f87171;
+
+    font-size:
+        10px;
+
+    font-weight:
+        900;
+
+}
+
+
+.diagnostic-checkpoint h4 {
+
+    margin:
+        0 0 4px;
+
+    font-size:
+        14px;
+
+}
+
+
+.diagnostic-checkpoint p {
+
+    margin:
+        0;
+
+    color:
+        var(--academy-text-muted);
+
+    font-size:
+        12px;
+
+}
+
+
+/* =========================================================
+   MEASUREMENT PANEL
+   ========================================================= */
+
+.measurement-panel {
+
+    margin:
+        35px 0;
+
+    padding:
+        30px;
+
+    border:
+        1px solid
+        rgba(56,189,248,.18);
+
+    border-radius:
+        var(--academy-radius);
+
+    background:
+        rgba(56,189,248,.035);
+
+}
+
+
+.measurement-panel h3 {
+
+    margin:
+        0 0 20px;
+
+    color:
+        var(--academy-blue);
+
+    font-size:
+        20px;
+
+}
+
+
+.measurement-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0,1fr)
+        );
+
+    gap:
+        14px;
+
+}
+
+
+.measurement-card {
+
+    padding:
+        20px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        12px;
+
+    background:
+        rgba(255,255,255,.02);
+
+}
+
+
+.measurement-card strong {
+
+    display:
+        block;
+
+    margin-bottom:
+        6px;
+
+    color:
+        var(--academy-text);
+
+    font-size:
+        14px;
+
+}
+
+
+.measurement-card span {
+
+    color:
+        var(--academy-text-muted);
+
+    font-size:
+        12px;
+
+}
+
+
+/* =========================================================
+   ROOT CAUSE ANALYSIS
+   ========================================================= */
+
+.root-cause {
+
+    margin:
+        35px 0;
+
+    padding:
+        30px;
+
+    border:
+        1px solid
+        rgba(167,139,250,.18);
+
+    border-radius:
+        var(--academy-radius);
+
+    background:
+        rgba(167,139,250,.035);
+
+}
+
+
+.root-cause h3 {
+
+    margin:
+        0 0 18px;
+
+    color:
+        #c4b5fd;
+
+    font-size:
+        20px;
+
+}
+
+
+.root-cause-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0,1fr)
+        );
+
+    gap:
+        12px;
+
+}
+
+
+.root-cause-step {
+
+    position:
+        relative;
+
+    padding:
+        20px 15px;
+
+    text-align:
+        center;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        11px;
+
+    background:
+        rgba(255,255,255,.02);
+
+}
+
+
+.root-cause-step strong {
+
+    display:
+        block;
+
+    margin-bottom:
+        6px;
+
+    color:
+        #c4b5fd;
+
+    font-size:
+        13px;
+
+}
+
+
+.root-cause-step span {
+
+    color:
+        var(--academy-text-muted);
+
+    font-size:
+        11px;
+
+}
+
+
+.root-cause-step:not(:last-child)::after {
+
+    content:
+        "→";
+
+    position:
+        absolute;
+
+    right:
+        -17px;
+
+    top:
+        50%;
+
+    transform:
+        translateY(-50%);
+
+    color:
+        #c4b5fd;
+
+    z-index:
+        3;
+
+}
+
+
+/* =========================================================
+   EXPERT DIAGNOSIS PANEL
+   ========================================================= */
+
+.expert-diagnosis {
+
+    margin:
+        35px 0;
+
+    padding:
+        30px;
+
+    border-left:
+        4px solid
+        var(--academy-red);
+
+    border-top:
+        1px solid
+        var(--academy-border);
+
+    border-right:
+        1px solid
+        var(--academy-border);
+
+    border-bottom:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        0 var(--academy-radius-small)
+        var(--academy-radius-small)
+        0;
+
+    background:
+        rgba(239,68,68,.04);
+
+}
+
+
+.expert-diagnosis h3 {
+
+    margin:
+        0 0 10px;
+
+    color:
+        #f87171;
+
+    font-size:
+        20px;
+
+}
+
+
+.expert-diagnosis p {
+
+    margin:
+        0;
+
+    color:
+        var(--academy-text-soft);
+
+    font-size:
+        13px;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (
+    max-width: 1000px
+) {
+
+    .diagnostic-levels {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            );
+
+    }
+
+
+    .measurement-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            );
+
+    }
+
+
+    .root-cause-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            );
+
+    }
+
+
+    .root-cause-step:not(:last-child)::after {
+
+        display:
+            none;
+
+    }
+
+}
+
+
+@media (
+    max-width: 700px
+) {
+
+    .advanced-diagnostic {
+
+        padding:
+            25px;
+
+    }
+
+
+    .diagnostic-levels,
+    .fault-tree-grid,
+    .measurement-grid,
+    .root-cause-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .fault-tree {
+
+        padding:
+            22px;
+
+    }
+
+
+    .fault-tree-branch::before {
+
+        display:
+            none;
+
+    }
+
+
+    .diagnostic-checkpoint {
+
+        grid-template-columns:
+            34px
+            minmax(0,1fr);
+
+    }
+
+
+    .diagnostic-checkpoint-number {
+
+        width:
+            34px;
+
+        height:
+            34px;
+
+    }
+
+
+    .expert-diagnosis {
+
+        padding:
+            23px;
+
+    }
+
+}
+
+
+/* =========================================================
+   END PART 10
+   ========================================================= */
