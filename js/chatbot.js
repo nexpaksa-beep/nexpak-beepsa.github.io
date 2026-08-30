@@ -586,3 +586,189 @@ function showTypingIndicator() {
 function hideTypingIndicator() {
     const typing = document.getElementById('typing-indicator');
     if (typing) typing.remove
+        const typing = document.getElementById('typing-indicator');
+    if (typing) typing.remove();
+}
+
+// ==================== AI RESPONSE GENERATION ====================
+function generateResponse(userMessage) {
+    const message = userMessage.toLowerCase();
+    
+    // Check FAQs first
+    for (const [key, value] of Object.entries(CHATBOT_CONFIG.faqs)) {
+        if (message.includes(key)) {
+            return value;
+        }
+    }
+    
+    // Check product queries / pricing
+    if (message.includes('price') || message.includes('cost') || message.includes('how much')) {
+        return getPricingResponse(message);
+    }
+    
+    if (message.includes('electric fence')) {
+        const product = CHATBOT_CONFIG.knowledgeBase.products['electric fencing'];
+        return `${product.description}\n\n${product.price}\n\nFeatures: ${product.features.join(', ')}`;
+    }
+    if (message.includes('cctv') || message.includes('camera')) {
+        const product = CHATBOT_CONFIG.knowledgeBase.products['cctv'];
+        return `${product.description}\n\n${product.price}\n\nFeatures: ${product.features.join(', ')}`;
+    }
+    if (message.includes('access control') || message.includes('biometric')) {
+        const product = CHATBOT_CONFIG.knowledgeBase.products['access control'];
+        return `${product.description}\n\n${product.price}\n\nFeatures: ${product.features.join(', ')}`;
+    }
+    if (message.includes('gate') || message.includes('automation')) {
+        const product = CHATBOT_CONFIG.knowledgeBase.products['gate automation'];
+        return `${product.description}\n\n${product.price}\n\nFeatures: ${product.features.join(', ')}`;
+    }
+    if (message.includes('equestrian') || message.includes('horse') || message.includes('paddock')) {
+        const product = CHATBOT_CONFIG.knowledgeBase.products['equestrian'];
+        return `${product.description}\n\nWe have a full range of equestrian fencing products! Would you like me to show you our equestrian store?`;
+    }
+    if (message.includes('contact') || message.includes('phone') || message.includes('call')) {
+        return `You can reach us at:\n\n${CHATBOT_CONFIG.companyPhone}\n${CHATBOT_CONFIG.companyEmail}\nWhatsApp: ${CHATBOT_CONFIG.companyWhatsApp}\n\nWe're open ${CHATBOT_CONFIG.businessHours}`;
+    }
+    if (message.includes('quote')) {
+        return `I'd be happy to help you get a quote! Could you tell me:\n\n1. What type of security do you need?\n2. What's the approximate size of your property?\n3. What's your location?\n\nOr leave your details and we'll call you!`;
+    }
+    if (message.includes('thank')) {
+        return "You're welcome! Is there anything else I can help you with?";
+    }
+    
+    // Default response
+    return `I understand you're asking about "${userMessage}". \n\nI can help you with:\n• Electric Fencing\n• CCTV Cameras\n• Access Control\n• Gate Automation\n• Equestrian Fencing\n• Free Quotes\n\nWhat would you like to know more about?`;
+}
+
+/**
+ * Get pricing response
+ */
+function getPricingResponse(message) {
+    let response = "Here's our pricing guide:\n\n";
+    for (const [product, price] of Object.entries(CHATBOT_CONFIG.knowledgeBase.pricing)) {
+        response += `${product.charAt(0).toUpperCase() + product.slice(1)}: ${price}\n`;
+    }
+    response += "\nThese are starting prices. Get a custom quote for your specific needs!";
+    return response;
+}
+
+// ==================== QUICK ACTIONS ====================
+/**
+ * Handle quick action buttons
+ */
+function handleQuickAction(action) {
+    switch(action) {
+        case 'quote':
+            addMessage("I'd like to get a quote", 'user');
+            setTimeout(() => {
+                addMessage("Great! I'll help you get a quote. What type of security solution are you interested in?", 'bot');
+                showLeadForm();
+            }, 500);
+            break;
+        case 'products':
+            addMessage("Show me your products", 'user');
+            setTimeout(() => {
+                addMessage("We offer a range of security solutions:\n\n• Electric Fencing (From R350/m)\n• CCTV Systems (From R4,500)\n• Access Control (From R8,000)\n• Gate Automation (From R12,000)\n• Equestrian Fencing\n\nWhich one interests you?", 'bot');
+            }, 500);
+            break;
+        case 'contact':
+            addMessage("I want to contact you", 'user');
+            setTimeout(() => {
+                addMessage(`${CHATBOT_CONFIG.companyPhone}\n${CHATBOT_CONFIG.companyEmail}\nWhatsApp: ${CHATBOT_CONFIG.companyWhatsApp}\n\nWe're open ${CHATBOT_CONFIG.businessHours}`, 'bot');
+            }, 500);
+            break;
+    }
+}
+
+// ==================== LEAD CAPTURE ====================
+/**
+ * Show lead capture form
+ */
+function showLeadForm() {
+    const form = document.getElementById('lead-form');
+    form.style.display = 'block';
+}
+
+/**
+ * Skip lead form
+ */
+function skipLeadForm() {
+    document.getElementById('lead-form').style.display = 'none';
+}
+
+/**
+ * Submit lead form
+ */
+function submitLeadForm() {
+    const name = document.getElementById('lead-name').value.trim();
+    const email = document.getElementById('lead-email').value.trim();
+    const phone = document.getElementById('lead-phone').value.trim();
+    const message = document.getElementById('lead-message').value.trim();
+    
+    if (!name || !email) {
+        alert('Please enter your name and email');
+        return;
+    }
+    
+    chatState.userInfo = { name, email, phone, message };
+    chatState.leadCaptured = true;
+    document.getElementById('lead-form').style.display = 'none';
+    
+    addMessage(`Thanks ${name}! We'll be in touch soon at ${email}.`, 'bot');
+    console.log('New Lead Captured:', chatState.userInfo);
+}
+
+// ==================== UTILITIES ====================
+/**
+ * Format time
+ */
+function formatTime(date) {
+    return date.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+    });
+}
+
+/**
+ * Save chat history
+ */
+function saveChatHistory() {
+    localStorage.setItem('nexpak_chat_history', JSON.stringify(chatState.messages));
+}
+
+/**
+ * Load chat history
+ */
+function loadChatHistory() {
+    const saved = localStorage.getItem('nexpak_chat_history');
+    if (saved) {
+        // Could restore chat history here
+    }
+}
+
+// ==================== INITIALIZE ====================
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
+}
+
+// Export for external use
+window.NexpakChatbot = {
+    open: () => {
+        if (!chatState.isOpen) toggleChat();
+    },
+    close: () => {
+        if (chatState.isOpen) toggleChat();
+    },
+    send: (message) => {
+        addMessage(message, 'user');
+        setTimeout(() => {
+            const response = generateResponse(message);
+            addMessage(response, 'bot');
+        }, 500);
+    }
+};
+})();
+        
