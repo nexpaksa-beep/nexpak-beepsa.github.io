@@ -2174,3 +2174,1144 @@ main {
 /* =========================================================
    END PART 2
    ========================================================= */
+/* =========================================================
+   NEXPAK SECURITY ACADEMY
+   ACADEMY.CSS
+   PART 3 — TRAINING CONTENT COMPONENTS
+   ========================================================= */
+
+
+/* =========================================================
+   CONTENT ARTICLE
+   ========================================================= */
+
+.academy-article {
+
+    max-width:
+        900px;
+
+    margin:
+        0 auto;
+
+}
+
+
+.academy-article > p {
+
+    margin-bottom:
+        20px;
+
+    color:
+        var(--academy-text-soft);
+
+    font-size:
+        16px;
+
+}
+
+
+.academy-article h2 {
+
+    margin:
+        45px 0 18px;
+
+    font-size:
+        clamp(
+            27px,
+            4vw,
+            38px
+        );
+
+}
+
+
+.academy-article h3 {
+
+    margin:
+        32px 0 12px;
+
+    font-size:
+        22px;
+
+}
+
+
+.academy-article h4 {
+
+    margin:
+        24px 0 10px;
+
+    color:
+        var(--academy-accent-light);
+
+    font-size:
+        17px;
+
+}
+
+
+/* =========================================================
+   LEARNING OBJECTIVES
+   ========================================================= */
+
+.learning-objectives {
+
+    display:
+        grid;
+
+    gap:
+        14px;
+
+    margin:
+        30px 0;
+
+}
+
+
+.objective-item {
+
+    position:
+        relative;
+
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    gap:
+        15px;
+
+    padding:
+        18px 20px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius-small);
+
+    background:
+        rgba(255,255,255,.025);
+
+    transition:
+        var(--academy-transition);
+
+}
+
+
+.objective-item:hover {
+
+    transform:
+        translateX(4px);
+
+    border-color:
+        rgba(245,158,11,.22);
+
+    background:
+        rgba(245,158,11,.035);
+
+}
+
+
+.objective-icon {
+
+    width:
+        34px;
+
+    height:
+        34px;
+
+    flex:
+        0 0 34px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    border-radius:
+        10px;
+
+    background:
+        rgba(34,197,94,.09);
+
+    color:
+        var(--academy-green);
+
+    font-size:
+        13px;
+
+    font-weight:
+        900;
+
+}
+
+
+.objective-item p {
+
+    margin:
+        0;
+
+    color:
+        var(--academy-text-soft);
+
+    font-size:
+        14px;
+
+}
+
+
+/* =========================================================
+   KNOWLEDGE BOX
+   ========================================================= */
+
+.knowledge-box {
+
+    margin:
+        32px 0;
+
+    padding:
+        28px;
+
+    border:
+        1px solid
+        rgba(56,189,248,.18);
+
+    border-radius:
+        var(--academy-radius);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(56,189,248,.07),
+            rgba(56,189,248,.015)
+        );
+
+}
+
+
+.knowledge-box-title {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
+
+    margin-bottom:
+        14px;
+
+    color:
+        var(--academy-blue);
+
+    font-size:
+        13px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .1em;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+.knowledge-box p {
+
+    color:
+        var(--academy-text-soft);
+
+}
+
+
+/* =========================================================
+   WARNING BOX
+   ========================================================= */
+
+.warning-box {
+
+    position:
+        relative;
+
+    margin:
+        32px 0;
+
+    padding:
+        25px 27px 25px 31px;
+
+    border:
+        1px solid
+        rgba(239,68,68,.2);
+
+    border-radius:
+        var(--academy-radius-small);
+
+    background:
+        rgba(239,68,68,.055);
+
+}
+
+
+.warning-box::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    top:
+        0;
+
+    bottom:
+        0;
+
+    left:
+        0;
+
+    width:
+        4px;
+
+    border-radius:
+        4px 0 0 4px;
+
+    background:
+        var(--academy-red);
+
+}
+
+
+.warning-box strong {
+
+    display:
+        block;
+
+    margin-bottom:
+        7px;
+
+    color:
+        #f87171;
+
+}
+
+
+/* =========================================================
+   STEP-BY-STEP PROCESS
+   ========================================================= */
+
+.process-list {
+
+    position:
+        relative;
+
+    display:
+        grid;
+
+    gap:
+        24px;
+
+    margin:
+        35px 0;
+
+}
+
+
+.process-list::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    top:
+        24px;
+
+    bottom:
+        24px;
+
+    left:
+        23px;
+
+    width:
+        1px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(245,158,11,.45),
+            rgba(245,158,11,.05)
+        );
+
+}
+
+
+.process-step {
+
+    position:
+        relative;
+
+    display:
+        grid;
+
+    grid-template-columns:
+        48px
+        minmax(0,1fr);
+
+    gap:
+        18px;
+
+}
+
+
+.process-number {
+
+    position:
+        relative;
+
+    width:
+        48px;
+
+    height:
+        48px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    border:
+        1px solid
+        rgba(245,158,11,.3);
+
+    border-radius:
+        50%;
+
+    background:
+        var(--academy-panel);
+
+    color:
+        var(--academy-accent-light);
+
+    font-size:
+        13px;
+
+    font-weight:
+        900;
+
+    z-index:
+        2;
+
+}
+
+
+.process-content {
+
+    padding:
+        20px 22px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius-small);
+
+    background:
+        rgba(255,255,255,.025);
+
+}
+
+
+.process-content h3 {
+
+    margin:
+        0 0 7px;
+
+    font-size:
+        18px;
+
+}
+
+
+.process-content p {
+
+    margin:
+        0;
+
+    font-size:
+        14px;
+
+}
+
+
+/* =========================================================
+   SYSTEM COMPONENT GRID
+   ========================================================= */
+
+.component-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0,1fr)
+        );
+
+    gap:
+        18px;
+
+    margin:
+        30px 0;
+
+}
+
+
+.component-card {
+
+    position:
+        relative;
+
+    padding:
+        24px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius-small);
+
+    background:
+        var(--academy-panel);
+
+    transition:
+        var(--academy-transition);
+
+}
+
+
+.component-card:hover {
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(245,158,11,.25);
+
+}
+
+
+.component-card-number {
+
+    margin-bottom:
+        13px;
+
+    color:
+        var(--academy-accent);
+
+    font-size:
+        11px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .12em;
+
+}
+
+
+.component-card h3 {
+
+    margin:
+        0 0 9px;
+
+    font-size:
+        18px;
+
+}
+
+
+.component-card p {
+
+    margin:
+        0;
+
+    font-size:
+        13px;
+
+}
+
+
+/* =========================================================
+   TECHNICAL SPECIFICATION
+   ========================================================= */
+
+.spec-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0,1fr)
+        );
+
+    gap:
+        15px;
+
+    margin:
+        30px 0;
+
+}
+
+
+.spec-item {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+    padding:
+        16px 18px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        11px;
+
+    background:
+        rgba(255,255,255,.025);
+
+}
+
+
+.spec-label {
+
+    color:
+        var(--academy-text-muted);
+
+    font-size:
+        13px;
+
+}
+
+
+.spec-value {
+
+    color:
+        var(--academy-text);
+
+    font-size:
+        13px;
+
+    font-weight:
+        800;
+
+    text-align:
+        right;
+
+}
+
+
+/* =========================================================
+   CHECKLIST
+   ========================================================= */
+
+.checklist {
+
+    display:
+        grid;
+
+    gap:
+        10px;
+
+    margin:
+        25px 0;
+
+}
+
+
+.checklist-item {
+
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    gap:
+        12px;
+
+    padding:
+        14px 16px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        10px;
+
+    background:
+        rgba(255,255,255,.02);
+
+}
+
+
+.checklist-item::before {
+
+    content:
+        "✓";
+
+    flex:
+        0 0 auto;
+
+    color:
+        var(--academy-green);
+
+    font-weight:
+        900;
+
+}
+
+
+.checklist-item span {
+
+    color:
+        var(--academy-text-soft);
+
+    font-size:
+        14px;
+
+}
+
+
+/* =========================================================
+   QUOTE / PROFESSIONAL NOTE
+   ========================================================= */
+
+.professional-note {
+
+    margin:
+        35px 0;
+
+    padding:
+        32px;
+
+    border:
+        1px solid
+        rgba(167,139,250,.18);
+
+    border-radius:
+        var(--academy-radius);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(167,139,250,.07),
+            rgba(167,139,250,.015)
+        );
+
+}
+
+
+.professional-note::before {
+
+    content:
+        "PROFESSIONAL PRACTICE";
+
+    display:
+        block;
+
+    margin-bottom:
+        12px;
+
+    color:
+        var(--academy-purple);
+
+    font-size:
+        10px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .15em;
+
+}
+
+
+.professional-note p {
+
+    margin:
+        0;
+
+    color:
+        var(--academy-text);
+
+    font-size:
+        16px;
+
+    font-weight:
+        600;
+
+}
+
+
+/* =========================================================
+   DIAGRAM / VISUAL PANEL
+   ========================================================= */
+
+.diagram-panel {
+
+    position:
+        relative;
+
+    min-height:
+        260px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    margin:
+        35px 0;
+
+    padding:
+        30px;
+
+    overflow:
+        hidden;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius);
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(245,158,11,.07),
+            transparent 55%
+        ),
+
+        var(--academy-panel);
+
+}
+
+
+.diagram-panel::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    inset:
+        20px;
+
+    border:
+        1px dashed
+        rgba(245,158,11,.12);
+
+    border-radius:
+        var(--academy-radius-small);
+
+}
+
+
+/* =========================================================
+   DATA STAT CARDS
+   ========================================================= */
+
+.stat-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0,1fr)
+        );
+
+    gap:
+        15px;
+
+    margin:
+        30px 0;
+
+}
+
+
+.stat-card {
+
+    padding:
+        22px 18px;
+
+    text-align:
+        center;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius-small);
+
+    background:
+        rgba(255,255,255,.025);
+
+}
+
+
+.stat-value {
+
+    display:
+        block;
+
+    margin-bottom:
+        5px;
+
+    color:
+        var(--academy-accent-light);
+
+    font-size:
+        27px;
+
+    font-weight:
+        900;
+
+}
+
+
+.stat-label {
+
+    color:
+        var(--academy-text-muted);
+
+    font-size:
+        11px;
+
+    letter-spacing:
+        .06em;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+/* =========================================================
+   MOBILE CONTENT COMPONENTS
+   ========================================================= */
+
+@media (
+    max-width: 900px
+) {
+
+    .component-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            );
+
+    }
+
+
+    .stat-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            );
+
+    }
+
+}
+
+
+@media (
+    max-width: 640px
+) {
+
+    .academy-article > p {
+
+        font-size:
+            15px;
+
+    }
+
+
+    .learning-objectives {
+
+        gap:
+            10px;
+
+    }
+
+
+    .objective-item {
+
+        padding:
+            15px;
+
+    }
+
+
+    .process-list {
+
+        gap:
+            18px;
+
+    }
+
+
+    .process-step {
+
+        grid-template-columns:
+            40px
+            minmax(0,1fr);
+
+        gap:
+            13px;
+
+    }
+
+
+    .process-list::before {
+
+        left:
+            19px;
+
+    }
+
+
+    .process-number {
+
+        width:
+            40px;
+
+        height:
+            40px;
+
+        font-size:
+            11px;
+
+    }
+
+
+    .process-content {
+
+        padding:
+            17px;
+
+    }
+
+
+    .component-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .spec-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .spec-item {
+
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+        gap:
+            5px;
+
+    }
+
+
+    .spec-value {
+
+        text-align:
+            left;
+
+    }
+
+
+    .professional-note {
+
+        padding:
+            24px;
+
+    }
+
+
+    .stat-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            );
+
+    }
+
+
+    .stat-value {
+
+        font-size:
+            23px;
+
+    }
+
+}
+
+
+/* =========================================================
+   END PART 3
+   ========================================================= */
