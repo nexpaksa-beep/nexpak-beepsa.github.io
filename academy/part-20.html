@@ -440,7 +440,7 @@
         ========================================== -->
 
         <form
-            id="finalExam"
+            id="academyExam"
             class="final-exam"
         >
 
@@ -4490,3 +4490,810 @@
         </form>
 
                         </main>
+        <!-- =========================================
+         EXAM RESULTS
+    ========================================== -->
+
+    <section
+        id="examResults"
+        class="exam-results"
+        style="display:none;"
+    >
+
+        <div class="results-card">
+
+            <div class="results-icon" id="resultsIcon">
+                ✓
+            </div>
+
+            <span class="results-label">
+                NEXPAK ACADEMY
+            </span>
+
+            <h2 id="resultsTitle">
+                Examination Results
+            </h2>
+
+            <p
+                id="resultsMessage"
+                class="results-message"
+            >
+                Your examination has been assessed.
+            </p>
+
+
+            <!-- SCORE -->
+
+            <div class="score-display">
+
+                <span class="score-label">
+                    YOUR SCORE
+                </span>
+
+                <strong id="scorePercentage">
+                    0%
+                </strong>
+
+                <span id="scoreFraction">
+                    0 / 50
+                </span>
+
+            </div>
+
+
+            <!-- RESULT STATUS -->
+
+            <div
+                id="resultStatus"
+                class="result-status"
+            >
+                RESULT
+            </div>
+
+
+            <!-- RESULT DETAILS -->
+
+            <div class="result-details">
+
+                <div class="result-detail">
+
+                    <span>
+                        Correct Answers
+                    </span>
+
+                    <strong id="correctAnswers">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="result-detail">
+
+                    <span>
+                        Incorrect Answers
+                    </span>
+
+                    <strong id="incorrectAnswers">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="result-detail">
+
+                    <span>
+                        Questions
+                    </span>
+
+                    <strong>
+                        50
+                    </strong>
+
+                </div>
+
+
+                <div class="result-detail">
+
+                    <span>
+                        Pass Mark
+                    </span>
+
+                    <strong>
+                        70%
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- PASS MESSAGE -->
+
+            <div
+                id="passMessage"
+                class="result-panel"
+                style="display:none;"
+            >
+
+                <h3>
+                    Congratulations! 🎓
+                </h3>
+
+                <p>
+                    You have successfully passed the
+                    Nexpak Academy examination.
+                </p>
+
+                <p>
+                    Your examination result has been
+                    recorded. You may now proceed to the
+                    certificate section.
+                </p>
+
+                <button
+                    type="button"
+                    id="certificateButton"
+                    class="certificate-button"
+                >
+                    View Certificate
+                </button>
+
+            </div>
+
+
+            <!-- FAIL MESSAGE -->
+
+            <div
+                id="failMessage"
+                class="result-panel"
+                style="display:none;"
+            >
+
+                <h3>
+                    Examination Not Passed
+                </h3>
+
+                <p>
+                    Your current score is below the required
+                    70% pass mark.
+                </p>
+
+                <p>
+                    Review the training material and
+                    strengthen the areas where you need
+                    improvement before attempting the
+                    examination again.
+                </p>
+
+                <button
+                    type="button"
+                    id="retryExam"
+                    class="retry-button"
+                >
+                    Review &amp; Retry
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         CERTIFICATE
+    ========================================== -->
+
+    <section
+        id="certificateSection"
+        class="certificate-section"
+        style="display:none;"
+    >
+
+        <div
+            id="certificate"
+            class="certificate"
+        >
+
+            <div class="certificate-border">
+
+                <div class="certificate-header">
+
+                    <span class="certificate-brand">
+                        NEXPAK ACADEMY
+                    </span>
+
+                    <h1>
+                        Certificate of Completion
+                    </h1>
+
+                    <p>
+                        PROFESSIONAL SECURITY TRAINING
+                    </p>
+
+                </div>
+
+
+                <div class="certificate-content">
+
+                    <p class="certificate-intro">
+                        This certificate is presented to
+                    </p>
+
+                    <h2 id="certificateName">
+                        Academy Student
+                    </h2>
+
+                    <p>
+                        for successfully completing the
+                        Nexpak Academy Professional Security
+                        Technician Training Examination.
+                    </p>
+
+
+                    <div class="certificate-result">
+
+                        <div>
+
+                            <span>
+                                Examination Score
+                            </span>
+
+                            <strong id="certificateScore">
+                                0%
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                Examination Result
+                            </span>
+
+                            <strong>
+                                PASSED
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="certificate-date">
+
+                        <span>
+                            Date of Completion
+                        </span>
+
+                        <strong id="certificateDate">
+                            —
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="certificate-footer">
+
+                    <div class="certificate-signature">
+
+                        <span>
+                            Nexpak Academy
+                        </span>
+
+                        <small>
+                            Training &amp; Assessment
+                        </small>
+
+                    </div>
+
+
+                    <div class="certificate-reference">
+
+                        <span>
+                            Certificate Reference
+                        </span>
+
+                        <strong id="certificateReference">
+                            NPA-000000
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="certificate-actions">
+
+            <button
+                type="button"
+                id="printCertificate"
+                class="print-certificate"
+            >
+                Print Certificate
+            </button>
+
+
+            <button
+                type="button"
+                id="backToResults"
+                class="back-results"
+            >
+                Back to Results
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         EXAM JAVASCRIPT
+    ========================================== -->
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const examForm =
+                    document.getElementById(
+                        "academyExam"
+                    );
+
+
+                const examResults =
+                    document.getElementById(
+                        "examResults"
+                    );
+
+
+                const certificateSection =
+                    document.getElementById(
+                        "certificateSection"
+                    );
+
+
+                const submitExam =
+                    document.getElementById(
+                        "submitExam"
+                    );
+
+
+                const retryExam =
+                    document.getElementById(
+                        "retryExam"
+                    );
+
+
+                const certificateButton =
+                    document.getElementById(
+                        "certificateButton"
+                    );
+
+
+                const printCertificate =
+                    document.getElementById(
+                        "printCertificate"
+                    );
+
+
+                const backToResults =
+                    document.getElementById(
+                        "backToResults"
+                    );
+
+
+                const scorePercentage =
+                    document.getElementById(
+                        "scorePercentage"
+                    );
+
+
+                const scoreFraction =
+                    document.getElementById(
+                        "scoreFraction"
+                    );
+
+
+                const correctAnswers =
+                    document.getElementById(
+                        "correctAnswers"
+                    );
+
+
+                const incorrectAnswers =
+                    document.getElementById(
+                        "incorrectAnswers"
+                    );
+
+
+                const resultStatus =
+                    document.getElementById(
+                        "resultStatus"
+                    );
+
+
+                const resultsTitle =
+                    document.getElementById(
+                        "resultsTitle"
+                    );
+
+
+                const resultsMessage =
+                    document.getElementById(
+                        "resultsMessage"
+                    );
+
+
+                const passMessage =
+                    document.getElementById(
+                        "passMessage"
+                    );
+
+
+                const failMessage =
+                    document.getElementById(
+                        "failMessage"
+                    );
+
+
+                const resultsIcon =
+                    document.getElementById(
+                        "resultsIcon"
+                    );
+
+
+                const certificateScore =
+                    document.getElementById(
+                        "certificateScore"
+                    );
+
+
+                const certificateDate =
+                    document.getElementById(
+                        "certificateDate"
+                    );
+
+
+                const certificateReference =
+                    document.getElementById(
+                        "certificateReference"
+                    );
+
+
+                /*
+                ========================================
+                ANSWER KEY
+                ========================================
+                */
+
+                const answerKey = {
+
+                    q1: "B",
+                    q2: "A",
+                    q3: "C",
+                    q4: "B",
+                    q5: "A",
+                    q6: "B",
+                    q7: "A",
+                    q8: "A",
+                    q9: "B",
+                    q10: "A",
+
+                    q11: "B",
+                    q12: "B",
+                    q13: "B",
+                    q14: "B",
+                    q15: "A",
+                    q16: "A",
+                    q17: "A",
+                    q18: "A",
+                    q19: "A",
+                    q20: "B",
+
+                    q21: "A",
+                    q22: "A",
+                    q23: "A",
+                    q24: "A",
+                    q25: "A",
+                    q26: "A",
+                    q27: "B",
+                    q28: "A",
+                    q29: "A",
+                    q30: "B",
+
+                    q31: "A",
+                    q32: "A",
+                    q33: "A",
+                    q34: "A",
+                    q35: "A",
+                    q36: "A",
+                    q37: "A",
+                    q38: "A",
+                    q39: "A",
+                    q40: "A",
+
+                    q41: "A",
+                    q42: "A",
+                    q43: "A",
+                    q44: "A",
+                    q45: "A",
+                    q46: "A",
+                    q47: "A",
+                    q48: "A",
+                    q49: "A",
+                    q50: "B"
+
+                };
+
+
+                const PASS_MARK = 70;
+
+
+                /*
+                ========================================
+                SUBMIT EXAM
+                ========================================
+                */
+
+                if (submitExam) {
+
+                    submitExam.addEventListener(
+                        "click",
+                        function () {
+
+                            let correct = 0;
+
+                            const total =
+                                Object.keys(
+                                    answerKey
+                                ).length;
+
+
+                            /*
+                            CHECK EVERY ANSWER
+                            */
+
+                            for (
+                                const question
+                                in answerKey
+                            ) {
+
+                                const selected =
+                                    examForm.querySelector(
+                                        "input[name='" +
+                                        question +
+                                        "']:checked"
+                                    );
+
+
+                                if (
+                                    selected &&
+                                    selected.value ===
+                                    answerKey[question]
+                                ) {
+
+                                    correct++;
+
+                                }
+
+                            }
+
+
+                            const incorrect =
+                                total - correct;
+
+
+                            const percentage =
+                                Math.round(
+                                    (
+                                        correct /
+                                        total
+                                    ) * 100
+                                );
+
+
+                            /*
+                            DISPLAY SCORE
+                            */
+
+                            scorePercentage.textContent =
+                                percentage + "%";
+
+
+                            scoreFraction.textContent =
+                                correct +
+                                " / " +
+                                total;
+
+
+                            correctAnswers.textContent =
+                                correct;
+
+
+                            incorrectAnswers.textContent =
+                                incorrect;
+
+
+                            /*
+                            DETERMINE RESULT
+                            */
+
+                            if (
+                                percentage >=
+                                PASS_MARK
+                            ) {
+
+                                resultsTitle.textContent =
+                                    "Examination Passed";
+
+
+                                resultsMessage.textContent =
+                                    "Excellent work. You have achieved " +
+                                    percentage +
+                                    "% and met the required pass mark.";
+
+
+                                resultStatus.textContent =
+                                    "PASSED";
+
+
+                                resultsIcon.textContent =
+                                    "✓";
+
+
+                                passMessage.style.display =
+                                    "block";
+
+
+                                failMessage.style.display =
+                                    "none";
+
+
+                                createCertificate(
+                                    percentage
+                                );
+
+                            } else {
+
+                                resultsTitle.textContent =
+                                    "Examination Not Passed";
+
+
+                                resultsMessage.textContent =
+                                    "Your score is " +
+                                    percentage +
+                                    "%. The required pass mark is 70%.";
+
+
+                                resultStatus.textContent =
+                                    "NOT PASSED";
+
+
+                                resultsIcon.textContent =
+                                    "✕";
+
+
+                                passMessage.style.display =
+                                    "none";
+
+
+                                failMessage.style.display =
+                                    "block";
+
+                            }
+
+
+                            /*
+                            HIDE EXAM
+                            */
+
+                            examForm.style.display =
+                                "none";
+
+
+                            examResults.style.display =
+                                "block";
+
+
+                            window.scrollTo({
+                                top: 0,
+                                behavior: "smooth"
+                            });
+
+                        }
+                    );
+
+                }
+
+
+                /*
+                ========================================
+                CREATE CERTIFICATE
+                ========================================
+                */
+
+                function createCertificate(
+                    percentage
+                ) {
+
+                    certificateScore.textContent =
+                        percentage + "%";
+
+
+                    const today =
+                        new Date();
+
+
+                    certificateDate.textContent =
+                        today.toLocaleDateString(
+                            "en-ZA",
+                            {
+                                day: "2-digit",
+                                month: "long",
+                                year: "numeric"
+                            }
+                        );
+
+
+                    const randomNumber =
+                        Math.floor(
+                            100000 +
+                            Math.random() *
+                            900000
+                        );
+
+
+                    certificateReference.textContent =
+                        "NPA-" +
+                        randomNumber;
+
+                }
+
+
+                /*
+                ========================================
+                VIEW CERTIFICATE
+                ========================================
+                */
+
+                if (certificateButton) {
+
+                    certificateButton.addEventListener(
+                        "click",
+                        function () {
+
+                            examResults.style.display =
+                                "none";
+
+
+                            certificateSection.style.display =
+                                "block";
+
+
+                            window.scrollTo({
+                                top: 0,
+                                behavior: "smooth"
+                            });
+
+                        }
+                    );
+
+                }
+
+
+                /*
+                ===============
