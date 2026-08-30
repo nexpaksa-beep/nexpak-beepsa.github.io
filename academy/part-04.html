@@ -607,4 +607,492 @@ strong { color: #ffffff; }
    CONTENT TYPOGRAPHY
 ========================================================= */
 .content-section p { max-width: 850px; margin-bottom: 20px; color: var(--academy-text-soft); }
-.content-
+.content-section strong { color: var(--academy-text); }
+.content-section ul, .content-section ol {
+    max-width: 850px; margin: 20px 0 25px 22px; color: var(--academy-text-soft);
+}
+.content-section li { margin-bottom: 10px; padding-left: 5px; }
+.content-section li::marker { color: var(--academy-accent); }
+
+/* =========================================================
+   CONSTRUCTION GRID
+========================================================= */
+.construction-grid {
+    display: grid; grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 20px; margin-top: 35px;
+}
+.construction-card {
+    position: relative; overflow: hidden; padding: 28px;
+    border: 1px solid var(--academy-border);
+    border-radius: var(--academy-radius);
+    background: linear-gradient(145deg, rgba(18,34,45,.96), rgba(7,16,24,.96));
+    box-shadow: var(--academy-shadow);
+    transition: transform var(--academy-transition), border-color var(--academy-transition), box-shadow var(--academy-transition);
+}
+.construction-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(245,158,11,.35);
+    box-shadow: 0 30px 80px rgba(0,0,0,.45);
+}
+.construction-card::before {
+    content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+    background: linear-gradient(90deg, var(--academy-accent), transparent);
+}
+.card-icon {
+    width: 48px; height: 48px; display: grid; place-items: center;
+    margin-bottom: 20px; border-radius: 14px;
+    background: rgba(245,158,11,.1);
+    border: 1px solid rgba(245,158,11,.2);
+    color: var(--academy-accent-light); font-size: 22px;
+}
+.construction-card h3 { margin-bottom: 10px; font-size: 20px; }
+.construction-card p { margin: 0; font-size: 14px; }
+
+/* =========================================================
+   PRACTICAL STEP CARDS
+========================================================= */
+.practical-steps { display: grid; gap: 16px; margin-top: 35px; }
+.practical-step {
+    display: grid; grid-template-columns: 64px 1fr; gap: 20px;
+    padding: 24px;
+    border: 1px solid var(--academy-border);
+    border-radius: var(--academy-radius-small);
+    background: rgba(255,255,255,.025);
+    transition: background var(--academy-transition), border-color var(--academy-transition);
+}
+.practical-step:hover { background: rgba(245,158,11,.045); border-color: rgba(245,158,11,.22); }
+.step-number {
+    width: 54px; height: 54px; display: grid; place-items: center;
+    border-radius: 14px;
+    background: linear-gradient(145deg, var(--academy-accent), var(--academy-accent-dark));
+    color: #111; font-size: 18px; font-weight: 900;
+}
+.practical-step h3 { margin-bottom: 7px; font-size: 19px; }
+.practical-step p { margin: 0; }
+
+/* =========================================================
+   TECHNICAL CALLOUT
+========================================================= */
+.technical-callout {
+    margin: 35px 0; padding: 30px;
+    border: 1px solid rgba(56,189,248,.2); border-left: 4px solid var(--academy-blue);
+    border-radius: var(--academy-radius-small);
+    background: rgba(56,189,248,.055);
+}
+.technical-callout h3 { margin-bottom: 10px; color: var(--academy-blue); }
+.technical-callout p { margin-bottom: 0; }
+
+/* =========================================================
+   SAFETY CALLOUT
+========================================================= */
+.safety-callout {
+    margin: 35px 0; padding: 30px;
+    border: 1px solid rgba(239,68,68,.2); border-left: 4px solid var(--academy-red);
+    border-radius: var(--academy-radius-small);
+    background: rgba(239,68,68,.055);
+}
+.safety-callout h3 { margin-bottom: 10px; color: #f87171; }
+.safety-callout p { margin-bottom: 0; }
+
+/* =========================================================
+   PROFESSIONAL TIP
+========================================================= */
+.professional-tip {
+    position: relative; margin: 35px 0;
+    padding: 28px 30px 28px 70px;
+    border: 1px solid rgba(34,197,94,.2);
+    border-radius: var(--academy-radius-small);
+    background: rgba(34,197,94,.045);
+}
+.professional-tip::before {
+    content: "✓"; position: absolute;
+    left: 22px; top: 25px; width: 34px; height: 34px;
+    display: grid; place-items: center; border-radius: 50%;
+    background: rgba(34,197,94,.14);
+    color: var(--academy-green); font-weight: 900;
+}
+.professional-tip h3 { margin-bottom: 8px; color: var(--academy-green); }
+.professional-tip p { margin-bottom: 0; }
+
+/* =========================================================
+   MATERIALS / COMPONENTS
+========================================================= */
+.material-grid {
+    display: grid; grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 18px; margin-top: 30px;
+}
+.material-item {
+    padding: 22px;
+    border: 1px solid var(--academy-border);
+    border-radius: var(--academy-radius-small);
+    background: rgba(255,255,255,.025);
+}
+.material-item h3 { margin-bottom: 8px; font-size: 17px; }
+.material-item p { margin: 0; font-size: 14px; }
+
+/* =========================================================
+   SPECIFICATION TABLE
+========================================================= */
+table { width: 100%; min-width: 600px; border-collapse: collapse; }
+th, td {
+    padding: 15px 18px; text-align: left;
+    border-bottom: 1px solid var(--academy-border);
+}
+th {
+    background: rgba(245,158,11,.08);
+    color: var(--academy-accent-light); font-size: 13px;
+    text-transform: uppercase; letter-spacing: .06em;
+}
+td { color: var(--academy-text-soft); font-size: 14px; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(255,255,255,.025); }
+
+/* =========================================================
+   DIAGRAM / VISUAL PANEL
+========================================================= */
+.diagram-panel {
+    position: relative; min-height: 300px;
+    display: grid; place-items: center;
+    margin: 35px 0; padding: 35px; overflow: hidden;
+    border: 1px solid var(--academy-border);
+    border-radius: var(--academy-radius);
+    background: radial-gradient(circle at center, rgba(245,158,11,.07), transparent 65%), var(--academy-panel);
+}
+.diagram-panel::before {
+    content: ""; position: absolute; inset: 18px;
+    border: 1px dashed rgba(245,158,11,.18); border-radius: 14px;
+}
+.diagram-content { position: relative; z-index: 2; text-align: center; }
+.diagram-content strong { display: block; margin-bottom: 8px; font-size: 22px; }
+.diagram-content span { color: var(--academy-text-muted); font-size: 14px; }
+
+/* =========================================================
+   QUOTE / KEY PRINCIPLE
+========================================================= */
+.key-principle {
+    margin: 40px 0; padding: 35px; text-align: center;
+    border: 1px solid rgba(245,158,11,.22);
+    border-radius: var(--academy-radius);
+    background: linear-gradient(135deg, rgba(245,158,11,.07), rgba(255,255,255,.02));
+}
+.key-principle p {
+    max-width: 800px; margin: auto; color: var(--academy-text);
+    font-size: clamp(20px, 3vw, 28px); line-height: 1.35; font-weight: 700;
+}
+
+/* =========================================================
+   MODULE NAVIGATION
+========================================================= */
+.part-navigation {
+    width: min(1180px, calc(100% - 40px));
+    margin: 0 auto; padding: 50px 0 70px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 20px; border-top: 1px solid var(--academy-border);
+}
+.nav-button {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 170px; padding: 14px 22px;
+    border: 1px solid var(--academy-border-strong);
+    border-radius: 999px; background: rgba(255,255,255,.035);
+    color: var(--academy-text); font-size: 14px; font-weight: 800;
+    transition: transform var(--academy-transition), background var(--academy-transition), border-color var(--academy-transition);
+}
+.nav-button:hover { transform: translateY(-3px); border-color: var(--academy-accent); background: rgba(245,158,11,.08); }
+.nav-button.next {
+    background: linear-gradient(135deg, var(--academy-accent), var(--academy-accent-dark));
+    border-color: transparent; color: #111;
+}
+.nav-button.next:hover { box-shadow: 0 12px 35px rgba(245,158,11,.22); }
+
+/* =========================================================
+   FOOTER
+========================================================= */
+.academy-footer {
+    padding: 40px 0; border-top: 1px solid var(--academy-border); background: rgba(0,0,0,.25);
+}
+.academy-footer-inner {
+    width: min(1180px, calc(100% - 40px));
+    margin: auto; display: flex; justify-content: space-between;
+    align-items: center; gap: 20px;
+}
+.academy-footer p { color: var(--academy-text-muted); font-size: 13px; }
+.academy-footer strong { color: var(--academy-text); }
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--academy-bg);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--academy-border-strong);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--academy-accent);
+}
+
+</style>
+</head>
+
+<body>
+    <!-- =========================================
+         ACADEMY HEADER
+    ========================================== -->
+    <header class="academy-header">
+        <div class="header-content">
+            <div class="academy-logo">
+                NEXPAK
+                <span>SECURITY ACADEMY</span>
+            </div>
+            <div class="course-label">
+                ELECTRIC FENCING
+            </div>
+        </div>
+    </header>
+
+    <!-- =========================================
+         COURSE HERO
+    ========================================== -->
+    <section class="course-hero">
+        <div class="hero-content">
+            <span class="course-badge">ELECTRIC FENCING COURSE</span>
+            <h1>Part 04</h1>
+            <h2>Practical Fence Construction</h2>
+            <p>
+                This section introduces the practical construction
+                principles used when installing an electric fence,
+                including posts, brackets, insulators, conductors,
+                mechanical structures and general installation practices.
+            </p>
+        </div>
+    </section>
+
+    <!-- =========================================
+         COURSE LAYOUT
+    ========================================== -->
+    <div class="course-layout">
+
+        <!-- =====================================
+             SIDEBAR
+        ====================================== -->
+        <aside class="sidebar">
+            <div class="sidebar-box">
+                <div class="sidebar-title">
+                    PART 04 CURRICULUM
+                </div>
+                <ul class="lesson-nav">
+                    <li><a href="#construction">01. Fence Construction</a></li>
+                    <li><a href="#posts">02. Fence Posts</a></li>
+                    <li><a href="#brackets">03. Brackets</a></li>
+                    <li><a href="#insulators">04. Insulators</a></li>
+                    <li><a href="#conductors">05. Fence Conductors</a></li>
+                    <li><a href="#tension">06. Conductor Tension</a></li>
+                    <li><a href="#corners">07. Corners &amp; Direction Changes</a></li>
+                    <li><a href="#mechanical">08. Mechanical Strength</a></li>
+                    <li><a href="#clearance">09. Clearances</a></li>
+                    <li><a href="#vegetation">10. Vegetation Management</a></li>
+                    <li><a href="#warning">11. Warning Signs</a></li>
+                    <li><a href="#quality">12. Installation Quality</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- =====================================
+             MAIN CONTENT
+        ====================================== -->
+        <main class="lesson-content">
+
+            <!-- =================================
+                 01. FENCE CONSTRUCTION
+            ================================== -->
+            <section id="construction" class="lesson-section">
+                <div class="section-number">01</div>
+                <h2>Fence Construction</h2>
+                <p>
+                    Practical fence construction begins once the
+                    site assessment and installation plan have
+                    been completed.
+                </p>
+                <p>
+                    The objective is to construct a mechanically
+                    stable fence structure that can support the
+                    electric fence conductors while maintaining
+                    the required clearances and security function.
+                </p>
+
+                <div class="info-card">
+                    <h3>Main Construction Components</h3>
+                    <ul>
+                        <li>Fence posts</li>
+                        <li>Brackets and support structures</li>
+                        <li>Insulators</li>
+                        <li>Electric fence conductors</li>
+                        <li>Tensioning components</li>
+                        <li>Corner and end supports</li>
+                        <li>Gate arrangements</li>
+                        <li>Warning signs</li>
+                    </ul>
+                </div>
+
+                <h3>Construction Sequence</h3>
+                <p>
+                    The construction sequence should follow the
+                    approved site plan. Posts and support
+                    structures are established first, followed
+                    by the installation of brackets, insulators
+                    and conductors.
+                </p>
+                <p>
+                    Each stage should be inspected before moving
+                    to the next stage. This prevents small
+                    construction errors from becoming larger
+                    problems later in the installation.
+                </p>
+
+                <div class="warning-card">
+                    <h3>Important</h3>
+                    <p>
+                        Electric fence construction must comply
+                        with the applicable South African
+                        requirements, relevant standards and the
+                        manufacturer's installation instructions.
+                        High-voltage connections and testing must
+                        only be performed by suitably qualified or
+                        authorised persons.
+                    </p>
+                </div>
+            </section>
+
+            <!-- =================================
+                 02. FENCE POSTS
+            ================================== -->
+            <section id="posts" class="lesson-section">
+                <div class="section-number">02</div>
+                <h2>Fence Posts</h2>
+                <p>
+                    Fence posts provide the primary mechanical
+                    support for the electric fence structure.
+                    Their position, strength and alignment have
+                    a direct effect on the finished installation.
+                </p>
+                <p>
+                    Posts may form part of a dedicated electric
+                    fence structure or may be mounted to an
+                    existing wall, fence or other suitable
+                    structure, depending on the design.
+                </p>
+
+                <div class="info-card">
+                    <h3>Post Assessment</h3>
+                    <ul>
+                        <li>Structural condition</li>
+                        <li>Material and corrosion resistance</li>
+                        <li>Correct positioning</li>
+                        <li>Vertical alignment</li>
+                        <li>Mechanical stability</li>
+                        <li>Compatibility with the selected brackets and insulators</li>
+                    </ul>
+                </div>
+
+                <h3>Post Alignment</h3>
+                <p>
+                    Posts should be positioned and aligned so that
+                    the completed fence follows the planned
+                    perimeter smoothly.
+                </p>
+                <p>
+                    Poor alignment can create uneven conductor
+                    tension, unnecessary mechanical stress and
+                    an untidy finished installation.
+                </p>
+
+                <h3>Existing Structures</h3>
+                <p>
+                    Where posts or brackets are attached to an
+                    existing wall or fence, the supporting
+                    structure must first be assessed to ensure
+                    that it is suitable for the additional load.
+                </p>
+            </section>
+
+            <!-- =================================
+                 03. BRACKETS
+            ================================== -->
+            <section id="brackets" class="lesson-section">
+                <div class="section-number">03</div>
+                <h2>Brackets</h2>
+                <p>
+                    Brackets position the electric fence
+                    conductors relative to the supporting
+                    structure.
+                </p>
+                <p>
+                    The bracket design must be appropriate for
+                    the installation and must provide sufficient
+                    mechanical support for the conductors and
+                    insulators.
+                </p>
+
+                <div class="info-card">
+                    <h3>Bracket Considerations</h3>
+                    <ul>
+                        <li>Correct bracket type</li>
+                        <li>Suitable mounting surface</li>
+                        <li>Mechanical strength</li>
+                        <li>Correct spacing</li>
+                        <li>Alignment</li>
+                        <li>Corrosion resistance</li>
+                        <li>Compatibility with insulators</li>
+                    </ul>
+                </div>
+
+                <h3>Bracket Alignment</h3>
+                <p>
+                    Brackets should form a consistent line along
+                    the perimeter wherever the design requires
+                    uniform conductor positioning.
+                </p>
+                <p>
+                    Corners, changes in direction and changes in
+                    elevation require additional attention because
+                    mechanical forces can differ from those on
+                    straight sections.
+                </p>
+
+                <div class="warning-card">
+                    <h3>Check Before Conductors</h3>
+                    <p>
+                        Inspect the supporting structure and
+                        bracket installation before installing
+                        conductors. Loose or poorly supported
+                        brackets should be corrected before the
+                        fence wiring stage begins.
+                    </p>
+                </div>
+            </section>
+
+            <!-- =================================
+                 04. INSULATORS
+            ================================== -->
+            <section id="insulators" class="lesson-section">
+                <div class="section-number">04</div>
+                <h2>Insulators</h2>
+                <p>
+                    Insulators electrically separate the fence
+                    conductors from the supporting structure.
+                    They are essential for preventing unwanted
+                    electrical leakage through posts, brackets
+                    and other conductive components.
+                </p>
+                <p>
+                    The correct insulator must be selected for
+                    the conductor arrangement, supporting
+                    structure and environmental conditions of
+                    the installation.
+                </p>
+
+      
