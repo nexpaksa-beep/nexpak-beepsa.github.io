@@ -5999,10 +5999,47 @@ main {
     }
 
 
-    .requirements-table {
+      .requirements-table {
 
         display:
             block;
 
         overflow-x:
+            auto;
+
+        white-space:
+            nowrap;
+
+    }
+
+
+    .documentation-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .professional-standard {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .responsibility-panel {
+
+        padding:
+            22px;
+
+    }
+
+}
+
+
+/* =========================================================
+   END PART 6
+   ========================================================= */
            
