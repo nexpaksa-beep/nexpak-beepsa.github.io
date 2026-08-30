@@ -3190,3 +3190,590 @@ if (
         );
 
         }
+    /* =========================================================
+   PART 6 — QUICK ACTIONS + LEAD CAPTURE
+========================================================= */
+
+    function handleQuickAction(action) {
+
+        if (!action) return;
+
+
+        /* ================================================
+           GET A QUOTE
+        ================================================ */
+
+        if (action === "quote") {
+
+            addUserMessage(
+                "I'd like to get a quote."
+            );
+
+            setTimeout(function() {
+
+                addBotMessage(
+                    "Absolutely! 👍\n\n" +
+                    "I can help you start a quote. " +
+                    "First, what type of security solution " +
+                    "are you interested in?\n\n" +
+                    "• Electric Fencing\n" +
+                    "• CCTV\n" +
+                    "• Gate Automation\n" +
+                    "• Access Control\n" +
+                    "• Alarm System\n" +
+                    "• Equestrian Fencing"
+                );
+
+                showLeadForm();
+
+            }, 400);
+
+            return;
+        }
+
+
+        /* ================================================
+           VIEW PRODUCTS
+        ================================================ */
+
+        if (action === "products") {
+
+            addUserMessage(
+                "Show me your products."
+            );
+
+            setTimeout(function() {
+
+                addBotMessage(
+                    "Sure! 🛡️ Here's what Nexpak can help you with:\n\n" +
+                    "⚡ Electric Fencing\n" +
+                    "📹 CCTV & Surveillance\n" +
+                    "🚪 Gate Automation\n" +
+                    "🔐 Access Control\n" +
+                    "🚨 Alarm Systems\n" +
+                    "📞 Intercom Systems\n" +
+                    "🐴 Equestrian Fencing\n\n" +
+                    "Tell me which product you're interested in " +
+                    "and I'll give you more information."
+                );
+
+            }, 400);
+
+            return;
+        }
+
+
+        /* ================================================
+           CONTACT US
+        ================================================ */
+
+        if (action === "contact") {
+
+            addUserMessage(
+                "I want to contact Nexpak."
+            );
+
+            setTimeout(function() {
+
+                addBotMessage(
+                    "Of course! 📞\n\n" +
+                    "You can contact Nexpak Security Solutions:\n\n" +
+                    "📱 Phone: " +
+                    CONFIG.phone +
+                    "\n\n" +
+                    "💬 WhatsApp: " +
+                    CONFIG.whatsapp +
+                    "\n\n" +
+                    "✉️ Email: " +
+                    CONFIG.email +
+                    "\n\n" +
+                    "Our team will be happy to assist you."
+                );
+
+            }, 400);
+
+            return;
+        }
+
+    }
+
+
+    /* =========================================================
+       SHOW LEAD FORM
+    ========================================================= */
+
+    function showLeadForm() {
+
+        const form =
+            document.getElementById(
+                "nexpak-lead-form"
+            );
+
+        if (!form) return;
+
+
+        form.classList.add(
+            "visible"
+        );
+
+
+        const nameInput =
+            document.getElementById(
+                "nexpak-lead-name"
+            );
+
+
+        if (nameInput) {
+
+            setTimeout(function() {
+
+                nameInput.focus();
+
+            }, 150);
+
+        }
+
+
+        scrollChatToBottom();
+
+    }
+
+
+    /* =========================================================
+       HIDE LEAD FORM
+    ========================================================= */
+
+    function hideLeadForm() {
+
+        const form =
+            document.getElementById(
+                "nexpak-lead-form"
+            );
+
+        if (!form) return;
+
+
+        form.classList.remove(
+            "visible"
+        );
+
+    }
+
+
+    /* =========================================================
+       SKIP LEAD FORM
+    ========================================================= */
+
+    function skipLeadForm() {
+
+        hideLeadForm();
+
+
+        addBotMessage(
+            "No problem! 😊 You can continue chatting with me " +
+            "without leaving your details."
+        );
+
+    }
+
+
+    /* =========================================================
+       SUBMIT LEAD
+    ========================================================= */
+
+    function submitLead() {
+
+        const nameInput =
+            document.getElementById(
+                "nexpak-lead-name"
+            );
+
+        const emailInput =
+            document.getElementById(
+                "nexpak-lead-email"
+            );
+
+        const phoneInput =
+            document.getElementById(
+                "nexpak-lead-phone"
+            );
+
+        const interestInput =
+            document.getElementById(
+                "nexpak-lead-interest"
+            );
+
+
+        if (!nameInput || !emailInput) {
+
+            return;
+
+        }
+
+
+        const name =
+            nameInput.value.trim();
+
+
+        const email =
+            emailInput.value.trim();
+
+
+        const phone =
+            phoneInput
+                ? phoneInput.value.trim()
+                : "";
+
+
+        const interest =
+            interestInput
+                ? interestInput.value.trim()
+                : "";
+
+
+        /* ================================================
+           VALIDATION
+        ================================================ */
+
+        if (!name) {
+
+            alert(
+                "Please enter your name."
+            );
+
+            nameInput.focus();
+
+            return;
+
+        }
+
+
+        if (!email) {
+
+            alert(
+                "Please enter your email address."
+            );
+
+            emailInput.focus();
+
+            return;
+
+        }
+
+
+        const emailPattern =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+        if (
+            !emailPattern.test(email)
+        ) {
+
+            alert(
+                "Please enter a valid email address."
+            );
+
+            emailInput.focus();
+
+            return;
+
+        }
+
+
+        /* ================================================
+           SAVE CUSTOMER INFORMATION
+        ================================================ */
+
+        chatState.userInfo = {
+
+            name: name,
+
+            email: email,
+
+            phone: phone,
+
+            interest: interest,
+
+            capturedAt:
+                new Date().toISOString()
+
+        };
+
+
+        chatState.leadCaptured =
+            true;
+
+
+        /* ================================================
+           SAVE LEAD LOCALLY
+        ================================================ */
+
+        try {
+
+            localStorage.setItem(
+
+                "nexpak_chat_lead",
+
+                JSON.stringify(
+                    chatState.userInfo
+                )
+
+            );
+
+        } catch (error) {
+
+            console.warn(
+                "Nexpak chatbot: unable to save lead.",
+                error
+            );
+
+        }
+
+
+        hideLeadForm();
+
+
+        /* ================================================
+           CLEAR FORM
+        ================================================ */
+
+        nameInput.value = "";
+
+        emailInput.value = "";
+
+
+        if (phoneInput) {
+
+            phoneInput.value = "";
+
+        }
+
+
+        if (interestInput) {
+
+            interestInput.value = "";
+
+        }
+
+
+        /* ================================================
+           CONFIRMATION MESSAGE
+        ================================================ */
+
+        addBotMessage(
+
+            "Thanks, " +
+            name +
+            "! 😊\n\n" +
+
+            "I've received your details and your enquiry " +
+            "has been recorded." +
+
+            "\n\n" +
+
+            "Our team can contact you at " +
+            email +
+
+            (
+                phone
+                    ? " or " + phone + "."
+                    : "."
+            ) +
+
+            "\n\n" +
+
+            "Is there anything else you'd like to know " +
+            "about our security solutions?"
+
+        );
+
+
+        /*
+         * Send the lead to any connected
+         * backend/API if one is configured.
+         */
+
+        sendLeadToBackend(
+            chatState.userInfo
+        );
+
+    }
+
+
+    /* =========================================================
+       BACKEND LEAD HOOK
+    ========================================================= */
+
+    function sendLeadToBackend(lead) {
+
+        /*
+         * This function is intentionally safe.
+         *
+         * The chatbot will still work even when
+         * no backend has been connected yet.
+         *
+         * When your Nexpak backend is ready,
+         * this is the place where the lead can
+         * be sent to your CRM / lead engine.
+         */
+
+        if (!CONFIG.leadEndpoint) {
+
+            console.log(
+                "Nexpak Lead:",
+                lead
+            );
+
+            return;
+
+        }
+
+
+        fetch(
+            CONFIG.leadEndpoint,
+            {
+
+                method: "POST",
+
+                headers: {
+
+                    "Content-Type":
+                        "application/json"
+
+                },
+
+                body:
+                    JSON.stringify(lead)
+
+            }
+
+        )
+
+        .then(function(response) {
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Lead request failed."
+                );
+
+            }
+
+            return response.json();
+
+        })
+
+        .then(function(data) {
+
+            console.log(
+                "Nexpak lead successfully sent.",
+                data
+            );
+
+        })
+
+        .catch(function(error) {
+
+            console.warn(
+                "Nexpak chatbot lead delivery failed.",
+                error
+            );
+
+        });
+
+    }
+
+
+    /* =========================================================
+       AUTO LEAD PROMPT
+    ========================================================= */
+
+    function startLeadPromptTimer() {
+
+        if (
+            !CONFIG.captureLeads
+        ) {
+
+            return;
+
+        }
+
+
+        setTimeout(function() {
+
+            if (
+                chatState.leadCaptured
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                chatState.messages.length > 1
+            ) {
+
+                addBotMessage(
+
+                    "If you'd like us to contact you about " +
+                    "your enquiry, you can leave your details " +
+                    "here. 👇"
+
+                );
+
+                showLeadForm();
+
+            }
+
+        }, CONFIG.leadDelay);
+
+    }
+
+
+    /* =========================================================
+       LOAD SAVED LEAD
+    ========================================================= */
+
+    function loadSavedLead() {
+
+        try {
+
+            const saved =
+                localStorage.getItem(
+                    "nexpak_chat_lead"
+                );
+
+
+            if (!saved) return;
+
+
+            const lead =
+                JSON.parse(saved);
+
+
+            if (!lead || !lead.email) {
+
+                return;
+
+            }
+
+
+            chatState.userInfo =
+                lead;
+
+
+            chatState.leadCaptured =
+                true;
+
+
+        } catch (error) {
+
+            console.warn(
+                "Nexpak chatbot: unable to load saved lead.",
+                error
+            );
+
+        }
+
+    }
