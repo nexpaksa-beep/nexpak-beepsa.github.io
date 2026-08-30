@@ -279,3 +279,39 @@ window.NexpakSEOEngine = {
 document.addEventListener("DOMContentLoaded", () => {
     initializeSEOEngine();
 });
+
+window.NexpakSEOEngine = {
+    load: initializeSEOEngine,
+    product: createProductSchema,
+    faq: createFAQSchema,
+    service: createServiceSchema,
+    breadcrumb: createBreadcrumbSchema
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+    initializeSEOEngine();
+});
+window.NexpakSEOEngine = {
+    load: initializeSEOEngine,
+    product: createProductSchema,
+    faq: createFAQSchema,
+    service: createServiceSchema,
+    breadcrumb: createBreadcrumbSchema
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+    initializeSEOEngine();
+});
+
+window.NexpakSEOEngine = {
+    load: initializeSEOEngine,
+    product: createProductSchema,
+    faq: createFAQSchema,
+    service: createServiceSchema,
+    breadcrumb: createBreadcrumbSchema
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+    initializeSEOEngine();
+});
+
