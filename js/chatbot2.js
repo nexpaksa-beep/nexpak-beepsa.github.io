@@ -4470,3 +4470,532 @@ if (
         }
 
     };
+
+    /* =========================================================
+   PART 8 — FLOATING AI BOT ANIMATION + FINAL CONTROLS
+========================================================= */
+
+    /* =========================================================
+       FLOATING BOT MOVEMENT
+    ========================================================= */
+
+    function startBotMovement() {
+
+        const bot =
+            document.getElementById(
+                "nexpak-chatbot"
+            );
+
+        if (!bot) return;
+
+
+        /*
+         * Keep the chatbot moving gently around
+         * the page without interfering with
+         * normal customer interaction.
+         */
+
+        let direction = 1;
+
+        setInterval(function() {
+
+            if (chatState.isOpen) {
+
+                return;
+
+            }
+
+
+            const current =
+                bot.classList.contains(
+                    "nexpak-bot-moving"
+                );
+
+
+            if (!current) {
+
+                bot.classList.add(
+                    "nexpak-bot-moving"
+                );
+
+            }
+
+
+            direction *= -1;
+
+
+            bot.style.setProperty(
+                "--nexpak-float-direction",
+                direction
+            );
+
+        }, 5000);
+
+    }
+
+
+    /* =========================================================
+       WAVE ANIMATION
+    ========================================================= */
+
+    function startWaveAnimation() {
+
+        const hand =
+            document.querySelector(
+                ".nexpak-bot-hand"
+            );
+
+
+        if (!hand) return;
+
+
+        /*
+         * Wave every few seconds to attract
+         * attention without being annoying.
+         */
+
+        setInterval(function() {
+
+            if (chatState.isOpen) {
+
+                return;
+
+            }
+
+
+            hand.classList.remove(
+                "nexpak-wave"
+            );
+
+
+            void hand.offsetWidth;
+
+
+            hand.classList.add(
+                "nexpak-wave"
+            );
+
+
+        }, 7000);
+
+
+        /*
+         * Initial wave.
+         */
+
+        setTimeout(function() {
+
+            hand.classList.add(
+                "nexpak-wave"
+            );
+
+        }, 1800);
+
+    }
+
+
+    /* =========================================================
+       BOT GREETING BUBBLE
+    ========================================================= */
+
+    function showFloatingGreeting() {
+
+        const greeting =
+            document.getElementById(
+                "nexpak-floating-greeting"
+            );
+
+
+        if (!greeting) return;
+
+
+        if (
+            sessionStorage.getItem(
+                "nexpak_greeting_seen"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        setTimeout(function() {
+
+            if (chatState.isOpen) {
+
+                return;
+
+            }
+
+
+            greeting.classList.add(
+                "visible"
+            );
+
+
+            try {
+
+                sessionStorage.setItem(
+                    "nexpak_greeting_seen",
+                    "true"
+                );
+
+            } catch (error) {
+
+                console.warn(
+                    "Nexpak chatbot: session storage unavailable."
+                );
+
+            }
+
+
+            setTimeout(function() {
+
+                greeting.classList.remove(
+                    "visible"
+                );
+
+            }, 6500);
+
+        }, 4000);
+
+    }
+
+
+    /* =========================================================
+       STOP GREETING WHEN CHAT OPENS
+    ========================================================= */
+
+    function setupGreetingControl() {
+
+        const toggle =
+            document.getElementById(
+                "nexpak-chat-toggle"
+            );
+
+
+        if (!toggle) return;
+
+
+        toggle.addEventListener(
+            "click",
+            function() {
+
+                const greeting =
+                    document.getElementById(
+                        "nexpak-floating-greeting"
+                    );
+
+
+                if (greeting) {
+
+                    greeting.classList.remove(
+                        "visible"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       PREVENT CHAT FROM BLOCKING WHATSAPP
+    ========================================================= */
+
+    function protectWhatsAppButton() {
+
+        const chatbot =
+            document.getElementById(
+                "nexpak-chatbot"
+            );
+
+
+        if (!chatbot) return;
+
+
+        /*
+         * If a WhatsApp floating button exists,
+         * place the chatbot above it rather than
+         * directly over it.
+         */
+
+        const whatsapp =
+            document.querySelector(
+                "#whatsapp-button, " +
+                ".whatsapp-button, " +
+                ".whatsapp-float, " +
+                "[href*='wa.me'], " +
+                "[href*='whatsapp.com']"
+            );
+
+
+        if (!whatsapp) return;
+
+
+        chatbot.classList.add(
+            "nexpak-whatsapp-aware"
+        );
+
+
+        /*
+         * Detect its approximate position.
+         */
+
+        try {
+
+            const rect =
+                whatsapp.getBoundingClientRect();
+
+
+            if (
+                rect.bottom >
+                window.innerHeight - 180
+            ) {
+
+                chatbot.style.bottom =
+                    "95px";
+
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "Nexpak chatbot: WhatsApp position could not be detected."
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       RESPONSIVE POSITIONING
+    ========================================================= */
+
+    function updateBotPosition() {
+
+        const chatbot =
+            document.getElementById(
+                "nexpak-chatbot"
+            );
+
+
+        if (!chatbot) return;
+
+
+        if (
+            window.innerWidth <= 480
+        ) {
+
+            chatbot.classList.add(
+                "nexpak-mobile"
+            );
+
+        } else {
+
+            chatbot.classList.remove(
+                "nexpak-mobile"
+            );
+
+        }
+
+
+        protectWhatsAppButton();
+
+    }
+
+
+    /* =========================================================
+       WINDOW RESIZE
+    ========================================================= */
+
+    window.addEventListener(
+        "resize",
+        function() {
+
+            updateBotPosition();
+
+        }
+    );
+
+
+    /* =========================================================
+       CHAT OPEN STATE UPDATE
+    ========================================================= */
+
+    function monitorChatState() {
+
+        const chatbot =
+            document.getElementById(
+                "nexpak-chatbot"
+            );
+
+
+        if (!chatbot) return;
+
+
+        setInterval(function() {
+
+            if (
+                chatState.isOpen
+            ) {
+
+                chatbot.classList.add(
+                    "nexpak-chat-active"
+                );
+
+            } else {
+
+                chatbot.classList.remove(
+                    "nexpak-chat-active"
+                );
+
+            }
+
+        }, 250);
+
+    }
+
+
+    /* =========================================================
+       BOT STARTUP ANIMATIONS
+    ========================================================= */
+
+    function startBotAnimations() {
+
+        startBotMovement();
+
+        startWaveAnimation();
+
+        showFloatingGreeting();
+
+        setupGreetingControl();
+
+        monitorChatState();
+
+        updateBotPosition();
+
+    }
+
+
+    /* =========================================================
+       FINAL SAFETY CHECK
+    ========================================================= */
+
+    function chatbotSafetyCheck() {
+
+        const chatbot =
+            document.getElementById(
+                "nexpak-chatbot"
+            );
+
+
+        if (!chatbot) {
+
+            console.warn(
+                "Nexpak AI chatbot element was not found."
+            );
+
+            return false;
+
+        }
+
+
+        const input =
+            document.getElementById(
+                "nexpak-chat-input"
+            );
+
+
+        const messages =
+            document.getElementById(
+                "nexpak-chat-messages"
+            );
+
+
+        if (
+            !input ||
+            !messages
+        ) {
+
+            console.warn(
+                "Nexpak AI chatbot interface is incomplete."
+            );
+
+            return false;
+
+        }
+
+
+        return true;
+
+    }
+
+
+    /* =========================================================
+       FINAL INITIALIZATION HOOK
+    ========================================================= */
+
+    function finishChatbotSetup() {
+
+        if (
+            !chatbotSafetyCheck()
+        ) {
+
+            return;
+
+        }
+
+
+        startBotAnimations();
+
+
+        /*
+         * Re-check the WhatsApp position after
+         * the page has finished rendering.
+         */
+
+        setTimeout(
+            protectWhatsAppButton,
+            1000
+        );
+
+
+        setTimeout(
+            protectWhatsAppButton,
+            3000
+        );
+
+    }
+
+
+    /* =========================================================
+       START FINAL SETUP
+    ========================================================= */
+
+    if (
+        document.readyState ===
+        "loading"
+    ) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            finishChatbotSetup
+        );
+
+    } else {
+
+        finishChatbotSetup();
+
+    }
+
+
+    /* =========================================================
+       END OF NEXPAK AI CHATBOT
+    ========================================================= */
+
+})();
