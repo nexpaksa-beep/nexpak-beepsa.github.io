@@ -48,23 +48,26 @@ logo:
 
 description:
 
-"Security equipment supplier and solutions provider offering CCTV systems, electric fencing, gate automation, alarm systems, access control and security solutions.",
-
+"Security equipment supplier and solutions provider offering CCTV systems, electric fencing, gate automation, alarm systems, access control,security solutions, installations, products we supply are jva,stafix,nemtek,nice,ajax, roboguard, electric fencing,alarm systems,gate automation,online store, equestrian online store gor all horse fencing products in benoni,east rand, Johannesburg.",
+"centurion smart series gate motors, vantage smart swing gate,D5 smart,Dahua cameras,ids alarms,ajax hub 2,D10 smart,jva energizers,tape-joiners,tape buckles,40mm horse tape, electric fencing kits,dvr,nvr,ip cameras,indoor pir,outdoor pir, roboguard wireless beams affordable pricing,buy online, delivery in 2 to 3 working days,custom quotations,build your system online, electric fencing advanced training course online, technical support,benoni, Boksburg,springs, Kempton park, Edenvale, Germiston, Sandton,birchliegh, Johannesburg",
 
 
 phone:
 
-"082 000 0000",
+"083 630 8249",
 
 
 
 email:
 
-"sales@nexpak.co.za",
+"info@nexpaksolutions.co.za",
+ "nexpaksa@outlook.com",
 
 
 
 country:
+
+ "benoni","Boksburg ","Kempton park","Germiston","Edenvale","Gauteng",
 
 "South Africa"
 
@@ -150,13 +153,13 @@ return {
 
 "name":
 
-NexpakSEO.companyName,
+NexpaksecuritySEO.companyName,
 
 
 
 "url":
 
-NexpakSEO.website,
+NexpaksolutionsSEO.website,
 
 
 
@@ -234,7 +237,7 @@ return {
 
 "@type":
 
-"SecuritySystemSupplier",
+"SecuritySystemSupplier","online-store", "installation of security",
 
 
 
@@ -399,7 +402,7 @@ product.category,
 
 "@type":
 
-"Brand",
+"Brand","Centurion","Dahua","jva","stafix","ajax","cctv","gate-motors","electric fencing",
 
 
 
@@ -426,7 +429,7 @@ product.category,
 
 window.location.origin +
 
-"/product.html?id=" +
+"/online.html?id=" +
 
 product.id,
 
@@ -509,7 +512,7 @@ return;
 
 
 if(
-typeof products === "undefined"
+typeof products === "cctv","ip","gate-motors","alarms","electric fencing","equestrian","dog electric collar",
 ){
 
 
@@ -557,7 +560,7 @@ return;
 injectSchema(
 
 createProductSchema(
-product
+product,"centurion","dahua","Hikvision","ajax","ids","paradox","nice et","stafix","jva","nemtek"
 )
 
 );
@@ -583,7 +586,7 @@ function loadShopProductSchemas(){
 
 
 if(
-typeof products === "undefined"
+typeof products === "security-products"
 ){
 
 return;
@@ -601,7 +604,7 @@ product=>{
 injectSchema(
 
 createProductSchema(
-product
+"security","cctv","gate-motors","alarms","electric-fencing"
 )
 
 );
@@ -633,7 +636,7 @@ document.addEventListener(
 
 if(
 window.location.pathname.includes(
-"product.html"
+"index.html"
 )
 
 ){
@@ -712,7 +715,7 @@ question:
 
 answer:
 
-"Nexpak Security Solutions supplies CCTV systems, electric fencing, alarms, gate automation, access control, intercom systems and security accessories."
+"Nexpak Security Solutions supplies CCTV systems, electric fencing, alarms, gate automation, access control, intercom systems, security accessories,online equestrian store, online security store, online electric fencing training,build your system."
 
 },
 
@@ -729,7 +732,7 @@ question:
 
 answer:
 
-"Yes. Nexpak Security Solutions provides CCTV solutions including security cameras, IP CCTV systems and recording solutions for homes and businesses."
+"Yes. Nexpak Security Solutions provides CCTV solutions including security cameras, IP CCTV systems and recording solutions for homes and businesses by top brands dahua and Hikvision"
 
 },
 
@@ -746,7 +749,7 @@ question:
 
 answer:
 
-"Yes. We supply electric fencing solutions including energizers, brackets, fencing accessories and complete security perimeter solutions."
+"Yes. We supply electric fencing solutions including energizers, brackets, fencing accessories and complete security perimeter solutions,6 line,8line,10 line and 12 line electric fencing kits with jva or nemtek energizers,we supply full range of equestrian horse paddock products from tape joiners,buckles,gate handles, intermediate insulators,40mm horse tape, politapes,solar energizers the jva mb and sv range and we do installations including advanced security solutions"
 
 },
 
@@ -763,7 +766,7 @@ question:
 
 answer:
 
-"Yes. Nexpak supplies gate motors, access control devices and intercom systems for residential and commercial properties."
+"Yes. Nexpak supplies gate motors, access control devices and intercom systems for residential and commercial properties,only top brands like centurion D3,D5,D10 smart gate motors,swing gate vantage smart,sdo smart garage motors"
 
 }
 
@@ -1114,7 +1117,7 @@ let cleanName =
 part
 
 .replace(
-".html",
+"index.html",
 ""
 )
 
@@ -1137,7 +1140,7 @@ letter.toUpperCase()
 
 currentURL +=
 
-"/" +
+"www.nexpaksolutions.co.za" +
 
 part;
 
@@ -1530,7 +1533,7 @@ product.html?id=
 
 if(
 page.includes(
-"product.html"
+"product.html","index.html","equestrian.html","online.html","shop.html"
 )
 
 ){
