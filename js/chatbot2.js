@@ -850,15 +850,26 @@
     }
 
 
-    /* =========================================================
-       SAVE CHAT
-    ========================================================= */
+/* =========================================================
+   SAVE CHAT
+========================================================= */
 
-    function saveChat() {
+function saveChat() {
 
-        try {
+    try {
 
-            localStorage.setItem(
-                CONFIG.storageKey,
-                JSON.stringify(
-      
+        localStorage.setItem(
+            CONFIG.storageKey,
+            JSON.stringify(chatState.messages)
+        );
+
+    } catch (error) {
+
+        console.warn(
+            'Nexpak Chat: Unable to save chat history.',
+            error
+        );
+
+    }
+
+}
