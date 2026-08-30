@@ -7984,3 +7984,1016 @@ main {
 /* =========================================================
    END PART 8
    ========================================================= */
+/* =========================================================
+   NEXPAK SECURITY ACADEMY
+   ACADEMY.CSS
+   PART 9 — MAINTENANCE, SERVICE & SYSTEM PERFORMANCE
+   ========================================================= */
+
+
+/* =========================================================
+   MAINTENANCE HERO
+   ========================================================= */
+
+.maintenance-hero {
+
+    position:
+        relative;
+
+    margin:
+        40px 0;
+
+    padding:
+        40px;
+
+    overflow:
+        hidden;
+
+    border:
+        1px solid
+        rgba(34,197,94,.2);
+
+    border-radius:
+        var(--academy-radius);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(34,197,94,.08),
+            rgba(7,16,24,.98)
+        );
+
+}
+
+
+.maintenance-hero::after {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        320px;
+
+    height:
+        320px;
+
+    right:
+        -160px;
+
+    bottom:
+        -180px;
+
+    border:
+        1px solid
+        rgba(34,197,94,.12);
+
+    border-radius:
+        50%;
+
+}
+
+
+.maintenance-label {
+
+    display:
+        inline-flex;
+
+    margin-bottom:
+        15px;
+
+    padding:
+        7px 12px;
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(34,197,94,.1);
+
+    color:
+        var(--academy-green);
+
+    font-size:
+        10px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .13em;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+.maintenance-hero h2 {
+
+    margin:
+        0 0 12px;
+
+    font-size:
+        clamp(
+            27px,
+            4vw,
+            38px
+        );
+
+}
+
+
+.maintenance-hero p {
+
+    max-width:
+        820px;
+
+    margin:
+        0;
+
+    color:
+        var(--academy-text-soft);
+
+}
+
+
+/* =========================================================
+   SERVICE CYCLE
+   ========================================================= */
+
+.service-cycle {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            5,
+            minmax(0,1fr)
+        );
+
+    gap:
+        12px;
+
+    margin:
+        35px 0;
+
+}
+
+
+.service-cycle-step {
+
+    position:
+        relative;
+
+    min-height:
+        135px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        18px 12px;
+
+    text-align:
+        center;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        14px;
+
+    background:
+        rgba(255,255,255,.025);
+
+}
+
+
+.service-cycle-step:not(:last-child)::after {
+
+    content:
+        "→";
+
+    position:
+        absolute;
+
+    right:
+        -17px;
+
+    top:
+        50%;
+
+    transform:
+        translateY(-50%);
+
+    color:
+        var(--academy-green);
+
+    font-size:
+        18px;
+
+    z-index:
+        3;
+
+}
+
+
+.service-cycle-number {
+
+    width:
+        34px;
+
+    height:
+        34px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    margin-bottom:
+        10px;
+
+    border-radius:
+        50%;
+
+    background:
+        rgba(34,197,94,.1);
+
+    color:
+        var(--academy-green);
+
+    font-size:
+        11px;
+
+    font-weight:
+        900;
+
+}
+
+
+.service-cycle-step strong {
+
+    font-size:
+        13px;
+
+}
+
+
+.service-cycle-step span {
+
+    margin-top:
+        4px;
+
+    color:
+        var(--academy-text-muted);
+
+    font-size:
+        10px;
+
+}
+
+
+/* =========================================================
+   MAINTENANCE TASK GRID
+   ========================================================= */
+
+.maintenance-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0,1fr)
+        );
+
+    gap:
+        16px;
+
+    margin:
+        30px 0;
+
+}
+
+
+.maintenance-card {
+
+    padding:
+        24px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius-small);
+
+    background:
+        var(--academy-panel);
+
+    transition:
+        var(--academy-transition);
+
+}
+
+
+.maintenance-card:hover {
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(34,197,94,.22);
+
+}
+
+
+.maintenance-card h3 {
+
+    margin:
+        0 0 8px;
+
+    font-size:
+        17px;
+
+}
+
+
+.maintenance-card p {
+
+    margin:
+        0;
+
+    color:
+        var(--academy-text-muted);
+
+    font-size:
+        13px;
+
+}
+
+
+.maintenance-frequency {
+
+    display:
+        inline-flex;
+
+    margin-bottom:
+        12px;
+
+    padding:
+        5px 9px;
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(56,189,248,.08);
+
+    color:
+        var(--academy-blue);
+
+    font-size:
+        9px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .08em;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+/* =========================================================
+   PERFORMANCE MONITOR
+   ========================================================= */
+
+.performance-monitor {
+
+    margin:
+        35px 0;
+
+    padding:
+        30px;
+
+    border:
+        1px solid
+        rgba(56,189,248,.18);
+
+    border-radius:
+        var(--academy-radius);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(56,189,248,.05),
+            rgba(7,16,24,.98)
+        );
+
+}
+
+
+.performance-monitor h3 {
+
+    margin:
+        0 0 20px;
+
+    color:
+        var(--academy-blue);
+
+    font-size:
+        21px;
+
+}
+
+
+.performance-row {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        180px
+        minmax(0,1fr)
+        80px;
+
+    align-items:
+        center;
+
+    gap:
+        15px;
+
+    padding:
+        13px 0;
+
+}
+
+
+.performance-row
++ .performance-row {
+
+    border-top:
+        1px solid
+        var(--academy-border);
+
+}
+
+
+.performance-name {
+
+    color:
+        var(--academy-text-soft);
+
+    font-size:
+        13px;
+
+}
+
+
+.performance-bar {
+
+    width:
+        100%;
+
+    height:
+        8px;
+
+    overflow:
+        hidden;
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(255,255,255,.06);
+
+}
+
+
+.performance-bar span {
+
+    display:
+        block;
+
+    width:
+        var(--performance,75%);
+
+    height:
+        100%;
+
+    border-radius:
+        inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--academy-accent-dark),
+            var(--academy-accent-light)
+        );
+
+}
+
+
+.performance-value {
+
+    color:
+        var(--academy-accent-light);
+
+    font-size:
+        12px;
+
+    font-weight:
+        900;
+
+    text-align:
+        right;
+
+}
+
+
+/* =========================================================
+   SERVICE RECORD
+   ========================================================= */
+
+.service-record {
+
+    margin:
+        35px 0;
+
+    overflow:
+        hidden;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius);
+
+}
+
+
+.service-record-header {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+    padding:
+        20px 24px;
+
+    background:
+        rgba(245,158,11,.06);
+
+}
+
+
+.service-record-header h3 {
+
+    margin:
+        0;
+
+    font-size:
+        19px;
+
+}
+
+
+.service-record-status {
+
+    padding:
+        6px 10px;
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(34,197,94,.09);
+
+    color:
+        var(--academy-green);
+
+    font-size:
+        9px;
+
+    font-weight:
+        900;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+.service-record-body {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0,1fr)
+        );
+
+}
+
+
+.service-record-field {
+
+    padding:
+        17px 20px;
+
+    border-top:
+        1px solid
+        var(--academy-border);
+
+}
+
+
+.service-record-field:nth-child(even) {
+
+    border-left:
+        1px solid
+        var(--academy-border);
+
+}
+
+
+.service-record-field strong {
+
+    display:
+        block;
+
+    margin-bottom:
+        4px;
+
+    color:
+        var(--academy-text);
+
+    font-size:
+        12px;
+
+}
+
+
+.service-record-field span {
+
+    color:
+        var(--academy-text-muted);
+
+    font-size:
+        12px;
+
+}
+
+
+/* =========================================================
+   PREVENTATIVE SERVICING
+   ========================================================= */
+
+.preventative-panel {
+
+    margin:
+        35px 0;
+
+    padding:
+        30px;
+
+    border:
+        1px solid
+        rgba(245,158,11,.18);
+
+    border-radius:
+        var(--academy-radius);
+
+    background:
+        rgba(245,158,11,.035);
+
+}
+
+
+.preventative-panel h3 {
+
+    margin:
+        0 0 18px;
+
+    color:
+        var(--academy-accent-light);
+
+    font-size:
+        21px;
+
+}
+
+
+.preventative-list {
+
+    display:
+        grid;
+
+    gap:
+        10px;
+
+}
+
+
+.preventative-item {
+
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    gap:
+        12px;
+
+    padding:
+        14px 16px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        10px;
+
+    background:
+        rgba(255,255,255,.02);
+
+}
+
+
+.preventative-item::before {
+
+    content:
+        "✓";
+
+    color:
+        var(--academy-green);
+
+    font-weight:
+        900;
+
+}
+
+
+.preventative-item span {
+
+    color:
+        var(--academy-text-soft);
+
+    font-size:
+        13px;
+
+}
+
+
+/* =========================================================
+   SYSTEM HEALTH STATUS
+   ========================================================= */
+
+.system-health {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0,1fr)
+        );
+
+    gap:
+        14px;
+
+    margin:
+        30px 0;
+
+}
+
+
+.health-card {
+
+    padding:
+        20px;
+
+    text-align:
+        center;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius-small);
+
+    background:
+        rgba(255,255,255,.025);
+
+}
+
+
+.health-indicator {
+
+    width:
+        11px;
+
+    height:
+        11px;
+
+    margin:
+        0 auto 11px;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--academy-green);
+
+    box-shadow:
+        0 0 14px
+        rgba(34,197,94,.4);
+
+}
+
+
+.health-card strong {
+
+    display:
+        block;
+
+    margin-bottom:
+        4px;
+
+    font-size:
+        14px;
+
+}
+
+
+.health-card span {
+
+    color:
+        var(--academy-text-muted);
+
+    font-size:
+        11px;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (
+    max-width: 1000px
+) {
+
+    .service-cycle {
+
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(0,1fr)
+            );
+
+    }
+
+
+    .service-cycle-step:not(:last-child)::after {
+
+        display:
+            none;
+
+    }
+
+
+    .maintenance-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            );
+
+    }
+
+
+    .system-health {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            );
+
+    }
+
+}
+
+
+@media (
+    max-width: 700px
+) {
+
+    .maintenance-hero {
+
+        padding:
+            25px;
+
+    }
+
+
+    .service-cycle,
+    .maintenance-grid,
+    .system-health {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .performance-row {
+
+        grid-template-columns:
+            1fr;
+
+        gap:
+            8px;
+
+    }
+
+
+    .performance-value {
+
+        text-align:
+            left;
+
+    }
+
+
+    .service-record-header {
+
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .service-record-body {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .service-record-field:nth-child(even) {
+
+        border-left:
+            none;
+
+    }
+
+}
+
+
+/* =========================================================
+   END PART 9
+   ========================================================= */
