@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Part 03 | Professional Site Assessment & Installation Planning |
+        Nexpak Academy
+    </title>
+
+    <meta
+        name="description"
+        content="Advanced electric fencing training covering professional site assessment, perimeter analysis, installation planning, risk assessment, environmental conditions and system documentation."
+    >
+
+
+    <style>
+
+        /* =====================================================
+           NEXPAK ACADEMY
+           PART 03
+           PROFESSIONAL SITE ASSESSMENT
+           & INSTALLATION PLANNING
+           ===================================================== */
+
+
+        *{
+
+            box-sizing:border-box;
+
+            margin:0;
+
+            padding:0;
+
+        }
+
+
+        html{
+
+            scroll-behavior:smooth;
+
+        }
+
+
+        body{
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:#071018;
+
+            color:#e9f0f4;
+
+            line-height:1.7;
+
+        }
+
+
+        a{
+
+            color:inherit;
+
+            text-decoration:none;
+
+        }
+
+
+        /* =====================================================
+           HEADER
+           ===================================================== */
+
+        .academy-header{
+
+            position:sticky;
+
+            top:0;
+
+            z-index:1000;
+
+            background:
+                rgba(7,16,24,.96);
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.08);
+
+            backdrop-filter:
+                blur(14px);
+
+        }
+
+
+        .header-inner{
+
+            max-width:1250px;
+
+            margin:auto;
+
+            padding:
+                15px
+                22px;
+
+            display:flex;
+
+            justify-content:space-between;
+
+            align-items:center;
+
+            gap:20px;
+
+        }
+
+
+        .brand{
+
+            display:flex;
+
+            align-items:center;
+
+            gap:12px;
+
+        }
+
+
+        .brand-mark{
+
+            width:44px;
+
+            height:44px;
+
+            border-radius:12px;
+
+            display:flex;
+
+            align-items:center;
+
+            justify-content:center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f6c453,
+                    #e89524
+                );
+
+            color:#071018;
+
+            font-weight:900;
+
+            font-size:22px;
+
+        }
+
+
+        .brand-text span{
+
+            display:block;
+
+            font-size:12px;
+
+            letter-spacing:2px;
+
+            font-weight:700;
+
+        }
+
+
+        .brand-text strong{
+
+            display:block;
+
+            font-size:16px;
+
+            letter-spacing:1px;
+
+        }
+
+
+        .part-label{
+
+            padding:
+                8px
+                14px;
+
+            border:
+                1px solid
+                rgba(246,196,83,.35);
+
+            border-radius:30px;
+
+            color:#f6c453;
+
+            font-size:12px;
+
+            font-weight:700;
+
+            letter-spacing:1px;
+
+        }
+
+
+        /* =====================================================
+           HERO
+           ===================================================== */
+
+        .hero{
+
+            position:relative;
+
+            overflow:hidden;
+
+            background:
+
+                radial-gradient(
+                    circle at 82% 18%,
+                    rgba(246,196,83,.14),
+                    transparent 35%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #071018,
+                    #0d1b26
+                );
+
+        }
+
+
+        .hero-inner{
+
+            max-width:1250px;
+
+            margin:auto;
+
+            padding:
+                90px
+                22px
+                80px;
+
+        }
+
+
+        .eyebrow{
+
+            display:inline-flex;
+
+            padding:
+                7px
+                13px;
+
+            border-radius:30px;
+
+            background:
+                rgba(246,196,83,.10);
+
+            border:
+                1px solid
+                rgba(246,196,83,.25);
+
+            color:#f6c453;
+
+            font-size:12px;
+
+            font-weight:800;
+
+            letter-spacing:1.5px;
+
+            margin-bottom:20px;
+
+        }
+
+
+        .hero h1{
+
+            max-width:950px;
+
+            font-size:
+                clamp(
+                    38px,
+                    7vw,
+                    70px
+                );
+
+            line-height:1.05;
+
+            margin-bottom:25px;
+
+        }
+
+
+        .hero h1 span{
+
+            color:#f6c453;
+
+        }
+
+
+        .hero-intro{
+
+            max-width:850px;
+
+            color:#b9c8d1;
+
+            font-size:18px;
+
+        }
+
+
+        .hero-meta{
+
+            display:flex;
+
+            flex-wrap:wrap;
+
+            gap:12px;
+
+            margin-top:30px;
+
+        }
+
+
+        .meta{
+
+            padding:
+                9px
+                14px;
+
+            border-radius:8px;
+
+            background:
+                rgba(255,255,255,.045);
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+
+            font-size:13px;
+
+            color:#cbd7dd;
+
+        }
+
+
+        /* =====================================================
+           COURSE LAYOUT
+           ===================================================== */
+
+        .course-layout{
+
+            max-width:1250px;
+
+            margin:auto;
+
+            padding:
+                50px
+                22px
+                100px;
+
+            display:grid;
+
+            grid-template-columns:
+                280px
+                1fr;
+
+            gap:45px;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+           ===================================================== */
+
+        .sidebar{
+
+            position:sticky;
+
+            top:85px;
+
+            align-self:start;
+
+        }
+
+
+        .sidebar-box{
+
+            padding:20px;
+
+            background:#0c1821;
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+
+            border-radius:16px;
+
+        }
+
+
+        .sidebar-title{
+
+            color:#f6c453;
+
+            font-size:12px;
+
+            font-weight:800;
+
+            letter-spacing:1.5px;
+
+            margin-bottom:14px;
+
+        }
+
+
+        .lesson-nav{
+
+            list-style:none;
+
+        }
+
+
+        .lesson-nav li{
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.05);
+
+        }
+
+
+        .lesson-nav a{
+
+            display:block;
+
+            padding:
+                9px
+                5px;
+
+            color:#aebec8;
+
+            font-size:13px;
+
+            transition:.2s;
+
+        }
+
+
+        .lesson-nav a:hover{
+
+            color:#f6c453;
+
+            padding-left:9px;
+
+        }
+
+
+        /* =====================================================
+           CONTENT
+           ===================================================== */
+
+        .content{
+
+            min-width:0;
+
+        }
+
+
+        .content-section{
+
+            margin-bottom:75px;
+
+            scroll-margin-top:100px;
+
+        }
+
+
+        .section-number{
+
+            color:#f6c453;
+
+            font-size:12px;
+
+            font-weight:800;
+
+            letter-spacing:2px;
+
+            text-transform:uppercase;
+
+            margin-bottom:10px;
+
+        }
+
+
+        .content-section h2{
+
+            font-size:
+                clamp(
+                    30px,
+                    4vw,
+                    46px
+                );
+
+            line-height:1.15;
+
+            margin-bottom:20px;
+
+        }
+
+
+        .content-section h3{
+
+            font-size:23px;
+
+            margin:
+                35px
+                0
+                15px;
+
+        }
+
+
+        .content-section h4{
+
+            font-size:17px;
+
+            margin-bottom:8px;
+
+        }
+
+
+        .content-section p{
+
+            color:#b9c8d1;
+
+            margin-bottom:18px;
+
+        }
+
+
+        /* =====================================================
+           CALLOUT
+           ===================================================== */
+
+        .callout{
+
+            margin:
+                28px
+                0;
+
+            padding:24px;
+
+            border-left:
+                4px solid
+                #f6c453;
+
+            background:
+                rgba(246,196,83,.07);
+
+            border-radius:
+                0
+                12px
+                12px
+                0;
+
+        }
+
+
+        .callout strong{
+
+            display:block;
+
+            color:#f6c453;
+
+            margin-bottom:7px;
+
+        }
+
+
+        .callout.warning{
+
+            border-left-color:#e89524;
+
+            background:
+                rgba(232,149,36,.07);
+
+        }
+
+
+        /* =====================================================
+           COMPONENT CARDS
+           ===================================================== */
+
+        .component-grid{
+
+            display:grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(
+                        210px,
+                        1fr
+                    )
+                );
+
+            gap:16px;
+
+            margin-top:25px;
+
+        }
+
+
+        .component-card{
+
+            padding:23px;
+
+            background:#0c1821;
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+
+            border-radius:15px;
+
+            transition:
+                transform .25s,
+                border-color .25s;
+
+        }
+
+
+        .component-card:hover{
+
+            transform:
+                translateY(-4px);
+
+            border-color:
+                rgba(246,196,83,.4);
+
+        }
+
+
+        .component-icon{
+
+            width:48px;
+
+            height:48px;
+
+            border-radius:12px;
+
+            display:flex;
+
+            align-items:center;
+
+            justify-content:center;
+
+            background:
+                rgba(246,196,83,.10);
+
+            font-size:23px;
+
+            margin-bottom:15px;
+
+        }
+
+
+        .component-card p{
+
+            font-size:14px;
+
+            margin:0;
+
+        }
+
+
+        /* =====================================================
+           IMAGE / VISUAL PANEL
+           ===================================================== */
+
+        .visual-panel{
+
+            min-height:300px;
+
+            margin:
+                30px
+                0;
+
+            border-radius:18px;
+
+            overflow:hidden;
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #101e28,
+                    #182b38
+                );
+
+            display:flex;
+
+            align-items:center;
+
+            justify-content:center;
+
+            text-align:center;
+
+            padding:30px;
+
+        }
+
+
+        .visual-panel-content{
+
+            max-width:650px;
+
+        }
+
+
+        .visual-panel .visual-icon{
+
+            font-size:58px;
+
+            margin-bottom:12px;
+
+        }
+
+
+        .visual-panel strong{
+
+            display:block;
+
+            font-size:21px;
+
+            margin-bottom:8px;
+
+        }
+
+
+        .visual-panel span{
+
+            color:#91a4af;
+
+            font-size:14px;
+
+        }
+
+
+        /* =====================================================
+           SITE ASSESSMENT TABLE
+           ===================================================== */
+
+        .table-wrap{
+
+            overflow-x:auto;
+
+            margin:
+                25px
+                0;
+
+        }
+
+
+        .technical-table{
+
+            width:100%;
+
+            border-collapse:collapse;
+
+            min-width:650px;
+
+            background:#0c1821;
+
+            border-radius:12px;
+
+            overflow:hidden;
+
+        }
+
+
+        .technical-table th,
+        .technical-table td{
+
+            padding:
+                14px
+                16px;
+
+            text-align:left;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.07);
+
+        }
+
+
+        .technical-table th{
+
+            color:#071018;
+
+            background:#f6c453;
+
+            font-size:13px;
+
+        }
+
+
+        .technical-table td{
+
+            color:#b9c8d1;
+
+            font-size:14px;
+
+        }
+
+
+        /* =====================================================
+           PLANNING FLOW
+           ===================================================== */
+
+        .planning-flow{
+
+            padding:30px;
+
+            margin:
+                30px
+                0;
+
+            background:#09141d;
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+
+            border-radius:18px;
+
+        }
+
+
+        .planning-title{
+
+            text-align:center;
+
+            color:#f6c453;
+
+            font-weight:800;
+
+            margin-bottom:25px;
+
+        }
+
+
+        .planning-steps{
+
+            display:flex;
+
+            flex-wrap:wrap;
+
+            justify-content:center;
+
+            align-items:center;
+
+            gap:12px;
+
+        }
+
+
+        .planning-step{
+
+            min-width:145px;
+
+            padding:18px;
+
+            text-align:center;
+
+            border:
+                1px solid
+                rgba(246,196,83,.25);
+
+            border-radius:12px;
+
+            background:#0d1d28;
+
+        }
+
+
+        .planning-step strong{
+
+            display:block;
+
+            color:#fff;
+
+        }
+
+
+        .planning-step span{
+
+            display:block;
+
+            color:#91a4af;
+
+            font-size:12px;
+
+            margin-top:5px;
+
+        }
+
+
+        .planning-arrow{
+
+            font-size:22px;
+
+            color:#f6c453;
+
+        }
+
+
+        /* =====================================================
+           CHECKLIST
+           ===================================================== */
+
+        .checklist{
+
+            margin:
+                25px
+                0;
+
+            padding:25px;
+
+            background:#0c1821;
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+
+            border-radius:16px;
+
+        }
+
+
+        .checklist-item{
+
+            display:flex;
+
+            gap:12px;
+
+            padding:
+                13px
+                0;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.06);
+
+            color:#b9c8d1;
+
+        }
+
+
+        .checklist-item:last-child{
+
+            border-bottom:0;
+
+        }
+
+
+        .check-icon{
+
+            flex:0 0 auto;
+
+            width:24px;
+
+            height:24px;
+
+            border-radius:50%;
+
+            display:flex;
+
+            align-items:center;
+
+            justify-content:center;
+
+            background:
+                rgba(246,196,83,.12);
+
+            color:#f6c453;
+
+            font-size:12px;
+
+            font-weight:900;
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+           ===================================================== */
+
+        .footer{
+
+            border-top:
+                1px solid
+                rgba(255,255,255,.08);
+
+            background:#050c12;
+
+        }
+
+
+        .footer-inner{
+
+            max-width:1250px;
+
+            margin:auto;
+
+            padding:
+                35px
+                22px;
+
+            display:flex;
+
+            justify-content:space-between;
+
+            align-items:center;
+
+            gap:20px;
+
+        }
+
+
+        .footer p{
+
+            color:#748792;
+
+            font-size:13px;
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+           ===================================================== */
+
+        @media(max-width:850px){
+
+            .course-layout{
+
+                grid-template-columns:1fr;
+
+            }
+
+
+            .sidebar{
+
+                position:relative;
+
+                top:auto;
+
+            }
+
+
+            .header-inner{
+
+                padding:
+                    12px
+                    15px;
+
+            }
+
+
+            .part-label{
+
+                display:none;
+
+            }
+
+
+            .hero-inner{
+
+                padding:
+                    65px
+                    18px
+                    60px;
+
+            }
+
+
+            .course-layout{
+
+                padding:
+                    40px
+                    18px
+                    70px;
+
+            }
+
+
+            .planning-arrow{
+
+                transform:
+                    rotate(90deg);
+
+            }
+
+        }
+
+
+        @media(max-width:500px){
+
+            .planning-steps{
+
+                flex-direction:column;
+
+            }
+
+
+            .planning-step{
+
+                width:100%;
+
+            }
+
+
+            .component-grid{
+
+                grid-template-columns:1fr;
+
+            }
+
+
+            .footer-inner{
+
+                flex-direction:column;
+
+                align-items:flex-start;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
+
+    <header class="academy-header">
+
+        <div class="header-inner">
+
+
+            <a
+                href="academy.html"
+                class="brand"
+            >
+
+                <div class="brand-mark">
+                    N
+                </div>
+
+
+                <div class="brand-text">
+
+                    <span>
+                        NEXPAK
+                    </span>
+
+                    <strong>
+                        ACADEMY
+                    </strong>
+
+                </div>
+
+            </a>
+
+
+            <div class="part-label">
+
+                PART 03 · PROFESSIONAL SITE ASSESSMENT
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+
+    <section class="hero">
+
+        <div class="hero-inner">
+
+            <div class="eyebrow">
+                ADVANCED ELECTRIC FENCE TRAINING
+            </div>
+
+
+            <h1>
+
+                Professional
+                <span>
+                    Site Assessment
+                </span>
+                &amp;
+                Installation Planning
+
+            </h1>
+
+
+            <p class="hero-intro">
+
+                Learn how professional electric-fence
+                installations are assessed, planned,
+                documented and prepared before physical
+                installation begins.
+
+            </p>
+
+
+            <div class="hero-meta">
+
+                <div class="meta">
+                    🎓 Advanced Level
+                </div>
+
+                <div class="meta">
+                    📐 Site Planning
+                </div>
+
+                <div class="meta">
+                    🛡️ Security Assessment
+                </div>
+
+                <div class="meta">
+                    📋 Professional Documentation
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         COURSE LAYOUT
+         ===================================================== -->
+
+    <main class="course-layout">
+
+
+        <!-- =================================================
+             SIDEBAR
+             ================================================= -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-box">
+
+                <div class="sidebar-title">
+                    PART 03 CURRICULUM
+                </div>
+
+
+                <ul class="lesson-nav">
+
+                    <li>
+                        <a href="#site-assessment">
+  
