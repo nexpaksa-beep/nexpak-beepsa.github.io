@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Part 02 | Electric Fence System Architecture |
+        Nexpak Academy
+    </title>
+
+    <meta
+        name="description"
+        content="Advanced electric fencing training covering system architecture, energizers, conductors, insulation and professional component selection."
+    >
+
+
+    <style>
+
+        /* =====================================================
+           NEXPAK ACADEMY
+           PART 02
+           ELECTRIC FENCE SYSTEM ARCHITECTURE
+           ===================================================== */
+
+
+        *{
+            box-sizing:border-box;
+            margin:0;
+            padding:0;
+        }
+
+
+        html{
+            scroll-behavior:smooth;
+        }
+
+
+        body{
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:#071018;
+
+            color:#e9f0f4;
+
+            line-height:1.7;
+
+        }
+
+
+        a{
+            color:inherit;
+            text-decoration:none;
+        }
+
+
+        /* =====================================================
+           HEADER
+           ===================================================== */
+
+        .academy-header{
+
+            position:sticky;
+
+            top:0;
+
+            z-index:1000;
+
+            background:
+                rgba(7,16,24,.96);
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.08);
+
+            backdrop-filter:
+                blur(14px);
+
+        }
+
+
+        .header-inner{
+
+            max-width:1250px;
+
+            margin:auto;
+
+            padding:
+                15px
+                22px;
+
+            display:flex;
+
+            justify-content:space-between;
+
+            align-items:center;
+
+            gap:20px;
+
+        }
+
+
+        .brand{
+
+            display:flex;
+
+            align-items:center;
+
+            gap:12px;
+
+        }
+
+
+        .brand-mark{
+
+            width:44px;
+
+            height:44px;
+
+            border-radius:12px;
+
+            display:flex;
+
+            align-items:center;
+
+            justify-content:center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f6c453,
+                    #e89524
+                );
+
+            color:#071018;
+
+            font-weight:900;
+
+            font-size:22px;
+
+        }
+
+
+        .brand-text span{
+
+            display:block;
+
+            font-size:12px;
+
+            letter-spacing:2px;
+
+            font-weight:700;
+
+        }
+
+
+        .brand-text strong{
+
+            display:block;
+
+            font-size:16px;
+
+            letter-spacing:1px;
+
+        }
+
+
+        .part-label{
+
+            padding:
+                8px
+                14px;
+
+            border:
+                1px solid
+                rgba(246,196,83,.35);
+
+            border-radius:30px;
+
+            color:#f6c453;
+
+            font-size:12px;
+
+            font-weight:700;
+
+            letter-spacing:1px;
+
+        }
+
+
+        /* =====================================================
+           HERO
+           ===================================================== */
+
+        .hero{
+
+            position:relative;
+
+            overflow:hidden;
+
+            background:
+                radial-gradient(
+                    circle at 80% 20%,
+                    rgba(246,196,83,.14),
+                    transparent 35%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #071018,
+                    #0d1b26
+                );
+
+        }
+
+
+        .hero-inner{
+
+            max-width:1250px;
+
+            margin:auto;
+
+            padding:
+                90px
+                22px
+                80px;
+
+        }
+
+
+        .eyebrow{
+
+            display:inline-flex;
+
+            padding:
+                7px
+                13px;
+
+            border-radius:30px;
+
+            background:
+                rgba(246,196,83,.10);
+
+            border:
+                1px solid
+                rgba(246,196,83,.25);
+
+            color:#f6c453;
+
+            font-size:12px;
+
+            font-weight:800;
+
+            letter-spacing:1.5px;
+
+            margin-bottom:20px;
+
+        }
+
+
+        .hero h1{
+
+            max-width:900px;
+
+            font-size:
+                clamp(
+                    38px,
+                    7vw,
+                    72px
+                );
+
+            line-height:1.05;
+
+            margin-bottom:25px;
+
+        }
+
+
+        .hero h1 span{
+
+            color:#f6c453;
+
+        }
+
+
+        .hero-intro{
+
+            max-width:820px;
+
+            color:#b9c8d1;
+
+            font-size:18px;
+
+        }
+
+
+        .hero-meta{
+
+            display:flex;
+
+            flex-wrap:wrap;
+
+            gap:12px;
+
+            margin-top:30px;
+
+        }
+
+
+        .meta{
+
+            padding:
+                9px
+                14px;
+
+            border-radius:8px;
+
+            background:
+                rgba(255,255,255,.045);
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+
+            font-size:13px;
+
+            color:#cbd7dd;
+
+        }
+
+
+        /* =====================================================
+           LAYOUT
+           ===================================================== */
+
+        .course-layout{
+
+            max-width:1250px;
+
+            margin:auto;
+
+            padding:
+                50px
+                22px
+                100px;
+
+            display:grid;
+
+            grid-template-columns:
+                280px
+                1fr;
+
+            gap:45px;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+           ===================================================== */
+
+        .sidebar{
+
+            position:sticky;
+
+            top:85px;
+
+            align-self:start;
+
+        }
+
+
+        .sidebar-box{
+
+            padding:20px;
+
+            background:#0c1821;
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+
+            border-radius:16px;
+
+        }
+
+
+        .sidebar-title{
+
+            color:#f6c453;
+
+            font-size:12px;
+
+            font-weight:800;
+
+            letter-spacing:1.5px;
+
+            margin-bottom:14px;
+
+        }
+
+
+        .lesson-nav{
+
+            list-style:none;
+
+        }
+
+
+        .lesson-nav li{
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.05);
+
+        }
+
+
+        .lesson-nav a{
+
+            display:block;
+
+            padding:
+                9px
+                5px;
+
+            color:#aebec8;
+
+            font-size:13px;
+
+            transition:.2s;
+
+        }
+
+
+        .lesson-nav a:hover{
+
+            color:#f6c453;
+
+            padding-left:9px;
+
+        }
+
+
+        /* =====================================================
+           CONTENT
+           ===================================================== */
+
+        .content{
+
+            min-width:0;
+
+        }
+
+
+        .content-section{
+
+            margin-bottom:75px;
+
+            scroll-margin-top:100px;
+
+        }
+
+
+        .section-number{
+
+            color:#f6c453;
+
+            font-size:12px;
+
+            font-weight:800;
+
+            letter-spacing:2px;
+
+            text-transform:uppercase;
+
+            margin-bottom:10px;
+
+        }
+
+
+        .content-section h2{
+
+            font-size:
+                clamp(
+                    30px,
+                    4vw,
+                    46px
+                );
+
+            line-height:1.15;
+
+            margin-bottom:20px;
+
+        }
+
+
+        .content-section h3{
+
+            font-size:23px;
+
+            margin:
+                35px
+                0
+                15px;
+
+        }
+
+
+        .content-section h4{
+
+            font-size:17px;
+
+            margin-bottom:8px;
+
+        }
+
+
+        .content-section p{
+
+            color:#b9c8d1;
+
+            margin-bottom:18px;
+
+        }
+
+
+        /* =====================================================
+           CALLOUT
+           ===================================================== */
+
+        .callout{
+
+            margin:
+                28px
+                0;
+
+            padding:24px;
+
+            border-left:
+                4px solid
+                #f6c453;
+
+            background:
+                rgba(246,196,83,.07);
+
+            border-radius:
+                0
+                12px
+                12px
+                0;
+
+        }
+
+
+        .callout strong{
+
+            display:block;
+
+            color:#f6c453;
+
+            margin-bottom:7px;
+
+        }
+
+
+        .callout.warning{
+
+            border-left-color:#e89524;
+
+            background:
+                rgba(232,149,36,.07);
+
+        }
+
+
+        /* =====================================================
+           COMPONENT GRID
+           ===================================================== */
+
+        .component-grid{
+
+            display:grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(
+                        210px,
+                        1fr
+                    )
+                );
+
+            gap:16px;
+
+            margin-top:25px;
+
+        }
+
+
+        .component-card{
+
+            padding:23px;
+
+            background:#0c1821;
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+
+            border-radius:15px;
+
+            transition:
+                transform .25s,
+                border-color .25s;
+
+        }
+
+
+        .component-card:hover{
+
+            transform:
+                translateY(-4px);
+
+            border-color:
+                rgba(246,196,83,.4);
+
+        }
+
+
+        .component-icon{
+
+            width:48px;
+
+            height:48px;
+
+            border-radius:12px;
+
+            display:flex;
+
+            align-items:center;
+
+            justify-content:center;
+
+            background:
+                rgba(246,196,83,.10);
+
+            font-size:23px;
+
+            margin-bottom:15px;
+
+        }
+
+
+        .component-card p{
+
+            font-size:14px;
+
+            margin:0;
+
+        }
+
+
+        /* =====================================================
+           TECHNICAL TABLE
+           ===================================================== */
+
+        .table-wrap{
+
+            overflow-x:auto;
+
+            margin:
+                25px
+                0;
+
+        }
+
+
+        .technical-table{
+
+            width:100%;
+
+            border-collapse:collapse;
+
+            min-width:600px;
+
+            background:#0c1821;
+
+            border-radius:12px;
+
+            overflow:hidden;
+
+        }
+
+
+        .technical-table th,
+        .technical-table td{
+
+            padding:
+                14px
+                16px;
+
+            text-align:left;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.07);
+
+        }
+
+
+        .technical-table th{
+
+            color:#071018;
+
+            background:#f6c453;
+
+            font-size:13px;
+
+        }
+
+
+        .technical-table td{
+
+            color:#b9c8d1;
+
+            font-size:14px;
+
+        }
+
+
+        /* =====================================================
+           ARCHITECTURE DIAGRAM
+           ===================================================== */
+
+        .architecture{
+
+            padding:30px;
+
+            margin:
+                30px
+                0;
+
+            background:#09141d;
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+
+            border-radius:18px;
+
+        }
+
+
+        .architecture-title{
+
+            text-align:center;
+
+            color:#f6c453;
+
+            font-weight:800;
+
+            margin-bottom:25px;
+
+        }
+
+
+        .architecture-flow{
+
+            display:flex;
+
+            flex-wrap:wrap;
+
+            justify-content:center;
+
+            align-items:center;
+
+            gap:12px;
+
+        }
+
+
+        .architecture-node{
+
+            min-width:145px;
+
+            padding:18px;
+
+            text-align:center;
+
+            border:
+                1px solid
+                rgba(246,196,83,.25);
+
+            border-radius:12px;
+
+            background:#0d1d28;
+
+        }
+
+
+        .architecture-node strong{
+
+            display:block;
+
+            color:#fff;
+
+        }
+
+
+        .architecture-node span{
+
+            display:block;
+
+            color:#91a4af;
+
+            font-size:12px;
+
+            margin-top:5px;
+
+        }
+
+
+        .architecture-arrow{
+
+            color:#f6c453;
+
+            font-size:24px;
+
+        }
+
+
+        /* =====================================================
+           IMAGE PLACEHOLDER
+           ===================================================== */
+
+        .visual-panel{
+
+            min-height:280px;
+
+            margin:
+                30px
+                0;
+
+            border-radius:18px;
+
+            overflow:hidden;
+
+            border:
+                1px solid
+                rgba(255,255,255,.08);
+
+            background:
+
+                linear-gradient(
+                    135deg,
+                    #101e28,
+                    #182b38
+                );
+
+            display:flex;
+
+            align-items:center;
+
+            justify-content:center;
+
+            text-align:center;
+
+            padding:30px;
+
+        }
+
+
+        .visual-panel-content{
+
+            max-width:600px;
+
+        }
+
+
+        .visual-panel .visual-icon{
+
+            font-size:55px;
+
+            margin-bottom:10px;
+
+        }
+
+
+        .visual-panel strong{
+
+            display:block;
+
+            font-size:20px;
+
+            margin-bottom:7px;
+
+        }
+
+
+        .visual-panel span{
+
+            color:#91a4af;
+
+            font-size:14px;
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+           ===================================================== */
+
+        .footer{
+
+            border-top:
+                1px solid
+                rgba(255,255,255,.08);
+
+            background:#050c12;
+
+        }
+
+
+        .footer-inner{
+
+            max-width:1250px;
+
+            margin:auto;
+
+            padding:
+                35px
+                22px;
+
+            display:flex;
+
+            justify-content:space-between;
+
+            align-items:center;
+
+            gap:20px;
+
+        }
+
+
+        .footer p{
+
+            color:#748792;
+
+            font-size:13px;
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+           ===================================================== */
+
+        @media(max-width:850px){
+
+            .course-layout{
+
+                grid-template-columns:1fr;
+
+            }
+
+
+            .sidebar{
+
+                position:relative;
+
+                top:auto;
+
+            }
+
+
+            .lesson-nav{
+
+                display:grid;
+
+                grid-template-columns:
+                    repeat(
+                        2,
+                        1fr
+                    );
+
+                gap:3px 12px;
+
+            }
+
+
+            .header-inner{
+
+                padding:
+                    12px
+                    15px;
+
+            }
+
+
+            .part-label{
+
+                display:none;
+
+            }
+
+
+            .hero-inner{
+
+                padding:
+                    65px
+                    18px
+                    60px;
+
+            }
+
+
+            .course-layout{
+
+                padding:
+                    40px
+                    18px
+                    70px;
+
+            }
+
+
+            .architecture-arrow{
+
+                transform:
+                    rotate(90deg);
+
+            }
+
+        }
+
+
+        @media(max-width:500px){
+
+            .lesson-nav{
+
+                grid-template-columns:1fr;
+
+            }
+
+
+            .component-grid{
+
+                grid-template-columns:1fr;
+
+            }
+
+
+            .footer-inner{
+
+                flex-direction:column;
+
+                align-items:flex-start;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ========================================================
+     HEADER
+     ======================================================== -->
+
+<header class="academy-header">
+
+    <div class="header-inner">
+
+        <a
+            href="academy.html"
+            class="brand"
+        >
+
+            <div class="brand-mark">
+                N
+            </div>
+
+            <div class="brand-text">
+
+                <span>
+                    NEXPAK SECURITY
+                </span>
+
+                <strong>
+                    ACADEMY
+                </strong>
+
+            </div>
+
+        </a>
+
+
+        <div class="part-label">
+
+            ADVANCED ELECTRIC FENCING
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- ========================================================
+     HERO
+     ======================================================== -->
+
+<section class="hero">
+
+    <div class="hero-inner">
+
+        <div class="eyebrow">
+            PART 02 • ADVANCED TECHNICAL TRAINING
+        </div>
+
+
+        <h1>
+
+            Electric Fence
+            <span>
+                System Architecture
+            </span>
+
+        </h1>
+
+
+        <p class="hero-intro">
+
+            A professional electric-fence installation is
+            an engineered system, not a collection of
+            individual products. This module examines the
+            architecture, function and selection of the
+            components that make the system work.
+
+        </p>
+
+
+        <div class="hero-meta">
+
+            <div class="meta">
+                ⚡ Advanced Level
+            </div>
+
+            <div class="meta">
+                🛡️ Professional Practice
+            </div>
+
+            <div class="meta">
+                📚 Technical Theory
+            </div>
+
+            <div class="meta">
+                🇿🇦 South African Context
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ========================================================
+     COURSE LAYOUT
+     ======================================================== -->
+
+<div class="course-layout">
+
+
+<!-- ========================================================
+     SIDEBAR
+     ======================================================== -->
+
+<aside class="sidebar">
+
+    <div class="sidebar-box">
+
+        <div class="sidebar-title">
+            PART 02 CONTENT
+        </div>
+
+
+        <ul class="lesson-nav">
+
+            <li>
+                <a href="#architecture">
+                    01. System Architecture
+                </a>
+            </li>
+
+            <li>
+                <a href="#energizer">
+                    02. The Energizer
+                </a>
+            </li>
+
+            <li>
+                <a href="#energizer-types">
+                    03. Energizer Technologies
+                </a>
+            </li>
+
+            <li>
+                <a href="#selection">
+                    04. Energizer Selection
+                </a>
+            </li>
+
+            <li>
+                <a href="#conductors">
+                    05. Fence Conductors
+                </a>
+            </li>
+
+            <li>
+                <a href="#ht-cable">
+                    06. HT Cable
+                </a>
+            </li>
+
+            <li>
+                <a href="#insulation">
+                    07. Insulation
+                </a>
+            </li>
+
+            <li>
+                <a href="#posts">
+                    08. Posts & Mechanical Structure
+                </a>
+            </li>
+
+            <li>
+                <a href="#earth">
+                    09. Earth System
+                </a>
+            </li>
+
+            <li>
+                <a href="#zones">
+                    10. Fence Zones
+                </a>
+            </li>
+
+            <li>
+                <a href="#gates">
+                    11
