@@ -3777,3 +3777,696 @@ if (
         }
 
     }
+
+ /* =========================================================
+   PART 7 — QUICK BUTTONS + CHAT CONTROLS + INITIALIZATION
+========================================================= */
+
+    /* =========================================================
+       QUICK ACTION BUTTONS
+    ========================================================= */
+
+    function createQuickActions() {
+
+        const container =
+            document.getElementById(
+                "nexpak-quick-actions"
+            );
+
+        if (!container) return;
+
+
+        container.innerHTML = "";
+
+
+        const actions = [
+
+            {
+                label: "💬 Get a Quote",
+                action: "quote"
+            },
+
+            {
+                label: "🛡️ Products",
+                action: "products"
+            },
+
+            {
+                label: "📞 Contact Us",
+                action: "contact"
+            }
+
+        ];
+
+
+        actions.forEach(function(item) {
+
+            const button =
+                document.createElement("button");
+
+
+            button.type =
+                "button";
+
+
+            button.className =
+                "nexpak-quick-button";
+
+
+            button.textContent =
+                item.label;
+
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    handleQuickAction(
+                        item.action
+                    );
+
+                }
+            );
+
+
+            container.appendChild(
+                button
+            );
+
+        });
+
+    }
+
+
+    /* =========================================================
+       OPEN CHAT
+    ========================================================= */
+
+    function openChat() {
+
+        const chatbot =
+            document.getElementById(
+                "nexpak-chatbot"
+            );
+
+        const windowElement =
+            document.getElementById(
+                "nexpak-chat-window"
+            );
+
+
+        if (!chatbot || !windowElement) {
+
+            return;
+
+        }
+
+
+        chatState.isOpen =
+            true;
+
+
+        chatbot.classList.add(
+            "chat-open"
+        );
+
+
+        windowElement.classList.add(
+            "open"
+        );
+
+
+        const input =
+            document.getElementById(
+                "nexpak-chat-input"
+            );
+
+
+        if (input) {
+
+            setTimeout(function() {
+
+                input.focus();
+
+            }, 200);
+
+        }
+
+
+        scrollChatToBottom();
+
+    }
+
+
+    /* =========================================================
+       CLOSE CHAT
+    ========================================================= */
+
+    function closeChat() {
+
+        const chatbot =
+            document.getElementById(
+                "nexpak-chatbot"
+            );
+
+        const windowElement =
+            document.getElementById(
+                "nexpak-chat-window"
+            );
+
+
+        if (!chatbot || !windowElement) {
+
+            return;
+
+        }
+
+
+        chatState.isOpen =
+            false;
+
+
+        chatbot.classList.remove(
+            "chat-open"
+        );
+
+
+        windowElement.classList.remove(
+            "open"
+        );
+
+    }
+
+
+    /* =========================================================
+       TOGGLE CHAT
+    ========================================================= */
+
+    function toggleChat() {
+
+        if (
+            chatState.isOpen
+        ) {
+
+            closeChat();
+
+        } else {
+
+            openChat();
+
+        }
+
+    }
+
+
+    /* =========================================================
+       CHAT BUTTON EVENTS
+    ========================================================= */
+
+    function setupChatEvents() {
+
+        const toggle =
+            document.getElementById(
+                "nexpak-chat-toggle"
+            );
+
+
+        const close =
+            document.getElementById(
+                "nexpak-chat-close"
+            );
+
+
+        const send =
+            document.getElementById(
+                "nexpak-chat-send"
+            );
+
+
+        const input =
+            document.getElementById(
+                "nexpak-chat-input"
+            );
+
+
+        const skip =
+            document.getElementById(
+                "nexpak-lead-skip"
+            );
+
+
+        const submit =
+            document.getElementById(
+                "nexpak-lead-submit"
+            );
+
+
+        if (toggle) {
+
+            toggle.addEventListener(
+                "click",
+                toggleChat
+            );
+
+        }
+
+
+        if (close) {
+
+            close.addEventListener(
+                "click",
+                closeChat
+            );
+
+        }
+
+
+        if (send) {
+
+            send.addEventListener(
+                "click",
+                sendChatMessage
+            );
+
+        }
+
+
+        if (input) {
+
+            input.addEventListener(
+                "keydown",
+                handleChatKeydown
+            );
+
+        }
+
+
+        if (skip) {
+
+            skip.addEventListener(
+                "click",
+                skipLeadForm
+            );
+
+        }
+
+
+        if (submit) {
+
+            submit.addEventListener(
+                "click",
+                submitLead
+            );
+
+        }
+
+
+        /*
+         * Allow clicking outside the chatbot
+         * window to close it on desktop.
+         */
+
+        document.addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    !chatState.isOpen
+                ) {
+
+                    return;
+
+                }
+
+
+                const chatbot =
+                    document.getElementById(
+                        "nexpak-chatbot"
+                    );
+
+
+                if (
+                    !chatbot
+                ) {
+
+                    return;
+
+                }
+
+
+                if (
+                    !chatbot.contains(
+                        event.target
+                    )
+                ) {
+
+                    closeChat();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       MOBILE KEYBOARD HANDLING
+    ========================================================= */
+
+    function setupMobileHandling() {
+
+        const input =
+            document.getElementById(
+                "nexpak-chat-input"
+            );
+
+
+        if (!input) return;
+
+
+        input.addEventListener(
+            "focus",
+            function() {
+
+                setTimeout(
+                    scrollChatToBottom,
+                    300
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       CHAT WINDOW ACCESSIBILITY
+    ========================================================= */
+
+    function setupAccessibility() {
+
+        const toggle =
+            document.getElementById(
+                "nexpak-chat-toggle"
+            );
+
+
+        const windowElement =
+            document.getElementById(
+                "nexpak-chat-window"
+            );
+
+
+        if (toggle) {
+
+            toggle.setAttribute(
+                "aria-label",
+                "Open Nexpak AI Assistant"
+            );
+
+            toggle.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        }
+
+
+        if (windowElement) {
+
+            windowElement.setAttribute(
+                "role",
+                "dialog"
+            );
+
+            windowElement.setAttribute(
+                "aria-label",
+                "Nexpak Security AI Assistant"
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       UPDATE ACCESSIBILITY STATE
+    ========================================================= */
+
+    function updateAccessibilityState() {
+
+        const toggle =
+            document.getElementById(
+                "nexpak-chat-toggle"
+            );
+
+
+        if (!toggle) return;
+
+
+        toggle.setAttribute(
+            "aria-expanded",
+            chatState.isOpen
+                ? "true"
+                : "false"
+        );
+
+    }
+
+
+    /* =========================================================
+       OPEN CHAT FROM EXTERNAL BUTTON
+    ========================================================= */
+
+    function attachExternalOpenButtons() {
+
+        document
+            .querySelectorAll(
+                "[data-open-nexpak-chat]"
+            )
+            .forEach(function(button) {
+
+                button.addEventListener(
+                    "click",
+                    function(event) {
+
+                        event.preventDefault();
+
+                        openChat();
+
+                    }
+                );
+
+            });
+
+    }
+
+
+    /* =========================================================
+       INITIAL BOT MESSAGE
+    ========================================================= */
+
+    function ensureGreeting() {
+
+        if (
+            chatState.messages.length > 0
+        ) {
+
+            return;
+
+        }
+
+
+        addBotMessage(
+            CONFIG.greeting
+        );
+
+    }
+
+
+    /* =========================================================
+       INITIALIZE CHATBOT
+    ========================================================= */
+
+    function initializeChatbot() {
+
+        /*
+         * Make sure the HTML created by
+         * the earlier section is available.
+         */
+
+        if (
+            !document.getElementById(
+                "nexpak-chatbot"
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        loadSavedLead();
+
+
+        loadChat();
+
+
+        ensureGreeting();
+
+
+        createQuickActions();
+
+
+        setupChatEvents();
+
+
+        setupMobileHandling();
+
+
+        setupAccessibility();
+
+
+        attachExternalOpenButtons();
+
+
+        startLeadPromptTimer();
+
+
+        /*
+         * Keep accessibility state synchronized.
+         */
+
+        const observer =
+            new MutationObserver(
+                function() {
+
+                    updateAccessibilityState();
+
+                }
+            );
+
+
+        const chatbot =
+            document.getElementById(
+                "nexpak-chatbot"
+            );
+
+
+        if (chatbot) {
+
+            observer.observe(
+                chatbot,
+                {
+                    attributes: true,
+                    subtree: true
+                }
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       START CHATBOT
+    ========================================================= */
+
+    if (
+        document.readyState ===
+        "loading"
+    ) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            initializeChatbot
+        );
+
+    } else {
+
+        initializeChatbot();
+
+    }
+
+
+    /* =========================================================
+       PUBLIC CHATBOT API
+    ========================================================= */
+
+    window.NexpakChatbot = {
+
+        open: function() {
+
+            openChat();
+
+        },
+
+
+        close: function() {
+
+            closeChat();
+
+        },
+
+
+        toggle: function() {
+
+            toggleChat();
+
+        },
+
+
+        send: function(message) {
+
+            if (!message) return;
+
+
+            addUserMessage(
+                message
+            );
+
+
+            showTyping();
+
+
+            setTimeout(
+                function() {
+
+                    hideTyping();
+
+
+                    addBotMessage(
+                        generateAIResponse(
+                            message
+                        )
+                    );
+
+                },
+                700
+            );
+
+        },
+
+
+        clear: function() {
+
+            clearChat();
+
+        },
+
+
+        getLead: function() {
+
+            return chatState.userInfo;
+
+        },
+
+
+        isOpen: function() {
+
+            return chatState.isOpen;
+
+        }
+
+    };
