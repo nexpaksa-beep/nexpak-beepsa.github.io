@@ -4303,3 +4303,926 @@ main {
 /* =========================================================
    END PART 4
    ========================================================= */
+/* =========================================================
+   NEXPAK SECURITY ACADEMY
+   ACADEMY.CSS
+   PART 5 — ADVANCED TECHNICAL & SYSTEM DESIGN STYLING
+   ========================================================= */
+
+
+/* =========================================================
+   SYSTEM ARCHITECTURE
+   ========================================================= */
+
+.system-architecture {
+
+    position:
+        relative;
+
+    margin:
+        40px 0;
+
+    padding:
+        35px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,34,45,.92),
+            rgba(4,10,15,.98)
+        );
+
+    overflow:
+        hidden;
+
+}
+
+
+.system-architecture::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        300px;
+
+    height:
+        300px;
+
+    top:
+        -180px;
+
+    right:
+        -120px;
+
+    border:
+        1px solid
+        rgba(56,189,248,.12);
+
+    border-radius:
+        50%;
+
+}
+
+
+.system-architecture h3 {
+
+    margin-bottom:
+        22px;
+
+    color:
+        var(--academy-blue);
+
+    font-size:
+        22px;
+
+}
+
+
+/* =========================================================
+   ARCHITECTURE FLOW
+   ========================================================= */
+
+.architecture-flow {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            5,
+            minmax(0,1fr)
+        );
+
+    gap:
+        12px;
+
+    align-items:
+        stretch;
+
+}
+
+
+.architecture-node {
+
+    position:
+        relative;
+
+    min-height:
+        120px;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        18px 12px;
+
+    text-align:
+        center;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        14px;
+
+    background:
+        rgba(255,255,255,.025);
+
+}
+
+
+.architecture-node strong {
+
+    margin-bottom:
+        6px;
+
+    color:
+        var(--academy-text);
+
+    font-size:
+        14px;
+
+}
+
+
+.architecture-node span {
+
+    color:
+        var(--academy-text-muted);
+
+    font-size:
+        11px;
+
+}
+
+
+.architecture-node:not(:last-child)::after {
+
+    content:
+        "→";
+
+    position:
+        absolute;
+
+    top:
+        50%;
+
+    right:
+        -17px;
+
+    transform:
+        translateY(-50%);
+
+    color:
+        var(--academy-accent-light);
+
+    font-size:
+        18px;
+
+    z-index:
+        3;
+
+}
+
+
+/* =========================================================
+   DESIGN PRINCIPLES
+   ========================================================= */
+
+.design-principles {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0,1fr)
+        );
+
+    gap:
+        18px;
+
+    margin:
+        30px 0;
+
+}
+
+
+.design-principle {
+
+    position:
+        relative;
+
+    padding:
+        25px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius-small);
+
+    background:
+        rgba(255,255,255,.025);
+
+    transition:
+        var(--academy-transition);
+
+}
+
+
+.design-principle:hover {
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(56,189,248,.22);
+
+}
+
+
+.design-principle-number {
+
+    display:
+        inline-block;
+
+    margin-bottom:
+        12px;
+
+    color:
+        var(--academy-blue);
+
+    font-size:
+        11px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .12em;
+
+}
+
+
+.design-principle h3 {
+
+    margin:
+        0 0 8px;
+
+    font-size:
+        18px;
+
+}
+
+
+.design-principle p {
+
+    margin:
+        0;
+
+    font-size:
+        14px;
+
+}
+
+
+/* =========================================================
+   SYSTEM LAYERS
+   ========================================================= */
+
+.system-layers {
+
+    display:
+        grid;
+
+    gap:
+        10px;
+
+    margin:
+        30px 0;
+
+}
+
+
+.system-layer {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        160px
+        minmax(0,1fr);
+
+    align-items:
+        center;
+
+    min-height:
+        62px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        12px;
+
+    overflow:
+        hidden;
+
+    background:
+        rgba(255,255,255,.02);
+
+}
+
+
+.system-layer-label {
+
+    height:
+        100%;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    padding:
+        0 18px;
+
+    background:
+        rgba(245,158,11,.07);
+
+    color:
+        var(--academy-accent-light);
+
+    font-size:
+        12px;
+
+    font-weight:
+        800;
+
+}
+
+
+.system-layer-description {
+
+    padding:
+        14px 18px;
+
+    color:
+        var(--academy-text-soft);
+
+    font-size:
+        13px;
+
+}
+
+
+/* =========================================================
+   DECISION MATRIX
+   ========================================================= */
+
+.decision-matrix {
+
+    margin:
+        35px 0;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius);
+
+    overflow:
+        hidden;
+
+}
+
+
+.decision-row {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        1.2fr
+        1fr
+        1fr;
+
+}
+
+
+.decision-row
++ .decision-row {
+
+    border-top:
+        1px solid
+        var(--academy-border);
+
+}
+
+
+.decision-row > div {
+
+    padding:
+        15px 17px;
+
+    color:
+        var(--academy-text-soft);
+
+    font-size:
+        13px;
+
+}
+
+
+.decision-row > div
++ div {
+
+    border-left:
+        1px solid
+        var(--academy-border);
+
+}
+
+
+.decision-header {
+
+    background:
+        rgba(245,158,11,.07);
+
+}
+
+
+.decision-header > div {
+
+    color:
+        var(--academy-accent-light);
+
+    font-size:
+        11px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .08em;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+/* =========================================================
+   SYSTEM DESIGN SCORE
+   ========================================================= */
+
+.design-score {
+
+    margin:
+        35px 0;
+
+    padding:
+        28px;
+
+    border:
+        1px solid
+        rgba(245,158,11,.18);
+
+    border-radius:
+        var(--academy-radius);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(245,158,11,.06),
+            rgba(7,16,24,.95)
+        );
+
+}
+
+
+.design-score-header {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+    margin-bottom:
+        22px;
+
+}
+
+
+.design-score-header h3 {
+
+    margin:
+        0;
+
+    font-size:
+        20px;
+
+}
+
+
+.design-score-value {
+
+    color:
+        var(--academy-accent-light);
+
+    font-size:
+        24px;
+
+    font-weight:
+        900;
+
+}
+
+
+.design-score-bar {
+
+    width:
+        100%;
+
+    height:
+        9px;
+
+    overflow:
+        hidden;
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(255,255,255,.06);
+
+}
+
+
+.design-score-bar span {
+
+    display:
+        block;
+
+    width:
+        var(--score, 80%);
+
+    height:
+        100%;
+
+    border-radius:
+        inherit;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--academy-accent-dark),
+            var(--academy-accent-light)
+        );
+
+}
+
+
+/* =========================================================
+   RISK ASSESSMENT
+   ========================================================= */
+
+.risk-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0,1fr)
+        );
+
+    gap:
+        15px;
+
+    margin:
+        30px 0;
+
+}
+
+
+.risk-card {
+
+    padding:
+        22px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius-small);
+
+    background:
+        rgba(255,255,255,.025);
+
+}
+
+
+.risk-level {
+
+    display:
+        inline-flex;
+
+    padding:
+        5px 9px;
+
+    margin-bottom:
+        12px;
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(239,68,68,.09);
+
+    color:
+        #f87171;
+
+    font-size:
+        9px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .1em;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+.risk-card h3 {
+
+    margin:
+        0 0 7px;
+
+    font-size:
+        17px;
+
+}
+
+
+.risk-card p {
+
+    margin:
+        0;
+
+    font-size:
+        13px;
+
+}
+
+
+/* =========================================================
+   TECHNICAL FORMULA
+   ========================================================= */
+
+.formula-box {
+
+    margin:
+        30px 0;
+
+    padding:
+        28px;
+
+    text-align:
+        center;
+
+    border:
+        1px solid
+        rgba(56,189,248,.18);
+
+    border-radius:
+        var(--academy-radius);
+
+    background:
+        rgba(56,189,248,.035);
+
+}
+
+
+.formula-label {
+
+    display:
+        block;
+
+    margin-bottom:
+        12px;
+
+    color:
+        var(--academy-blue);
+
+    font-size:
+        10px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .14em;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+.formula {
+
+    color:
+        var(--academy-text);
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size:
+        clamp(
+            17px,
+            3vw,
+            26px
+        );
+
+    font-weight:
+        700;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (
+    max-width: 900px
+) {
+
+    .architecture-flow {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            );
+
+    }
+
+
+    .architecture-node:not(:last-child)::after {
+
+        display:
+            none;
+
+    }
+
+
+    .risk-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            );
+
+    }
+
+}
+
+
+@media (
+    max-width: 640px
+) {
+
+    .system-architecture {
+
+        padding:
+            22px;
+
+    }
+
+
+    .architecture-flow {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .design-principles {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .system-layer {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .system-layer-label {
+
+        min-height:
+            45px;
+
+    }
+
+
+    .decision-row {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .decision-row > div
+    + div {
+
+        border-left:
+            none;
+
+        border-top:
+            1px solid
+            var(--academy-border);
+
+    }
+
+
+    .risk-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .design-score {
+
+        padding:
+            22px;
+
+    }
+
+
+    .design-score-header {
+
+        align-items:
+            flex-start;
+
+    }
+
+}
+
+
+/* =========================================================
+   END PART 5
+   ========================================================= */
