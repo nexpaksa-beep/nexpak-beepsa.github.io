@@ -1877,4 +1877,480 @@ What would you like to know?
     `.trim();
 
 }
+
+    /* =========================================================
+   LEAD CAPTURE
+========================================================= */
+
+function showLeadForm() {
+
+    const form =
+        document.getElementById(
+            'nexpak-lead-form'
+        );
+
+    if (!form) {
+        return;
+    }
+
+    form.classList.add(
+        'nexpak-lead-visible'
+    );
+
+}
+
+
+/* =========================================================
+   HIDE LEAD FORM
+========================================================= */
+
+function hideLeadForm() {
+
+    const form =
+        document.getElementById(
+            'nexpak-lead-form'
+        );
+
+    if (!form) {
+        return;
+    }
+
+    form.classList.remove(
+        'nexpak-lead-visible'
+    );
+
+}
+
+
+/* =========================================================
+   SUBMIT LEAD
+========================================================= */
+
+function submitLead() {
+
+    const name =
+        document.getElementById(
+            'nexpak-lead-name'
+        );
+
+    const email =
+        document.getElementById(
+            'nexpak-lead-email'
+        );
+
+    const phone =
+        document.getElementById(
+            'nexpak-lead-phone'
+        );
+
+    const interest =
+        document.getElementById(
+            'nexpak-lead-interest'
+        );
+
+
+    if (!name || !email) {
+        return;
+    }
+
+
+    const nameValue =
+        name.value.trim();
+
+    const emailValue =
+        email.value.trim();
+
+    const phoneValue =
+        phone
+            ? phone.value.trim()
+            : '';
+
+    const interestValue =
+        interest
+            ? interest.value.trim()
+            : '';
+
+
+    if (!nameValue) {
+
+        name.focus();
+
+        return;
+
+    }
+
+
+    if (!emailValue) {
+
+        email.focus();
+
+        return;
+
+    }
+
+
+    if (
+        !emailValue.includes('@') ||
+        !emailValue.includes('.')
+    ) {
+
+        email.focus();
+
+        return;
+
+    }
+
+
+    chatState.userInfo = {
+
+        name: nameValue,
+
+        email: emailValue,
+
+        phone: phoneValue,
+
+        interest: interestValue,
+
+        time: Date.now()
+
+    };
+
+
+    chatState.leadCaptured = true;
+
+
+    localStorage.setItem(
+
+        'nexpak_chat_lead',
+
+        JSON.stringify(
+            chatState.userInfo
+        )
+
+    );
+
+
+    hideLeadForm();
+
+
+    addMessage(
+
+        `Thanks ${nameValue}! 👍
+
+We've received your details.
+
+Our team can contact you regarding your ${interestValue || 'security requirements'}.
+
+If you need anything else, you can continue chatting with me.`,
+
+        'bot'
+
+    );
+
+
+    /*
+     * Send the lead to the configured endpoint
+     * if one has been supplied.
+     */
+
+    if (
+        CONFIG.leadEndpoint &&
+        typeof fetch === 'function'
+    ) {
+
+        fetch(
+            CONFIG.leadEndpoint,
+            {
+
+                method: 'POST',
+
+                headers: {
+
+                    'Content-Type':
+                        'application/json'
+
+                },
+
+                body: JSON.stringify(
+                    chatState.userInfo
+                )
+
+            }
+
+        ).catch(function(error) {
+
+            console.warn(
+                'Nexpak Chat: Lead endpoint error.',
+                error
+            );
+
+        });
+
+    }
+
+}
+
+
+/* =========================================================
+   CHECK SAVED LEAD
+========================================================= */
+
+function loadLead() {
+
+    try {
+
+        const saved =
+            localStorage.getItem(
+                'nexpak_chat_lead'
+            );
+
+
+        if (!saved) {
+            return;
+        }
+
+
+        const lead =
+            JSON.parse(saved);
+
+
+        if (!lead) {
+            return;
+        }
+
+
+        chatState.userInfo =
+            lead;
+
+        chatState.leadCaptured =
+            true;
+
+
+    } catch (error) {
+
+        console.warn(
+            'Nexpak Chat: Unable to load lead.',
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   LEAD FORM HTML
+========================================================= */
+
+function createLeadForm() {
+
+    const existing =
+        document.getElementById(
+            'nexpak-lead-form'
+        );
+
+    if (existing) {
+        return;
+    }
+
+
+    const wrapper =
+        document.createElement('div');
+
+
+    wrapper.id =
+        'nexpak-lead-form';
+
+    wrapper.className =
+        'nexpak-lead-form';
+
+
+    wrapper.innerHTML = `
+
+        <div class="nexpak-lead-title">
+
+            <strong>
+                Want us to contact you?
+            </strong>
+
+            <button
+                type="button"
+                id="nexpak-lead-close"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <p class="nexpak-lead-text">
+
+            Leave your details and our team
+            can assist you with your security
+            requirements.
+
+        </p>
+
+
+        <input
+            type="text"
+            id="nexpak-lead-name"
+            placeholder="Your name"
+            autocomplete="name"
+        >
+
+
+        <input
+            type="email"
+            id="nexpak-lead-email"
+            placeholder="Email address"
+            autocomplete="email"
+        >
+
+
+        <input
+            type="tel"
+            id="nexpak-lead-phone"
+            placeholder="Phone number"
+            autocomplete="tel"
+        >
+
+
+        <input
+            type="text"
+            id="nexpak-lead-interest"
+            placeholder="What security do you need?"
+        >
+
+
+        <button
+            type="button"
+            id="nexpak-lead-submit"
+            class="nexpak-lead-submit"
+        >
+            Send My Details
+        </button>
+
+    `;
+
+
+    document.body.appendChild(
+        wrapper
+    );
+
+
+    const closeButton =
+        document.getElementById(
+            'nexpak-lead-close'
+        );
+
+
+    if (closeButton) {
+
+        closeButton.addEventListener(
+            'click',
+            hideLeadForm
+        );
+
+    }
+
+
+    const submitButton =
+        document.getElementById(
+            'nexpak-lead-submit'
+        );
+
+
+    if (submitButton) {
+
+        submitButton.addEventListener(
+            'click',
+            submitLead
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   CHATBOT INTRO MESSAGE
+========================================================= */
+
+function showWelcomeMessage() {
+
+    const container =
+        document.getElementById(
+            'nexpak-chat-messages'
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    if (
+        container.children.length > 0
+    ) {
+        return;
+    }
+
+
+    addMessage(
+
+        `Hi! 👋 I'm Nexpak's virtual security assistant.
+
+I can help you find the right security products, answer questions and help you request a quote.
+
+What are you looking for today?`,
+
+        'bot'
+
+    );
+
+}
+
+
+/* =========================================================
+   CHATBOT INITIALISATION
+========================================================= */
+
+function initialiseChatbot() {
+
+    createChatbotUI();
+
+    createLeadForm();
+
+    loadLead();
+
+    loadChat();
+
+    showWelcomeMessage();
+
+    setupChatEvents();
+
+}
+
+
+/* =========================================================
+   START CHATBOT
+========================================================= */
+
+if (
+    document.readyState === 'loading'
+) {
+
+    document.addEventListener(
+        'DOMContentLoaded',
+        initialiseChatbot
+    );
+
+} else {
+
+    initialiseChatbot();
+
+            }
+    
     
