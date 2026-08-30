@@ -6042,4 +6042,903 @@ main {
 /* =========================================================
    END PART 6
    ========================================================= */
-           
+
+/* =========================================================
+   NEXPAK SECURITY ACADEMY
+   ACADEMY.CSS
+   PART 7 — ADVANCED INSTALLATION & FIELD WORK
+   ========================================================= */
+
+
+/* =========================================================
+   FIELD OPERATIONS HERO
+   ========================================================= */
+
+.field-operations {
+
+    position:
+        relative;
+
+    margin:
+        40px 0;
+
+    padding:
+        38px;
+
+    overflow:
+        hidden;
+
+    border:
+        1px solid
+        rgba(34,197,94,.18);
+
+    border-radius:
+        var(--academy-radius);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(34,197,94,.07),
+            rgba(7,16,24,.97)
+        );
+
+}
+
+
+.field-operations::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        280px;
+
+    height:
+        280px;
+
+    right:
+        -140px;
+
+    top:
+        -150px;
+
+    border:
+        1px solid
+        rgba(34,197,94,.12);
+
+    border-radius:
+        50%;
+
+}
+
+
+.field-operations-label {
+
+    display:
+        inline-flex;
+
+    margin-bottom:
+        14px;
+
+    padding:
+        7px 12px;
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(34,197,94,.1);
+
+    color:
+        var(--academy-green);
+
+    font-size:
+        10px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .13em;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+.field-operations h2 {
+
+    margin:
+        0 0 12px;
+
+    font-size:
+        clamp(
+            27px,
+            4vw,
+            38px
+        );
+
+}
+
+
+.field-operations p {
+
+    max-width:
+        800px;
+
+    margin:
+        0;
+
+    color:
+        var(--academy-text-soft);
+
+}
+
+
+/* =========================================================
+   INSTALLATION CHECKPOINTS
+   ========================================================= */
+
+.installation-checkpoints {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0,1fr)
+        );
+
+    gap:
+        14px;
+
+    margin:
+        35px 0;
+
+}
+
+
+.installation-checkpoint {
+
+    position:
+        relative;
+
+    padding:
+        22px 18px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius-small);
+
+    background:
+        rgba(255,255,255,.025);
+
+    transition:
+        var(--academy-transition);
+
+}
+
+
+.installation-checkpoint:hover {
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(34,197,94,.24);
+
+}
+
+
+.checkpoint-number {
+
+    display:
+        block;
+
+    margin-bottom:
+        10px;
+
+    color:
+        var(--academy-green);
+
+    font-size:
+        10px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .12em;
+
+}
+
+
+.installation-checkpoint h3 {
+
+    margin:
+        0 0 7px;
+
+    font-size:
+        16px;
+
+}
+
+
+.installation-checkpoint p {
+
+    margin:
+        0;
+
+    color:
+        var(--academy-text-muted);
+
+    font-size:
+        12px;
+
+}
+
+
+/* =========================================================
+   FIELD PROCEDURE
+   ========================================================= */
+
+.field-procedure {
+
+    margin:
+        35px 0;
+
+    padding:
+        28px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius);
+
+    background:
+        var(--academy-panel);
+
+}
+
+
+.field-procedure-header {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+    margin-bottom:
+        22px;
+
+}
+
+
+.field-procedure-header h3 {
+
+    margin:
+        0;
+
+    font-size:
+        21px;
+
+}
+
+
+.field-procedure-badge {
+
+    padding:
+        6px 10px;
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(34,197,94,.08);
+
+    color:
+        var(--academy-green);
+
+    font-size:
+        9px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .1em;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+.field-procedure-step {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        42px
+        minmax(0,1fr);
+
+    gap:
+        15px;
+
+    padding:
+        17px 0;
+
+}
+
+
+.field-procedure-step
++ .field-procedure-step {
+
+    border-top:
+        1px solid
+        var(--academy-border);
+
+}
+
+
+.field-procedure-step-number {
+
+    width:
+        42px;
+
+    height:
+        42px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    border-radius:
+        12px;
+
+    background:
+        rgba(34,197,94,.08);
+
+    color:
+        var(--academy-green);
+
+    font-size:
+        12px;
+
+    font-weight:
+        900;
+
+}
+
+
+.field-procedure-step h4 {
+
+    margin:
+        0 0 5px;
+
+    color:
+        var(--academy-text);
+
+    font-size:
+        16px;
+
+}
+
+
+.field-procedure-step p {
+
+    margin:
+        0;
+
+    color:
+        var(--academy-text-muted);
+
+    font-size:
+        13px;
+
+}
+
+
+/* =========================================================
+   TOOLS & EQUIPMENT
+   ========================================================= */
+
+.tools-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0,1fr)
+        );
+
+    gap:
+        14px;
+
+    margin:
+        30px 0;
+
+}
+
+
+.tool-card {
+
+    padding:
+        20px 16px;
+
+    text-align:
+        center;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius-small);
+
+    background:
+        rgba(255,255,255,.025);
+
+    transition:
+        var(--academy-transition);
+
+}
+
+
+.tool-card:hover {
+
+    transform:
+        translateY(-3px);
+
+    border-color:
+        rgba(245,158,11,.22);
+
+}
+
+
+.tool-icon {
+
+    width:
+        42px;
+
+    height:
+        42px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    margin:
+        0 auto 12px;
+
+    border-radius:
+        12px;
+
+    background:
+        rgba(245,158,11,.09);
+
+    color:
+        var(--academy-accent-light);
+
+    font-size:
+        17px;
+
+    font-weight:
+        900;
+
+}
+
+
+.tool-card h3 {
+
+    margin:
+        0 0 5px;
+
+    font-size:
+        15px;
+
+}
+
+
+.tool-card p {
+
+    margin:
+        0;
+
+    color:
+        var(--academy-text-muted);
+
+    font-size:
+        11px;
+
+}
+
+
+/* =========================================================
+   INSTALLATION QUALITY PANEL
+   ========================================================= */
+
+.quality-panel {
+
+    margin:
+        35px 0;
+
+    padding:
+        30px;
+
+    border:
+        1px solid
+        rgba(34,197,94,.18);
+
+    border-radius:
+        var(--academy-radius);
+
+    background:
+        rgba(34,197,94,.035);
+
+}
+
+
+.quality-panel h3 {
+
+    margin:
+        0 0 18px;
+
+    color:
+        var(--academy-green);
+
+    font-size:
+        20px;
+
+}
+
+
+.quality-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0,1fr)
+        );
+
+    gap:
+        11px;
+
+}
+
+
+.quality-item {
+
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    gap:
+        11px;
+
+    padding:
+        14px 16px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        10px;
+
+    background:
+        rgba(255,255,255,.02);
+
+}
+
+
+.quality-item::before {
+
+    content:
+        "✓";
+
+    flex:
+        0 0 auto;
+
+    color:
+        var(--academy-green);
+
+    font-weight:
+        900;
+
+}
+
+
+.quality-item span {
+
+    color:
+        var(--academy-text-soft);
+
+    font-size:
+        13px;
+
+}
+
+
+/* =========================================================
+   ENVIRONMENTAL CONDITIONS
+   ========================================================= */
+
+.environment-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0,1fr)
+        );
+
+    gap:
+        15px;
+
+    margin:
+        30px 0;
+
+}
+
+
+.environment-card {
+
+    padding:
+        23px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius-small);
+
+    background:
+        var(--academy-panel);
+
+}
+
+
+.environment-card h3 {
+
+    margin:
+        0 0 8px;
+
+    color:
+        var(--academy-blue);
+
+    font-size:
+        17px;
+
+}
+
+
+.environment-card p {
+
+    margin:
+        0;
+
+    color:
+        var(--academy-text-muted);
+
+    font-size:
+        13px;
+
+}
+
+
+/* =========================================================
+   FIELD SAFETY NOTICE
+   ========================================================= */
+
+.field-safety {
+
+    position:
+        relative;
+
+    margin:
+        35px 0;
+
+    padding:
+        25px 28px 25px 32px;
+
+    border:
+        1px solid
+        rgba(239,68,68,.2);
+
+    border-radius:
+        var(--academy-radius-small);
+
+    background:
+        rgba(239,68,68,.045);
+
+}
+
+
+.field-safety::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    left:
+        0;
+
+    top:
+        0;
+
+    bottom:
+        0;
+
+    width:
+        4px;
+
+    border-radius:
+        4px 0 0 4px;
+
+    background:
+        var(--academy-red);
+
+}
+
+
+.field-safety strong {
+
+    display:
+        block;
+
+    margin-bottom:
+        6px;
+
+    color:
+        #f87171;
+
+    font-size:
+        14px;
+
+}
+
+
+.field-safety p {
+
+    margin:
+        0;
+
+    color:
+        var(--academy-text-soft);
+
+    font-size:
+        13px;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (
+    max-width: 1000px
+) {
+
+    .installation-checkpoints,
+    .tools-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            );
+
+    }
+
+
+    .environment-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0,1fr)
+            );
+
+    }
+
+}
+
+
+@media (
+    max-width: 640px
+) {
+
+    .field-operations {
+
+        padding:
+            25px;
+
+    }
+
+
+    .installation-checkpoints,
+    .tools-grid,
+    .environment-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .field-procedure {
+
+        padding:
+            22px;
+
+    }
+
+
+    .field-procedure-header {
+
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .quality-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .field-safety {
+
+        padding:
+            21px 21px 21px 27px;
+
+    }
+
+}
+
+
+/* =========================================================
+   END PART 7
+   ========================================================= */
