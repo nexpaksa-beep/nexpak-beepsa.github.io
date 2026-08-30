@@ -873,3 +873,491 @@ function saveChat() {
     }
 
 }
+
+    /* =========================================================
+   LOAD CHAT
+========================================================= */
+
+function loadChat() {
+
+    try {
+
+        const saved = localStorage.getItem(
+            CONFIG.storageKey
+        );
+
+        if (!saved) {
+            return;
+        }
+
+        const history = JSON.parse(saved);
+
+        if (!Array.isArray(history)) {
+            return;
+        }
+
+        chatState.messages = history;
+
+        const container =
+            document.getElementById('nexpak-chat-messages');
+
+        if (!container) {
+            return;
+        }
+
+        history.forEach(function(message) {
+
+            if (
+                !message ||
+                !message.content ||
+                !message.sender
+            ) {
+                return;
+            }
+
+            renderMessage(
+                message.content,
+                message.sender,
+                false
+            );
+
+        });
+
+    } catch (error) {
+
+        console.warn(
+            'Nexpak Chat: Unable to load chat history.',
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   ADD MESSAGE
+========================================================= */
+
+function addMessage(content, sender) {
+
+    if (!content) {
+        return;
+    }
+
+    chatState.messages.push({
+
+        content: String(content),
+
+        sender: sender,
+
+        time: Date.now()
+
+    });
+
+    renderMessage(
+        content,
+        sender,
+        true
+    );
+
+    saveChat();
+
+}
+
+
+/* =========================================================
+   RENDER MESSAGE
+========================================================= */
+
+function renderMessage(
+    content,
+    sender,
+    scroll
+) {
+
+    const container =
+        document.getElementById(
+            'nexpak-chat-messages'
+        );
+
+    if (!container) {
+        return;
+    }
+
+    const message =
+        document.createElement('div');
+
+    message.className =
+        'nexpak-chat-message ' +
+        (sender === 'user'
+            ? 'nexpak-user-message'
+            : 'nexpak-bot-message');
+
+
+    const text =
+        document.createElement('div');
+
+    text.className =
+        'nexpak-message-text';
+
+    /*
+     * Convert line breaks to HTML safely.
+     */
+
+    text.innerHTML =
+        escapeHTML(String(content))
+        .replace(/\n/g, '<br>');
+
+
+    const time =
+        document.createElement('div');
+
+    time.className =
+        'nexpak-message-time';
+
+    time.textContent =
+        formatTime(new Date());
+
+
+    message.appendChild(text);
+
+    message.appendChild(time);
+
+    container.appendChild(message);
+
+
+    if (scroll) {
+
+        container.scrollTop =
+            container.scrollHeight;
+
+    }
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value) {
+
+    const div =
+        document.createElement('div');
+
+    div.textContent = value;
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   FORMAT TIME
+========================================================= */
+
+function formatTime(date) {
+
+    return date.toLocaleTimeString(
+        'en-ZA',
+        {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        }
+    );
+
+}
+
+
+/* =========================================================
+   TYPING INDICATOR
+========================================================= */
+
+function showTyping() {
+
+    const container =
+        document.getElementById(
+            'nexpak-chat-messages'
+        );
+
+    if (!container) {
+        return;
+    }
+
+    if (
+        document.getElementById(
+            'nexpak-typing'
+        )
+    ) {
+        return;
+    }
+
+
+    const typing =
+        document.createElement('div');
+
+    typing.id =
+        'nexpak-typing';
+
+    typing.className =
+        'nexpak-typing';
+
+
+    typing.innerHTML = `
+        <span></span>
+        <span></span>
+        <span></span>
+    `;
+
+
+    container.appendChild(typing);
+
+    container.scrollTop =
+        container.scrollHeight;
+
+}
+
+
+/* =========================================================
+   HIDE TYPING INDICATOR
+========================================================= */
+
+function hideTyping() {
+
+    const typing =
+        document.getElementById(
+            'nexpak-typing'
+        );
+
+    if (typing) {
+
+        typing.remove();
+
+    }
+
+}
+
+
+/* =========================================================
+   BOT RESPONSE
+========================================================= */
+
+function sendBotResponse(
+    response,
+    delay
+) {
+
+    showTyping();
+
+
+    setTimeout(function() {
+
+        hideTyping();
+
+        addMessage(
+            response,
+            'bot'
+        );
+
+    }, delay || 800);
+
+}
+
+
+/* =========================================================
+   OPEN CHAT
+========================================================= */
+
+function openChat() {
+
+    const windowElement =
+        document.getElementById(
+            'nexpak-chat-window'
+        );
+
+    if (!windowElement) {
+        return;
+    }
+
+    windowElement.classList.add(
+        'nexpak-chat-open'
+    );
+
+    chatState.isOpen = true;
+
+
+    const input =
+        document.getElementById(
+            'nexpak-chat-input'
+        );
+
+    if (input) {
+
+        setTimeout(function() {
+
+            input.focus();
+
+        }, 200);
+
+    }
+
+}
+
+
+/* =========================================================
+   CLOSE CHAT
+========================================================= */
+
+function closeChat() {
+
+    const windowElement =
+        document.getElementById(
+            'nexpak-chat-window'
+        );
+
+    if (!windowElement) {
+        return;
+    }
+
+    windowElement.classList.remove(
+        'nexpak-chat-open'
+    );
+
+    chatState.isOpen = false;
+
+}
+
+
+/* =========================================================
+   TOGGLE CHAT
+========================================================= */
+
+function toggleChat() {
+
+    if (chatState.isOpen) {
+
+        closeChat();
+
+    } else {
+
+        openChat();
+
+    }
+
+}
+
+
+/* =========================================================
+   SEND USER MESSAGE
+========================================================= */
+
+function sendUserMessage() {
+
+    const input =
+        document.getElementById(
+            'nexpak-chat-input'
+        );
+
+    if (!input) {
+        return;
+    }
+
+
+    const message =
+        input.value.trim();
+
+
+    if (!message) {
+        return;
+    }
+
+
+    addMessage(
+        message,
+        'user'
+    );
+
+
+    input.value = '';
+
+
+    processMessage(message);
+
+}
+
+
+/* =========================================================
+   PROCESS MESSAGE
+========================================================= */
+
+function processMessage(message) {
+
+    const response =
+        generateAIResponse(message);
+
+
+    sendBotResponse(
+        response,
+        700 + Math.random() * 700
+    );
+
+}
+
+
+/* =========================================================
+   QUICK ACTION
+========================================================= */
+
+function quickAction(action) {
+
+    if (action === 'quote') {
+
+        addMessage(
+            'I would like a quote.',
+            'user'
+        );
+
+        sendBotResponse(
+            'Absolutely! 👍 Tell me which security solution you need — Electric Fencing, CCTV, Gate Automation, Access Control, Alarm Systems, or Equestrian Fencing. I can then help you with the next step.',
+            600
+        );
+
+        return;
+    }
+
+
+    if (action === 'products') {
+
+        addMessage(
+            'Show me your products.',
+            'user'
+        );
+
+        sendBotResponse(
+            'We supply a wide range of security products including Electric Fencing, CCTV, Gate Automation, Access Control, Alarm Systems, Intercoms, Roboguard and Equestrian Fencing. 🛡️ Which one would you like to explore?',
+            600
+        );
+
+        return;
+    }
+
+
+    if (action === 'contact') {
+
+        addMessage(
+            'I want to contact Nexpak.',
+            'user'
+        );
+
+        sendBotResponse(
+            'Sure! You can contact Nexpak Security Solutions through WhatsApp, phone or email. Our team can also arrange a quotation or site assessment for you.',
+            600
+        );
+
+        return;
+    }
+
+                               }
+    
