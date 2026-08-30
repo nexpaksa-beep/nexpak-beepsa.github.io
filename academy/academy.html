@@ -1,1367 +1,540 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
 
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
 
-<meta name="description"
-      content="Nexpak Security Academy - Advanced Electric Fencing Systems training covering design, installation, testing, commissioning, fault finding, maintenance and South African compliance.">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<meta name="keywords"
-      content="electric fencing course South Africa, electric fence training, electric fencing installation, electric fence fault finding, Nexpak Academy">
+    <meta
+        name="description"
+        content="Nexpak Security Academy - Advanced Electric Fencing Systems training covering design, installation, testing, commissioning, fault finding, maintenance and South African compliance."
+    >
 
-<meta name="author"
-      content="Nexpak Security Solutions">
+    <meta
+        name="keywords"
+        content="electric fencing course South Africa, electric fence training, electric fencing installation, electric fence fault finding, Nexpak Academy"
+    >
 
-<title>
-Nexpak Security Academy | Advanced Electric Fencing Systems
-</title>
+    <meta
+        name="author"
+        content="Nexpak Security Solutions"
+    >
 
-<style>
+    <title>
+        Nexpak Security Academy | Advanced Electric Fencing Systems
+    </title>
 
-/* ==========================================================
-   NEXPAK SECURITY ACADEMY
-   MASTER STYLES
-   ========================================================== */
 
-:root{
+    <!-- ==========================================================
+         NEXPAK SECURITY ACADEMY
+         MASTER PAGE STYLES
+         ========================================================== -->
 
-    --primary:#0b1f33;
-    --primary-light:#12395b;
+    <style>
 
-    --accent:#00c896;
-    --accent-dark:#009b76;
+        /* ==========================================================
+           GLOBAL VARIABLES
+           ========================================================== */
 
-    --gold:#f4b942;
+        :root {
 
-    --white:#ffffff;
-    --light:#f4f7f9;
-    --border:#dce4ea;
+            --primary:
+                #0b1f33;
 
-    --text:#17212b;
-    --muted:#65727e;
+            --primary-light:
+                #12395b;
 
-    --shadow:
-        0 12px 35px rgba(0,0,0,.08);
+            --accent:
+                #00c896;
 
-    --radius:18px;
+            --accent-dark:
+                #009b76;
 
-}
+            --gold:
+                #f4b942;
 
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
+            --white:
+                #ffffff;
 
-html{
-    scroll-behavior:smooth;
-}
+            --light:
+                #f4f7f9;
 
-body{
+            --border:
+                #dce4ea;
 
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+            --text:
+                #17212b;
 
-    background:var(--light);
+            --muted:
+                #65727e;
 
-    color:var(--text);
+            --shadow:
+                0 12px 35px rgba(0,0,0,.08);
 
-    line-height:1.6;
+            --radius:
+                18px;
 
-}
+        }
 
-a{
-    text-decoration:none;
-    color:inherit;
-}
 
-button{
-    font-family:inherit;
-}
+        /* ==========================================================
+           RESET
+           ========================================================== */
 
-/* ==========================================================
-   HEADER
-   ========================================================== */
+        * {
 
-.header{
+            box-sizing:
+                border-box;
 
-    position:sticky;
+            margin:
+                0;
 
-    top:0;
+            padding:
+                0;
 
-    z-index:1000;
+        }
 
-    background:
-        rgba(11,31,51,.97);
 
-    border-bottom:
-        1px solid rgba(255,255,255,.08);
+        html {
 
-    backdrop-filter:
-        blur(12px);
+            scroll-behavior:
+                smooth;
 
-}
+        }
 
-.header-inner{
 
-    max-width:1200px;
+        body {
 
-    margin:auto;
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
 
-    padding:
-        15px 24px;
+            background:
+                var(--light);
 
-    display:flex;
+            color:
+                var(--text);
 
-    align-items:center;
+            line-height:
+                1.6;
 
-    justify-content:space-between;
+        }
 
-    gap:25px;
 
-}
+        a {
 
-.logo{
+            text-decoration:
+                none;
 
-    display:flex;
+            color:
+                inherit;
 
-    align-items:center;
+        }
 
-    gap:12px;
 
-    color:white;
+        button {
 
-    font-weight:800;
+            font-family:
+                inherit;
 
-    letter-spacing:.5px;
+        }
 
-}
 
-.logo-mark{
+        /* ==========================================================
+           HEADER
+           ========================================================== */
 
-    width:42px;
-    height:42px;
+        .header {
 
-    border-radius:12px;
+            position:
+                sticky;
 
-    display:flex;
+            top:
+                0;
 
-    align-items:center;
-    justify-content:center;
+            z-index:
+                1000;
 
-    background:
-        linear-gradient(
-            135deg,
-            var(--accent),
-            #007fca
-        );
+            background:
+                rgba(11,31,51,.97);
 
-    color:white;
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.08);
 
-    font-size:20px;
+            backdrop-filter:
+                blur(12px);
 
-    box-shadow:
-        0 8px 20px
-        rgba(0,200,150,.25);
+            -webkit-backdrop-filter:
+                blur(12px);
 
-}
+        }
 
-.logo-text span{
 
-    display:block;
+        .header-inner {
 
-    font-size:12px;
+            max-width:
+                1200px;
 
-    color:
-        rgba(255,255,255,.65);
+            margin:
+                auto;
 
-    font-weight:600;
+            padding:
+                15px 24px;
 
-    letter-spacing:1.5px;
+            display:
+                flex;
 
-}
+            align-items:
+                center;
 
-.logo-text strong{
+            justify-content:
+                space-between;
 
-    display:block;
+            gap:
+                25px;
 
-    font-size:17px;
+        }
 
-}
 
-.nav{
+        /* ==========================================================
+           LOGO
+           ========================================================== */
 
-    display:flex;
+        .logo {
 
-    align-items:center;
+            display:
+                flex;
 
-    gap:25px;
+            align-items:
+                center;
 
-}
+            gap:
+                12px;
 
-.nav a{
+            color:
+                white;
 
-    color:
-        rgba(255,255,255,.78);
+            font-weight:
+                800;
 
-    font-size:14px;
+            letter-spacing:
+                .5px;
 
-    font-weight:600;
+        }
 
-    transition:.25s;
 
-}
+        .logo-mark {
 
-.nav a:hover{
+            width:
+                42px;
 
-    color:
-        var(--accent);
+            height:
+                42px;
 
-}
+            flex:
+                0 0 42px;
 
-.nav-button{
+            border-radius:
+                12px;
 
-    padding:
-        10px 18px;
+            display:
+                flex;
 
-    border-radius:
-        30px;
+            align-items:
+                center;
 
-    background:
-        var(--accent);
+            justify-content:
+                center;
 
-    color:
-        #06251d !important;
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--accent),
+                    #007fca
+                );
 
-}
+            color:
+                white;
 
-/* ==========================================================
-   HERO
-   ========================================================== */
+            font-size:
+                20px;
 
-.hero{
+            box-shadow:
+                0 8px 20px
+                rgba(0,200,150,.25);
 
-    position:relative;
+        }
 
-    overflow:hidden;
 
-    background:
+        .logo-text {
 
-        radial-gradient(
-            circle at 80% 20%,
-            rgba(0,200,150,.18),
-            transparent 35%
-        ),
+            display:
+                flex;
 
-        linear-gradient(
-            135deg,
-            #071522,
-            #0b1f33 60%,
-            #12395b
-        );
+            flex-direction:
+                column;
 
-    color:white;
+        }
 
-}
 
-.hero::after{
+        .logo-text span {
 
-    content:"";
+            display:
+                block;
 
-    position:absolute;
+            font-size:
+                12px;
 
-    width:420px;
-    height:420px;
+            color:
+                rgba(255,255,255,.65);
 
-    border-radius:50%;
+            font-weight:
+                600;
 
-    right:-180px;
-    bottom:-220px;
+            letter-spacing:
+                1.5px;
 
-    border:
-        70px solid
-        rgba(255,255,255,.025);
+        }
 
-}
 
-.hero-inner{
+        .logo-text strong {
 
-    max-width:1200px;
+            display:
+                block;
 
-    margin:auto;
+            font-size:
+                17px;
 
-    padding:
-        95px 24px
-        105px;
+            color:
+                white;
 
-    display:grid;
+        }
 
-    grid-template-columns:
-        1.15fr .85fr;
 
-    gap:70px;
+        /* ==========================================================
+           NAVIGATION
+           ========================================================== */
 
-    align-items:center;
+        .nav {
 
-}
+            display:
+                flex;
 
-.badge{
+            align-items:
+                center;
 
-    display:inline-flex;
+            gap:
+                25px;
 
-    align-items:center;
+        }
 
-    gap:8px;
 
-    padding:
-        8px 14px;
+        .nav a {
 
-    border-radius:30px;
+            color:
+                rgba(255,255,255,.78);
 
-    background:
-        rgba(0,200,150,.12);
+            font-size:
+                14px;
 
-    border:
-        1px solid
-        rgba(0,200,150,.28);
+            font-weight:
+                600;
 
-    color:
-        #67e6c4;
+            transition:
+                .25s;
 
-    font-size:13px;
+        }
 
-    font-weight:700;
 
-    margin-bottom:22px;
+        .nav a:hover {
 
-}
+            color:
+                var(--accent);
 
-.hero h1{
+        }
 
-    font-size:
-        clamp(38px,5vw,68px);
 
-    line-height:
-        1.04;
+        .nav-button {
 
-    letter-spacing:
-        -2px;
+            display:
+                inline-flex;
 
-    margin-bottom:24px;
+            align-items:
+                center;
 
-}
+            justify-content:
+                center;
 
-.hero h1 span{
+            padding:
+                10px 18px;
 
-    color:
-        var(--accent);
+            border-radius:
+                30px;
 
-}
+            background:
+                var(--accent);
 
-.hero-text{
+            color:
+                #06251d !important;
 
-    max-width:700px;
+            font-weight:
+                800;
 
-    color:
-        rgba(255,255,255,.74);
+            transition:
+                .25s;
 
-    font-size:18px;
+        }
 
-    margin-bottom:32px;
 
-}
+        .nav-button:hover {
 
-.hero-actions{
+            background:
+                var(--gold);
 
-    display:flex;
+            color:
+                #17212b !important;
 
-    flex-wrap:wrap;
+            transform:
+                translateY(-2px);
 
-    gap:14px;
+        }
 
-}
 
-.btn{
+        /* ==========================================================
+           MOBILE HEADER
+           ========================================================== */
 
-    display:inline-flex;
+        @media (
+            max-width: 760px
+        ) {
 
-    align-items:center;
+            .header-inner {
 
-    justify-content:center;
+                padding:
+                    12px 16px;
 
-    gap:9px;
+            }
 
-    padding:
-        14px 22px;
 
-    border-radius:12px;
+            .nav {
 
-    border:none;
+                gap:
+                    10px;
 
-    font-weight:800;
+            }
 
-    cursor:pointer;
 
-    transition:
-        transform .25s,
-        box-shadow .25s;
+            .nav a:not(.nav-button) {
 
-}
+                display:
+                    none;
 
-.btn:hover{
+            }
 
-    transform:
-        translateY(-2px);
 
-}
+            .logo-text strong {
 
-.btn-primary{
+                font-size:
+                    15px;
 
-    background:
-        var(--accent);
+            }
 
-    color:
-        #05271e;
 
-    box-shadow:
-        0 10px 25px
-        rgba(0,200,150,.2);
+            .logo-text span {
 
-}
+                font-size:
+                    10px;
 
-.btn-secondary{
+            }
 
-    background:
-        rgba(255,255,255,.07);
 
-    border:
-        1px solid
-        rgba(255,255,255,.18);
+            .nav-button {
 
-    color:white;
+                padding:
+                    9px 14px;
 
-}
+                font-size:
+                    12px;
 
-/* ==========================================================
-   HERO PANEL
-   ========================================================== */
+            }
 
-.hero-panel{
+        }
 
-    position:relative;
+    </style>
 
-    padding:28px;
-
-    border-radius:24px;
-
-    background:
-        rgba(255,255,255,.06);
-
-    border:
-        1px solid
-        rgba(255,255,255,.12);
-
-    box-shadow:
-        0 30px 70px
-        rgba(0,0,0,.2);
-
-}
-
-.hero-panel-top{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    margin-bottom:24px;
-
-}
-
-.panel-label{
-
-    font-size:12px;
-
-    text-transform:uppercase;
-
-    letter-spacing:1.5px;
-
-    color:
-        rgba(255,255,255,.55);
-
-}
-
-.status{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:7px;
-
-    font-size:12px;
-
-    color:
-        #72edca;
-
-}
-
-.status-dot{
-
-    width:8px;
-    height:8px;
-
-    border-radius:50%;
-
-    background:
-        var(--accent);
-
-    box-shadow:
-        0 0 12px
-        var(--accent);
-
-}
-
-.progress{
-
-    height:9px;
-
-    background:
-        rgba(255,255,255,.1);
-
-    border-radius:20px;
-
-    overflow:hidden;
-
-    margin:
-        10px 0 25px;
-
-}
-
-.progress-bar{
-
-    width:0%;
-
-    height:100%;
-
-    background:
-        linear-gradient(
-            90deg,
-            var(--accent),
-            #58e7ff
-        );
-
-    border-radius:20px;
-
-}
-
-.stat-grid{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(2,1fr);
-
-    gap:12px;
-
-}
-
-.stat{
-
-    padding:16px;
-
-    border-radius:14px;
-
-    background:
-        rgba(255,255,255,.055);
-
-    border:
-        1px solid
-        rgba(255,255,255,.07);
-
-}
-
-.stat strong{
-
-    display:block;
-
-    font-size:24px;
-
-    color:white;
-
-}
-
-.stat span{
-
-    font-size:12px;
-
-    color:
-        rgba(255,255,255,.55);
-
-}
-
-/* ==========================================================
-   GENERAL SECTIONS
-   ========================================================== */
-
-.section{
-
-    max-width:1200px;
-
-    margin:auto;
-
-    padding:
-        85px 24px;
-
-}
-
-.section-header{
-
-    max-width:720px;
-
-    margin-bottom:42px;
-
-}
-
-.eyebrow{
-
-    color:
-        var(--accent-dark);
-
-    font-size:13px;
-
-    text-transform:uppercase;
-
-    font-weight:800;
-
-    letter-spacing:1.5px;
-
-    margin-bottom:9px;
-
-}
-
-.section-title{
-
-    font-size:
-        clamp(30px,4vw,46px);
-
-    line-height:1.1;
-
-    margin-bottom:15px;
-
-    color:
-        var(--primary);
-
-}
-
-.section-description{
-
-    color:
-        var(--muted);
-
-    font-size:16px;
-
-}
-
-/* ==========================================================
-   COURSE OVERVIEW
-   ========================================================== */
-
-.overview-grid{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
-
-    gap:18px;
-
-}
-
-.overview-card{
-
-    background:white;
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius:
-        var(--radius);
-
-    padding:25px;
-
-    box-shadow:
-        var(--shadow);
-
-}
-
-.overview-icon{
-
-    width:48px;
-    height:48px;
-
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    border-radius:14px;
-
-    background:
-        #e7fbf5;
-
-    color:
-        var(--accent-dark);
-
-    font-size:22px;
-
-    margin-bottom:17px;
-
-}
-
-.overview-card h3{
-
-    font-size:17px;
-
-    margin-bottom:7px;
-
-}
-
-.overview-card p{
-
-    color:
-        var(--muted);
-
-    font-size:14px;
-
-}
-
-/* ==========================================================
-   COURSE INFORMATION
-   ========================================================== */
-
-.course-box{
-
-    display:grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap:30px;
-
-    padding:35px;
-
-    background:white;
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius:
-        24px;
-
-    box-shadow:
-        var(--shadow);
-
-}
-
-.course-box h3{
-
-    color:
-        var(--primary);
-
-    font-size:22px;
-
-    margin-bottom:18px;
-
-}
-
-.check-list{
-
-    list-style:none;
-
-}
-
-.check-list li{
-
-    display:flex;
-
-    gap:10px;
-
-    margin-bottom:12px;
-
-    color:
-        var(--muted);
-
-}
-
-.check{
-
-    color:
-        var(--accent-dark);
-
-    font-weight:900;
-
-}
-
-/* ==========================================================
-   CURRICULUM
-   ========================================================== */
-
-.curriculum{
-
-    background:
-        #0b1f33;
-
-}
-
-.curriculum .section-title{
-
-    color:white;
-
-}
-
-.curriculum .section-description{
-
-    color:
-        rgba(255,255,255,.62);
-
-}
-
-.module-grid{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap:18px;
-
-}
-
-.module-card{
-
-    position:relative;
-
-    background:
-        rgba(255,255,255,.055);
-
-    border:
-        1px solid
-        rgba(255,255,255,.09);
-
-    border-radius:
-        18px;
-
-    padding:24px;
-
-    color:white;
-
-    transition:
-        transform .25s,
-        border-color .25s;
-
-}
-
-.module-card:hover{
-
-    transform:
-        translateY(-4px);
-
-    border-color:
-        rgba(0,200,150,.45);
-
-}
-
-.module-number{
-
-    color:
-        var(--accent);
-
-    font-weight:900;
-
-    font-size:13px;
-
-    letter-spacing:1px;
-
-    margin-bottom:12px;
-
-}
-
-.module-card h3{
-
-    font-size:19px;
-
-    margin-bottom:9px;
-
-}
-
-.module-card p{
-
-    color:
-        rgba(255,255,255,.58);
-
-    font-size:14px;
-
-}
-
-/* ==========================================================
-   LEARNING PATH
-   ========================================================== */
-
-.path{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(5,1fr);
-
-    gap:12px;
-
-}
-
-.path-step{
-
-    position:relative;
-
-    padding:22px 15px;
-
-    text-align:center;
-
-    background:white;
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius:16px;
-
-}
-
-.path-step strong{
-
-    display:block;
-
-    margin-bottom:6px;
-
-    color:
-        var(--primary);
-
-}
-
-.path-step span{
-
-    font-size:12px;
-
-    color:
-        var(--muted);
-
-}
-
-/* ==========================================================
-   CERTIFICATION
-   ========================================================== */
-
-.certificate{
-
-    background:
-        linear-gradient(
-            135deg,
-            #eefbf7,
-            #f8fbfd
-        );
-
-}
-
-.certificate-box{
-
-    display:grid;
-
-    grid-template-columns:
-        1fr .8fr;
-
-    gap:45px;
-
-    align-items:center;
-
-    background:white;
-
-    padding:42px;
-
-    border:
-        1px solid
-        var(--border);
-
-    border-radius:
-        26px;
-
-    box-shadow:
-        var(--shadow);
-
-}
-
-.certificate-box h2{
-
-    color:
-        var(--primary);
-
-    font-size:
-        clamp(28px,4vw,42px);
-
-    line-height:1.1;
-
-    margin-bottom:15px;
-
-}
-
-.certificate-box p{
-
-    color:
-        var(--muted);
-
-    margin-bottom:22px;
-
-}
-
-.certificate-preview{
-
-    min-height:240px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    justify-content:center;
-
-    text-align:center;
-
-    padding:25px;
-
-    border:
-        8px double
-        #dce7e5;
-
-    background:
-        #fbfdfd;
-
-}
-
-.certificate-preview small{
-
-    text-transform:uppercase;
-
-    letter-spacing:2px;
-
-    color:
-        var(--muted);
-
-}
-
-.certificate-preview strong{
-
-    display:block;
-
-    margin:
-        12px 0;
-
-    font-size:22px;
-
-    color:
-        var(--primary);
-
-}
-
-/* ==========================================================
-   COMPLIANCE NOTICE
-   ========================================================== */
-
-.notice{
-
-    padding:
-        25px;
-
-    border-left:
-        4px solid
-        var(--gold);
-
-    background:
-        #fffaf0;
-
-    border-radius:
-        12px;
-
-    color:
-        #654c17;
-
-}
-
-.notice strong{
-
-    display:block;
-
-    margin-bottom:6px;
-
-}
-
-/* ==========================================================
-   FOOTER
-   ========================================================== */
-
-.footer{
-
-    background:
-        #06121d;
-
-    color:white;
-
-}
-
-.footer-inner{
-
-    max-width:1200px;
-
-    margin:auto;
-
-    padding:
-        50px 24px;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    gap:30px;
-
-}
-
-.footer p{
-
-    color:
-        rgba(255,255,255,.5);
-
-    font-size:13px;
-
-}
-
-.footer-links{
-
-    display:flex;
-
-    gap:20px;
-
-}
-
-.footer-links a{
-
-    color:
-        rgba(255,255,255,.6);
-
-    font-size:13px;
-
-}
-
-/* ==========================================================
-   RESPONSIVE
-   ========================================================== */
-
-@media(max-width:950px){
-
-    .hero-inner{
-
-        grid-template-columns:1fr;
-
-        padding-top:70px;
-
-    }
-
-    .overview-grid{
-
-        grid-template-columns:
-            repeat(2,1fr);
-
-    }
-
-    .module-grid{
-
-        grid-template-columns:
-            repeat(2,1fr);
-
-    }
-
-    .path{
-
-        grid-template-columns:
-            repeat(2,1fr);
-
-    }
-
-    .certificate-box{
-
-        grid-template-columns:1fr;
-
-    }
-
-}
-
-@media(max-width:650px){
-
-    .header-inner{
-
-        padding:
-            12px 16px;
-
-    }
-
-    .nav a:not(.nav-button){
-
-        display:none;
-
-    }
-
-    .hero-inner{
-
-        padding:
-            60px 18px
-            70px;
-
-    }
-
-    .hero h1{
-
-        letter-spacing:-1px;
-
-    }
-
-    .hero-text{
-
-        font-size:16px;
-
-    }
-
-    .section{
-
-        padding:
-            60px 18px;
-
-    }
-
-    .overview-grid,
-    .module-grid{
-
-        grid-template-columns:1fr;
-
-    }
-
-    .course-box{
-
-        grid-template-columns:1fr;
-
-        padding:25px;
-
-    }
-
-    .path{
-
-        grid-template-columns:1fr;
-
-    }
-
-    .certificate-box{
-
-        padding:25px;
-
-    }
-
-    .footer-inner{
-
-        flex-direction:column;
-
-    }
-
-}
-
-/* ==========================================================
-   ACCESSIBILITY
-   ========================================================== */
-
-:focus-visible{
-
-    outline:
-        3px solid
-        var(--accent);
-
-    outline-offset:3px;
-
-}
-
-</style>
 </head>
+
 
 <body>
 
-<!-- ========================================================
-     HEADER
-     ======================================================== -->
 
-<header class="header">
+    <!-- ==========================================================
+         HEADER
+         ========================================================== -->
 
-    <div class="header-inner">
+    <header class="header">
 
-        <a href="academy.html"
-           class="logo">
+        <div class="header-inner">
 
-            <div class="logo-mark">
-                N
-            </div>
 
-            <div class="logo-text">
+            <a
+                href="../index.html"
+                class="logo"
+            >
 
-                <span>
-                    NEXPAK SECURITY
-                </span>
+                <div class="logo-mark">
+                    N
+                </div>
 
-                <strong>
-                    ACADEMY
-                </strong>
+                <div class="logo-text">
 
-            </div>
+                    <span>
+                        NEXPAK
+                    </span>
 
-        </a>
+                    <strong>
+                        Security Academy
+                    </strong>
 
-        <nav class="nav">
-
-            <a href="#course">
-                Course
-            </a>
-
-            <a href="#curriculum">
-                Curriculum
-            </a>
-
-            <a href="#certification">
-                Certification
-            </a>
-
-            <a href="#course"
-               class="nav-button">
-
-                Explore Course
+                </div>
 
             </a>
 
-        </nav>
 
-    </div>
+            <nav class="nav">
 
-</header>
+                <a href="#curriculum">
+                    Curriculum
+                </a>
+
+                <a href="#learning-path">
+                    Learning Path
+                </a>
+
+                <a href="#assessment">
+                    Assessment
+                </a>
+
+                <a
+                    href="part-20.html"
+                    class="nav-button"
+                >
+                    Final Exam →
+                </a>
+
+            </nav>
+
+
+        </div>
+
+    </header>
 
 
 <!-- ========================================================
