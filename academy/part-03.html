@@ -2646,3 +2646,71 @@
 
 
     </main>
+            </main>
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer class="academy-footer">
+
+        <div class="footer-content">
+
+            <h3>
+                NEXPAK SECURITY ACADEMY
+            </h3>
+
+            <p>
+                Professional security training and
+                practical installation knowledge.
+            </p>
+
+            <p class="footer-copy">
+                © 2026 Nexpak Security Solutions.
+                All Rights Reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================================
+         PAGE SCRIPT
+    ========================================== -->
+
+    <script>
+
+        document.querySelectorAll(
+            '.lesson-nav a'
+        ).forEach(function(link) {
+
+            link.addEventListener(
+                'click',
+                function() {
+
+                    document.querySelectorAll(
+                        '.lesson-nav a'
+                    ).forEach(function(item) {
+
+                        item.classList.remove(
+                            'active'
+                        );
+
+                    });
+
+                    this.classList.add(
+                        'active'
+                    );
+
+                }
+            );
+
+        });
+
+    </script>
+
+
+</body>
+
+</html>
