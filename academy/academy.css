@@ -1,0 +1,879 @@
+ /* =========================================================
+    NEXPAK SECURITY ACADEMY
+    ACADEMY.CSS
+    PART 1 — CORE FOUNDATION
+    ========================================================= */
+
+
+/* =========================================================
+   GLOBAL VARIABLES
+   ========================================================= */
+
+:root {
+
+    --academy-bg:
+        #071018;
+
+    --academy-bg-deep:
+        #03070b;
+
+    --academy-panel:
+        #0c1720;
+
+    --academy-panel-light:
+        #12222d;
+
+    --academy-panel-hover:
+        #172b37;
+
+    --academy-border:
+        rgba(255,255,255,.09);
+
+    --academy-border-strong:
+        rgba(255,255,255,.16);
+
+    --academy-text:
+        #eef5f8;
+
+    --academy-text-soft:
+        #b7c7ce;
+
+    --academy-text-muted:
+        #81959f;
+
+    --academy-accent:
+        #f59e0b;
+
+    --academy-accent-light:
+        #fbbf24;
+
+    --academy-accent-dark:
+        #b45309;
+
+    --academy-green:
+        #22c55e;
+
+    --academy-blue:
+        #38bdf8;
+
+    --academy-red:
+        #ef4444;
+
+    --academy-purple:
+        #a78bfa;
+
+    --academy-radius:
+        18px;
+
+    --academy-radius-small:
+        12px;
+
+    --academy-shadow:
+        0 25px 70px rgba(0,0,0,.35);
+
+    --academy-shadow-heavy:
+        0 35px 90px rgba(0,0,0,.48);
+
+    --academy-transition:
+        .3s ease;
+
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+
+    box-sizing:
+        border-box;
+
+    margin:
+        0;
+
+    padding:
+        0;
+
+}
+
+
+html {
+
+    scroll-behavior:
+        smooth;
+
+    background:
+        var(--academy-bg-deep);
+
+}
+
+
+body {
+
+    min-height:
+        100vh;
+
+    background:
+
+        radial-gradient(
+            circle at 15% 8%,
+            rgba(245,158,11,.08),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 85% 18%,
+            rgba(56,189,248,.06),
+            transparent 28%
+        ),
+
+        linear-gradient(
+            180deg,
+            var(--academy-bg),
+            var(--academy-bg-deep)
+        );
+
+    color:
+        var(--academy-text);
+
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    line-height:
+        1.7;
+
+    overflow-x:
+        hidden;
+
+}
+
+
+/* =========================================================
+   TEXT
+   ========================================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+
+    color:
+        var(--academy-text);
+
+    line-height:
+        1.15;
+
+}
+
+
+p {
+
+    color:
+        var(--academy-text-soft);
+
+}
+
+
+strong {
+
+    color:
+        var(--academy-text);
+
+}
+
+
+::selection {
+
+    background:
+        rgba(245,158,11,.28);
+
+    color:
+        #ffffff;
+
+}
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+a {
+
+    color:
+        inherit;
+
+    text-decoration:
+        none;
+
+}
+
+
+button,
+a {
+
+    -webkit-tap-highlight-color:
+        transparent;
+
+}
+
+
+/* =========================================================
+   IMAGES
+   ========================================================= */
+
+img {
+
+    display:
+        block;
+
+    max-width:
+        100%;
+
+    height:
+        auto;
+
+}
+
+
+/* =========================================================
+   PAGE CONTAINERS
+   ========================================================= */
+
+.container,
+.section,
+main {
+
+    width:
+        min(
+            1180px,
+            calc(100% - 40px)
+        );
+
+    margin-left:
+        auto;
+
+    margin-right:
+        auto;
+
+}
+
+
+/* =========================================================
+   ACADEMY HEADER
+   ========================================================= */
+
+.academy-header {
+
+    position:
+        relative;
+
+    width:
+        100%;
+
+    padding:
+        22px 0;
+
+    border-bottom:
+        1px solid
+        var(--academy-border);
+
+    background:
+        rgba(3,7,11,.84);
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    z-index:
+        50;
+
+}
+
+
+/* =========================================================
+   HEADER INNER
+   ========================================================= */
+
+.academy-header-inner {
+
+    width:
+        min(
+            1180px,
+            calc(100% - 40px)
+        );
+
+    margin:
+        auto;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        25px;
+
+}
+
+
+/* =========================================================
+   ACADEMY BRAND
+   ========================================================= */
+
+.academy-brand {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        14px;
+
+}
+
+
+/* =========================================================
+   ACADEMY LOGO
+   ========================================================= */
+
+.academy-logo {
+
+    width:
+        46px;
+
+    height:
+        46px;
+
+    display:
+        grid;
+
+    place-items:
+        center;
+
+    flex-shrink:
+        0;
+
+    border-radius:
+        14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--academy-accent),
+            var(--academy-accent-dark)
+        );
+
+    color:
+        #111111;
+
+    font-size:
+        21px;
+
+    font-weight:
+        900;
+
+    box-shadow:
+        0 10px 30px
+        rgba(245,158,11,.25);
+
+}
+
+
+/* =========================================================
+   BRAND TEXT
+   ========================================================= */
+
+.academy-brand-text {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+}
+
+
+.academy-brand-text strong {
+
+    color:
+        var(--academy-text);
+
+    font-size:
+        16px;
+
+    letter-spacing:
+        .08em;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+.academy-brand-text span {
+
+    color:
+        var(--academy-text-muted);
+
+    font-size:
+        12px;
+
+}
+
+
+/* =========================================================
+   MODULE BADGE
+   ========================================================= */
+
+.module-badge {
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    gap:
+        9px;
+
+    padding:
+        8px 15px;
+
+    border:
+        1px solid
+        rgba(245,158,11,.25);
+
+    border-radius:
+        999px;
+
+    background:
+        rgba(245,158,11,.07);
+
+    color:
+        var(--academy-accent-light);
+
+    font-size:
+        11px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .13em;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+.module-badge::before {
+
+    content:
+        "";
+
+    width:
+        7px;
+
+    height:
+        7px;
+
+    flex-shrink:
+        0;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--academy-accent);
+
+    box-shadow:
+        0 0 14px
+        rgba(245,158,11,.65);
+
+}
+
+
+/* =========================================================
+   GENERIC SECTION
+   ========================================================= */
+
+.content-section {
+
+    position:
+        relative;
+
+    padding:
+        82px 0;
+
+}
+
+
+.content-section
++ .content-section {
+
+    border-top:
+        1px solid
+        var(--academy-border);
+
+}
+
+
+/* =========================================================
+   SECTION HEADING
+   ========================================================= */
+
+.section-heading {
+
+    max-width:
+        850px;
+
+    margin-bottom:
+        42px;
+
+}
+
+
+.section-heading .eyebrow {
+
+    margin-bottom:
+        12px;
+
+    color:
+        var(--academy-accent-light);
+
+    font-size:
+        11px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        .16em;
+
+    text-transform:
+        uppercase;
+
+}
+
+
+.section-heading h2 {
+
+    font-size:
+        clamp(
+            29px,
+            4vw,
+            47px
+        );
+
+    letter-spacing:
+        -.025em;
+
+}
+
+
+.section-heading p {
+
+    margin-top:
+        17px;
+
+    color:
+        var(--academy-text-soft);
+
+    font-size:
+        16px;
+
+}
+
+
+/* =========================================================
+   STANDARD CONTENT
+   ========================================================= */
+
+.content-section > p {
+
+    max-width:
+        880px;
+
+    margin-bottom:
+        20px;
+
+    color:
+        var(--academy-text-soft);
+
+}
+
+
+/* =========================================================
+   LISTS
+   ========================================================= */
+
+.content-section ul,
+.content-section ol {
+
+    max-width:
+        850px;
+
+    margin:
+        20px 0 25px 24px;
+
+    color:
+        var(--academy-text-soft);
+
+}
+
+
+.content-section li {
+
+    margin-bottom:
+        10px;
+
+    padding-left:
+        5px;
+
+}
+
+
+.content-section li::marker {
+
+    color:
+        var(--academy-accent-light);
+
+}
+
+
+/* =========================================================
+   GLOBAL CARD
+   ========================================================= */
+
+.academy-card {
+
+    position:
+        relative;
+
+    padding:
+        28px;
+
+    border:
+        1px solid
+        var(--academy-border);
+
+    border-radius:
+        var(--academy-radius);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,34,45,.94),
+            rgba(7,16,24,.96)
+        );
+
+    box-shadow:
+        var(--academy-shadow);
+
+    transition:
+        transform
+        var(--academy-transition),
+
+        border-color
+        var(--academy-transition),
+
+        box-shadow
+        var(--academy-transition);
+
+}
+
+
+.academy-card:hover {
+
+    transform:
+        translateY(-5px);
+
+    border-color:
+        var(--academy-border-strong);
+
+    box-shadow:
+        var(--academy-shadow-heavy);
+
+}
+
+
+/* =========================================================
+   RESPONSIVE FOUNDATION
+   ========================================================= */
+
+@media (
+    max-width: 900px
+) {
+
+    .academy-header-inner {
+
+        width:
+            calc(100% - 32px);
+
+    }
+
+
+    .container,
+    .section,
+    main {
+
+        width:
+            calc(100% - 32px);
+
+    }
+
+
+    .content-section {
+
+        padding:
+            68px 0;
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (
+    max-width: 640px
+) {
+
+    .academy-header {
+
+        padding:
+            16px 0;
+
+    }
+
+
+    .academy-header-inner {
+
+        width:
+            calc(100% - 28px);
+
+        gap:
+            12px;
+
+    }
+
+
+    .academy-logo {
+
+        width:
+            40px;
+
+        height:
+            40px;
+
+        border-radius:
+            12px;
+
+        font-size:
+            17px;
+
+    }
+
+
+    .academy-brand-text strong {
+
+        font-size:
+            12px;
+
+    }
+
+
+    .academy-brand-text span {
+
+        font-size:
+            9px;
+
+    }
+
+
+    .module-badge {
+
+        font-size:
+            9px;
+
+        padding:
+            7px 11px;
+
+    }
+
+
+    .container,
+    .section,
+    main {
+
+        width:
+            calc(100% - 28px);
+
+    }
+
+
+    .content-section {
+
+        padding:
+            58px 0;
+
+    }
+
+
+    .section-heading {
+
+        margin-bottom:
+            30px;
+
+    }
+
+
+    .section-heading h2 {
+
+        font-size:
+            29px;
+
+    }
+
+
+    .section-heading p {
+
+        font-size:
+            15px;
+
+    }
+
+
+    .academy-card {
+
+        padding:
+            22px;
+
+    }
+
+}
+
+
+/* =========================================================
+   END PART 1
+   ========================================================= */
