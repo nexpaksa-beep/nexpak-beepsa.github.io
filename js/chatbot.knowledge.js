@@ -1195,3 +1195,762 @@
 
 
 })(window);
+
+        /* =========================================================
+           08. CCTV SURVEILLANCE — ADVANCED KNOWLEDGE
+        ========================================================= */
+
+        cctvAdvanced: {
+
+            name: 'CCTV Surveillance',
+
+            category: 'Video Surveillance',
+
+
+            /* -----------------------------------------------------
+               CORE EXPLANATION
+            ----------------------------------------------------- */
+
+            definition:
+                'CCTV is a video-surveillance system used to monitor, record and review activity in and around a property.',
+
+
+            simpleExplanation:
+                'CCTV cameras allow a customer to see what is happening around a property and, when recording is configured, review events that have already happened.',
+
+
+            importantSalesPrinciple:
+                'Do not recommend cameras simply by asking how many cameras the customer wants. Determine what they need to see, where they need to see it, how far away the subject is, lighting conditions and whether identification is required.',
+
+
+            /* -----------------------------------------------------
+               CCTV TECHNOLOGIES
+            ----------------------------------------------------- */
+
+            technologies: {
+
+
+                hdCctv: {
+
+                    name: 'HD CCTV',
+
+                    description:
+                        'High-definition surveillance systems commonly using compatible coaxial cabling and a digital video recorder.',
+
+                    suitableApplications: [
+
+                        'Residential properties',
+
+                        'Small businesses',
+
+                        'Existing coaxial CCTV upgrades',
+
+                        'Customers wanting to reuse suitable existing cabling'
+
+                    ],
+
+                    salesQuestions: [
+
+                        'Do you already have CCTV installed?',
+
+                        'What type of recorder do you currently have?',
+
+                        'Is the existing cabling still usable?',
+
+                        'Are you replacing cameras or the entire system?'
+
+                    ]
+
+                },
+
+
+                ipCctv: {
+
+                    name: 'IP CCTV',
+
+                    description:
+                        'Network-based surveillance systems where cameras communicate using network infrastructure.',
+
+                    advantages: [
+
+                        'Digital video transmission',
+
+                        'Flexible network architecture',
+
+                        'High-resolution camera options',
+
+                        'PoE options where supported',
+
+                        'Remote network connectivity',
+
+                        'Scalable system architecture'
+
+                    ],
+
+                    suitableApplications: [
+
+                        'New CCTV installations',
+
+                        'Commercial properties',
+
+                        'Industrial properties',
+
+                        'Larger residential properties',
+
+                        'Customers requiring advanced network features'
+
+                    ]
+
+                },
+
+
+                poe: {
+
+                    name: 'Power over Ethernet',
+
+                    abbreviation: 'PoE',
+
+                    description:
+                        'PoE allows compatible network equipment to deliver power and data over suitable Ethernet infrastructure.',
+
+                    advantages: [
+
+                        'Simplified cabling',
+
+                        'Centralized power arrangement',
+
+                        'Suitable for compatible IP cameras',
+
+                        'Can simplify installation planning'
+
+                    ],
+
+                    importantNote:
+                        'PoE availability and power requirements must be checked against the actual camera, switch, recorder and network equipment specifications.'
+
+                },
+
+
+                dvr: {
+
+                    name: 'DVR',
+
+                    fullName: 'Digital Video Recorder',
+
+                    purpose:
+                        'Records and manages video from compatible CCTV cameras.',
+
+                    commonlyAssociatedWith:
+                        'HD CCTV systems using compatible coaxial infrastructure.'
+
+                },
+
+
+                nvr: {
+
+                    name: 'NVR',
+
+                    fullName: 'Network Video Recorder',
+
+                    purpose:
+                        'Records and manages video from compatible network cameras.',
+
+                    commonlyAssociatedWith:
+                        'IP CCTV systems.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               CAMERA RESOLUTION
+            ----------------------------------------------------- */
+
+            resolution: {
+
+                principle:
+                    'Higher resolution can provide more image detail, but resolution alone does not determine whether a camera will identify a person or object.',
+
+                commonResolutionClasses: [
+
+                    '2MP',
+
+                    '4MP',
+
+                    '5MP',
+
+                    '8MP',
+
+                    '4K-class surveillance'
+
+                ],
+
+                importantFactors: [
+
+                    'Lens selection',
+
+                    'Viewing distance',
+
+                    'Field of view',
+
+                    'Lighting',
+
+                    'Camera position',
+
+                    'Compression',
+
+                    'Scene movement',
+
+                    'Required identification detail'
+
+                ],
+
+                salesExplanation:
+                    'A higher-resolution camera is not automatically better for every location. The camera must be matched to the scene and viewing requirement.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               CAMERA LENS
+            ----------------------------------------------------- */
+
+            lenses: {
+
+                principle:
+                    'The lens determines how wide or narrow the camera views the scene and strongly affects how much detail is available at a particular distance.',
+
+                wideAngle:
+
+                    'Useful when the customer needs a wider field of view over a relatively close area.',
+
+                narrowerView:
+
+                    'Useful when the customer needs more focused coverage of a specific area or greater detail at distance.',
+
+                selectionQuestions: [
+
+                    'How far is the camera from the area being monitored?',
+
+                    'How wide is the area?',
+
+                    'Does the customer need a wide overview or more focused detail?',
+
+                    'Is identification required?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               NIGHT VISION
+            ----------------------------------------------------- */
+
+            nightVision: {
+
+                definition:
+                    'Night-vision capability allows compatible cameras to produce usable surveillance images in low-light or dark conditions.',
+
+                technologies: [
+
+                    'Infrared illumination',
+
+                    'Low-light imaging',
+
+                    'Colour night vision on supported equipment',
+
+                    'Supplementary lighting where appropriate'
+
+                ],
+
+                customerQuestions: [
+
+                    'Do you need the camera to operate in complete darkness?',
+
+                    'Is there existing lighting at night?',
+
+                    'How far away is the area you need to see?',
+
+                    'Do you need general observation or identification at night?'
+
+                ],
+
+                importantWarning:
+                    'Night vision performance depends on the camera, lens, scene, ambient light, reflective surfaces and distance. Do not promise a specific night-vision distance without verified product specifications.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               HUMAN / VEHICLE DETECTION
+            ----------------------------------------------------- */
+
+            analytics: {
+
+                features: [
+
+                    'Motion detection',
+
+                    'Human detection',
+
+                    'Vehicle detection',
+
+                    'Line crossing',
+
+                    'Intrusion detection',
+
+                    'Area detection',
+
+                    'Event filtering',
+
+                    'Smart search'
+
+                ],
+
+                explanation:
+                    'Analytics can help reduce irrelevant alerts by allowing compatible systems to distinguish or classify certain types of movement.',
+
+                salesQuestions: [
+
+                    'Do you want alerts for every movement or only people and vehicles?',
+
+                    'Are false alarms a major concern?',
+
+                    'Which areas require intelligent detection?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               REMOTE VIEWING
+            ----------------------------------------------------- */
+
+            remoteViewing: {
+
+                definition:
+                    'Remote viewing allows authorized users to view compatible CCTV systems from a phone, tablet or computer through the appropriate network and application setup.',
+
+                customerBenefits: [
+
+                    'View property remotely',
+
+                    'Check entrances',
+
+                    'Review events',
+
+                    'Receive supported notifications',
+
+                    'Monitor business premises while away'
+
+                ],
+
+                requirements: [
+
+                    'Compatible recorder or camera',
+
+                    'Suitable network connection',
+
+                    'Correct system configuration',
+
+                    'Compatible application or platform',
+
+                    'Appropriate user credentials'
+
+                ],
+
+                salesQuestions: [
+
+                    'Do you want to view your cameras from your phone?',
+
+                    'Do you need notifications when activity is detected?',
+
+                    'Is reliable internet available at the property?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               STORAGE
+            ----------------------------------------------------- */
+
+            storage: {
+
+                definition:
+                    'CCTV storage determines how much recorded video can be retained before older footage is overwritten or otherwise managed.',
+
+                factors: [
+
+                    'Number of cameras',
+
+                    'Camera resolution',
+
+                    'Frame rate',
+
+                    'Compression',
+
+                    'Recording schedule',
+
+                    'Motion-based recording',
+
+                    'Continuous recording',
+
+                    'Required retention period'
+
+                ],
+
+                customerQuestions: [
+
+                    'How many cameras will be recording?',
+
+                    'Do you need continuous recording?',
+
+                    'How many days of footage would you like to retain?',
+
+                    'Do you want recording all the time or primarily when activity occurs?'
+
+                ],
+
+                importantRule:
+                    'Never promise a specific number of recording days without calculating the actual storage requirements from the chosen equipment and recording settings.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               CAMERA TYPES
+            ----------------------------------------------------- */
+
+            cameraTypes: {
+
+
+                turret: {
+
+                    name: 'Turret Camera',
+
+                    commonUses: [
+
+                        'Residential surveillance',
+
+                        'Entrances',
+
+                        'Driveways',
+
+                        'General outdoor monitoring'
+
+                    ]
+
+                },
+
+
+                dome: {
+
+                    name: 'Dome Camera',
+
+                    commonUses: [
+
+                        'Indoor surveillance',
+
+                        'Commercial premises',
+
+                        'Retail environments',
+
+                        'Areas where a compact camera design is preferred'
+
+                    ]
+
+                },
+
+
+                bullet: {
+
+                    name: 'Bullet Camera',
+
+                    commonUses: [
+
+                        'Outdoor monitoring',
+
+                        'Perimeter views',
+
+                        'Driveways',
+
+                        'Longer directional viewing applications'
+
+                    ]
+
+                },
+
+
+                ptz: {
+
+                    name: 'PTZ Camera',
+
+                    fullName:
+                        'Pan-Tilt-Zoom',
+
+                    capabilities: [
+
+                        'Pan',
+
+                        'Tilt',
+
+                        'Optical zoom on supported models',
+
+                        'Preset positions',
+
+                        'Tracking features on supported models'
+
+                    ],
+
+                    suitableApplications: [
+
+                        'Large areas',
+
+                        'Open compounds',
+
+                        'Industrial sites',
+
+                        'Situations requiring active camera control'
+
+                    ],
+
+                    importantNote:
+                        'A PTZ camera should not automatically be treated as a replacement for multiple fixed cameras because a PTZ may be looking in one direction while an event occurs elsewhere.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               CCTV COVERAGE
+            ----------------------------------------------------- */
+
+            coveragePlanning: {
+
+                principle:
+                    'CCTV coverage should be designed around the areas that matter most to the customer rather than simply placing cameras at convenient positions.',
+
+                priorityAreas: [
+
+                    'Main entrance',
+
+                    'Vehicle gate',
+
+                    'Pedestrian gate',
+
+                    'Driveway',
+
+                    'Parking area',
+
+                    'Perimeter',
+
+                    'Backyard',
+
+                    'Side passages',
+
+                    'Warehouse entrance',
+
+                    'Loading area',
+
+                    'Cash or stock areas',
+
+                    'Office entrances'
+
+                ],
+
+                designQuestions: [
+
+                    'What area are you trying to monitor?',
+
+                    'Where does the person or vehicle approach from?',
+
+                    'How far is the subject from the camera?',
+
+                    'What needs to be visible?',
+
+                    'What happens at night?',
+
+                    'Do you need identification or general observation?',
+
+                    'Are there obstructions such as walls, trees or buildings?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               IDENTIFICATION VS OBSERVATION
+            ----------------------------------------------------- */
+
+            identification: {
+
+                observation:
+                    'The customer mainly wants to know what is happening in an area.',
+
+                recognition:
+                    'The customer wants enough detail to distinguish a known person, vehicle or object.',
+
+                identification:
+                    'The customer requires sufficiently detailed imagery to assist with identifying an unknown person, vehicle or event.',
+
+                importantFactors: [
+
+                    'Distance',
+
+                    'Lens',
+
+                    'Resolution',
+
+                    'Lighting',
+
+                    'Camera position',
+
+                    'Target size in the image',
+
+                    'Movement',
+
+                    'Scene conditions'
+
+                ],
+
+                salesQuestion:
+                    'Do you mainly want to see what is happening, or do you need enough detail to identify people or vehicles?'
+
+            },
+
+
+            /* -----------------------------------------------------
+               CCTV INSTALLATION PLANNING
+            ----------------------------------------------------- */
+
+            installationFactors: [
+
+                'Camera mounting height',
+
+                'Camera position',
+
+                'Cable routes',
+
+                'Power availability',
+
+                'Network infrastructure',
+
+                'Weather exposure',
+
+                'Lighting',
+
+                'Vandalism risk',
+
+                'Access for maintenance',
+
+                'Recorder location',
+
+                'Storage requirements',
+
+                'Internet availability for remote viewing'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               CCTV CUSTOMER QUALIFICATION
+            ----------------------------------------------------- */
+
+            qualificationQuestions: [
+
+                'Is this for a home or business?',
+
+                'How many areas do you want to monitor?',
+
+                'Which areas are most important?',
+
+                'Do you need the driveway monitored?',
+
+                'Do you need gate monitoring?',
+
+                'Do you need coverage at night?',
+
+                'Do you need to identify people?',
+
+                'Do you need to identify vehicle number plates?',
+
+                'Do you want remote viewing on your phone?',
+
+                'Do you need continuous recording?',
+
+                'How long do you want recordings retained?',
+
+                'Do you already have an existing CCTV system?',
+
+                'Do you know whether the existing system is HD or IP?',
+
+                'Do you have existing cabling that you want to reuse?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               CCTV SALES SCENARIOS
+            ----------------------------------------------------- */
+
+            scenarios: {
+
+
+                homeBasic: {
+
+                    description:
+                        'Customer wants general monitoring around a home.',
+
+                    likelySolution:
+                        'A correctly sized residential CCTV system with suitable cameras, recording and optional remote viewing.',
+
+                    askFirst: [
+
+                        'How many areas need coverage?',
+
+                        'Which areas are most important?',
+
+                        'Do you need night vision?',
+
+                        'Do you want phone access?'
+
+                    ]
+
+                },
+
+
+                driveway: {
+
+                    description:
+                        'Customer wants to monitor vehicles entering or leaving.',
+
+                    considerations: [
+
+                        'Camera position',
+
+                        'Distance to vehicle',
+
+                        'Lighting',
+
+                        'Required image detail',
+
+                        'Number-plate requirements',
+
+                        'Gate position'
+
+                    ],
+
+                    askFirst: [
+
+                        'How far is the camera from the vehicle entry point?',
+
+                        'Do you need to identify number plates or simply see vehicles?',
+
+                        'Is the area illum
