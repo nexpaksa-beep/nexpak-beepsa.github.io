@@ -3123,3 +3123,967 @@ body {
 
                 </section>
   
+<!-- =======================================================
+     LESSON 05 — RISK-BASED DESIGN
+======================================================= -->
+
+<section
+    id="risk"
+    class="lesson-section"
+>
+
+    <div class="section-number">
+        05
+    </div>
+
+
+    <div class="section-heading">
+
+        <span class="section-kicker">
+            SECURITY ENGINEERING
+        </span>
+
+        <h2>
+            Risk-Based Design
+        </h2>
+
+        <p class="section-lead">
+            Converting security risk into measurable design
+            priorities and defensible engineering decisions.
+        </p>
+
+    </div>
+
+
+    <p>
+        Professional security design should be based on the actual
+        assessed risk associated with a property rather than applying
+        an identical template to every installation. A perimeter may
+        have significant differences in accessibility, visibility,
+        consequence and exposure from one section to another.
+    </p>
+
+    <p>
+        Risk-based design provides a structured method for identifying
+        those differences and allocating security resources where they
+        provide the greatest value.
+    </p>
+
+
+    <!-- RISK MODEL -->
+
+    <div class="formula-card">
+
+        <div class="formula-label">
+            SECURITY RISK MODEL
+        </div>
+
+        <div class="formula">
+            RISK ≈ THREAT × VULNERABILITY × CONSEQUENCE
+        </div>
+
+        <p>
+            This simplified model provides a useful conceptual
+            framework for comparing perimeter areas. It is not a
+            substitute for a formal risk assessment methodology where
+            one is required.
+        </p>
+
+    </div>
+
+
+    <h3>
+        Understanding the Three Variables
+    </h3>
+
+
+    <div class="risk-grid">
+
+        <div class="risk-card">
+
+            <div class="risk-number">
+                01
+            </div>
+
+            <h3>
+                Threat
+            </h3>
+
+            <p>
+                The likelihood that an attempted intrusion or security
+                incident may occur.
+            </p>
+
+            <div class="risk-indicator">
+                LIKELIHOOD
+            </div>
+
+        </div>
+
+
+        <div class="risk-card">
+
+            <div class="risk-number">
+                02
+            </div>
+
+            <h3>
+                Vulnerability
+            </h3>
+
+            <p>
+                The susceptibility of the property or perimeter to
+                successful compromise.
+            </p>
+
+            <div class="risk-indicator">
+                EXPOSURE
+            </div>
+
+        </div>
+
+
+        <div class="risk-card">
+
+            <div class="risk-number">
+                03
+            </div>
+
+            <h3>
+                Consequence
+            </h3>
+
+            <p>
+                The potential severity of the outcome if the security
+                control is defeated.
+            </p>
+
+            <div class="risk-indicator">
+                IMPACT
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        CPTED and Perimeter Security
+    </h3>
+
+    <p>
+        <strong>Crime Prevention Through Environmental Design
+        (CPTED)</strong> provides another useful framework for
+        understanding how the physical environment can influence
+        security behaviour and opportunity.
+    </p>
+
+    <p>
+        CPTED does not replace engineering controls. Instead, it can
+        complement them by encouraging the designer to consider
+        visibility, access routes, territorial definition and the
+        ongoing condition of the environment.
+    </p>
+
+
+    <div class="cpted-grid">
+
+        <div class="cpted-card">
+
+            <span class="cpted-icon">
+                ◉
+            </span>
+
+            <h3>
+                Natural Surveillance
+            </h3>
+
+            <p>
+                Preserve useful sightlines so that suspicious activity
+                can be observed by legitimate occupants, security
+                personnel or surveillance systems.
+            </p>
+
+        </div>
+
+
+        <div class="cpted-card">
+
+            <span class="cpted-icon">
+                ⇥
+            </span>
+
+            <h3>
+                Access Control
+            </h3>
+
+            <p>
+                Guide movement through defined and monitorable access
+                points rather than allowing uncontrolled approaches to
+                the perimeter.
+            </p>
+
+        </div>
+
+
+        <div class="cpted-card">
+
+            <span class="cpted-icon">
+                ◇
+            </span>
+
+            <h3>
+                Territorial Reinforcement
+            </h3>
+
+            <p>
+                Clearly communicate the boundary between public,
+                semi-private and controlled areas.
+            </p>
+
+        </div>
+
+
+        <div class="cpted-card">
+
+            <span class="cpted-icon">
+                ✓
+            </span>
+
+            <h3>
+                Maintenance
+            </h3>
+
+            <p>
+                Maintain the perimeter and surrounding environment so
+                that the property does not communicate a perception of
+                neglect or weak guardianship.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Perimeter Risk Classification
+    </h3>
+
+    <p>
+        Each major perimeter section can be assigned a relative risk
+        classification during the design process. The purpose is not
+        to create artificial mathematical precision, but to provide
+        a documented basis for deciding where additional attention
+        may be justified.
+    </p>
+
+
+    <div class="risk-matrix">
+
+        <div class="matrix-header">
+            PERIMETER RISK MATRIX
+        </div>
+
+
+        <div class="matrix-row matrix-head">
+
+            <div>
+                AREA
+            </div>
+
+            <div>
+                THREAT
+            </div>
+
+            <div>
+                VULNERABILITY
+            </div>
+
+            <div>
+                CONSEQUENCE
+            </div>
+
+            <div>
+                PRIORITY
+            </div>
+
+        </div>
+
+
+        <div class="matrix-row">
+
+            <div>
+                Front Boundary
+            </div>
+
+            <div>
+                Medium
+            </div>
+
+            <div>
+                Medium
+            </div>
+
+            <div>
+                High
+            </div>
+
+            <div class="priority-high">
+                HIGH
+            </div>
+
+        </div>
+
+
+        <div class="matrix-row">
+
+            <div>
+                Rear Boundary
+            </div>
+
+            <div>
+                High
+            </div>
+
+            <div>
+                High
+            </div>
+
+            <div>
+                High
+            </div>
+
+            <div class="priority-critical">
+                CRITICAL
+            </div>
+
+        </div>
+
+
+        <div class="matrix-row">
+
+            <div>
+                Side Boundary A
+            </div>
+
+            <div>
+                Medium
+            </div>
+
+            <div>
+                Low
+            </div>
+
+            <div>
+                Medium
+            </div>
+
+            <div class="priority-medium">
+                MEDIUM
+            </div>
+
+        </div>
+
+
+        <div class="matrix-row">
+
+            <div>
+                Vehicle Gate
+            </div>
+
+            <div>
+                High
+            </div>
+
+            <div>
+                High
+            </div>
+
+            <div>
+                High
+            </div>
+
+            <div class="priority-critical">
+                CRITICAL
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="technical-card">
+
+        <div class="technical-icon">
+            Σ
+        </div>
+
+        <div>
+
+            <h4>
+                Engineering Interpretation
+            </h4>
+
+            <p>
+                The matrix is a planning tool. Actual ratings must be
+                based on the property's circumstances, customer
+                requirements, relevant threat information and the
+                methodology being used by the security professional.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Identifying Vulnerable Areas
+    </h3>
+
+    <p>
+        Vulnerable areas may include secluded sections, boundaries
+        adjacent to public access areas, sections concealed by
+        vegetation, poorly illuminated areas, low or damaged
+        structures, irregular terrain and access points where normal
+        perimeter continuity is interrupted.
+    </p>
+
+    <p>
+        The designer should document why a particular section has been
+        classified as vulnerable rather than relying on an assumption
+        that all perimeter sections present identical conditions.
+    </p>
+
+
+    <h3>
+        Security Controls Should Follow Risk
+    </h3>
+
+    <p>
+        Higher-risk areas may justify increased detection resolution,
+        more detailed CCTV coverage, improved lighting, additional
+        monitoring attention or smaller electrical zones where the
+        selected equipment supports such architecture.
+    </p>
+
+    <p>
+        However, additional equipment should only be introduced when
+        it produces a meaningful security benefit. Complexity without
+        purpose increases installation cost, maintenance requirements
+        and the number of possible failure points.
+    </p>
+
+
+    <div class="comparison-card">
+
+        <div class="comparison-column">
+
+            <span class="comparison-badge">
+                WEAK APPROACH
+            </span>
+
+            <h3>
+                One Design For Every Property
+            </h3>
+
+            <ul>
+
+                <li>
+                    Same zoning regardless of risk
+                </li>
+
+                <li>
+                    Same camera arrangement
+                </li>
+
+                <li>
+                    No documented threat assessment
+                </li>
+
+                <li>
+                    Decisions based mainly on habit
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="comparison-column">
+
+            <span class="comparison-badge">
+                PROFESSIONAL APPROACH
+            </span>
+
+            <h3>
+                Risk-Driven Architecture
+            </h3>
+
+            <ul>
+
+                <li>
+                    Site-specific assessment
+                </li>
+
+                <li>
+                    Critical areas identified
+                </li>
+
+                <li>
+                    Controls matched to requirements
+                </li>
+
+                <li>
+                    Design decisions documented
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Risk Is Dynamic
+    </h3>
+
+    <p>
+        A security assessment should not be regarded as permanently
+        valid. Changes to neighbouring properties, road access,
+        vegetation, lighting, property use, building layout or
+        operating procedures can alter the risk profile.
+    </p>
+
+    <p>
+        Professional documentation should therefore record the date
+        of assessment and the assumptions on which the design was
+        based.
+    </p>
+
+
+    <div class="success-card">
+
+        <div class="card-icon">
+            ✓
+        </div>
+
+        <div>
+
+            <h3>
+                Professional Principle
+            </h3>
+
+            <p>
+                Do not design security simply around perimeter length.
+                Design around assessed risk, operational requirements
+                and the consequences of failure.
+            </p>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =======================================================
+     LESSON 06 — ADVANCED ZONING
+======================================================= -->
+
+<section
+    id="zoning"
+    class="lesson-section"
+>
+
+    <div class="section-number">
+        06
+    </div>
+
+
+    <div class="section-heading">
+
+        <span class="section-kicker">
+            ELECTRICAL ARCHITECTURE
+        </span>
+
+        <h2>
+            Advanced Zoning
+        </h2>
+
+        <p class="section-lead">
+            Dividing the perimeter into logical, diagnosable and
+            maintainable electrical security zones.
+        </p>
+
+    </div>
+
+
+    <p>
+        Zoning divides a larger electric-fence installation into
+        defined sections that can be monitored, diagnosed and
+        managed independently or through an appropriate shared
+        architecture.
+    </p>
+
+    <p>
+        At an advanced level, zoning is not simply a matter of
+        drawing lines on a site plan. Each zone represents a defined
+        electrical and operational area with its own conductor
+        length, environmental exposure, leakage characteristics,
+        monitoring requirements and maintenance implications.
+    </p>
+
+
+    <div class="zone-architecture">
+
+        <div class="zone-source">
+
+            <span>
+                ENERGIZER
+            </span>
+
+            <small>
+                System source
+            </small>
+
+        </div>
+
+
+        <div class="zone-trunk">
+            ↓
+        </div>
+
+
+        <div class="zone-row">
+
+            <div class="zone-block">
+
+                <span>
+                    ZONE 01
+                </span>
+
+                <small>
+                    Front
+                </small>
+
+            </div>
+
+
+            <div class="zone-block">
+
+                <span>
+                    ZONE 02
+                </span>
+
+                <small>
+                    East
+                </small>
+
+            </div>
+
+
+            <div class="zone-block">
+
+                <span>
+                    ZONE 03
+                </span>
+
+                <small>
+                    Rear
+                </small>
+
+            </div>
+
+
+            <div class="zone-block">
+
+                <span>
+                    ZONE 04
+                </span>
+
+                <small>
+                    West
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="zone-monitor">
+            MONITORING / ALARM PROCESSING
+        </div>
+
+    </div>
+
+
+    <h3>
+        Why Use Zones?
+    </h3>
+
+
+    <div class="benefit-grid">
+
+        <div class="benefit-card">
+
+            <span>
+                01
+            </span>
+
+            <h3>
+                Fault Localisation
+            </h3>
+
+            <p>
+                A smaller affected area can make troubleshooting
+                faster and more systematic.
+            </p>
+
+        </div>
+
+
+        <div class="benefit-card">
+
+            <span>
+                02
+            </span>
+
+            <h3>
+                Alarm Identification
+            </h3>
+
+            <p>
+                The monitoring system can identify which logical
+                perimeter area generated an event where supported.
+            </p>
+
+        </div>
+
+
+        <div class="benefit-card">
+
+            <span>
+                03
+            </span>
+
+            <h3>
+                Maintenance
+            </h3>
+
+            <p>
+                Technicians can isolate and investigate defined
+                sections more efficiently.
+            </p>
+
+        </div>
+
+
+        <div class="benefit-card">
+
+            <span>
+                04
+            </span>
+
+            <h3>
+                Expansion
+            </h3>
+
+            <p>
+                A well-documented architecture can simplify future
+                system modifications where equipment capacity allows.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Zone Length and Energizer Capacity
+    </h3>
+
+    <p>
+        Every energizer has manufacturer-specified operating limits.
+        These may include maximum recommended fence length, expected
+        load characteristics, output energy and permissible system
+        configurations.
+    </p>
+
+    <p>
+        Zone planning must therefore be checked against the actual
+        manufacturer's specifications for the selected energizer.
+        Designers should never determine maximum fence length from a
+        generic rule when the equipment documentation provides a
+        specific limit.
+    </p>
+
+
+    <div class="warning-card">
+
+        <div class="card-icon">
+            ⚠
+        </div>
+
+        <div>
+
+            <h3>
+                Manufacturer Data Takes Priority
+            </h3>
+
+            <p>
+                Fence length, zone capacity, output energy, loading
+                and compatible monitoring devices vary between
+                energizers. Always verify the selected model's
+                technical documentation before finalising a zone
+                architecture.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Zone Boundaries
+    </h3>
+
+    <p>
+        Zone boundaries should have a logical relationship to the
+        physical property and the security objective. Useful
+        boundaries may correspond to changes in perimeter direction,
+        different security classifications, vehicle entrances,
+        pedestrian access areas or significant changes in
+        construction.
+    </p>
+
+
+    <div class="zone-planning-grid">
+
+        <div class="zone-plan-card">
+
+            <div class="zone-plan-number">
+                A
+            </div>
+
+            <h3>
+                Physical Logic
+            </h3>
+
+            <p>
+                The zone should correspond to a clearly identifiable
+                physical section of the perimeter.
+            </p>
+
+        </div>
+
+
+        <div class="zone-plan-card">
+
+            <div class="zone-plan-number">
+                B
+            </div>
+
+            <h3>
+                Electrical Logic
+            </h3>
+
+            <p>
+                The electrical configuration must remain within the
+                capabilities and limits of the equipment.
+            </p>
+
+        </div>
+
+
+        <div class="zone-plan-card">
+
+            <div class="zone-plan-number">
+                C
+            </div>
+
+            <h3>
+                Security Logic
+            </h3>
+
+            <p>
+                The zone should provide useful information for
+                identifying and responding to events.
+            </p>
+
+        </div>
+
+
+        <div class="zone-plan-card">
+
+            <div class="zone-plan-number">
+                D
+            </div>
+
+            <h3>
+                Maintenance Logic
+            </h3>
+
+            <p>
+                A technician should be able to identify the physical
+                location represented by the zone.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Zone Identification
+    </h3>
+
+    <p>
+        Zone identifiers should be consistent across the entire
+        project. If the drawing identifies a section as
+        <strong>ZONE 03 — REAR BOUNDARY</strong>, the same identifier
+        should appear in the equipment schedule, alarm configuration,
+        commissioning documentation and maintenance records.
+    </p>
+
+
+    <div class="technical-card">
+
+        <div class="technical-icon">
+            #
+        </div>
+
+        <div>
+
+            <h4>
+                Requirements Traceability
+            </h4>
+
+            <p>
+                A useful zone naming convention creates a direct link
+                between the physical perimeter, the electrical
+                architecture and the monitoring system.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Avoid Excessive Complexity
+    </h3>
+
+    <p>
+        More zones do not automatically create a superior security
+        system. Excessive zoning can increase equipment requirements,
+        cabling, configuration complexity, commissioning time and
+        maintenance burden.
+    </p>
+
+    <p>
+        The objective is therefore not to maximise the number of
+        zones. The objective is to create the <strong>most useful
+        zoning architecture for the security requirement</stron
