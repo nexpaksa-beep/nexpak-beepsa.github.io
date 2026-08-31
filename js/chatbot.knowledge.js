@@ -27888,6 +27888,631 @@
         },
 
 
-        /* =========================================================
+         /* =========================================================
            86. LEAD SCORING & SALES PRIORITY ENGINE
+        ========================================================= */
+
+        leadScoringSalesPriorityEngine: {
+
+            objective:
+                'Evaluate customer buying intent and sales readiness using information collected during the conversation, allowing qualified opportunities to be prioritised for follow-up.',
+
+
+            /* -----------------------------------------------------
+               CORE PRINCIPLE
+            ----------------------------------------------------- */
+
+            principle:
+
+                'Lead scoring is used to prioritise sales attention, not to manipulate customers or make unsupported assumptions.',
+
+
+            /* -----------------------------------------------------
+               SCORE RANGE
+            ----------------------------------------------------- */
+
+            scoreRange: {
+
+                minimum: 0,
+
+                maximum: 100,
+
+
+                interpretation: {
+
+                    '0-19':
+
+                        'Very low intent. Customer is primarily researching or browsing.',
+
+
+                    '20-39':
+
+                        'Low intent. Customer has some interest but little project definition.',
+
+
+                    '40-59':
+
+                        'Moderate intent. Customer has identified a meaningful requirement.',
+
+
+                    '60-79':
+
+                        'High intent. Customer has a defined project and is considering action.',
+
+
+                    '80-100':
+
+                        'Very high intent. Customer is strongly sales-ready or requesting immediate commercial action.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               SCORING FACTORS
+            ----------------------------------------------------- */
+
+            scoringFactors: {
+
+                productInterest: {
+
+                    points: 10,
+
+                    description:
+
+                        'Customer has clearly identified a product or security category they are interested in.'
+
+                },
+
+
+                definedRequirement: {
+
+                    points: 10,
+
+                    description:
+
+                        'Customer can clearly explain what they want the system to achieve.'
+
+                },
+
+
+                propertyInformation: {
+
+                    points: 5,
+
+                    description:
+
+                        'Property type, application or environment has been identified.'
+
+                },
+
+
+                measurements: {
+
+                    points: 10,
+
+                    description:
+
+                        'Useful measurements such as fence length, camera distances or gate dimensions have been provided.'
+
+                },
+
+
+                quantities: {
+
+                    points: 5,
+
+                    description:
+
+                        'Customer has identified an approximate quantity of equipment required.'
+
+                },
+
+
+                installationInterest: {
+
+                    points: 10,
+
+                    description:
+
+                        'Customer is actively considering professional installation.'
+
+                },
+
+
+                quotationRequest: {
+
+                    points: 20,
+
+                    description:
+
+                        'Customer explicitly requests a quotation or project pricing.'
+
+                },
+
+
+                purchaseIntent: {
+
+                    points: 20,
+
+                    description:
+
+                        'Customer indicates they are ready or close to ready to purchase.'
+
+                },
+
+
+                timeframe: {
+
+                    points: 10,
+
+                    description:
+
+                        'Customer provides a realistic timeframe for the project.'
+
+                },
+
+
+                contactInformation: {
+
+                    points: 5,
+
+                    description:
+
+                        'Customer voluntarily provides contact information for follow-up.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               NEGATIVE SIGNALS
+            ----------------------------------------------------- */
+
+            negativeSignals: {
+
+                researchOnly: {
+
+                    points: -10,
+
+                    signals: [
+
+                        'just researching',
+
+                        'just looking',
+
+                        'only curious',
+
+                        'not buying yet'
+
+                    ]
+
+                },
+
+
+                noDefinedRequirement: {
+
+                    points: -5,
+
+                    signals: [
+
+                        'not sure what I need',
+
+                        'just looking at options'
+
+                    ]
+
+                },
+
+
+                noImmediateProject: {
+
+                    points: -5,
+
+                    signals: [
+
+                        'maybe next year',
+
+                        'sometime in the future',
+
+                        'no plans yet'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               SCORING RULES
+            ----------------------------------------------------- */
+
+            rules: [
+
+                'Start every new lead at a neutral score.',
+
+                'Add points only when meaningful buying or project information is identified.',
+
+                'Do not award points simply because the customer is polite or engaged.',
+
+                'Do not assume purchasing power from language, location or property type.',
+
+                'Do not score a customer based on sensitive personal characteristics.',
+
+                'Do not penalise customers for asking many questions.',
+
+                'Do not artificially inflate scores to increase sales activity.',
+
+                'Recalculate the score as new information becomes available.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               INTENT CLASSIFICATION
+            ----------------------------------------------------- */
+
+            intentClassification: {
+
+                cold: {
+
+                    score:
+
+                        '0-39',
+
+
+                    action:
+
+                        'Educate and answer questions without aggressive sales prompting.'
+
+                },
+
+
+                warm: {
+
+                    score:
+
+                        '40-69',
+
+
+                    action:
+
+                        'Continue qualification and begin moving toward recommendation or quotation.'
+
+                },
+
+
+                hot: {
+
+                    score:
+
+                        '70-89',
+
+
+                    action:
+
+                        'Prioritise quotation preparation, lead capture or human sales follow-up.'
+
+                },
+
+
+                priority: {
+
+                    score:
+
+                        '90-100',
+
+
+                    action:
+
+                        'Treat as a highly qualified opportunity and move quickly toward the appropriate sales process.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               HIGH-VALUE PROJECT SIGNALS
+            ----------------------------------------------------- */
+
+            highValueSignals: [
+
+                'Multiple properties',
+
+                'Multiple buildings',
+
+                'Commercial premises',
+
+                'Industrial premises',
+
+                'Large perimeter',
+
+                'Large CCTV deployment',
+
+                'Multiple access-control doors',
+
+                'Integrated security requirements',
+
+                'Site assessment request',
+
+                'Formal quotation request',
+
+                'Existing system upgrade',
+
+                'Multi-product requirement'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               MULTI-PRODUCT BONUS
+            ----------------------------------------------------- */
+
+            multiProductOpportunity: {
+
+                condition:
+
+                    'Customer has meaningful interest in two or more security categories.',
+
+
+                action:
+
+                    'Identify whether the customer wants an integrated security solution.',
+
+
+                example:
+
+                    'Customer requires electric fencing, CCTV, gate automation and alarm integration.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               URGENCY
+            ----------------------------------------------------- */
+
+            urgencyScoring: {
+
+                emergency:
+
+                    'Immediate security failure or urgent operational requirement.',
+
+
+                urgent:
+
+                    'Customer needs a solution within days or a very short timeframe.',
+
+
+                planned:
+
+                    'Customer has a defined project but normal implementation timeframe.',
+
+
+                future:
+
+                    'Customer is researching a future project.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               BUYING STAGE
+            ----------------------------------------------------- */
+
+            buyingStage: {
+
+                awareness:
+
+                    'Customer is learning about available solutions.',
+
+
+                consideration:
+
+                    'Customer is comparing products or approaches.',
+
+
+                evaluation:
+
+                    'Customer is discussing specifications, pricing or suitability.',
+
+
+                decision:
+
+                    'Customer is resolving final concerns before purchase.',
+
+
+                purchase:
+
+                    'Customer is ready to order or proceed.',
+
+
+                postPurchase:
+
+                    'Customer already purchased or requires after-sales assistance.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               LEAD PRIORITY
+            ----------------------------------------------------- */
+
+            priorityClassification: {
+
+                low:
+
+                    'Lead requires normal automated assistance.',
+
+
+                medium:
+
+                    'Lead may benefit from sales follow-up.',
+
+
+                high:
+
+                    'Lead should receive timely human sales attention.',
+
+
+                urgent:
+
+                    'Lead requires rapid human attention because of urgency, project value or customer request.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               SALES ACTION BY SCORE
+            ----------------------------------------------------- */
+
+            recommendedActions: {
+
+                '0-19':
+
+                    'Continue education and answer questions.',
+
+
+                '20-39':
+
+                    'Identify the customers main requirement and gather basic qualification information.',
+
+
+                '40-59':
+
+                    'Provide product guidance and collect important project details.',
+
+
+                '60-79':
+
+                    'Move toward recommendation, quotation or lead capture.',
+
+
+                '80-89':
+
+                    'Prioritise quotation preparation and human sales follow-up.',
+
+
+                '90-100':
+
+                    'Prioritise immediate sales action and human handoff where appropriate.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               LEAD SCORE DISPLAY
+            ----------------------------------------------------- */
+
+            internalScoreFormat:
+
+                'LEAD SCORE: [score] / 100\nINTENT: [classification]\nSTAGE: [buying stage]\nPRIORITY: [priority]\nNEXT ACTION: [recommended action]',
+
+
+            /* -----------------------------------------------------
+               EXAMPLE
+            ----------------------------------------------------- */
+
+            example:
+
+                'Customer requests a CCTV quotation for a commercial property, requires 16 cameras, wants remote viewing, has provided approximate camera distances and wants installation within two weeks.',
+
+
+            exampleAnalysis: {
+
+                productInterest:
+
+                    10,
+
+                definedRequirement:
+
+                    10,
+
+                propertyInformation:
+
+                    5,
+
+                measurements:
+
+                    10,
+
+                quantities:
+
+                    5,
+
+                installationInterest:
+
+                    10,
+
+                quotationRequest:
+
+                    20,
+
+                timeframe:
+
+                    10
+
+            },
+
+
+            exampleResult:
+
+                '80 / 100 — High-intent sales opportunity requiring quotation and timely human follow-up.',
+
+
+            /* -----------------------------------------------------
+               SCORE PROTECTION
+            ----------------------------------------------------- */
+
+            scoreProtection: [
+
+                'Never fabricate missing information to increase a lead score.',
+
+                'Never infer budget from property appearance or customer language.',
+
+                'Never infer financial status.',
+
+                'Never infer urgency without evidence.',
+
+                'Never classify a customer as high priority solely because they asked for a discount.',
+
+                'Never lower service quality because a customer has a low score.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               SALES PRIORITISATION
+            ----------------------------------------------------- */
+
+            prioritisationRule:
+
+                'When multiple leads are available, prioritise based on legitimate indicators such as explicit buying intent, quotation readiness, project scope, urgency and completeness of the information required for sales action.',
+
+
+            /* -----------------------------------------------------
+               SCORE UPDATE
+            ----------------------------------------------------- */
+
+            updateBehaviour:
+
+                'Recalculate the lead score whenever meaningful new customer information is collected. The latest confirmed information takes precedence over earlier assumptions.',
+
+
+            /* -----------------------------------------------------
+               FINAL RULE
+            ----------------------------------------------------- */
+
+            finalRule:
+
+                'Lead scoring should help the Nexpak sales team spend time where it is most useful while ensuring every customer continues to receive respectful, accurate and professional assistance.'
+
+        },
+
+
+        /* =========================================================
+           87. PRODUCT RECOMMENDATION & SOLUTION MATCHING ENGINE
         ========================================================= */
