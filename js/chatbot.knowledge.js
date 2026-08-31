@@ -8760,7 +8760,7 @@
             ],
 
 
-            /* -----------------------------------------------------
+                        /* -----------------------------------------------------
                INTERCOM SCENARIOS
             ----------------------------------------------------- */
 
@@ -8768,5 +8768,691 @@
 
                 residential: {
 
-       
-               
+                    description:
+                        'Homeowner wants to identify and communicate with visitors before allowing access.',
+
+                    askFirst: [
+
+                        'Is the entrance a pedestrian gate or vehicle gate?',
+
+                        'Do you need audio or video?',
+
+                        'How far is the entrance from the house?',
+
+                        'Do you want to answer from inside the house?',
+
+                        'Do you want to answer from your mobile phone?',
+
+                        'Do you want remote gate release?',
+
+                        'Do you already have a gate motor installed?'
+
+                    ]
+
+                },
+
+
+                commercial: {
+
+                    description:
+                        'Business requires controlled visitor communication at one or more entrances.',
+
+                    askFirst: [
+
+                        'How many entrances require intercoms?',
+
+                        'Who needs to answer visitor calls?',
+
+                        'How many staff members need access?',
+
+                        'Do you require video verification?',
+
+                        'Do you require access control?',
+
+                        'Do you need visitor records?',
+
+                        'Do you require CCTV integration?',
+
+                        'Do you need mobile answering?'
+
+                    ]
+
+                },
+
+
+                estate: {
+
+                    description:
+                        'Residential estate or complex requires visitor communication and controlled entrance management.',
+
+                    askFirst: [
+
+                        'Is this for a main entrance or individual units?',
+
+                        'How many residents or users require access?',
+
+                        'How many entrance points are involved?',
+
+                        'Do visitors need to be verified before access is granted?',
+
+                        'Do residents need mobile access?',
+
+                        'Is access control already installed?',
+
+                        'Is CCTV already installed?',
+
+                        'Do you require centralized management?'
+
+                    ]
+
+                },
+
+
+                pedestrianGate: {
+
+                    description:
+                        'Customer wants communication and controlled release at a pedestrian entrance.',
+
+                    askFirst: [
+
+                        'Is the pedestrian gate currently locked?',
+
+                        'What type of lock is installed?',
+
+                        'Do you need video verification?',
+
+                        'How far is the gate from the building?',
+
+                        'Do you want remote release?',
+
+                        'Do you already have access control?'
+
+                    ]
+
+                },
+
+
+                vehicleGate: {
+
+                    description:
+                        'Customer wants visitors to communicate with the occupant before a vehicle gate is opened.',
+
+                    askFirst: [
+
+                        'Is the gate sliding or swing type?',
+
+                        'Is a gate motor already installed?',
+
+                        'What gate motor is currently installed?',
+
+                        'Do you need video verification?',
+
+                        'How far is the gate from the house or office?',
+
+                        'Do you want remote opening from a phone?',
+
+                        'Do you require access control as well?'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               INTERCOM PRICING
+            ----------------------------------------------------- */
+
+            pricingGuidance: {
+
+                principle:
+                    'Intercom pricing depends on the system type, number of stations, video capability, cable or network requirements, gate or door integration and installation complexity.',
+
+                factors: [
+
+                    'Audio or video',
+
+                    'Number of outdoor stations',
+
+                    'Number of indoor stations',
+
+                    'Number of users',
+
+                    'Cable distance',
+
+                    'Network infrastructure',
+
+                    'PoE requirements',
+
+                    'Power supply',
+
+                    'Backup power',
+
+                    'Gate motor integration',
+
+                    'Door lock integration',
+
+                    'Access-control integration',
+
+                    'Mobile functionality',
+
+                    'Installation complexity'
+
+                ],
+
+                responseWhenAskedPrice:
+                    'The price depends on whether you need audio or video, how many entrances are involved, the distance between the entrance and building, and whether you want gate or door release and mobile functionality.',
+
+                importantRule:
+                    'Never provide a fixed intercom installation price without understanding the entrance type, distance and required functionality.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               INTERCOM COMMON QUESTIONS
+            ----------------------------------------------------- */
+
+            commonQuestions: [
+
+                'How much does an intercom cost?',
+
+                'Can I see visitors on my phone?',
+
+                'Can an intercom open my gate?',
+
+                'Can I connect an intercom to my gate motor?',
+
+                'Can I use an intercom with access control?',
+
+                'Can I install an intercom at a pedestrian gate?',
+
+                'Can I use video intercom?',
+
+                'Can multiple people answer the intercom?',
+
+                'Can an intercom work without internet?',
+
+                'Can I upgrade my existing intercom?',
+
+                'Can I connect an intercom to CCTV?',
+
+                'Can I use an IP intercom?',
+
+                'Can an intercom work over Wi-Fi?',
+
+                'Can visitors call my phone from the gate?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               INTERCOM TROUBLESHOOTING
+            ----------------------------------------------------- */
+
+            troubleshooting: {
+
+                noAudio: [
+
+                    'Power problem',
+
+                    'Wiring problem',
+
+                    'Network communication problem',
+
+                    'Microphone fault',
+
+                    'Speaker fault',
+
+                    'Incorrect configuration'
+
+                ],
+
+
+                noVideo: [
+
+                    'Camera power problem',
+
+                    'Network communication problem',
+
+                    'Cable fault',
+
+                    'Camera fault',
+
+                    'Display problem',
+
+                    'Incorrect configuration',
+
+                    'Insufficient network bandwidth where applicable'
+
+                ],
+
+
+                gateWillNotOpen: [
+
+                    'Gate motor problem',
+
+                    'Intercom relay problem',
+
+                    'Incorrect wiring',
+
+                    'Access-control issue',
+
+                    'Power supply problem',
+
+                    'Gate motor configuration problem',
+
+                    'Mechanical gate problem'
+
+                ],
+
+
+                intermittentCommunication: [
+
+                    'Loose connection',
+
+                    'Network instability',
+
+                    'Wireless signal problem',
+
+                    'Power instability',
+
+                    'Cable fault',
+
+                    'Environmental interference'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               INTERCOM SALES RULES
+            ----------------------------------------------------- */
+
+            salesRules: [
+
+                'Determine whether the customer needs audio or video.',
+
+                'Determine whether the entrance is a pedestrian gate, vehicle gate or door.',
+
+                'Determine the distance between the entrance and the building.',
+
+                'Determine whether the customer wants mobile answering.',
+
+                'Determine whether remote gate or door release is required.',
+
+                'Determine whether an existing gate motor or lock must be integrated.',
+
+                'Determine whether access control is required.',
+
+                'Determine whether CCTV integration is required.',
+
+                'Do not recommend equipment based solely on price.',
+
+                'Do not claim compatibility without confirming the equipment involved.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               INTERCOM SAFETY RULES
+            ----------------------------------------------------- */
+
+            safetyRules: [
+
+                'Do not assume every intercom can operate every gate motor.',
+
+                'Do not invent compatibility between intercom and access-control equipment.',
+
+                'Do not guarantee wireless range without assessing the installation environment.',
+
+                'Do not promise mobile functionality without confirming compatible hardware and services.',
+
+                'Do not recommend bypassing gate or door safety mechanisms.',
+
+                'Recommend professional installation for complex gate, door or network integration.'
+
+            ]
+
+        },
+
+
+        /* =========================================================
+           23. INTERCOM SALES CONVERSATION ENGINE
+        ========================================================= */
+
+        intercomSalesEngine: {
+
+            objective:
+                'Determine the visitor communication and access requirement before recommending an intercom system.',
+
+            openingQuestions: [
+
+                'Where do you need the intercom installed?',
+
+                'Do you need audio or video?',
+
+                'Do you want to answer from inside the property or from your phone?',
+
+                'Do you want the intercom to release the gate or door?'
+
+            ],
+
+
+            decisionLogic: {
+
+                audioOnly:
+                    'Focus on reliable voice communication and suitable installation distance.',
+
+                video:
+                    'Prioritize visitor visibility, camera positioning, lighting and display or mobile requirements.',
+
+                gateRelease:
+                    'Determine the existing gate motor or lock before recommending integration.',
+
+                mobile:
+                    'Determine network and mobile application requirements before recommending the system.',
+
+                commercial:
+                    'Focus on multiple users, multiple entrances, access control and visitor management.',
+
+                residential:
+                    'Focus on ease of use, visitor verification, gate release and mobile convenience.'
+
+            },
+
+
+            closingStrategy: {
+
+                equipmentOnly:
+                    'Determine the required outdoor station, indoor station, power requirements and accessories before recommending equipment.',
+
+                installation:
+                    'Collect entrance type, distances, existing equipment and integration requirements before preparing a quotation.',
+
+                upgrade:
+                    'Identify the existing intercom equipment and determine whether replacement or expansion is practical.',
+
+                highIntent:
+                    'When the customer clearly wants an intercom installation, move toward collecting the information required for a quotation.'
+
+            }
+
+        },
+
+
+        /* =========================================================
+           24. GATE AUTOMATION — ADVANCED KNOWLEDGE
+        ========================================================= */
+
+        gateAutomationAdvanced: {
+
+            name: 'Gate Automation',
+
+            category: 'Automated Vehicle & Pedestrian Access',
+
+            definition:
+                'Gate automation uses a suitable motor and control system to open and close a compatible gate while providing controlled access and safety functions.',
+
+            simpleExplanation:
+                'A gate motor allows the customer to open and close a compatible gate without manually moving it. The correct motor depends on the gate type, weight, dimensions, usage and installation conditions.',
+
+
+            /* -----------------------------------------------------
+               GATE TYPES
+            ----------------------------------------------------- */
+
+            gateTypes: {
+
+                sliding: {
+
+                    name: 'Sliding Gate',
+
+                    operation:
+                        'The gate moves horizontally along a track or suitable sliding mechanism.',
+
+                    considerations: [
+
+                        'Gate weight',
+
+                        'Gate length',
+
+                        'Track condition',
+
+                        'Gate alignment',
+
+                        'Ground conditions',
+
+                        'Usage frequency',
+
+                        'Rack installation',
+
+                        'Manual release requirements',
+
+                        'Safety sensors',
+
+                        'Available power'
+
+                    ]
+
+                },
+
+
+                swing: {
+
+                    name: 'Swing Gate',
+
+                    operation:
+                        'The gate opens by rotating around hinges or another suitable pivot arrangement.',
+
+                    considerations: [
+
+                        'Gate weight',
+
+                        'Gate leaf length',
+
+                        'Number of leaves',
+
+                        'Hinge condition',
+
+                        'Gate alignment',
+
+                        'Opening angle',
+
+                        'Wind exposure',
+
+                        'Usage frequency',
+
+                        'Motor mounting conditions',
+
+                        'Safety requirements'
+
+                    ]
+
+                },
+
+
+                pedestrian: {
+
+                    name: 'Pedestrian Gate',
+
+                    operation:
+                        'A pedestrian entrance may use an electric lock, strike, magnetic lock or other compatible access mechanism rather than a vehicle gate motor.',
+
+                    considerations: [
+
+                        'Gate construction',
+
+                        'Lock type',
+
+                        'Access-control requirements',
+
+                        'Intercom requirements',
+
+                        'Exit requirements',
+
+                        'Power availability',
+
+                        'Emergency-release requirements'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               GATE MOTOR SELECTION
+            ----------------------------------------------------- */
+
+            motorSelection: {
+
+                principle:
+                    'Gate motor selection should be based on the actual gate and application rather than simply choosing the most powerful or cheapest motor.',
+
+                factors: [
+
+                    'Gate type',
+
+                    'Gate weight',
+
+                    'Gate length',
+
+                    'Gate geometry',
+
+                    'Gate condition',
+
+                    'Track condition',
+
+                    'Hinge condition',
+
+                    'Usage frequency',
+
+                    'Residential or commercial use',
+
+                    'Power availability',
+
+                    'Battery backup requirements',
+
+                    'Safety requirements',
+
+                    'Manual release requirements'
+
+                ],
+
+                salesRule:
+                    'Never recommend a specific motor solely from the gate weight. Gate condition, geometry, usage frequency and installation conditions must also be considered.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               GATE AUTOMATION QUALIFICATION
+            ----------------------------------------------------- */
+
+            qualificationQuestions: [
+
+                'Is the gate sliding or swing type?',
+
+                'What are the approximate gate dimensions?',
+
+                'Do you know the approximate gate weight?',
+
+                'Is the gate currently easy to open manually?',
+
+                'Is the track or hinge system in good condition?',
+
+                'How often is the gate used each day?',
+
+                'Is this a residential or commercial property?',
+
+                'Is there mains power available at the gate?',
+
+                'Do you need battery backup?',
+
+                'Do you want remote controls?',
+
+                'Do you want keypad or access-control entry?',
+
+                'Do you want an intercom?',
+
+                'Do you want CCTV at the entrance?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               GATE AUTOMATION SALES RULES
+            ----------------------------------------------------- */
+
+            salesRules: [
+
+                'Always identify the gate type first.',
+
+                'Determine gate condition before recommending automation.',
+
+                'Ask about usage frequency.',
+
+                'Determine whether mains power is available.',
+
+                'Determine whether backup power is required.',
+
+                'Ask whether access control or intercom integration is required.',
+
+                'Do not recommend a motor based solely on price.',
+
+                'Do not guarantee motor suitability without sufficient gate information.',
+
+                'Recommend a site assessment when the installation is complex or the gate condition is uncertain.'
+
+            ]
+
+        },
+
+
+        /* =========================================================
+           25. GATE AUTOMATION SALES ENGINE
+        ========================================================= */
+
+        gateAutomationSalesEngine: {
+
+            objective:
+                'Qualify the gate and customer requirements before recommending an automation solution.',
+
+            openingQuestions: [
+
+                'What type of gate do you have—sliding or swing?',
+
+                'Approximately how heavy and large is the gate?',
+
+                'How often is the gate used each day?',
+
+                'Is the gate currently easy to open manually?',
+
+                'Do you already have a motor installed?'
+
+            ],
+
+
+            decisionLogic: {
+
+                sliding:
+                    'Assess gate weight, length, track condition, alignment, usage frequency and motor requirements.',
+
+                swing:
+                    'Assess gate leaf size, weight, hinges, opening geometry, wind exposure and usage frequency.',
+
+                existingMotor:
+                    'Identify the motor make and model, current fault and desired upgrade before recommending replacement equipment.',
+
+                highUsage:
+                    'Prioritize equipment appropriate for the required duty cycle rather than selecting solely on price.',
+
+                poorGateCondition:
+                    'Recommend correcting mechanical gate problems before or as part of automation installation.',
+
+                integratedSecurity:
+                    'Determine whether the customer wants remote controls, access control, intercom or CCTV integra
