@@ -6523,3 +6523,812 @@
             }
 
         },
+
+        /* =========================================================
+           18. ALARM SYSTEMS & INTRUSION DETECTION
+        ========================================================= */
+
+        alarmSystemsAdvanced: {
+
+            name: 'Alarm Systems',
+
+            category: 'Intrusion Detection',
+
+
+            /* -----------------------------------------------------
+               CORE DEFINITION
+            ----------------------------------------------------- */
+
+            definition:
+                'An alarm system is designed to detect defined security events and generate an alert through a configured control system.',
+
+            simpleExplanation:
+                'An alarm system uses sensors and detectors around a property. When a protected area is triggered while the system is armed, the alarm system can generate an alert and activate connected devices or services.',
+
+            salesPrinciple:
+                'The correct alarm system depends on the property layout, number of protected areas, user requirements, communication method, existing equipment and the type of threats the customer wants to detect.',
+
+
+            /* -----------------------------------------------------
+               SYSTEM TYPES
+            ----------------------------------------------------- */
+
+            systemTypes: {
+
+                wired: {
+
+                    name: 'Wired Alarm System',
+
+                    description:
+                        'Uses physical cabling between compatible detectors, sensors and the alarm control equipment.',
+
+                    advantages: [
+
+                        'Reliable physical connections',
+
+                        'Suitable for many permanent installations',
+
+                        'Can support larger installations',
+
+                        'No detector battery required for many conventional wired devices'
+
+                    ],
+
+                    considerations: [
+
+                        'Cable installation',
+
+                        'Building construction',
+
+                        'Existing wiring',
+
+                        'Installation access',
+
+                        'Expansion requirements'
+
+                    ]
+
+                },
+
+
+                wireless: {
+
+                    name: 'Wireless Alarm System',
+
+                    description:
+                        'Uses wireless communication between compatible devices and the alarm system.',
+
+                    advantages: [
+
+                        'Reduced cabling',
+
+                        'Useful where cable installation is difficult',
+
+                        'Can simplify expansion on compatible systems',
+
+                        'Suitable for certain retrofit installations'
+
+                    ],
+
+                    considerations: [
+
+                        'Signal strength',
+
+                        'Battery condition',
+
+                        'Wireless range',
+
+                        'Environmental conditions',
+
+                        'Device compatibility',
+
+                        'Battery maintenance'
+
+                    ]
+
+                },
+
+
+                hybrid: {
+
+                    name: 'Hybrid Alarm System',
+
+                    description:
+                        'Combines compatible wired and wireless devices within the same alarm architecture.',
+
+                    advantages: [
+
+                        'Installation flexibility',
+
+                        'Useful for upgrades',
+
+                        'Can combine existing wired devices with wireless expansion where supported'
+
+                    ],
+
+                    considerations: [
+
+                        'Panel compatibility',
+
+                        'Device compatibility',
+
+                        'Available zones',
+
+                        'Wireless capacity',
+
+                        'Existing wiring'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               ALARM SYSTEM COMPONENTS
+            ----------------------------------------------------- */
+
+            components: {
+
+                controlPanel: {
+
+                    name: 'Alarm Control Panel',
+
+                    function:
+                        'The control panel manages connected alarm devices, processes events and controls configured alarm outputs and communication functions.',
+
+                    considerations: [
+
+                        'Number of zones',
+
+                        'Wireless capacity',
+
+                        'User capacity',
+
+                        'Communication options',
+
+                        'Expansion capability',
+
+                        'Power requirements',
+
+                        'Battery backup'
+
+                    ]
+
+                },
+
+
+                keypad: {
+
+                    name: 'Keypad',
+
+                    function:
+                        'Allows authorized users to interact with the alarm system, including arming, disarming and viewing system information on supported systems.',
+
+                    considerations: [
+
+                        'Location',
+
+                        'User accessibility',
+
+                        'Number of keypads',
+
+                        'System compatibility',
+
+                        'User interface'
+
+                    ]
+
+                },
+
+
+                pir: {
+
+                    name: 'PIR Motion Detector',
+
+                    function:
+                        'A passive infrared detector is commonly used to detect movement associated with changes in infrared energy within its detection area.',
+
+                    considerations: [
+
+                        'Coverage area',
+
+                        'Mounting height',
+
+                        'Detection pattern',
+
+                        'Pet immunity where supported',
+
+                        'Environmental conditions',
+
+                        'Possible sources of false activation'
+
+                    ]
+
+                },
+
+
+                magneticContact: {
+
+                    name: 'Magnetic Door / Window Contact',
+
+                    function:
+                        'Detects the opening or separation of a protected door or window using a compatible magnetic contact arrangement.',
+
+                    suitableFor: [
+
+                        'Entrance doors',
+
+                        'Windows',
+
+                        'Garage doors',
+
+                        'Security doors',
+
+                        'Other opening points'
+
+                    ]
+
+                },
+
+
+                panicButton: {
+
+                    name: 'Panic Button',
+
+                    function:
+                        'Allows a user to manually generate an alarm event when connected to a compatible alarm system.',
+
+                    suitableFor: [
+
+                        'Residential panic requirements',
+
+                        'Commercial premises',
+
+                        'Reception areas',
+
+                        'Security-sensitive locations'
+
+                    ]
+
+                },
+
+
+                siren: {
+
+                    name: 'Siren',
+
+                    function:
+                        'Provides an audible alarm indication when activated by the compatible alarm system.',
+
+                    considerations: [
+
+                        'Indoor or outdoor installation',
+
+                        'Weather exposure',
+
+                        'Mounting position',
+
+                        'System compatibility',
+
+                        'Power requirements'
+
+                    ]
+
+                },
+
+
+                battery: {
+
+                    name: 'Backup Battery',
+
+                    function:
+                        'Provides backup power to compatible alarm equipment during a mains power interruption.',
+
+                    considerations: [
+
+                        'Battery capacity',
+
+                        'System load',
+
+                        'Battery age',
+
+                        'Charging condition',
+
+                        'Connected equipment'
+
+                    ],
+
+                    importantRule:
+                        'Never promise a specific backup duration without considering the actual system load and battery specification.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               ALARM ZONES
+            ----------------------------------------------------- */
+
+            zones: {
+
+                definition:
+                    'A zone represents a monitored input or defined detection area within an alarm system.',
+
+                examples: [
+
+                    'Front door',
+
+                    'Back door',
+
+                    'Garage',
+
+                    'Bedroom',
+
+                    'Living area',
+
+                    'Office',
+
+                    'Warehouse',
+
+                    'Perimeter detection',
+
+                    'Panic input'
+
+                ],
+
+                salesPrinciple:
+                    'Zone requirements should be based on the number and type of protected areas rather than simply selecting the cheapest panel.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               DETECTOR TYPES
+            ----------------------------------------------------- */
+
+            detectorTypes: {
+
+                pir: {
+
+                    name: 'PIR',
+
+                    primaryPurpose:
+                        'Detect movement within a defined detection area.',
+
+                    typicalApplications: [
+
+                        'Rooms',
+
+                        'Passageways',
+
+                        'Offices',
+
+                        'Warehouses',
+
+                        'Reception areas'
+
+                    ]
+
+                },
+
+
+                outdoorPir: {
+
+                    name: 'Outdoor Motion Detector',
+
+                    primaryPurpose:
+                        'Detect movement in selected external areas using a compatible outdoor detection technology.',
+
+                    considerations: [
+
+                        'Environmental conditions',
+
+                        'Detection range',
+
+                        'Mounting height',
+
+                        'Vegetation',
+
+                        'Animals',
+
+                        'Weather',
+
+                        'False-alarm management'
+
+                    ]
+
+                },
+
+
+                magneticContact: {
+
+                    name: 'Magnetic Contact',
+
+                    primaryPurpose:
+                        'Detect opening of doors, windows or other protected openings.',
+
+                    typicalApplications: [
+
+                        'Entrance doors',
+
+                        'Windows',
+
+                        'Garage doors',
+
+                        'Security gates'
+
+                    ]
+
+                },
+
+
+                glassBreak: {
+
+                    name: 'Glass-Break Detector',
+
+                    primaryPurpose:
+                        'Detect characteristics associated with breaking glass where supported.',
+
+                    considerations: [
+
+                        'Detector technology',
+
+                        'Room acoustics',
+
+                        'Glass type',
+
+                        'Mounting position',
+
+                        'Manufacturer specifications'
+
+                    ]
+
+                },
+
+
+                smoke: {
+
+                    name: 'Smoke Detector',
+
+                    primaryPurpose:
+                        'Detect smoke or fire-related conditions using compatible detection equipment.',
+
+                    importantRule:
+                        'Fire detection requirements should be treated separately from ordinary intrusion detection and designed according to the applicable requirements.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               ARMING MODES
+            ----------------------------------------------------- */
+
+            armingModes: {
+
+                away: {
+
+                    name: 'Away Arm',
+
+                    description:
+                        'Used when occupants leave the protected property and the designated zones are armed according to the system configuration.'
+
+                },
+
+
+                stay: {
+
+                    name: 'Stay / Home Arm',
+
+                    description:
+                        'Allows selected zones to remain inactive while other configured zones remain armed, depending on the alarm system configuration.'
+
+                },
+
+
+                night: {
+
+                    name: 'Night Mode',
+
+                    description:
+                        'A configured partial-arm mode intended for nighttime use on compatible alarm systems.'
+
+                },
+
+
+                disarmed: {
+
+                    name: 'Disarmed',
+
+                    description:
+                        'The system is not actively armed for the selected intrusion zones, although certain 24-hour or special zones may remain active depending on configuration.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               ALARM COMMUNICATION
+            ----------------------------------------------------- */
+
+            communication: {
+
+                methods: [
+
+                    'Wi-Fi where supported',
+
+                    'Ethernet / IP',
+
+                    'Cellular communication',
+
+                    'SMS where supported',
+
+                    'App notifications',
+
+                    'Monitoring-centre communication where supported'
+
+                ],
+
+                salesQuestions: [
+
+                    'Do you want notifications on your phone?',
+
+                    'Do you need communication during an internet outage?',
+
+                    'Do you require monitoring-centre connectivity?',
+
+                    'Is there reliable cellular coverage at the property?'
+
+                ],
+
+                importantRule:
+                    'Never promise communication availability without considering the actual communication technology, network coverage and service requirements.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               MOBILE APP
+            ----------------------------------------------------- */
+
+            mobileControl: {
+
+                possibleFunctions: [
+
+                    'Remote arming',
+
+                    'Remote disarming',
+
+                    'Alarm notifications',
+
+                    'System status',
+
+                    'Event history',
+
+                    'Automation control on supported systems',
+
+                    'CCTV integration on compatible platforms'
+
+                ],
+
+                salesQuestion:
+                    'Would you like to control or monitor the alarm from your phone?'
+
+            },
+
+
+            /* -----------------------------------------------------
+               FALSE ALARMS
+            ----------------------------------------------------- */
+
+            falseAlarmFactors: [
+
+                'Incorrect detector positioning',
+
+                'Poor installation',
+
+                'Loose connections',
+
+                'Low batteries',
+
+                'Environmental movement',
+
+                'Animals',
+
+                'Temperature changes',
+
+                'Poor detector selection',
+
+                'Incorrect configuration',
+
+                'User error',
+
+                'Communication or power problems'
+
+            ],
+
+            falseAlarmRule:
+                'Do not immediately assume a false alarm means the alarm panel is defective. The detector, environment, installation and configuration should also be investigated.'
+
+
+            /* -----------------------------------------------------
+               ALARM FAULTS
+            ----------------------------------------------------- */
+
+            ,
+            commonFaults: {
+
+                alarmNotArming: [
+
+                    'Open zone',
+
+                    'Fault condition',
+
+                    'Low battery',
+
+                    'Communication fault',
+
+                    'Incorrect user operation',
+
+                    'System configuration issue'
+
+                ],
+
+
+                falseAlarm: [
+
+                    'Detector activation',
+
+                    'Environmental movement',
+
+                    'Pet activity',
+
+                    'Incorrect detector positioning',
+
+                    'Low battery',
+
+                    'Wiring issue',
+
+                    'Configuration problem'
+
+                ],
+
+
+                keypadProblem: [
+
+                    'Power issue',
+
+                    'Communication problem',
+
+                    'Keypad fault',
+
+                    'System fault',
+
+                    'Wiring problem'
+
+                ],
+
+
+                batteryFault: [
+
+                    'Old battery',
+
+                    'Low battery voltage',
+
+                    'Charging problem',
+
+                    'Power interruption',
+
+                    'Excessive system load'
+
+                ],
+
+
+                communicationFailure: [
+
+                    'Internet outage',
+
+                    'Cellular signal problem',
+
+                    'SIM or service issue',
+
+                    'Network configuration',
+
+                    'Communication hardware fault',
+
+                    'Service interruption'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               RESIDENTIAL ALARM SCENARIO
+            ----------------------------------------------------- */
+
+            residentialScenario: {
+
+                description:
+                    'Customer wants intrusion protection for a home.',
+
+                askFirst: [
+
+                    'How many bedrooms and living areas need protection?',
+
+                    'How many external doors are there?',
+
+                    'How many accessible windows need protection?',
+
+                    'Do you have pets?',
+
+                    'Do you want outdoor detection?',
+
+                    'Do you want panic buttons?',
+
+                    'Do you want mobile notifications?',
+
+                    'Do you need battery backup?',
+
+                    'Do you already have an alarm system?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               COMMERCIAL ALARM SCENARIO
+            ----------------------------------------------------- */
+
+            commercialScenario: {
+
+                description:
+                    'Business customer requires intrusion protection.',
+
+                askFirst: [
+
+                    'What type of business is it?',
+
+                    'How large is the premises?',
+
+                    'How many entrances are there?',
+
+                    'How many staff members require access?',
+
+                    'Are there restricted areas?',
+
+                    'Are there valuable stock or equipment areas?',
+
+                    'Do you need panic buttons?',
+
+                    'Do you need after-hours protection?',
+
+                    'Do you require monitoring-centre connectivity?',
+
+                    'Do you want CCTV and access-control integration?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               EXISTING ALARM
+            ----------------------------------------------------- */
+
+            existingAlarm: {
+
+                description:
+                    'Customer already has an alarm system and wants an upgrade.',
+
+                askFirst: [
+
+                    'What alarm system is currently installed?',
+
+                    'H
