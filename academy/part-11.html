@@ -6429,4 +6429,1142 @@ body {
 
 
         <div class="process-arrow">
+
+                    <span>
+            →
+        </span>
+    </div>
+
+
+    <div class="process-node">
+
+        <span>
+            02
+        </span>
+
+        <strong>
+            CLASSIFY
+        </strong>
+
+        <small>
+            Determine event type
+        </small>
+
+    </div>
+
+
+    <div class="process-arrow">
+
+        <span>
+            →
+        </span>
+
+    </div>
+
+
+    <div class="process-node">
+
+        <span>
+            03
+        </span>
+
+        <strong>
+            VERIFY
+        </strong>
+
+        <small>
+            Confirm condition
+        </small>
+
+    </div>
+
+
+    <div class="process-arrow">
+
+        <span>
+            →
+        </span>
+
+    </div>
+
+
+    <div class="process-node">
+
+        <span>
+            04
+        </span>
+
+        <strong>
+            RESPOND
+        </strong>
+
+        <small>
+            Initiate procedure
+        </small>
+
+    </div>
+
+</div>
+
+
+<h3>
+    Alarm Cause-and-Effect Matrix
+</h3>
+
+<p>
+    A professional integrated security system should have a clearly
+    documented cause-and-effect relationship between detected events,
+    system outputs and operational responses. This prevents ambiguity
+    when the system is placed into service and provides a reference
+    for future technicians and monitoring personnel.
+</p>
+
+
+<div class="matrix-wrapper">
+
+    <table class="security-matrix">
+
+        <thead>
+
+            <tr>
+
+                <th>
+                    EVENT
+                </th>
+
+                <th>
+                    SYSTEM CONDITION
+                </th>
+
+                <th>
+                    REQUIRED OUTPUT
+                </th>
+
+                <th>
+                    OPERATOR ACTION
+                </th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr>
+
+                <td>
+                    Fence intrusion event
+                </td>
+
+                <td>
+                    Zone alarm condition
+                </td>
+
+                <td>
+                    Alarm + event identification
+                </td>
+
+                <td>
+                    Follow verification and response procedure
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Fence conductor fault
+                </td>
+
+                <td>
+                    Electrical fault condition
+                </td>
+
+                <td>
+                    Fault indication
+                </td>
+
+                <td>
+                    Investigate and restore system integrity
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    AC power failure
+                </td>
+
+                <td>
+                    Primary power unavailable
+                </td>
+
+                <td>
+                    Power-failure notification
+                </td>
+
+                <td>
+                    Verify backup power and investigate supply
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Communication failure
+                </td>
+
+                <td>
+                    Monitoring path unavailable
+                </td>
+
+                <td>
+                    Communication fault
+                </td>
+
+                <td>
+                    Investigate communication path
+                </td>
+
+            </tr>
+
+
+            <tr>
+
+                <td>
+                    Tamper condition
+                </td>
+
+                <td>
+                    Enclosure or equipment tamper
+                </td>
+
+                <td>
+                    Tamper notification
+                </td>
+
+                <td>
+                    Verify equipment security
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+<h3>
+    Supervised Versus Unsupervised Signals
+</h3>
+
+<p>
+    Where the equipment supports it, security-critical signalling
+    should be designed so that a wiring fault or communication
+    failure cannot simply appear to the receiving system as a normal
+    condition. This is the fundamental purpose of
+    <strong>supervision</strong>.
+</p>
+
+<p>
+    In an unsupervised connection, a broken conductor may prevent an
+    alarm signal from reaching the receiving equipment without the
+    receiving equipment necessarily knowing that the connection has
+    failed. In a supervised arrangement, the receiving equipment
+    continuously checks the expected electrical or communication
+    state and can distinguish, according to the manufacturer's
+    implementation, between normal operation, alarm and fault
+    conditions.
+</p>
+
+
+<div class="technical-card">
+
+    <div class="technical-icon">
+        ⚡
+    </div>
+
+    <div>
+
+        <h3>
+            Engineering Insight
+        </h3>
+
+        <p>
+            Supervision does not make a system immune to failure.
+            It makes certain classes of failure
+            <strong>observable</strong>.
+            This distinction is fundamental to professional security
+            engineering.
+        </p>
+
+    </div>
+
+</div>
+
+
+<h3>
+    Alarm Prioritisation
+</h3>
+
+<p>
+    Not every security event should necessarily receive the same
+    operational priority. A professional monitoring architecture
+    should define event priorities according to the customer's risk
+    assessment and the consequences associated with each event.
+</p>
+
+
+<div class="priority-grid">
+
+    <div class="priority-card critical">
+
+        <span class="priority-level">
+            PRIORITY 01
+        </span>
+
+        <h4>
+            CRITICAL
+        </h4>
+
+        <p>
+            Events indicating a potentially active security incident
+            requiring immediate assessment according to the agreed
+            response procedure.
+        </p>
+
+    </div>
+
+
+    <div class="priority-card high">
+
+        <span class="priority-level">
+            PRIORITY 02
+        </span>
+
+        <h4>
+            HIGH
+        </h4>
+
+        <p>
+            Significant security or system events requiring prompt
+            operator attention.
+        </p>
+
+    </div>
+
+
+    <div class="priority-card medium">
+
+        <span class="priority-level">
+            PRIORITY 03
+        </span>
+
+        <h4>
+            MEDIUM
+        </h4>
+
+        <p>
+            Conditions requiring investigation but not necessarily
+            immediate emergency escalation.
+        </p>
+
+    </div>
+
+
+    <div class="priority-card low">
+
+        <span class="priority-level">
+            PRIORITY 04
+        </span>
+
+        <h4>
+            LOW
+        </h4>
+
+        <p>
+            Informational, maintenance or non-critical system
+            conditions that should still be recorded.
+        </p>
+
+    </div>
+
+</div>
+
+
+<h3>
+    Alarm Acknowledgement
+</h3>
+
+<p>
+    In monitored environments, the system should provide an
+    appropriate mechanism for acknowledging received events where
+    supported by the equipment. However, acknowledgement must not be
+    confused with resolution.
+</p>
+
+<div class="two-column">
+
+    <div class="info-card">
+
+        <h3>
+            Acknowledged
+        </h3>
+
+        <p>
+            The operator has received and recognised the event.
+        </p>
+
+    </div>
+
+
+    <div class="warning-card">
+
+        <h3>
+            Resolved
+        </h3>
+
+        <p>
+            The underlying condition has been investigated and
+            returned to the required operational state.
+        </p>
+
+    </div>
+
+</div>
+
+
+<h3>
+    Alarm Logging
+</h3>
+
+<p>
+    Significant security events and technical faults should be
+    recorded in a manner appropriate to the system and monitoring
+    environment. Event records provide valuable information for
+    troubleshooting, maintenance, incident investigation and
+    performance analysis.
+</p>
+
+
+<div class="info-card">
+
+    <h3>
+        Useful Event Information
+    </h3>
+
+    <ul>
+
+        <li>
+            Date and time
+        </li>
+
+        <li>
+            Affected zone or subsystem
+        </li>
+
+        <li>
+            Event classification
+        </li>
+
+        <li>
+            Operator acknowledgement
+        </li>
+
+        <li>
+            Verification result
+        </li>
+
+        <li>
+            Action taken
+        </li>
+
+        <li>
+            Restoration time
+        </li>
+
+        <li>
+            Technician or operator responsible
+        </li>
+
+    </ul>
+
+</div>
+
+
+<h3>
+    Alarm Fatigue
+</h3>
+
+<p>
+    One of the most important operational risks in a security system
+    is excessive nuisance signalling. If operators repeatedly receive
+    alarms that do not represent meaningful security events, they
+    may gradually reduce their attention to subsequent alarms.
+</p>
+
+<p>
+    This creates a dangerous feedback loop:
+</p>
+
+
+<div class="danger-flow">
+
+    <div class="danger-step">
+
+        <span>
+            01
+        </span>
+
+        <strong>
+            NUISANCE EVENTS
+        </strong>
+
+    </div>
+
+
+    <div class="danger-arrow">
+        ↓
+    </div>
+
+
+    <div class="danger-step">
+
+        <span>
+            02
+        </span>
+
+        <strong>
+            OPERATOR FATIGUE
+        </strong>
+
+    </div>
+
+
+    <div class="danger-arrow">
+        ↓
+    </div>
+
+
+    <div class="danger-step">
+
+        <span>
+            03
+        </span>
+
+        <strong>
+            REDUCED ATTENTION
+        </strong>
+
+    </div>
+
+
+    <div class="danger-arrow">
+        ↓
+    </div>
+
+
+    <div class="danger-step">
+
+        <span>
+            04
+        </span>
+
+        <strong>
+            MISSED EVENT
+        </strong>
+
+    </div>
+
+</div>
+
+
+<p>
+    The correct engineering response to repeated nuisance alarms is
+    to identify and correct their underlying cause. Possible causes
+    include vegetation contact, poor mechanical construction,
+    inadequate insulation, environmental effects, incorrect
+    configuration, unsuitable equipment or an inappropriate alarm
+    threshold.
+</p>
+
+
+<div class="success-card">
+
+    <h3>
+        Professional Principle
+    </h3>
+
+    <p>
+        Never solve a nuisance-alarm problem simply by making the
+        operator ignore the alarm. Find the technical or operational
+        cause, correct it, and verify that the corrected system still
+        detects the security event it was designed to detect.
+    </p>
+
+</div>
+
+
+<h3>
+    Alarm Integration Commissioning
+</h3>
+
+<p>
+    Alarm integration should be tested as an operational chain rather
+    than merely checked for electrical continuity. The commissioning
+    process should demonstrate that a defined system event produces
+    the intended indication, classification, communication and
+    response at every relevant stage.
+</p>
+
+
+<div class="commissioning-grid">
+
+    <div class="commission-step">
+
+        <span>
+            01
+        </span>
+
+        <h4>
+            GENERATE
+        </h4>
+
+        <p>
+            Produce a controlled test event using an approved test
+            procedure.
+        </p>
+
+    </div>
+
+
+    <div class="commission-step">
+
+        <span>
+            02
+        </span>
+
+        <h4>
+            DETECT
+        </h4>
+
+        <p>
+            Confirm that the electric-fence or associated subsystem
+            detects the event correctly.
+        </p>
+
+    </div>
+
+
+    <div class="commission-step">
+
+        <span>
+            03
+        </span>
+
+        <h4>
+            TRANSMIT
+        </h4>
+
+        <p>
+            Confirm that the event reaches the intended receiving
+            system.
+        </p>
+
+    </div>
+
+
+    <div class="commission-step">
+
+        <span>
+            04
+        </span>
+
+        <h4>
+            CLASSIFY
+        </h4>
+
+        <p>
+            Confirm that the receiving system identifies the event
+            correctly.
+        </p>
+
+    </div>
+
+
+    <div class="commission-step">
+
+        <span>
+            05
+        </span>
+
+        <h4>
+            VERIFY
+        </h4>
+
+        <p>
+            Confirm the intended verification mechanism operates.
+        </p>
+
+    </div>
+
+
+    <div class="commission-step">
+
+        <span>
+            06
+        </span>
+
+        <h4>
+            RESPOND
+        </h4>
+
+        <p>
+            Confirm that the documented response process is followed.
+        </p>
+
+    </div>
+
+
+    <div class="commission-step">
+
+        <span>
+            07
+        </span>
+
+        <h4>
+            RESTORE
+        </h4>
+
+        <p>
+            Return the system to its normal operating state.
+        </p>
+
+    </div>
+
+
+    <div class="commission-step">
+
+        <span>
+            08
+        </span>
+
+        <h4>
+            RECORD
+        </h4>
+
+        <p>
+            Document the test result and any corrective action.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="technical-card">
+
+    <div class="technical-icon">
+        ✓
+    </div>
+
+    <div>
+
+        <h3>
+            Commissioning Standard
+        </h3>
+
+        <p>
+            A successful integration test should demonstrate the
+            complete chain from <strong>physical event</strong> to
+            <strong>operator response</strong>, not merely show that
+            a relay changes state.
+        </p>
+
+    </div>
+
+</div>
+
+
+<h3>
+    Maintenance Implications
+</h3>
+
+<p>
+    Alarm integration introduces additional components and
+    interfaces that must be maintained. Every future modification to
+    the fence, alarm panel, CCTV system, network infrastructure or
+    monitoring configuration should therefore be evaluated for its
+    effect on the integrated alarm chain.
+</p>
+
+<p>
+    Changes should be documented and, where they affect security
+    functionality, followed by an appropriate re-test of the
+    affected integration path.
+</p>
+
+
+<div class="warning-card">
+
+    <h3>
+        Never Assume Integration Still Works
+    </h3>
+
+    <p>
+        A security system can continue to appear operational while
+        an integration path has failed. Periodic testing is therefore
+        essential to demonstrate that the complete detection,
+        communication, verification and response chain remains
+        functional.
+    </p>
+
+</div>
+
+
+<!-- =========================================
+     LESSON 10 SUMMARY
+========================================== -->
+
+<div class="lesson-summary">
+
+    <div class="summary-header">
+
+        <span class="summary-icon">
+            10
+        </span>
+
+        <div>
+
+            <span class="summary-label">
+                LESSON COMPLETE
+            </span>
+
+            <h3>
+                Alarm Integration Summary
+            </h3>
+
+        </div>
+
+    </div>
+
+
+    <p>
+        Advanced alarm integration is not simply the connection of an
+        electric-fence output to an alarm input. It is the engineered
+        definition of how security events are detected, classified,
+        communicated, verified, prioritised, responded to and
+        recorded.
+    </p>
+
+
+    <div class="summary-points">
+
+        <div>
+            <strong>
+                01
+            </strong>
+
+            Define the event.
+        </div>
+
+        <div>
+            <strong>
+                02
+            </strong>
+
+            Classify the condition.
+        </div>
+
+        <div>
+            <strong>
+                03
+            </strong>
+
+            Supervise critical signalling where supported.
+        </div>
+
+        <div>
+            <strong>
+                04
+            </strong>
+
+            Control nuisance alarms.
+        </div>
+
+        <div>
+            <strong>
+                05
+            </strong>
+
+            Verify the complete alarm chain.
+        </div>
+
+        <div>
+            <strong>
+                06
+            </strong>
+
+            Document the result.
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================================
+     11. REMOTE MONITORING
+========================================== -->
+
+<section
+    id="monitoring"
+    class="lesson-section"
+>
+
+    <div class="section-number">
+        11
+    </div>
+
+    <h2>
+        Remote Monitoring
+    </h2>
+
+    <p>
+        Remote monitoring extends the security architecture beyond
+        the physical property by communicating selected system
+        events and health conditions to a remote operator, control
+        room or monitoring service.
+    </p>
+
+    <p>
+        A professional designer must therefore treat the monitoring
+        pathway as another security subsystem with its own
+        availability, failure modes, supervision requirements and
+        operational procedures.
+    </p>
+
+
+    <div class="info-card">
+
+        <h3>
+            Monitoring Can Communicate
+        </h3>
+
+        <ul>
+
+            <li>
+                Fence alarm events
+            </li>
+
+            <li>
+                Zone identification
+            </li>
+
+            <li>
+                AC power failure
+            </li>
+
+            <li>
+                Backup battery conditions
+            </li>
+
+            <li>
+                Communication failures
+            </li>
+
+            <li>
+                Equipment faults
+            </li>
+
+            <li>
+                Tamper conditions
+            </li>
+
+            <li>
+                System status
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <h3>
+        Monitoring Architecture
+    </h3>
+
+    <p>
+        A typical monitored security architecture can be represented
+        as a chain:
+    </p>
+
+
+    <div class="monitoring-chain">
+
+        <div class="monitor-node">
+
+            <span>
+                01
+            </span>
+
+            <strong>
+                PERIMETER
+            </strong>
+
+            <small>
+                Physical event
+            </small>
+
+        </div>
+
+
+        <div class="monitor-arrow">
+            →
+        </div>
+
+
+        <div class="monitor-node">
+
+            <span>
+                02
+            </span>
+
+            <strong>
+                CONTROLLER
+            </strong>
+
+            <small>
+                Event processing
+            </small>
+
+        </div>
+
+
+        <div class="monitor-arrow">
+            →
+        </div>
+
+
+        <div class="monitor-node">
+
+            <span>
+                03
+            </span>
+
+            <strong>
+                COMMUNICATION
+            </strong>
+
+            <small>
+                Data transmission
+            </small>
+
+        </div>
+
+
+        <div class="monitor-arrow">
+            →
+        </div>
+
+
+        <div class="monitor-node">
+
+            <span>
+                04
+            </span>
+
+            <strong>
+                MONITORING CENTRE
+            </strong>
+
+            <small>
+                Event reception
+            </small>
+
+        </div>
+
+
+        <div class="monitor-arrow">
+            →
+        </div>
+
+
+        <div class="monitor-node">
+
+            <span>
+                05
+            </span>
+
+            <strong>
+                RESPONSE
+            </strong>
+
+            <small>
+                Operational action
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Communication Path Reliability
+    </h3>
+
+    <p>
+        The monitoring system is only as reliable as the communication
+        pathway that connects the protected premises to the receiving
+        environment. A professional design should identify the
+        primary communication path and its relevant failure modes.
+    </p>
+
+
+    <div class="two-column">
+
+        <div class="info-card">
+
+            <h3>
+                Primary Path
+            </h3>
+
+            <p>
+                The normal communication route used to transmit system
+                events and status information.
+            </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+            <h3>
+                Secondary Path
+            </h3>
+
+            <p>
+                Where justified by risk and equipment capability, a
+                separate backup communication route can improve
+                resilience against failure of the primary path.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Diverse Communication Paths
+    </h3>
+
  
