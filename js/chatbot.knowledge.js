@@ -5103,4 +5103,806 @@
             ]
 
         },
-               
+
+                    /* =========================================================
+           16. CCTV & VIDEO SURVEILLANCE — ADVANCED KNOWLEDGE
+        ========================================================= */
+
+        cctvAdvanced: {
+
+            name: 'CCTV Surveillance',
+
+            category: 'Video Security',
+
+
+            /* -----------------------------------------------------
+               CORE DEFINITION
+            ----------------------------------------------------- */
+
+            definition:
+                'CCTV is a video surveillance system used to monitor, record and review activity in selected areas of a property.',
+
+            simpleExplanation:
+                'CCTV cameras capture video and send it to a recording or processing device. Depending on the system, customers may also view live or recorded footage remotely.',
+
+            salesPrinciple:
+                'Do not sell a camera simply because it has a high megapixel number. The correct camera depends on what the customer needs to see, the distance involved, lighting conditions, mounting position, required image detail and recording requirements.',
+
+
+            /* -----------------------------------------------------
+               CCTV SYSTEM TYPES
+            ----------------------------------------------------- */
+
+            systemTypes: {
+
+                analogHD: {
+
+                    name: 'HD Analog CCTV',
+
+                    description:
+                        'Uses compatible coaxial or related cabling to transmit high-definition video to a compatible recorder.',
+
+                    commonComponents: [
+
+                        'HD cameras',
+
+                        'DVR',
+
+                        'Hard drive',
+
+                        'Power supply',
+
+                        'Video cabling',
+
+                        'Connectors',
+
+                        'Monitor where required'
+
+                    ],
+
+                    advantages: [
+
+                        'Can be suitable for upgrading existing coaxial installations',
+
+                        'Wide range of camera options',
+
+                        'Centralized recording'
+
+                    ]
+
+                },
+
+
+                ip: {
+
+                    name: 'IP CCTV',
+
+                    description:
+                        'Uses network-connected cameras that transmit digital video over a network to compatible recording or management equipment.',
+
+                    commonComponents: [
+
+                        'IP cameras',
+
+                        'NVR',
+
+                        'Network switch where required',
+
+                        'PoE equipment where applicable',
+
+                        'Network cabling',
+
+                        'Hard drive',
+
+                        'Router or network infrastructure where required'
+
+                    ],
+
+                    advantages: [
+
+                        'Digital network video',
+
+                        'Flexible network architecture',
+
+                        'High-resolution camera options',
+
+                        'PoE support on compatible equipment',
+
+                        'Advanced analytics on supported cameras and recorders'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               CAMERA SELECTION
+            ----------------------------------------------------- */
+
+            cameraSelection: {
+
+                principle:
+                    'Camera selection should start with the surveillance objective rather than the camera resolution.',
+
+                primaryQuestions: [
+
+                    'What area do you want to monitor?',
+
+                    'What do you need to see?',
+
+                    'How far is the camera from the target?',
+
+                    'Do you need to identify a person or simply detect activity?',
+
+                    'Do you need to identify vehicle number plates?',
+
+                    'Is the area indoors or outdoors?',
+
+                    'How much lighting is available at night?',
+
+                    'Do you need colour footage at night?',
+
+                    'Do you need audio?',
+
+                    'Do you need remote viewing?',
+
+                    'How long do you need recordings retained?'
+
+                ],
+
+
+                selectionFactors: [
+
+                    'Resolution',
+
+                    'Lens type',
+
+                    'Field of view',
+
+                    'Target distance',
+
+                    'Lighting',
+
+                    'Night performance',
+
+                    'Infrared capability',
+
+                    'Low-light performance',
+
+                    'Wide dynamic range',
+
+                    'Weather resistance',
+
+                    'Mounting position',
+
+                    'Required identification detail',
+
+                    'Recording requirements',
+
+                    'Storage capacity',
+
+                    'Analytics',
+
+                    'Network requirements'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               CAMERA OBJECTIVES
+            ----------------------------------------------------- */
+
+            surveillanceObjectives: {
+
+                overview: {
+
+                    description:
+                        'Customer wants a general view of an area.',
+
+                    priority:
+
+                        [
+
+                            'Coverage',
+
+                            'Field of view',
+
+                            'Lighting',
+
+                            'Mounting position'
+
+                        ]
+
+                },
+
+
+                detection: {
+
+                    description:
+                        'Customer wants to know whether activity is occurring.',
+
+                    priority: [
+
+                        'Coverage',
+
+                        'Movement visibility',
+
+                        'Lighting',
+
+                        'Camera placement'
+
+                    ]
+
+                },
+
+
+                recognition: {
+
+                    description:
+                        'Customer wants enough visual detail to recognize a person or object.',
+
+                    priority: [
+
+                        'Target distance',
+
+                        'Resolution',
+
+                        'Lens',
+
+                        'Lighting',
+
+                        'Camera positioning'
+
+                    ]
+
+                },
+
+
+                identification: {
+
+                    description:
+                        'Customer requires sufficient detail to identify a person, vehicle or other target.',
+
+                    priority: [
+
+                        'Target distance',
+
+                        'Pixel density',
+
+                        'Lens selection',
+
+                        'Lighting',
+
+                        'Camera angle',
+
+                        'Target movement'
+
+                    ],
+
+                    importantRule:
+                        'A camera specification alone cannot guarantee identification quality. The complete installation must be designed around the target and viewing conditions.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               CAMERA LOCATIONS
+            ----------------------------------------------------- */
+
+            commonLocations: {
+
+                frontEntrance: {
+
+                    description:
+                        'Customer wants to monitor people approaching or entering the main entrance.',
+
+                    considerations: [
+
+                        'Approach direction',
+
+                        'Camera height',
+
+                        'Face visibility',
+
+                        'Lighting',
+
+                        'Door position',
+
+                        'Backlighting',
+
+                        'Required identification detail'
+
+                    ],
+
+                    askFirst: [
+
+                        'How far is the camera from the entrance?',
+
+                        'Do you need to identify visitors or simply monitor activity?',
+
+                        'Is the entrance illuminated at night?',
+
+                        'Is there strong sunlight behind people approaching the camera?'
+
+                    ]
+
+                },
+
+
+                driveway: {
+
+                    description:
+                        'Customer wants to monitor vehicles entering or leaving.',
+
+                    considerations: [
+
+                        'Camera position',
+
+                        'Distance to vehicle',
+
+                        'Lighting',
+
+                        'Required image detail',
+
+                        'Number-plate requirements',
+
+                        'Gate position',
+
+                        'Vehicle direction',
+
+                        'Vehicle speed'
+
+                    ],
+
+                    askFirst: [
+
+                        'How far is the camera from the vehicle entry point?',
+
+                        'Do you need to identify number plates or simply see vehicles?',
+
+                        'Is the area illuminated at night?',
+
+                        'Do vehicles stop at the gate or continue moving through it?',
+
+                        'How many vehicle entry points are there?'
+
+                    ]
+
+                },
+
+
+                backyard: {
+
+                    description:
+                        'Customer wants to monitor an external residential area.',
+
+                    considerations: [
+
+                        'Coverage area',
+
+                        'Lighting',
+
+                        'Vegetation',
+
+                        'Weather exposure',
+
+                        'Mounting height',
+
+                        'Blind spots',
+
+                        'Night performance'
+
+                    ]
+
+                },
+
+
+                businessEntrance: {
+
+                    description:
+                        'Commercial customer wants to monitor a staff or customer entrance.',
+
+                    considerations: [
+
+                        'Pedestrian traffic',
+
+                        'Operating hours',
+
+                        'Identification requirements',
+
+                        'Lighting',
+
+                        'Access-control integration',
+
+                        'Recording retention',
+
+                        'Privacy considerations'
+
+                    ]
+
+                },
+
+
+                warehouse: {
+
+                    description:
+                        'Customer wants surveillance of a warehouse or storage facility.',
+
+                    considerations: [
+
+                        'Large coverage areas',
+
+                        'High mounting positions',
+
+                        'Low-light areas',
+
+                        'Loading bays',
+
+                        'Staff movement',
+
+                        'Stock protection',
+
+                        'Vehicle movement',
+
+                        'Recording duration'
+
+                    ]
+
+                },
+
+
+                cashDesk: {
+
+                    description:
+                        'Customer wants to monitor a point-of-sale or cash-handling area.',
+
+                    considerations: [
+
+                        'Camera angle',
+
+                        'Transaction visibility',
+
+                        'Lighting',
+
+                        'Screen glare',
+
+                        'Privacy',
+
+                        'Recording retention'
+
+                    ],
+
+                    importantRule:
+                        'Camera positioning should provide useful evidence without unnecessarily capturing sensitive areas unrelated to the security objective.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               LENS KNOWLEDGE
+            ----------------------------------------------------- */
+
+            lenses: {
+
+                fixed: {
+
+                    name: 'Fixed Lens',
+
+                    description:
+                        'Provides a predetermined field of view.',
+
+                    suitableFor: [
+
+                        'Defined viewing areas',
+
+                        'Entrances',
+
+                        'Small rooms',
+
+                        'Standard surveillance positions'
+
+                    ]
+
+                },
+
+
+                varifocal: {
+
+                    name: 'Varifocal Lens',
+
+                    description:
+                        'Allows the lens field of view to be adjusted within its supported range.',
+
+                    suitableFor: [
+
+                        'Installations where exact framing needs adjustment',
+
+                        'Variable target distances',
+
+                        'Professional camera positioning'
+
+                    ]
+
+                },
+
+
+                wideAngle: {
+
+                    name: 'Wide-Angle View',
+
+                    description:
+                        'Provides broader coverage but may reduce the amount of image detail available on distant targets.',
+
+                    importantRule:
+                        'Wider coverage and greater identification detail often require different camera and lens considerations.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               RESOLUTION
+            ----------------------------------------------------- */
+
+            resolution: {
+
+                commonLevels: [
+
+                    '2MP',
+
+                    '4MP',
+
+                    '5MP',
+
+                    '8MP / 4K',
+
+                    'Higher resolutions on supported equipment'
+
+                ],
+
+                principle:
+                    'Higher resolution can provide more image detail, but resolution alone does not determine the quality of surveillance evidence.',
+
+                otherFactors: [
+
+                    'Lens quality',
+
+                    'Lighting',
+
+                    'Sensor performance',
+
+                    'Compression',
+
+                    'Distance',
+
+                    'Camera angle',
+
+                    'Target movement',
+
+                    'Recording settings'
+
+                ],
+
+                salesRule:
+                    'Never tell a customer that 4K automatically means they will be able to identify every person or number plate.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               NIGHT VISION
+            ----------------------------------------------------- */
+
+            nightVision: {
+
+                infrared: {
+
+                    name: 'Infrared Night Vision',
+
+                    description:
+                        'Uses infrared illumination to assist cameras in producing images in low-light or dark conditions on supported equipment.',
+
+                    considerations: [
+
+                        'IR range',
+
+                        'Scene reflectivity',
+
+                        'Camera placement',
+
+                        'Obstructions',
+
+                        'Target distance',
+
+                        'Environmental conditions'
+
+                    ]
+
+                },
+
+
+                lowLight: {
+
+                    name: 'Low-Light Colour',
+
+                    description:
+                        'Some cameras are designed to retain colour information under suitable low-light conditions.',
+
+                    considerations: [
+
+                        'Available light',
+
+                        'Camera sensor',
+
+                        'Lens',
+
+                        'Target movement',
+
+                        'Scene conditions'
+
+                    ]
+
+                },
+
+
+                whiteLight: {
+
+                    name: 'White-Light Illumination',
+
+                    description:
+                        'Some cameras use visible illumination to assist with colour images at night.',
+
+                    considerations: [
+
+                        'Customer preference',
+
+                        'Neighbour considerations',
+
+                        'Lighting environment',
+
+                        'Camera location',
+
+                        'Detection requirements'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               WDR
+            ----------------------------------------------------- */
+
+            wideDynamicRange: {
+
+                name: 'WDR',
+
+                definition:
+                    'Wide Dynamic Range technology can help cameras handle scenes containing significant differences between bright and dark areas.',
+
+                usefulLocations: [
+
+                    'Entrances',
+
+                    'Doorways',
+
+                    'Driveways',
+
+                    'Areas facing sunlight',
+
+                    'Areas with strong backlighting'
+
+                ],
+
+                salesExplanation:
+                    'If a person is standing in front of a bright doorway or strong sunlight, WDR can help produce a more usable image where supported and correctly configured.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               NUMBER PLATE REQUIREMENTS
+            ----------------------------------------------------- */
+
+            numberPlateRecognition: {
+
+                principle:
+                    'Number-plate identification requires careful consideration of camera position, target distance, lens, vehicle speed, lighting, shutter behaviour and the specific camera capabilities.',
+
+                askFirst: [
+
+                    'How far is the camera from the vehicle?',
+
+                    'How fast are the vehicles moving?',
+
+                    'Do vehicles stop at the gate?',
+
+                    'Is the camera viewing the vehicle straight on or at an angle?',
+
+                    'Is the area illuminated at night?',
+
+                    'Do you need plate identification during both day and night?',
+
+                    'How many lanes or entry points need monitoring?'
+
+                ],
+
+                importantRule:
+                    'Do not promise number-plate recognition from an ordinary general-purpose CCTV camera.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               AUDIO
+            ----------------------------------------------------- */
+
+            audio: {
+
+                possibilities: [
+
+                    'Built-in microphone',
+
+                    'External microphone',
+
+                    'Two-way audio',
+
+                    'Audio recording where supported'
+
+                ],
+
+                considerations: [
+
+                    'Camera capability',
+
+                    'Recorder capability',
+
+                    'Network bandwidth',
+
+                    'Storage',
+
+                    'Legal and privacy requirements'
+
+                ],
+
+                importantRule:
+                    'Audio recording and monitoring may have additional legal and privacy considerations. Do not make legal claims without verified requirements.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               STORAGE
+            ----------------------------------------------------- */
+
+            storage: {
+
+                purpose:
+                    'Recorded video requires storage capacity based on camera count, resolution, frame rate, compression, recording mode and retention period.',
+
+                factors: [
+
+                    'Number of cameras',
+
+                    'Resolution',
+
+                    'Frame rate',
+
+                    'Compression',
+
+                    'Continuous recording',
+
+                    'Motion recording',
+
+                    'Ev
