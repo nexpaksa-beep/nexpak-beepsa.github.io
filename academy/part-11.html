@@ -4629,3 +4629,847 @@ body {
 
 
     </section>
+
+        </strong>
+        zoning architecture for the security requirement</strong>,
+        equipment capabilities and maintenance strategy.
+    </p>
+
+
+    <div class="principle-card">
+
+        <div class="principle-icon">
+            ⚙
+        </div>
+
+        <div>
+
+            <h4>
+                DESIGN PRINCIPLE
+            </h4>
+
+            <p>
+                Zone architecture should maximise
+                <strong>useful information</strong>, not simply
+                the number of electrical divisions.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Logical Zone Grouping
+    </h3>
+
+    <p>
+        A well-designed perimeter normally benefits from zones that
+        correspond to meaningful physical or operational areas of the
+        property. Examples may include the front boundary, rear
+        boundary, vehicle entrance, pedestrian entrance, high-risk
+        side boundary or a particular building-facing section.
+    </p>
+
+    <p>
+        Logical grouping allows an alarm received at the monitoring
+        centre to immediately provide useful location information.
+        Instead of reporting only that the perimeter has been
+        disturbed, the system can identify the approximate area in
+        which the event occurred.
+    </p>
+
+
+    <div class="zone-architecture">
+
+        <div class="zone-node">
+            <span class="zone-number">01</span>
+            <strong>FRONT</strong>
+            <small>Main entrance perimeter</small>
+        </div>
+
+        <div class="zone-line"></div>
+
+        <div class="zone-node">
+            <span class="zone-number">02</span>
+            <strong>SIDE A</strong>
+            <small>Residential boundary</small>
+        </div>
+
+        <div class="zone-line"></div>
+
+        <div class="zone-node">
+            <span class="zone-number">03</span>
+            <strong>REAR</strong>
+            <small>Higher-risk boundary</small>
+        </div>
+
+        <div class="zone-line"></div>
+
+        <div class="zone-node">
+            <span class="zone-number">04</span>
+            <strong>SIDE B</strong>
+            <small>Secondary boundary</small>
+        </div>
+
+    </div>
+
+
+    <h3>
+        Zone Length and Electrical Performance
+    </h3>
+
+    <p>
+        Every zone must be evaluated against the electrical
+        characteristics of the selected energizer and the actual
+        conductor arrangement. Longer conductors generally present
+        greater capacitive loading and provide more opportunity for
+        leakage through vegetation, contamination, damaged
+        insulation or environmental conditions.
+    </p>
+
+    <p>
+        The designer should therefore establish the expected
+        conductor length for each zone and compare it with the
+        manufacturer's specified operating limits. Manufacturer
+        specifications take precedence over generic rules of thumb.
+    </p>
+
+
+    <div class="technical-card">
+
+        <div class="technical-header">
+
+            <span class="technical-label">
+                ENGINEERING CHECK
+            </span>
+
+            <span class="technical-symbol">
+                ∑
+            </span>
+
+        </div>
+
+        <h3>
+            Zone Electrical Budget
+        </h3>
+
+        <p>
+            For each zone, record:
+        </p>
+
+        <ul>
+
+            <li>
+                Approximate conductor length
+            </li>
+
+            <li>
+                Number of conductors
+            </li>
+
+            <li>
+                Expected environmental leakage
+            </li>
+
+            <li>
+                Monitoring equipment connected to the circuit
+            </li>
+
+            <li>
+                Manufacturer's permitted configuration
+            </li>
+
+            <li>
+                Measured voltage and current during commissioning
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <h3>
+        Zone Identification
+    </h3>
+
+    <p>
+        Zone identifiers should remain consistent across every
+        project document. If the drawing identifies a perimeter
+        section as <strong>ZONE 03</strong>, the equipment schedule,
+        alarm panel programming, monitoring software, commissioning
+        report and maintenance records should use the same identifier.
+    </p>
+
+
+    <div class="code-card">
+
+        <div class="code-title">
+            EXAMPLE ZONE REGISTER
+        </div>
+
+        <div class="zone-register">
+
+            <div class="zone-row zone-heading">
+                <span>ZONE</span>
+                <span>AREA</span>
+                <span>RISK</span>
+                <span>FUNCTION</span>
+            </div>
+
+            <div class="zone-row">
+                <span>Z01</span>
+                <span>Front</span>
+                <span>Medium</span>
+                <span>Perimeter detection</span>
+            </div>
+
+            <div class="zone-row">
+                <span>Z02</span>
+                <span>Side A</span>
+                <span>High</span>
+                <span>Perimeter detection</span>
+            </div>
+
+            <div class="zone-row">
+                <span>Z03</span>
+                <span>Rear</span>
+                <span>High</span>
+                <span>Perimeter detection</span>
+            </div>
+
+            <div class="zone-row">
+                <span>Z04</span>
+                <span>Side B</span>
+                <span>Low</span>
+                <span>Perimeter detection</span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Zone Monitoring and Fault Location
+    </h3>
+
+    <p>
+        One of the principal advantages of logical zoning is
+        improved fault localisation. If the system reports a fault
+        in a defined zone, maintenance personnel can immediately
+        restrict the investigation to the associated physical
+        perimeter section.
+    </p>
+
+    <p>
+        This does not eliminate the need for physical testing.
+        Environmental conditions, conductor breaks, vegetation,
+        insulation degradation and intermittent faults can produce
+        complex symptoms. Zone information should therefore be
+        treated as a diagnostic aid rather than absolute proof of
+        the precise physical fault location.
+    </p>
+
+
+    <div class="warning-card">
+
+        <div class="warning-icon">
+            ⚠
+        </div>
+
+        <div>
+
+            <h3>
+                IMPORTANT
+            </h3>
+
+            <p>
+                Never assume that an alarm indication identifies the
+                exact fault point. The indicated zone identifies the
+                monitored section; physical inspection and appropriate
+                testing are still required.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Zoning and Future Expansion
+    </h3>
+
+    <p>
+        A professional design should consider foreseeable expansion.
+        Additional buildings, gates, boundary extensions or changes
+        in property use may create future requirements for additional
+        monitoring points.
+    </p>
+
+    <p>
+        However, designing unnecessary capacity can increase initial
+        cost and complexity. Expansion planning should therefore be
+        based on realistic foreseeable requirements rather than
+        speculative equipment provision.
+    </p>
+
+
+    <div class="success-card">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <div>
+
+            <h3>
+                LESSON 06 KEY TAKEAWAY
+            </h3>
+
+            <p>
+                Effective zoning converts a large perimeter into
+                meaningful, manageable security sections. The best
+                zoning architecture balances security information,
+                electrical performance, equipment capability,
+                installation complexity and long-term maintenance.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     LESSON 07 — GATES & ACCESS POINTS
+========================================================= -->
+
+<section
+    id="gates"
+    class="lesson-section"
+>
+
+    <div class="section-number">
+        07
+    </div>
+
+    <div class="section-kicker">
+        ACCESS ENGINEERING
+    </div>
+
+    <h2>
+        Gates &amp; Access Points
+    </h2>
+
+    <p class="lead">
+        Gates represent deliberate openings in the physical
+        perimeter and therefore require careful integration with
+        the electric-fence system. They introduce moving
+        structures, mechanical clearances, access-control
+        equipment and additional electrical interfaces into an
+        otherwise continuous perimeter.
+    </p>
+
+
+    <div class="info-card">
+
+        <h3>
+            Gate Design Considerations
+        </h3>
+
+        <div class="feature-grid">
+
+            <div class="feature-item">
+                <span>01</span>
+                Gate type
+            </div>
+
+            <div class="feature-item">
+                <span>02</span>
+                Gate movement
+            </div>
+
+            <div class="feature-item">
+                <span>03</span>
+                Electric-fence termination
+            </div>
+
+            <div class="feature-item">
+                <span>04</span>
+                Insulation
+            </div>
+
+            <div class="feature-item">
+                <span>05</span>
+                High-voltage cable routing
+            </div>
+
+            <div class="feature-item">
+                <span>06</span>
+                Mechanical clearance
+            </div>
+
+            <div class="feature-item">
+                <span>07</span>
+                Alarm integration
+            </div>
+
+            <div class="feature-item">
+                <span>08</span>
+                Maintenance access
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Gates as Security Interfaces
+    </h3>
+
+    <p>
+        A gate is not merely a physical opening. It may simultaneously
+        function as a vehicle-access point, pedestrian-access point,
+        electric-fence transition, gate-automation interface,
+        access-control interface, intercom location and CCTV
+        observation point.
+    </p>
+
+    <p>
+        The designer should therefore analyse the gate as a
+        <strong>multi-system interface</strong>. Each subsystem must
+        remain functional without creating unacceptable interference
+        or unsafe interaction with the others.
+    </p>
+
+
+    <div class="architecture-card">
+
+        <div class="architecture-title">
+            GATE SYSTEM ARCHITECTURE
+        </div>
+
+        <div class="architecture-flow">
+
+            <div class="architecture-node">
+                <strong>
+                    ELECTRIC FENCE
+                </strong>
+                <small>
+                    Perimeter detection
+                </small>
+            </div>
+
+            <div class="architecture-arrow">
+                →
+            </div>
+
+            <div class="architecture-node">
+                <strong>
+                    GATE
+                </strong>
+                <small>
+                    Physical access point
+                </small>
+            </div>
+
+            <div class="architecture-arrow">
+                →
+            </div>
+
+            <div class="architecture-node">
+                <strong>
+                    ACCESS CONTROL
+                </strong>
+                <small>
+                    Authorised entry
+                </small>
+            </div>
+
+            <div class="architecture-arrow">
+                →
+            </div>
+
+            <div class="architecture-node">
+                <strong>
+                    CCTV
+                </strong>
+                <small>
+                    Visual verification
+                </small>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Insulation Coordination
+    </h3>
+
+    <p>
+        Electric-fence conductors operate at high voltage and must
+        remain appropriately separated from earthed metalwork and
+        unrelated low-voltage systems. At gates, this requirement
+        becomes especially important because metal structures,
+        motors, control cables and moving components may all be
+        located within a relatively small area.
+    </p>
+
+    <p>
+        The exact clearances, insulation arrangements and approved
+        components must be determined according to the applicable
+        equipment manufacturer's instructions and relevant standards.
+        Generic distances should not be substituted for a
+        manufacturer's specified requirements where those requirements
+        apply.
+    </p>
+
+
+    <div class="warning-card">
+
+        <div class="warning-icon">
+            ⚡
+        </div>
+
+        <div>
+
+            <h3>
+                HIGH-VOLTAGE SEGREGATION
+            </h3>
+
+            <p>
+                Do not route electric-fence high-voltage wiring
+                casually alongside gate automation, access-control,
+                CCTV or communication wiring. Follow the applicable
+                equipment instructions and required separation,
+                insulation and routing practices.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Sliding Gates
+    </h3>
+
+    <p>
+        Sliding gates introduce a moving interface between the fixed
+        perimeter and the gate leaf. The electrical arrangement must
+        accommodate the gate's complete travel while preventing
+        conductor damage, unintended contact with metalwork and
+        mechanical interference.
+    </p>
+
+    <p>
+        Cable movement, mechanical protection, flexible connections
+        and termination arrangements should be selected for the actual
+        duty cycle of the gate rather than based solely on appearance
+        or initial installation convenience.
+    </p>
+
+
+    <h3>
+        Swing Gates
+    </h3>
+
+    <p>
+        Swing gates introduce rotational movement. The designer must
+        consider the full opening arc, mechanical clearances and the
+        relationship between the moving gate structure and fixed
+        electric-fence conductors.
+    </p>
+
+
+    <h3>
+        Pedestrian Gates
+    </h3>
+
+    <p>
+        Pedestrian gates are often physically smaller than vehicle
+        entrances, but they can represent a significant security
+        vulnerability if they are poorly integrated.
+    </p>
+
+    <p>
+        The gate should therefore be evaluated for access control,
+        mechanical integrity, electric-fence continuity, alarm
+        monitoring and surveillance in exactly the same structured
+        manner as a larger vehicle entrance.
+    </p>
+
+
+    <div class="gate-checklist">
+
+        <div class="gate-check-title">
+            PROFESSIONAL GATE REVIEW
+        </div>
+
+        <label>
+            <input type="checkbox">
+            Gate type identified
+        </label>
+
+        <label>
+            <input type="checkbox">
+            Movement range assessed
+        </label>
+
+        <label>
+            <input type="checkbox">
+            Fence transition designed
+        </label>
+
+        <label>
+            <input type="checkbox">
+            High-voltage routing reviewed
+        </label>
+
+        <label>
+            <input type="checkbox">
+            Low-voltage segregation reviewed
+        </label>
+
+        <label>
+            <input type="checkbox">
+            Access-control requirements identified
+        </label>
+
+        <label>
+            <input type="checkbox">
+            CCTV coverage considered
+        </label>
+
+        <label>
+            <input type="checkbox">
+            Alarm integration considered
+        </label>
+
+        <label>
+            <input type="checkbox">
+            Maintenance access considered
+        </label>
+
+    </div>
+
+
+    <div class="success-card">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <div>
+
+            <h3>
+                LESSON 07 KEY TAKEAWAY
+            </h3>
+
+            <p>
+                Treat every gate as a critical multi-system interface.
+                A professionally designed gate maintains physical
+                security, electrical integrity, safe separation,
+                reliable access control and effective monitoring.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     LESSON 08 — SECURITY SYSTEM INTEGRATION
+========================================================= -->
+
+<section
+    id="integration"
+    class="lesson-section"
+>
+
+    <div class="section-number">
+        08
+    </div>
+
+    <div class="section-kicker">
+        SYSTEMS INTEGRATION
+    </div>
+
+    <h2>
+        Security System Integration
+    </h2>
+
+    <p class="lead">
+        A modern electric-fence installation rarely operates in
+        isolation. Professional perimeter security combines multiple
+        technologies so that detection, verification, access control,
+        communication and response operate as one coordinated
+        security architecture.
+    </p>
+
+
+    <div class="integration-grid">
+
+        <div class="integration-card">
+
+            <div class="integration-icon">
+                ⚡
+            </div>
+
+            <h3>
+                Electric Fence
+            </h3>
+
+            <p>
+                Provides perimeter deterrence and electrical
+                intrusion-event detection.
+            </p>
+
+        </div>
+
+
+        <div class="integration-card">
+
+            <div class="integration-icon">
+                ◉
+            </div>
+
+            <h3>
+                CCTV
+            </h3>
+
+            <p>
+                Provides visual information for verification,
+                assessment and investigation.
+            </p>
+
+        </div>
+
+
+        <div class="integration-card">
+
+            <div class="integration-icon">
+                🔐
+            </div>
+
+            <h3>
+                Access Control
+            </h3>
+
+            <p>
+                Controls authorised movement through designated
+                access points.
+            </p>
+
+        </div>
+
+
+        <div class="integration-card">
+
+            <div class="integration-icon">
+                🔔
+            </div>
+
+            <h3>
+                Alarm System
+            </h3>
+
+            <p>
+                Processes security events and communicates alarm
+                conditions to the appropriate response layer.
+            </p>
+
+        </div>
+
+
+        <div class="integration-card">
+
+            <div class="integration-icon">
+                📡
+            </div>
+
+            <h3>
+                Monitoring
+            </h3>
+
+            <p>
+                Transfers relevant events to remote operators or
+                monitoring infrastructure.
+            </p>
+
+        </div>
+
+
+        <div class="integration-card">
+
+            <div class="integration-icon">
+                🧠
+            </div>
+
+            <h3>
+                Security Management
+            </h3>
+
+            <p>
+                Combines information from multiple systems to support
+                informed security decisions.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Integration Layers
+    </h3>
+
+    <p>
+        Security integration can be understood through three
+        principal layers:
+    </p>
+
+
+    <div class="layer-stack">
+
+        <div class="layer">
+
+            <span class="layer-number">
+                03
+            </span>
+
+            <div>
+
+                <strong>
+                    OPERATIONAL LAYER
+                </strong>
+
+                <p>
+                    Defines how personnel interpret events and what
+                    response actions are taken.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="layer">
+
+            <span class="layer-number">
+                02
+            </span>
+
+            <div>
+
+                <strong>
+                    PROTOCOL / COMMUNICATION LAYER
+                </st
