@@ -7318,7 +7318,7 @@
             },
 
 
-            /* -----------------------------------------------------
+                        /* -----------------------------------------------------
                EXISTING ALARM
             ----------------------------------------------------- */
 
@@ -7331,4 +7331,731 @@
 
                     'What alarm system is currently installed?',
 
-                    'H
+                    'How old is the system?',
+
+                    'What would you like to improve?',
+
+                    'Are the existing sensors still working?',
+
+                    'Do you want mobile control?',
+
+                    'Do you want to add CCTV or other security equipment?',
+
+                    'Are you experiencing false alarms?',
+
+                    'Is the system currently operational?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               BUSINESS ALARM
+            ----------------------------------------------------- */
+
+            businessAlarm: {
+
+                description:
+                    'Commercial customer wants intrusion protection.',
+
+                considerations: [
+
+                    'Multiple entrances',
+
+                    'Restricted areas',
+
+                    'Staff access',
+
+                    'Stock rooms',
+
+                    'Office areas',
+
+                    'Cash-handling areas',
+
+                    'After-hours operation',
+
+                    'Panic requirements',
+
+                    'External detection',
+
+                    'Monitoring requirements',
+
+                    'CCTV integration',
+
+                    'Access-control integration'
+
+                ],
+
+                askFirst: [
+
+                    'What type of business is it?',
+
+                    'How large is the premises?',
+
+                    'How many entrances need protection?',
+
+                    'Which areas contain valuable stock or equipment?',
+
+                    'How many staff members use the premises?',
+
+                    'Do you require panic buttons?',
+
+                    'Do you require after-hours protection?',
+
+                    'Do you need monitoring?',
+
+                    'Do you want CCTV integration?',
+
+                    'Do you want access-control integration?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               ALARM PRICING
+            ----------------------------------------------------- */
+
+            pricingGuidance: {
+
+                principle:
+                    'Alarm system pricing depends on the panel, number and type of detectors, communication technology, backup power, installation complexity and integration requirements.',
+
+                factors: [
+
+                    'Control panel',
+
+                    'Number of zones',
+
+                    'Number of detectors',
+
+                    'Detector type',
+
+                    'Wired or wireless installation',
+
+                    'Keypads',
+
+                    'Sirens',
+
+                    'Panic buttons',
+
+                    'Backup battery',
+
+                    'Communication module',
+
+                    'Installation requirements',
+
+                    'Monitoring requirements',
+
+                    'CCTV integration',
+
+                    'Access-control integration'
+
+                ],
+
+                responseWhenAskedPrice:
+                    'The price depends on the size of the property, number of protected areas, detector types and whether you need installation, mobile control or monitoring. I can help work out the correct system first.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               ALARM SALES QUALIFICATION
+            ----------------------------------------------------- */
+
+            qualificationQuestions: [
+
+                'Is this for a home or business?',
+
+                'How large is the property?',
+
+                'How many entrances need protection?',
+
+                'How many rooms or areas need motion detection?',
+
+                'Do you need door and window contacts?',
+
+                'Do you have pets?',
+
+                'Do you need outdoor detection?',
+
+                'Do you need panic buttons?',
+
+                'Do you want mobile notifications?',
+
+                'Do you need battery backup?',
+
+                'Do you already have an alarm system?',
+
+                'Do you want CCTV integration?',
+
+                'Do you want access-control integration?',
+
+                'Do you require professional monitoring?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               COMMON CUSTOMER QUESTIONS
+            ----------------------------------------------------- */
+
+            commonQuestions: [
+
+                'How much does an alarm system cost?',
+
+                'What alarm system should I buy?',
+
+                'Can I control my alarm from my phone?',
+
+                'Can an alarm work without internet?',
+
+                'Can I add more sensors later?',
+
+                'Can I use wireless alarm sensors?',
+
+                'What is the difference between wired and wireless alarms?',
+
+                'Can I keep my existing alarm sensors?',
+
+                'Why does my alarm keep going off?',
+
+                'Why will my alarm not arm?',
+
+                'Why is my alarm battery low?',
+
+                'Can I connect CCTV to my alarm?',
+
+                'Can I connect access control to my alarm?',
+
+                'Can I have a panic button?',
+
+                'Can an alarm system work during a power failure?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               ACCURACY & SAFETY RULES
+            ----------------------------------------------------- */
+
+            safetyRules: [
+
+                'Never advise a customer to disable a security device simply to stop false alarms.',
+
+                'Never advise bypassing a detector without understanding the security consequences.',
+
+                'Never guarantee wireless range without considering the actual property and environment.',
+
+                'Never guarantee battery runtime without knowing the system load and battery specification.',
+
+                'Never claim an alarm system makes a property completely secure.',
+
+                'Never promise monitoring availability without confirming the applicable service.',
+
+                'Recommend professional inspection for persistent faults or suspected wiring problems.',
+
+                'Treat fire detection requirements separately from ordinary intrusion detection.',
+
+                'Do not invent alarm-panel compatibility.',
+
+                'Do not invent product specifications or current pricing.'
+
+            ]
+
+        },
+
+
+        /* =========================================================
+           19. ALARM SALES CONVERSATION ENGINE
+        ========================================================= */
+
+        alarmSalesEngine: {
+
+            objective:
+                'Convert a general alarm enquiry into a properly qualified security requirement.',
+
+
+            openingQuestions: [
+
+                'Is this for a home or business?',
+
+                'Are you installing a new alarm system or upgrading an existing one?',
+
+                'Which areas or entry points are you most concerned about?'
+
+            ],
+
+
+            decisionLogic: {
+
+                newSystem:
+                    'Determine property type, size, entrances, protected rooms, detector requirements, communication needs and user requirements.',
+
+                existingSystem:
+                    'Identify the existing alarm brand or model, current faults, existing sensors and desired upgrades.',
+
+                falseAlarm:
+                    'Determine which detector or zone is triggering, whether the problem is constant or intermittent and whether environmental or battery-related factors may be involved.',
+
+                mobileControl:
+                    'Determine whether the customer wants notifications, remote arming, remote disarming or broader system control.',
+
+                commercial:
+                    'Qualify entrances, restricted areas, staff access, panic requirements, monitoring and integration needs.'
+
+            },
+
+
+            closingStrategy: {
+
+                equipmentOnly:
+                    'Determine the required panel, detectors and accessories before recommending equipment.',
+
+                installation:
+                    'Gather sufficient property information for a quotation or recommend a site assessment where necessary.',
+
+                upgrade:
+                    'Identify the existing system before suggesting replacement equipment.',
+
+                highIntent:
+                    'When the customer clearly wants an alarm installation, move toward collecting the information required for a quotation.'
+
+            }
+
+        },
+
+
+        /* =========================================================
+           20. ACCESS CONTROL — ADVANCED KNOWLEDGE
+        ========================================================= */
+
+        accessControlAdvanced: {
+
+            name: 'Access Control',
+
+            category: 'Controlled Entry',
+
+            definition:
+                'Access control manages who is permitted to enter a protected area and can use credentials, authentication devices or authorized release mechanisms to control entry.',
+
+            simpleExplanation:
+                'Instead of giving everyone unrestricted access, an access-control system allows authorized users to enter using an approved credential such as a tag, card, PIN, biometric identifier or other supported method.',
+
+
+            /* -----------------------------------------------------
+               ACCESS CONTROL TYPES
+            ----------------------------------------------------- */
+
+            accessMethods: {
+
+                keypad: {
+
+                    name: 'PIN / Keypad Access',
+
+                    description:
+                        'Users enter an authorized PIN using a compatible keypad.',
+
+                    advantages: [
+
+                        'No physical card required',
+
+                        'Simple user experience',
+
+                        'Useful for selected residential and commercial applications'
+
+                    ],
+
+                    considerations: [
+
+                        'PIN management',
+
+                        'User sharing',
+
+                        'Security of the keypad location',
+
+                        'Audit requirements'
+
+                    ]
+
+                },
+
+
+                rfid: {
+
+                    name: 'RFID / Proximity Access',
+
+                    description:
+                        'Users present an authorized card, tag or credential to a compatible reader.',
+
+                    advantages: [
+
+                        'Fast access',
+
+                        'Individual credentials can be assigned',
+
+                        'Credentials can often be removed when access is no longer required'
+
+                    ],
+
+                    considerations: [
+
+                        'Credential management',
+
+                        'Reader location',
+
+                        'Credential type',
+
+                        'System capacity'
+
+                    ]
+
+                },
+
+
+                biometric: {
+
+                    name: 'Biometric Access',
+
+                    description:
+                        'Uses a biometric characteristic such as a fingerprint or facial recognition capability on compatible equipment.',
+
+                    advantages: [
+
+                        'Convenient authentication',
+
+                        'Can reduce reliance on physical credentials',
+
+                        'Useful for controlled staff access'
+
+                    ],
+
+                    considerations: [
+
+                        'Device capability',
+
+                        'Environmental conditions',
+
+                        'User enrolment',
+
+                        'Privacy considerations',
+
+                        'System compatibility'
+
+                    ]
+
+                },
+
+
+                mobile: {
+
+                    name: 'Mobile Access',
+
+                    description:
+                        'Allows supported mobile devices to be used as an access credential or control interface.',
+
+                    considerations: [
+
+                        'Compatible application',
+
+                        'Connectivity',
+
+                        'Phone compatibility',
+
+                        'User permissions',
+
+                        'System platform'
+
+                    ]
+
+                },
+
+
+                intercom: {
+
+                    name: 'Intercom Access',
+
+                    description:
+                        'Allows an authorized person to communicate with a visitor before deciding whether to release the entrance or gate.',
+
+                    possibleFeatures: [
+
+                        'Audio communication',
+
+                        'Video communication',
+
+                        'Remote gate release',
+
+                        'Mobile answering',
+
+                        'Visitor verification'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               ACCESS CONTROL COMPONENTS
+            ----------------------------------------------------- */
+
+            components: {
+
+                controller: {
+
+                    name: 'Access Controller',
+
+                    function:
+                        'Manages credentials, access permissions and compatible entry hardware.',
+
+                    considerations: [
+
+                        'Number of doors',
+
+                        'Number of users',
+
+                        'Credential type',
+
+                        'Event logging',
+
+                        'Network requirements',
+
+                        'Integration capability'
+
+                    ]
+
+                },
+
+
+                reader: {
+
+                    name: 'Credential Reader',
+
+                    function:
+                        'Reads or receives the credential used by an authorized user.',
+
+                    examples: [
+
+                        'RFID reader',
+
+                        'Keypad',
+
+                        'Fingerprint reader',
+
+                        'Face recognition terminal',
+
+                        'Mobile credential reader'
+
+                    ]
+
+                },
+
+
+                lock: {
+
+                    name: 'Electric Lock',
+
+                    function:
+                        'Provides controlled locking or release of a compatible door or access point.',
+
+                    types: [
+
+                        'Magnetic lock',
+
+                        'Electric strike',
+
+                        'Other compatible electric locking mechanisms'
+
+                    ],
+
+                    importantRule:
+                        'Lock selection must consider the door construction, access direction, power requirements, emergency-release requirements and applicable installation requirements.'
+
+                },
+
+
+                exitDevice: {
+
+                    name: 'Exit Device',
+
+                    examples: [
+
+                        'Exit button',
+
+                        'Request-to-exit device',
+
+                        'Compatible exit sensor'
+
+                    ]
+
+                },
+
+
+                powerSupply: {
+
+                    name: 'Access Control Power Supply',
+
+                    considerations: [
+
+                        'Load',
+
+                        'Voltage',
+
+                        'Battery backup',
+
+                        'Lock requirements',
+
+                        'Controller requirements'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               ACCESS CONTROL QUALIFICATION
+            ----------------------------------------------------- */
+
+            qualificationQuestions: [
+
+                'What are you trying to control—a door, pedestrian gate, vehicle gate or multiple entrances?',
+
+                'How many entry points require access control?',
+
+                'How many users need access?',
+
+                'How should users authenticate—PIN, RFID, fingerprint, face recognition or mobile?',
+
+                'Do you need an event history showing who accessed the area?',
+
+                'Do you need different access permissions for different users?',
+
+                'Do you need access control integrated with a gate motor?',
+
+                'Do you need CCTV integration?',
+
+                'Do you require battery backup?',
+
+                'Is there an existing access-control system?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               COMMERCIAL ACCESS CONTROL
+            ----------------------------------------------------- */
+
+            commercial: {
+
+                suitableApplications: [
+
+                    'Office entrances',
+
+                    'Warehouses',
+
+                    'Factories',
+
+                    'Staff entrances',
+
+                    'Server rooms',
+
+                    'Restricted storage areas',
+
+                    'Retail premises',
+
+                    'Multi-door facilities'
+
+                ],
+
+                considerations: [
+
+                    'Number of users',
+
+                    'Number of doors',
+
+                    'User permissions',
+
+                    'Time schedules',
+
+                    'Event logging',
+
+                    'Visitor management',
+
+                    'Integration',
+
+                    'Backup power'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               ACCESS CONTROL + CCTV
+            ----------------------------------------------------- */
+
+            cctvIntegration: {
+
+                concept:
+                    'Compatible access-control and CCTV systems can work together to provide both controlled entry and visual verification of activity.',
+
+                possibleBenefits: [
+
+                    'Visual verification',
+
+                    'Event correlation',
+
+                    'Improved investigation',
+
+                    'Centralized security management'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               ACCESS CONTROL + ALARM
+            ----------------------------------------------------- */
+
+            alarmIntegration: {
+
+                concept:
+                    'Compatible access-control systems can be integrated with alarm systems so that access events and security events can be managed as part of a broader security architecture.',
+
+                importantRule:
+                    'Integration capabilities depend on the specific equipment and system architecture.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               ACCESS CONTROL PRICING
+            ----------------------------------------------------- */
+
+            pricingGuidance: {
+
+                principle:
+                    'Access-control pricing depends on the number of doors, credential technology, controller capacity, locking hardware, power requirements, software and installation complexity.',
+
+                factors: [
+
+                    'Number of doors',
+
+                    'Number of users',
+
+                    'Credential type',
+
+                    'Reader type',
+
+                    'Controller',
+
+                    'Locking hardware',
+
+               
