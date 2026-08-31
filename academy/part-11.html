@@ -8542,6 +8542,896 @@ body {
 
                 <tr>
 
-                    <td
+                  </td>
+                    <h3>
+                       Equipment Schedule
+                   </h3>
+
+        <p>
+            An equipment schedule provides a structured record of the
+            major components included in the system. It should identify
+            the equipment type, manufacturer, model, quantity, rating,
+            intended function and installed location where appropriate.
+            This creates a permanent technical reference for procurement,
+            installation, commissioning, maintenance and future
+            replacement.
+        </p>
+
+
+        <div class="equipment-table-wrap">
+
+            <table class="equipment-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Category
+                        </th>
+
+                        <th>
+                            Equipment
+                        </th>
+
+                        <th>
+                            Purpose
+                        </th>
+
+                        <th>
+                            Design Information
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>
+                            Energizer
+                        </td>
+
+                        <td>
+                            Electric fence energizer
+                        </td>
+
+                        <td>
+                            Generates the fence pulse
+                        </td>
+
+                        <td>
+                            Output energy, voltage,
+                            rated fence capability
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            Conductors
+                        </td>
+
+                        <td>
+                            High-voltage fence wire
+                        </td>
+
+                        <td>
+                            Carries the fence pulse
+                        </td>
+
+                        <td>
+                            Number of strands,
+                            length and configuration
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            Insulators
+                        </td>
+
+                        <td>
+                            Fence insulators
+                        </td>
+
+                        <td>
+                            Electrically isolates conductors
+                        </td>
+
+                        <td>
+                            Type, mounting arrangement
+                            and environmental suitability
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            Earthing
+                        </td>
+
+                        <td>
+                            Earth electrodes and conductors
+                        </td>
+
+                        <td>
+                            Provides the pulse return path
+                        </td>
+
+                        <td>
+                            Electrode arrangement,
+                            conductor size and test results
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            Zoning
+                        </td>
+
+                        <td>
+                            Zone monitoring equipment
+                        </td>
+
+                        <td>
+                            Identifies perimeter events
+                        </td>
+
+                        <td>
+                            Zone allocation and
+                            equipment compatibility
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            Alarm
+                        </td>
+
+                        <td>
+                            Alarm interface
+                        </td>
+
+                        <td>
+                            Communicates security events
+                        </td>
+
+                        <td>
+                            Inputs, outputs and
+                            signal classification
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            CCTV
+                        </td>
+
+                        <td>
+                            Security cameras
+                        </td>
+
+                        <td>
+                            Provides visual verification
+                        </td>
+
+                        <td>
+                            Location, coverage,
+                            lens and illumination
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>
+                            Communications
+                        </td>
+
+                        <td>
+                            Network / cellular equipment
+                        </td>
+
+                        <td>
+                            Transports system information
+                        </td>
+
+                        <td>
+                            Primary and backup paths
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <h3>
+            Design Assumptions
+        </h3>
+
+        <p>
+            Every engineering design contains assumptions. The
+            professional difference is whether those assumptions are
+            documented and subsequently verified.
+        </p>
+
+        <p>
+            Examples include the assumed property boundary, expected
+            access patterns, existing electrical infrastructure,
+            available communication services, structural condition,
+            environmental conditions and customer operating
+            requirements.
+        </p>
+
+
+        <div class="warning-card">
+
+            <h3>
+                Assumptions Must Be Verified
+            </h3>
+
+            <p>
+                An assumption should never silently become a permanent
+                design fact. Where an assumption materially affects
+                system performance or safety, it should be verified
+                during the survey, installation or commissioning stage.
+            </p>
+
+        </div>
+
+
+        <h3>
+            Cable Routing Documentation
+        </h3>
+
+        <p>
+            High-voltage cable routes should be documented clearly.
+            The drawing should indicate the approximate route from the
+            energizer to the perimeter and identify significant
+            crossings, transitions, termination points and areas where
+            segregation from other services is required.
+        </p>
+
+        <p>
+            Where high-voltage and low-voltage services are located
+            near one another, the design should follow the applicable
+            equipment manufacturer's requirements and relevant
+            electrical installation rules concerning separation,
+            insulation and routing.
+        </p>
+
+
+        <div class="info-card">
+
+            <h3>
+                Cable Documentation Should Identify
+            </h3>
+
+            <ul>
+
+                <li>
+                    Energizer location
+                </li>
+
+                <li>
+                    High-voltage cable route
+                </li>
+
+                <li>
+                    Zone transitions
+                </li>
+
+                <li>
+                    Gate crossings
+                </li>
+
+                <li>
+                    Building entries
+                </li>
+
+                <li>
+                    Junction or termination points
+                </li>
+
+                <li>
+                    Segregation requirements
+                </li>
+
+                <li>
+                    Accessible maintenance points
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <h3>
+            Zone Documentation
+        </h3>
+
+        <p>
+            Each zone should have a unique identifier that corresponds
+            to both the physical perimeter and the monitoring system.
+            For example, a drawing may identify a section as
+            <strong>ZONE 03 — EAST BOUNDARY</strong>, while the alarm
+            configuration uses the same identifier.
+        </p>
+
+        <p>
+            This simple naming discipline prevents a common operational
+            failure: the monitoring operator receives an alarm from
+            "Zone 3" but cannot determine which physical section of the
+            property requires investigation.
+        </p>
+
+
+        <div class="zone-map">
+
+            <div class="zone-map-title">
+                SAMPLE ZONE IDENTIFICATION
+            </div>
+
+
+            <div class="zone-row">
+
+                <span class="zone-code">
+                    Z01
+                </span>
+
+                <span>
+                    NORTH BOUNDARY
+                </span>
+
+            </div>
+
+
+            <div class="zone-row">
+
+                <span class="zone-code">
+                    Z02
+                </span>
+
+                <span>
+                    WEST BOUNDARY
+                </span>
+
+            </div>
+
+
+            <div class="zone-row">
+
+                <span class="zone-code">
+                    Z03
+                </span>
+
+                <span>
+                    EAST BOUNDARY
+                </span>
+
+            </div>
+
+
+            <div class="zone-row">
+
+                <span class="zone-code">
+                    Z04
+                </span>
+
+                <span>
+                    SOUTH BOUNDARY
+                </span>
+
+            </div>
+
+
+            <div class="zone-row">
+
+                <span class="zone-code">
+                    Z05
+                </span>
+
+                <span>
+                    VEHICLE ACCESS AREA
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <h3>
+            Cause-and-Effect Matrix
+        </h3>
+
+        <p>
+            Integrated systems should have a documented cause-and-effect
+            relationship. The matrix defines what happens when a
+            particular event occurs and which subsystem is responsible
+            for the next action.
+        </p>
+
+
+        <div class="cause-effect">
+
+            <div class="cause-effect-row header">
+
+                <div>
+                    EVENT
+                </div>
+
+                <div>
+                    SYSTEM RESPONSE
+                </div>
+
+                <div>
+                    OPERATOR ACTION
+                </div>
+
+            </div>
+
+
+            <div class="cause-effect-row">
+
+                <div>
+                    Fence alarm
+                </div>
+
+                <div>
+                    Alarm generated and event logged
+                </div>
+
+                <div>
+                    Verify affected zone
+                </div>
+
+            </div>
+
+
+            <div class="cause-effect-row">
+
+                <div>
+                    Fence fault
+                </div>
+
+                <div>
+                    Fault condition reported
+                </div>
+
+                <div>
+                    Dispatch maintenance process
+                </div>
+
+            </div>
+
+
+            <div class="cause-effect-row">
+
+                <div>
+                    Communication failure
+                </div>
+
+                <div>
+                    Communication-loss condition generated
+                </div>
+
+                <div>
+                    Investigate monitoring path
+                </div>
+
+            </div>
+
+
+            <div class="cause-effect-row">
+
+                <div>
+                    Power failure
+                </div>
+
+                <div>
+                    Backup supply / fault indication
+                </div>
+
+                <div>
+                    Assess power condition
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <h3>
+            Revision Control
+        </h3>
+
+        <p>
+            Security designs can change during the project. Equipment
+            substitutions, customer-requested changes, structural
+            modifications or changes to the site can all affect the
+            original design.
+        </p>
+
+        <p>
+            A controlled revision system ensures that the installation
+            team is working from the current approved design rather
+            than an obsolete drawing.
+        </p>
+
+
+        <div class="revision-card">
+
+            <div class="revision-header">
+
+                <span>
+                    REV
+                </span>
+
+                <span>
+                    DATE
+                </span>
+
+                <span>
+                    DESCRIPTION
+                </span>
+
+                <span>
+                    APPROVED
+                </span>
+
+            </div>
+
+
+            <div class="revision-row">
+
+                <span>
+                    00
+                </span>
+
+                <span>
+                    Initial
+                </span>
+
+                <span>
+                    Preliminary design
+                </span>
+
+                <span>
+                    —
+                </span>
+
+            </div>
+
+
+            <div class="revision-row">
+
+                <span>
+                    01
+                </span>
+
+                <span>
+                    —
+                </span>
+
+                <span>
+                    Design revision
+                </span>
+
+                <span>
+                    —
+                </span>
+
+            </div>
+
+
+            <div class="revision-row">
+
+                <span>
+                    02
+                </span>
+
+                <span>
+                    —
+                </span>
+
+                <span>
+                    Approved construction issue
+                </span>
+
+                <span>
+                    —
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="success-card">
+
+            <h3>
+                Documentation Standard
+            </h3>
+
+            <p>
+                The final documentation should allow a competent
+                technician to understand what was designed, why it was
+                designed that way, what equipment was installed, how
+                the system is divided into zones, how integrated
+                signals behave and how the completed installation was
+                verified.
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- =================================
+         13. PROFESSIONAL DESIGN WORKFLOW
+    ================================== -->
+
+    <section
+        id="design-workflow"
+        class="lesson-section"
+    >
+
+        <div class="section-number">
+            13
+        </div>
+
+        <h2>
+            Professional Design Workflow
+        </h2>
+
+        <p>
+            A professional electric-fence design should follow a
+            repeatable workflow rather than relying on individual
+            technician preference. The workflow converts a customer's
+            security objective into a documented, reviewable and
+            testable system.
+        </p>
+
+
+        <div class="workflow">
+
+            <div class="workflow-step">
+
+                <span>
+                    01
+                </span>
+
+                <div>
+
+                    <strong>
+                        REQUIREMENTS
+                    </strong>
+
+                    <p>
+                        Establish the customer's security objectives,
+                        operational requirements and constraints.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="workflow-step">
+
+                <span>
+                    02
+                </span>
+
+                <div>
+
+                    <strong>
+                        SITE SURVEY
+                    </strong>
+
+                    <p>
+                        Record perimeter geometry, structures, gates,
+                        environmental conditions and existing services.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="workflow-step">
+
+                <span>
+                    03
+                </span>
+
+                <div>
+
+                    <strong>
+                        RISK ASSESSMENT
+                    </strong>
+
+                    <p>
+                        Identify vulnerable sections and rank their
+                        relative security criticality.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="workflow-step">
+
+                <span>
+                    04
+                </span>
+
+                <div>
+
+                    <strong>
+                        ARCHITECTURE
+                    </strong>
+
+                    <p>
+                        Define the perimeter, fence, zoning and
+                        integration architecture.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="workflow-step">
+
+                <span>
+                    05
+                </span>
+
+                <div>
+
+                    <strong>
+                        EQUIPMENT
+                    </strong>
+
+                    <p>
+                        Select compatible equipment against documented
+                        performance requirements.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="workflow-step">
+
+                <span>
+                    06
+                </span>
+
+                <div>
+
+                    <strong>
+                        DOCUMENTATION
+                    </strong>
+
+                    <p>
+                        Produce drawings, schedules, calculations,
+                        assumptions and integration information.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="workflow-step">
+
+                <span>
+                    07
+                </span>
+
+                <div>
+
+                    <strong>
+                        DESIGN REVIEW
+                    </strong>
+
+                    <p>
+                        Check the complete design before installation.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="workflow-step">
+
+                <span>
+                    08
+                </span>
+
+                <div>
+
+                    <strong>
+                        INSTALLATION
+                    </strong>
+
+                    <p>
+                        Construct the system in accordance with the
+                        approved design and applicable requirements.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="workflow-step">
+
+                <span>
+                    09
+                </span>
+
+                <div>
+
+                    <strong>
+                        COMMISSIONING
+                    </strong>
+
+                    <p>
+                        Verify electrical, structural, alarm and
+                        integration performance.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="workflow-step">
+
+                <span>
+                    10
+                </span>
+
+                <div>
+
+                    <strong>
+                        HANDOVER
+                    </strong>
+
+                    <p>
+                        Deliver documentation, test records and
+                        operational information to the responsible
+                        customer or operator.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </di
 
  
