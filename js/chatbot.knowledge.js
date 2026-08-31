@@ -23726,7 +23726,665 @@
 
         },
 
-
         /* =========================================================
            79. QUOTATION PREPARATION ENGINE
+        ========================================================= */
+
+        quotationPreparationEngine: {
+
+            objective:
+                'Convert a qualified customer conversation into a structured quotation request containing the information required for accurate pricing and sales follow-up.',
+
+
+            /* -----------------------------------------------------
+               QUOTATION PRINCIPLES
+            ----------------------------------------------------- */
+
+            principles: [
+
+                'Never invent a quotation price.',
+
+                'Never invent product quantities.',
+
+                'Never assume installation is included.',
+
+                'Never assume delivery is included.',
+
+                'Never assume a site visit is included.',
+
+                'Use customer-provided information wherever possible.',
+
+                'Clearly identify information that is still missing.',
+
+                'Separate confirmed information from estimates.',
+
+                'Use approximate measurements as approximate measurements.',
+
+                'Escalate complex projects when a formal technical quotation is required.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               QUOTATION DATA STRUCTURE
+            ----------------------------------------------------- */
+
+            quotationData: {
+
+                customer: {
+
+                    name:
+                        'Customer name.',
+
+                    phone:
+                        'Customer telephone number.',
+
+                    email:
+                        'Customer email address.',
+
+                    preferredContact:
+                        'Preferred communication method when provided.'
+
+                },
+
+
+                project: {
+
+                    propertyType:
+                        'Type of property.',
+
+                    location:
+                        'Installation or delivery location.',
+
+                    projectType:
+                        'New installation, upgrade, replacement, repair or expansion.',
+
+                    timeframe:
+                        'Customer project timeframe.',
+
+                    installationRequired:
+                        'Whether installation is required.',
+
+                    siteAssessmentRequired:
+                        'Whether a site assessment may be appropriate.'
+
+                },
+
+
+                securityRequirements: {
+
+                    objective:
+                        'Primary security objective.',
+
+                    products:
+                        'Security products requested.',
+
+                    areas:
+                        'Areas or assets the customer wants protected.',
+
+                    specialRequirements:
+                        'Special functionality or environmental requirements.'
+
+                },
+
+
+                measurements: {
+
+                    perimeterLength:
+                        'Approximate or confirmed perimeter length.',
+
+                    fenceLength:
+                        'Approximate or confirmed electric-fence length.',
+
+                    gateDimensions:
+                        'Gate dimensions when supplied.',
+
+                    gateWeight:
+                        'Gate weight when known.',
+
+                    cameraDistances:
+                        'Approximate distances between cameras and monitored targets.',
+
+                    otherMeasurements:
+                        'Other project measurements supplied by the customer.'
+
+                },
+
+
+                quantities: {
+
+                    cameras:
+                        'Number of cameras.',
+
+                    doors:
+                        'Number of controlled doors.',
+
+                    gates:
+                        'Number of gates.',
+
+                    sensors:
+                        'Number of required sensors where known.',
+
+                    fenceComponents:
+                        'Required fencing component quantities when established.',
+
+                    otherEquipment:
+                        'Other equipment quantities.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               PRODUCT-SPECIFIC QUOTATION DATA
+            ----------------------------------------------------- */
+
+            electricFencing: {
+
+                requiredInformation: [
+
+                    'Approximate fence length',
+
+                    'Fence type',
+
+                    'Number of strands',
+
+                    'Wall or pole installation',
+
+                    'Existing fence condition',
+
+                    'Gate count',
+
+                    'Energizer requirement',
+
+                    'Power availability',
+
+                    'Vegetation conditions',
+
+                    'Installation requirement',
+
+                    'Location'
+
+                ],
+
+
+                optionalInformation: [
+
+                    'Existing energizer',
+
+                    'Existing fence accessories',
+
+                    'Battery backup',
+
+                    'Solar requirement',
+
+                    'Warning signage',
+
+                    'Access requirements'
+
+                ]
+
+            },
+
+
+            cctv: {
+
+                requiredInformation: [
+
+                    'Number of areas to monitor',
+
+                    'Approximate camera quantity',
+
+                    'Target areas',
+
+                    'Approximate camera distances',
+
+                    'Indoor or outdoor requirements',
+
+                    'Night-time requirements',
+
+                    'Recording requirement',
+
+                    'Remote viewing requirement',
+
+                    'Location'
+
+                ],
+
+
+                usefulInformation: [
+
+                    'Number-plate identification',
+
+                    'Facial identification',
+
+                    'Wide-area monitoring',
+
+                    'Existing CCTV system',
+
+                    'Existing cabling',
+
+                    'Network availability',
+
+                    'Storage retention requirement',
+
+                    'Future expansion'
+
+                ]
+
+            },
+
+
+            alarm: {
+
+                requiredInformation: [
+
+                    'Property type',
+
+                    'Existing alarm system',
+
+                    'Areas requiring protection',
+
+                    'Number of entrances',
+
+                    'Required detection',
+
+                    'Remote notification requirement',
+
+                    'Installation requirement',
+
+                    'Location'
+
+                ],
+
+
+                usefulInformation: [
+
+                    'Number of doors',
+
+                    'Number of windows',
+
+                    'Pet ownership',
+
+                    'Outdoor detection',
+
+                    'Existing sensors',
+
+                    'Existing wiring',
+
+                    'Backup power requirement'
+
+                ]
+
+            },
+
+
+            gateAutomation: {
+
+                requiredInformation: [
+
+                    'Gate type',
+
+                    'Gate condition',
+
+                    'Approximate gate size',
+
+                    'Approximate gate weight when known',
+
+                    'Usage frequency',
+
+                    'Power availability',
+
+                    'Location',
+
+                    'Installation requirement'
+
+                ],
+
+
+                usefulInformation: [
+
+                    'Existing motor',
+
+                    'Manual release requirement',
+
+                    'Intercom',
+
+                    'Access control',
+
+                    'Solar or backup power',
+
+                    'Remote operation'
+
+                ]
+
+            },
+
+
+            accessControl: {
+
+                requiredInformation: [
+
+                    'Number of doors',
+
+                    'Number of users',
+
+                    'Access type',
+
+                    'Reader requirement',
+
+                    'Lock requirement',
+
+                    'Power requirement',
+
+                    'Installation requirement',
+
+                    'Location'
+
+                ],
+
+
+                usefulInformation: [
+
+                    'Employee access',
+
+                    'Visitor access',
+
+                    'Time restrictions',
+
+                    'Event logging',
+
+                    'Remote management',
+
+                    'Existing access-control system',
+
+                    'Integration requirements'
+
+                ]
+
+            },
+
+
+            intercom: {
+
+                requiredInformation: [
+
+                    'Entrance type',
+
+                    'Audio or video requirement',
+
+                    'Number of stations',
+
+                    'Gate or door release requirement',
+
+                    'Approximate distance',
+
+                    'Installation requirement',
+
+                    'Location'
+
+                ],
+
+
+                usefulInformation: [
+
+                    'Mobile access',
+
+                    'Existing gate motor',
+
+                    'Access control',
+
+                    'CCTV integration',
+
+                    'Network availability'
+
+                ]
+
+            },
+
+
+            equestrian: {
+
+                requiredInformation: [
+
+                    'Approximate fence length',
+
+                    'Number of paddocks',
+
+                    'Number of gates',
+
+                    'Permanent or portable installation',
+
+                    'Energizer requirement',
+
+                    'Power availability',
+
+                    'Installation requirement',
+
+                    'Location'
+
+                ],
+
+
+                usefulInformation: [
+
+                    'Horse or livestock application',
+
+                    'Number of animals',
+
+                    'Preferred conductor',
+
+                    'Solar requirement',
+
+                    'Existing fencing',
+
+                    'Gate configuration'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               QUOTATION COMPLETENESS
+            ----------------------------------------------------- */
+
+            completeness: {
+
+                incomplete:
+                    'Important information required to determine the quotation is missing.',
+
+                workable:
+                    'Enough information exists to prepare an initial recommendation or preliminary quotation.',
+
+                complete:
+                    'The key information required for a formal quotation has been provided or verified.',
+
+                siteAssessment:
+                    'A site assessment is recommended before final pricing or system design.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               MISSING INFORMATION
+            ----------------------------------------------------- */
+
+            missingInformation: {
+
+                rule:
+                    'Identify only the information that is genuinely required for the next quotation step.',
+
+
+                response:
+
+                    'I have most of the information I need. I just need to confirm a few details before we can prepare the quotation.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               QUOTE CONFIRMATION
+            ----------------------------------------------------- */
+
+            confirmation: {
+
+                principle:
+                    'Before finalising a quotation request, summarise the important requirements and allow the customer to correct mistakes.',
+
+
+                example:
+
+                    'Just to make sure I have this right: you need CCTV for the driveway, front entrance and rear garden, with remote viewing on your phone. You are looking for supply and installation in Benoni. Is that correct?'
+
+            },
+
+
+            /* -----------------------------------------------------
+               QUOTATION SCOPE
+            ----------------------------------------------------- */
+
+            scope: {
+
+                equipment:
+                    'List equipment required or recommended.',
+
+                installation:
+                    'Identify whether installation is required.',
+
+                delivery:
+                    'Identify whether delivery is required.',
+
+                configuration:
+                    'Identify setup, programming or commissioning requirements where applicable.',
+
+                siteAssessment:
+                    'Identify whether a site visit may be required.',
+
+                exclusions:
+                    'Record important items that are not included or have not yet been confirmed.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               CUSTOMER BUDGET
+            ----------------------------------------------------- */
+
+            budgetHandling: {
+
+                principle:
+                    'Budget information may help tailor recommendations but must never be treated as mandatory unless required by a specific sales process.',
+
+
+                rules: [
+
+                    'Do not pressure the customer to disclose a budget.',
+
+                    'Do not assume a budget.',
+
+                    'If a budget is provided, use it to identify suitable options.',
+
+                    'Do not recommend an unsuitable system merely to meet a stated budget.',
+
+                    'If the requested system exceeds the stated budget, explain the available trade-offs honestly.'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               QUOTE OPTIONS
+            ----------------------------------------------------- */
+
+            optionStrategy: {
+
+                basic:
+
+                    'Provide a practical entry-level solution when appropriate.',
+
+                recommended:
+
+                    'Provide the solution that best matches the customers stated requirements.',
+
+                enhanced:
+
+                    'Provide a higher-specification option when additional capability provides a genuine benefit.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               QUOTATION HANDOFF
+            ----------------------------------------------------- */
+
+            handoff: {
+
+                trigger:
+
+                    'When sufficient information has been collected for human quotation preparation, create a structured sales handoff.',
+
+
+                summaryFields: [
+
+                    'Customer details',
+
+                    'Project location',
+
+                    'Property type',
+
+                    'Project type',
+
+                    'Security objective',
+
+                    'Products requested',
+
+                    'Quantities',
+
+                    'Measurements',
+
+                    'Existing equipment',
+
+                    'Installation requirement',
+
+                    'Special requirements',
+
+                    'Timeframe',
+
+                    'Budget if provided',
+
+                    'Customer concerns',
+
+                    'Lead score',
+
+                    'Recommended next step'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               QUOTE REQUEST RESPONSE
+            ----------------------------------------------------- */
+
+            finalResponse:
+
+                'Thanks — I have the main requirements. I can use these details to move the enquiry toward a quotation. If any important site or technical details still need confirmation, the Nexpak team can verify them before the final quote is issued.',
+
+
+            /* -----------------------------------------------------
+               FINAL RULE
+            ----------------------------------------------------- */
+
+            finalRule:
+                'The assistant must treat quotation preparation as a structured information-gathering process. It should produce useful, accurate sales information without fabricating prices, quantities, specifications, stock availability or installation commitments.'
+
+        },
+
+
+        /* =========================================================
+           80. PRODUCT DISCOVERY & RECOMMENDATION DIALOGUE
         ========================================================= */
