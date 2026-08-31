@@ -7567,4 +7567,981 @@ body {
         Diverse Communication Paths
     </h3>
 
+        <p>
+        Communication resilience should be considered in relation to
+        the importance of the protected site and the consequences of
+        losing remote visibility. A single communication path can
+        represent a single point of failure. Where the risk assessment
+        justifies it, the system may therefore use independent
+        communication technologies so that failure of one path does
+        not necessarily eliminate the ability to communicate critical
+        security events.
+    </p>
+
+
+    <div class="architecture-diagram">
+
+        <div class="architecture-title">
+            COMMUNICATION RESILIENCE MODEL
+        </div>
+
+        <div class="architecture-flow">
+
+            <div class="architecture-node">
+
+                <span class="node-number">
+                    01
+                </span>
+
+                <strong>
+                    SECURITY SYSTEM
+                </strong>
+
+                <small>
+                    Fence / Alarm / CCTV
+                </small>
+
+            </div>
+
+
+            <div class="architecture-line">
+                <span></span>
+            </div>
+
+
+            <div class="architecture-node">
+
+                <span class="node-number">
+                    02
+                </span>
+
+                <strong>
+                    PRIMARY PATH
+                </strong>
+
+                <small>
+                    IP / Ethernet / Fibre
+                </small>
+
+            </div>
+
+
+            <div class="architecture-line">
+                <span></span>
+            </div>
+
+
+            <div class="architecture-node">
+
+                <span class="node-number">
+                    03
+                </span>
+
+                <strong>
+                    SECONDARY PATH
+                </strong>
+
+                <small>
+                    Cellular / Alternate Network
+                </small>
+
+            </div>
+
+
+            <div class="architecture-line">
+                <span></span>
+            </div>
+
+
+            <div class="architecture-node">
+
+                <span class="node-number">
+                    04
+                </span>
+
+                <strong>
+                    MONITORING CENTRE
+                </strong>
+
+                <small>
+                    Event Reception
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Communication Supervision
+    </h3>
+
+    <p>
+        A professional monitoring architecture should be capable of
+        identifying loss of communication rather than assuming that
+        the absence of an alarm message means that the protected
+        system is healthy.
+    </p>
+
+    <p>
+        This is normally achieved through periodic supervisory
+        communication. The protected system periodically communicates
+        its operational status to the receiving platform. If expected
+        communication is not received within the defined supervision
+        interval, the monitoring platform can generate a communication
+        failure condition.
+    </p>
+
+
+    <div class="info-card">
+
+        <h3>
+            What Should Be Supervised?
+        </h3>
+
+        <ul>
+
+            <li>
+                Communication availability
+            </li>
+
+            <li>
+                Main electrical supply
+            </li>
+
+            <li>
+                Backup battery condition
+            </li>
+
+            <li>
+                Energizer operational status
+            </li>
+
+            <li>
+                Fence-zone condition
+            </li>
+
+            <li>
+                Alarm controller status
+            </li>
+
+            <li>
+                Relevant network equipment
+            </li>
+
+            <li>
+                Critical communication interfaces
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <h3>
+        Heartbeat Signals
+    </h3>
+
+    <p>
+        A heartbeat is a periodic status message indicating that a
+        monitored device or communication path remains operational.
+        The monitoring system can use the absence of the expected
+        heartbeat as an indication that further investigation is
+        required.
+    </p>
+
+
+    <div class="technical-card">
+
+        <div class="technical-label">
+            ENGINEERING CONCEPT
+        </div>
+
+        <h3>
+            Event Reporting vs System Supervision
+        </h3>
+
+        <p>
+            Event reporting answers the question:
+            <strong>
+                "Did something happen?"
+            </strong>
+        </p>
+
+        <p>
+            Supervision answers the question:
+            <strong>
+                "Is the communication and security system still
+                capable of telling us if something happens?"
+            </strong>
+        </p>
+
+        <p>
+            A professional design should address both questions.
+        </p>
+
+    </div>
+
+
+    <h3>
+        Monitoring Priorities
+    </h3>
+
+    <p>
+        Not every system event has the same operational importance.
+        Events should therefore be classified according to their
+        security significance and the required response.
+    </p>
+
+
+    <div class="priority-grid">
+
+        <div class="priority-card critical">
+
+            <span class="priority-level">
+                PRIORITY 01
+            </span>
+
+            <h4>
+                CRITICAL
+            </h4>
+
+            <p>
+                Events indicating a potentially active security
+                incident or major system compromise.
+            </p>
+
+            <ul>
+
+                <li>
+                    Confirmed perimeter intrusion
+                </li>
+
+                <li>
+                    Critical zone alarm
+                </li>
+
+                <li>
+                    Multiple simultaneous security events
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="priority-card high">
+
+            <span class="priority-level">
+                PRIORITY 02
+            </span>
+
+            <h4>
+                HIGH
+            </h4>
+
+            <p>
+                Events requiring timely investigation because they
+                could affect security performance.
+            </p>
+
+            <ul>
+
+                <li>
+                    Fence fault
+                </li>
+
+                <li>
+                    Communication failure
+                </li>
+
+                <li>
+                    Backup-power warning
+                </li>
+
+            </ul>
+
+        </div>
+
+
+        <div class="priority-card normal">
+
+            <span class="priority-level">
+                PRIORITY 03
+            </span>
+
+            <h4>
+                NORMAL
+            </h4>
+
+            <p>
+                Routine operational information that does not normally
+                require immediate intervention.
+            </p>
+
+            <ul>
+
+                <li>
+                    System status
+                </li>
+
+                <li>
+                    Scheduled test
+                </li>
+
+                <li>
+                    Maintenance notification
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Operator Response Chain
+    </h3>
+
+    <p>
+        Remote monitoring is only effective when the receiving
+        organisation has a clearly defined procedure for handling
+        events. The technical system should therefore be designed
+        together with the operational response process.
+    </p>
+
+
+    <div class="process-flow">
+
+        <div class="process-node">
+
+            <span>
+                01
+            </span>
+
+            <strong>
+                RECEIVE
+            </strong>
+
+            <small>
+                Event reaches monitoring platform
+            </small>
+
+        </div>
+
+
+        <div class="process-arrow">
+            →
+        </div>
+
+
+        <div class="process-node">
+
+            <span>
+                02
+            </span>
+
+            <strong>
+                CLASSIFY
+            </strong>
+
+            <small>
+                Determine event type
+            </small>
+
+        </div>
+
+
+        <div class="process-arrow">
+            →
+        </div>
+
+
+        <div class="process-node">
+
+            <span>
+                03
+            </span>
+
+            <strong>
+                VERIFY
+            </strong>
+
+            <small>
+                Assess available information
+            </small>
+
+        </div>
+
+
+        <div class="process-arrow">
+            →
+        </div>
+
+
+        <div class="process-node">
+
+            <span>
+                04
+            </span>
+
+            <strong>
+                RESPOND
+            </strong>
+
+            <small>
+                Follow approved procedure
+            </small>
+
+        </div>
+
+
+        <div class="process-arrow">
+            →
+        </div>
+
+
+        <div class="process-node">
+
+            <span>
+                05
+            </span>
+
+            <strong>
+                RECORD
+            </strong>
+
+            <small>
+                Preserve event information
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Event Logging
+    </h3>
+
+    <p>
+        Monitoring systems should maintain appropriate event records
+        so that security incidents, technical faults and operator
+        actions can be reviewed after the event.
+    </p>
+
+    <p>
+        Depending on the system architecture, useful records may
+        include timestamps, zone identifiers, event classifications,
+        acknowledgement times, operator actions, restoration times
+        and communication-status information.
+    </p>
+
+
+    <div class="info-card">
+
+        <h3>
+            Why Event History Matters
+        </h3>
+
+        <ul>
+
+            <li>
+                Supports incident investigation
+            </li>
+
+            <li>
+                Helps identify recurring faults
+            </li>
+
+            <li>
+                Provides maintenance history
+            </li>
+
+            <li>
+                Assists performance analysis
+            </li>
+
+            <li>
+                Supports system auditing
+            </li>
+
+            <li>
+                Helps identify repeated nuisance events
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <h3>
+        Communication Failure Scenarios
+    </h3>
+
+    <p>
+        A professional design should consider what happens when
+        communication fails rather than only documenting normal
+        operation.
+    </p>
+
+
+    <div class="failure-grid">
+
+        <div class="failure-card">
+
+            <span>
+                FAILURE A
+            </span>
+
+            <h4>
+                PRIMARY NETWORK LOST
+            </h4>
+
+            <p>
+                Determine whether the secondary communication path
+                automatically assumes the required communication role.
+            </p>
+
+        </div>
+
+
+        <div class="failure-card">
+
+            <span>
+                FAILURE B
+            </span>
+
+            <h4>
+                CELLULAR PATH UNAVAILABLE
+            </h4>
+
+            <p>
+                Determine whether the system generates a local or
+                remote communication-failure indication.
+            </p>
+
+        </div>
+
+
+        <div class="failure-card">
+
+            <span>
+                FAILURE C
+            </span>
+
+            <h4>
+                MONITORING SERVER UNAVAILABLE
+            </h4>
+
+            <p>
+                Determine whether an alternative receiving mechanism
+                or local event storage is available.
+            </p>
+
+        </div>
+
+
+        <div class="failure-card">
+
+            <span>
+                FAILURE D
+            </span>
+
+            <h4>
+                POWER FAILURE
+            </h4>
+
+            <p>
+                Determine how the monitoring system behaves while
+                operating from backup power.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Monitoring Redundancy
+    </h3>
+
+    <p>
+        Redundancy should be applied according to risk rather than
+        automatically to every installation. A high-criticality site
+        may justify multiple communication paths, independent power
+        arrangements and additional monitoring infrastructure,
+        whereas a lower-risk installation may require a simpler
+        architecture.
+    </p>
+
+
+    <div class="success-card">
+
+        <h3>
+            Professional Monitoring Principle
+        </h3>
+
+        <p>
+            A monitored security system should not merely report
+            alarms. It should also provide sufficient supervision,
+            status information and fault reporting to allow the
+            monitoring organisation to determine whether the system
+            itself remains capable of performing its security
+            function.
+        </p>
+
+    </div>
+
+
+    <div class="lesson-summary">
+
+        <div class="summary-icon">
+            11
+        </div>
+
+        <div>
+
+            <h3>
+                Lesson 11 Summary
+            </h3>
+
+            <p>
+                Remote monitoring transforms the electric-fence system
+                from a locally observed installation into a
+                continuously supervised security subsystem. Advanced
+                design considers communication reliability,
+                supervision, redundancy, event classification,
+                operator procedures, event logging and failure
+                behaviour.
+            </p>
+
+            <p>
+                The key engineering principle is simple:
+                <strong>
+                    a communication path must itself be treated as a
+                    component that can fail.
+                </strong>
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     12. PROFESSIONAL DESIGN DOCUMENTATION
+========================================================= -->
+
+<section
+    id="documentation"
+    class="lesson-section"
+>
+
+    <div class="section-number">
+        12
+    </div>
+
+    <h2>
+        Professional Design Documentation
+    </h2>
+
+    <p>
+        Professional electric-fence design does not end when the
+        equipment has been selected. A technically sound system must
+        also be documented so that the design intent can be understood,
+        installed, tested, maintained and audited throughout the
+        operational life of the installation.
+    </p>
+
+    <p>
+        Documentation is therefore part of the engineering system,
+        not administrative paperwork added after the technical work
+        has been completed.
+    </p>
+
+
+    <div class="info-card">
+
+        <h3>
+            Core Design Documentation
+        </h3>
+
+        <ul>
+
+            <li>
+                Site assessment information
+            </li>
+
+            <li>
+                Perimeter drawings
+            </li>
+
+            <li>
+                Zone layout
+            </li>
+
+            <li>
+                Energizer location
+            </li>
+
+            <li>
+                High-voltage cable routes
+            </li>
+
+            <li>
+                Earth-system information
+            </li>
+
+            <li>
+                Gate details
+            </li>
+
+            <li>
+                Equipment schedules
+            </li>
+
+            <li>
+                Alarm interfaces
+            </li>
+
+            <li>
+                CCTV integration
+            </li>
+
+            <li>
+                Monitoring architecture
+            </li>
+
+            <li>
+                Testing and commissioning records
+            </li>
+
+            <li>
+                Revision history
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <h3>
+        The Site Drawing
+    </h3>
+
+    <p>
+        The site drawing is one of the most important documents in a
+        professional perimeter-security project. It should allow a
+        competent technician to understand the physical relationship
+        between the property boundary, fence system, equipment,
+        gates, zones and related security technologies.
+    </p>
+
+
+    <div class="diagram-card">
+
+        <div class="diagram-header">
+            TYPICAL DESIGN DRAWING INFORMATION
+        </div>
+
+        <div class="site-plan">
+
+            <div class="site-boundary">
+
+                <span class="site-label">
+                    PROTECTED PROPERTY
+                </span>
+
+
+                <div class="building">
+                    BUILDING
+                </div>
+
+
+                <div class="energizer">
+                    ENERGIZER
+                </div>
+
+
+                <div class="gate">
+                    VEHICLE GATE
+                </div>
+
+
+                <div class="zone zone-a">
+                    ZONE 01
+                </div>
+
+
+                <div class="zone zone-b">
+                    ZONE 02
+                </div>
+
+
+                <div class="zone zone-c">
+                    ZONE 03
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Drawing Information
+    </h3>
+
+    <p>
+        Where practical, drawings should identify major equipment
+        locations, zone boundaries, gate positions, cable routes,
+        earth-electrode locations and relevant integration points.
+        The level of detail should be appropriate to the complexity
+        and security sensitivity of the installation.
+    </p>
+
+
+    <h3>
+        Equipment Schedule
+    </h3>
+
+    <p>
+        An equipment schedule provides a structured record of the
+        components specified for the installation. It should contain
+        enough information to identify the intended equipment
+        unambiguously and to support procurement, installation,
+        commissioning and future maintenance.
+    </p>
+
+
+    <div class="table-card">
+
+        <div class="table-title">
+            EXAMPLE EQUIPMENT SCHEDULE
+        </div>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        ITEM
+                    </th>
+
+                    <th>
+                        DESCRIPTION
+                    </th>
+
+                    <th>
+                        LOCATION
+                    </th>
+
+                    <th>
+                        REFERENCE
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <tr>
+
+                    <td>
+                        01
+                    </td>
+
+                    <td>
+                        Electric-fence energizer
+                    </td>
+
+                    <td>
+                        Secure equipment area
+                    </td>
+
+                    <td>
+                        E-01
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        02
+                    </td>
+
+                    <td>
+                        Fence-zone equipment
+                    </td>
+
+                    <td>
+                        Zone boundary
+                    </td>
+
+                    <td>
+                        Z-01
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        03
+                    </td>
+
+                    <td>
+                        High-voltage cable
+                    </td>
+
+                    <td>
+                        Cable route
+                    </td>
+
+                    <td>
+                        HV-01
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td>
+                        04
+                    </td>
+
+                    <td>
+                        Earth electrodes
+                    </td>
+
+                    <td>
+                        Earth system
+                    </td>
+
+                    <td>
+                        ER-01
+                    </td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td
+
  
