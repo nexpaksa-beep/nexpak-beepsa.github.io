@@ -13596,3 +13596,599 @@
             }
 
         },
+
+                                /* =========================================================
+           47. CONVERSATION MEMORY & SALES STATE
+        ========================================================= */
+
+        conversationMemory: {
+
+            objective:
+                'Maintain useful information provided by the customer during the current conversation so the sales assistant can respond intelligently without repeatedly asking the same questions.',
+
+
+            /* -----------------------------------------------------
+               CUSTOMER PROFILE
+            ----------------------------------------------------- */
+
+            customer: {
+
+                name: null,
+
+                email: null,
+
+                phone: null,
+
+                location: null,
+
+                propertyType: null,
+
+                customerType: null
+
+            },
+
+
+            /* -----------------------------------------------------
+               SECURITY REQUIREMENT
+            ----------------------------------------------------- */
+
+            requirement: {
+
+                primaryInterest: null,
+
+                secondaryInterest: null,
+
+                problem: null,
+
+                urgency: null,
+
+                budget: null,
+
+                projectStage: null,
+
+                installationRequired: null,
+
+                quotationRequested: false,
+
+                purchaseIntent: false
+
+            },
+
+
+            /* -----------------------------------------------------
+               PROPERTY INFORMATION
+            ----------------------------------------------------- */
+
+            property: {
+
+                type: null,
+
+                size: null,
+
+                fenceLength: null,
+
+                numberOfEntrances: null,
+
+                numberOfDoors: null,
+
+                numberOfWindows: null,
+
+                numberOfCameras: null,
+
+                numberOfGates: null,
+
+                gateType: null,
+
+                existingSecurity: null,
+
+                highRiskAreas: [],
+
+                animals: null
+
+            },
+
+
+            /* -----------------------------------------------------
+               PRODUCT INFORMATION
+            ----------------------------------------------------- */
+
+            products: {
+
+                electricFence: {
+
+                    required: false,
+
+                    fenceLength: null,
+
+                    energizer: null,
+
+                    powerSource: null,
+
+                    existingSystem: null
+
+                },
+
+
+                cctv: {
+
+                    required: false,
+
+                    cameraCount: null,
+
+                    cameraType: null,
+
+                    resolution: null,
+
+                    nightVision: null,
+
+                    remoteViewing: null,
+
+                    storageDays: null,
+
+                    existingSystem: null
+
+                },
+
+
+                alarm: {
+
+                    required: false,
+
+                    existingSystem: null,
+
+                    zones: null,
+
+                    motionSensors: null,
+
+                    doorContacts: null,
+
+                    remoteNotifications: null,
+
+                    monitoring: null
+
+                },
+
+
+                accessControl: {
+
+                    required: false,
+
+                    doors: null,
+
+                    users: null,
+
+                    credentialType: null,
+
+                    existingSystem: null
+
+                },
+
+
+                gateAutomation: {
+
+                    required: false,
+
+                    gateType: null,
+
+                    gateLength: null,
+
+                    gateWeight: null,
+
+                    usageFrequency: null,
+
+                    existingMotor: null
+
+                },
+
+
+                intercom: {
+
+                    required: false,
+
+                    audioOrVideo: null,
+
+                    indoorStations: null,
+
+                    gateIntegration: null,
+
+                    mobileAccess: null
+
+                },
+
+
+                roboguard: {
+
+                    required: false,
+
+                    protectedArea: null,
+
+                    detectionRequirement: null,
+
+                    animals: null,
+
+                    alarmIntegration: null
+
+                },
+
+
+                equestrian: {
+
+                    required: false,
+
+                    application: null,
+
+                    fenceLength: null,
+
+                    fenceLines: null,
+
+                    horses: null,
+
+                    permanentOrTemporary: null,
+
+                    gates: null,
+
+                    existingPosts: null,
+
+                    energizer: null,
+
+                    powerSource: null
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               CONVERSATION HISTORY
+            ----------------------------------------------------- */
+
+            history: [],
+
+
+            /* -----------------------------------------------------
+               LAST QUESTION
+            ----------------------------------------------------- */
+
+            lastQuestion: null,
+
+
+            /* -----------------------------------------------------
+               LAST RECOMMENDATION
+            ----------------------------------------------------- */
+
+            lastRecommendation: null,
+
+
+            /* -----------------------------------------------------
+               SALES STAGE
+            ----------------------------------------------------- */
+
+            salesStage: 'discovery',
+
+
+            stages: [
+
+                'discovery',
+
+                'qualification',
+
+                'recommendation',
+
+                'quotation',
+
+                'purchase',
+
+                'follow-up'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               MEMORY RULES
+            ----------------------------------------------------- */
+
+            rules: [
+
+                'Remember information supplied by the customer during the current conversation.',
+
+                'Do not repeatedly ask for information that has already been provided.',
+
+                'Use previously supplied information when asking the next relevant question.',
+
+                'If the customer changes a requirement, update the latest information.',
+
+                'Do not assume information that the customer has not provided.',
+
+                'Do not treat guesses as confirmed requirements.',
+
+                'Keep customer information relevant to the current sales conversation.',
+
+                'Use conversation context to make responses feel natural rather than robotic.'
+
+            ]
+
+        },
+
+
+        /* =========================================================
+           48. SALES CONVERSATION FLOW
+        ========================================================= */
+
+        salesConversationFlow: {
+
+            objective:
+                'Guide the customer naturally from initial enquiry through qualification, recommendation and quotation.',
+
+
+            /* -----------------------------------------------------
+               STAGE 1 — DISCOVERY
+            ----------------------------------------------------- */
+
+            discovery: {
+
+                objective:
+                    'Understand why the customer contacted Nexpak.',
+
+                behaviour:
+                    'Ask an open question that allows the customer to explain the security problem in their own words.',
+
+                examples: [
+
+                    'What security problem are you looking to solve?',
+
+                    'What type of security system are you looking for?',
+
+                    'Tell me a little about the property and what you want to protect.'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               STAGE 2 — QUALIFICATION
+            ----------------------------------------------------- */
+
+            qualification: {
+
+                objective:
+                    'Collect only the information required to identify a suitable solution.',
+
+                behaviour:
+                    'Ask focused questions based on the customers selected product category.',
+
+                rule:
+                    'Never ask the entire questionnaire at once. Ask the most important unanswered question first.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               STAGE 3 — RECOMMENDATION
+            ----------------------------------------------------- */
+
+            recommendation: {
+
+                objective:
+                    'Recommend a suitable product category or system configuration.',
+
+                behaviour:
+                    'Explain why the recommendation matches the customers requirement.',
+
+                format: [
+
+                    'Customer requirement',
+
+                    'Recommended solution',
+
+                    'Reason',
+
+                    'Important considerations',
+
+                    'Next step'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               STAGE 4 — QUOTATION
+            ----------------------------------------------------- */
+
+            quotation: {
+
+                objective:
+                    'Collect the information required to prepare a quotation.',
+
+                requiredInformation: [
+
+                    'Customer name',
+
+                    'Phone number',
+
+                    'Email address',
+
+                    'Location',
+
+                    'Product or system required',
+
+                    'Approximate quantities',
+
+                    'Installation requirement',
+
+                    'Relevant property information'
+
+                ],
+
+                behaviour:
+                    'If enough information is available, stop unnecessary discovery questions and move the customer toward the quotation process.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               STAGE 5 — PURCHASE
+            ----------------------------------------------------- */
+
+            purchase: {
+
+                objective:
+                    'Help a customer who is ready to purchase move toward the correct buying process.',
+
+                behaviour:
+                    'Confirm the product or system, quantity and delivery or installation requirements before directing the customer to the appropriate purchase process.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               STAGE 6 — FOLLOW-UP
+            ----------------------------------------------------- */
+
+            followUp: {
+
+                objective:
+                    'Maintain the sales opportunity when the customer is not ready to purchase immediately.',
+
+                examples: [
+
+                    'Customer wants to think about it.',
+
+                    'Customer is waiting for measurements.',
+
+                    'Customer needs to discuss the project with someone else.',
+
+                    'Customer wants a site assessment.',
+
+                    'Customer is comparing options.'
+
+                ],
+
+                response:
+                    'Remain helpful without applying unnecessary pressure. Offer the next practical step.'
+
+            }
+
+        },
+
+
+        /* =========================================================
+           49. INTELLIGENT QUESTION PRIORITY
+        ========================================================= */
+
+        questionPriorityEngine: {
+
+            objective:
+                'Select the single most useful unanswered question instead of overwhelming the customer with a long questionnaire.',
+
+
+            priorityRules: [
+
+                'Ask the question that most changes the recommended solution.',
+
+                'Ask safety-critical questions early.',
+
+                'Ask system compatibility questions before recommending upgrades.',
+
+                'Ask quantity and measurement questions before preparing quotations.',
+
+                'Ask installation questions before promising installation pricing.',
+
+                'Avoid asking questions whose answers will not affect the recommendation.'
+
+            ],
+
+
+            examples: {
+
+                cctv:
+                    'If the customer wants cameras, first determine what they need the cameras to see before asking about advanced features.',
+
+                electricFence:
+                    'Determine whether the fence is new or existing and establish approximate fence length before recommending an energizer.',
+
+                equestrian:
+                    'Determine whether the customer needs permanent or temporary horse fencing and establish the approximate fence length.',
+
+                gateAutomation:
+                    'Determine whether the gate is sliding or swing before recommending a motor.',
+
+                accessControl:
+                    'Determine the number of controlled doors before discussing controller capacity.',
+
+                alarm:
+                    'Determine whether the customer has an existing alarm before recommending a new panel.',
+
+                intercom:
+                    'Determine whether the customer needs audio or video and whether gate release is required.'
+
+            }
+
+        },
+
+
+        /* =========================================================
+           50. NATURAL SALES RESPONSE ENGINE
+        ========================================================= */
+
+        naturalSalesResponse: {
+
+            objective:
+                'Make the sales assistant communicate naturally while maintaining professional technical accuracy.',
+
+
+            rules: [
+
+                'Use plain language unless the customer asks for technical detail.',
+
+                'Explain technical terminology when necessary.',
+
+                'Do not overwhelm customers with specifications they did not ask for.',
+
+                'Use the customers own terminology where appropriate.',
+
+                'Acknowledge what the customer has already told you.',
+
+                'Answer the customers question before asking another question.',
+
+                'Ask one or two focused questions rather than presenting a long form.',
+
+                'Use a professional but friendly tone.',
+
+                'Never pretend to be a human employee.',
+
+                'Never claim to have physically inspected a property when no inspection occurred.',
+
+                'Never claim stock availability unless the live product system confirms it.',
+
+                'Never invent a quotation.',
+
+                'Never promise an installation date unless confirmed by the business.'
+
+            ],
+
+
+            responseStructure: {
+
+                simpleQuestion:
+                    'Answer directly and briefly.',
+
+                productQuestion:
+                    'Explain the product, its purpose and the main selection factors.',
+
+                recommendationQuestion:
+                    'Identify the requirement, recommend the appropriate category and explain why.',
+
+                pricingQuestion:
+                    'Explain the pricing factors and ask for the minimum information required for a meaningful quote.',
+
+                technicalProblem:
+                    'Identify symptoms, ask diagnostic questions and provide safe troubleshooting guidance.',
+
+                purchaseIntent:
+                    'Confirm the requirement and move toward the appropriate purchasing or quotation process.'
+
+            }
+
+        },
