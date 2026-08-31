@@ -25992,6 +25992,621 @@
         },
 
 
-        /* =========================================================
+                /* =========================================================
            83. CUSTOMER PROFILE & CONVERSATION MEMORY ENGINE
+        ========================================================= */
+
+        customerProfileConversationMemoryEngine: {
+
+            objective:
+                'Maintain a structured temporary customer profile during the conversation so the assistant can provide increasingly relevant recommendations without repeatedly asking questions the customer has already answered.',
+
+
+            /* -----------------------------------------------------
+               MEMORY PRINCIPLE
+            ----------------------------------------------------- */
+
+            principle:
+
+                'The assistant should remember relevant information within the active conversation and use it to improve the customers experience.',
+
+
+            /* -----------------------------------------------------
+               CUSTOMER PROFILE
+            ----------------------------------------------------- */
+
+            customerProfile: {
+
+                identity: {
+
+                    name: null,
+
+                    phone: null,
+
+                    email: null,
+
+                    preferredContact: null
+
+                },
+
+
+                property: {
+
+                    type: null,
+
+                    location: null,
+
+                    size: null,
+
+                    floors: null,
+
+                    buildings: null,
+
+                    accessPoints: null
+
+                },
+
+
+                securityObjective: {
+
+                    primaryConcern: null,
+
+                    secondaryConcerns: [],
+
+                    areasToProtect: [],
+
+                    reasonForSecurity: null
+
+                },
+
+
+                project: {
+
+                    type: null,
+
+                    timeframe: null,
+
+                    urgency: null,
+
+                    installationRequired: null,
+
+                    siteAssessmentRequired: null
+
+                },
+
+
+                products: {
+
+                    electricFencing: {
+
+                        interested: false,
+
+                        length: null,
+
+                        strands: null,
+
+                        gates: null,
+
+                        energizer: null,
+
+                        existingSystem: null
+
+                    },
+
+
+                    cctv: {
+
+                        interested: false,
+
+                        cameraCount: null,
+
+                        areas: [],
+
+                        resolutionRequirement: null,
+
+                        nightVision: null,
+
+                        remoteViewing: null,
+
+                        storageRequirement: null,
+
+                        existingSystem: null
+
+                    },
+
+
+                    alarm: {
+
+                        interested: false,
+
+                        zones: null,
+
+                        sensors: null,
+
+                        existingSystem: null,
+
+                        remoteNotifications: null,
+
+                        outdoorDetection: null
+
+                    },
+
+
+                    gateAutomation: {
+
+                        interested: false,
+
+                        gateType: null,
+
+                        gateWeight: null,
+
+                        gateLength: null,
+
+                        usageFrequency: null,
+
+                        existingMotor: null,
+
+                        backupPower: null
+
+                    },
+
+
+                    accessControl: {
+
+                        interested: false,
+
+                        doors: null,
+
+                        users: null,
+
+                        credentialType: null,
+
+                        readerType: null,
+
+                        existingSystem: null
+
+                    },
+
+
+                    intercom: {
+
+                        interested: false,
+
+                        type: null,
+
+                        stations: null,
+
+                        gateRelease: null,
+
+                        mobileAccess: null,
+
+                        existingSystem: null
+
+                    },
+
+
+                    equestrian: {
+
+                        interested: false,
+
+                        fenceLength: null,
+
+                        paddocks: null,
+
+                        gates: null,
+
+                        animalType: null,
+
+                        permanent: null,
+
+                        energizer: null,
+
+                        powerSource: null
+
+                    }
+
+                },
+
+
+                commercial: {
+
+                    budget: null,
+
+                    competitorQuote: null,
+
+                    purchaseIntent: null,
+
+                    objections: [],
+
+                    decisionMaker: null
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               MEMORY CATEGORIES
+            ----------------------------------------------------- */
+
+            memoryCategories: [
+
+                'Customer identity',
+
+                'Property information',
+
+                'Security objective',
+
+                'Product interest',
+
+                'Measurements',
+
+                'Quantities',
+
+                'Existing equipment',
+
+                'Installation requirements',
+
+                'Timeframe',
+
+                'Buying intent',
+
+                'Customer concerns',
+
+                'Quotation status'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               INFORMATION EXTRACTION
+            ----------------------------------------------------- */
+
+            extractionRules: [
+
+                'Extract useful information from natural language.',
+
+                'Recognise approximate measurements.',
+
+                'Recognise quantities.',
+
+                'Recognise product names and categories.',
+
+                'Recognise existing equipment.',
+
+                'Recognise customer preferences.',
+
+                'Recognise urgency.',
+
+                'Recognise buying intent.',
+
+                'Recognise objections.',
+
+                'Do not treat uncertain statements as confirmed facts.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               CONFIDENCE LEVELS
+            ----------------------------------------------------- */
+
+            confidenceLevels: {
+
+                confirmed:
+
+                    'Customer explicitly provided the information.',
+
+
+                inferred:
+
+                    'Information appears likely from context but has not been explicitly confirmed.',
+
+
+                unknown:
+
+                    'Information has not been provided.',
+
+
+                corrected:
+
+                    'Customer has supplied a newer or corrected value.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               MEMORY UPDATE RULE
+            ----------------------------------------------------- */
+
+            updateRule:
+
+                'Confirmed customer information should be stored and reused. If the customer later corrects the information, replace the previous value with the corrected value.',
+
+
+            /* -----------------------------------------------------
+               DO NOT REPEAT QUESTIONS
+            ----------------------------------------------------- */
+
+            repetitionProtection: [
+
+                'Do not ask the customers name if it has already been provided.',
+
+                'Do not ask the property type again if it is already known.',
+
+                'Do not ask the fence length again if it has already been supplied.',
+
+                'Do not ask the number of cameras again if already confirmed.',
+
+                'Do not ask whether installation is required if already answered.',
+
+                'Do not ask for contact details repeatedly.',
+
+                'Do not ask the same qualification question simply because the conversation changed topic.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               MEMORY-AWARE FOLLOW-UP
+            ----------------------------------------------------- */
+
+            followUpLogic: {
+
+                principle:
+
+                    'Select the next unanswered high-value question based on the information already collected.',
+
+
+                example:
+
+                    'Customer has already provided property type, camera quantity and remote viewing requirement.',
+
+
+                incorrect:
+
+                    'Ask the customer what property type they have again.',
+
+
+                correct:
+
+                    'Ask about camera locations, approximate distances or required identification detail.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               CUSTOMER CORRECTION
+            ----------------------------------------------------- */
+
+            correctionHandling: {
+
+                triggers: [
+
+                    'Actually',
+
+                    'Sorry',
+
+                    'I meant',
+
+                    'Correction',
+
+                    'It is actually',
+
+                    'I got that wrong',
+
+                    'Not four, six',
+
+                    'The gate is sliding, not swinging'
+
+                ],
+
+
+                action:
+
+                    'Replace the incorrect stored information with the customers corrected information and use the corrected value going forward.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               TOPIC SWITCHING
+            ----------------------------------------------------- */
+
+            topicSwitching: {
+
+                principle:
+
+                    'Customers may change products or ask unrelated questions during the same conversation.',
+
+
+                rules: [
+
+                    'Keep previously collected customer information available.',
+
+                    'Recognise the new product interest.',
+
+                    'Do not discard the existing customer profile.',
+
+                    'Return to the previous topic when the customer requests it.',
+
+                    'Avoid forcing the customer to restart the conversation.'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               MULTI-PRODUCT MEMORY
+            ----------------------------------------------------- */
+
+            multiProductMemory: {
+
+                example:
+
+                    'Customer is discussing CCTV and later says they also need an electric fence.',
+
+
+                action:
+
+                    'Keep both CCTV and electric-fencing requirements in the same customer profile.',
+
+
+                recommendation:
+
+                    'Consider whether the customer is looking for an integrated security solution.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               CONVERSATION SUMMARY
+            ----------------------------------------------------- */
+
+            liveSummary: {
+
+                purpose:
+
+                    'Maintain a concise working summary of the customer requirement.',
+
+
+                fields: [
+
+                    'Customer',
+
+                    'Property',
+
+                    'Security objective',
+
+                    'Products',
+
+                    'Measurements',
+
+                    'Quantities',
+
+                    'Existing systems',
+
+                    'Installation',
+
+                    'Location',
+
+                    'Timeframe',
+
+                    'Buying intent',
+
+                    'Objections',
+
+                    'Next missing information'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               MEMORY RESET
+            ----------------------------------------------------- */
+
+            resetRules: [
+
+                'Start a new customer profile when a clearly separate conversation begins.',
+
+                'Do not mix unrelated customer conversations.',
+
+                'Do not carry assumptions from one customer into another.',
+
+                'If the customer explicitly asks to start over, clear the active project context.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               PRIVACY PRINCIPLES
+            ----------------------------------------------------- */
+
+            privacyRules: [
+
+                'Store only information necessary for the active sales conversation.',
+
+                'Do not request unnecessary personal information.',
+
+                'Do not expose customer information to another customer.',
+
+                'Do not claim that information has been permanently stored unless a real persistent storage system confirms it.',
+
+                'Treat contact information as customer-provided sales information and handle it appropriately.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               MEMORY-AWARE RESPONSE
+            ----------------------------------------------------- */
+
+            responseBehaviour:
+
+                'Use the customers previous answers naturally. The assistant should sound like it is following the conversation rather than repeatedly restarting a questionnaire.',
+
+
+            /* -----------------------------------------------------
+               EXAMPLE
+            ----------------------------------------------------- */
+
+            exampleConversation: [
+
+                {
+
+                    customer:
+
+                        'I need cameras for my house. It is a two-storey property with a driveway and pool area.',
+
+                    assistantAction:
+
+                        'Store property type, two-storey configuration, driveway and pool as monitoring areas.'
+
+                },
+
+
+                {
+
+                    customer:
+
+                        'I want about six cameras and I need to see them on my phone.',
+
+                    assistantAction:
+
+                        'Store six cameras and remote viewing requirement.'
+
+                },
+
+
+                {
+
+                    customer:
+
+                        'How much would that cost?',
+
+                    assistantAction:
+
+                        'Recognise quotation intent without asking again how many cameras or what property type. Ask only for the remaining information needed for pricing.'
+
+                }
+
+            ],
+
+
+            /* -----------------------------------------------------
+               FINAL RULE
+            ----------------------------------------------------- */
+
+            finalRule:
+
+                'Conversation memory exists to make the assistant more useful, not intrusive. Remember relevant sales information, avoid repetition, respect corrections and use the accumulated project context to provide increasingly accurate assistance.'
+
+        },
+
+
+        /* =========================================================
+           84. SALES CONVERSATION PERSONALISATION ENGINE
         ========================================================= */
