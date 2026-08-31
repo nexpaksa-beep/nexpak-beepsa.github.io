@@ -1953,4 +1953,442 @@
 
                         'Do you need to identify number plates or simply see vehicles?',
 
-                        'Is the area illum
+                                                'Is the area illuminated at night?'
+
+                    ]
+
+                },
+
+
+                /* =================================================
+                   BUSINESS CCTV SCENARIO
+                ================================================= */
+
+                business: {
+
+                    description:
+                        'Customer wants CCTV for a commercial property.',
+
+                    considerations: [
+
+                        'Main entrance',
+
+                        'Staff entrance',
+
+                        'Customer areas',
+
+                        'Cashier or point-of-sale areas',
+
+                        'Stock rooms',
+
+                        'Warehouse areas',
+
+                        'Loading areas',
+
+                        'Parking areas',
+
+                        'Vehicle entrances',
+
+                        'Perimeter',
+
+                        'Recording retention',
+
+                        'Remote viewing',
+
+                        'User access permissions'
+
+                    ],
+
+                    askFirst: [
+
+                        'What type of business is it?',
+
+                        'How many areas need monitoring?',
+
+                        'Which areas are most important?',
+
+                        'Do you need to monitor staff, customers, vehicles or stock?',
+
+                        'Do you need remote viewing?',
+
+                        'How long do you need recordings retained?',
+
+                        'Do you already have CCTV installed?'
+
+                    ]
+
+                },
+
+
+                /* =================================================
+                   LARGE PROPERTY SCENARIO
+                ================================================= */
+
+                largeProperty: {
+
+                    description:
+                        'Customer wants to monitor a large residential, agricultural or industrial property.',
+
+                    considerations: [
+
+                        'Property size',
+
+                        'Camera distances',
+
+                        'Network infrastructure',
+
+                        'Power availability',
+
+                        'Multiple buildings',
+
+                        'Perimeter areas',
+
+                        'Long-distance links',
+
+                        'Remote monitoring',
+
+                        'Environmental conditions',
+
+                        'Maintenance access'
+
+                    ],
+
+                    askFirst: [
+
+                        'Approximately how large is the property?',
+
+                        'How many buildings need coverage?',
+
+                        'How far apart are the buildings?',
+
+                        'Which areas are the highest priority?',
+
+                        'Is power available where cameras will be installed?',
+
+                        'Is network infrastructure already available?',
+
+                        'Do you need remote viewing?'
+
+                    ],
+
+                    recommendation:
+                        'A site assessment may be appropriate before final equipment selection.'
+
+                }
+
+            },
+
+
+            /* =================================================
+               CCTV COMMON QUESTIONS
+            ================================================= */
+
+            commonQuestions: [
+
+                'What is CCTV?',
+
+                'What is the difference between DVR and NVR?',
+
+                'What is an IP camera?',
+
+                'What is PoE?',
+
+                'What camera resolution do I need?',
+
+                'Do I need 4K cameras?',
+
+                'Can I view CCTV on my phone?',
+
+                'How long can CCTV record?',
+
+                'How much storage do I need?',
+
+                'Can CCTV work at night?',
+
+                'Can CCTV see in complete darkness?',
+
+                'Can CCTV identify people?',
+
+                'Can CCTV read number plates?',
+
+                'How many cameras do I need?',
+
+                'Can I use my existing CCTV cables?',
+
+                'Can I upgrade my old CCTV system?',
+
+                'What is the best camera for a driveway?',
+
+                'What is the best camera for a gate?',
+
+                'What is the best CCTV for a business?',
+
+                'Can CCTV work with an alarm system?',
+
+                'Can CCTV work with electric fencing?',
+
+                'Can CCTV detect people?',
+
+                'Can CCTV detect vehicles?',
+
+                'Can CCTV send notifications to my phone?',
+
+                'Can CCTV record when there is movement?',
+
+                'Can CCTV record continuously?',
+
+                'How much does CCTV cost?',
+
+                'How many cameras do I need for my house?',
+
+                'How many cameras do I need for my business?',
+
+                'What is the difference between 2MP, 4MP and 8MP cameras?',
+
+                'What is 4K CCTV?',
+
+                'What is night vision?',
+
+                'What is infrared CCTV?',
+
+                'What is colour night vision?',
+
+                'What is a PTZ camera?',
+
+                'What is a dome camera?',
+
+                'What is a bullet camera?',
+
+                'What is a turret camera?'
+
+            ],
+
+
+            /* =================================================
+               CCTV SAFETY / ACCURACY RULES
+            ================================================= */
+
+            safetyRules: [
+
+                'Do not promise that CCTV will prevent crime.',
+
+                'Do not promise that every camera can identify a person at any distance.',
+
+                'Do not promise a specific night-vision distance without verified specifications.',
+
+                'Do not promise a specific recording period without calculating storage requirements.',
+
+                'Do not promise remote viewing without confirming compatible equipment and connectivity.',
+
+                'Do not recommend a camera solely because it has a higher megapixel rating.',
+
+                'Do not claim number-plate recognition unless the selected equipment and installation are appropriate for that purpose.',
+
+                'Do not invent product models or technical specifications.',
+
+                'Do not invent current prices.',
+
+                'Do not claim a product is in stock unless the live product system confirms availability.',
+
+                'Do not claim an installation date unless confirmed by Nexpak.',
+
+                'If the customer requires a technically complex CCTV system, recommend a proper site assessment.'
+
+            ],
+
+
+            /* =================================================
+               CCTV SALES POSITIONING
+            ================================================= */
+
+            salesPositioning:
+                'The best CCTV recommendation is based on what the customer needs to see, where the subject will be, lighting conditions, required image detail, recording requirements and available infrastructure—not simply camera quantity or megapixels.'
+
+        },
+
+
+        /* =========================================================
+           09. CCTV SALES QUALIFICATION ENGINE
+        ========================================================= */
+
+        cctvSalesQualification: {
+
+            objective:
+                'Collect enough information to determine the customer requirement before recommending a CCTV solution.',
+
+
+            priorityQuestions: [
+
+                {
+                    id: 'property',
+
+                    question:
+                        'What type of property are you looking to secure?',
+
+                    options: [
+
+                        'House',
+
+                        'Townhouse',
+
+                        'Smallholding',
+
+                        'Farm',
+
+                        'Office',
+
+                        'Retail',
+
+                        'Warehouse',
+
+                        'Factory',
+
+                        'Other'
+
+                    ]
+
+                },
+
+
+                {
+                    id: 'coverage',
+
+                    question:
+                        'Which areas do you want the cameras to cover?',
+
+                    examples: [
+
+                        'Front entrance',
+
+                        'Driveway',
+
+                        'Gate',
+
+                        'Backyard',
+
+                        'Side passages',
+
+                        'Parking',
+
+                        'Warehouse',
+
+                        'Perimeter',
+
+                        'Stock area'
+
+                    ]
+
+                },
+
+
+                {
+                    id: 'cameraCount',
+
+                    question:
+                        'Approximately how many areas need monitoring?',
+
+                    note:
+                        'Do not automatically translate the answer into a final camera count. Camera placement should be determined from the required coverage.'
+
+                },
+
+
+                {
+                    id: 'night',
+
+                    question:
+                        'Do you need reliable surveillance at night?'
+
+                },
+
+
+                {
+                    id: 'identification',
+
+                    question:
+                        'Do you need general monitoring, or do you need to identify people and vehicles?'
+
+                },
+
+
+                {
+                    id: 'remote',
+
+                    question:
+                        'Would you like to view the cameras from your phone when you are away?'
+
+                },
+
+
+                {
+                    id: 'recording',
+
+                    question:
+                        'How long would you like recorded footage to be retained?'
+
+                },
+
+
+                {
+                    id: 'existing',
+
+                    question:
+                        'Do you already have a CCTV system installed?'
+
+                }
+
+            ],
+
+
+            /* =================================================
+               CUSTOMER INTENT LEVELS
+            ================================================= */
+
+            intentLevels: {
+
+                browsing: {
+
+                    description:
+                        'Customer is only researching CCTV.',
+
+                    responseStrategy:
+                        'Explain the available options and ask what they are trying to monitor.'
+
+                },
+
+
+                interested: {
+
+                    description:
+                        'Customer is actively considering purchasing CCTV.',
+
+                    responseStrategy:
+                        'Ask qualification questions and narrow down a suitable system.'
+
+                },
+
+
+                readyToBuy: {
+
+                    description:
+                        'Customer knows what they want or is asking for pricing.',
+
+                    responseStrategy:
+                        'Collect the information required for a quotation and move the customer toward the sales process.'
+
+                },
+
+
+                urgent: {
+
+                    description:
+                        'Customer has an active security problem or urgently needs a replacement.',
+
+                    responseStrategy:
+                        'Determine the immediate requirement, avoid making unsupported promises and escalate to the appropriate Nexpak sales channel when necessary.'
+
+                }
+
+            }
+
+        },
