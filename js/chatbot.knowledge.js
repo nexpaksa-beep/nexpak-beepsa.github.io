@@ -12911,3 +12911,688 @@
                 'Once the fence length, configuration, energizer requirement and gate requirements are known, move the customer toward a product recommendation or quotation.'
 
         },
+
+                    /* =========================================================
+           45. PRODUCT RECOMMENDATION ENGINE
+        ========================================================= */
+
+        productRecommendationEngine: {
+
+            objective:
+                'Match the customer security requirement to the most appropriate Nexpak product category while avoiding unnecessary recommendations.',
+
+
+            /* -----------------------------------------------------
+               CORE SALES PRINCIPLE
+            ----------------------------------------------------- */
+
+            principle:
+                'Recommend the solution based on the customers actual security problem, property type, required protection level, environment, budget and existing equipment.',
+
+
+            rules: [
+
+                'Understand the customers requirement before recommending a product.',
+
+                'Ask only the questions needed to make a useful recommendation.',
+
+                'Do not recommend equipment that does not solve an identified problem.',
+
+                'Do not invent product specifications.',
+
+                'Do not invent stock availability.',
+
+                'Do not invent exact pricing.',
+
+                'Do not guarantee installation results without a site assessment.',
+
+                'When technical information is missing, explain what information is required.',
+
+                'When a customer is ready to buy, move toward a quotation or product selection.',
+
+                'For complex installations, recommend a professional site assessment.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               ELECTRIC FENCING
+            ----------------------------------------------------- */
+
+            electricFencing: {
+
+                customerNeeds: [
+
+                    'Perimeter deterrence',
+
+                    'Wall-top security',
+
+                    'Existing fence protection',
+
+                    'New electric fence',
+
+                    'Electric fence upgrade',
+
+                    'Electric fence repair',
+
+                    'Electric fence maintenance'
+
+                ],
+
+                askFirst: [
+
+                    'Is the fence already installed?',
+
+                    'How long is the fence approximately?',
+
+                    'Is it installed on a wall or freestanding fence?',
+
+                    'How many electric fence strands are required or already installed?',
+
+                    'Do you already have an energizer?',
+
+                    'Are there vegetation problems?',
+
+                    'Is mains power available?',
+
+                    'Do you require solar or battery backup?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               CCTV
+            ----------------------------------------------------- */
+
+            cctv: {
+
+                customerNeeds: [
+
+                    'Monitor property',
+
+                    'Monitor entrances',
+
+                    'Monitor driveway',
+
+                    'Monitor perimeter',
+
+                    'Monitor business premises',
+
+                    'Identify people',
+
+                    'Monitor vehicles',
+
+                    'Number-plate requirements',
+
+                    'Remote viewing',
+
+                    'Night surveillance'
+
+                ],
+
+                askFirst: [
+
+                    'What areas need monitoring?',
+
+                    'How many areas are there?',
+
+                    'Do you need general monitoring or identification?',
+
+                    'Do you need number-plate identification?',
+
+                    'Do you need night vision?',
+
+                    'Do you want mobile viewing?',
+
+                    'Is this a new installation or upgrade?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               ALARM SYSTEMS
+            ----------------------------------------------------- */
+
+            alarms: {
+
+                customerNeeds: [
+
+                    'Intrusion detection',
+
+                    'Home alarm',
+
+                    'Business alarm',
+
+                    'Alarm upgrade',
+
+                    'Remote notifications',
+
+                    'Panic protection',
+
+                    'Additional sensors'
+
+                ],
+
+                askFirst: [
+
+                    'Is this for a home or business?',
+
+                    'Is there an existing alarm system?',
+
+                    'What areas need protection?',
+
+                    'How many entrances are there?',
+
+                    'Do you have pets?',
+
+                    'Do you require mobile notifications?',
+
+                    'Do you require monitoring?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               ACCESS CONTROL
+            ----------------------------------------------------- */
+
+            accessControl: {
+
+                customerNeeds: [
+
+                    'Control who enters',
+
+                    'Restrict employee access',
+
+                    'Control office doors',
+
+                    'Control gates',
+
+                    'Track users',
+
+                    'Biometric access',
+
+                    'PIN access',
+
+                    'Card access',
+
+                    'Remote access'
+
+                ],
+
+                askFirst: [
+
+                    'How many doors need access control?',
+
+                    'How many users require access?',
+
+                    'Is this for a home or business?',
+
+                    'Do you need biometric, PIN, card or another credential type?',
+
+                    'Do you need user access records?',
+
+                    'Do you already have an access-control system?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               GATE AUTOMATION
+            ----------------------------------------------------- */
+
+            gateAutomation: {
+
+                customerNeeds: [
+
+                    'Automate sliding gate',
+
+                    'Automate swing gate',
+
+                    'Replace gate motor',
+
+                    'Upgrade gate motor',
+
+                    'Add remotes',
+
+                    'Add keypad',
+
+                    'Add intercom',
+
+                    'Add mobile control',
+
+                    'Improve gate security'
+
+                ],
+
+                askFirst: [
+
+                    'Is the gate sliding or swing?',
+
+                    'Approximately how heavy is the gate?',
+
+                    'How long or wide is the gate?',
+
+                    'How frequently is the gate used?',
+
+                    'Is the gate currently automated?',
+
+                    'Is the track or hinge system in good condition?',
+
+                    'Do you require battery backup?',
+
+                    'Do you want an intercom or access control?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               INTERCOM
+            ----------------------------------------------------- */
+
+            intercom: {
+
+                customerNeeds: [
+
+                    'Visitor communication',
+
+                    'Gate communication',
+
+                    'Remote gate access',
+
+                    'Video visitor verification',
+
+                    'Residential gate communication',
+
+                    'Commercial entrance communication'
+
+                ],
+
+                askFirst: [
+
+                    'Is the intercom for a gate or building entrance?',
+
+                    'Do you need audio or video?',
+
+                    'How many indoor stations are required?',
+
+                    'Do you want to unlock the gate or door from the intercom?',
+
+                    'Do you require mobile access?',
+
+                    'Is there an existing gate motor or access-control system?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               ROBOGUARD
+            ----------------------------------------------------- */
+
+            roboguard: {
+
+                customerNeeds: [
+
+                    'Outdoor movement detection',
+
+                    'Driveway detection',
+
+                    'Large-property protection',
+
+                    'Perimeter detection',
+
+                    'Early warning',
+
+                    'Outdoor intrusion detection'
+
+                ],
+
+                askFirst: [
+
+                    'What outdoor area needs protection?',
+
+                    'How large is the area?',
+
+                    'Are you protecting people, vehicles or both?',
+
+                    'Do you have pets or animals?',
+
+                    'Do you already have an alarm system?',
+
+                    'Do you need alarm integration?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               EQUESTRIAN
+            ----------------------------------------------------- */
+
+            equestrian: {
+
+                customerNeeds: [
+
+                    'Horse paddock',
+
+                    'Horse fencing',
+
+                    'Electric horse fencing',
+
+                    'Temporary paddock',
+
+                    'Permanent paddock',
+
+                    'Horse arena',
+
+                    'Stable yard',
+
+                    'Fence upgrade',
+
+                    'Fence repair',
+
+                    'Solar horse fencing'
+
+                ],
+
+                askFirst: [
+
+                    'What type of equestrian area are you fencing?',
+
+                    'Approximately how many metres of fencing do you need?',
+
+                    'How many fence lines are required?',
+
+                    'How many horses will use the area?',
+
+                    'Is the fence permanent or temporary?',
+
+                    'Do you already have posts?',
+
+                    'Do you already have an energizer?',
+
+                    'How many gates are required?',
+
+                    'Do you need solar power?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               SOLAR SECURITY
+            ----------------------------------------------------- */
+
+            solar: {
+
+                customerNeeds: [
+
+                    'Remote security',
+
+                    'Off-grid CCTV',
+
+                    'Solar electric fencing',
+
+                    'Remote alarm',
+
+                    'Security in areas without mains power'
+
+                ],
+
+                askFirst: [
+
+                    'What equipment needs to be powered?',
+
+                    'Is mains power available?',
+
+                    'How long must the equipment operate each day?',
+
+                    'Do you require battery backup?',
+
+                    'Do you already have solar equipment?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               MULTI-SYSTEM PROJECTS
+            ----------------------------------------------------- */
+
+            completeSecuritySystem: {
+
+                triggerExamples: [
+
+                    'I need security for my house',
+
+                    'I need security for my business',
+
+                    'I want a complete security system',
+
+                    'Can you secure my property?',
+
+                    'I need everything',
+
+                    'What security system do you recommend?'
+
+                ],
+
+                responseStrategy:
+                    'Do not immediately recommend a large package. First identify the property type, security concerns, perimeter, entrances, existing systems, high-risk areas and customer priorities.',
+
+                askFirst: [
+
+                    'Is this a residential, commercial or agricultural property?',
+
+                    'What is your biggest security concern?',
+
+                    'Do you have an existing alarm system?',
+
+                    'Do you have existing CCTV?',
+
+                    'What type of perimeter protection do you have?',
+
+                    'How are vehicles entering the property?',
+
+                    'Do you need access control?',
+
+                    'Do you need remote monitoring or notifications?'
+
+                ]
+
+            }
+
+        },
+
+
+        /* =========================================================
+           46. CUSTOMER INTENT DETECTION
+        ========================================================= */
+
+        customerIntentEngine: {
+
+            objective:
+                'Determine what stage of the buying journey the customer is currently in.',
+
+
+            intents: {
+
+                information: {
+
+                    signals: [
+
+                        'What is',
+
+                        'How does',
+
+                        'Explain',
+
+                        'What does it do',
+
+                        'Tell me about'
+
+                    ],
+
+                    action:
+                        'Provide a concise explanation and ask whether the customer wants help selecting a solution.'
+
+                },
+
+
+                research: {
+
+                    signals: [
+
+                        'Which is better',
+
+                        'What do you recommend',
+
+                        'What should I use',
+
+                        'What system do I need',
+
+                        'Which camera should I buy'
+
+                    ],
+
+                    action:
+                        'Ask qualification questions and compare suitable options.'
+
+                },
+
+
+                priceShopping: {
+
+                    signals: [
+
+                        'How much',
+
+                        'Price',
+
+                        'Cost',
+
+                        'Cheap',
+
+                        'Affordable',
+
+                        'Budget'
+
+                    ],
+
+                    action:
+                        'Explain the main pricing factors and collect the minimum information needed for a meaningful quote.'
+
+                },
+
+
+                quoteReady: {
+
+                    signals: [
+
+                        'I want a quote',
+
+                        'Send me a quote',
+
+                        'Can you quote',
+
+                        'I need a quotation',
+
+                        'Quote me'
+
+                    ],
+
+                    action:
+                        'Move directly into lead qualification and quotation requirements.'
+
+                },
+
+
+                purchaseIntent: {
+
+                    signals: [
+
+                        'I want to buy',
+
+                        'I need to order',
+
+                        'How do I order',
+
+                        'Can I buy',
+
+                        'Do you have stock',
+
+                        'I want this product'
+
+                    ],
+
+                    action:
+                        'Determine the exact product or system required and move toward the appropriate purchase or quotation process.'
+
+                },
+
+
+                installationIntent: {
+
+                    signals: [
+
+                        'Do you install',
+
+                        'Installation',
+
+                        'Can you install',
+
+                        'Installer',
+
+                        'Fit it for me'
+
+                    ],
+
+                    action:
+                        'Determine the location, system type and installation requirements before promising availability or price.'
+
+                },
+
+
+                urgentProblem: {
+
+                    signals: [
+
+                        'Not working',
+
+                        'Broken',
+
+                        'Fault',
+
+                        'Stopped working',
+
+                        'Alarm keeps going off',
+
+                        'Camera is offline',
+
+                        'Fence has no power'
+
+                    ],
+
+                    action:
+                        'Switch into troubleshooting mode and identify the symptoms before recommending replacement equipment.'
+
+                }
+
+            }
+
+        },
