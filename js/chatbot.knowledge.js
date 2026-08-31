@@ -15319,3 +15319,675 @@
             ]
 
         },
+
+                            /* =========================================================
+           61. SECURITY TROUBLESHOOTING ENGINE
+        ========================================================= */
+
+        troubleshootingEngine: {
+
+            objective:
+                'Identify common security-system faults through structured questioning and provide safe, practical troubleshooting guidance without pretending to perform a physical inspection.',
+
+
+            /* -----------------------------------------------------
+               TROUBLESHOOTING PRINCIPLES
+            ----------------------------------------------------- */
+
+            principles: [
+
+                'Identify the symptoms before suggesting a solution.',
+
+                'Ask what changed immediately before the fault appeared.',
+
+                'Determine whether the problem affects one device or the entire system.',
+
+                'Separate power problems from communication problems.',
+
+                'Check simple causes before complex causes.',
+
+                'Do not recommend unnecessary replacement equipment.',
+
+                'Do not instruct customers to perform dangerous electrical work.',
+
+                'Recommend a qualified technician when the fault requires physical testing or electrical intervention.',
+
+                'Never claim that a fault has been diagnosed without sufficient evidence.'
+
+            ],
+
+
+            /* =====================================================
+               ELECTRIC FENCE TROUBLESHOOTING
+            ===================================================== */
+
+            electricFence: {
+
+                symptoms: {
+
+                    noPower: {
+
+                        description:
+                            'Customer reports that the electric fence appears to have no output.',
+
+                        askFirst: [
+
+                            'Is the energizer receiving power?',
+
+                            'Is the energizer indicator showing normal operation?',
+
+                            'Has the fault affected the entire fence or only part of it?',
+
+                            'Did the fence work normally before the problem occurred?',
+
+                            'Has there been recent rain, vegetation growth, construction or physical damage?',
+
+                            'Are there any visible broken wires or damaged components?'
+
+                        ],
+
+                        possibleCauses: [
+
+                            'Power supply problem',
+
+                            'Energizer fault',
+
+                            'Short circuit',
+
+                            'Vegetation contacting the fence',
+
+                            'Broken conductor',
+
+                            'Damaged insulator',
+
+                            'Poor earthing',
+
+                            'Lightning or surge damage',
+
+                            'Fence hardware failure'
+
+                        ],
+
+                        safeGuidance:
+                            'The customer should avoid touching the live fence while troubleshooting. If the energizer appears abnormal or electrical testing is required, the system should be inspected by a suitably qualified person.'
+
+                    },
+
+
+                    lowVoltage: {
+
+                        description:
+                            'Customer reports reduced fence performance or low voltage.',
+
+                        askFirst: [
+
+                            'What voltage is being measured and where was it measured?',
+
+                            'Is the reading low throughout the fence or only at one point?',
+
+                            'Has vegetation grown onto the fence?',
+
+                            'Are there damaged or cracked insulators?',
+
+                            'Has the earthing system been checked?',
+
+                            'Has the energizer recently been changed or serviced?'
+
+                        ],
+
+                        possibleCauses: [
+
+                            'Vegetation leakage',
+
+                            'Poor earthing',
+
+                            'Damaged insulators',
+
+                            'Fence short circuit',
+
+                            'Broken conductor',
+
+                            'Energizer performance issue',
+
+                            'Poor connections'
+
+                        ]
+
+                    },
+
+
+                    intermittentFault: {
+
+                        description:
+                            'Fence works normally at some times but loses performance intermittently.',
+
+                        askFirst: [
+
+                            'Does the fault occur mainly during rain or damp conditions?',
+
+                            'Does it happen at a particular time of day?',
+
+                            'Does the voltage change when vegetation moves or becomes wet?',
+
+                            'Has any recent construction or maintenance taken place near the fence?',
+
+                            'Can the affected section be isolated?'
+
+                        ],
+
+                        possibleCauses: [
+
+                            'Moisture leakage',
+
+                            'Vegetation contact',
+
+                            'Loose connection',
+
+                            'Damaged insulator',
+
+                            'Intermittent conductor fault',
+
+                            'Poor underground connection'
+
+                        ]
+
+                    }
+
+                }
+
+            },
+
+
+            /* =====================================================
+               CCTV TROUBLESHOOTING
+            ===================================================== */
+
+            cctv: {
+
+                cameraOffline: {
+
+                    description:
+                        'Customer reports that one or more cameras are offline.',
+
+                    askFirst: [
+
+                        'Is one camera offline or are all cameras offline?',
+
+                        'Can you still access the recorder?',
+
+                        'Did the camera work previously?',
+
+                        'Was there a power outage?',
+
+                        'Was any network or cabling work recently performed?',
+
+                        'Does the camera have visible power or status indicators?'
+
+                    ],
+
+                    diagnosticLogic: [
+
+                        'If one camera is offline, investigate that camera, its connection and its power source first.',
+
+                        'If all cameras are offline, investigate the recorder, network or common power supply.',
+
+                        'If the recorder works but remote viewing does not, investigate the network or internet connection.',
+
+                        'If the camera has no power, investigate its power path before assuming camera failure.'
+
+                    ]
+
+                },
+
+
+                noRecording: {
+
+                    description:
+                        'Customer can see cameras but recorded footage is unavailable.',
+
+                    askFirst: [
+
+                        'Can you view the cameras live?',
+
+                        'Can you access playback?',
+
+                        'Is the recorder reporting a storage or hard-drive warning?',
+
+                        'Is recording configured for continuous or motion recording?',
+
+                        'When was the last successful recording?'
+
+                    ],
+
+                    possibleCauses: [
+
+                        'Storage failure',
+
+                        'Incorrect recording configuration',
+
+                        'Full or damaged storage',
+
+                        'Recording schedule issue',
+
+                        'Recorder fault',
+
+                        'Camera recording configuration problem'
+
+                    ]
+
+                },
+
+
+                poorNightImage: {
+
+                    description:
+                        'Customer reports that the camera image is poor at night.',
+
+                    askFirst: [
+
+                        'Is the image completely dark or simply unclear?',
+
+                        'Is there strong lighting near the camera?',
+
+                        'Is the lens clean?',
+
+                        'Is the camera looking through glass or another surface?',
+
+                        'Did the problem appear recently?',
+
+                        'Is the camera correctly positioned for the required distance?'
+
+                    ],
+
+                    possibleCauses: [
+
+                        'Insufficient illumination',
+
+                        'Dirty lens',
+
+                        'Reflection',
+
+                        'Incorrect camera positioning',
+
+                        'Infrared limitations',
+
+                        'Environmental conditions',
+
+                        'Camera configuration'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* =====================================================
+               ALARM TROUBLESHOOTING
+            ===================================================== */
+
+            alarm: {
+
+                falseAlarms: {
+
+                    description:
+                        'Customer reports repeated unwanted alarm activations.',
+
+                    askFirst: [
+
+                        'Which zone is triggering?',
+
+                        'Does the alarm occur at a particular time?',
+
+                        'Is the problem affecting one sensor or several sensors?',
+
+                        'Are there pets in the protected area?',
+
+                        'Have furniture, curtains or objects recently moved?',
+
+                        'Has there been recent construction or environmental change?',
+
+                        'Does the system report a tamper or battery fault?'
+
+                    ],
+
+                    possibleCauses: [
+
+                        'Sensor movement',
+
+                        'Incorrect sensor positioning',
+
+                        'Environmental changes',
+
+                        'Pet activity',
+
+                        'Low battery',
+
+                        'Tamper condition',
+
+                        'Wiring issue',
+
+                        'Sensor fault'
+
+                    ]
+
+                },
+
+
+                alarmNotArming: {
+
+                    description:
+                        'Customer reports that the alarm will not arm.',
+
+                    askFirst: [
+
+                        'Does the keypad show a specific message?',
+
+                        'Is a zone showing as open?',
+
+                        'Does the problem occur with every user?',
+
+                        'Has anything changed in the property recently?',
+
+                        'Is the system reporting a fault or tamper condition?'
+
+                    ],
+
+                    possibleCauses: [
+
+                        'Open zone',
+
+                        'Sensor fault',
+
+                        'Tamper condition',
+
+                        'Low battery',
+
+                        'Power issue',
+
+                        'Configuration problem'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* =====================================================
+               GATE MOTOR TROUBLESHOOTING
+            ===================================================== */
+
+            gateMotor: {
+
+               notOperating: {
+
+                    description:
+                        'Customer reports that the automated gate does not operate.',
+
+                    askFirst: [
+
+                        'Does the motor have power?',
+
+                        'Does the motor make any sound when activated?',
+
+                        'Does the gate move manually?',
+
+                        'Does the remote control indicator work?',
+
+                        'Does the gate respond to a second remote or control method?',
+
+                        'Has there been a power outage?',
+
+                        'Is the gate physically obstructed?',
+
+                        'Is the motor showing an error or warning indicator?'
+
+                    ],
+
+                    possibleCauses: [
+
+                        'Power supply problem',
+
+                        'Battery problem',
+
+                        'Remote-control issue',
+
+                        'Gate obstruction',
+
+                        'Mechanical resistance',
+
+                        'Motor fault',
+
+                        'Control-board fault',
+
+                        'Safety input activation'
+
+                    ],
+
+                    safety:
+                        'Do not bypass safety devices or force the gate mechanism. Mechanical or electrical faults should be inspected by a qualified installer or technician.'
+
+                },
+
+
+                slowOperation: {
+
+                    description:
+                        'Customer reports that the gate is operating slower than normal.',
+
+                    askFirst: [
+
+                        'Has the operating speed changed recently?',
+
+                        'Does the gate move freely manually?',
+
+                        'Is the problem worse under certain conditions?',
+
+                        'Has the gate track, wheels or hinges been serviced recently?',
+
+                        'Is the motor battery healthy?'
+
+                    ],
+
+                    possibleCauses: [
+
+                        'Mechanical resistance',
+
+                        'Gate alignment problem',
+
+                        'Battery condition',
+
+                        'Motor configuration',
+
+                        'Mechanical wear'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* =====================================================
+               ACCESS CONTROL TROUBLESHOOTING
+            ===================================================== */
+
+            accessControl: {
+
+               doorNotUnlocking: {
+
+                    description:
+                        'Customer reports that an authorised credential does not unlock the door.',
+
+                    askFirst: [
+
+                        'Does the reader respond when the credential is presented?',
+
+                        'Does the reader show an error?', 
+
+                        'Does the problem affect one user or all users?',
+
+                        'Does the lock receive power?',
+
+                        'Can another authorised credential open the door?',
+
+                        'Did the problem begin after a power outage or configuration change?'
+
+                    ],
+
+                    possibleCauses: [
+
+                        'Invalid credential',
+
+                        'Reader communication issue',
+
+                        'Power problem',
+
+                        'Lock problem',
+
+                        'Controller issue',
+
+                        'User-permission configuration',
+
+                        'Network communication issue'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* =====================================================
+               INTERCOM TROUBLESHOOTING
+            ===================================================== */
+
+            intercom: {
+
+               noAudio: {
+
+                    description:
+                        'Customer reports that the intercom has no audio.',
+
+                    askFirst: [
+
+                        'Is the problem one-way or both-way?',
+
+                        'Does video still work if it is a video intercom?',
+
+                        'Does the indoor station power on?', 
+
+                        'Does the gate station power on?',
+
+                        'Did the problem begin after electrical or network work?',
+
+                        'Does the gate release function still operate?'
+
+                    ],
+
+                    possibleCauses: [
+
+                        'Power problem',
+
+                        'Cable problem',
+
+                        'Network communication issue',
+
+                        'Speaker or microphone fault',
+
+                        'Configuration issue',
+
+                        'Device fault'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* =====================================================
+               TROUBLESHOOTING ESCALATION
+            ===================================================== */
+
+            escalation: {
+
+                immediateProfessionalHelp: [
+
+                    'Electrical burning smell',
+
+                    'Visible electrical damage',
+
+                    'Exposed conductors',
+
+                    'Repeated electrical arcing',
+
+                    'Lightning damage',
+
+                    'Smoke from equipment',
+
+                    'Damaged mains wiring',
+
+                    'Unsafe gate movement',
+
+                    'Security system connected to unsafe electrical equipment'
+
+                ],
+
+
+                response:
+                    'For safety reasons, stop operating the affected equipment and arrange an inspection by a suitably qualified technician or installer. Do not bypass safety devices or work on live electrical equipment.'
+
+            }
+
+        },
+
+
+        /* =========================================================
+           62. TECHNICAL EXPLANATION ENGINE
+        ========================================================= */
+
+        technicalExplanationEngine: {
+
+            objective:
+                'Explain security technology at the level appropriate to the customer while keeping the information technically responsible.',
+
+
+            principles: [
+
+                'Start with a simple explanation.',
+
+                'Explain technical terms when they matter.',
+
+                'Use examples where useful.',
+
+                'Avoid unnecessary specifications.',
+
+                'Offer deeper technical detail when the customer requests it.',
+
+                'Never present uncertain information as a confirmed specification.'
+
+            ],
+
+
+            examples: {
+
+                electricFence:
+                    'An electric fence energizer sends controlled high-voltage pulses through the fence conductor. When the circuit is interrupted or a person contacts the fence and provides a path to earth, the system produces a deterrent shock. Proper earthing, insulation and installation are essential.',
+
+                cctv:
+                    'A CCTV system uses cameras to capture video, a recorder or storage system to retain footage, and a display or network connection to allow viewing. The correct design depends on what needs to be seen, where cameras are positioned and how long footage must be retained.',
+
+                alarm:
+                    'An alarm system uses sensors to detect configured security events and communicates those events to a control panel. Depending on the system, alerts can then be provided locally or remotely.',
+
+                accessControl:
+                    'Access control determines whether a person is authorised to enter through a controlled door or gate. The system typically uses a credential, reader, controller and locking mechanism.',
+
+                gateAutomation:
+                    'Gate automation uses a motor and control system to open and close a gate while providing control through devices such as remotes, keypads, intercoms or access-control systems.'
+
+            }
+
+        },
