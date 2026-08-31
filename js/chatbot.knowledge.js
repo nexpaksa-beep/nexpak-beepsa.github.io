@@ -10159,3 +10159,762 @@
             }
 
         },
+
+                    /* =========================================================
+           29. ROBOGUARD — ADVANCED KNOWLEDGE
+        ========================================================= */
+
+        roboguardAdvanced: {
+
+            name: 'Roboguard',
+
+            category: 'Outdoor Perimeter Detection',
+
+            definition:
+                'Roboguard is an outdoor perimeter detection solution designed to detect movement within defined protected areas using compatible wireless outdoor detectors and a receiver or control system.',
+
+            simpleExplanation:
+                'Roboguard can help detect movement outside a building before an intruder reaches the main structure. The system is particularly useful for protecting yards, driveways, gardens, approaches and other outdoor areas.',
+
+
+            /* -----------------------------------------------------
+               ROBOGUARD APPLICATIONS
+            ----------------------------------------------------- */
+
+            applications: {
+
+                residential: {
+
+                    suitableFor: [
+
+                        'Large residential properties',
+
+                        'Driveways',
+
+                        'Gardens',
+
+                        'Pool areas',
+
+                        'Side passages',
+
+                        'Approaches to buildings',
+
+                        'Perimeter areas'
+
+                    ]
+
+                },
+
+
+                commercial: {
+
+                    suitableFor: [
+
+                        'Warehouses',
+
+                        'Factories',
+
+                        'Business premises',
+
+                        'Storage areas',
+
+                        'Vehicle yards',
+
+                        'Restricted outdoor areas',
+
+                        'Commercial perimeters'
+
+                    ]
+
+                },
+
+
+                agricultural: {
+
+                    suitableFor: [
+
+                        'Farm approaches',
+
+                        'Large properties',
+
+                        'Outbuildings',
+
+                        'Equipment areas',
+
+                        'Vehicle approaches',
+
+                        'Selected perimeter applications'
+
+                    ],
+
+                    importantRule:
+                        'Outdoor detection must be designed around the property, terrain, environmental conditions and intended detection zone.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               ROBOGUARD DESIGN FACTORS
+            ----------------------------------------------------- */
+
+            designFactors: [
+
+                'Property size',
+
+                'Detection distance',
+
+                'Detection direction',
+
+                'Detector positioning',
+
+                'Terrain',
+
+                'Vegetation',
+
+                'Driveways',
+
+                'Paths',
+
+                'Walls',
+
+                'Buildings',
+
+                'Animals',
+
+                'Environmental conditions',
+
+                'Wireless communication',
+
+                'Receiver location',
+
+                'Power requirements',
+
+                'Integration requirements'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               ROBOGUARD QUALIFICATION
+            ----------------------------------------------------- */
+
+            qualificationQuestions: [
+
+                'What area are you trying to protect?',
+
+                'Approximately how large is the property?',
+
+                'Where do people or vehicles normally approach the property?',
+
+                'Do you need driveway protection?',
+
+                'Do you have pets or animals on the property?',
+
+                'Are there trees, bushes or other environmental obstacles?',
+
+                'How many areas need detection?',
+
+                'Do you already have Roboguard equipment?',
+
+                'Do you want the detection system integrated with an alarm?',
+
+                'Do you require remote notifications?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               ROBOGUARD DETECTION CONSIDERATIONS
+            ----------------------------------------------------- */
+
+            detectionConsiderations: {
+
+                people:
+                    'The system should be positioned and configured according to the intended human movement paths.',
+
+                vehicles:
+                    'Driveways and vehicle approaches should be considered when determining detector placement and coverage.',
+
+                animals:
+                    'Pets, livestock and wildlife must be considered because outdoor detection systems can be affected by animal movement depending on the equipment and configuration.',
+
+                vegetation:
+                    'Vegetation movement can affect outdoor detection and should be considered during system design.',
+
+                terrain:
+                    'Slopes, walls, buildings and other physical features can affect detection coverage.',
+
+                weather:
+                    'Outdoor environmental conditions should be considered when selecting and positioning detection equipment.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               ROBOGUARD SALES RULES
+            ----------------------------------------------------- */
+
+            salesRules: [
+
+                'Determine the area requiring protection before recommending detector quantities.',
+
+                'Ask about pets and animals.',
+
+                'Ask about driveways and normal movement paths.',
+
+                'Consider terrain and vegetation.',
+
+                'Determine whether the customer already has an alarm system.',
+
+                'Determine whether integration is required.',
+
+                'Do not promise exact detection coverage without confirming the equipment and installation conditions.',
+
+                'Do not assume one detector is sufficient for an entire property.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               ROBOGUARD PRICING
+            ----------------------------------------------------- */
+
+            pricingGuidance: {
+
+                principle:
+                    'Roboguard pricing depends on the number of detectors, receiver or control equipment, accessories, integration requirements and installation conditions.',
+
+                factors: [
+
+                    'Number of detectors',
+
+                    'Detection areas',
+
+                    'Receiver',
+
+                    'Mounting equipment',
+
+                    'Power requirements',
+
+                    'Alarm integration',
+
+                    'Communication requirements',
+
+                    'Installation complexity'
+
+                ],
+
+                responseWhenAskedPrice:
+                    'The price depends mainly on how many outdoor areas need protection and how the detectors need to be positioned. I can help determine the required coverage first.'
+
+            }
+
+        },
+
+
+        /* =========================================================
+           30. ROBOGUARD SALES CONVERSATION ENGINE
+        ========================================================= */
+
+        roboguardSalesEngine: {
+
+            objective:
+                'Determine whether outdoor movement detection is appropriate and qualify the property before recommending a Roboguard solution.',
+
+            openingQuestions: [
+
+                'What area of the property are you trying to protect?',
+
+                'Do you want to detect people, vehicles or both?',
+
+                'How large is the area?',
+
+                'Do you have pets or animals?',
+
+                'Do you already have an alarm system?'
+
+            ],
+
+
+            decisionLogic: {
+
+                driveway:
+                    'Determine vehicle approach direction, detector positioning and whether additional perimeter protection is required.',
+
+                largeProperty:
+                    'Break the property into practical detection zones rather than assuming one detector can cover everything.',
+
+                pets:
+                    'Consider animal movement and the suitability of the proposed detection equipment and configuration.',
+
+                alarmIntegration:
+                    'Determine the existing alarm system and available integration method before recommending equipment.',
+
+                outdoorSecurity:
+                    'Consider Roboguard as part of a layered security strategy rather than as the only security measure.'
+
+            }
+
+        },
+
+
+        /* =========================================================
+           31. CCTV — ADVANCED KNOWLEDGE
+        ========================================================= */
+
+        cctvAdvanced: {
+
+            name: 'CCTV Surveillance',
+
+            category: 'Video Surveillance',
+
+            definition:
+                'CCTV systems use cameras and recording equipment to provide visual monitoring and recorded evidence of activity within selected areas.',
+
+            simpleExplanation:
+                'CCTV allows a customer to see what is happening around a property and, when recording is configured, review events after they occur.',
+
+
+            /* -----------------------------------------------------
+               CCTV SYSTEM TYPES
+            ----------------------------------------------------- */
+
+            systemTypes: {
+
+                analogHD: {
+
+                    name: 'HD Analogue CCTV',
+
+                    description:
+                        'Uses compatible analogue cameras and recording equipment over suitable cabling.',
+
+                    considerations: [
+
+                        'Existing cabling',
+
+                        'Camera resolution',
+
+                        'Cable distance',
+
+                        'DVR capability',
+
+                        'Power requirements',
+
+                        'Upgrade requirements'
+
+                    ]
+
+                },
+
+
+                ip: {
+
+                    name: 'IP CCTV',
+
+                    description:
+                        'Uses network-connected cameras and compatible network video recording equipment.',
+
+                    considerations: [
+
+                        'Network infrastructure',
+
+                        'PoE',
+
+                        'Bandwidth',
+
+                        'Network security',
+
+                        'Camera resolution',
+
+                        'NVR capacity',
+
+                        'Storage requirements'
+
+                    ]
+
+                },
+
+
+                wireless: {
+
+                    name: 'Wireless CCTV',
+
+                    description:
+                        'Uses wireless networking or communication for supported camera installations.',
+
+                    considerations: [
+
+                        'Wireless signal',
+
+                        'Distance',
+
+                        'Interference',
+
+                        'Power availability',
+
+                        'Network capacity',
+
+                        'Environmental conditions'
+
+                    ],
+
+                    importantRule:
+                        'Wireless CCTV should not be recommended simply because cable installation appears inconvenient. Signal reliability and power requirements must be considered.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               CAMERA TYPES
+            ----------------------------------------------------- */
+
+            cameraTypes: {
+
+                dome: {
+
+                    name: 'Dome Camera',
+
+                    typicalApplications: [
+
+                        'Indoor areas',
+
+                        'Commercial premises',
+
+                        'Entrances',
+
+                        'Corridors',
+
+                        'General surveillance'
+
+                    ]
+
+                },
+
+
+                turret: {
+
+                    name: 'Turret Camera',
+
+                    typicalApplications: [
+
+                        'Residential properties',
+
+                        'Commercial properties',
+
+                        'Outdoor walls',
+
+                        'General surveillance'
+
+                    ]
+
+                },
+
+
+                bullet: {
+
+                    name: 'Bullet Camera',
+
+                    typicalApplications: [
+
+                        'Perimeter monitoring',
+
+                        'Driveways',
+
+                        'Longer viewing directions',
+
+                        'Outdoor surveillance'
+
+                    ]
+
+                },
+
+
+                ptz: {
+
+                    name: 'PTZ Camera',
+
+                    typicalApplications: [
+
+                        'Large areas',
+
+                        'Commercial properties',
+
+                        'Yards',
+
+                        'Large outdoor spaces'
+
+                    ],
+
+                    considerations: [
+
+                        'Operator requirements',
+
+                        'Preset positions',
+
+                        'Tracking capabilities',
+
+                        'Coverage limitations'
+
+                    ],
+
+                    importantRule:
+                        'A PTZ camera should not automatically be treated as a replacement for multiple fixed cameras because its field of view can change.'
+
+                }
+
+
+            },
+
+
+            /* -----------------------------------------------------
+               CCTV IMAGE REQUIREMENTS
+            ----------------------------------------------------- */
+
+            imageRequirements: {
+
+                overview:
+
+                    'The customer must decide whether the objective is general monitoring, identifying people, identifying vehicles or reading number plates.',
+
+                generalMonitoring: {
+
+                    objective:
+                        'Observe activity within an area.',
+
+                    priorities: [
+
+                        'Coverage',
+
+                        'Camera position',
+
+                        'Lighting',
+
+                        'Recording'
+
+                    ]
+
+                },
+
+
+                identification: {
+
+                    objective:
+                        'Capture sufficient image detail to help identify a person or event.',
+
+                    priorities: [
+
+                        'Camera resolution',
+
+                        'Distance',
+
+                        'Lens selection',
+
+                        'Lighting',
+
+                        'Camera position',
+
+                        'Pixel detail'
+
+                    ]
+
+                },
+
+
+                numberPlate: {
+
+                    objective:
+                        'Capture suitable vehicle and number-plate information under appropriate conditions.',
+
+                    priorities: [
+
+                        'Distance',
+
+                        'Vehicle speed',
+
+                        'Camera angle',
+
+                        'Lighting',
+
+                        'Number-plate illumination',
+
+                        'Lens selection',
+
+                        'Image detail',
+
+                        'Camera positioning'
+
+                    ],
+
+                    importantRule:
+                        'Never guarantee number-plate recognition simply because a camera is advertised as high resolution.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               CCTV SALES QUALIFICATION
+            ----------------------------------------------------- */
+
+            qualificationQuestions: [
+
+                'What areas do you want to monitor?',
+
+                'How many cameras are you considering?',
+
+                'Do you need indoor, outdoor or both?',
+
+                'Do you need to identify people or simply monitor activity?',
+
+                'Do you need number-plate identification?',
+
+                'How far is the camera from the area you want to monitor?',
+
+                'Is the area well lit at night?',
+
+                'Do you need night vision?',
+
+                'Do you want to view cameras remotely from your phone?',
+
+                'How long do you want recordings stored?',
+
+                'Do you have existing CCTV equipment?',
+
+                'Do you have existing cabling?',
+
+                'Do you want audio?',
+
+                'Do you require motion detection or analytics?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               CCTV STORAGE
+            ----------------------------------------------------- */
+
+            storage: {
+
+                purpose:
+                    'Recorded video requires storage capacity based on camera count, resolution, frame rate, compression, recording mode and retention period.',
+
+                factors: [
+
+                    'Number of cameras',
+
+                    'Resolution',
+
+                    'Frame rate',
+
+                    'Compression',
+
+                    'Continuous recording',
+
+                    'Motion recording',
+
+                    'Event recording',
+
+                    'Retention period',
+
+                    'Hard-drive capacity',
+
+                    'NVR or DVR capability'
+
+                ],
+
+                salesQuestions: [
+
+                    'How many cameras will be recording?',
+
+                    'Do you want continuous recording or motion recording?',
+
+                    'How many days of footage do you want to keep?',
+
+                    'Do you need high-resolution recording?'
+
+                ],
+
+                importantRule:
+                    'Never promise a specific recording retention period without calculating the storage requirement.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               CCTV REMOTE VIEWING
+            ----------------------------------------------------- */
+
+            remoteViewing: {
+
+                possibleFeatures: [
+
+                    'Live camera viewing',
+
+                    'Playback',
+
+                    'Motion notifications',
+
+                    'Remote system management where supported',
+
+                    'User access management'
+
+                ],
+
+                requirements: [
+
+                    'Compatible recorder',
+
+                    'Network connectivity',
+
+                    'Compatible mobile application',
+
+                    'Correct configuration',
+
+                    'Internet service for remote access'
+
+                ]
+
+            }
+
+        },
+
+
+        /* =========================================================
+           32. CCTV SALES ENGINE
+        ========================================================= */
+
+        cctvSalesEngine: {
+
+            objective:
+                'Determine the customer surveillance objective before recommending cameras, recorder capacity and storage.',
+
+            openingQuestions: [
+
+                'What do you want the cameras to see?',
+
+                'How many areas need monitoring?',
+
+                'Do you need general monitoring or identification?',
+
+                'Do you need number-plate identification?',
+
+                'Do you want to view the cameras from your phone?'
+
+            ],
+
+
+            decisionLogic: {
+
+                residential:
+                    'Prioritize entrances, driveway, perimeter, vulnerable areas, night visibility and practical recording requirements.',
+
+                commercial:
+                    'Prioritize entrances, staff areas, stock areas, perimeter coverage, storage retention and user access.',
+
+                driveway:
+                    'Determine distance to vehicles, camera posit
