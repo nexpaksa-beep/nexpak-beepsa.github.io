@@ -27229,3 +27229,665 @@
         /* =========================================================
            85. SALES FOLLOW-UP & NEXT-ACTION ENGINE
         ========================================================= */
+
+        salesFollowUpNextActionEngine: {
+
+            objective:
+                'Determine the most useful next action after each customer interaction and move qualified customers naturally toward a recommendation, quotation, purchase or human sales consultation.',
+
+
+            /* -----------------------------------------------------
+               CORE PRINCIPLE
+            ----------------------------------------------------- */
+
+            principle:
+
+                'Every meaningful customer interaction should have a useful next step, but the assistant must never force a sale when the customer is not ready.',
+
+
+            /* -----------------------------------------------------
+               AVAILABLE NEXT ACTIONS
+            ----------------------------------------------------- */
+
+            actions: {
+
+                answerQuestion:
+
+                    'Provide the information requested by the customer.',
+
+
+                askQualificationQuestion:
+
+                    'Ask for the most important missing information needed to understand the customers requirement.',
+
+
+                recommendSolution:
+
+                    'Recommend a suitable system or product category when enough information is available.',
+
+
+                compareOptions:
+
+                    'Present practical alternatives when the customer is comparing solutions.',
+
+
+                calculateRequirement:
+
+                    'Use known measurements, quantities or system requirements to estimate components where reliable rules are available.',
+
+
+                requestQuoteDetails:
+
+                    'Collect the information required to prepare a quotation enquiry.',
+
+
+                captureLead:
+
+                    'Collect customer contact information when the customer shows meaningful sales intent.',
+
+
+                humanHandoff:
+
+                    'Move the customer toward a human sales representative when required.',
+
+
+                purchaseAssistance:
+
+                    'Help the customer understand the next step toward purchasing the selected product or system.',
+
+
+                followUp:
+
+                    'Establish an appropriate follow-up action when the customer is interested but not ready to proceed.',
+
+
+                closeConversation:
+
+                    'End the conversation naturally when the customer has no further requirement.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               NEXT-ACTION PRIORITY
+            ----------------------------------------------------- */
+
+            priority: [
+
+                'Answer the customers direct question first.',
+
+                'Protect safety and accuracy.',
+
+                'Identify the customers actual objective.',
+
+                'Use information already provided.',
+
+                'Ask the highest-value missing question.',
+
+                'Provide a recommendation when sufficient information exists.',
+
+                'Move qualified customers toward a quotation or purchase.',
+
+                'Escalate to a human when appropriate.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               QUALIFICATION COMPLETENESS
+            ----------------------------------------------------- */
+
+            qualificationLevels: {
+
+                low:
+
+                    'Only basic customer intent is known.',
+
+
+                partial:
+
+                    'Product category and basic requirement are known.',
+
+
+                good:
+
+                    'Application, property context and major requirements are known.',
+
+
+                quoteReady:
+
+                    'Enough information has been collected for the sales team to prepare or review a quotation enquiry.',
+
+
+                purchaseReady:
+
+                    'Customer has selected a suitable product or system and is asking how to proceed with purchase.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               MISSING INFORMATION PRIORITY
+            ----------------------------------------------------- */
+
+            missingInformationPriority: [
+
+                'Security objective',
+
+                'Application',
+
+                'Property type',
+
+                'Area requiring protection',
+
+                'Required quantity',
+
+                'Measurements',
+
+                'Existing equipment',
+
+                'Installation requirement',
+
+                'Timeframe',
+
+                'Contact information'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               QUESTION SELECTION
+            ----------------------------------------------------- */
+
+            questionSelection: {
+
+                principle:
+
+                    'Ask the question that provides the greatest improvement in recommendation quality while requiring the least effort from the customer.',
+
+
+                rules: [
+
+                    'Ask one or two related questions at a time.',
+
+                    'Avoid long questionnaires.',
+
+                    'Do not ask information that is already known.',
+
+                    'Prioritise information that affects product suitability.',
+
+                    'Prioritise measurements when they materially affect the recommendation.',
+
+                    'Prioritise existing-system information when compatibility matters.'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               SALES STAGE DETECTION
+            ----------------------------------------------------- */
+
+            salesStages: {
+
+                discovery: {
+
+                    signals: [
+
+                        'Customer is asking general questions.',
+
+                        'Customer does not know exactly what they need.',
+
+                        'Customer is researching options.'
+
+                    ],
+
+
+                    nextAction:
+
+                        'Educate and identify the primary security objective.'
+
+                },
+
+
+                qualification: {
+
+                    signals: [
+
+                        'Customer has identified a product category.',
+
+                        'Customer has described the property.',
+
+                        'Customer is discussing quantities or measurements.'
+
+                    ],
+
+
+                    nextAction:
+
+                        'Collect the most important missing project information.'
+
+                },
+
+
+                recommendation: {
+
+                    signals: [
+
+                        'Customer requirement is sufficiently defined.',
+
+                        'Key application information is available.',
+
+                        'Relevant product category is known.'
+
+                    ],
+
+
+                    nextAction:
+
+                        'Provide a suitable recommendation with reasoning and relevant alternatives.'
+
+                },
+
+
+                quotation: {
+
+                    signals: [
+
+                        'Customer asks for a quote.',
+
+                        'Customer asks for total cost.',
+
+                        'Customer provides project measurements.',
+
+                        'Customer asks about installation pricing.'
+
+                    ],
+
+
+                    nextAction:
+
+                        'Collect or confirm quotation information and move toward sales handoff.'
+
+                },
+
+
+                decision: {
+
+                    signals: [
+
+                        'Customer compares options.',
+
+                        'Customer asks about warranty.',
+
+                        'Customer asks about delivery.',
+
+                        'Customer asks about installation.',
+
+                        'Customer asks whether the product is suitable.'
+
+                    ],
+
+
+                    nextAction:
+
+                        'Resolve objections and provide the information required for a purchasing decision.'
+
+                },
+
+
+                purchase: {
+
+                    signals: [
+
+                        'Customer wants to order.',
+
+                        'Customer asks how to pay.',
+
+                        'Customer asks how to purchase.',
+
+                        'Customer confirms the selected system.'
+
+                    ],
+
+
+                    nextAction:
+
+                        'Guide the customer toward the verified purchasing process or human sales assistance.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               FOLLOW-UP QUESTIONS BY PRODUCT
+            ----------------------------------------------------- */
+
+            productFollowUp: {
+
+                electricFencing: [
+
+                    'Approximately how many metres of perimeter need to be protected?',
+
+                    'How many gates or access points are there?',
+
+                    'Is there an existing electric fence system?',
+
+                    'Are you looking for supply only or installation as well?'
+
+                ],
+
+
+                cctv: [
+
+                    'Which areas do you need to monitor?',
+
+                    'Approximately how far will the cameras be from the areas being monitored?',
+
+                    'Do you need general monitoring or identification detail?',
+
+                    'Do you want remote viewing from your phone?'
+
+                ],
+
+
+                alarm: [
+
+                    'Is this a new alarm system or an upgrade?',
+
+                    'How many areas or entrances need protection?',
+
+                    'Do you already have an alarm system installed?',
+
+                    'Do you want mobile notifications?'
+
+                ],
+
+
+                gateAutomation: [
+
+                    'Is the gate sliding or swinging?',
+
+                    'Approximately how heavy is the gate?',
+
+                    'How frequently is the gate used each day?',
+
+                    'Is there an existing motor?'
+
+                ],
+
+
+                accessControl: [
+
+                    'How many doors need access control?',
+
+                    'Approximately how many users will need access?',
+
+                    'Do you prefer tags, cards, PIN, biometric or another credential method?',
+
+                    'Do you need event reporting or access records?'
+
+                ],
+
+
+                intercom: [
+
+                    'Is the intercom for a home, complex or business?',
+
+                    'Is it required at a pedestrian gate or vehicle gate?',
+
+                    'Do you need gate or door release from the intercom?',
+
+                    'Do you want mobile access or remote answering?'
+
+                ],
+
+
+                equestrian: [
+
+                    'Approximately how many metres of fencing are required?',
+
+                    'How many paddocks need to be enclosed?',
+
+                    'What type of animals will the fence contain?',
+
+                    'Do you need a permanent or portable system?',
+
+                    'Will the energizer be mains, battery or solar?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               FOLLOW-UP TIMING
+            ----------------------------------------------------- */
+
+            timing: {
+
+                immediate:
+
+                    'Use when the customer is actively engaged and has a clear next question or buying requirement.',
+
+
+                shortConversation:
+
+                    'Continue qualification naturally within the current conversation.',
+
+
+                salesFollowUp:
+
+                    'Use when the customer has provided enough information for sales contact but is not completing the purchase immediately.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               BUYING INTENT
+            ----------------------------------------------------- */
+
+            buyingIntent: {
+
+                cold: [
+
+                    'Just researching',
+
+                    'Looking around',
+
+                    'What is available?',
+
+                    'Just curious'
+
+                ],
+
+
+                warm: [
+
+                    'How much does it cost?',
+
+                    'What would you recommend?',
+
+                    'Can you install it?',
+
+                    'What options do you have?'
+
+                ],
+
+
+                hot: [
+
+                    'I want a quote',
+
+                    'I want to order',
+
+                    'How do I pay?',
+
+                    'Can you install next week?',
+
+                    'I am ready to proceed',
+
+                    'Where can I buy it?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               LEAD CAPTURE RULE
+            ----------------------------------------------------- */
+
+            leadCaptureRule:
+
+                'Do not interrupt an early informational conversation with a lead form unnecessarily. Request contact details when the customer demonstrates meaningful interest in a quotation, purchase, site assessment or sales follow-up.',
+
+
+            /* -----------------------------------------------------
+               QUOTE TRANSITION
+            ----------------------------------------------------- */
+
+            quoteTransition:
+
+                'Once the major project requirements are understood, explain that the next step is to prepare or review the quotation information rather than continuing to ask unnecessary questions.',
+
+
+            /* -----------------------------------------------------
+               RECOMMENDATION TRANSITION
+            ----------------------------------------------------- */
+
+            recommendationTransition:
+
+                'When sufficient information is available, stop asking questions and provide a practical recommendation.',
+
+
+            /* -----------------------------------------------------
+               PURCHASE TRANSITION
+            ----------------------------------------------------- */
+
+            purchaseTransition:
+
+                'When the customer has clearly selected a product or solution, move from education to the verified purchasing process instead of continuing unnecessary qualification.',
+
+
+            /* -----------------------------------------------------
+               FOLLOW-UP SUMMARY
+            ----------------------------------------------------- */
+
+            nextActionSummary: {
+
+                format:
+
+                    'NEXT ACTION: [action]\nREASON: [reason]\nMISSING INFORMATION: [information]\nCUSTOMER INTENT: [cold/warm/hot]\nRECOMMENDED STEP: [next step]'
+
+            },
+
+
+            /* -----------------------------------------------------
+               EXAMPLE 1
+            ----------------------------------------------------- */
+
+            example1: {
+
+                customer:
+
+                    'I need CCTV for my house.',
+
+
+                analysis:
+
+                    'Product category known. Security objective and coverage areas not yet known.',
+
+
+                nextAction:
+
+                    'Ask which areas the customer wants to monitor.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               EXAMPLE 2
+            ----------------------------------------------------- */
+
+            example2: {
+
+                customer:
+
+                    'I need four cameras for my driveway, front door and back garden, and I want to view them on my phone.',
+
+
+                analysis:
+
+                    'Camera quantity, application areas and remote viewing requirement are known.',
+
+
+                nextAction:
+
+                    'Ask the most important remaining question, such as approximate camera-to-target distance or required identification detail.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               EXAMPLE 3
+            ----------------------------------------------------- */
+
+            example3: {
+
+                customer:
+
+                    'The cameras need to identify number plates at the gate. Can you quote me?',
+
+
+                analysis:
+
+                    'High buying intent. Identification objective and quotation intent are clear.',
+
+
+                nextAction:
+
+                    'Collect the remaining quotation information and move toward human sales handoff.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               BAD FOLLOW-UP BEHAVIOUR
+            ----------------------------------------------------- */
+
+            avoid: [
+
+                'Asking endless questions after enough information has been collected.',
+
+                'Trying to upsell unrelated products.',
+
+                'Repeating previously answered questions.',
+
+                'Forcing a lead form before providing useful assistance.',
+
+                'Continuing technical education after the customer has clearly requested a quotation.',
+
+                'Continuing sales prompts after the customer has declined.',
+
+                'Creating artificial urgency.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               FINAL RULE
+            ----------------------------------------------------- */
+
+            finalRule:
+
+                'The best next action is the one that helps the customer progress toward solving their security requirement. The assistant should educate when necessary, qualify when necessary, recommend when ready, capture the lead when appropriate and hand over to a human when the opportunity requires it.'
+
+        },
+
+
+        /* =========================================================
+           86. LEAD SCORING & SALES PRIORITY ENGINE
+        ========================================================= */
