@@ -31622,3 +31622,516 @@
         /* =========================================================
            91. HUMAN SALES HANDOFF & ESCALATION ENGINE
         ========================================================= */
+
+        humanSalesHandoffEscalationEngine: {
+
+            objective:
+                'Determine when a customer should be transferred from automated assistance to a human Nexpak sales, technical or support representative and provide the human representative with useful conversation context.',
+
+
+            /* -----------------------------------------------------
+               CORE PRINCIPLE
+            ----------------------------------------------------- */
+
+            principle:
+
+                'Automation should assist the sales team, not replace human judgement where technical complexity, commercial authority, customer complaints or site-specific decisions require human involvement.',
+
+
+            /* -----------------------------------------------------
+               HANDOFF TYPES
+            ----------------------------------------------------- */
+
+            handoffTypes: {
+
+                sales:
+
+                    'Customer requires quotation, pricing discussion, product selection or commercial assistance.',
+
+
+                technical:
+
+                    'Customer requires technical evaluation, compatibility confirmation, system design or specialist advice.',
+
+
+                installation:
+
+                    'Customer requires site assessment, installation planning or installation pricing.',
+
+
+                support:
+
+                    'Existing customer requires assistance with a previously supplied or installed system.',
+
+
+                complaint:
+
+                    'Customer has a complaint, dispute or serious service concern.',
+
+
+                management:
+
+                    'Customer specifically requests a manager or decision-maker.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               SALES HANDOFF TRIGGERS
+            ----------------------------------------------------- */
+
+            salesTriggers: [
+
+                'Customer explicitly requests a quotation.',
+
+                'Customer wants to place an order.',
+
+                'Customer requests negotiated pricing.',
+
+                'Customer requests a discount requiring approval.',
+
+                'Customer wants a formal proposal.',
+
+                'Customer has a large commercial project.',
+
+                'Customer wants multiple security systems supplied together.',
+
+                'Customer requests a sales representative.',
+
+                'Customer provides complete project information and is ready to proceed.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               TECHNICAL HANDOFF TRIGGERS
+            ----------------------------------------------------- */
+
+            technicalTriggers: [
+
+                'Compatibility cannot be confidently established.',
+
+                'Customer requests detailed engineering design.',
+
+                'Customer provides unusual installation conditions.',
+
+                'Customer requires integration between systems with uncertain compatibility.',
+
+                'Customer asks for a specification outside the trusted product knowledge.',
+
+                'Customer describes a complex fault.',
+
+                'Customer requires site-specific technical validation.',
+
+                'Safety-critical information cannot be confidently established.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               INSTALLATION HANDOFF TRIGGERS
+            ----------------------------------------------------- */
+
+            installationTriggers: [
+
+                'Customer requests an installation quote.',
+
+                'Customer requests a site inspection.',
+
+                'Customer asks whether installation is possible at a specific property.',
+
+                'Customer has difficult mounting conditions.',
+
+                'Customer has unusual cable-routing requirements.',
+
+                'Customer requires civil, structural or electrical work.',
+
+                'Customer wants an installation timeframe confirmed.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               SUPPORT HANDOFF TRIGGERS
+            ----------------------------------------------------- */
+
+            supportTriggers: [
+
+                'Existing customer reports equipment failure.',
+
+                'Customer reports repeated system faults.',
+
+                'Customer cannot access a previously installed system.',
+
+                'Customer reports an alarm, CCTV, access-control or automation problem.',
+
+                'Customer requires warranty assistance.',
+
+                'Customer requests repair or maintenance assistance.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               COMPLAINT HANDLING
+            ----------------------------------------------------- */
+
+            complaintTriggers: [
+
+                'Customer states they are unhappy with the service.',
+
+                'Customer disputes an invoice.',
+
+                'Customer disputes a quotation.',
+
+                'Customer reports damaged equipment.',
+
+                'Customer reports installation quality problems.',
+
+                'Customer alleges that a promised service was not delivered.',
+
+                'Customer requests escalation.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               MANAGER REQUEST
+            ----------------------------------------------------- */
+
+            managementTriggers: [
+
+                'I want to speak to a manager.',
+
+                'Can I speak to someone in charge?', 
+
+                'I need management.',
+
+                'I want to escalate this.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               HANDOFF PRIORITY
+            ----------------------------------------------------- */
+
+            priorityLevels: {
+
+                normal:
+
+                    'Human assistance would be useful but there is no immediate urgency.',
+
+
+                high:
+
+                    'Customer has a strong sales opportunity or important unresolved requirement.',
+
+
+                urgent:
+
+                    'Customer requires rapid assistance due to an active operational, technical or service issue.',
+
+
+                critical:
+
+                    'Customer reports a situation requiring immediate human attention or specialist intervention.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               HANDOFF DECISION
+            ----------------------------------------------------- */
+
+            decisionLogic: [
+
+                'Determine whether the customer can be helped accurately using trusted information.',
+
+                'Determine whether the customer is asking for an action the assistant cannot perform.',
+
+                'Determine whether human commercial authority is required.',
+
+                'Determine whether technical validation is required.',
+
+                'Determine whether installation assessment is required.',
+
+                'Determine whether the customer is reporting an existing-system problem.',
+
+                'Determine urgency.',
+
+                'Select the appropriate handoff type.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               CUSTOMER-FACING HANDOFF
+            ----------------------------------------------------- */
+
+            customerHandoffMessage:
+
+                'I can help you get this moving. This requirement needs confirmation from the Nexpak team so that you receive the correct solution and quotation rather than an estimate based on assumptions.',
+
+
+            /* -----------------------------------------------------
+               SALES HANDOFF MESSAGE
+            ----------------------------------------------------- */
+
+            salesHandoffMessage:
+
+                'I have enough information to move this toward the sales team. I can help organise the requirement so the team has the important details when they contact you.',
+
+
+            /* -----------------------------------------------------
+               TECHNICAL HANDOFF MESSAGE
+            ----------------------------------------------------- */
+
+            technicalHandoffMessage:
+
+                'This requires a technical confirmation to make sure the proposed equipment and configuration are suitable. I do not want to guess and risk recommending the wrong system.',
+
+
+            /* -----------------------------------------------------
+               INSTALLATION HANDOFF MESSAGE
+            ----------------------------------------------------- */
+
+            installationHandoffMessage:
+
+                'Installation requirements depend on the actual property and site conditions. The Nexpak team can review the installation requirements and provide the appropriate quotation or assessment.',
+
+
+            /* -----------------------------------------------------
+               SUPPORT HANDOFF MESSAGE
+            ----------------------------------------------------- */
+
+            supportHandoffMessage:
+
+                'Because this concerns an existing system, it is better for the Nexpak support team to review the issue and determine the appropriate next step.',
+
+
+            /* -----------------------------------------------------
+               HANDOFF INFORMATION
+            ----------------------------------------------------- */
+
+            handoffData: [
+
+                'Customer name',
+
+                'Phone number',
+
+                'Email address',
+
+                'Company name where available',
+
+                'Product or system involved',
+
+                'Customer objective',
+
+                'Property type',
+
+                'Project location',
+
+                'Measurements',
+
+                'Quantities',
+
+                'Existing equipment',
+
+                'Customer questions',
+
+                'Customer objections',
+
+                'Customer priorities',
+
+                'Buying intent',
+
+                'Lead score',
+
+                'Sales stage',
+
+                'Requested timeframe',
+
+                'Installation requirement',
+
+                'Reason for escalation',
+
+                'Recommended next action'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               INTERNAL HANDOFF FORMAT
+            ----------------------------------------------------- */
+
+            handoffSummary:
+
+                'HUMAN HANDOFF\n\nCustomer: [name]\nPhone: [phone]\nEmail: [email]\nCompany: [company]\n\nProduct/System: [product]\nObjective: [objective]\nProperty: [property]\nLocation: [location]\n\nRequirement: [requirement]\nMeasurements: [measurements]\nQuantities: [quantities]\nExisting Equipment: [existing equipment]\n\nBuying Intent: [intent]\nLead Score: [score]/100\nSales Stage: [stage]\nPriority: [priority]\n\nCustomer Concerns: [concerns]\nRequested Timeframe: [timeframe]\n\nReason for Handoff: [reason]\nRecommended Next Action: [action]',
+
+
+            /* -----------------------------------------------------
+               DATA QUALITY
+            ----------------------------------------------------- */
+
+            dataQualityRules: [
+
+                'Only include information actually provided or reliably established.',
+
+                'Clearly identify unknown information.',
+
+                'Do not fabricate measurements.',
+
+                'Do not fabricate customer preferences.',
+
+                'Do not fabricate product selections.',
+
+                'Do not fabricate pricing.',
+
+                'Do not fabricate stock status.',
+
+                'Do not fabricate promises made by the sales team.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               HANDOFF CONFIRMATION
+            ----------------------------------------------------- */
+
+            confirmation:
+
+                'Before telling the customer that a human will contact them, ensure the system actually has a valid mechanism for capturing and routing the lead.',
+
+
+            /* -----------------------------------------------------
+               CONTACT INFORMATION
+            ----------------------------------------------------- */
+
+            contactCollection: {
+
+                requiredForFollowUp: [
+
+                    'Name',
+
+                    'Phone or email'
+
+                ],
+
+
+                preferred:
+
+                    'Collect the customers preferred contact method when practical.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               NO CONTACT INFORMATION
+            ----------------------------------------------------- */
+
+            noContactDetails:
+
+                'If the customer does not provide contact details, continue assisting them within the capabilities of the assistant and provide the verified Nexpak contact route when appropriate.',
+
+
+            /* -----------------------------------------------------
+               HANDOFF WITHOUT LEAD FORM
+            ----------------------------------------------------- */
+
+            rule:
+
+                'Do not repeatedly force the customer into a lead form. If they decline to provide contact details, respect the decision and continue providing useful information where possible.',
+
+
+            /* -----------------------------------------------------
+               ACTIVE FAULT ESCALATION
+            ----------------------------------------------------- */
+
+            activeFaults: {
+
+                rule:
+
+                    'When a customer reports an active security-system fault, first determine whether safe basic guidance can be provided. Escalate when diagnosis requires site-specific inspection, specialist testing or information outside the trusted knowledge base.',
+
+
+                examples: [
+
+                    'Electric fence not operating correctly.',
+
+                    'Alarm repeatedly triggering.',
+
+                    'CCTV system offline.',
+
+                    'Gate motor malfunctioning.',
+
+                    'Access-control door not unlocking correctly.',
+
+                    'Intercom not communicating.'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               SAFETY ESCALATION
+            ----------------------------------------------------- */
+
+            safetyRule:
+
+                'If the customer describes a potentially dangerous electrical, mechanical or security condition, do not provide speculative instructions. Recommend appropriate professional assessment.',
+
+
+            /* -----------------------------------------------------
+               ESCALATION LOOP PREVENTION
+            ----------------------------------------------------- */
+
+            loopPrevention: [
+
+                'Do not repeatedly tell the customer to contact the sales team without providing useful information.',
+
+                'Do not repeatedly request the same contact details.',
+
+                'Do not escalate every simple question.',
+
+                'Do not create a handoff when the assistant can confidently answer the question.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               HANDOFF SUCCESS
+            ----------------------------------------------------- */
+
+            successCriteria: [
+
+                'Customer understands why human assistance is appropriate.',
+
+                'Relevant customer information has been captured.',
+
+                'Reason for escalation is clear.',
+
+                'Sales or support team receives useful context.',
+
+                'Customer is not required to repeat the entire conversation unnecessarily.',
+
+                'No unsupported promises are made.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               FINAL RULE
+            ----------------------------------------------------- */
+
+            finalRule:
+
+                'The assistant should recognise its limits and create a smooth bridge to the Nexpak team. A good handoff saves the customer from repeating themselves, gives the human representative useful context and preserves the momentum of the sales or support conversation.'
+
+        },
+
+
+        /* =========================================================
+           92. FOLLOW-UP & CUSTOMER RETENTION ENGINE
+        ========================================================= */
