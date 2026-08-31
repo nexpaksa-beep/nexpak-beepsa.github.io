@@ -862,4 +862,336 @@
 
                 'Can electric fencing be installed on my wall?',
 
-                '
+                '                'Can electric fencing be installed on my wall?',
+
+                'Can electric fencing be installed on an existing fence?',
+
+                'How many strands do I need?',
+
+                'What energizer do I need?',
+
+                'Why is my electric fence alarming?',
+
+                'Why is my electric fence losing voltage?',
+
+                'How often should an electric fence be serviced?',
+
+                'Can electric fencing work with CCTV?',
+
+                'Can electric fencing work with an alarm system?',
+
+                'Can electric fencing protect a gate?',
+
+                'Can electric fencing work during a power failure?',
+
+                'Can I use solar power for an electric fence?',
+
+                'What happens if vegetation touches the fence?',
+
+                'Why does my electric fence keep going off?',
+
+                'How do I know if my electric fence has a fault?',
+
+                'How do I test an electric fence?',
+
+                'How often should an electric fence be maintained?',
+
+                'Can you upgrade my existing electric fence?',
+
+                'Can electric fencing be installed on top of a wall?',
+
+                'Can electric fencing be installed on a palisade fence?',
+
+                'What is the difference between electric fencing and an ordinary fence?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               SALES POSITIONING
+            ----------------------------------------------------- */
+
+            salesPositioning:
+                'The assistant should sell the complete security solution rather than treating the energizer, wire or insulators as isolated products.'
+
+
+        },
+
+
+        /* =========================================================
+           05. ELECTRIC FENCING — FAULTS
+        ========================================================= */
+
+        electricFenceFaults: {
+
+            lowVoltage: {
+
+                description:
+                    'Low fence voltage can result from leakage, poor connections, vegetation contact, damaged insulation, earth-system problems, conductor problems or equipment issues.',
+
+                possibleCauses: [
+
+                    'Vegetation touching conductors',
+
+                    'Damaged insulators',
+
+                    'Poor electrical connections',
+
+                    'Broken conductor',
+
+                    'Corrosion',
+
+                    'Poor earth system',
+
+                    'Moisture-related leakage',
+
+                    'Equipment fault'
+
+                ],
+
+                safeCustomerGuidance: [
+
+                    'Ask the customer whether the problem is constant or intermittent.',
+
+                    'Ask whether vegetation has recently grown onto the fence.',
+
+                    'Ask whether the system has recently been exposed to severe weather.',
+
+                    'Recommend professional testing when the cause is not obvious.'
+
+                ]
+
+            },
+
+
+            nuisanceAlarm: {
+
+                description:
+                    'Repeated or unexplained fence alarms can be caused by environmental conditions, mechanical faults, electrical leakage or equipment problems.',
+
+                possibleCauses: [
+
+                    'Vegetation touching the fence',
+
+                    'Loose connections',
+
+                    'Damaged insulators',
+
+                    'Broken conductors',
+
+                    'Moisture',
+
+                    'Poor earthing',
+
+                    'Environmental interference',
+
+                    'Equipment fault'
+
+                ]
+
+            },
+
+
+            intermittentFault: {
+
+                description:
+                    'An intermittent fault occurs only under certain conditions, which can make it more difficult to identify.',
+
+                commonTriggers: [
+
+                    'Wind movement',
+
+                    'Vegetation movement',
+
+                    'Rain',
+
+                    'Moisture',
+
+                    'Temperature changes',
+
+                    'Loose mechanical connections',
+
+                    'Intermittent conductor contact'
+
+                ]
+
+            },
+
+
+            safetyRule:
+                'Never tell a customer to touch an energized conductor, bypass a safety device or perform unsafe electrical testing. Encourage appropriate professional testing and servicing.'
+
+        },
+
+
+        /* =========================================================
+           06. GENERAL SALES LANGUAGE
+        ========================================================= */
+
+        salesLanguage: {
+
+            preferredTerms: {
+
+                recommend: [
+
+                    'I would recommend considering...',
+
+                    'For that type of application...',
+
+                    'The right option depends on...',
+
+                    'To select the correct system, I need to know...'
+
+                ],
+
+
+                clarify: [
+
+                    'Let me narrow that down for you.',
+
+                    'There are a couple of factors that affect the correct choice.',
+
+                    'Before I recommend a system, can I check...'
+
+                ],
+
+
+                quote: [
+
+                    'I can help you work out what you need for a quotation.',
+
+                    'Once we have the basic site details, we can move toward a quote.',
+
+                    'Let me get a few details so we can recommend the right solution.'
+
+                ]
+
+            },
+
+
+            avoidTerms: [
+
+                'This is definitely the cheapest',
+
+                'This will protect you 100%',
+
+                'This product can never fail',
+
+                'Guaranteed to stop all criminals',
+
+                'I guarantee this exact price',
+
+                'We definitely have stock',
+
+                'Installation is definitely available tomorrow'
+
+            ],
+
+
+            salesPrinciple:
+                'The assistant should build trust by giving accurate information and asking intelligent questions rather than making exaggerated claims.'
+
+        },
+
+
+        /* =========================================================
+           07. KNOWLEDGE VERSION
+        ========================================================= */
+
+        version: {
+
+            major: 1,
+
+            minor: 0,
+
+            patch: 0,
+
+            name: 'Nexpak Advanced Sales Assistant Knowledge Base',
+
+            date: '2026-08-31'
+
+        }
+
+    };
+
+
+    /* =============================================================
+       KNOWLEDGE API
+    ============================================================= */
+
+    const NexpakKnowledgeAPI = {
+
+
+        getCategory: function (category) {
+
+            if (!category) {
+                return null;
+            }
+
+            return NEXPAK_KNOWLEDGE.productCategories[category] || null;
+
+        },
+
+
+        getPropertyType: function (type) {
+
+            if (!type) {
+                return null;
+            }
+
+            return NEXPAK_KNOWLEDGE.propertyTypes[type] || null;
+
+        },
+
+
+        getElectricFenceKnowledge: function () {
+
+            return NEXPAK_KNOWLEDGE.electricFencing;
+
+        },
+
+
+        getFaultKnowledge: function () {
+
+            return NEXPAK_KNOWLEDGE.electricFenceFaults;
+
+        },
+
+
+        getAllCategories: function () {
+
+            return Object.keys(
+                NEXPAK_KNOWLEDGE.productCategories
+            );
+
+        },
+
+
+        getAllPropertyTypes: function () {
+
+            return Object.keys(
+                NEXPAK_KNOWLEDGE.propertyTypes
+            );
+
+        },
+
+
+        getVersion: function () {
+
+            return NEXPAK_KNOWLEDGE.version;
+
+        }
+
+    };
+
+
+    /* =============================================================
+       EXPORT TO WINDOW
+    ============================================================= */
+
+    window.NEXPAK_KNOWLEDGE = NEXPAK_KNOWLEDGE;
+
+    window.NexpakKnowledgeAPI = NexpakKnowledgeAPI;
+
+
+})(window);
