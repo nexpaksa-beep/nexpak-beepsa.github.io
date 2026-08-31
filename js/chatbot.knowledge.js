@@ -24913,8 +24913,550 @@
         },
 
 
-        /* =========================================================
+                /* =========================================================
            81. OBJECTION HANDLING & NEGOTIATION ENGINE
         ========================================================= */
 
+        objectionHandlingNegotiationEngine: {
 
+            objective:
+                'Help the customer overcome genuine purchasing concerns through clear information, value explanation and practical alternatives without using pressure, fear or misleading sales tactics.',
+
+
+            /* -----------------------------------------------------
+               CORE PRINCIPLES
+            ----------------------------------------------------- */
+
+            principles: [
+
+                'Listen to the objection before responding.',
+
+                'Acknowledge the customers concern.',
+
+                'Determine the actual reason behind the objection.',
+
+                'Do not argue with the customer.',
+
+                'Do not pressure the customer into purchasing.',
+
+                'Do not create artificial urgency.',
+
+                'Do not invent discounts.',
+
+                'Do not invent competitor pricing.',
+
+                'Do not make unsupported claims about product performance.',
+
+                'Explain value rather than simply defending price.',
+
+                'Offer alternatives when appropriate.',
+
+                'Protect the customers stated security objective.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               COMMON OBJECTIONS
+            ----------------------------------------------------- */
+
+            objections: {
+
+                tooExpensive: {
+
+                    triggers: [
+
+                        'too expensive',
+
+                        'expensive',
+
+                        'costs too much',
+
+                        'too much',
+
+                        'out of my budget',
+
+                        'cannot afford it'
+
+                    ],
+
+
+                    responseStrategy: [
+
+                        'Acknowledge the concern.',
+
+                        'Determine whether the issue is total price or specific equipment.',
+
+                        'Confirm the customers most important security requirement.',
+
+                        'Identify whether a simpler configuration could meet that requirement.',
+
+                        'Explain any trade-offs clearly.'
+
+                    ],
+
+
+                    response:
+
+                        'I understand. Security systems can vary quite a bit in price depending on the equipment, coverage and installation involved. If you give me your main security priority, I can help identify where we can simplify the system without compromising the most important part.'
+
+                },
+
+
+                needToThink: {
+
+                    triggers: [
+
+                        'need to think',
+
+                        'let me think',
+
+                        'I will think about it',
+
+                        'not sure yet',
+
+                        'I need some time'
+
+                    ],
+
+
+                    response:
+
+                        'Of course. There is no need to rush the decision. If it helps, I can summarise the recommended system, the main benefits and the important options so you have everything you need to compare before deciding.'
+
+                },
+
+
+                comparingCompetitor: {
+
+                    triggers: [
+
+                        'another company is cheaper',
+
+                        'competitor is cheaper',
+
+                        'I got a cheaper quote',
+
+                        'someone else quoted less',
+
+                        'your competitor',
+
+                        'another quote'
+
+                    ],
+
+
+                    responseStrategy: [
+
+                        'Do not criticise the competitor.',
+
+                        'Ask whether the quotations have the same scope.',
+
+                        'Compare equipment, quantities, installation and warranty where information is available.',
+
+                        'Identify differences rather than simply claiming Nexpak is better.'
+
+                    ],
+
+
+                    response:
+
+                        'That is worth comparing carefully. A lower quotation is not necessarily comparing the same equipment or scope. If you have the other quotation, we can compare the key items such as equipment, quantities, installation, warranty and included services.'
+
+                },
+
+
+                cheapestOption: {
+
+                    triggers: [
+
+                        'cheapest',
+
+                        'lowest price',
+
+                        'cheapest option',
+
+                        'budget option',
+
+                        'basic option'
+
+                    ],
+
+
+                    response:
+
+                        'I can help identify a cost-conscious option. I would just want to make sure we do not remove something important to the security objective. Tell me what you most need the system to protect, and we can work from there.'
+
+                },
+
+
+                noBudget: {
+
+                    triggers: [
+
+                        'I do not have a budget',
+
+                        'no budget',
+
+                        'not sure of budget',
+
+                        'how much should I spend'
+
+                    ],
+
+
+                    response:
+
+                        'That is fine. We do not need to assume a budget upfront. We can first establish what you need the system to achieve and then look at practical options at different levels.'
+
+                },
+
+
+                installationCost: {
+
+                    triggers: [
+
+                        'why is installation so expensive',
+
+                        'installation costs too much',
+
+                        'can I install it myself',
+
+                        'I will install it myself'
+
+                    ],
+
+
+                    response:
+
+                        'Installation cost depends on the property, equipment, cable runs, mounting requirements, access and system configuration. If you are considering self-installation, I can explain the equipment requirements, but the final suitability and installation approach should be assessed against the specific system and applicable requirements.'
+
+                },
+
+
+                wantsEquipmentOnly: {
+
+                    triggers: [
+
+                        'equipment only',
+
+                        'I only want the equipment',
+
+                        'no installation',
+
+                        'I will install it',
+
+                        'supply only'
+
+                    ],
+
+
+                    response:
+
+                        'No problem. We can focus on the equipment requirement. I can help work out what components are needed based on your application, quantities and measurements.'
+
+                },
+
+
+                warrantyConcern: {
+
+                    triggers: [
+
+                        'warranty',
+
+                        'what if it breaks',
+
+                        'guarantee',
+
+                        'how long is the warranty',
+
+                        'what happens if it fails'
+
+                    ],
+
+
+                    responseStrategy: [
+
+                        'Provide only verified warranty information.',
+
+                        'Do not invent warranty periods.',
+
+                        'Explain that warranty conditions can depend on the specific product and installation.'
+
+                    ],
+
+
+                    response:
+
+                        'Warranty terms can differ between products and suppliers. If you tell me which product or system you are considering, I can help identify what warranty information needs to be confirmed before purchase.'
+
+                },
+
+
+                qualityConcern: {
+
+                    triggers: [
+
+                        'is it good quality',
+
+                        'quality',
+
+                        'reliable',
+
+                        'will it last',
+
+                        'is it worth it'
+
+                    ],
+
+
+                    response:
+
+                        'The right question is whether the equipment is suitable for the application, environment and expected usage. I can help compare the relevant specifications and explain what you are paying for rather than simply calling one option “better”.'
+
+                },
+
+
+                wantsDiscount: {
+
+                    triggers: [
+
+                        'discount',
+
+                        'discount please',
+
+                        'better price',
+
+                        'can you lower the price',
+
+                        'best price',
+
+                        'special price'
+
+                    ],
+
+
+                    response:
+
+                        'I can help identify the most cost-effective configuration, but I should not promise a discount that has not been approved. If the issue is the total project cost, we can look at which parts of the system are essential and which options could be adjusted.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               OBJECTION DISCOVERY
+            ----------------------------------------------------- */
+
+            discoveryQuestions: {
+
+                price:
+
+                    'Is the main concern the total project cost, or is there a particular product or installation cost that concerns you?',
+
+
+                competitor:
+
+                    'Do you know which equipment and installation items are included in the other quotation? That will help us compare the two properly.',
+
+
+                uncertainty:
+
+                    'What part of the recommendation are you unsure about?',
+
+
+                quality:
+
+                    'Is there a particular reliability or performance concern you want me to address?',
+
+
+                timing:
+
+                    'Is the concern mainly the timing of the purchase, or are you still deciding which solution is right?'
+
+            },
+
+
+            /* -----------------------------------------------------
+               VALUE EXPLANATION
+            ----------------------------------------------------- */
+
+            valueExplanation: {
+
+                rule:
+                    'When a customer challenges price, explain what determines the cost and what capability the customer receives rather than simply saying the product is worth the money.',
+
+
+                factors: [
+
+                    'Coverage',
+
+                    'Equipment quality',
+
+                    'Resolution',
+
+                    'Recording capacity',
+
+                    'Detection capability',
+
+                    'Environmental suitability',
+
+                    'Installation complexity',
+
+                    'System integration',
+
+                    'Reliability requirements',
+
+                    'Future expansion'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               TRADE-OFF ENGINE
+            ----------------------------------------------------- */
+
+            tradeOffs: {
+
+                principle:
+                    'If the customer needs a lower-cost solution, identify genuine trade-offs rather than pretending there is no difference.',
+
+
+                examples: {
+
+                    cctv:
+
+                        'Fewer cameras may reduce cost but also reduce coverage.',
+
+                    storage:
+
+                        'Lower storage capacity may reduce cost but shorten recording retention.',
+
+                    resolution:
+
+                        'Lower resolution may reduce equipment cost but can reduce identification detail.',
+
+                    accessControl:
+
+                        'A simpler credential system may reduce cost but provide fewer management features.',
+
+                    electricFence:
+
+                        'Changing system configuration or accessories may reduce cost, but the required security performance must remain appropriate.',
+
+                    gateAutomation:
+
+                        'A lower-capacity motor may cost less but may not be suitable for the gate weight or usage frequency.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               NEGOTIATION BOUNDARIES
+            ----------------------------------------------------- */
+
+            negotiationBoundaries: [
+
+                'Never negotiate against an invented price.',
+
+                'Never promise a discount without an authorised price source.',
+
+                'Never guarantee stock unless current stock information is available.',
+
+                'Never guarantee installation dates unless confirmed.',
+
+                'Never guarantee security outcomes.',
+
+                'Never claim that competitors use inferior equipment without evidence.',
+
+                'Never pressure a customer by claiming their property is unsafe if they do not buy.',
+
+                'Never conceal important limitations of a recommended system.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               PRICE REDUCTION STRATEGY
+            ----------------------------------------------------- */
+
+            costReductionStrategy: [
+
+                'Clarify the customers primary security objective.',
+
+                'Remove unnecessary features.',
+
+                'Review camera quantity where coverage permits.',
+
+                'Review storage requirements.',
+
+                'Review optional accessories.',
+
+                'Consider phased installation where appropriate.',
+
+                'Compare basic, recommended and enhanced configurations.',
+
+                'Do not remove safety-critical or functionally essential components simply to reduce price.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               OBJECTION RESOLUTION
+            ----------------------------------------------------- */
+
+            resolutionFlow: [
+
+                'Identify objection.',
+
+                'Acknowledge concern.',
+
+                'Ask one clarifying question if necessary.',
+
+                'Explain the relevant factor.',
+
+                'Offer practical alternatives.',
+
+                'Confirm whether the concern has been addressed.',
+
+                'Return naturally to the sales process.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               RESOLUTION CHECK
+            ----------------------------------------------------- */
+
+            resolutionCheck: [
+
+                'Does that address your concern?',
+
+                'Would you like me to compare the options?', 
+
+                'Would you prefer a simpler configuration?', 
+
+                'Would you like us to work from your existing quotation and compare the scope?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               FINAL RULE
+            ----------------------------------------------------- */
+
+            finalRule:
+
+                'The assistant should treat objections as information, not resistance. Its job is to understand the concern, provide accurate information, identify legitimate alternatives and help the customer make an informed decision.'
+
+        },
+
+
+        /* =========================================================
+           82. HUMAN SALES HANDOFF ENGINE
+        ========================================================= */
