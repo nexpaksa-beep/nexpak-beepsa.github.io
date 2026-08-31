@@ -3724,4 +3724,767 @@
 
         },
 
+                    /* =========================================================
+           13. ACCESS CONTROL — ADVANCED KNOWLEDGE
+        ========================================================= */
+
+        accessControlAdvanced: {
+
+            name: 'Access Control',
+
+            category: 'Controlled Entry',
+
+
+            /* -----------------------------------------------------
+               CORE DEFINITION
+            ----------------------------------------------------- */
+
+            definition:
+                'Access control is a security system used to control and manage who is permitted to enter a protected area.',
+
+
+            simpleExplanation:
+                'Instead of allowing everyone to enter freely, access control requires an authorized credential or approved method of entry.',
+
+
+            salesPrinciple:
+                'The assistant should determine who needs access, where access is required, how many users are involved and how the customer wants access managed before recommending equipment.',
+
+
+            /* -----------------------------------------------------
+               ACCESS METHODS
+            ----------------------------------------------------- */
+
+            accessMethods: {
+
+
+                keypad: {
+
+                    name: 'PIN / Keypad Access',
+
+                    description:
+                        'Users enter an authorized PIN or code to request access.',
+
+                    advantages: [
+
+                        'No physical card required',
+
+                        'Simple for selected applications',
+
+                        'Useful for controlled staff or residential access'
+
+                    ],
+
+                    considerations: [
+
+                        'PIN sharing',
+
+                        'User management',
+
+                        'Code security',
+
+                        'Suitable installation environment'
+
+                    ]
+
+                },
+
+
+                rfid: {
+
+                    name: 'RFID / Proximity Access',
+
+                    description:
+                        'Users present a compatible credential such as a proximity card or tag to a reader.',
+
+                    advantages: [
+
+                        'Convenient user access',
+
+                        'Individual credentials can be assigned',
+
+                        'Credentials can often be removed when access is no longer required'
+
+                    ],
+
+                    applications: [
+
+                        'Offices',
+
+                        'Staff entrances',
+
+                        'Apartment buildings',
+
+                        'Warehouses',
+
+                        'Controlled gates'
+
+                    ]
+
+                },
+
+
+                biometric: {
+
+                    name: 'Biometric Access',
+
+                    description:
+                        'Uses a biometric characteristic such as a fingerprint or facial feature on supported equipment to authenticate a user.',
+
+                    commonApplications: [
+
+                        'Offices',
+
+                        'Commercial buildings',
+
+                        'Staff entrances',
+
+                        'Restricted areas'
+
+                    ],
+
+                    considerations: [
+
+                        'Number of users',
+
+                        'Environment',
+
+                        'Device capability',
+
+                        'User enrollment',
+
+                        'Privacy requirements',
+
+                        'Backup access method'
+
+                    ],
+
+                    importantRule:
+                        'Do not promise biometric recognition performance without considering the actual device, environment and manufacturer specifications.'
+
+                },
+
+
+                mobile: {
+
+                    name: 'Mobile Access',
+
+                    description:
+                        'Some access-control platforms support mobile credentials or application-based access.',
+
+                    considerations: [
+
+                        'Compatible hardware',
+
+                        'Application support',
+
+                        'Bluetooth or network requirements',
+
+                        'User permissions',
+
+                        'Phone compatibility'
+
+                    ]
+
+                },
+
+
+                remote: {
+
+                    name: 'Remote Access Management',
+
+                    description:
+                        'Compatible systems may allow authorized administrators to manage users or access events remotely.',
+
+                    possibleFunctions: [
+
+                        'User management',
+
+                        'Credential management',
+
+                        'Access event review',
+
+                        'Remote unlocking where supported',
+
+                        'Temporary access'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               CORE COMPONENTS
+            ----------------------------------------------------- */
+
+            components: {
+
+
+                reader: {
+
+                    name: 'Access Reader',
+
+                    purpose:
+                        'Reads or receives the credential used by an authorized user.',
+
+                    possibleTypes: [
+
+                        'RFID reader',
+
+                        'Keypad reader',
+
+                        'Fingerprint reader',
+
+                        'Facial recognition reader',
+
+                        'Combined reader'
+
+                    ]
+
+                },
+
+
+                controller: {
+
+                    name: 'Access Controller',
+
+                    purpose:
+                        'Processes access requests and controls connected locking or entry equipment according to its configuration.'
+
+                },
+
+
+                electricStrike: {
+
+                    name: 'Electric Strike',
+
+                    purpose:
+                        'An electrically controlled locking component that can release a compatible door latch when authorized access is granted.',
+
+                    considerations: [
+
+                        'Door type',
+
+                        'Lock type',
+
+                        'Fail-safe or fail-secure configuration',
+
+                        'Power requirements',
+
+                        'Fire and emergency requirements'
+
+                    ],
+
+                    importantRule:
+                        'The correct locking method must be selected for the specific door and safety requirements.'
+
+                },
+
+
+                maglock: {
+
+                    name: 'Magnetic Lock',
+
+                    purpose:
+                        'An electromagnetic locking device used on suitable doors.',
+
+                    considerations: [
+
+                        'Door construction',
+
+                        'Power supply',
+
+                        'Emergency release requirements',
+
+                        'Fail-safe operation',
+
+                        'Exit hardware',
+
+                        'Fire safety requirements'
+
+                    ],
+
+                    importantRule:
+                        'Magnetic locks require appropriate emergency egress and safety arrangements. Do not recommend a configuration without considering the applicable building and fire-safety requirements.'
+
+                },
+
+
+                exitButton: {
+
+                    name: 'Request-to-Exit / Exit Button',
+
+                    purpose:
+                        'Allows an authorized person inside a controlled area to initiate a release of the door where appropriately configured.',
+
+                    commonApplications: [
+
+                        'Offices',
+
+                        'Staff entrances',
+
+                        'Controlled rooms',
+
+                        'Commercial premises'
+
+                    ]
+
+                },
+
+
+                doorSensor: {
+
+                    name: 'Door Position Sensor',
+
+                    purpose:
+                        'Provides information about whether a protected door is open or closed when supported by the system.',
+
+                    benefits: [
+
+                        'Door-status monitoring',
+
+                        'Access event context',
+
+                        'Detection of certain abnormal door conditions'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               USER MANAGEMENT
+            ----------------------------------------------------- */
+
+            userManagement: {
+
+                principle:
+                    'A good access-control system should make it easier for an authorized administrator to control who has access.',
+
+                possibleFunctions: [
+
+                    'Add users',
+
+                    'Remove users',
+
+                    'Assign credentials',
+
+                    'Change PINs',
+
+                    'Disable lost credentials',
+
+                    'Manage access permissions',
+
+                    'Review access events where supported',
+
+                    'Create temporary access where supported'
+
+                ],
+
+                salesQuestions: [
+
+                    'How many people need access?',
+
+                    'Do different people require different access permissions?',
+
+                    'Do you need to remove users when they leave the company?',
+
+                    'Do you need temporary access for visitors or contractors?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               ACCESS LEVELS
+            ----------------------------------------------------- */
+
+            accessLevels: {
+
+                concept:
+                    'Access levels determine which users are allowed to enter particular doors, gates or areas.',
+
+                examples: [
+
+                    'General staff',
+
+                    'Management',
+
+                    'Security personnel',
+
+                    'Maintenance staff',
+
+                    'Visitors',
+
+                    'Contractors'
+
+                ],
+
+                salesExample:
+                    'A business may allow general employees into the main building while restricting the server room, stock room or management areas to authorized personnel.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               ACCESS EVENTS
+            ----------------------------------------------------- */
+
+            eventLogging: {
+
+                description:
+                    'Some access-control systems record access events, allowing authorized administrators to review activity.',
+
+                possibleInformation: [
+
+                    'User identity',
+
+                    'Credential used',
+
+                    'Door or gate',
+
+                    'Date',
+
+                    'Time',
+
+                    'Access granted',
+
+                    'Access denied'
+
+                ],
+
+                importantRule:
+                    'Exact event information depends on the selected access-control equipment and software.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               RESIDENTIAL ACCESS CONTROL
+            ----------------------------------------------------- */
+
+            residential: {
+
+                applications: [
+
+                    'Main entrance',
+
+                    'Pedestrian gate',
+
+                    'Garage access',
+
+                    'Apartment entrance',
+
+                    'Complex entrance',
+
+                    'Staff or service entrance'
+
+                ],
+
+                commonRequirements: [
+
+                    'Remote gate access',
+
+                    'Intercom',
+
+                    'Keypad',
+
+                    'RFID',
+
+                    'Mobile access',
+
+                    'Visitor management'
+
+                ],
+
+                qualificationQuestions: [
+
+                    'Is this for a private home or residential complex?',
+
+                    'How many people require access?',
+
+                    'Do you need vehicle and pedestrian access controlled separately?',
+
+                    'Do you need an intercom?',
+
+                    'Do you want mobile access?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               COMMERCIAL ACCESS CONTROL
+            ----------------------------------------------------- */
+
+            commercial: {
+
+                applications: [
+
+                    'Office buildings',
+
+                    'Factories',
+
+                    'Warehouses',
+
+                    'Retail premises',
+
+                    'Medical facilities',
+
+                    'Schools',
+
+                    'Storage facilities'
+
+                ],
+
+                considerations: [
+
+                    'Number of employees',
+
+                    'Number of controlled doors',
+
+                    'User permissions',
+
+                    'Working hours',
+
+                    'Visitor access',
+
+                    'Staff turnover',
+
+                    'Event logging',
+
+                    'Emergency exit requirements',
+
+                    'Integration with alarm systems',
+
+                    'Integration with CCTV'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               ACCESS CONTROL + CCTV
+            ----------------------------------------------------- */
+
+            cctvIntegration: {
+
+                concept:
+                    'Access control and CCTV can complement each other by combining information about who requested access with visual information from nearby cameras where compatible systems support integration.',
+
+                benefits: [
+
+                    'Visual verification',
+
+                    'Improved event investigation',
+
+                    'Better awareness of access events',
+
+                    'Centralized security information where supported'
+
+                ],
+
+                salesQuestion:
+                    'Would you like CCTV to monitor the doors or gates controlled by the access-control system?'
+
+            },
+
+
+            /* -----------------------------------------------------
+               ACCESS CONTROL + ALARM
+            ----------------------------------------------------- */
+
+            alarmIntegration: {
+
+                concept:
+                    'Access control and intrusion alarms can work together in suitable installations.',
+
+                applications: [
+
+                    'Restricted areas',
+
+                    'After-hours access',
+
+                    'Staff entrances',
+
+                    'Commercial buildings',
+
+                    'Warehouses'
+
+                ],
+
+                importantNote:
+                    'Integration depends on compatible equipment and configuration.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               ACCESS CONTROL SALES QUALIFICATION
+            ----------------------------------------------------- */
+
+            qualificationQuestions: [
+
+                'Is the system for a home, office, warehouse, factory or another property?',
+
+                'How many people need access?',
+
+                'How many doors or gates need to be controlled?',
+
+                'Do you need vehicle access, pedestrian access or both?',
+
+                'Which access method would you prefer—PIN, RFID, biometric or mobile?',
+
+                'Do different users need different access permissions?',
+
+                'Do you need visitor access?',
+
+                'Do you need access-event records?',
+
+                'Do you need remote management?',
+
+                'Do you already have an access-control system?',
+
+                'Do you want access control integrated with CCTV?',
+
+                'Do you want access control integrated with an alarm system?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               COMMON QUESTIONS
+            ----------------------------------------------------- */
+
+            commonQuestions: [
+
+                'What is access control?',
+
+                'How does access control work?',
+
+                'What is RFID access?',
+
+                'What is biometric access?',
+
+                'Can I use a PIN to open the door?',
+
+                'Can I use my phone to open the gate?',
+
+                'How many users can an access-control system support?',
+
+                'Can I remove a user when they leave the company?',
+
+                'Can I see who accessed the door?',
+
+                'Can access control work with CCTV?',
+
+                'Can access control work with an alarm?',
+
+                'Can access control be installed on a gate?',
+
+                'Can access control be installed on a pedestrian gate?',
+
+                'How much does access control cost?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               SAFETY / ACCURACY
+            ----------------------------------------------------- */
+
+            safetyRules: [
+
+                'Do not recommend a lock without considering the door and exit requirements.',
+
+                'Do not ignore emergency egress requirements.',
+
+                'Do not claim a biometric reader will work perfectly in every environment.',
+
+                'Do not invent user capacity specifications.',
+
+                'Do not claim mobile access is available without compatible equipment.',
+
+                'Do not promise access logs without confirming that the selected system supports them.',
+
+                'Do not invent compatibility between access-control equipment and other security systems.'
+
+            ]
+
+        },
+
+
+        /* =========================================================
+           14. GATE AUTOMATION — ADVANCED KNOWLEDGE
+        ========================================================= */
+
+        gateAutomationAdvanced: {
+
+            name: 'Gate Automation',
+
+            category: 'Automated Entry',
+
+
+            /* -----------------------------------------------------
+               CORE DEFINITION
+            ----------------------------------------------------- */
+
+            definition:
+                'Gate automation uses an electrically powered operator and control system to open and close a compatible gate.',
+
+
+            simpleExplanation:
+                'Instead of manually opening the gate, a motorized system allows authorized users to operate the gate using a remote, keypad, intercom, access-control system or compatible mobile solution.',
+
+
+            salesPrinciple:
+                'The correct gate motor depends on the gate type, gate weight, gate dimensions, operating frequency, installation conditions and required features.'
+
+
+            /* -----------------------------------------------------
+               GATE TYPES
+            ----------------------------------------------------- */
+
+            gateTypes: {
+
+                sliding: {
+
+                    name: 'Sliding Gate',
+
+                    operation:
+                        'The gate moves horizontally along a track or suitable sliding mechanism.',
+
+                    considerations: [
+
+                        'Gate weight',
+
+                        'Gate length',
+
+                        'Track condition',
+
+                        'Gate alignment',
+
+                        'Ground conditions',
+
+                        'Usage frequency',
+
+                        'Rack installation',
+
+                        'Manual release requirements'
+
+                    ]
+
+                },
+
+
+                swing: {
+
+                    name: 'Swing G
                
