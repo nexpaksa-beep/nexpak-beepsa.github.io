@@ -17303,6 +17303,557 @@
             },
 
 
-            /* =====================================================
+                        /* =====================================================
                ROBOTIC / PERIMETER DETECTION
-       
+            ===================================================== */
+
+            perimeterDetection: {
+
+                overview:
+                    'Perimeter detection systems are designed to identify activity or intrusion along defined external areas and can form an additional layer of protection around a property.',
+
+
+                applications: [
+
+                    'Residential properties',
+
+                    'Farms and agricultural properties',
+
+                    'Commercial premises',
+
+                    'Industrial sites',
+
+                    'Large perimeters',
+
+                    'Remote areas',
+
+                    'Vehicle approaches',
+
+                    'Restricted zones'
+
+                ],
+
+
+                technologies: {
+
+                    outdoorDetection:
+                        'Outdoor detection systems can identify movement or activity in defined areas and may be used as part of a layered perimeter-security strategy.',
+
+                    beamDetection:
+                        'Beam-based detection uses a defined detection path and can be useful for protecting suitable access routes or perimeter sections.',
+
+                    perimeterSensors:
+                        'Specialised perimeter sensors can monitor defined sections of a property depending on the technology and installation environment.',
+
+                    roboticDetection:
+                        'Robotic or advanced perimeter-detection solutions may combine sensors, processing and alert technologies to identify activity across larger or more complex areas.'
+
+                },
+
+
+                considerations: [
+
+                    'Detection range',
+
+                    'Property size',
+
+                    'Detection zone',
+
+                    'Environmental conditions',
+
+                    'Vegetation',
+
+                    'Animals',
+
+                    'Weather',
+
+                    'Power availability',
+
+                    'Communication requirements',
+
+                    'False-alarm management',
+
+                    'Integration with other security systems',
+
+                    'Maintenance requirements'
+
+                ],
+
+
+                customerQuestions: [
+
+                    'What area are you trying to protect?',
+
+                    'How large is the perimeter?',
+
+                    'What type of activity do you want to detect?',
+
+                    'Are there animals on the property?',
+
+                    'Is the area heavily vegetated?',
+
+                    'Is mains power available?',
+
+                    'Do you need local or remote alerts?',
+
+                    'Do you already have CCTV or an alarm system?'
+
+                ],
+
+
+                salesRule:
+                    'The assistant should first establish what the customer wants to detect, where detection is required and what environmental conditions exist before recommending a particular perimeter-detection technology.'
+
+            },
+
+
+            /* =====================================================
+               BACKUP POWER
+            ===================================================== */
+
+            backupPower: {
+
+                overview:
+                    'Backup power helps selected security equipment continue operating during mains-power interruptions.',
+
+
+                applications: [
+
+                    'Alarm systems',
+
+                    'CCTV systems',
+
+                    'Access control',
+
+                    'Gate automation',
+
+                    'Electric fencing',
+
+                    'Intercom systems',
+
+                    'Network equipment',
+
+                    'Perimeter detection'
+
+                ],
+
+
+                technologies: {
+
+                    batteryBackup:
+                        'Battery backup can maintain suitable equipment during a mains-power interruption for a period determined by system load and battery capacity.',
+
+                    ups:
+                        'An appropriate UPS can provide temporary backup power to compatible equipment such as networking equipment, CCTV recorders and other electronic devices.',
+
+                    solar:
+                        'Solar power can provide an alternative energy source for suitable security equipment, particularly where mains power is unavailable or impractical.',
+
+                    hybrid:
+                        'Hybrid systems can combine available power sources and battery storage depending on the application.'
+
+                },
+
+
+                sizingFactors: [
+
+                    'Equipment load',
+
+                    'Voltage',
+
+                    'Current consumption',
+
+                    'Battery capacity',
+
+                    'Required backup duration',
+
+                    'Charging capability',
+
+                    'Number of devices',
+
+                    'Environmental conditions',
+
+                    'Solar availability',
+
+                    'Future expansion'
+
+                ],
+
+
+                customerQuestions: [
+
+                    'Which equipment needs to remain operational during a power failure?',
+
+                    'How long would you like the system to operate without mains power?',
+
+                    'How many devices need backup power?',
+
+                    'Is solar power an option?', 
+
+                    'Is the equipment installed at a remote location?'
+
+                ],
+
+
+                salesRule:
+                    'Never promise a specific backup duration without knowing the connected load, battery capacity and operating conditions.'
+
+            },
+
+
+            /* =====================================================
+               NETWORKING & CONNECTIVITY
+            ===================================================== */
+
+            networking: {
+
+                overview:
+                    'Many modern security systems depend on reliable network infrastructure for communication, remote access, management and integration.',
+
+
+                components: {
+
+                    ethernet:
+                        'Ethernet cabling provides wired network connectivity for compatible security equipment.',
+
+                    switch:
+                        'A network switch connects multiple network devices and can support security equipment depending on its specifications.',
+
+                    poeSwitch:
+                        'A PoE switch can provide both network connectivity and power to compatible PoE devices.',
+
+                    router:
+                        'A router manages network connectivity and may provide the internet connection required for remote access.',
+
+                    wireless:
+                        'Wireless connectivity can be useful where supported by the equipment, although environmental conditions and signal strength must be considered.',
+
+                    internet:
+                        'An internet connection may be required for remote viewing, cloud services, notifications or remote management depending on the system.'
+
+                },
+
+
+                customerQuestions: [
+
+                    'Is internet available at the property?',
+
+                    'Is network cabling already installed?',
+
+                    'How far are the cameras or other devices from the network equipment?',
+
+                    'Do you require remote access?',
+
+                    'Is the system being installed in a new or existing network?'
+
+                ],
+
+
+                salesRule:
+                    'Do not assume that an internet connection automatically guarantees reliable remote access. Network configuration, bandwidth, equipment compatibility and connectivity quality must also be considered.'
+
+            },
+
+
+            /* =====================================================
+               SECURITY LIGHTING
+            ===================================================== */
+
+            securityLighting: {
+
+                overview:
+                    'Security lighting can improve visibility around entrances, driveways, pathways and vulnerable areas and can complement CCTV and other security systems.',
+
+
+                applications: [
+
+                    'Driveways',
+
+                    'Entrances',
+
+                    'Perimeters',
+
+                    'Parking areas',
+
+                    'Walkways',
+
+                    'Loading areas',
+
+                    'Gate areas',
+
+                    'Dark or isolated sections'
+
+                ],
+
+
+                considerations: [
+
+                    'Area size',
+
+                    'Mounting position',
+
+                    'Required illumination',
+
+                    'Night-time environment',
+
+                    'Power availability',
+
+                    'Motion activation',
+
+                    'CCTV positioning',
+
+                    'Light spill',
+
+                    'Weather exposure'
+
+                ],
+
+
+                salesRule:
+                    'Lighting should be considered alongside camera positioning because excessive glare, poor positioning or insufficient illumination can affect surveillance performance.'
+
+            },
+
+
+            /* =====================================================
+               SECURITY INTEGRATION
+            ===================================================== */
+
+            integration: {
+
+                overview:
+                    'Integrated security systems allow different security technologies to work together where the equipment supports the required interfaces and functionality.',
+
+
+                commonIntegrations: {
+
+                    electricFenceCCTV:
+                        'CCTV can provide visual verification around an electric-fence perimeter.',
+
+                    electricFenceAlarm:
+                        'Compatible perimeter events may be integrated with an alarm system.',
+
+                    gateIntercom:
+                        'An intercom can allow a visitor to communicate with an occupant before the gate is released.',
+
+                    gateAccessControl:
+                        'Access control can regulate authorised operation of a compatible automated gate.',
+
+                    cctvAccessControl:
+                        'CCTV can provide visual context around controlled entrances.',
+
+                    alarmCCTV:
+                        'CCTV can assist with visual verification of selected alarm events where compatible integration is available.',
+
+                    accessIntercom:
+                        'Intercom and access control can work together to allow communication and controlled entry.',
+
+                    completeSecurity:
+                        'A larger security installation may combine perimeter protection, detection, CCTV, access control, gate automation, alarm systems and appropriate response procedures.'
+
+                },
+
+
+                rule:
+                    'The assistant must verify compatibility before claiming that two specific products or systems can be directly integrated.'
+
+            },
+
+
+            /* =====================================================
+               SECURITY SYSTEM MAINTENANCE
+            ===================================================== */
+
+            maintenance: {
+
+                overview:
+                    'Regular maintenance helps identify deterioration, faults and environmental problems before they become major security failures.',
+
+
+                electricFence: [
+
+                    'Inspect conductors',
+
+                    'Check vegetation',
+
+                    'Inspect insulators',
+
+                    'Check connections',
+
+                    'Inspect energizer condition',
+
+                    'Check earthing',
+
+                    'Inspect warning signage',
+
+                    'Check gates and access points'
+
+                ],
+
+
+                cctv: [
+
+                    'Clean camera lenses',
+
+                    'Inspect camera housings',
+
+                    'Check image quality',
+
+                    'Check night performance',
+
+                    'Verify recording',
+
+                    'Check storage health',
+
+                    'Inspect network connections',
+
+                    'Confirm remote access'
+
+                ],
+
+
+                alarm: [
+
+                    'Test sensors',
+
+                    'Check batteries',
+
+                    'Inspect tamper conditions',
+
+                    'Test sirens',
+
+                    'Check communication',
+
+                    'Review event history',
+
+                    'Confirm user access'
+
+                ],
+
+
+                gateAutomation: [
+
+                    'Inspect mechanical movement',
+
+                    'Check gate alignment',
+
+                    'Inspect wheels or hinges',
+
+                    'Check rack and pinion where applicable',
+
+                    'Inspect safety devices',
+
+                    'Check battery condition',
+
+                    'Test remotes',
+
+                    'Check manual release mechanism'
+
+                ],
+
+
+                accessControl: [
+
+                    'Test readers',
+
+                    'Check credentials',
+
+                    'Inspect locks',
+
+                    'Check exit devices',
+
+                    'Check power supply',
+
+                    'Review user permissions',
+
+                    'Review access events'
+
+                ],
+
+
+                customerMessage:
+                    'Security equipment should not simply be installed and forgotten. Periodic inspection and testing can help identify faults, wear, battery problems and environmental issues before they affect system performance.'
+
+            }
+
+        },
+
+
+        /* =========================================================
+           67. PRODUCT COMPARISON ENGINE
+        ========================================================= */
+
+        productComparisonEngine: {
+
+            objective:
+                'Help customers compare security technologies based on their actual requirements rather than simply presenting one product as universally better.',
+
+
+            comparisonRules: [
+
+                'Compare products using the customers stated requirements.',
+
+                'Explain the practical difference between technologies.',
+
+                'Identify advantages and limitations.',
+
+                'Avoid claiming that the most expensive option is automatically the best.',
+
+                'Avoid making unsupported brand comparisons.',
+
+                'Ask for the application when the correct choice depends on the environment.'
+
+            ],
+
+
+            comparisons: {
+
+                analogVsIP: {
+
+                    question:
+                        'Should I choose analog HD or IP CCTV?',
+
+                    answer:
+                        'The better choice depends on the project. IP systems can provide strong networking and integration capabilities, while HD-over-coax systems can be practical where compatible coaxial infrastructure already exists.'
+
+                },
+
+
+                domeVsBullet: {
+
+                    question:
+                        'Should I use dome or bullet cameras?',
+
+                    answer:
+                        'The choice depends mainly on mounting location, viewing direction, environmental conditions and the required appearance. Neither type is automatically better for every installation.'
+
+                },
+
+
+                mainsVsSolar: {
+
+                    question:
+                        'Should I use mains or solar power?',
+
+                    answer:
+                        'Mains power is generally practical where reliable electrical supply is available. Solar can be advantageous for remote locations or applications where extending mains power is impractical, but battery sizing and environmental conditions must be considered.'
+
+                },
+
+
+                standaloneVsNetworkedAccess: {
+
+                    question:
+                        'Should I use standalone or networked access control?',
+
+                    answer:
+                        'Standalone access control can suit a simple single-door requirement. Networked systems become more useful when multiple doors, many users, central management, reporting or integration are required.'
+
+                }
+
+            }
+
+        },
+
+
+        
