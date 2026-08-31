@@ -10917,4 +10917,646 @@
                     'Prioritize entrances, staff areas, stock areas, perimeter coverage, storage retention and user access.',
 
                 driveway:
-                    'Determine distance to vehicles, camera posit
+                                        'Determine distance to vehicles, camera position, lighting and whether number-plate identification is required.',
+
+                numberPlate:
+                    'Prioritize camera positioning, distance, lens selection, lighting and vehicle movement conditions.',
+
+                nightMonitoring:
+                    'Determine available lighting and the required night-vision performance.',
+
+                existingSystem:
+                    'Identify existing cameras, recorder, cabling and system technology before recommending an upgrade.',
+
+                remoteViewing:
+                    'Determine network connectivity and compatible mobile-viewing requirements.',
+
+                blindSpots:
+                    'Identify areas that are not currently visible and determine whether additional cameras or repositioning are required.',
+
+                highSecurity:
+                    'Prioritize identification quality, critical entry points, perimeter coverage, recording retention and system reliability.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               CCTV PRICING
+            ----------------------------------------------------- */
+
+            pricingGuidance: {
+
+                principle:
+                    'CCTV pricing depends on camera count, camera type, resolution, lens, recorder capacity, storage, cabling, power, network requirements and installation complexity.',
+
+                factors: [
+
+                    'Number of cameras',
+
+                    'Camera type',
+
+                    'Resolution',
+
+                    'Lens selection',
+
+                    'Night vision',
+
+                    'DVR or NVR',
+
+                    'Hard-drive capacity',
+
+                    'Cabling',
+
+                    'Power supply',
+
+                    'PoE requirements',
+
+                    'Network equipment',
+
+                    'Remote viewing',
+
+                    'Analytics',
+
+                    'Audio',
+
+                    'Installation height',
+
+                    'Cable distance',
+
+                    'Access equipment',
+
+                    'Configuration requirements'
+
+                ],
+
+                responseWhenAskedPrice:
+                    'The correct CCTV price depends on the number of cameras, what each camera needs to see, the required image detail, recording period and installation requirements. I can help specify the system before giving you a quotation.',
+
+                importantRule:
+                    'Do not recommend a fixed CCTV package or installation price without understanding the customer security objectives.'
+
+            }
+
+        },
+
+
+        /* =========================================================
+           33. CCTV OBJECTION HANDLING
+        ========================================================= */
+
+        cctvObjectionHandling: {
+
+            expensive: {
+
+                response:
+                    'I understand. The goal is to get the important areas properly covered without adding equipment you do not need. We can design the system around your security priorities and budget.'
+
+            },
+
+
+            onlyNeedTwoCameras: {
+
+                response:
+                    'Two cameras may be enough depending on the property layout. Let me first establish which areas are most important so we do not create unnecessary blind spots.'
+
+            },
+
+
+            wantHighestResolution: {
+
+                response:
+                    'Higher resolution can provide more detail, but resolution alone does not guarantee identification. Distance, lens selection, lighting, positioning and recording quality are also important.'
+
+            },
+
+
+            wantCheapCamera: {
+
+                response:
+                    'We can work within a budget, but I would rather match the camera to the actual security requirement than recommend a camera that looks good on paper but does not capture the detail you need.'
+
+            },
+
+
+            camerasNotClearAtNight: {
+
+                response:
+                    'Night-time image quality depends on more than the camera resolution. Lighting, distance, infrared performance, reflective surfaces and camera positioning can all affect the result.'
+
+            },
+
+
+            alreadyHaveCameras: {
+
+                response:
+                    'We may be able to upgrade or expand the existing system rather than replace everything. I would first need to know the camera and recorder make and model and what you want to improve.'
+
+            }
+
+        },
+
+
+        /* =========================================================
+           34. CCTV CAMERA PLACEMENT INTELLIGENCE
+        ========================================================= */
+
+        cameraPlacement: {
+
+            objective:
+                'Help determine suitable camera positions based on the area being monitored and the required level of detail.',
+
+
+            entrance: {
+
+                description:
+                    'Main entrances are high-priority CCTV locations because they provide an opportunity to monitor people entering and leaving.',
+
+                considerations: [
+
+                    'Approach direction',
+
+                    'Face visibility',
+
+                    'Lighting',
+
+                    'Door or gate position',
+
+                    'Camera height',
+
+                    'Field of view',
+
+                    'Potential obstruction'
+
+                ]
+
+            },
+
+
+            driveway: {
+
+                description:
+                    'Driveways require camera positioning that provides useful vehicle and visitor information.',
+
+                considerations: [
+
+                    'Vehicle approach direction',
+
+                    'Distance from camera',
+
+                    'Gate position',
+
+                    'Lighting',
+
+                    'Vehicle speed',
+
+                    'Number-plate requirements',
+
+                    'Camera angle',
+
+                    'Night conditions'
+
+                ]
+
+            },
+
+
+            perimeter: {
+
+                description:
+                    'Perimeter cameras should provide useful coverage of vulnerable approaches without relying on a single camera to monitor an excessive area.',
+
+                considerations: [
+
+                    'Property boundaries',
+
+                    'Walls',
+
+                    'Fences',
+
+                    'Trees',
+
+                    'Dark areas',
+
+                    'Approach paths',
+
+                    'Camera overlap',
+
+                    'Potential blind spots'
+
+                ]
+
+            },
+
+
+            parkingArea: {
+
+                description:
+                    'Parking areas require consideration of vehicle movement, pedestrian activity and lighting.',
+
+                considerations: [
+
+                    'Parking layout',
+
+                    'Vehicle entrances',
+
+                    'Pedestrian areas',
+
+                    'Lighting',
+
+                    'Camera height',
+
+                    'Required identification detail',
+
+                    'Number-plate requirements'
+
+                ]
+
+            },
+
+
+            warehouse: {
+
+                description:
+                    'Warehouse CCTV should focus on entrances, loading areas, stock areas, aisles and other operationally important locations.',
+
+                considerations: [
+
+                    'Entrance points',
+
+                    'Loading bays',
+
+                    'Stock areas',
+
+                    'Aisles',
+
+                    'High-value goods',
+
+                    'Staff areas',
+
+                    'Lighting',
+
+                    'Camera height',
+
+                    'Recording retention'
+
+                ]
+
+            },
+
+
+            importantRule:
+                'Never assume that a wide-angle camera provides useful identification across the entire image. The required level of detail must be considered at the actual target location.'
+
+        },
+
+
+        /* =========================================================
+           35. CCTV SYSTEM DESIGN LOGIC
+        ========================================================= */
+
+        cctvSystemDesign: {
+
+            objective:
+                'Translate the customer security objective into a practical CCTV system specification.',
+
+
+            monitoringLevels: {
+
+                overview:
+
+                    'Used when the customer mainly wants to know what is happening in an area.',
+
+                detection:
+
+                    'Used when the customer needs to determine that a person or vehicle is present.',
+
+                recognition:
+
+                    'Used when the customer needs useful visual characteristics of a person or object.',
+
+                identification:
+
+                    'Used when the customer requires stronger image detail for identifying a person or object.',
+
+                numberPlate:
+
+                    'Requires dedicated consideration of camera position, lens, lighting, vehicle movement and image detail.'
+
+            },
+
+
+            designRules: [
+
+                'Determine the security objective before choosing the camera.',
+
+                'Do not choose cameras based only on megapixel rating.',
+
+                'Consider lens selection and target distance.',
+
+                'Consider daytime and nighttime conditions.',
+
+                'Consider camera mounting height.',
+
+                'Consider possible obstructions.',
+
+                'Consider recording requirements.',
+
+                'Consider network infrastructure for IP systems.',
+
+                'Consider PoE requirements where applicable.',
+
+                'Consider storage capacity.',
+
+                'Consider remote-viewing requirements.',
+
+                'Consider future expansion.',
+
+                'Avoid unnecessary camera duplication.',
+
+                'Avoid creating important blind spots.'
+
+            ]
+
+        },
+
+
+        /* =========================================================
+           36. CCTV TROUBLESHOOTING INTELLIGENCE
+        ========================================================= */
+
+        cctvTroubleshooting: {
+
+            cameraOffline: [
+
+                'Power problem',
+
+                'Network connection problem',
+
+                'PoE problem',
+
+                'Cable fault',
+
+                'Camera fault',
+
+                'IP configuration issue',
+
+                'Network equipment problem'
+
+            ],
+
+
+            poorImage: [
+
+                'Dirty lens',
+
+                'Incorrect focus',
+
+                'Incorrect lens selection',
+
+                'Insufficient lighting',
+
+                'Backlighting',
+
+                'Camera position',
+
+                'Network or recording configuration',
+
+                'Camera hardware problem'
+
+            ],
+
+
+            nightImagePoor: [
+
+                'Insufficient lighting',
+
+                'Incorrect camera position',
+
+                'Infrared limitations',
+
+                'Reflective surfaces',
+
+                'Excessive distance',
+
+                'Environmental conditions',
+
+                'Incorrect exposure settings'
+
+            ],
+
+
+            recordingMissing: [
+
+                'Storage failure',
+
+                'Recorder configuration',
+
+                'Hard-drive problem',
+
+                'Recording schedule',
+
+                'Motion-detection configuration',
+
+                'Network problem',
+
+                'Camera offline'
+
+            ],
+
+
+            remoteViewingNotWorking: [
+
+                'Internet connection',
+
+                'Router problem',
+
+                'Network configuration',
+
+                'Mobile application configuration',
+
+                'Recorder connectivity',
+
+                'Account or permission issue'
+
+            ],
+
+
+            intermittentCamera: [
+
+                'Unstable power',
+
+                'Cable problem',
+
+                'Network instability',
+
+                'PoE issue',
+
+                'Environmental conditions',
+
+                'Camera hardware fault'
+
+            ]
+
+
+        },
+
+
+        /* =========================================================
+           37. CCTV SALES CLOSING ENGINE
+        ========================================================= */
+
+        cctvClosingEngine: {
+
+            objective:
+                'Move a qualified CCTV customer from general enquiry toward a practical system specification or quotation.',
+
+
+            highIntentSignals: [
+
+                'Customer asks for installation price',
+
+                'Customer provides property size',
+
+                'Customer provides number of cameras',
+
+                'Customer explains security problem',
+
+                'Customer asks for a quotation',
+
+                'Customer asks about installation availability',
+
+                'Customer asks about payment',
+
+                'Customer asks how quickly the system can be installed'
+
+            ],
+
+
+            closingQuestions: [
+
+                'What areas are most important for you to monitor?',
+
+                'How many entrances or vulnerable areas do you have?',
+
+                'Do you need to identify people or simply monitor activity?',
+
+                'Do you need number-plate identification?',
+
+                'Do you want to view the cameras from your phone?',
+
+                'How many days of recordings would you like to retain?',
+
+                'Is this a new installation or an upgrade?'
+
+            ],
+
+
+            quoteTransition:
+                'Once the required coverage and equipment requirements are understood, offer to prepare or arrange a quotation rather than continuing to ask unnecessary questions.'
+
+        },
+
+
+        /* =========================================================
+           38. SOLAR SECURITY — ADVANCED KNOWLEDGE
+        ========================================================= */
+
+        solarSecurity: {
+
+            name: 'Solar-Powered Security',
+
+            category: 'Off-Grid Security',
+
+            definition:
+                'Solar security systems use solar energy and battery storage to power compatible security equipment where mains electricity is unavailable, unreliable or impractical.',
+
+            applications: [
+
+                'Remote CCTV',
+
+                'Electric fencing',
+
+                'Gate automation support systems',
+
+                'Outdoor detection',
+
+                'Remote perimeter monitoring',
+
+                'Agricultural security',
+
+                'Construction sites',
+
+                'Remote properties'
+
+            ],
+
+
+            designFactors: [
+
+                'Equipment power consumption',
+
+                'Daily operating time',
+
+                'Battery capacity',
+
+                'Solar panel capacity',
+
+                'Sunlight availability',
+
+                'Seasonal conditions',
+
+                'Location',
+
+                'Mounting position',
+
+                'Weather exposure',
+
+                'Backup requirements',
+
+                'Cable losses',
+
+                'Future expansion'
+
+            ],
+
+
+            qualificationQuestions: [
+
+                'What equipment do you want to power?',
+
+                'How much power does the equipment require?',
+
+                'Is mains electricity available?',
+
+                'How many hours per day must the system operate?',
+
+                'Is the location exposed to sufficient sunlight?',
+
+                'Do you require operation during several cloudy days?',
+
+                'Do you already have solar equipment?',
+
+                'Do you require battery backup?'
+
+            ],
+
+
+            salesRules: [
+
+                'Do not size a solar system from panel wattage alone.',
+
+                'Determine the actual equipment load.',
+
+                'Consider battery storage requirements.',
+
+                'Consider seasonal sunlight variation.',
+
+                'Consider the required autonomy period.',
+
+                'Do not guarantee uninterrupted operation without an appropriate system design.',
+
+                'Recommend a proper technical assessment for larger off-grid installations.'
+
+            ]
+
+        },
