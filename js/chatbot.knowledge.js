@@ -22566,6 +22566,638 @@
         },
 
 
-        /* =========================================================
+                /* =========================================================
            77. SMART SALES CONVERSATION ROUTER
+        ========================================================= */
+
+        smartSalesConversationRouter: {
+
+            objective:
+                'Determine the most appropriate sales action for every customer message and route the conversation to the correct knowledge and sales engine.',
+
+
+            /* -----------------------------------------------------
+               PRIMARY INTENT DETECTION
+            ----------------------------------------------------- */
+
+            intents: {
+
+                greeting: [
+
+                    'hello',
+
+                    'hi',
+
+                    'hey',
+
+                    'good morning',
+
+                    'good afternoon',
+
+                    'good evening',
+
+                    'how are you'
+
+                ],
+
+
+                information:
+
+                    'Customer is looking for information about a security product, service or concept.',
+
+
+                recommendation:
+
+                    'Customer wants help deciding what product or system is suitable.',
+
+
+                pricing:
+
+                    'Customer asks about price, cost, budget or quotation.',
+
+
+                quotation:
+
+                    'Customer wants a formal or informal quotation.',
+
+
+                purchase:
+
+                    'Customer indicates that they want to buy or order.',
+
+
+                delivery:
+
+                    'Customer asks about delivery, shipping or collection.',
+
+
+                installation:
+
+                    'Customer asks whether Nexpak can install or service the system.',
+
+
+                troubleshooting:
+
+                    'Customer reports a fault, malfunction or performance problem.',
+
+
+                comparison:
+
+                    'Customer wants to compare products, systems or quotations.',
+
+
+                upgrade:
+
+                    'Customer wants to improve or expand an existing system.',
+
+
+                contact:
+
+                    'Customer wants contact information or a human salesperson.',
+
+
+                support:
+
+                    'Customer needs assistance after purchasing or installing equipment.',
+
+
+                objection:
+
+                    'Customer expresses hesitation, concern or resistance to purchasing.',
+
+
+                unclear:
+
+                    'The customers intent cannot be determined confidently from the message.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               PRODUCT DETECTION
+            ----------------------------------------------------- */
+
+            productDetection: {
+
+                electricFence: [
+
+                    'electric fence',
+
+                    'electric fencing',
+
+                    'electric fence system',
+
+                    'fence energizer',
+
+                    'energizer',
+
+                    'fence pulse',
+
+                    'fence alarm'
+
+                ],
+
+
+                cctv: [
+
+                    'cctv',
+
+                    'camera',
+
+                    'cameras',
+
+                    'security camera',
+
+                    'surveillance',
+
+                    'video surveillance',
+
+                    'nvr',
+
+                    'dvr'
+
+                ],
+
+
+                alarm: [
+
+                    'alarm',
+
+                    'alarm system',
+
+                    'intruder alarm',
+
+                    'burglar alarm',
+
+                    'alarm sensor',
+
+                    'pir',
+
+                    'motion sensor'
+
+                ],
+
+
+                gateAutomation: [
+
+                    'gate motor',
+
+                    'gate automation',
+
+                    'automatic gate',
+
+                    'sliding gate motor',
+
+                    'swing gate motor',
+
+                    'gate opener'
+
+                ],
+
+
+                accessControl: [
+
+                    'access control',
+
+                    'access system',
+
+                    'card reader',
+
+                    'tag reader',
+
+                    'fingerprint',
+
+                    'biometric',
+
+                    'keypad',
+
+                    'door access'
+
+                ],
+
+
+                intercom: [
+
+                    'intercom',
+
+                    'video intercom',
+
+                    'door station',
+
+                    'gate intercom',
+
+                    'visitor system'
+
+                ],
+
+
+                equestrian: [
+
+                    'equestrian',
+
+                    'horse fence',
+
+                    'horse fencing',
+
+                    'paddock',
+
+                    'horse paddock',
+
+                    'polytape',
+
+                    'polyrope',
+
+                    'horse energizer'
+
+                ],
+
+
+                perimeterDetection: [
+
+                    'perimeter detection',
+
+                    'beam',
+
+                    'beams',
+
+                    'outdoor detector',
+
+                    'perimeter alarm',
+
+                    'boundary detection'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               ROUTING PRIORITY
+            ----------------------------------------------------- */
+
+            routingPriority: [
+
+                'Safety-critical issue',
+
+                'Explicit purchase request',
+
+                'Quotation request',
+
+                'Troubleshooting',
+
+                'Product recommendation',
+
+                'Pricing question',
+
+                'Installation question',
+
+                'Product information',
+
+                'General enquiry'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               SAFETY-FIRST ROUTING
+            ----------------------------------------------------- */
+
+            safetyRouting: {
+
+                triggers: [
+
+                    'electric shock',
+
+                    'dangerous',
+
+                    'sparking',
+
+                    'burning smell',
+
+                    'exposed wire',
+
+                    'damaged cable',
+
+                    'smoke',
+
+                    'fire',
+
+                    'electrical fault',
+
+                    'person injured',
+
+                    'animal injured'
+
+                ],
+
+
+                action:
+                    'Prioritise immediate safety guidance and recommend isolation of the affected equipment and professional assistance where appropriate.',
+
+
+                rule:
+                    'Never allow a sales objective to override an immediate safety concern.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               PURCHASE ROUTING
+            ----------------------------------------------------- */
+
+            purchaseRouting: {
+
+                triggers: [
+
+                    'I want to buy',
+
+                    'I want to order',
+
+                    'I am ready',
+
+                    'how do I order',
+
+                    'how can I buy',
+
+                    'can I purchase',
+
+                    'send me an invoice',
+
+                    'where do I pay'
+
+                ],
+
+
+                action:
+                    'Move the customer toward the appropriate ordering, quotation or payment process without unnecessary additional qualification.',
+
+                response:
+                    'Absolutely. I can help you with the next step. Let me confirm what you need so we can make sure the order is correct.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               QUOTE ROUTING
+            ----------------------------------------------------- */
+
+            quotationRouting: {
+
+                triggers: [
+
+                    'quote',
+
+                    'quotation',
+
+                    'quote me',
+
+                    'send a quote',
+
+                    'how much',
+
+                    'what will it cost',
+
+                    'price'
+
+                ],
+
+
+                action:
+                    'Determine whether enough information is available for a meaningful quotation request.',
+
+
+                sufficientInformation:
+                    'Move toward lead capture or quotation preparation.',
+
+
+                insufficientInformation:
+                    'Ask only the most important missing qualification question.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               PRODUCT ROUTING
+            ----------------------------------------------------- */
+
+            productRouting: {
+
+                rule:
+                    'When a recognised security product is detected, route the message to the relevant specialist knowledge engine.',
+
+
+                electricFence:
+                    'Route to electric-fencing knowledge, qualification, design and sales logic.',
+
+                cctv:
+                    'Route to CCTV knowledge, camera selection, coverage and recording logic.',
+
+                alarm:
+                    'Route to alarm knowledge, detection and system qualification logic.',
+
+                gateAutomation:
+                    'Route to gate type, motor selection and automation logic.',
+
+                accessControl:
+                    'Route to access-control system design and pricing logic.',
+
+                intercom:
+                    'Route to intercom selection and entrance-control logic.',
+
+                equestrian:
+                    'Route to equestrian fencing knowledge and animal-fencing sales logic.',
+
+                perimeterDetection:
+                    'Route to perimeter detection and outdoor security logic.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               MULTIPLE PRODUCT DETECTION
+            ----------------------------------------------------- */
+
+            multipleProducts: {
+
+                rule:
+                    'If the customer mentions multiple security products, recognise each requirement and avoid answering only one part unless the customer clearly prioritises one.',
+
+
+                example:
+
+                    'Customer: I need an electric fence, CCTV and a gate motor.',
+
+
+                expectedResponse:
+
+                    'Recognise all three requirements, then establish the property and project information needed to build an integrated recommendation.',
+
+
+                priorityQuestion:
+
+                    'What type of property is this, and are these systems for the same property?'
+
+            },
+
+
+            /* -----------------------------------------------------
+               CONTEXT ROUTING
+            ----------------------------------------------------- */
+
+            contextRouting: {
+
+                rule:
+                    'Use information already collected from the conversation when deciding how to respond.',
+
+
+                example:
+
+                    'Customer: I need cameras for my house.',
+
+                    'Customer: I have already told you it is a two-storey house.',
+
+
+                expectedBehaviour:
+
+                    'Do not ask the customer again what type of property they have. Continue with the next relevant CCTV qualification question.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               FOLLOW-UP QUESTION SELECTION
+            ----------------------------------------------------- */
+
+            followUpQuestionSelection: {
+
+                principle:
+                    'Select the question that will provide the greatest improvement in recommendation accuracy.',
+
+
+                rules: [
+
+                    'Ask one high-value question at a time when possible.',
+
+                    'Avoid asking questions whose answers have already been provided.',
+
+                    'Prefer practical questions over unnecessary technical questions.',
+
+                    'Ask for measurements when measurements affect product selection.',
+
+                    'Ask about the intended outcome before asking about technical specifications.',
+
+                    'Ask about existing equipment when compatibility or upgrading is relevant.'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               CONVERSATION STATE
+            ----------------------------------------------------- */
+
+            conversationState: {
+
+                discovery:
+                    'Customer requirement is still being established.',
+
+                qualification:
+                    'Important project information is being collected.',
+
+                recommendation:
+                    'Enough information exists to suggest a suitable solution.',
+
+                quotation:
+                    'Customer is ready for quotation preparation.',
+
+                purchase:
+                    'Customer has indicated buying intent.',
+
+                handoff:
+                    'Human sales involvement is appropriate.',
+
+                support:
+                    'Customer requires post-sale assistance.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               STATE TRANSITION RULES
+            ----------------------------------------------------- */
+
+            stateTransitions: [
+
+                'Discovery → Qualification when the customer provides a defined requirement.',
+
+                'Qualification → Recommendation when enough information is available.',
+
+                'Recommendation → Quotation when the customer requests pricing.',
+
+                'Quotation → Purchase when the customer indicates they are ready to proceed.',
+
+                'Any state → Human Handoff when the project requires specialist intervention.',
+
+                'Any state → Safety Response when an immediate safety concern is identified.',
+
+                'Any state → Troubleshooting when the customer reports a system fault.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               RESPONSE DECISION
+            ----------------------------------------------------- */
+
+            responseDecision: {
+
+                step1:
+                    'Identify customer intent.',
+
+                step2:
+                    'Identify relevant product or products.',
+
+                step3:
+                    'Check previously collected customer information.',
+
+                step4:
+                    'Determine the current conversation state.',
+
+                step5:
+                    'Check whether safety or escalation rules apply.',
+
+                step6:
+                    'Determine whether the customer needs information, a question, recommendation, quotation, purchase assistance or human handoff.',
+
+                step7:
+                    'Generate a concise customer-friendly response.',
+
+                step8:
+                    'Offer the most useful next action.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               UNKNOWN REQUESTS
+            ----------------------------------------------------- */
+
+            unknownRequest:
+
+                'I can help with CCTV, electric fencing, alarms, gate automation, access control, intercoms, perimeter security and equestrian fencing. Tell me what you are looking to protect and I will point you in the right direction.',
+
+
+            /* -----------------------------------------------------
+               GENERAL SALES RULE
+            ----------------------------------------------------- */
+
+            finalRule:
+                'The assistant should behave like a professional security sales consultant: understand first, qualify intelligently, recommend appropriately, explain clearly and move the customer toward the correct next step without unnecessary pressure.'
+
+        },
+
+
+        /* =========================================================
+           78. LEAD QUALIFICATION SCORING ENGINE
         ========================================================= */
