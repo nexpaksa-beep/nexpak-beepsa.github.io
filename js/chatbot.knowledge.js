@@ -14192,3 +14192,589 @@
             }
 
         },
+
+                                /* =========================================================
+           51. LEAD QUALIFICATION & SCORING ENGINE
+        ========================================================= */
+
+        leadQualificationEngine: {
+
+            objective:
+                'Determine how commercially qualified a customer is and identify when the conversation should move toward a quotation or sales follow-up.',
+
+
+            /* -----------------------------------------------------
+               LEAD SCORE
+            ----------------------------------------------------- */
+
+            scoring: {
+
+                informationOnly: {
+
+                    score: 10,
+
+                    description:
+                        'Customer is primarily looking for general information and has not indicated a specific project.'
+
+                },
+
+
+                researching: {
+
+                    score: 25,
+
+                    description:
+                        'Customer is comparing products or investigating possible solutions.'
+
+                },
+
+
+                interested: {
+
+                    score: 40,
+
+                    description:
+                        'Customer has identified a specific security requirement and is considering a solution.'
+
+                },
+
+
+                qualified: {
+
+                    score: 60,
+
+                    description:
+                        'Customer has provided meaningful project information such as property type, quantities or measurements.'
+
+                },
+
+
+                quoteReady: {
+
+                    score: 80,
+
+                    description:
+                        'Customer has requested a quotation and provided enough information to begin the quotation process.'
+
+                },
+
+
+                purchaseReady: {
+
+                    score: 100,
+
+                    description:
+                        'Customer has clear purchase intent and has identified the product or system required.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               POSITIVE SALES SIGNALS
+            ----------------------------------------------------- */
+
+            positiveSignals: {
+
+                asksForQuote: 20,
+
+                providesPhoneNumber: 10,
+
+                providesEmail: 10,
+
+                providesLocation: 10,
+
+                providesMeasurements: 15,
+
+                providesQuantity: 15,
+
+                requestsInstallation: 15,
+
+                asksForDelivery: 10,
+
+                asksAboutPayment: 10,
+
+                asksAboutAvailability: 10,
+
+                asksHowToOrder: 15,
+
+                givesPropertyDetails: 15,
+
+                describesSecurityProblem: 10
+
+            },
+
+
+            /* -----------------------------------------------------
+               BUYING INTENT SIGNALS
+            ----------------------------------------------------- */
+
+            purchaseSignals: [
+
+                'I want to buy',
+
+                'I want to order',
+
+                'I need this',
+
+                'Can I order',
+
+                'How do I pay',
+
+                'Where can I buy',
+
+                'Do you have stock',
+
+                'Can you deliver',
+
+                'Can you install',
+
+                'Send me a quote',
+
+                'Please quote me',
+
+                'I am ready to proceed'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               HIGH-VALUE PROJECT SIGNALS
+            ----------------------------------------------------- */
+
+            highValueSignals: [
+
+                'New house',
+
+                'New business',
+
+                'Warehouse',
+
+                'Factory',
+
+                'Estate',
+
+                'Farm',
+
+                'Large property',
+
+                'Multiple buildings',
+
+                'Multiple cameras',
+
+                'Long electric fence',
+
+                'Multiple gates',
+
+                'Access control for employees',
+
+                'Complete security system'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               LEAD PRIORITY
+            ----------------------------------------------------- */
+
+            priorityLevels: {
+
+                low: {
+
+                    range:
+                        '0-29',
+
+                    action:
+                        'Continue providing useful information and identify the customers requirement.'
+
+                },
+
+
+                medium: {
+
+                    range:
+                        '30-59',
+
+                    action:
+                        'Qualify the customer further and identify the next practical step.'
+
+                },
+
+
+                high: {
+
+                    range:
+                        '60-79',
+
+                    action:
+                        'Move toward a quotation, product recommendation or site assessment.'
+
+                },
+
+
+                urgentSales: {
+
+                    range:
+                        '80-100',
+
+                    action:
+                        'Prioritize quotation or purchase assistance and collect the remaining contact information required.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               LEAD QUALIFICATION QUESTIONS
+            ----------------------------------------------------- */
+
+            questions: [
+
+                'What type of property is this for?',
+
+                'Where is the property located?',
+
+                'What security problem are you trying to solve?',
+
+                'Is this a new installation or an upgrade?',
+
+                'Approximately how large is the project?',
+
+                'When are you looking to complete the project?',
+
+                'Do you require installation?',
+
+                'Would you like us to prepare a quotation?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               SALES PRIORITY RULES
+            ----------------------------------------------------- */
+
+            rules: [
+
+                'Do not ask every qualification question if the customer has already provided the information.',
+
+                'Do not pressure low-intent customers.',
+
+                'Prioritize customers who have a defined project.',
+
+                'Prioritize customers requesting quotations.',
+
+                'Prioritize customers with installation requirements.',
+
+                'Prioritize larger or multi-system projects.',
+
+                'Move purchase-ready customers toward the appropriate buying process.',
+
+                'Do not promise that a high score guarantees immediate human follow-up.'
+
+            ]
+
+        },
+
+
+        /* =========================================================
+           52. LEAD CAPTURE INTELLIGENCE
+        ========================================================= */
+
+        leadCaptureIntelligence: {
+
+            objective:
+                'Capture useful customer information at the appropriate point in the sales conversation without creating unnecessary friction.',
+
+
+            /* -----------------------------------------------------
+               WHEN TO REQUEST DETAILS
+            ----------------------------------------------------- */
+
+            requestWhen: [
+
+                'Customer requests a quotation',
+
+                'Customer requests installation',
+
+                'Customer wants a site assessment',
+
+                'Customer is ready to purchase',
+
+                'Customer requests a callback',
+
+                'Customer asks for a customised recommendation',
+
+                'Customer has a substantial project'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               INFORMATION TO COLLECT
+            ----------------------------------------------------- */
+
+            requiredForQuote: [
+
+                'Name',
+
+                'Phone number',
+
+                'Email address',
+
+                'Location',
+
+                'Security requirement'
+
+            ],
+
+
+            usefulForSales: [
+
+                'Property type',
+
+                'Project size',
+
+                'Product category',
+
+                'Approximate quantities',
+
+                'Installation requirement',
+
+                'Preferred contact method',
+
+                'Project timeframe',
+
+                'Additional requirements'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               LEAD FORM BEHAVIOUR
+            ----------------------------------------------------- */
+
+            behaviour: {
+
+                earlyConversation:
+                    'Do not immediately force the customer into a lead form. First provide useful assistance and establish the customers requirement.',
+
+                qualifiedCustomer:
+                    'When the customer has a genuine project and requests a quote or callback, request the minimum contact information required.',
+
+                missingInformation:
+                    'Ask for missing information naturally rather than restarting the entire qualification process.',
+
+                customerRefuses:
+                    'Continue providing useful general information without repeatedly requesting contact details.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               LEAD CONFIRMATION
+            ----------------------------------------------------- */
+
+            confirmation:
+
+                'Thank you. I have the information needed to move this enquiry forward. The next step is to review the requirement and prepare the appropriate quotation or recommendation.'
+
+
+        },
+
+
+        /* =========================================================
+           53. PRODUCT COMPARISON ENGINE
+        ========================================================= */
+
+        productComparisonEngine: {
+
+            objective:
+                'Help customers compare security solutions according to their actual requirements rather than simply presenting a list of technical specifications.',
+
+
+            comparisonRules: [
+
+                'Compare products according to the customers intended use.',
+
+                'Explain practical differences.',
+
+                'Identify advantages and limitations.',
+
+                'Do not declare one product universally better than another.',
+
+                'Do not invent specifications.',
+
+                'Use confirmed product data when exact specifications are required.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               COMMON COMPARISONS
+            ----------------------------------------------------- */
+
+            comparisons: {
+
+                hdVsIpCCTV: {
+
+                    question:
+                        'Which is better, HD or IP CCTV?',
+
+                    response:
+                        'Both can be effective. The right choice depends on the existing infrastructure, required image quality, networking requirements, expansion plans and budget.'
+
+                },
+
+
+                wiredVsWirelessCCTV: {
+
+                    question:
+                        'Should I use wired or wireless cameras?',
+
+                    response:
+                        'Wired CCTV is generally preferred where reliable cabling is practical. Wireless can be useful in suitable locations, but signal quality, interference and power availability must be considered.'
+
+                },
+
+
+                mainsVsSolar: {
+
+                    question:
+                        'Should I use mains or solar power?',
+
+                    response:
+                        'Mains power is normally simpler where reliable electricity is available. Solar becomes particularly useful for remote or off-grid locations, but the load and battery autonomy need to be properly designed.'
+
+                },
+
+
+                tapeVsRope: {
+
+                    question:
+                        'Should I use electric tape or electric rope for horse fencing?',
+
+                    response:
+                        'Both can be suitable depending on the application. Visibility, fence design, installation method, length and customer preference should be considered before selecting the conductor.'
+
+                },
+
+
+                alarmVsCCTV: {
+
+                    question:
+                        'Do I need an alarm or CCTV?',
+
+                    response:
+                        'They perform different functions. An alarm is designed to detect configured security events, while CCTV provides visual monitoring and recorded video. Many properties benefit from using both as complementary layers.'
+
+                },
+
+
+                accessControlVsIntercom: {
+
+                    question:
+                        'What is the difference between access control and an intercom?',
+
+                    response:
+                        'Access control manages who is authorised to enter. An intercom allows communication with a visitor and, where supported, can be used to control a gate or door. They can also work together.'
+
+                }
+
+            }
+
+        },
+
+
+        /* =========================================================
+           54. BUDGET & VALUE SELLING ENGINE
+        ========================================================= */
+
+        budgetSalesEngine: {
+
+            objective:
+                'Help customers with budget concerns by prioritizing security requirements instead of automatically reducing system quality.',
+
+
+            principles: [
+
+                'Understand the customers budget concern.',
+
+                'Identify the most important security objectives.',
+
+                'Prioritize critical areas first.',
+
+                'Remove unnecessary features before removing essential protection.',
+
+                'Offer staged upgrades where appropriate.',
+
+                'Explain the trade-offs clearly.',
+
+                'Never misrepresent a lower-cost solution as equivalent to a higher-specification system.'
+
+            ],
+
+
+            responses: {
+
+                tooExpensive:
+                    'We can look at the system differently. Instead of removing important protection, we can prioritize the highest-risk areas first and identify which features can be added later.',
+
+                limitedBudget:
+                    'If you have a fixed budget, tell me roughly what you are comfortable spending and what you most need the system to achieve. I can help prioritize the equipment.',
+
+                cheapestOption:
+                    'I can help identify a cost-effective option, but I would first make sure it still meets the security requirement. The cheapest equipment is not always the lowest-cost solution if it fails to perform the required job.',
+
+                stagedInstallation:
+                    'A staged installation can be considered where the customer cannot complete the entire project at once. The initial design should allow for sensible future expansion.'
+
+            }
+
+        },
+
+
+        /* =========================================================
+           55. CUSTOMER OBJECTION MASTER ENGINE
+        ========================================================= */
+
+        objectionHandling: {
+
+            objective:
+                'Respond professionally to common sales objections while keeping the conversation focused on the customers actual requirement.',
+
+
+            objections: {
+
+                needToThink:
+
+                    'Of course. Before you decide, is there anything about the system, price or installation that you would like me to clarify?',
+
+                comparingPrices:
+
+                    'That makes sense. When comparing quotations, I recommend checking not only the equipment price but also what is included, the specifications, installation, storage, warranty and support.',
+
+                foundCheaper:
+
+                    'There may be a lower-priced option. The important question is whether the equipment and installation provide the same level of performance and coverage. If you show me what you are comparing, I can help explain the differences.',
+
+                notSureWhatINeed:
+
+                    'No problem. You do not need to know the technical equipment before contacting us. Tell me what you want to protect and I can help work out what information is needed.',
+
+                justLooking:
+
+                    'Absolutely. I can give you an overview without any pressure. If you tell me what type of property you are looking at securing, I can point you in the right direction.',
+
+                sendPriceList:
+
+                    'I can help narrow down the products first. Security equipment can vary significantly depending on the application, so knowing what you need to protect will help avoid giving you irrelevant options.',
+
+                wantDiscount:
+
+                    'I can note that you are working within a budget. The best approach is to first establish the correct system and then look at where the specification can be optimized without compromising the important security requirements.'
+
+            }
+
+        },
