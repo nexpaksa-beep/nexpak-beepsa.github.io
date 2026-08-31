@@ -15991,3 +15991,736 @@
             }
 
         },
+
+                    /* =========================================================
+           63. ADVANCED SECURITY SYSTEM DESIGN ENGINE
+        ========================================================= */
+
+        securitySystemDesignEngine: {
+
+            objective:
+                'Design a layered security solution by identifying the customers security objectives, property vulnerabilities, detection requirements, verification requirements, access requirements and response requirements.',
+
+
+            /* -----------------------------------------------------
+               SECURITY DESIGN PRINCIPLE
+            ----------------------------------------------------- */
+
+            principle:
+                'A professional security system should be designed as multiple complementary layers rather than relying on a single product or technology.',
+
+
+            securityLayers: {
+
+                layer1: {
+
+                    name: 'Perimeter Protection',
+
+                    purpose:
+                        'Create the first security boundary around the property.',
+
+                    solutions: [
+
+                        'Electric fencing',
+
+                        'Security fencing',
+
+                        'Perimeter detection',
+
+                        'Gate security',
+
+                        'Boundary lighting'
+
+                    ]
+
+                },
+
+
+                layer2: {
+
+                    name: 'Detection',
+
+                    purpose:
+                        'Detect movement, intrusion or other defined security events.',
+
+                    solutions: [
+
+                        'Alarm sensors',
+
+                        'Outdoor detectors',
+
+                        'Perimeter detection',
+
+                        'CCTV analytics',
+
+                        'Gate sensors',
+
+                        'Door contacts'
+
+                    ]
+
+                },
+
+
+                layer3: {
+
+                    name: 'Verification',
+
+                    purpose:
+                        'Determine what is happening after an event has been detected.',
+
+                    solutions: [
+
+                        'CCTV',
+
+                        'Video intercom',
+
+                        'Remote video viewing',
+
+                        'Alarm verification'
+
+                    ]
+
+                },
+
+
+                layer4: {
+
+                    name: 'Access Control',
+
+                    purpose:
+                        'Control authorised movement into and through the property.',
+
+                    solutions: [
+
+                        'Access-control readers',
+
+                        'Biometric systems',
+
+                        'Keypads',
+
+                        'Intercoms',
+
+                        'Gate automation',
+
+                        'Electronic locks'
+
+                    ]
+
+                },
+
+
+                layer5: {
+
+                    name: 'Response',
+
+                    purpose:
+                        'Determine what happens after a security event occurs.',
+
+                    solutions: [
+
+                        'Local alarm',
+
+                        'Remote notifications',
+
+                        'Monitoring',
+
+                        'Security response procedures',
+
+                        'Human verification'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               PROPERTY RISK ANALYSIS
+            ----------------------------------------------------- */
+
+            riskAssessment: {
+
+                objective:
+                    'Identify the areas and circumstances that may require additional security consideration.',
+
+
+                questions: [
+
+                    'What are you most concerned about protecting?',
+
+                    'Where are the most vulnerable access points?',
+
+                    'How does someone currently enter the property?',
+
+                    'Are there areas that cannot easily be seen from the house or office?',
+
+                    'Are there dark areas at night?',
+
+                    'Are there remote sections of the property?',
+
+                    'Have there been previous security incidents?',
+
+                    'Are there valuables, vehicles, stock or equipment that require additional protection?'
+
+                ],
+
+
+                riskFactors: [
+
+                    'Property size',
+
+                    'Perimeter length',
+
+                    'Number of entrances',
+
+                    'Number of buildings',
+
+                    'Vehicle access',
+
+                    'Pedestrian access',
+
+                    'Visibility',
+
+                    'Lighting',
+
+                    'Remote areas',
+
+                    'Existing security',
+
+                    'Environmental conditions',
+
+                    'Customer security concerns'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               RESIDENTIAL DESIGN
+            ----------------------------------------------------- */
+
+            residential: {
+
+                objective:
+                    'Develop practical security recommendations for houses, estates and residential properties.',
+
+
+                commonRisks: [
+
+                    'Unauthorised pedestrian entry',
+
+                    'Vehicle entry',
+
+                    'Perimeter intrusion',
+
+                    'Garage access',
+
+                    'Door and window intrusion',
+
+                    'Blind spots',
+
+                    'Poor night visibility'
+
+                ],
+
+
+                commonSolutions: [
+
+                    'Electric fencing',
+
+                    'CCTV',
+
+                    'Alarm system',
+
+                    'Gate automation',
+
+                    'Intercom',
+
+                    'Access control',
+
+                    'Outdoor detection',
+
+                    'Security lighting'
+
+                ],
+
+
+                designApproach:
+                    'Prioritize the perimeter, main entrance, vehicle entrance, vulnerable doors and windows, blind spots and areas requiring night-time visibility.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               COMMERCIAL DESIGN
+            ----------------------------------------------------- */
+
+            commercial: {
+
+                objective:
+                    'Develop security recommendations for offices, warehouses, shops, factories and other commercial properties.',
+
+
+                commonRisks: [
+
+                    'Unauthorised entry',
+
+                    'Employee access',
+
+                    'After-hours intrusion',
+
+                    'Stock theft',
+
+                    'Vehicle access',
+
+                    'Perimeter intrusion',
+
+                    'Restricted areas',
+
+                    'Blind spots'
+
+                ],
+
+
+                commonSolutions: [
+
+                    'CCTV',
+
+                    'Access control',
+
+                    'Alarm systems',
+
+                    'Electric fencing',
+
+                    'Gate automation',
+
+                    'Intercom',
+
+                    'Perimeter detection',
+
+                    'Remote monitoring'
+
+                ],
+
+
+                designApproach:
+                    'Separate public areas, employee areas, restricted areas, stock areas, entrances, vehicle access points and perimeter zones when designing the system.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               AGRICULTURAL / FARM DESIGN
+            ----------------------------------------------------- */
+
+            agricultural: {
+
+                objective:
+                    'Identify practical security requirements for farms, agricultural properties and large rural sites.',
+
+
+                considerations: [
+
+                    'Large perimeter distances',
+
+                    'Remote buildings',
+
+                    'Limited mains power',
+
+                    'Vehicle entrances',
+
+                    'Livestock',
+
+                    'Equipment storage',
+
+                    'Long cable runs',
+
+                    'Solar power requirements',
+
+                    'Remote monitoring'
+
+                ],
+
+
+                commonSolutions: [
+
+                    'Electric fencing',
+
+                    'Solar-powered security',
+
+                    'Outdoor detection',
+
+                    'CCTV',
+
+                    'Gate automation',
+
+                    'Intercom',
+
+                    'Remote alarm systems'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               INDUSTRIAL DESIGN
+            ----------------------------------------------------- */
+
+            industrial: {
+
+                objective:
+                    'Develop security recommendations for factories, industrial yards, warehouses and logistics facilities.',
+
+
+                considerations: [
+
+                    'Large perimeter',
+
+                    'Multiple vehicle entrances',
+
+                    'Loading areas',
+
+                    'Staff entrances',
+
+                    'Restricted areas',
+
+                    'High-value stock',
+
+                    'After-hours operation',
+
+                    'Large numbers of users',
+
+                    'Multiple buildings'
+
+                ],
+
+
+                commonSolutions: [
+
+                    'Perimeter electric fencing',
+
+                    'CCTV',
+
+                    'Access control',
+
+                    'Vehicle access control',
+
+                    'Alarm systems',
+
+                    'Intercom',
+
+                    'Gate automation',
+
+                    'Remote monitoring'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               SECURITY DESIGN QUESTIONS
+            ----------------------------------------------------- */
+
+            designQuestions: [
+
+                'What are we protecting?',
+
+                'Where can someone enter?',
+
+                'Where could an intruder approach from?',
+
+                'What needs to detect the intrusion?',
+
+                'How will the event be verified?',
+
+                'Who is authorised to enter?',
+
+                'How should access be controlled?',
+
+                'What should happen when an alarm occurs?',
+
+                'Does the system need remote access?',
+
+                'What happens if mains power fails?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               SYSTEM INTEGRATION
+            ----------------------------------------------------- */
+
+            integration: {
+
+                electricFenceAndCCTV:
+                    'Electric fencing provides perimeter deterrence while CCTV provides visual verification.',
+
+                electricFenceAndAlarm:
+                    'The perimeter system can form part of a layered intrusion-detection strategy where compatible equipment and installation design support integration.',
+
+                cctvAndAccessControl:
+                    'CCTV can provide visual verification around controlled entrances and help customers understand access events.',
+
+                gateAndIntercom:
+                    'An intercom can allow a resident or operator to communicate with visitors before deciding whether to release the gate.',
+
+                gateAndAccessControl:
+                    'Access control can determine whether an authorised person may operate or pass through a controlled gate.',
+
+                alarmAndCCTV:
+                    'CCTV can provide visual verification when an alarm event occurs, subject to the capabilities and configuration of the equipment.',
+
+                completeSystem:
+                    'For larger properties, the strongest design may combine perimeter protection, detection, CCTV verification, controlled access and appropriate response procedures.'
+
+            }
+
+        },
+
+
+        /* =========================================================
+           64. PROJECT SIZING ENGINE
+        ========================================================= */
+
+        projectSizingEngine: {
+
+            objective:
+                'Determine the approximate size and complexity of a security project before recommending equipment or preparing a quotation.',
+
+
+            /* -----------------------------------------------------
+               GENERAL SIZING QUESTIONS
+            ----------------------------------------------------- */
+
+            questions: [
+
+                'Approximately how large is the property?',
+
+                'How many entrances are there?',
+
+                'How many gates are there?',
+
+                'How many doors need protection or access control?',
+
+                'How many areas need CCTV coverage?',
+
+                'How long is the perimeter?',
+
+                'How many buildings are involved?',
+
+                'Are there existing security systems?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               CCTV SIZING
+            ----------------------------------------------------- */
+
+            cctv: {
+
+                factors: [
+
+                    'Number of viewing areas',
+
+                    'Required coverage',
+
+                    'Camera positioning',
+
+                    'Required identification distance',
+
+                    'Lighting',
+
+                    'Camera type',
+
+                    'Resolution',
+
+                    'Recording requirements',
+
+                    'Retention period',
+
+                    'Network infrastructure'
+
+                ],
+
+
+                rule:
+                    'Do not determine the camera quantity from property size alone. Camera placement and the customers required level of identification are critical.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               ELECTRIC FENCE SIZING
+            ----------------------------------------------------- */
+
+            electricFence: {
+
+                factors: [
+
+                    'Fence length',
+
+                    'Number of strands',
+
+                    'Fence configuration',
+
+                    'Energizer capability',
+
+                    'Vegetation',
+
+                    'Earthing',
+
+                    'Gate locations',
+
+                    'Zone requirements',
+
+                    'Existing infrastructure'
+
+                ],
+
+
+                rule:
+                    'The correct energizer and fence configuration must be determined from the actual fence design and system requirements rather than fence length alone.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               ACCESS CONTROL SIZING
+            ----------------------------------------------------- */
+
+            accessControl: {
+
+                factors: [
+
+                    'Number of doors',
+
+                    'Number of users',
+
+                    'Reader technology',
+
+                    'Credential type',
+
+                    'Controller capacity',
+
+                    'Locking hardware',
+
+                    'Exit devices',
+
+                    'Power requirements',
+
+                    'Software requirements',
+
+                    'Networking'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               ALARM SIZING
+            ----------------------------------------------------- */
+
+            alarm: {
+
+                factors: [
+
+                    'Number of protected zones',
+
+                    'Doors',
+
+                    'Windows',
+
+                    'Motion detection areas',
+
+                    'Outdoor areas',
+
+                    'Panic requirements',
+
+                    'Existing sensors',
+
+                    'Remote notification requirements',
+
+                    'Monitoring requirements'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               GATE AUTOMATION SIZING
+            ----------------------------------------------------- */
+
+            gateAutomation: {
+
+                factors: [
+
+                    'Gate type',
+
+                    'Gate weight',
+
+                    'Gate length',
+
+                    'Mechanical condition',
+
+                    'Usage frequency',
+
+                    'Power availability',
+
+                    'Battery backup',
+
+                    'Safety devices',
+
+                    'Access-control integration',
+
+                    'Intercom integration'
+
+                ]
+
+            }
+
+        },
+
+
+        /* =========================================================
+           65. SMART RECOMMENDATION BUILDER
+        ========================================================= */
+
+        smartRecommendationBuilder: {
+
+            objective:
+                'Convert the customers collected information into a clear, professional recommendation.',
+
+
+            recommendationFormat: {
+
+                requirement:
+                    'Summarise what the customer wants to achieve.',
+
+                solution:
+                    'Identify the recommended security category or combination of systems.',
+
+                reasoning:
+                    'Explain why the solution fits the stated requirement.',
+
+                considerations:
+                    'Identify important information that still needs to be confirmed.',
+
+                nextStep:
+                    'Provide a clear quotation, assessment, purchase or information step.'
+
+            },
+
+
+            example:
+
+                'Based on what you have told me, you are looking to protect the perimeter of a residential property and monitor the driveway. A combination of perimeter protection and CCTV would provide complementary layers of security. Before finalizing the equipment, the approximate perimeter length, driveway distance and required identification level should be confirmed. If you provide those details, we can narrow down the appropriate solution.'
+
+        },
