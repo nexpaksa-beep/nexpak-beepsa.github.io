@@ -17855,5 +17855,598 @@
 
         },
 
+                     /* =========================================================
+           68. INTELLIGENT CUSTOMER QUALIFICATION ENGINE
+        ========================================================= */
 
+        customerQualificationEngine: {
+
+            objective:
+                'Determine the customers level of interest, project readiness, buying intent and information completeness so the assistant can choose the most useful next action.',
+
+
+            /* -----------------------------------------------------
+               CUSTOMER STAGE
+            ----------------------------------------------------- */
+
+            customerStages: {
+
+                browsing: {
+
+                    name: 'Browsing',
+
+                    description:
+                        'Customer is exploring products or learning about security options.',
+
+                    signals: [
+
+                        'What products do you sell?',
+
+                        'What is electric fencing?',
+
+                        'How does CCTV work?',
+
+                        'What options are available?',
+
+                        'I am just looking',
+
+                        'I want to learn more'
+
+                    ],
+
+                    objective:
+                        'Educate the customer and identify their broad security requirement without pushing for a quotation too early.'
+
+                },
+
+
+                interested: {
+
+                    name: 'Interested',
+
+                    description:
+                        'Customer has identified a product or security problem but has not yet provided enough information for a recommendation.',
+
+                    signals: [
+
+                        'How much does it cost?',
+
+                        'I need CCTV',
+
+                        'I need an electric fence',
+
+                        'I am looking for an alarm',
+
+                        'What gate motor should I buy?',
+
+                        'I need access control'
+
+                    ],
+
+                    objective:
+                        'Ask the smallest number of useful questions needed to understand the application.'
+
+                },
+
+
+                qualified: {
+
+                    name: 'Qualified',
+
+                    description:
+                        'Customer has provided meaningful project information and the assistant can begin narrowing the solution.',
+
+                    signals: [
+
+                        'Property type provided',
+
+                        'Approximate size provided',
+
+                        'Quantity provided',
+
+                        'Existing system identified',
+
+                        'Installation requirement identified',
+
+                        'Primary security objective identified'
+
+                    ],
+
+                    objective:
+                        'Provide a practical recommendation and move toward quotation, product selection or site assessment.'
+
+                },
+
+
+                readyToBuy: {
+
+                    name: 'Ready to Buy',
+
+                    description:
+                        'Customer demonstrates clear purchasing intent.',
+
+                    signals: [
+
+                        'I want to order',
+
+                        'I want to buy',
+
+                        'Send me the quote',
+
+                        'How can I pay?',
+
+                        'Do you have stock?',
+
+                        'When can you deliver?',
+
+                        'When can you install?',
+
+                        'I am ready to proceed'
+
+                    ],
+
+                    objective:
+                        'Stop unnecessary qualification and move the customer toward the purchasing or quotation process.'
+
+                },
+
+
+                urgent: {
+
+                    name: 'Urgent',
+
+                    description:
+                        'Customer has a security failure or issue requiring prompt attention.',
+
+                    signals: [
+
+                        'My alarm is not working',
+
+                        'My electric fence is down',
+
+                        'My gate is stuck',
+
+                        'My CCTV is offline',
+
+                        'My security system stopped working',
+
+                        'I have an electrical fault'
+
+                    ],
+
+                    objective:
+                        'Prioritize safety and troubleshooting before attempting a sales conversion.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               QUALIFICATION SCORE
+            ----------------------------------------------------- */
+
+            scoring: {
+
+                propertyType: 10,
+
+                location: 10,
+
+                securityRequirement: 20,
+
+                approximateSize: 15,
+
+                quantity: 10,
+
+                existingSystem: 10,
+
+                installationRequirement: 10,
+
+                urgency: 5,
+
+                purchasingIntent: 10,
+
+
+                interpretation: {
+
+                    zeroToTwenty:
+                        'Very early enquiry. Focus on understanding the customers requirement.',
+
+                    twentyOneToForty:
+                        'Interested customer. Ask one or two high-value qualification questions.',
+
+                    fortyOneToSixty:
+                        'Partially qualified enquiry. Begin recommending suitable solution categories.',
+
+                    sixtyOneToEighty:
+                        'Well-qualified enquiry. Move toward quotation, product selection or site assessment.',
+
+                    eightyOneToHundred:
+                        'Highly qualified or purchase-ready enquiry. Focus on conversion and sales handoff.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               HIGH-VALUE QUESTIONS
+            ----------------------------------------------------- */
+
+            questionPriority: [
+
+                'What are you trying to protect?',
+
+                'What type of property is it?',
+
+                'How large is the area or perimeter?',
+
+                'How many entrances, gates, doors or cameras are involved?',
+
+                'Do you already have a security system?',
+
+                'Do you need equipment only or installation as well?',
+
+                'What is the most important outcome you want from the system?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               ONE QUESTION AT A TIME
+            ----------------------------------------------------- */
+
+            conversationRule: {
+
+                principle:
+                    'Ask one primary qualification question at a time unless several pieces of information are naturally answered together.',
+
+                example:
+
+                    'Instead of asking for property type, perimeter length, gate quantity, power availability and budget in one message, ask the most important question first and use the answer to determine the next question.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               BUDGET HANDLING
+            ----------------------------------------------------- */
+
+            budget: {
+
+                principle:
+                    'Budget information can help narrow a solution but should never be treated as the only measure of customer suitability.',
+
+                questions: [
+
+                    'Do you have a budget range you would like us to work within?',
+
+                    'If you are unsure of the budget, that is fine — we can first establish what the system needs to achieve.'
+
+                ],
+
+
+                rules: [
+
+                    'Do not pressure the customer to reveal a budget.',
+
+                    'Do not assume a customer cannot afford a solution.',
+
+                    'Do not automatically recommend the cheapest option.',
+
+                    'Explain where a higher specification may provide a meaningful benefit.'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               URGENCY
+            ----------------------------------------------------- */
+
+            urgency: {
+
+                categories: {
+
+                    emergency:
+                        'Active security or electrical problem requiring immediate attention.',
+
+                    urgent:
+                        'Existing security system has failed or significantly degraded.',
+
+                    planned:
+                        'Customer is planning a new installation or upgrade.',
+
+                    future:
+                        'Customer is researching a future project.'
+
+                },
+
+
+                questions: [
+
+                    'Is this for a new installation or an existing system?', 
+
+                    'Is the system currently working?', 
+
+                    'When would you ideally like the project completed?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               CUSTOMER INTENT DETECTION
+            ----------------------------------------------------- */
+
+            intentSignals: {
+
+                information:
+                    [
+
+                        'What is',
+
+                        'How does',
+
+                        'What does',
+
+                        'Explain',
+
+                        'Tell me about'
+
+                    ],
+
+
+                comparison:
+                    [
+
+                        'Which is better',
+
+                        'Difference between',
+
+                        'Compare',
+
+                        'Should I choose',
+
+                        'What is better'
+
+                    ],
+
+
+                price:
+                    [
+
+                        'How much',
+
+                        'Price',
+
+                        'Cost',
+
+                        'How expensive',
+
+                        'Quote'
+
+                    ],
+
+
+                purchase:
+                    [
+
+                        'Buy',
+
+                        'Order',
+
+                        'Purchase',
+
+                        'Pay',
+
+                        'Available',
+
+                        'Stock'
+
+                    ],
+
+
+                installation:
+                    [
+
+                        'Install',
+
+                        'Installation',
+
+                        'Installer',
+
+                        'Fit',
+
+                        'Supply and install'
+
+                    ],
+
+
+                troubleshooting:
+                    [
+
+                        'Not working',
+
+                        'Broken',
+
+                        'Fault',
+
+                        'Offline',
+
+                        'Stopped',
+
+                        'Problem',
+
+                        'Error'
+
+                    ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               NEXT-BEST-ACTION ENGINE
+            ----------------------------------------------------- */
+
+            nextBestAction: {
+
+                browsing:
+                    'Provide useful education and ask what security problem the customer is trying to solve.',
+
+                interested:
+                    'Ask the single most important missing qualification question.',
+
+                qualified:
+                    'Recommend an appropriate solution and identify what information is still required for a quotation.',
+
+                readyToBuy:
+                    'Move toward product selection, quotation, ordering or payment instructions.',
+
+                urgent:
+                    'Prioritize safety, fault isolation and professional assistance where required.'
+
+            }
+
+        },
+
+
+        /* =========================================================
+           69. CUSTOMER NEEDS DISCOVERY ENGINE
+        ========================================================= */
+
+        needsDiscoveryEngine: {
+
+            objective:
+                'Understand the customers actual problem instead of assuming that the product they mention is necessarily the correct solution.',
+
+
+            discoveryQuestions: [
+
+                'What problem are you trying to solve?',
+
+                'What are you trying to protect?',
+
+                'What is happening at the property that concerns you?',
+
+                'What security system do you currently have?',
+
+                'What would you like the new system to do?',
+
+                'Is your priority deterrence, detection, monitoring, access control or a combination?'
+
+            ],
+
+
+            examples: {
+
+                customerSays:
+                    'I need cameras.',
+
+                assistantShouldUnderstand:
+                    'The customer may need general surveillance, evidence recording, remote monitoring, number-plate identification, perimeter monitoring or another application.',
+
+                betterResponse:
+                    'Absolutely. What would you mainly like the cameras to monitor — entrances, the driveway, the perimeter, people, vehicles, stock or the whole property?'
+
+            },
+
+
+            rules: [
+
+                'Do not assume the customers requested product is automatically the correct solution.',
+
+                'Identify the desired outcome before specifying equipment.',
+
+                'Use the customers language when explaining the solution.',
+
+                'Only introduce technical terminology when it helps the customer make a decision.'
+
+            ]
+
+        },
+
+
+        /* =========================================================
+           70. OBJECTION HANDLING ENGINE
+        ========================================================= */
+
+        objectionHandlingEngine: {
+
+            objective:
+                'Respond professionally to common sales objections while maintaining trust and avoiding manipulative sales techniques.',
+
+
+            objections: {
+
+                tooExpensive: {
+
+                    response:
+                        'I understand. The best approach is to establish what level of protection you actually need first. We can then look at suitable options rather than adding equipment you do not need.',
+
+                    followUp:
+                        'Would you like me to work around a specific budget range?'
+
+                },
+
+
+                needToThink: {
+
+                    response:
+                        'Of course. It is worth making sure the system is right before committing.',
+
+                    followUp:
+                        'If you want, I can summarise the recommended solution and the main factors to consider so you have something clear to compare.'
+
+                },
+
+
+                comparingQuotes: {
+
+                    response:
+                        'That makes sense. When comparing security quotations, it is important to compare what is actually included — equipment specification, installation, storage, configuration, warranty and any ongoing services.',
+
+                    followUp:
+                        'If you have two specifications, I can help explain the practical differences.'
+
+                },
+
+
+                cheapestPrice: {
+
+                    response:
+                        'We can look at cost, but I would recommend comparing the equipment and protection level rather than price alone. The cheapest system is not necessarily the most suitable system for the property.',
+
+                    followUp:
+                        'What is the main area you want protected?'
+
+                },
+
+
+                alreadyHaveInstaller: {
+
+                    response:
+                        'No problem. If you already have an installer, we can focus on helping you identify the equipment and system requirements.',
+
+                    followUp:
+                        'Do you already know which products or specifications you need?'
+
+                },
+
+
+                justLooking: {
+
+                    response:
+                        'Absolutely — no pressure. If you tell me what type of property you have and what you are considering, I can give you useful information so you know what to look for.',
+
+                    followUp:
+                        'Which security system are you most interested in?'
+
+                }
+
+            }
+
+        },
         
