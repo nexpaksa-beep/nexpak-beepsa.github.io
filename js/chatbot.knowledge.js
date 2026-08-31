@@ -11560,3 +11560,700 @@
             ]
 
         },
+
+                        /* =========================================================
+           39. SOLAR SECURITY SALES ENGINE
+        ========================================================= */
+
+        solarSecuritySalesEngine: {
+
+            objective:
+                'Determine whether solar power is appropriate for the customers security equipment and establish the information required for a suitable solution.',
+
+
+            openingQuestions: [
+
+                'What security equipment do you need to power?',
+
+                'Is mains electricity available at the installation location?',
+
+                'How many devices need to operate from the solar system?',
+
+                'How many hours per day must the equipment operate?',
+
+                'Do you need the system to continue operating during extended cloudy weather?',
+
+                'Do you already have solar panels or batteries installed?'
+
+            ],
+
+
+            decisionLogic: {
+
+                remoteCCTV:
+                    'Determine camera power consumption, recorder or communication requirements, network equipment, battery autonomy and solar exposure.',
+
+                electricFence:
+                    'Determine energizer requirements, backup requirements, fence configuration and expected operating conditions.',
+
+                remoteProperty:
+                    'Prioritize reliable off-grid operation, battery autonomy, solar exposure and equipment efficiency.',
+
+                unreliablePower:
+                    'Determine whether a backup system or hybrid solar solution is more appropriate than a fully off-grid installation.',
+
+                highLoad:
+                    'Calculate the combined equipment load before selecting the solar panel and battery capacity.',
+
+                expansion:
+                    'Allow sufficient capacity where the customer intends adding additional security equipment later.'
+
+            },
+
+
+            pricingGuidance: {
+
+                principle:
+                    'Solar-security pricing depends on equipment load, solar-panel capacity, battery storage, mounting requirements, charge controller or inverter requirements, cabling and installation complexity.',
+
+                factors: [
+
+                    'Equipment load',
+
+                    'Solar panel capacity',
+
+                    'Battery capacity',
+
+                    'Battery technology',
+
+                    'Charge controller',
+
+                    'Inverter where required',
+
+                    'Mounting hardware',
+
+                    'Cabling',
+
+                    'Protection equipment',
+
+                    'Weather exposure',
+
+                    'Installation requirements',
+
+                    'Required autonomy'
+
+                ],
+
+                responseWhenAskedPrice:
+                    'Solar pricing depends on exactly what security equipment needs to be powered and how long it must operate without mains electricity. I would first determine the load and backup requirement before recommending a system.'
+
+            }
+
+        },
+
+
+        /* =========================================================
+           40. ALARM SYSTEMS — ADVANCED KNOWLEDGE
+        ========================================================= */
+
+        alarmSystemsAdvanced: {
+
+            name: 'Intrusion Alarm Systems',
+
+            category: 'Electronic Security',
+
+            definition:
+                'An intrusion alarm system uses sensors, control equipment, user interfaces and notification devices to detect selected security events and generate an alarm condition.',
+
+            simpleExplanation:
+                'An alarm system helps detect unauthorised entry or other configured security events. The correct system depends on the property layout, entry points, detection requirements and how the customer wants alerts handled.',
+
+
+            /* -----------------------------------------------------
+               ALARM SYSTEM COMPONENTS
+            ----------------------------------------------------- */
+
+            components: {
+
+                controlPanel: {
+
+                    name: 'Alarm Control Panel',
+
+                    function:
+                        'Acts as the central control point for compatible alarm devices, zones, user controls and system functions.',
+
+                    considerations: [
+
+                        'Number of zones',
+
+                        'Expansion capability',
+
+                        'User capacity',
+
+                        'Communication options',
+
+                        'Battery backup',
+
+                        'Integration capability'
+
+                    ]
+
+                },
+
+
+                keypad: {
+
+                    name: 'Keypad',
+
+                    function:
+                        'Provides a user interface for arming, disarming and interacting with supported alarm functions.',
+
+                    considerations: [
+
+                        'Location',
+
+                        'User requirements',
+
+                        'Access codes',
+
+                        'Multiple keypads',
+
+                        'System compatibility'
+
+                    ]
+
+                },
+
+
+                pir: {
+
+                    name: 'PIR Motion Detector',
+
+                    function:
+                        'Detects changes in infrared energy associated with movement within its detection area.',
+
+                    considerations: [
+
+                        'Room size',
+
+                        'Mounting position',
+
+                        'Detection pattern',
+
+                        'Heat sources',
+
+                        'Air movement',
+
+                        'Pets',
+
+                        'Environmental conditions'
+
+                    ]
+
+                },
+
+
+                magneticContact: {
+
+                    name: 'Magnetic Door/Window Contact',
+
+                    function:
+                        'Detects opening of a protected door, window or other suitable opening.',
+
+                    considerations: [
+
+                        'Door construction',
+
+                        'Window construction',
+
+                        'Mounting position',
+
+                        'Alignment',
+
+                        'Wiring or wireless requirements'
+
+                    ]
+
+                },
+
+
+                panicButton: {
+
+                    name: 'Panic Button',
+
+                    function:
+                        'Provides a manually activated alarm input where supported by the alarm system.',
+
+                    applications: [
+
+                        'Residential emergency activation',
+
+                        'Commercial premises',
+
+                        'Reception areas',
+
+                        'Cash offices',
+
+                        'Security-sensitive locations'
+
+                    ]
+
+                },
+
+
+                siren: {
+
+                    name: 'Siren',
+
+                    function:
+                        'Provides an audible alarm indication when activated by the system.',
+
+                    considerations: [
+
+                        'Indoor or outdoor installation',
+
+                        'Location',
+
+                        'Weather exposure',
+
+                        'Power requirements',
+
+                        'Tamper protection'
+
+                    ]
+
+                },
+
+
+                communicator: {
+
+                    name: 'Alarm Communicator',
+
+                    function:
+                        'Allows compatible alarm systems to communicate events through supported communication channels.',
+
+                    considerations: [
+
+                        'Network availability',
+
+                        'Cellular connectivity',
+
+                        'Internet connectivity',
+
+                        'Monitoring requirements',
+
+                        'Notification method',
+
+                        'System compatibility'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               ALARM APPLICATIONS
+            ----------------------------------------------------- */
+
+            applications: {
+
+                residential: {
+
+                    priorities: [
+
+                        'Main entrances',
+
+                        'Secondary entrances',
+
+                        'Windows',
+
+                        'Garages',
+
+                        'Passages',
+
+                        'High-risk rooms',
+
+                        'Perimeter integration',
+
+                        'Remote notifications'
+
+                    ]
+
+                },
+
+
+                commercial: {
+
+                    priorities: [
+
+                        'Main entrances',
+
+                        'Emergency exits',
+
+                        'Reception',
+
+                        'Offices',
+
+                        'Warehouses',
+
+                        'Stock areas',
+
+                        'Server rooms',
+
+                        'Restricted areas',
+
+                        'Panic protection',
+
+                        'Access control integration'
+
+                    ]
+
+                },
+
+
+                smallBusiness: {
+
+                    priorities: [
+
+                        'Entry points',
+
+                        'After-hours protection',
+
+                        'Staff access',
+
+                        'Stock protection',
+
+                        'Panic activation',
+
+                        'Remote notifications'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               ALARM QUALIFICATION
+            ----------------------------------------------------- */
+
+            qualificationQuestions: [
+
+                'Is this for a home or business?',
+
+                'Is this a new alarm or an upgrade?',
+
+                'How many doors and windows need protection?',
+
+                'How many rooms or areas need motion detection?',
+
+                'Do you have pets?',
+
+                'Do you need panic buttons?',
+
+                'Do you want mobile notifications?',
+
+                'Do you need armed-response or monitoring integration?',
+
+                'Do you already have an alarm system?',
+
+                'What alarm system is currently installed?',
+
+                'Do you want CCTV integration?',
+
+                'Do you want access-control integration?',
+
+                'Do you require battery backup?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               ALARM DESIGN PRINCIPLES
+            ----------------------------------------------------- */
+
+            designPrinciples: {
+
+                layeredProtection:
+                    'A strong security design can combine perimeter protection, intrusion detection, CCTV, access control and physical security rather than relying on one technology.',
+
+                entryPoints:
+                    'Doors and windows should be assessed according to their security importance and the required detection method.',
+
+                zoning:
+                    'Appropriate zoning can help identify which area generated an alarm and can make troubleshooting easier.',
+
+                pets:
+                    'Pets must be considered when selecting and positioning motion detectors.',
+
+                communication:
+                    'Customers requiring remote notifications or monitoring need an appropriate communication method and compatible equipment.',
+
+                backupPower:
+                    'Alarm systems should have suitable backup power where continued operation during mains failures is required.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               ALARM TROUBLESHOOTING
+            ----------------------------------------------------- */
+
+            troubleshooting: {
+
+                falseAlarms: [
+
+                    'Incorrect detector positioning',
+
+                    'Pet movement',
+
+                    'Environmental movement',
+
+                    'Loose connections',
+
+                    'Sensor fault',
+
+                    'Low battery',
+
+                    'Door or window contact alignment',
+
+                    'Incorrect configuration'
+
+                ],
+
+
+                alarmNotArming: [
+
+                    'Open zone',
+
+                    'Faulty sensor',
+
+                    'Door or window left open',
+
+                    'System fault',
+
+                    'Incorrect user procedure',
+
+                    'Low battery',
+
+                    'Communication fault'
+
+                ],
+
+
+                alarmNotCommunicating: [
+
+                    'Network problem',
+
+                    'Cellular connectivity issue',
+
+                    'Communication module problem',
+
+                    'Configuration issue',
+
+                    'Power problem',
+
+                    'Service problem'
+
+                ],
+
+
+                keypadProblems: [
+
+                    'Power problem',
+
+                    'Communication fault',
+
+                    'Damaged keypad',
+
+                    'Configuration issue',
+
+                    'Cable problem'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               ALARM SALES RULES
+            ----------------------------------------------------- */
+
+            salesRules: [
+
+                'Determine the property type first.',
+
+                'Identify the main entry points.',
+
+                'Determine whether the system is new or an upgrade.',
+
+                'Ask about pets before recommending motion detection.',
+
+                'Determine whether remote notifications are required.',
+
+                'Determine whether monitoring or armed-response integration is required.',
+
+                'Do not guarantee compatibility with an existing alarm system without identifying the equipment.',
+
+                'Do not recommend bypassing alarm safety or tamper mechanisms.',
+
+                'Recommend professional installation for complex alarm systems.'
+
+            ]
+
+        },
+
+
+        /* =========================================================
+           41. ALARM SALES ENGINE
+        ========================================================= */
+
+        alarmSalesEngine: {
+
+            objective:
+                'Qualify the customers intrusion-protection requirements and identify the most appropriate alarm-system approach.',
+
+
+            openingQuestions: [
+
+                'Is this for a home or business?',
+
+                'Is there an existing alarm system?',
+
+                'What are the main areas you want protected?',
+
+                'How many entrances are there?',
+
+                'Do you have pets?',
+
+                'Do you want alerts on your phone?'
+
+            ],
+
+
+            decisionLogic: {
+
+                newInstallation:
+                    'Determine property layout, entry points, required sensors, keypad locations, sirens, communication and backup-power requirements.',
+
+                upgrade:
+                    'Identify the existing alarm panel, sensors, wiring and desired improvements before recommending replacement equipment.',
+
+                pets:
+                    'Consider suitable detection technology and detector positioning to reduce unwanted alarms.',
+
+                remoteNotifications:
+                    'Determine compatible communication options and customer notification requirements.',
+
+                commercial:
+                    'Consider zoning, multiple users, restricted areas, panic protection and integration with other security systems.',
+
+                highRisk:
+                    'Prioritize layered protection and integration between perimeter detection, alarms, CCTV and access control where appropriate.'
+
+            },
+
+
+            pricingGuidance: {
+
+                principle:
+                    'Alarm pricing depends on the number of zones, sensors, control equipment, keypads, sirens, communication equipment, backup power and installation complexity.',
+
+                factors: [
+
+                    'Control panel',
+
+                    'Number of zones',
+
+                    'Motion detectors',
+
+                    'Door contacts',
+
+                    'Window contacts',
+
+                    'Panic buttons',
+
+                    'Keypads',
+
+                    'Siren',
+
+                    'Communicator',
+
+                    'Battery',
+
+                    'Cabling',
+
+                    'Wireless devices',
+
+                    'Monitoring requirements',
+
+                    'Installation'
+
+                ],
+
+                responseWhenAskedPrice:
+                    'The alarm price depends on how many areas and entry points you need to protect and whether you want features such as mobile notifications, monitoring or integration with CCTV and access control.'
+
+            }
+
+        },
+
+
+        /* =========================================================
+           42. SECURITY SYSTEM CROSS-SELL ENGINE
+        ========================================================= */
+
+        securityCrossSellEngine: {
+
+            objective:
+                'Identify additional security requirements that naturally complement the customers primary security solution without forcing unnecessary products.',
+
+
+            rules: [
+
+                'Only recommend additional products when they solve an identified security problem.',
+
+                'Do not add products simply to increase the sale.',
+
+                'Explain the benefit of the additional system.',
+
+                'Ask permission before moving into a secondary recommendation.',
+
+                'Prioritize practical security improvements over unnecessary features.'
+
+            ],
+
+
+            combinations: {
+
+                electricFencePlusCCTV:
+                    'Electric fencing can provide perimeter deterrence while CCTV provides visual verification and recorded evidence.',
+
+                electricFencePlusAlarm:
+                    'An electric fence can form part of the perimeter layer while an alarm system provides additional intrusion detection.',
+
+                cctvPlusAlarm:
+                    'CCTV can provide visual information while the alarm system can provide intrusion detection and alerting.',
+
+                cctvPlusAccessControl:
+                    'Access control manages authorised entry while CCTV provides visual monitoring of access points.',
+
+                gateAutomationPlusIntercom:
+                    'Gate automation controls physical movement while the intercom allows communication and visitor verification.',
+
+                gateAutomationPlusCCTV:
+                    'CCTV can monitor the gate area while automation controls vehicle access.',
+
+                alarmPlusMonitoring:
+                    'Compatible monitoring services can provide an additional response layer when an alarm event occurs.'
+
+            },
+
+
+            recommendationExample:
+                'Based on what you have told me, I would recommend starting with the main security requirement first. There may also be an opportunity to add another layer such as CCTV, alarm detection or access control if it addresses a specific weakness.'
+            
+        },
