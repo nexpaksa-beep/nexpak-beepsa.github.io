@@ -5886,7 +5886,7 @@
                STORAGE
             ----------------------------------------------------- */
 
-            storage: {
+                        storage: {
 
                 purpose:
                     'Recorded video requires storage capacity based on camera count, resolution, frame rate, compression, recording mode and retention period.',
@@ -5905,4 +5905,621 @@
 
                     'Motion recording',
 
-                    'Ev
+                    'Event recording',
+
+                    'Retention period',
+
+                    'Hard-drive capacity',
+
+                    'Recording schedule',
+
+                    'Camera bitrate',
+
+                    'Video encoding'
+
+                ],
+
+                salesQuestions: [
+
+                    'How many cameras do you need?',
+
+                    'How many days of footage would you like to retain?',
+
+                    'Do you want continuous recording or motion/event recording?',
+
+                    'What resolution do you require?',
+
+                    'Do you need important cameras to record continuously?'
+
+                ],
+
+                explanation:
+                    'The amount of storage required depends on how many cameras are recording, the quality and bitrate of the video, how often they record and how long the customer wants to keep the footage.',
+
+                importantRule:
+                    'Never guarantee a specific number of recording days without calculating the system requirements and available storage capacity.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               DVR / NVR
+            ----------------------------------------------------- */
+
+            recorders: {
+
+                dvr: {
+
+                    name: 'DVR',
+
+                    description:
+                        'A Digital Video Recorder is commonly used with compatible HD analog CCTV systems.',
+
+                    considerations: [
+
+                        'Number of channels',
+
+                        'Camera compatibility',
+
+                        'Recording resolution',
+
+                        'Storage capacity',
+
+                        'Remote access support',
+
+                        'Analytics support where applicable'
+
+                    ]
+
+                },
+
+
+                nvr: {
+
+                    name: 'NVR',
+
+                    description:
+                        'A Network Video Recorder manages and records compatible IP cameras.',
+
+                    considerations: [
+
+                        'Number of channels',
+
+                        'Camera compatibility',
+
+                        'Network bandwidth',
+
+                        'PoE support where applicable',
+
+                        'Recording resolution',
+
+                        'Storage capacity',
+
+                        'Analytics support'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               POE
+            ----------------------------------------------------- */
+
+            poe: {
+
+                definition:
+                    'Power over Ethernet allows compatible network equipment to transmit data and electrical power over Ethernet cabling.',
+
+                benefits: [
+
+                    'Simplified cabling',
+
+                    'Centralized power',
+
+                    'Suitable for many IP camera installations'
+
+                ],
+
+                considerations: [
+
+                    'PoE standard',
+
+                    'Available power budget',
+
+                    'Camera power requirements',
+
+                    'Cable quality',
+
+                    'Network switch capability',
+
+                    'Cable distance'
+
+                ],
+
+                importantRule:
+                    'The camera, switch, NVR or other equipment must support the required PoE standard and power requirements.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               REMOTE VIEWING
+            ----------------------------------------------------- */
+
+            remoteViewing: {
+
+                possibleMethods: [
+
+                    'Mobile application',
+
+                    'Web interface',
+
+                    'Desktop software',
+
+                    'Cloud-supported services where available'
+
+                ],
+
+                requirements: [
+
+                    'Compatible recorder or camera',
+
+                    'Internet connectivity',
+
+                    'Correct configuration',
+
+                    'User authentication',
+
+                    'Supported application or software'
+
+                ],
+
+                salesQuestion:
+                    'Would you like to view your cameras remotely from your phone?',
+
+                troubleshootingQuestions: [
+
+                    'Can you view the cameras locally?',
+
+                    'Is the recorder powered on?',
+
+                    'Is the network connection working?',
+
+                    'Does the application show the recorder as online?',
+
+                    'Has anything changed on the internet connection or router?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               CCTV NETWORKING
+            ----------------------------------------------------- */
+
+            networking: {
+
+                considerations: [
+
+                    'Network bandwidth',
+
+                    'Cable length',
+
+                    'Switch capacity',
+
+                    'PoE requirements',
+
+                    'IP addressing',
+
+                    'Internet connectivity',
+
+                    'Network security',
+
+                    'Remote access configuration'
+
+                ],
+
+                importantRule:
+                    'Do not assume an existing network is automatically suitable for a large IP CCTV installation.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               CCTV STORAGE MODES
+            ----------------------------------------------------- */
+
+            recordingModes: {
+
+                continuous: {
+
+                    name: 'Continuous Recording',
+
+                    description:
+                        'The system records continuously during the configured recording period.',
+
+                    advantages: [
+
+                        'Provides continuous footage',
+
+                        'Useful where complete event history is important'
+
+                    ],
+
+                    consideration:
+                        'Requires more storage than event-based recording under comparable settings.'
+
+                },
+
+
+                motion: {
+
+                    name: 'Motion Recording',
+
+                    description:
+                        'The system records based on configured motion detection or analytics.',
+
+                    advantages: [
+
+                        'Can reduce storage requirements',
+
+                        'Can make reviewing events easier'
+
+                    ],
+
+                    consideration:
+                        'Detection settings must be configured correctly to reduce missed events or unwanted recordings.'
+
+                },
+
+
+                event: {
+
+                    name: 'Event Recording',
+
+                    description:
+                        'Recording can be triggered by supported events such as alarms, analytics or other configured conditions.',
+
+                    consideration:
+                        'Available event types depend on the selected equipment.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               CCTV SCENARIOS
+            ----------------------------------------------------- */
+
+            scenarios: {
+
+                residential: {
+
+                    description:
+                        'Customer wants CCTV for a home.',
+
+                    askFirst: [
+
+                        'How many areas do you want to monitor?',
+
+                        'Which entrances need coverage?',
+
+                        'Do you need driveway monitoring?',
+
+                        'Do you need indoor cameras?',
+
+                        'Do you want phone viewing?',
+
+                        'How many days of recording do you require?',
+
+                        'Do you need colour night vision?'
+
+                    ]
+
+                },
+
+
+                commercial: {
+
+                    description:
+                        'Business requires a surveillance system.',
+
+                    askFirst: [
+
+                        'What type of business is it?',
+
+                        'How large is the premises?',
+
+                        'How many entrances and exits are there?',
+
+                        'Do you need internal and external coverage?',
+
+                        'Do you need staff or customer monitoring?',
+
+                        'Do you need vehicle monitoring?',
+
+                        'How long should footage be retained?',
+
+                        'Do you need remote monitoring?',
+
+                        'Do you require integration with access control or alarms?'
+
+                    ]
+
+                },
+
+
+                upgrade: {
+
+                    description:
+                        'Customer already has CCTV and wants to upgrade.',
+
+                    askFirst: [
+
+                        'What system do you currently have?',
+
+                        'Is it analog or IP?',
+
+                        'How old is the system?',
+
+                        'What do you want to improve?',
+
+                        'Are the existing cameras still working?',
+
+                        'Do you want higher resolution?',
+
+                        'Do you want better night vision?',
+
+                        'Do you want remote viewing?',
+
+                        'Do you need additional cameras?'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               CCTV PRICING
+            ----------------------------------------------------- */
+
+            pricingGuidance: {
+
+                principle:
+                    'CCTV pricing depends on the camera type, number of cameras, resolution, recorder, storage, cabling, installation complexity, networking and additional features.',
+
+                factors: [
+
+                    'Number of cameras',
+
+                    'Camera type',
+
+                    'Resolution',
+
+                    'Lens',
+
+                    'Night vision',
+
+                    'Recorder',
+
+                    'Hard-drive capacity',
+
+                    'Cabling',
+
+                    'Network equipment',
+
+                    'PoE equipment',
+
+                    'Mounting requirements',
+
+                    'Installation complexity',
+
+                    'Remote-viewing requirements',
+
+                    'Analytics'
+
+                ],
+
+                responseWhenAskedPrice:
+                    'I can help narrow down the right CCTV system, but the final price depends on the number of cameras, required image quality, storage, installation and the areas you need covered.',
+
+                importantRule:
+                    'Never invent current product pricing or installation costs.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               CCTV SALES QUALIFICATION
+            ----------------------------------------------------- */
+
+            qualificationQuestions: [
+
+                'What property are we protecting?',
+
+                'How many areas need monitoring?',
+
+                'Which areas are the highest priority?',
+
+                'Do you need indoor, outdoor or both?',
+
+                'Do you need to identify people or simply monitor activity?',
+
+                'Do you need vehicle or number-plate identification?',
+
+                'How far are the cameras from the target areas?',
+
+                'What lighting conditions exist at night?',
+
+                'Do you want colour night vision?',
+
+                'Do you want remote viewing on your phone?',
+
+                'How many days of recording do you require?',
+
+                'Do you already have CCTV infrastructure?',
+
+                'Do you want CCTV integrated with access control or an alarm system?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               COMMON CUSTOMER QUESTIONS
+            ----------------------------------------------------- */
+
+            commonQuestions: [
+
+                'How much does CCTV cost?',
+
+                'What CCTV camera should I buy?',
+
+                'What is the difference between DVR and NVR?',
+
+                'What is IP CCTV?',
+
+                'What is 4K CCTV?',
+
+                'Can I view CCTV from my phone?',
+
+                'Can CCTV work without internet?',
+
+                'Can CCTV record at night?',
+
+                'How far can a CCTV camera see?',
+
+                'Can CCTV identify number plates?',
+
+                'How many cameras do I need?',
+
+                'How long will CCTV recordings last?',
+
+                'Can I use my existing CCTV cables?',
+
+                'Can I upgrade my existing CCTV system?',
+
+                'Can CCTV work with an alarm system?',
+
+                'Can CCTV work with access control?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               CCTV SAFETY / ACCURACY RULES
+            ----------------------------------------------------- */
+
+            safetyRules: [
+
+                'Do not guarantee identification without considering the installation conditions.',
+
+                'Do not promise number-plate recognition from a standard camera.',
+
+                'Do not invent camera range specifications.',
+
+                'Do not invent recording duration.',
+
+                'Do not assume an existing recorder is compatible with every camera.',
+
+                'Do not assume existing cabling is suitable without checking the system requirements.',
+
+                'Do not guarantee remote viewing without suitable network connectivity.',
+
+                'Do not recommend bypassing network security.',
+
+                'Do not make unsupported legal claims about surveillance or audio recording.',
+
+                'Recommend a site assessment when the requirement is complex or identification-critical.'
+
+            ]
+
+        },
+
+
+        /* =========================================================
+           17. CCTV SALES CONVERSATION ENGINE
+        ========================================================= */
+
+        cctvSalesEngine: {
+
+            objective:
+                'Turn a general CCTV enquiry into a qualified security requirement before recommending products.',
+
+
+            openingQuestions: [
+
+                'Is this for a home or business?',
+
+                'What areas would you like to monitor?',
+
+                'What are you mainly trying to achieve—general monitoring, identifying people, monitoring vehicles or number-plate identification?'
+
+            ],
+
+
+            decisionLogic: {
+
+                generalMonitoring:
+                    'Prioritize coverage, camera placement, field of view and suitable night performance.',
+
+                personIdentification:
+                    'Prioritize target distance, camera angle, lens selection, resolution and lighting.',
+
+                vehicleMonitoring:
+                    'Prioritize camera position, vehicle direction, distance, lighting and required image detail.',
+
+                numberPlateIdentification:
+                    'Treat as a specialist requirement and gather detailed information before recommending equipment.'
+
+            },
+
+
+            salesQuestions: [
+
+                'How many cameras are you considering?',
+
+                'Where will the cameras be installed?',
+
+                'What are the approximate distances to the areas being monitored?',
+
+                'Are the cameras exposed to weather?',
+
+                'What lighting is available at night?',
+
+                'Do you need audio?',
+
+                'Do you want remote viewing?',
+
+                'How many days of recordings do you want to keep?',
+
+                'Do you already have a DVR, NVR or cameras?',
+
+                'Would you like the CCTV integrated with your alarm or access-control system?'
+
+            ],
+
+
+            closingStrategy: {
+
+                equipmentOnly:
+                    'If the customer wants equipment only, determine the required specifications and direct them toward suitable products.',
+
+                installation:
+                    'If installation is required, gather enough information for a quotation or recommend a site assessment when necessary.',
+
+                uncertainCustomer:
+                    'If the customer is unsure what they need, explain the main options and ask focused questions rather than overwhelming them with specifications.',
+
+                highIntent:
+                    'When the customer clearly wants to purchase or install CCTV, move naturally toward collecting the information required for a quotation.'
+
+            }
+
+        },
