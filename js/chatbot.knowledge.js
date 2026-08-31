@@ -4486,5 +4486,621 @@
 
                 swing: {
 
-                    name: 'Swing G
+                                        name: 'Swing Gate',
+
+                    operation:
+                        'The gate swings open and closed around hinges.',
+
+                    considerations: [
+
+                        'Gate leaf weight',
+
+                        'Gate leaf length',
+
+                        'Hinge condition',
+
+                        'Opening angle',
+
+                        'Wind exposure',
+
+                        'Gate geometry',
+
+                        'Usage frequency',
+
+                        'Operator mounting position',
+
+                        'Manual release requirements'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               SLIDING GATE MOTORS
+            ----------------------------------------------------- */
+
+            slidingGate: {
+
+                commonComponents: [
+
+                    'Gate motor',
+
+                    'Drive gear',
+
+                    'Rack',
+
+                    'Remote controls',
+
+                    'Control board',
+
+                    'Safety sensors where applicable',
+
+                    'Battery backup where supported',
+
+                    'Manual release mechanism'
+
+                ],
+
+                qualificationQuestions: [
+
+                    'Is the gate sliding or swinging?',
+
+                    'Approximately how heavy is the gate?',
+
+                    'How long is the gate?',
+
+                    'How frequently is the gate used?',
+
+                    'Is the gate moving freely by hand?',
+
+                    'Is the track level and in good condition?',
+
+                    'Do you need battery backup?',
+
+                    'Do you want phone or access-control operation?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               SWING GATE MOTORS
+            ----------------------------------------------------- */
+
+            swingGate: {
+
+                commonComponents: [
+
+                    'Swing gate operator',
+
+                    'Control board',
+
+                    'Hinges',
+
+                    'Mounting brackets',
+
+                    'Remote controls',
+
+                    'Safety devices where applicable',
+
+                    'Battery backup where supported',
+
+                    'Manual release mechanism'
+
+                ],
+
+                qualificationQuestions: [
+
+                    'Is it a single or double swing gate?',
+
+                    'Approximately how heavy is each gate leaf?',
+
+                    'How wide is each gate leaf?',
+
+                    'How frequently is the gate used?',
+
+                    'Does the gate move freely manually?',
+
+                    'Are the hinges in good condition?',
+
+                    'Is there strong wind exposure?',
+
+                    'Do you need battery backup?',
+
+                    'Do you want phone or access-control operation?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               GATE MOTOR SELECTION
+            ----------------------------------------------------- */
+
+            selectionFactors: [
+
+                'Gate type',
+
+                'Gate weight',
+
+                'Gate dimensions',
+
+                'Usage frequency',
+
+                'Gate condition',
+
+                'Track condition',
+
+                'Hinge condition',
+
+                'Slope',
+
+                'Wind exposure',
+
+                'Power availability',
+
+                'Battery backup requirement',
+
+                'Security requirements',
+
+                'Access-control integration',
+
+                'Intercom integration',
+
+                'Remote operation requirements'
+
+            ],
+
+
+            importantRule:
+                'Never recommend a specific gate motor solely from the gate weight. Gate dimensions, operating frequency, mechanical condition and installation conditions must also be considered.',
+
+
+            /* -----------------------------------------------------
+               BATTERY BACKUP
+            ----------------------------------------------------- */
+
+            batteryBackup: {
+
+                purpose:
+                    'Battery backup can allow compatible gate automation equipment to continue operating during a mains power interruption.',
+
+                considerations: [
+
+                    'Battery capacity',
+
+                    'Gate size',
+
+                    'Motor load',
+
+                    'Usage frequency',
+
+                    'Battery condition',
+
+                    'System design'
+
+                ],
+
+                salesQuestion:
+                    'Do you need the gate to continue operating during a power failure?'
+
+            },
+
+
+            /* -----------------------------------------------------
+               SAFETY DEVICES
+            ----------------------------------------------------- */
+
+            safetyDevices: {
+
+                purpose:
+                    'Safety devices can help detect people, vehicles or obstacles and may be used to reduce the risk of the gate moving into an obstruction when correctly installed and configured.',
+
+                possibleDevices: [
+
+                    'Photocells',
+
+                    'Safety beams',
+
+                    'Obstacle detection',
+
+                    'Warning lights',
+
+                    'Safety edges where supported'
+
+                ],
+
+                importantRule:
+                    'Safety-device requirements depend on the gate design, operator and installation. Never advise bypassing safety devices.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               ACCESS CONTROL INTEGRATION
+            ----------------------------------------------------- */
+
+            accessIntegration: {
+
+                methods: [
+
+                    'RFID',
+
+                    'Keypad',
+
+                    'Biometric reader',
+
+                    'Intercom',
+
+                    'Remote control',
+
+                    'Mobile access',
+
+                    'Vehicle detection systems where supported'
+
+                ],
+
+                salesQuestion:
+                    'How would you like authorized users to open the gate?'
+
+            },
+
+
+            /* -----------------------------------------------------
+               INTERCOM INTEGRATION
+            ----------------------------------------------------- */
+
+            intercomIntegration: {
+
+                concept:
+                    'An intercom can allow occupants or security personnel to communicate with a visitor before deciding whether to grant access.',
+
+                possibleFeatures: [
+
+                    'Two-way communication',
+
+                    'Video verification',
+
+                    'Gate release',
+
+                    'Mobile answering on supported systems',
+
+                    'Visitor identification'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               GATE PROBLEMS
+            ----------------------------------------------------- */
+
+            commonFaults: {
+
+                gateNotMoving: [
+
+                    'Power issue',
+
+                    'Battery problem',
+
+                    'Control-board issue',
+
+                    'Motor fault',
+
+                    'Mechanical obstruction',
+
+                    'Gate binding',
+
+                    'Track problem',
+
+                    'Manual release engaged'
+
+                ],
+
+                slowGate: [
+
+                    'Mechanical resistance',
+
+                    'Gate alignment problem',
+
+                    'Track or hinge issue',
+
+                    'Motor overload',
+
+                    'Power-related problem',
+
+                    'Equipment fault'
+
+                ],
+
+                gateReverses: [
+
+                    'Obstacle detection',
+
+                    'Safety sensor activation',
+
+                    'Mechanical resistance',
+
+                    'Configuration issue',
+
+                    'Gate alignment problem',
+
+                    'Equipment fault'
+
+                ],
+
+                intermittentOperation: [
+
+                    'Power supply issue',
+
+                    'Battery condition',
+
+                    'Remote-control issue',
+
+                    'Receiver issue',
+
+                    'Loose connection',
+
+                    'Environmental interference',
+
+                    'Mechanical resistance'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               GATE SALES SCENARIOS
+            ----------------------------------------------------- */
+
+            scenarios: {
+
+                newInstallation: {
+
+                    description:
+                        'Customer wants automation installed on an existing manual gate.',
+
+                    askFirst: [
+
+                        'Is the gate sliding or swinging?',
+
+                        'What are the approximate dimensions?',
+
+                        'Approximately how heavy is it?',
+
+                        'Does it move freely by hand?',
+
+                        'How often is it used each day?',
+
+                        'Do you need battery backup?',
+
+                        'Do you want remote controls, keypad, intercom or mobile access?'
+
+                    ]
+
+                },
+
+
+                replacement: {
+
+                    description:
+                        'Customer wants to replace an existing gate motor.',
+
+                    askFirst: [
+
+                        'What motor is currently installed?',
+
+                        'What type of gate is it?',
+
+                        'What problem are you experiencing?',
+
+                        'How old is the motor?',
+
+                        'Is the gate mechanically operating correctly?',
+
+                        'Do you want to keep the existing remotes?',
+
+                        'Do you want to upgrade to mobile or access-control operation?'
+
+                    ]
+
+                },
+
+
+                repair: {
+
+                    description:
+                        'Customer reports a problem with an existing automated gate.',
+
+                    approach: [
+
+                        'Identify whether the gate is sliding or swinging.',
+
+                        'Determine whether the gate moves manually.',
+
+                        'Determine whether the motor has power.',
+
+                        'Identify any warning indicators.',
+
+                        'Determine whether the problem is constant or intermittent.',
+
+                        'Recommend professional inspection where the cause cannot safely be determined remotely.'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               COMMON QUESTIONS
+            ----------------------------------------------------- */
+
+            commonQuestions: [
+
+                'How much does a gate motor cost?',
+
+                'What gate motor do I need?',
+
+                'Can you automate my existing gate?',
+
+                'Can a gate motor work during a power failure?',
+
+                'Can I open my gate from my phone?',
+
+                'Can I connect my gate to an intercom?',
+
+                'Can I connect my gate to access control?',
+
+                'Can I use a keypad with my gate motor?',
+
+                'Can I use an RFID reader on my gate?',
+
+                'Why is my gate motor not working?',
+
+                'Why is my gate motor slow?',
+
+                'Why does my gate reverse?',
+
+                'Why does my gate only work sometimes?',
+
+                'How often should a gate motor be serviced?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               SAFETY RULES
+            ----------------------------------------------------- */
+
+            safetyRules: [
+
+                'Never advise a customer to bypass gate safety devices.',
+
+                'Never advise operating a mechanically unsafe gate.',
+
+                'Never recommend a motor solely on gate weight.',
+
+                'Never guarantee a motor will work without checking the gate condition.',
+
+                'Never promise battery runtime without knowing the system load and battery specification.',
+
+                'Never claim a gate automation system makes a property completely secure.',
+
+                'Recommend professional inspection when the gate is damaged, binding or mechanically unsafe.'
+
+            ]
+
+        },
+
+
+        /* =========================================================
+           15. ACCESS + GATE SALES QUALIFICATION ENGINE
+        ========================================================= */
+
+        accessGateQualification: {
+
+            objective:
+                'Determine the customer requirement before recommending access-control or gate-automation equipment.',
+
+            qualificationFlow: [
+
+                {
+                    step: 1,
+
+                    question:
+                        'What are you trying to control—a pedestrian door, pedestrian gate, vehicle gate or multiple entry points?'
+
+                },
+
+                {
+                    step: 2,
+
+                    question:
+                        'How many people or vehicles need authorized access?'
+
+                },
+
+                {
+                    step: 3,
+
+                    question:
+                        'How would you like users to gain access—remote, PIN, RFID, biometric, intercom or mobile access?'
+
+                },
+
+                {
+                    step: 4,
+
+                    question:
+                        'Is there an existing gate motor or access-control system?'
+
+                },
+
+                {
+                    step: 5,
+
+                    question:
+                        'What type and size of gate or door are we dealing with?'
+
+                },
+
+                {
+                    step: 6,
+
+                    question:
+                        'Do you require battery backup?'
+
+                },
+
+                {
+                    step: 7,
+
+                    question:
+                        'Would you like CCTV or alarm integration?'
+
+                },
+
+                {
+                    step: 8,
+
+                    question:
+                        'Would you like us to prepare a quotation based on the requirement?'
+
+                }
+
+            ],
+
+
+            highIntentSignals: [
+
+                'I need a gate motor',
+
+                'I need access control installed',
+
+                'My gate motor is broken',
+
+                'I need a new gate motor',
+
+                'I need a keypad for my gate',
+
+                'I need fingerprint access',
+
+                'I need RFID access',
+
+                'I need an intercom',
+
+                'I need a quote'
+
+            ]
+
+        },
                
