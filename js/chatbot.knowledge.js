@@ -16724,3 +16724,585 @@
                 'Based on what you have told me, you are looking to protect the perimeter of a residential property and monitor the driveway. A combination of perimeter protection and CCTV would provide complementary layers of security. Before finalizing the equipment, the approximate perimeter length, driveway distance and required identification level should be confirmed. If you provide those details, we can narrow down the appropriate solution.'
 
         },
+
+                        /* =========================================================
+           66. ADVANCED PRODUCT KNOWLEDGE ENGINE
+        ========================================================= */
+
+        productKnowledgeEngine: {
+
+            objective:
+                'Provide the sales assistant with structured knowledge of security products, technologies, applications, selection factors and customer-facing explanations.',
+
+
+            /* =====================================================
+               ELECTRIC FENCING
+            ===================================================== */
+
+            electricFencing: {
+
+                overview:
+                    'Electric fencing is a perimeter security system designed to provide a strong deterrent and, where correctly configured, detect interference with the fence.',
+
+
+                mainComponents: {
+
+                    energizer:
+                        'The energizer generates controlled high-voltage pulses for the electric fence.',
+
+                    fenceConductors:
+                        'Conductive wires carry the energizer pulses around the protected perimeter.',
+
+                    insulators:
+                        'Insulators electrically isolate the fence conductors from supporting structures.',
+
+                    earthSystem:
+                        'The earthing system provides the required return path for the fence circuit and is critical to system performance.',
+
+                    strainers:
+                        'Straining components maintain appropriate conductor tension.',
+
+                    posts:
+                        'Posts provide mechanical support for the fence configuration.',
+
+                    warningSigns:
+                        'Warning signs communicate the presence of an electric security fence where required.',
+
+                    gateContacts:
+                        'Gate-related components help maintain or manage fence continuity around access points.',
+
+                    cable:
+                        'High-voltage fence cable is used where the fence circuit needs to pass between suitable connection points.'
+
+                },
+
+
+                customerQuestions: [
+
+                    'How long is the perimeter?',
+
+                    'Is the fence being installed on top of an existing wall or fence?',
+
+                    'Is this a new installation or an upgrade?',
+
+                    'How many gates are involved?',
+
+                    'Is mains power available?', 
+
+                    'Would backup power be required?',
+
+                    'Are there trees or vegetation close to the fence?',
+
+                    'Is the property residential, commercial, industrial or agricultural?'
+
+                ],
+
+
+                buyingFactors: [
+
+                    'Fence length',
+
+                    'Fence configuration',
+
+                    'Energizer capability',
+
+                    'Number of zones',
+
+                    'Earthing',
+
+                    'Vegetation',
+
+                    'Gate arrangement',
+
+                    'Power availability',
+
+                    'Backup power',
+
+                    'Installation environment'
+
+                ],
+
+
+                salesExplanation:
+                    'The energizer, fence construction, insulation, earthing and installation quality all affect the performance of an electric-fence system. The assistant should avoid recommending an energizer based solely on perimeter length.'
+
+
+            },
+
+
+            /* =====================================================
+               CCTV
+            ===================================================== */
+
+            cctv: {
+
+                overview:
+                    'CCTV systems provide visual surveillance and recorded evidence for residential, commercial, industrial and agricultural applications.',
+
+
+                technologies: {
+
+                    analogHD:
+                        'HD-over-coax systems transmit high-definition video over compatible coaxial infrastructure.',
+
+                    ip:
+                        'IP cameras transmit digital video over a network and can provide advanced networking and integration capabilities.',
+
+                    poe:
+                        'Power over Ethernet allows compatible network cameras to receive power and data through suitable Ethernet infrastructure.',
+
+                    nvr:
+                        'A Network Video Recorder manages recording for compatible IP cameras.',
+
+                    dvr:
+                        'A Digital Video Recorder is commonly used with compatible coaxial camera systems.',
+
+                    remoteViewing:
+                        'Remote viewing allows authorised users to access compatible camera systems through a network or internet connection.',
+
+                    motionDetection:
+                        'Motion-based recording can reduce unnecessary storage use when configured appropriately.',
+
+                    videoAnalytics:
+                        'Compatible cameras or recorders may provide analytics such as line crossing, intrusion detection or object classification depending on the equipment.'
+
+                },
+
+
+                cameraTypes: {
+
+                    turret:
+                        'Turret cameras are commonly used for general-purpose surveillance and can be suitable for indoor or outdoor applications depending on their specification.',
+
+                    dome:
+                        'Dome cameras provide a compact enclosed form factor and are commonly used in commercial and indoor environments.',
+
+                    bullet:
+                        'Bullet cameras provide a visible directional form factor and are commonly used for perimeter and outdoor applications.',
+
+                    ptz:
+                        'PTZ cameras can remotely pan, tilt and zoom and are useful where active operator control or large-area observation is required.',
+
+                    thermal:
+                        'Thermal cameras detect infrared radiation and can be useful for specialist applications where conventional visible-light cameras may have limitations.',
+
+                    numberPlate:
+                        'Specialised number-plate applications require suitable camera positioning, lens selection, lighting and configuration. A general CCTV camera should not automatically be presented as a guaranteed number-plate identification solution.'
+
+                },
+
+
+                customerQuestions: [
+
+                    'What areas do you want to monitor?',
+
+                    'How many cameras do you think you need?',
+
+                    'Do you need to identify people or simply monitor activity?',
+
+                    'Do you need vehicle or number-plate identification?',
+
+                    'Do you need night-time coverage?',
+
+                    'Do you want remote viewing on your phone?',
+
+                    'How long should recordings be retained?',
+
+                    'Do you already have cameras or a recorder?'
+
+                ],
+
+
+                buyingFactors: [
+
+                    'Coverage area',
+
+                    'Identification requirement',
+
+                    'Camera position',
+
+                    'Lighting',
+
+                    'Lens selection',
+
+                    'Resolution',
+
+                    'Night performance',
+
+                    'Recorder capacity',
+
+                    'Storage capacity',
+
+                    'Network infrastructure',
+
+                    'Weather exposure',
+
+                    'Remote access'
+
+                ]
+
+            },
+
+
+            /* =====================================================
+               ALARM SYSTEMS
+            ===================================================== */
+
+            alarmSystems: {
+
+                overview:
+                    'Alarm systems detect defined security events and communicate those events to a control panel and, where configured, to users or monitoring services.',
+
+
+                components: {
+
+                    controlPanel:
+                        'The control panel is the central processing unit of the alarm system.',
+
+                    keypad:
+                        'A keypad provides a user interface for arming, disarming and interacting with the alarm system.',
+
+                    pir:
+                        'A PIR detector uses changes in infrared radiation to detect movement within its configured detection area.',
+
+                    magneticContact:
+                        'Magnetic contacts are commonly used to monitor doors, windows and other openings.',
+
+                    outdoorDetector:
+                        'Outdoor detectors are designed for external environments but require appropriate placement and configuration to reduce nuisance alarms.',
+
+                    panicButton:
+                        'A panic device allows a user to initiate a configured alarm event.',
+
+                    siren:
+                        'A siren provides an audible local alarm indication.',
+
+                    battery:
+                        'The backup battery helps maintain system operation during mains-power interruptions.',
+
+                    communicator:
+                        'A communicator can transmit alarm information through supported communication networks depending on system capability.'
+
+                },
+
+
+                customerQuestions: [
+
+                    'Is there an existing alarm system?',
+
+                    'How many doors and windows need protection?',
+
+                    'How many rooms or areas need detection?',
+
+                    'Are pets present?', 
+
+                    'Do you need outdoor detection?',
+
+                    'Do you want notifications on your phone?',
+
+                    'Do you need armed and disarmed schedules or multiple users?',
+
+                    'Do you require monitoring?'
+
+                ],
+
+
+                buyingFactors: [
+
+                    'Number of zones',
+
+                    'Sensor types',
+
+                    'Property layout',
+
+                    'Pet environment',
+
+                    'Outdoor conditions',
+
+                    'Communication method',
+
+                    'Backup battery',
+
+                    'User requirements',
+
+                    'Existing wiring',
+
+                    'Integration requirements'
+
+                ]
+
+            },
+
+
+            /* =====================================================
+               ACCESS CONTROL
+            ===================================================== */
+
+            accessControl: {
+
+                overview:
+                    'Access-control systems regulate entry by determining whether a credential or user is authorised to access a controlled area.',
+
+
+                technologies: {
+
+                    keypad:
+                        'A keypad uses a PIN or code as an access credential.',
+
+                    proximity:
+                        'Proximity systems use compatible cards, tags or credentials presented to a reader.',
+
+                    biometric:
+                        'Biometric systems use a physical characteristic such as a fingerprint or facial feature for identification or verification, depending on the system.',
+
+                    mobileCredential:
+                        'Compatible systems can use mobile devices as credentials.',
+
+                    standalone:
+                        'Standalone access-control devices can manage individual doors without requiring a larger networked access-control platform, depending on the model.',
+
+                    networked:
+                        'Networked access-control systems allow multiple doors, users and controllers to be managed through a central platform.'
+
+                },
+
+
+                components: {
+
+                    reader:
+                        'The reader receives or identifies the users credential.',
+
+                    controller:
+                        'The controller makes or supports the access decision and manages connected access hardware.',
+
+                    lock:
+                        'The locking mechanism physically controls the door or access point.',
+
+                    exitDevice:
+                        'An exit device allows authorised occupants to leave the controlled area.',
+
+                    powerSupply:
+                        'The access-control power system supplies the required equipment and may include backup power.',
+
+                    software:
+                        'Management software may be used for users, permissions, events and reporting depending on the system.'
+
+                },
+
+
+                customerQuestions: [
+
+                    'How many doors require access control?',
+
+                    'How many users need access?',
+
+                    'Do users need cards, tags, PINs, biometrics or mobile credentials?',
+
+                    'Do you need an event history?',
+
+                    'Do you need remote management?',
+
+                    'Is the door currently fitted with a lock?',
+
+                    'Is the system for employees, residents or visitors?'
+
+                ]
+
+            },
+
+
+            /* =====================================================
+               GATE AUTOMATION
+            ===================================================== */
+
+            gateAutomation: {
+
+                overview:
+                    'Gate automation uses a motor and control system to operate a compatible gate safely and reliably.',
+
+
+                gateTypes: {
+
+                    sliding:
+                        'Sliding gates move horizontally and typically require suitable mechanical support, track or guided movement and a compatible motor.',
+
+                    swing:
+                        'Swing gates rotate around hinges and require suitable mechanical condition, geometry and motor selection.',
+
+                    pedestrian:
+                        'Pedestrian gates can use compatible access-control or locking solutions depending on the application.'
+
+                },
+
+
+                components: {
+
+                    motor:
+                        'The motor provides the mechanical force required to operate the gate.',
+
+                    controlBoard:
+                        'The control board manages motor operation and connected control inputs.',
+
+                    remote:
+                        'Remote controls allow authorised users to operate compatible automated gates.',
+
+                    battery:
+                        'A backup battery can maintain operation during suitable power interruptions depending on system design.',
+
+                    safetyDevices:
+                        'Safety devices help detect conditions that should prevent or interrupt gate movement.',
+
+                    rack:
+                        'Sliding gates commonly use a rack and pinion arrangement to transfer motor movement to the gate.',
+
+                    intercom:
+                        'An intercom can allow communication with visitors before access is granted.',
+
+                    accessControl:
+                        'Access-control systems can provide controlled operation of compatible gates.'
+
+                },
+
+
+                customerQuestions: [
+
+                    'Is the gate sliding or swing?',
+
+                    'Approximately how heavy is the gate?',
+
+                    'How long is the gate?', 
+
+                    'Does the gate move freely manually?',
+
+                    'How frequently is it used?', 
+
+                    'Is mains power available?', 
+
+                    'Is backup power required?',
+
+                    'Do you need an intercom?', 
+
+                    'Do you need access control?'
+
+                ]
+
+            },
+
+
+            /* =====================================================
+               INTERCOM SYSTEMS
+            ===================================================== */
+
+            intercom: {
+
+                overview:
+                    'Intercom systems allow communication between a visitor and an occupant or operator and may provide controlled access depending on the system.',
+
+
+                types: {
+
+                    audio:
+                        'Audio intercom systems provide voice communication without video.',
+
+                    video:
+                        'Video intercom systems provide visual and audio communication.',
+
+                    ip:
+                        'IP intercom systems use network infrastructure and may provide advanced integration capabilities.',
+
+                    wireless:
+                        'Wireless intercom solutions can reduce cabling requirements where the equipment supports the required environment and range.'
+
+                },
+
+
+                customerQuestions: [
+
+                    'Do you need audio or video?',
+
+                    'How far is the entrance from the building?',
+
+                    'How many indoor stations are required?',
+
+                    'Do you need gate release?', 
+
+                    'Do you want mobile access?', 
+
+                    'Is network infrastructure available?'
+
+                ]
+
+            },
+
+
+            /* =====================================================
+               EQUESTRIAN FENCING
+            ===================================================== */
+
+            equestrian: {
+
+                overview:
+                    'Equestrian electric fencing is designed to create a visible and effective boundary for horses and other animals when correctly designed, installed and maintained.',
+
+
+                products: {
+
+                    polytape:
+                        'Polytape is a highly visible electric-fence conductor commonly used for horse fencing.',
+
+                    polyrope:
+                        'Polyrope provides a visible conductive boundary and can be suitable for equestrian applications.',
+
+                    electricWire:
+                        'Electric fencing wire can be used in appropriate animal-fencing configurations.',
+
+                    insulators:
+                        'Insulators support the conductive material while maintaining electrical isolation.',
+
+                    energizer:
+                        'The energizer supplies the electrical pulses to the fence.',
+
+                    solarEnergizer:
+                        'Solar energizers combine an energizer system with solar charging for locations where mains power may be unavailable.',
+
+                    gateHandle:
+                        'Gate handles provide a practical way to open and close electric-fence gate sections.',
+
+                    gateInsulators:
+                        'Gate-specific insulators help maintain electrical continuity around suitable gate arrangements.',
+
+                    posts:
+                        'Posts provide mechanical support for the fence system.',
+
+                    warningSigns:
+                        'Warning signage may be required depending on the application and installation environment.'
+
+                },
+
+
+                customerQuestions: [
+
+                    'How many metres of fencing do you need?',
+
+                    'How many paddocks are you creating?',
+
+                    'How many gates are required?',
+
+                    'What type of horses or animals will use the enclosure?',
+
+                    'Is the system permanent or temporary?',
+
+                    'Is mains power available?',
+
+                    'Would solar power be useful?',
+
+                    'Do you need the equipment only or installation as well?'
+
+                ]
+
+            },
+
+
+            /* =====================================================
+               ROBOTIC / PERIMETER DETECTION
+       
