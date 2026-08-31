@@ -1,2439 +1,1766 @@
-<!DOCTYPE html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
 
-<html lang="en">
+«»
 
-<head>
+<title>
+    Nexpak Security Academy | Electric Fencing Course | Part 11
+</title><meta
+name="description"
+content="Nexpak Security Academy Electric Fencing Course Part 11 — Advanced Electric Fence System Design, Risk-Based Security Planning, Zoning, CCTV, Alarm Integration, Monitoring and Professional Documentation."
 
-    <meta charset="UTF-8">
+«»
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<meta
+name="keywords"
+content="electric fencing course, electric fence design, electric fence training South Africa, perimeter security, electric fence zoning, security system design, Nexpak Security Academy"
 
-    <title>
-        Electric Fencing Course | Part 11
-    </title>
+«»
 
-    <meta
-        name="description"
-        content="Nexpak Security Academy Electric Fencing Course Part 11 - Advanced Electric Fence System Design and Security Planning"
-    >
+<style>
 
-    <link
-        rel="stylesheet"
-        href="academy.css"
-    >
+/* =========================================================
+   NEXPAK SECURITY ACADEMY
+   PART 11 — ADVANCED SYSTEM DESIGN
+   SELF-CONTAINED PREMIUM COURSE CSS
+========================================================= */
 
-</head>
+:root {
 
+    --bg:
+        #050a0f;
 
-<body>
+    --bg-soft:
+        #09121a;
 
+    --panel:
+        #0d1821;
 
-    <!-- =========================================
-         ACADEMY HEADER
-    ========================================== -->
+    --panel-light:
+        #12232e;
 
-    <header class="academy-header">
+    --panel-hover:
+        #162d3a;
 
-        <div class="header-content">
+    --border:
+        #203744;
 
-            <div class="academy-logo">
+    --border-light:
+        #2a4655;
 
-                NEXPAK
+    --text:
+        #e9f1f5;
 
-                <span>
-                    SECURITY ACADEMY
-                </span>
+    --text-soft:
+        #aebec8;
 
-            </div>
+    --text-muted:
+        #738792;
 
+    --accent:
+        #19d3a2;
 
-            <div class="course-label">
+    --accent-dark:
+        #0c8f72;
 
-                ELECTRIC FENCING
+    --accent-glow:
+        rgba(25,211,162,.18);
 
-            </div>
+    --blue:
+        #35a9ff;
 
-        </div>
+    --blue-glow:
+        rgba(53,169,255,.15);
 
-    </header>
+    --warning:
+        #ffb84d;
 
+    --warning-glow:
+        rgba(255,184,77,.12);
 
-    <!-- =========================================
-         COURSE HERO
-    ========================================== -->
+    --danger:
+        #ff6577;
 
-    <section class="course-hero">
+    --danger-glow:
+        rgba(255,101,119,.12);
 
-        <div class="hero-content">
+    --success:
+        #35df9b;
 
-            <span class="course-badge">
-                ELECTRIC FENCING COURSE
-            </span>
+    --shadow:
+        0 18px 50px rgba(0,0,0,.35);
 
-            <h1>
-                Part 11
-            </h1>
+    --radius:
+        14px;
 
-            <h2>
-                Advanced System Design &amp; Security Planning
-            </h2>
+    --max:
+        1280px;
 
-            <p>
-                Developing professional perimeter-security
-                solutions through site assessment, system
-                architecture, zoning and integrated security
-                planning.
-            </p>
+}
 
-        </div>
 
-    </section>
+/* =========================================================
+   RESET
+========================================================= */
 
+* {
+    box-sizing:
+        border-box;
 
-    <!-- =========================================
-         COURSE LAYOUT
-    ========================================== -->
+    margin:
+        0;
 
-    <div class="course-layout">
+    padding:
+        0;
+}
 
 
-        <!-- =====================================
-             SIDEBAR
-        ====================================== -->
+html {
+    scroll-behavior:
+        smooth;
+}
 
-        <aside class="sidebar">
 
-            <div class="sidebar-box">
+body {
 
-                <div class="sidebar-title">
-                    PART 11 CURRICULUM
-                </div>
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(25,211,162,.06),
+            transparent 32%
+        ),
+        var(--bg);
 
+    color:
+        var(--text);
 
-                <ul class="lesson-nav">
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 
-                    <li>
-                        <a href="#design">
-                            01. Principles of System Design
-                        </a>
-                    </li>
+    line-height:
+        1.75;
 
-                    <li>
-                        <a href="#security-objective">
-                            02. Defining the Security Objective
-                        </a>
-                    </li>
+    min-height:
+        100vh;
 
-                    <li>
-                        <a href="#site-analysis">
-                            03. Site &amp; Perimeter Analysis
-                        </a>
-                    </li>
+}
 
-                    <li>
-                        <a href="#perimeter">
-                            04. Perimeter Architecture
-                        </a>
-                    </li>
 
-                    <li>
-                        <a href="#risk">
-                            05. Risk-Based Design
-                        </a>
-                    </li>
+/* =========================================================
+   GLOBAL ELEMENTS
+========================================================= */
 
-                    <li>
-                        <a href="#zoning">
-                            06. Advanced Zoning
-                        </a>
-                    </li>
+a {
 
-                    <li>
-                        <a href="#gates">
-                            07. Gates &amp; Access Points
-                        </a>
-                    </li>
+    color:
+        inherit;
 
-                    <li>
-                        <a href="#integration">
-                            08. Security System Integration
-                        </a>
-                    </li>
+    text-decoration:
+        none;
 
-                    <li>
-                        <a href="#cctv">
-                            09. CCTV Integration
-                        </a>
-                    </li>
+}
 
-                    <li>
-                        <a href="#alarms">
-                            10. Alarm Integration
-                        </a>
-                    </li>
 
-                    <li>
-                        <a href="#monitoring">
-                            11. Remote Monitoring
-                        </a>
-                    </li>
+p {
 
-                    <li>
-                        <a href="#documentation">
-                            12. Professional Design Documentation
-                        </a>
-                    </li>
+    margin-bottom:
+        18px;
 
-                </ul>
+    color:
+        var(--text-soft);
 
-            </div>
+}
 
-        </aside>
 
+strong {
 
-        <!-- =====================================
-             MAIN CONTENT
-        ====================================== -->
+    color:
+        #ffffff;
 
-        <main class="lesson-content">
+}
 
 
-            <!-- =================================
-                 01. PRINCIPLES OF SYSTEM DESIGN
-            ================================== -->
+ul,
+ol {
 
-            <section
-                id="design"
-                class="lesson-section"
-            >
+    padding-left:
+        24px;
 
-                <div class="section-number">
-                    01
-                </div>
+}
 
-                <h2>
-                    Principles of System Design
-                </h2>
 
-                <p>
-                    Professional electric-fence design begins
-                    before the first component is purchased or
-                    installed.
-                </p>
+li {
 
-                <p>
-                    The designer must understand the property,
-                    security objective, environmental conditions,
-                    perimeter structure, access points and
-                    interaction with other security systems.
-                </p>
+    margin-bottom:
+        9px;
 
+    color:
+        var(--text-soft);
 
-                <div class="info-card">
+}
 
-                    <h3>
-                        A Professional Design Considers
-                    </h3>
 
-                    <ul>
+h1,
+h2,
+h3,
+h4 {
 
-                        <li>
-                            Site layout
-                        </li>
+    line-height:
+        1.25;
 
-                        <li>
-                            Perimeter configuration
-                        </li>
+}
 
-                        <li>
-                            Security objectives
-                        </li>
 
-                        <li>
-                            Risk areas
-                        </li>
+::selection {
 
-                        <li>
-                            Fence construction
-                        </li>
+    background:
+        var(--accent);
 
-                        <li>
-                            Gates and access points
-                        </li>
+    color:
+        #02110c;
 
-                        <li>
-                            Electrical supply
-                        </li>
+}
 
-                        <li>
-                            Earth system
-                        </li>
 
-                        <li>
-                            Environmental conditions
-                        </li>
+/* =========================================================
+   HEADER
+========================================================= */
 
-                        <li>
-                            Alarm requirements
-                        </li>
+.academy-header {
 
-                        <li>
-                            CCTV coverage
-                        </li>
+    position:
+        sticky;
 
-                        <li>
-                            Monitoring requirements
-                        </li>
+    top:
+        0;
 
-                        <li>
-                            Applicable standards and regulations
-                        </li>
+    z-index:
+        1000;
 
-                    </ul>
+    background:
+        rgba(5,10,15,.94);
 
-                </div>
+    backdrop-filter:
+        blur(16px);
 
+    border-bottom:
+        1px solid var(--border);
 
-                <h3>
-                    Design Before Installation
-                </h3>
+}
 
-                <p>
-                    A well-designed system reduces installation
-                    problems, improves maintainability and provides
-                    a more predictable security outcome.
-                </p>
 
+.header-content {
 
-                <h3>
-                    The System Must Be Designed As A Whole
-                </h3>
+    max-width:
+        var(--max);
 
-                <p>
-                    The energizer, conductors, insulators, earth
-                    system, zoning, gates, alarm interfaces and
-                    monitoring equipment should be considered as
-                    parts of one security system.
-                </p>
+    margin:
+        auto;
 
+    padding:
+        15px 28px;
 
-                <div class="success-card">
+    display:
+        flex;
 
-                    <h3>
-                        Professional Principle
-                    </h3>
+    justify-content:
+        space-between;
 
-                    <p>
-                        Do not design the fence first and attempt to
-                        solve the security requirements afterwards.
-                        Define the security requirement first, then
-                        design the system around it.
-                    </p>
+    align-items:
+        center;
 
-                </div>
+    gap:
+        20px;
 
-            </section>
+}
 
 
-            <!-- =================================
-                 02. DEFINING THE SECURITY OBJECTIVE
-            ================================== -->
+.academy-logo {
 
-            <section
-                id="security-objective"
-                class="lesson-section"
-            >
+    font-size:
+        22px;
 
-                <div class="section-number">
-                    02
-                </div>
+    font-weight:
+        900;
 
-                <h2>
-                    Defining the Security Objective
-                </h2>
+    letter-spacing:
+        2px;
 
-                <p>
-                    Before designing an electric-fence system, the
-                    technician or security professional must
-                    understand what the system is intended to
-                    achieve.
-                </p>
+    color:
+        white;
 
+}
 
-                <div class="info-card">
 
-                    <h3>
-                        Questions To Establish
-                    </h3>
+.academy-logo span {
 
-                    <ul>
+    display:
+        block;
 
-                        <li>
-                            What area must be protected?
-                        </li>
+    color:
+        var(--accent);
 
-                        <li>
-                            What type of intrusion is the system
-                            intended to detect or deter?
-                        </li>
+    font-size:
+        9px;
 
-                        <li>
-                            Which perimeter sections represent the
-                            greatest risk?
-                        </li>
+    letter-spacing:
+        3px;
 
-                        <li>
-                            Where are the normal access points?
-                        </li>
+    margin-top:
+        -2px;
 
-                        <li>
-                            Are there pedestrian or vehicle gates?
-                        </li>
+}
 
-                        <li>
-                            Are there vulnerable structures near
-                            the perimeter?
-                        </li>
 
-                        <li>
-                            Is rapid alarm notification required?
-                        </li>
+.course-label {
 
-                        <li>
-                            Does the customer require integration
-                            with CCTV or another security system?
-                        </li>
+    font-size:
+        11px;
 
-                    </ul>
+    font-weight:
+        700;
 
-                </div>
+    letter-spacing:
+        1.5px;
 
+    color:
+        var(--text-muted);
 
-                <h3>
-                    Detection And Deterrence
-                </h3>
+    text-align:
+        right;
 
-                <p>
-                    An electric fence can contribute to both
-                    physical deterrence and intrusion detection.
-                    The design should clearly identify the intended
-                    function of the installation.
-                </p>
+}
 
 
-                <h3>
-                    Security Priorities
-                </h3>
+/* =========================================================
+   HERO
+========================================================= */
 
-                <p>
-                    Not every section of a property necessarily
-                    presents the same security risk.
-                </p>
+.course-hero {
 
-                <p>
-                    Professional design identifies critical areas
-                    and ensures that the system architecture
-                    supports the required level of protection.
-                </p>
+    position:
+        relative;
 
+    overflow:
+        hidden;
 
-                <div class="warning-card">
+    border-bottom:
+        1px solid var(--border);
 
-                    <h3>
-                        Never Design From Assumptions
-                    </h3>
+    background:
 
-                    <p>
-                        A technician should not assume that every
-                        property has the same security requirements.
-                        Site-specific conditions must be assessed
-                        before the system is designed.
-                    </p>
+        radial-gradient(
+            circle at 80% 30%,
+            rgba(25,211,162,.13),
+            transparent 28%
+        ),
 
-                </div>
+        linear-gradient(
+            135deg,
+            #071017,
+            #0b1821 55%,
+            #071017
+        );
 
-            </section>
+}
 
 
-            <!-- =================================
-                 03. SITE & PERIMETER ANALYSIS
-            ================================== -->
+.course-hero::before {
 
-            <section
-                id="site-analysis"
-                class="lesson-section"
-            >
+    content:
+        "";
 
-                <div class="section-number">
-                    03
-                </div>
+    position:
+        absolute;
 
-                <h2>
-                    Site &amp; Perimeter Analysis
-                </h2>
+    width:
+        500px;
 
-                <p>
-                    Site analysis converts the physical property
-                    into information that can be used for system
-                    design.
-                </p>
+    height:
+        500px;
 
+    border:
+        1px solid rgba(25,211,162,.08);
 
-                <div class="info-card">
+    border-radius:
+        50%;
 
-                    <h3>
-                        Inspect The Property
-                    </h3>
+    right:
+        -180px;
 
-                    <ul>
+    top:
+        -180px;
 
-                        <li>
-                            Property boundaries
-                        </li>
+}
 
-                        <li>
-                            Existing walls
-                        </li>
 
-                        <li>
-                            Existing fences
-                        </li>
+.hero-content {
 
-                        <li>
-                            Slopes and changes in level
-                        </li>
+    max-width:
+        var(--max);
 
-                        <li>
-                            Gates
-                        </li>
+    margin:
+        auto;
 
-                        <li>
-                            Buildings
-                        </li>
+    padding:
+        75px 28px 80px;
 
-                        <li>
-                            Trees and vegetation
-                        </li>
+}
 
-                        <li>
-                            Drainage areas
-                        </li>
 
-                        <li>
-                            Electrical infrastructure
-                        </li>
+.course-badge {
 
-                        <li>
-                            Communication infrastructure
-                        </li>
+    display:
+        inline-flex;
 
-                        <li>
-                            Potential external interference
-                        </li>
+    padding:
+        7px 13px;
 
-                    </ul>
+    border:
+        1px solid rgba(25,211,162,.35);
 
-                </div>
+    background:
+        rgba(25,211,162,.08);
 
+    color:
+        var(--accent);
 
-                <h3>
-                    Perimeter Walk
-                </h3>
+    border-radius:
+        999px;
 
-                <p>
-                    A complete perimeter walk should be performed
-                    before finalising the design.
-                </p>
+    font-size:
+        10px;
 
-                <p>
-                    This allows the designer to identify physical
-                    conditions that may not be visible on a basic
-                    property drawing.
-                </p>
+    font-weight:
+        800;
 
+    letter-spacing:
+        1.5px;
 
-                <h3>
-                    Measurements
-                </h3>
+    margin-bottom:
+        22px;
 
-                <p>
-                    Relevant perimeter dimensions should be
-                    established as accurately as reasonably
-                    possible.
-                </p>
+}
 
-                <p>
-                    Measurements influence material quantities,
-                    zoning decisions, cable routing, equipment
-                    placement and installation planning.
-                </p>
 
+.hero-content h1 {
 
-                <div class="success-card">
+    font-size:
+        clamp(52px, 8vw, 90px);
 
-                    <h3>
-                        Field Rule
-                    </h3>
+    font-weight:
+        900;
 
-                    <p>
-                        Walk the perimeter before designing the
-                        perimeter.
-                    </p>
+    letter-spacing:
+        -4px;
 
-                </div>
+    color:
+        white;
 
-            </section>
+}
 
 
-            <!-- =================================
-                 04. PERIMETER ARCHITECTURE
-            ================================== -->
+.hero-content h2 {
 
-            <section
-                id="perimeter"
-                class="lesson-section"
-            >
+    font-size:
+        clamp(25px, 4vw, 42px);
 
-                <div class="section-number">
-                    04
-                </div>
+    margin:
+        10px 0 22px;
 
-                <h2>
-                    Perimeter Architecture
-                </h2>
+    max-width:
+        850px;
 
-                <p>
-                    Perimeter architecture describes how the
-                    physical security boundary is constructed and
-                    how the electric-fence system interacts with
-                    that boundary.
-                </p>
+    color:
+        var(--accent);
 
+}
 
-                <div class="info-card">
 
-                    <h3>
-                        Common Perimeter Considerations
-                    </h3>
+.hero-content p {
 
-                    <ul>
+    max-width:
+        850px;
 
-                        <li>
-                            Wall-mounted systems
-                        </li>
+    font-size:
+        17px;
 
-                        <li>
-                            Free-standing fence structures
-                        </li>
+    color:
+        #aebdc6;
 
-                        <li>
-                            Existing palisade structures
-                        </li>
+}
 
-                        <li>
-                            Security mesh
-                        </li>
 
-                        <li>
-                            Combination wall and fence systems
-                        </li>
+/* =========================================================
+   COURSE STATS
+========================================================= */
 
-                        <li>
-                            Sloped boundaries
-                        </li>
+.course-stats {
 
-                        <li>
-                            Irregular property boundaries
-                        </li>
+    max-width:
+        var(--max);
 
-                    </ul>
+    margin:
+        -28px auto 45px;
 
-                </div>
+    padding:
+        0 28px;
 
+    position:
+        relative;
 
-                <h3>
-                    Structural Condition
-                </h3>
+    z-index:
+        5;
 
-                <p>
-                    The supporting structure must be suitable for
-                    the proposed installation.
-                </p>
+    display:
+        grid;
 
-                <p>
-                    Cracked walls, unstable posts, damaged fencing
-                    or other structural defects should be
-                    identified before installation begins.
-                </p>
+    grid-template-columns:
+        repeat(4, 1fr);
 
+    gap:
+        14px;
 
-                <h3>
-                    Alignment
-                </h3>
+}
 
-                <p>
-                    The perimeter layout should provide a
-                    consistent and maintainable conductor
-                    arrangement while accommodating the physical
-                    shape of the property.
-                </p>
 
+.stat-card {
 
-                <h3>
-                    Changes In Level
-                </h3>
+    background:
+        linear-gradient(
+            145deg,
+            var(--panel-light),
+            var(--panel)
+        );
 
-                <p>
-                    Slopes and changes in elevation require careful
-                    planning so that conductor spacing, mechanical
-                    support and overall system configuration remain
-                    appropriate.
-                </p>
+    border:
+        1px solid var(--border);
 
+    border-radius:
+        12px;
 
-                <div class="warning-card">
+    padding:
+        20px;
 
-                    <h3>
-                        Never Compromise The Structure
-                    </h3>
+    box-shadow:
+        var(--shadow);
 
-                    <p>
-                        An electrically effective fence is still a
-                        poor security installation if its supporting
-                        structure is unstable or unsuitable.
-                    </p>
+}
 
-                </div>
 
-          </section>
+.stat-number {
 
-                        <!-- =================================
-                 05. RISK-BASED DESIGN
-            ================================== -->
+    color:
+        var(--accent);
 
-            <section
-                id="risk"
-                class="lesson-section"
-            >
+    font-size:
+        25px;
 
-                <div class="section-number">
-                    05
-                </div>
+    font-weight:
+        900;
 
-                <h2>
-                    Risk-Based Design
-                </h2>
+}
 
-                <p>
-                    Professional security design should be based
-                    on the actual risks associated with the
-                    property rather than applying the same design
-                    to every site.
-                </p>
 
-                <p>
-                    Risk-based design considers the likelihood of
-                    intrusion, the consequences of a breach and
-                    the characteristics of the protected property.
-                </p>
+.stat-label {
 
+    color:
+        var(--text-muted);
 
-                <div class="info-card">
+    font-size:
+        11px;
 
-                    <h3>
-                        Factors To Consider
-                    </h3>
+    text-transform:
+        uppercase;
 
-                    <ul>
+    letter-spacing:
+        1px;
 
-                        <li>
-                            Property location
-                        </li>
+}
 
-                        <li>
-                            Property use
-                        </li>
 
-                        <li>
-                            Perimeter accessibility
-                        </li>
+/* =========================================================
+   LAYOUT
+========================================================= */
 
-                        <li>
-                            Existing security measures
-                        </li>
+.course-layout {
 
-                        <li>
-                            Vulnerable areas
-                        </li>
+    max-width:
+        var(--max);
 
-                        <li>
-                            Access points
-                        </li>
+    margin:
+        auto;
 
-                        <li>
-                            Environmental conditions
-                        </li>
+    padding:
+        0 28px 80px;
 
-                        <li>
-                            Customer security requirements
-                        </li>
+    display:
+        grid;
 
-                        <li>
-                            Required response and monitoring
-                        </li>
+    grid-template-columns:
+        285px minmax(0, 1fr);
 
-                    </ul>
+    gap:
+        32px;
 
-                </div>
+}
 
 
-                <h3>
-                    Identify Vulnerable Areas
-                </h3>
+.sidebar {
 
-                <p>
-                    Some perimeter sections may be easier to
-                    approach, conceal an intruder more effectively
-                    or provide access to particularly sensitive
-                    areas.
-                </p>
+    position:
+        sticky;
 
-                <p>
-                    These areas should receive appropriate attention
-                    during the security design process.
-                </p>
+    top:
+        86px;
 
+    align-self:
+        start;
 
-                <h3>
-                    Risk Is Not Static
-                </h3>
+}
 
-                <p>
-                    Security risks can change when the property,
-                    surrounding environment, access arrangements or
-                    use of the premises changes.
-                </p>
 
+.sidebar-box {
 
-                <div class="success-card">
+    background:
+        var(--panel);
 
-                    <h3>
-                        Professional Principle
-                    </h3>
+    border:
+        1px solid var(--border);
 
-                    <p>
-                        Design the security system around the risk,
-                        not simply around the perimeter length.
-                    </p>
+    border-radius:
+        var(--radius);
 
-                </div>
+    overflow:
+        hidden;
 
-            </section>
+}
 
 
-            <!-- =================================
-                 06. ADVANCED ZONING
-            ================================== -->
+.sidebar-title {
 
-            <section
-                id="zoning"
-                class="lesson-section"
-            >
+    padding:
+        17px 18px;
 
-                <div class="section-number">
-                    06
-                </div>
+    background:
+        #101f29;
 
-                <h2>
-                    Advanced Zoning
-                </h2>
+    border-bottom:
+        1px solid var(--border);
 
-                <p>
-                    Zoning divides a larger electric-fence
-                    installation into manageable sections for
-                    monitoring, fault identification and system
-                    management.
-                </p>
+    color:
+        var(--accent);
 
+    font-size:
+        11px;
 
-                <div class="info-card">
+    font-weight:
+        900;
 
-                    <h3>
-                        Why Use Zones?
-                    </h3>
+    letter-spacing:
+        1.5px;
 
-                    <ul>
+}
 
-                        <li>
-                            Improve fault localisation
-                        </li>
 
-                        <li>
-                            Improve alarm identification
-                        </li>
+.lesson-nav {
 
-                        <li>
-                            Simplify maintenance
-                        </li>
+    list-style:
+        none;
 
-                        <li>
-                            Assist system expansion
-                        </li>
+    padding:
+        8px;
 
-                        <li>
-                            Improve operational visibility
-                        </li>
+}
 
-                        <li>
-                            Allow different perimeter areas to be
-                            managed appropriately
-                        </li>
 
-                    </ul>
+.lesson-nav li {
 
-                </div>
+    margin:
+        0;
 
+}
 
-                <h3>
-                    Zone Boundaries
-                </h3>
 
-                <p>
-                    Zone boundaries should be planned according to
-                    the physical layout, security requirements and
-                    equipment capabilities.
-                </p>
+.lesson-nav a {
 
+    display:
+        block;
 
-                <h3>
-                    Avoid Unnecessary Complexity
-                </h3>
+    padding:
+        10px 11px;
 
-                <p>
-                    More zones do not automatically mean a better
-                    system.
-                </p>
+    border-radius:
+        8px;
 
-                <p>
-                    Excessive complexity can increase installation,
-                    maintenance and diagnostic requirements.
-                </p>
+    color:
+        var(--text-muted);
 
+    font-size:
+        12px;
 
-                <h3>
-                    Logical Zoning
-                </h3>
+    line-height:
+        1.4;
 
-                <p>
-                    Useful zoning may follow natural property
-                    divisions such as front, rear, side boundaries,
-                    vehicle entrances or other meaningful security
-                    areas.
-                </p>
+    transition:
+        .2s ease;
 
+}
 
-                <div class="warning-card">
 
-                    <h3>
-                        Zoning Must Match The Equipment
-                    </h3>
+.lesson-nav a:hover {
 
-                    <p>
-                        The number and configuration of zones must
-                        remain within the capabilities of the
-                        selected equipment and system architecture.
-                    </p>
+    background:
+        rgba(25,211,162,.08);
 
-                </div>
+    color:
+        var(--accent);
 
-            </section>
+    transform:
+        translateX(3px);
 
+}
 
-            <!-- =================================
-                 07. GATES & ACCESS POINTS
-            ================================== -->
 
-            <section
-                id="gates"
-                class="lesson-section"
-            >
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
 
-                <div class="section-number">
-                    07
-                </div>
+.lesson-content {
 
-                <h2>
-                    Gates &amp; Access Points
-                </h2>
+    min-width:
+        0;
 
-                <p>
-                    Gates are among the most important areas in
-                    perimeter security design because they create
-                    controlled openings in an otherwise continuous
-                    boundary.
-                </p>
+}
 
 
-                <div class="info-card">
+.lesson-section {
 
-                    <h3>
-                        Gate Design Considerations
-                    </h3>
+    position:
+        relative;
 
-                    <ul>
+    background:
+        linear-gradient(
+            145deg,
+            rgba(13,24,33,.96),
+            rgba(9,18,25,.96)
+        );
 
-                        <li>
-                            Gate type
-                        </li>
+    border:
+        1px solid var(--border);
 
-                        <li>
-                            Gate movement
-                        </li>
+    border-radius:
+        var(--radius);
 
-                        <li>
-                            Electric-fence termination
-                        </li>
+    padding:
+        38px;
 
-                        <li>
-                            Insulation requirements
-                        </li>
+    margin-bottom:
+        30px;
 
-                        <li>
-                            High-voltage cable routing
-                        </li>
+    box-shadow:
+        0 10px 35px rgba(0,0,0,.18);
 
-                        <li>
-                            Gate access frequency
-                        </li>
+}
 
-                        <li>
-                            Alarm requirements
-                        </li>
 
-                        <li>
-                            Mechanical clearance
-                        </li>
+.lesson-section::after {
 
-                        <li>
-                            Maintenance access
-                        </li>
+    content:
+        "";
 
-                    </ul>
+    position:
+        absolute;
 
-                </div>
+    left:
+        0;
 
+    top:
+        35px;
 
-                <h3>
-                    Moving Gates
-                </h3>
+    width:
+        3px;
 
-                <p>
-                    A moving gate requires particular attention to
-                    the transition between fixed and moving sections
-                    of the perimeter.
-                </p>
+    height:
+        55px;
 
-                <p>
-                    The design must accommodate movement without
-                    creating unsafe conditions or compromising the
-                    intended electrical arrangement.
-                </p>
+    background:
+        var(--accent);
 
+    border-radius:
+        0 5px 5px 0;
 
-                <h3>
-                    Vehicle Entrances
-                </h3>
+}
 
-                <p>
-                    Vehicle gates may require integration with
-                    gate-automation equipment, access control,
-                    intercom systems and alarm monitoring.
-                </p>
 
+.section-number {
 
-                <h3>
-                    Pedestrian Access
-                </h3>
+    color:
+        var(--accent);
 
-                <p>
-                    Pedestrian gates should be considered as part of
-                    the complete perimeter-security design rather
-                    than treated as an afterthought.
-                </p>
+    font-size:
+        12px;
 
+    font-weight:
+        900;
 
-                <div class="warning-card">
+    letter-spacing:
+        2px;
 
-                    <h3>
-                        Gate Areas Require Extra Attention
-                    </h3>
+    margin-bottom:
+        9px;
 
-                    <p>
-                        Frequent movement, mechanical wear and
-                        repeated access can make gates more demanding
-                        to maintain than fixed perimeter sections.
-                    </p>
+}
 
-                </div>
 
-            </section>
+.lesson-section h2 {
 
+    font-size:
+        clamp(27px, 4vw, 36px);
 
-            <!-- =================================
-                 08. SECURITY SYSTEM INTEGRATION
-            ================================== -->
+    color:
+        white;
 
-            <section
-                id="integration"
-                class="lesson-section"
-            >
+    margin-bottom:
+        24px;
 
-                <div class="section-number">
-                    08
-                </div>
+}
 
-                <h2>
-                    Security System Integration
-                </h2>
 
-                <p>
-                    Modern perimeter protection often combines
-                    electric fencing with other security
-                    technologies.
-                </p>
+.lesson-section h3 {
 
-                <p>
-                    The objective is to create a coordinated
-                    security solution rather than a collection of
-                    independent devices.
-                </p>
+    font-size:
+        19px;
 
+    color:
+        #ffffff;
 
-                <div class="info-card">
+    margin:
+        30px 0 13px;
 
-                    <h3>
-                        Common Integration Partners
-                    </h3>
+}
 
-                    <ul>
 
-                        <li>
-                            Intrusion alarm systems
-                        </li>
+.lesson-section h4 {
 
-                        <li>
-                            CCTV
-                        </li>
+    color:
+        var(--accent);
 
-                        <li>
-                            Access control
-                        </li>
+}
 
-                        <li>
-                            Gate automation
-                        </li>
 
-                        <li>
-                            Intercom systems
-                        </li>
+.lesson-section p {
 
-                        <li>
-                            Remote monitoring
-                        </li>
+    max-width:
+        900px;
 
-                        <li>
-                            Security control rooms
-                        </li>
+}
 
-                    </ul>
 
-                </div>
+/* =========================================================
+   INFO CARDS
+========================================================= */
 
+.info-card,
+.success-card,
+.warning-card,
+.danger-card {
 
-                <h3>
-                    Integration Planning
-                </h3>
+    border-radius:
+        12px;
 
-                <p>
-                    Before connecting systems together, determine
-                    what information needs to be transferred and
-                    what response should occur when an event is
-                    detected.
-                </p>
+    padding:
+        24px;
 
+    margin:
+        26px 0;
 
-                <h3>
-                    Alarm Events
-                </h3>
+}
 
-                <p>
-                    An electric-fence alarm may be used to trigger
-                    or inform other security systems depending on
-                    the equipment and system design.
-                </p>
 
+.info-card {
 
-                <h3>
-                    Avoid False Integration
-                </h3>
+    background:
+        linear-gradient(
+            135deg,
+            rgba(53,169,255,.08),
+            rgba(53,169,255,.025)
+        );
 
-                <p>
-                    Integration should have a defined purpose.
-                    Connecting equipment without understanding the
-                    required inputs, outputs and responses can create
-                    unreliable or confusing security behaviour.
-                </p>
+    border:
+        1px solid rgba(53,169,255,.22);
 
+}
 
-                <div class="success-card">
 
-                    <h3>
-                        Think In Systems
-                    </h3>
+.info-card h3 {
 
-                    <p>
-                        The strongest security solutions are designed
-                        around how the systems work together, not
-                        simply around how many devices are installed.
-                    </p>
+    color:
+        var(--blue);
 
-                </div>
+    margin-top:
+        0;
 
-    </section>
+}
 
-                        <!-- =================================
-                 09. CCTV INTEGRATION
-            ================================== -->
 
-            <section
-                id="cctv"
-                class="lesson-section"
-            >
+.success-card {
 
-                <div class="section-number">
-                    09
-                </div>
+    background:
+        linear-gradient(
+            135deg,
+            rgba(25,211,162,.10),
+            rgba(25,211,162,.025)
+        );
 
-                <h2>
-                    CCTV Integration
-                </h2>
+    border:
+        1px solid rgba(25,211,162,.25);
 
-                <p>
-                    CCTV can complement an electric-fence system by
-                    providing visual information when a perimeter
-                    event occurs.
-                </p>
+}
 
-                <p>
-                    The electric fence can provide an indication that
-                    an event has occurred, while CCTV can assist in
-                    determining what is happening at the affected
-                    location.
-                </p>
 
+.success-card h3 {
 
-                <div class="info-card">
+    color:
+        var(--accent);
 
-                    <h3>
-                        CCTV Integration Objectives
-                    </h3>
+    margin-top:
+        0;
 
-                    <ul>
+}
 
-                        <li>
-                            Identify the affected perimeter area
-                        </li>
 
-                        <li>
-                            Provide visual verification
-                        </li>
+.warning-card {
 
-                        <li>
-                            Assist security response
-                        </li>
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,184,77,.09),
+            rgba(255,184,77,.025)
+        );
 
-                        <li>
-                            Support incident investigation
-                        </li>
+    border:
+        1px solid rgba(255,184,77,.25);
 
-                        <li>
-                            Improve situational awareness
-                        </li>
+}
 
-                    </ul>
 
-                </div>
+.warning-card h3 {
 
+    color:
+        var(--warning);
 
-                <h3>
-                    Camera Positioning
-                </h3>
+    margin-top:
+        0;
 
-                <p>
-                    Cameras should be positioned according to the
-                    required field of view, lighting conditions,
-                    mounting environment and security objectives.
-                </p>
+}
 
 
-                <h3>
-                    Event Association
-                </h3>
+.danger-card {
 
-                <p>
-                    Where equipment supports it, a fence alarm or
-                    zone event may be associated with a relevant
-                    camera or recording system.
-                </p>
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,101,119,.09),
+            rgba(255,101,119,.025)
+        );
 
-                <p>
-                    This allows the operator to investigate the
-                    correct area instead of searching through the
-                    entire property.
-                </p>
+    border:
+        1px solid rgba(255,101,119,.25);
 
+}
 
-                <h3>
-                    Night-Time Performance
-                </h3>
 
-                <p>
-                    CCTV integration must consider night-time
-                    visibility. A camera that provides excellent
-                    daytime coverage may not provide the same
-                    information under darkness or changing
-                    illumination.
-                </p>
+.danger-card h3 {
 
+    color:
+        var(--danger);
 
-                <div class="warning-card">
+    margin-top:
+        0;
 
-                    <h3>
-                        Do Not Assume CCTV Equals Verification
-                    </h3>
+}
 
-                    <p>
-                        Camera performance depends on positioning,
-                        lighting, image quality, field of view and
-                        equipment configuration. Integration should
-                        be tested under realistic operating
-                        conditions.
-                    </p>
 
-                </div>
+/* =========================================================
+   TECHNICAL FORMULA
+========================================================= */
 
-            </section>
+.formula-box {
 
+    margin:
+        25px 0;
 
-            <!-- =================================
-                 10. ALARM INTEGRATION
-            ================================== -->
+    padding:
+        28px;
 
-            <section
-                id="alarms"
-                class="lesson-section"
-            >
+    background:
+        #050c11;
 
-                <div class="section-number">
-                    10
-                </div>
+    border:
+        1px solid var(--border-light);
 
-                <h2>
-                    Alarm Integration
-                </h2>
+    border-radius:
+        12px;
 
-                <p>
-                    Electric-fence systems can form part of a wider
-                    intrusion alarm solution where compatible
-                    equipment and system architecture permit.
-                </p>
+    text-align:
+        center;
 
+}
 
-                <div class="info-card">
 
-                    <h3>
-                        Alarm Integration Considerations
-                    </h3>
+.formula {
 
-                    <ul>
+    font-size:
+        clamp(20px, 4vw, 31px);
 
-                        <li>
-                            Event detection
-                        </li>
+    font-weight:
+        900;
 
-                        <li>
-                            Zone identification
-                        </li>
+    color:
+        var(--accent);
 
-                        <li>
-                            Alarm inputs
-                        </li>
+    letter-spacing:
+        1px;
 
-                        <li>
-                            Relay or communication interfaces
-                        </li>
+}
 
-                        <li>
-                            Alarm response
-                        </li>
 
-                        <li>
-                            Monitoring requirements
-                        </li>
+.formula-caption {
 
-                        <li>
-                            Event logging
-                        </li>
+    margin-top:
+        9px;
 
-                    </ul>
+    color:
+        var(--text-muted);
 
-                </div>
+    font-size:
+        11px;
 
+}
 
-                <h3>
-                    Understand The Signal
-                </h3>
 
-                <p>
-                    Before integrating two systems, the technician
-                    must understand what signal is being produced,
-                    what equipment receives it and what response is
-                    expected.
-                </p>
+/* =========================================================
+   V MODEL
+========================================================= */
 
+.v-model {
 
-                <h3>
-                    Alarm Conditions
-                </h3>
+    margin:
+        30px 0;
 
-                <p>
-                    Different systems may distinguish between
-                    normal operation, alarm conditions, power
-                    failures, communication faults and other
-                    events.
-                </p>
+    padding:
+        28px;
 
-                <p>
-                    These conditions should be correctly identified
-                    during system design and commissioning.
-                </p>
+    background:
+        #070e14;
 
+    border:
+        1px solid var(--border);
 
-                <h3>
-                    False Alarm Management
-                </h3>
+    border-radius:
+        14px;
 
-                <p>
-                    Repeated nuisance alarms can reduce confidence
-                    in a security system and may lead operators to
-                    ignore genuine events.
-                </p>
+}
 
-                <p>
-                    The cause of repeated alarms should therefore be
-                    investigated rather than simply suppressing the
-                    alarm condition.
-                </p>
 
+.v-model-title {
 
-                <div class="success-card">
+    text-align:
+        center;
 
-                    <h3>
-                        Professional Principle
-                    </h3>
+    color:
+        var(--accent);
 
-                    <p>
-                        A security alarm is only useful when the
-                        system can reliably communicate the event
-                        and the response process is clearly
-                        understood.
-                    </p>
+    font-size:
+        13px;
 
-                </div>
+    font-weight:
+        900;
 
-            </section>
+    letter-spacing:
+        1.5px;
 
+    margin-bottom:
+        25px;
 
-            <!-- =================================
-                 11. REMOTE MONITORING
-            ================================== -->
+}
 
-            <section
-                id="monitoring"
-                class="lesson-section"
-            >
 
-                <div class="section-number">
-                    11
-                </div>
+.v-grid {
 
-                <h2>
-                    Remote Monitoring
-                </h2>
+    display:
+        grid;
 
-                <p>
-                    Remote monitoring allows relevant system events
-                    or conditions to be communicated to an operator
-                    or monitoring service away from the protected
-                    property.
-                </p>
+    grid-template-columns:
+        1fr 1fr;
 
+    gap:
+        20px;
 
-                <div class="info-card">
+}
 
-                    <h3>
-                        Possible Monitoring Information
-                    </h3>
 
-                    <ul>
+.v-side {
 
-                        <li>
-                            Fence alarm events
-                        </li>
+    padding:
+        20px;
 
-                        <li>
-                            Zone information
-                        </li>
+    border:
+        1px solid var(--border);
 
-                        <li>
-                            Power failures
-                        </li>
+    border-radius:
+        10px;
 
-                        <li>
-                            Backup battery conditions
-                        </li>
+}
 
-                        <li>
-                            Communication failures
-                        </li>
 
-                        <li>
-                            Equipment faults
-                        </li>
+.v-side h4 {
 
-                        <li>
-                            System status
-                        </li>
+    margin-bottom:
+        14px;
 
-                    </ul>
+}
 
-                </div>
 
+.v-side ul {
 
-                <h3>
-                    Communication Path
-                </h3>
+    padding-left:
+        20px;
 
-                <p>
-                    A monitored system depends on a communication
-                    path between the protected premises and the
-                    receiving system.
-                </p>
+}
 
-                <p>
-                    The design should therefore consider the
-                    reliability and limitations of the selected
-                    communication method.
-                </p>
 
+.v-verification {
 
-                <h3>
-                    Monitoring Is A Process
-                </h3>
+    grid-column:
+        1 / -1;
 
-                <p>
-                    Sending an alarm is only one part of the
-                    solution. There must also be a defined process
-                    for receiving, assessing and responding to the
-                    event.
-                </p>
+    text-align:
+        center;
 
+    border:
+        1px dashed var(--accent-dark);
 
-                <h3>
-                    Communication Failure
-                </h3>
+    padding:
+        17px;
 
-                <p>
-                    The security system should be assessed for what
-                    happens if its normal communication path becomes
-                    unavailable.
-                </p>
+    border-radius:
+        10px;
 
+    color:
+        var(--accent);
 
-                <div class="warning-card">
+    font-weight:
+        700;
 
-                    <h3>
-                        Do Not Promise Response Times
-                    </h3>
+}
 
-                    <p>
-                        Technicians should not make unsupported
-                        claims about monitoring or emergency
-                        response times. These depend on the
-                        monitoring provider, response arrangements,
-                        equipment and service agreement.
-                    </p>
 
-                </div>
+/* =========================================================
+   RISK MATRIX
+========================================================= */
 
-            </section>
+.risk-matrix {
 
+    overflow-x:
+        auto;
 
-            <!-- =================================
-                 12. PROFESSIONAL DESIGN
-                      DOCUMENTATION
-            ================================== -->
+    margin:
+        25px 0;
 
-            <section
-                id="documentation"
-                class="lesson-section"
-            >
+}
 
-                <div class="section-number">
-                    12
-                </div>
 
-                <h2>
-                    Professional Design Documentation
-                </h2>
+.risk-matrix table {
 
-                <p>
-                    A professional electric-fence project should be
-                    supported by clear documentation.
-                </p>
+    width:
+        100%;
 
-                <p>
-                    Documentation helps communicate the intended
-                    system design, supports installation and
-                    commissioning, and provides a useful reference
-                    for future maintenance.
-                </p>
+    border-collapse:
+        collapse;
 
+    min-width:
+        620px;
 
-                <div class="info-card">
+}
 
-                    <h3>
-                        Design Documentation May Include
-                    </h3>
 
-                    <ul>
+.risk-matrix th {
 
-                        <li>
-                            Site information
-                        </li>
+    background:
+        #132630;
 
-                        <li>
-                            Perimeter layout
-                        </li>
+    color:
+        var(--accent);
 
-                        <li>
-                            Fence zones
-                        </li>
+    font-size:
+        12px;
 
-                        <li>
-                            Gate locations
-                        </li>
+    text-align:
+        left;
 
-                        <li>
-                            Energizer location
-                        </li>
+}
 
-                        <li>
-                            High-voltage cable routes
-                        </li>
 
-                        <li>
-                            Earth-system information
-                        </li>
+.risk-matrix td,
+.risk-matrix th {
 
-                        <li>
-                            Equipment schedules
-                        </li>
+    padding:
+        13px;
 
-                        <li>
-                            Alarm interfaces
-                        </li>
+    border:
+        1px solid var(--border);
 
-                        <li>
-                            CCTV integration points
-                        </li>
+}
 
-                        <li>
-                            Monitoring requirements
-                        </li>
 
-                        <li>
-                            Relevant notes and assumptions
-                        </li>
+.risk-matrix td {
 
-                    </ul>
+    color:
+        var(--text-soft);
 
-                </div>
+    font-size:
+        13px;
 
+}
 
-                <h3>
-                    Site Drawing
-                </h3>
 
-                <p>
-                    A clear site drawing can show the relationship
-                    between the perimeter, fence zones, gates,
-                    equipment and other security systems.
-                </p>
+/* =========================================================
+   WORKFLOW
+========================================================= */
 
+.workflow {
 
-                <h3>
-                    Equipment Schedule
-                </h3>
+    display:
+        grid;
 
-                <p>
-                    An equipment schedule provides a structured
-                    record of the major components included in the
-                    system.
-                </p>
+    grid-template-columns:
+        repeat(2, 1fr);
 
+    gap:
+        12px;
 
-                <h3>
-                    Design Assumptions
-                </h3>
+    margin:
+        25px 0;
 
-                <p>
-                    Important assumptions should be recorded rather
-                    than left to memory.
-                </p>
+}
 
-                <p>
-                    Examples include existing infrastructure,
-                    customer requirements, access arrangements and
-                    conditions identified during the site
-                    assessment.
-                </p>
 
+.workflow-step {
 
-                <div class="success-card">
+    display:
+        flex;
 
-                    <h3>
-                        Professional Principle
-                    </h3>
+    gap:
+        14px;
 
-                    <p>
-                        If another competent technician cannot
-                        understand your design from the
-                        documentation, the documentation is not
-                        complete enough.
-                    </p>
+    align-items:
+        flex-start;
 
-                </div>
+    padding:
+        17px;
 
+    background:
+        #09131a;
 
-                <div class="warning-card">
+    border:
+        1px solid var(--border);
 
-                    <h3>
-                        Protect Security Information
-                    </h3>
+    border-radius:
+        10px;
 
-                    <p>
-                        System drawings, equipment locations,
-                        access information and monitoring details
-                        can contain sensitive security information.
-                        Documentation must be stored and shared
-                        responsibly.
-                    </p>
+}
 
-                </div>
 
-                            </section>
+.workflow-number {
 
-                        <!-- =================================
-                 13. PROFESSIONAL DESIGN WORKFLOW
-            ================================== -->
+    flex:
+        0 0 32px;
 
-            <section
-                id="design-workflow"
-                class="lesson-section"
-            >
+    height:
+        32px;
 
-                <div class="section-number">
-                    13
-                </div>
+    display:
+        grid;
 
-                <h2>
-                    Professional Design Workflow
-                </h2>
+    place-items:
+        center;
 
-                <p>
-                    A professional electric-fence design should
-                    follow a structured process from the initial
-                    customer consultation through to final
-                    documentation.
-                </p>
+    border-radius:
+        50%;
 
+    background:
+        rgba(25,211,162,.10);
 
-                <div class="info-card">
+    border:
+        1px solid rgba(25,211,162,.25);
 
-                    <h3>
-                        Recommended Design Sequence
-                    </h3>
+    color:
+        var(--accent);
 
-                    <ol>
+    font-weight:
+        900;
 
-                        <li>
-                            Understand the customer's security
-                            requirements.
-                        </li>
+    font-size:
+        12px;
 
-                        <li>
-                            Conduct a site assessment.
-                        </li>
+}
 
-                        <li>
-                            Identify perimeter risks and vulnerable
-                            areas.
-                        </li>
 
-                        <li>
-                            Assess the existing perimeter structure.
-                        </li>
+.workflow-step strong {
 
-                        <li>
-                            Identify gates and access points.
-                        </li>
+    display:
+        block;
 
-                        <li>
-                            Determine appropriate fence
-                            configuration.
-                        </li>
+    margin-bottom:
+        3px;
 
-                        <li>
-                            Develop the zoning arrangement.
-                        </li>
+}
 
-                        <li>
-                            Determine equipment requirements.
-                        </li>
 
-                        <li>
-                            Plan power and relevant earth-system
-                            requirements.
-                        </li>
+.workflow-step span {
 
-                        <li>
-                            Plan high-voltage cable routes.
-                        </li>
+    color:
+        var(--text-muted);
 
-                        <li>
-                            Determine alarm, CCTV and monitoring
-                            integration requirements.
-                        </li>
+    font-size:
+        12px;
 
-                        <li>
-                            Review the design against applicable
-                            requirements.
-                        </li>
+}
 
-                        <li>
-                            Prepare documentation and equipment
-                            schedules.
-                        </li>
 
-                        <li>
-                            Review the final design before
-                            installation.
-                        </li>
+/* =========================================================
+   KNOWLEDGE CHECK
+========================================================= */
 
-                    </ol>
+.check-list {
 
-                </div>
+    list-style:
+        none;
 
+    padding:
+        0;
 
-                <h3>
-                    Design Review
-                </h3>
+}
 
-                <p>
-                    Before installation begins, the proposed design
-                    should be reviewed to identify omissions,
-                    conflicts or impractical installation
-                    conditions.
-                </p>
 
+.check-list li {
 
-                <h3>
-                    Installation Planning
-                </h3>
+    display:
+        flex;
 
-                <p>
-                    The design should provide enough information for
-                    the installation team to understand the intended
-                    system without relying on assumptions.
-                </p>
+    gap:
+        12px;
 
+    padding:
+        13px 0;
 
-                <div class="success-card">
+    border-bottom:
+        1px solid rgba(255,255,255,.05);
 
-                    <h3>
-                        Design Principle
-                    </h3>
+}
 
-                    <p>
-                        Good design reduces problems before they
-                        reach the installation stage.
-                    </p>
 
-                </div>
+.check-icon {
 
-            </section>
+    color:
+        var(--accent);
 
+    font-weight:
+        900;
 
-            <!-- =================================
-                 14. DESIGN QUALITY REVIEW
-            ================================== -->
+}
 
-            <section
-                id="design-review"
-                class="lesson-section"
-            >
 
-                <div class="section-number">
-                    14
-                </div>
+/* =========================================================
+   COMPLETION
+========================================================= */
 
-                <h2>
-                    Design Quality Review
-                </h2>
+.completion {
 
-                <p>
-                    Before approving an electric-fence design, the
-                    designer should conduct a structured review.
-                </p>
+    text-align:
+        center;
 
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(25,211,162,.10),
+            transparent 60%
+        );
 
-                <div class="info-card">
+}
 
-                    <h3>
-                        Design Review Checklist
-                    </h3>
 
-                    <ul>
+.completion-icon {
 
-                        <li>
-                            ☐ Customer security objective identified
-                        </li>
+    width:
+        70px;
 
-                        <li>
-                            ☐ Site assessment completed
-                        </li>
+    height:
+        70px;
 
-                        <li>
-                            ☐ Perimeter structure assessed
-                        </li>
+    margin:
+        0 auto 20px;
 
-                        <li>
-                            ☐ Vulnerable areas identified
-                        </li>
+    display:
+        grid;
 
-                        <li>
-                            ☐ Gates and access points considered
-                        </li>
+    place-items:
+        center;
 
-                        <li>
-                            ☐ Fence configuration defined
-                        </li>
+    border-radius:
+        50%;
 
-                        <li>
-                            ☐ Zones logically planned
-                        </li>
+    border:
+        2px solid var(--accent);
 
-                        <li>
-                            ☐ Energizer requirements established
-                        </li>
+    color:
+        var(--accent);
 
-                        <li>
-                            ☐ Power requirements considered
-                        </li>
+    font-size:
+        30px;
 
-                        <li>
-                            ☐ Earth-system requirements considered
-                        </li>
+    box-shadow:
+        0 0 30px var(--accent-glow);
 
-                        <li>
-                            ☐ High-voltage cable routes planned
-                        </li>
+}
 
-                        <li>
-                            ☐ Alarm integration considered
-                        </li>
 
-                        <li>
-                            ☐ CCTV requirements considered
-                        </li>
+/* =========================================================
+   NAVIGATION
+========================================================= */
 
-                        <li>
-                            ☐ Monitoring requirements considered
-                        </li>
+.part-navigation {
 
-                        <li>
-                            ☐ Maintenance access considered
-                        </li>
+    display:
+        flex;
 
-                        <li>
-                            ☐ Documentation prepared
-                        </li>
+    justify-content:
+        space-between;
 
-                        <li>
-                            ☐ Applicable standards and regulations
-                            considered
-                        </li>
+    gap:
+        15px;
 
-                    </ul>
+    margin-top:
+        10px;
 
-                </div>
+}
 
 
-                <h3>
-                    Maintainability
-                </h3>
+.nav-button {
 
-                <p>
-                    A good design must allow technicians to inspect,
-                    test and maintain the system throughout its
-                    service life.
-                </p>
+    flex:
+        1;
 
-                <p>
-                    Equipment should therefore be positioned and
-                    documented with future maintenance in mind.
-                </p>
+    padding:
+        17px 20px;
 
+    border:
+        1px solid var(--border);
 
-                <div class="warning-card">
+    background:
+        var(--panel);
 
-                    <h3>
-                        Do Not Design Only For Installation Day
-                    </h3>
+    border-radius:
+        10px;
 
-                    <p>
-                        A system that is difficult to maintain can
-                        become expensive and unreliable over time.
-                        Design for the complete lifecycle of the
-                        installation.
-                    </p>
+    text-align:
+        center;
 
-                </div>
+    color:
+        var(--text-soft);
 
-            </section>
+    font-weight:
+        800;
 
+    font-size:
+        13px;
 
-            <!-- =================================
-                 15. PROFESSIONAL DESIGN PRINCIPLES
-            ================================== -->
+    transition:
+        .2s ease;
 
-            <section
-                id="design-principles"
-                class="lesson-section"
-            >
+}
 
-                <div class="section-number">
-                    15
-                </div>
 
-                <h2>
-                    Professional Design Principles
-                </h2>
+.nav-button:hover {
 
-                <p>
-                    The strongest electric-fence installations are
-                    based on a combination of security effectiveness,
-                    electrical performance, safety, maintainability
-                    and compliance.
-                </p>
+    border-color:
+        var(--accent);
 
+    color:
+        var(--accent);
 
-                <div class="info-card">
+    background:
+        rgba(25,211,162,.06);
 
-                    <h3>
-                        Five Design Priorities
-                    </h3>
+    transform:
+        translateY(-2px);
 
-                    <ol>
+}
 
-                        <li>
-                            <strong>
-                                Security
-                            </strong>
 
-                            <br>
+/* =========================================================
+   FOOTER
+========================================================= */
 
-                            The system must address the identified
-                            security objective.
-                        </li>
+.academy-footer {
 
+    border-top:
+        1px solid var(--border);
 
-                        <li>
-                            <strong>
-                                Safety
-                            </strong>
+    background:
+        #03070b;
 
-                            <br>
+}
 
-                            The design must consider people,
-                            property and safe operation.
-                        </li>
 
+.footer-content {
 
-                        <li>
-                            <strong>
-                                Reliability
-                            </strong>
+    max-width:
+        var(--max);
 
-                            <br>
+    margin:
+        auto;
 
-                            Equipment and system architecture should
-                            support dependable operation.
-                        </li>
+    padding:
+        45px 28px;
 
+    text-align:
+        center;
 
-                        <li>
-                            <strong>
-                                Maintainability
-                            </strong>
+}
 
-                            <br>
 
-                            Future inspection, testing and repair
-                            should be practical.
-                        </li>
+.footer-content h3 {
 
+    color:
+        white;
 
-                        <li>
-                            <strong>
-                                Compliance
-                            </strong>
+    letter-spacing:
+        2px;
 
-                            <br>
+}
 
-                            The installation must be designed and
-                            implemented in accordance with applicable
-                            requirements.
-                        </li>
 
-                    </ol>
+.footer-content p {
 
-                </div>
+    font-size:
+        13px;
 
+    color:
+        var(--text-muted);
 
-                <h3>
-                    Avoid Over-Engineering
-                </h3>
+}
 
-                <p>
-                    A professional system should be appropriately
-                    designed for the property and security
-                    requirement.
-                </p>
 
-                <p>
-                    Adding unnecessary equipment or complexity does
-                    not automatically improve security.
-                </p>
+.footer-copy {
 
+    margin-top:
+        20px;
 
-                <h3>
-                    Avoid Under-Design
-                </h3>
+    padding-top:
+        18px;
 
-                <p>
-                    The opposite problem is designing a system that
-                    does not adequately address the identified
-                    security risks.
-                </p>
+    border-top:
+        1px solid var(--border);
 
+}
 
-                <div class="success-card">
 
-                    <h3>
-                        The Right Question
-                    </h3>
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
-                    <p>
-                        Do not ask, "How much equipment can we
-                        install?"
-                    </p>
+@media (max-width: 1050px) {
 
-                    <p>
-                        Ask, "What system is appropriate for the
-                        security requirement, the property and the
-                        applicable requirements?"
-                    </p>
+    .course-layout {
 
-                </div>
+        grid-template-columns:
+            230px minmax(0,1fr);
 
-            </section>
+    }
 
+}
 
-            <!-- =================================
-                 16. PART 11 KNOWLEDGE CHECK
-            ================================== -->
 
-            <section
-                id="knowledge-check"
-                class="lesson-section"
-            >
+@media (max-width: 820px) {
 
-                <div class="section-number">
-                    ?
-                </div>
+    .header-content {
 
-                <h2>
-                    Part 11 Knowledge Check
-                </h2>
+        padding:
+            13px 18px;
 
-                <p>
-                    Before progressing, the learner should be able
-                    to explain how a professional electric-fence
-                    system is developed from a security requirement
-                    into a documented installation design.
-                </p>
+    }
 
+    .course-label {
 
-                <div class="info-card">
+        display:
+            none;
 
-                    <h3>
-                        The Learner Should Be Able To Explain:
-                    </h3>
+    }
 
-                    <ul>
+    .hero-content {
 
-                        <li>
-                            Why system design must begin with the
-                            security objective
-                        </li>
+        padding:
+            55px 20px 65px;
 
-                        <li>
-                            Why a site assessment is essential
-                        </li>
+    }
 
-                        <li>
-                            How perimeter architecture influences
-                            system design
-                        </li>
+    .course-stats {
 
-                        <li>
-                            Why risk-based design is important
-                        </li>
+        grid-template-columns:
+            repeat(2,1fr);
 
-                        <li>
-                            The purpose of zoning
-                        </li>
+        padding:
+            0 20px;
 
-                        <li>
-                            Why gates require special consideration
-                        </li>
+    }
 
-                        <li>
-                            How electric fencing can integrate with
-                            CCTV
-                        </li>
+    .course-layout {
 
-                        <li>
-                            How electric fencing can integrate with
-                            alarm systems
-                        </li>
+        grid-template-columns:
+            1fr;
 
-                        <li>
-                            The purpose of remote monitoring
-                        </li>
+        padding:
+            0 20px 60px;
 
-                        <li>
-                            Why professional documentation is
-                            important
-                        </li>
+    }
 
-                        <li>
-                            Why maintainability must be considered
-                            during design
-                        </li>
+    .sidebar {
 
-                        <li>
-                            Why applicable standards and regulations
-                            must be considered
-                        </li>
+        position:
+            static;
 
-                    </ul>
+    }
 
-                </div>
+    .lesson-nav {
 
+        display:
+            grid;
 
-                <div class="warning-card">
+        grid-template-columns:
+            repeat(2,1fr);
 
-                    <h3>
-                        Important South African Context
-                    </h3>
+    }
 
-                    <p>
-                        Electric-fence design and installation in
-                        South Africa must be approached in accordance
-                        with the applicable legislation, standards,
-                        certification requirements and competent
-                        authority requirements relevant to the
-                        installation.
-                    </p>
+    .lesson-section {
 
-                    <p>
-                        Training material provides educational
-                        guidance and does not replace the current
-                        requirements applicable to a specific
-                        installation.
-                    </p>
+        padding:
+            28px 22px;
 
-                </div>
+    }
 
-            </section>
+    .v-grid,
+    .workflow {
 
+        grid-template-columns:
+            1fr;
 
-            <!-- =================================
-                 PART 11 COMPLETE
-            ================================== -->
+    }
 
-            <section
-                id="part-complete"
-                class="lesson-section"
-            >
+}
 
-                <div class="section-number">
-                    ✓
-                </div>
 
-                <h2>
-                    Part 11 Complete
-                </h2>
+@media (max-width: 520px) {
 
-                <p>
-                    The learner has now covered the fundamentals of
-                    advanced electric-fence system design and
-                    security planning.
-                </p>
+    .hero-content h1 {
 
-                <p>
-                    This includes security objectives, site
-                    assessment, perimeter architecture, risk,
-                    zoning, gates, CCTV integration, alarm
-                    integration, remote monitoring and professional
-                    documentation.
-                </p>
+        letter-spacing:
+            -2px;
 
+    }
 
-                <div class="success-card">
+    .course-stats {
 
-                    <h3>
-                        The Professional Designer
-                    </h3>
+        grid-template-columns:
+            1fr;
 
-                    <p>
-                        A professional designer does not begin with
-                        a product catalogue.
-                    </p>
+    }
 
-                    <p>
-                        They begin with the property, the risk, the
-                        customer's security objective and the
-                        applicable requirements.
-                    </p>
+    .lesson-nav {
 
-                    <p>
-                        Equipment is then selected to support the
-                        resulting system design.
-                    </p>
+        grid-template-columns:
+            1fr;
 
-                </div>
+    }
 
+    .part-navigation {
 
-                <div class="info-card">
+        flex-direction:
+            column;
 
-                    <h3>
-                        What Comes Next
-                    </h3>
+    }
 
-                    <p>
-                        The next part will move deeper into the
-                        practical professional environment,
-                        developing the learner's ability to plan,
-                        prepare and execute an electric-fence
-                        project from the design stage through to
-                        installation and commissioning.
-                    </p>
+    .lesson-section {
 
-                    <p>
-                        The emphasis will be on disciplined
-                        installation practice, quality control,
-                        verification and professional workmanship.
-                    </p>
+        padding:
+            25px 18px;
 
-                </div>
+    }
 
-            </section>
+}
 
 
-            <!-- =========================================
-                 PART NAVIGATION
-            ========================================== -->
+/* =========================================================
+   PRINT
+========================================================= */
 
-            <div class="part-navigation">
+@media print {
 
-                <a
-                    href="part-10.html"
-                    class="nav-button previous"
-                >
-                    ← Previous Part
-                </a>
+    .academy-header,
+    .sidebar,
+    .part-navigation {
 
+        display:
+            none;
 
-                <a
-                    href="part-12.html"
-                    class="nav-button next"
-                >
-                    Part 12 →
-                </a>
+    }
 
-            </div>
+    body {
 
+        background:
+            white;
 
-        </main>
+        color:
+            black;
 
+    }
+
+    .lesson-section {
+
+        break-inside:
+            avoid;
+
+        border:
+            1px solid #ccc;
+
+        box-shadow:
+            none;
+
+    }
+
+}
+
+</style></head><body><!-- =======================================================
+     HEADER
+======================================================= --><header class="academy-header"><div class="header-content">
+
+    <div class="academy-logo">
+
+        NEXPAK
+
+        <span>
+            SECURITY ACADEMY
+        </span>
 
     </div>
 
+    <div class="course-label">
 
-    <!-- =========================================
-         FOOTER
-    ========================================== -->
-
-    <footer class="academy-footer">
-
-        <div class="footer-content">
-
-            <h3>
-                NEXPAK SECURITY ACADEMY
-            </h3>
-
-            <p>
-                Professional security training and
-                practical installation knowledge.
-            </p>
-
-            <p class="footer-copy">
-                © 2026 Nexpak Security Solutions.
-                All Rights Reserved.
-            </p>
-
-        </div>
-
-    </footer>
-
-
-</body>
-
-                            </html>
+        ELECTRIC FENCING
+        &nbsp;•&nbsp;
+  
