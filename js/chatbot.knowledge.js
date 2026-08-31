@@ -12257,3 +12257,657 @@
                 'Based on what you have told me, I would recommend starting with the main security requirement first. There may also be an opportunity to add another layer such as CCTV, alarm detection or access control if it addresses a specific weakness.'
             
         },
+
+                        /* =========================================================
+           43. EQUESTRIAN FENCING — ADVANCED KNOWLEDGE
+        ========================================================= */
+
+        equestrianAdvanced: {
+
+            name: 'Equestrian Fencing',
+
+            category: 'Horse & Paddock Fencing',
+
+            definition:
+                'Equestrian fencing is designed to create secure paddock, horse-yard, training and pasture boundaries while considering horse behaviour, visibility, fence height, electrical performance, gate access and the risk of injury.',
+
+            simpleExplanation:
+                'Horse fencing needs to do more than simply keep horses inside an area. The system should be designed with horse safety, visibility, containment, durability and practical access in mind.',
+
+
+            /* -----------------------------------------------------
+               EQUESTRIAN APPLICATIONS
+            ----------------------------------------------------- */
+
+            applications: {
+
+                paddock: {
+
+                    name: 'Horse Paddock',
+
+                    purpose:
+                        'Provides a defined area where horses can graze or remain contained.',
+
+                    considerations: [
+
+                        'Paddock size',
+
+                        'Number of horses',
+
+                        'Horse behaviour',
+
+                        'Fence visibility',
+
+                        'Fence height',
+
+                        'Number of fence lines',
+
+                        'Gate locations',
+
+                        'Vegetation',
+
+                        'Terrain',
+
+                        'Water points',
+
+                        'Access requirements'
+
+                    ]
+
+                },
+
+
+                stableYard: {
+
+                    name: 'Stable Yard',
+
+                    purpose:
+                        'Provides controlled areas around stables, grooming areas and horse handling zones.',
+
+                    considerations: [
+
+                        'Stable entrances',
+
+                        'Horse movement',
+
+                        'Gate positioning',
+
+                        'Visibility',
+
+                        'High-traffic areas',
+
+                        'Access control',
+
+                        'Safety'
+
+                    ]
+
+                },
+
+
+                trainingArena: {
+
+                    name: 'Training Arena',
+
+                    purpose:
+                        'Creates a controlled boundary around an arena or training area.',
+
+                    considerations: [
+
+                        'Arena dimensions',
+
+                        'Horse visibility',
+
+                        'Fence construction',
+
+                        'Gate access',
+
+                        'Training requirements',
+
+                        'Surface conditions'
+
+                    ]
+
+                },
+
+
+                temporary: {
+
+                    name: 'Temporary Electric Fencing',
+
+                    purpose:
+                        'Allows paddock or grazing areas to be divided or changed without constructing a permanent fence.',
+
+                    considerations: [
+
+                        'Portable posts',
+
+                        'Polytape or rope',
+
+                        'Energizer',
+
+                        'Grounding',
+
+                        'Gate access',
+
+                        'Frequent relocation',
+
+                        'Battery or solar power'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               EQUESTRIAN PRODUCTS
+            ----------------------------------------------------- */
+
+            products: {
+
+                polyTape: {
+
+                    name: 'Electric Fence Polytape',
+
+                    purpose:
+                        'Highly visible conductive tape suitable for selected equestrian fencing applications.',
+
+                    advantages: [
+
+                        'High visibility',
+
+                        'Suitable for temporary or permanent applications',
+
+                        'Available in different widths',
+
+                        'Can be used with compatible insulators',
+
+                        'Useful for creating visible horse boundaries'
+
+                    ],
+
+                    considerations: [
+
+                        'Tape width',
+
+                        'Conductive performance',
+
+                        'Fence length',
+
+                        'Wind exposure',
+
+                        'Post spacing',
+
+                        'Energizer capacity',
+
+                        'Insulator compatibility'
+
+                    ]
+
+                },
+
+
+                electricRope: {
+
+                    name: 'Electric Fence Rope',
+
+                    purpose:
+                        'Conductive rope designed for suitable electric-fence applications where visibility, appearance and flexibility are important.',
+
+                    considerations: [
+
+                        'Fence length',
+
+                        'Conductive material',
+
+                        'Visibility',
+
+                        'Post spacing',
+
+                        'Insulator compatibility',
+
+                        'Energizer capacity'
+
+                    ]
+
+                },
+
+
+                insulators: {
+
+                    name: 'Equestrian Insulators',
+
+                    purpose:
+                        'Support and electrically isolate the conductive fence material from the supporting posts.',
+
+                    considerations: [
+
+                        'Post type',
+
+                        'Tape or rope type',
+
+                        'Mechanical strength',
+
+                        'Fence configuration',
+
+                        'UV exposure',
+
+                        'Compatibility'
+
+                    ]
+
+                },
+
+
+                energizer: {
+
+                    name: 'Electric Fence Energizer',
+
+                    purpose:
+                        'Supplies electrical pulses to a compatible electric fence.',
+
+                    considerations: [
+
+                        'Fence length',
+
+                        'Fence construction',
+
+                        'Vegetation',
+
+                        'Number of fence lines',
+
+                        'Grounding',
+
+                        'Power source',
+
+                        'Battery requirements',
+
+                        'Solar requirements'
+
+                    ],
+
+                    importantRule:
+                        'Energizer selection should be based on the actual fence system and conditions rather than simply choosing the largest available unit.'
+
+                },
+
+
+                gateHardware: {
+
+                    name: 'Electric Fence Gate Hardware',
+
+                    purpose:
+                        'Allows gates and access points to be incorporated into the electric fence while maintaining suitable electrical continuity and practical access.',
+
+                    considerations: [
+
+                        'Gate width',
+
+                        'Gate location',
+
+                        'Number of gate openings',
+
+                        'Handle requirements',
+
+                        'Underground or insulated connection requirements',
+
+                        'Electrical continuity'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               HORSE SAFETY
+            ----------------------------------------------------- */
+
+            horseSafety: {
+
+                priorities: [
+
+                    'Fence visibility',
+
+                    'Appropriate fence height',
+
+                    'Safe construction',
+
+                    'Avoiding unnecessary protrusions',
+
+                    'Suitable gate design',
+
+                    'Reliable energizer performance',
+
+                    'Correct grounding',
+
+                    'Regular maintenance',
+
+                    'Suitable spacing',
+
+                    'Horse behaviour'
+
+                ],
+
+                importantRule:
+                    'Equestrian fencing should be designed with animal safety in mind. The bot must not present electric fencing as automatically safe simply because it is used around horses.',
+
+                response:
+                    'For horses, visibility and safe physical construction are especially important. I would want to understand the paddock layout, horse behaviour and fence design before recommending the products and configuration.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               EQUESTRIAN QUALIFICATION
+            ----------------------------------------------------- */
+
+            qualificationQuestions: [
+
+                'How many horses will use the area?',
+
+                'Is this for a paddock, stable yard, arena or temporary grazing area?',
+
+                'What is the approximate fence length?',
+
+                'Is the fence permanent or temporary?',
+
+                'What type of existing posts do you have?',
+
+                'Are you building a completely new fence?',
+
+                'Do you already have an energizer?',
+
+                'Do you have mains electricity available?',
+
+                'Would you prefer mains, battery or solar power?',
+
+                'How many fence lines do you need?',
+
+                'How many gates are required?',
+
+                'Do you have vegetation growing against the fence?',
+
+                'Are the horses likely to challenge or push against the fence?',
+
+                'Do you need a portable paddock system?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               EQUESTRIAN SYSTEM DESIGN
+            ----------------------------------------------------- */
+
+            designPrinciples: [
+
+                'Start with the paddock or property layout.',
+
+                'Determine the total fence length.',
+
+                'Determine whether the installation is permanent or temporary.',
+
+                'Consider fence visibility for horses.',
+
+                'Consider the number of fence lines.',
+
+                'Select compatible tape, rope, posts and insulators.',
+
+                'Select the energizer according to the complete fence system.',
+
+                'Plan gates before finalising the fence layout.',
+
+                'Consider grounding requirements.',
+
+                'Consider vegetation and leakage.',
+
+                'Consider power availability.',
+
+                'Consider solar where mains power is unavailable or impractical.',
+
+                'Plan for maintenance and periodic inspection.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               EQUESTRIAN TROUBLESHOOTING
+            ----------------------------------------------------- */
+
+            troubleshooting: {
+
+                lowVoltage: [
+
+                    'Poor grounding',
+
+                    'Vegetation contacting the fence',
+
+                    'Broken conductor',
+
+                    'Poor electrical connection',
+
+                    'Damaged insulator',
+
+                    'Fence too long for the energizer',
+
+                    'Faulty energizer',
+
+                    'Poor gate connection',
+
+                    'Battery or power problem'
+
+                ],
+
+
+                fenceNotWorking: [
+
+                    'Energizer not powered',
+
+                    'Broken conductor',
+
+                    'Disconnected gate',
+
+                    'Poor connection',
+
+                    'Grounding problem',
+
+                    'Damaged insulator',
+
+                    'Vegetation shorting the fence'
+
+                ],
+
+
+                frequentBreaks: [
+
+                    'Mechanical damage',
+
+                    'Animal contact',
+
+                    'Incorrect installation',
+
+                    'Poor tension',
+
+                    'Damaged fittings',
+
+                    'Environmental exposure'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               EQUESTRIAN PRICING
+            ----------------------------------------------------- */
+
+            pricingGuidance: {
+
+                principle:
+                    'Equestrian fencing pricing depends on fence length, number of fence lines, conductive material, posts, insulators, energizer, gates, power source and installation requirements.',
+
+                factors: [
+
+                    'Fence length',
+
+                    'Number of fence lines',
+
+                    'Polytape',
+
+                    'Electric rope',
+
+                    'Posts',
+
+                    'Insulators',
+
+                    'Energizer',
+
+                    'Grounding equipment',
+
+                    'Gate hardware',
+
+                    'Solar equipment',
+
+                    'Battery equipment',
+
+                    'Installation'
+
+                ],
+
+                responseWhenAskedPrice:
+                    'I can help you work out the right equestrian fencing system, but the price depends mainly on the fence length, number of lines, type of tape or rope, energizer and number of gates.'
+
+            }
+
+        },
+
+
+        /* =========================================================
+           44. EQUESTRIAN SALES ENGINE
+        ========================================================= */
+
+        equestrianSalesEngine: {
+
+            objective:
+                'Qualify an equestrian customer and determine the appropriate fencing products and system configuration.',
+
+
+            openingQuestions: [
+
+                'Are you fencing a paddock, arena, stable yard or temporary grazing area?',
+
+                'Approximately how many metres of fencing do you need?',
+
+                'How many fence lines are you planning?',
+
+                'Is the fence permanent or temporary?',
+
+                'Do you already have posts installed?',
+
+                'Do you already have an energizer?',
+
+                'How many gates do you need?'
+
+            ],
+
+
+            decisionLogic: {
+
+                newPaddock:
+                    'Determine perimeter length, number of fence lines, gates, posts, insulators, energizer and grounding requirements.',
+
+                temporaryPaddock:
+                    'Prioritize portable posts, suitable tape or rope, energizer, grounding and easy relocation.',
+
+                existingFence:
+                    'Determine what components already exist and identify whether the customer needs additional conductive material, insulators, energizer or gate equipment.',
+
+                solarPaddock:
+                    'Determine fence length, energizer requirements, solar exposure, battery requirements and desired autonomy.',
+
+                vegetation:
+                    'Determine whether vegetation is likely to contact the fence and cause leakage or reduced performance.',
+
+                largeProperty:
+                    'Break the fence into sections and determine total fence length, number of lines and energizer requirements before quoting.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               EQUESTRIAN SALES QUALIFICATION SCORE
+            ----------------------------------------------------- */
+
+            qualificationScore: {
+
+                highIntent: [
+
+                    'Customer provides fence measurements',
+
+                    'Customer knows the number of horses',
+
+                    'Customer asks for a complete system',
+
+                    'Customer asks for installation',
+
+                    'Customer asks for a quotation',
+
+                    'Customer asks about energizer sizing',
+
+                    'Customer asks about delivery',
+
+                    'Customer asks about available products'
+
+                ],
+
+                mediumIntent: [
+
+                    'Customer is researching horse fencing',
+
+                    'Customer asks about polytape',
+
+                    'Customer asks about electric rope',
+
+                    'Customer asks about energizers'
+
+                ],
+
+                lowIntent: [
+
+                    'General product information',
+
+                    'General horse-fencing questions',
+
+                    'Customer has not yet determined the required fence area'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               EQUESTRIAN CLOSING
+            ----------------------------------------------------- */
+
+            closingQuestions: [
+
+                'If you give me the approximate fence length, I can help you work out the main components you will need.',
+
+                'How many gates will the paddock have?',
+
+                'Do you need the fencing supplied only, or are you looking for installation as well?',
+
+                'Would you prefer a mains, battery or solar energizer?',
+
+                'Do you want a permanent installation or a portable system?'
+
+            ],
+
+
+            quoteTransition:
+                'Once the fence length, configuration, energizer requirement and gate requirements are known, move the customer toward a product recommendation or quotation.'
+
+        },
