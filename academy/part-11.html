@@ -5472,4 +5472,961 @@ body {
 
                 <strong>
                     PROTOCOL / COMMUNICATION LAYER
-                </st
+                </strong>
+
+                    <p>
+                        Defines how security systems exchange
+                        information, commands and status information.
+                        This may involve physical inputs and outputs,
+                        serial communication, network communication,
+                        manufacturer-specific protocols or other
+                        approved interfaces.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="layer">
+
+                <span class="layer-number">
+                    01
+                </span>
+
+                <div>
+
+                    <strong>
+                        PHYSICAL LAYER
+                    </strong>
+
+                    <p>
+                        Includes relay outputs, supervised inputs,
+                        network connections, interface modules and
+                        the physical infrastructure that allows the
+                        security systems to communicate.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <h3>
+            Cause-and-Effect Engineering
+        </h3>
+
+        <p>
+            One of the most useful tools in advanced integration
+            design is the <strong>cause-and-effect matrix</strong>.
+            It defines what the security architecture should do when
+            a specific event occurs.
+        </p>
+
+
+        <div class="cause-effect-table">
+
+            <div class="ce-row ce-header">
+
+                <span>
+                    EVENT
+                </span>
+
+                <span>
+                    SYSTEM ACTION
+                </span>
+
+                <span>
+                    OPERATOR RESPONSE
+                </span>
+
+            </div>
+
+
+            <div class="ce-row">
+
+                <span>
+                    Fence Zone Alarm
+                </span>
+
+                <span>
+                    Generate security alarm and identify affected
+                    zone.
+                </span>
+
+                <span>
+                    Verify the associated CCTV view and assess the
+                    event.
+                </span>
+
+            </div>
+
+
+            <div class="ce-row">
+
+                <span>
+                    Gate Forced
+                </span>
+
+                <span>
+                    Generate access-point alarm.
+                </span>
+
+                <span>
+                    Assess the gate and associated surveillance.
+                </span>
+
+            </div>
+
+
+            <div class="ce-row">
+
+                <span>
+                    Fence Fault
+                </span>
+
+                <span>
+                    Generate technical fault indication.
+                </span>
+
+                <span>
+                    Dispatch technical investigation according to
+                    the maintenance procedure.
+                </span>
+
+            </div>
+
+
+            <div class="ce-row">
+
+                <span>
+                    Communication Failure
+                </span>
+
+                <span>
+                    Generate communication fault.
+                </span>
+
+                <span>
+                    Investigate the communication path and backup
+                    arrangements.
+                </span>
+
+            </div>
+
+
+            <div class="ce-row">
+
+                <span>
+                    Power Failure
+                </span>
+
+                <span>
+                    Report primary power failure.
+                </span>
+
+                <span>
+                    Verify backup power and system status.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <h3>
+            Integration Testing
+        </h3>
+
+        <p>
+            Integration should never be considered complete merely
+            because two devices have been physically connected.
+            The complete signal path must be tested from the
+            initiating event through to the final operator response.
+        </p>
+
+        <div class="process-flow">
+
+            <div class="process-node">
+
+                <span>
+                    01
+                </span>
+
+                <strong>
+                    EVENT
+                </strong>
+
+                <small>
+                    Security condition occurs
+                </small>
+
+            </div>
+
+
+            <div class="process-arrow">
+                →
+            </div>
+
+
+            <div class="process-node">
+
+                <span>
+                    02
+                </span>
+
+                <strong>
+                    DETECTION
+                </strong>
+
+                <small>
+                    System recognises condition
+                </small>
+
+            </div>
+
+
+            <div class="process-arrow">
+                →
+            </div>
+
+
+            <div class="process-node">
+
+                <span>
+                    03
+                </span>
+
+                <strong>
+                    TRANSMISSION
+                </strong>
+
+                <small>
+                    Event transferred
+                </small>
+
+            </div>
+
+
+            <div class="process-arrow">
+                →
+            </div>
+
+
+            <div class="process-node">
+
+                <span>
+                    04
+                </span>
+
+                <strong>
+                    RESPONSE
+                </strong>
+
+                <small>
+                    Operator follows procedure
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <div class="warning-card">
+
+            <div class="warning-icon">
+                ⚠
+            </div>
+
+            <div>
+
+                <h3>
+                    INTEGRATION MUST BE TESTED
+                </h3>
+
+                <p>
+                    A system can appear operational while an
+                    important signal path is incorrectly configured.
+                    Test genuine event conditions, faults,
+                    communication failures and recovery conditions
+                    before accepting the installation.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="success-card">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <div>
+
+                <h3>
+                    LESSON 08 KEY TAKEAWAY
+                </h3>
+
+                <p>
+                    Integration transforms individual security
+                    products into a coordinated security system.
+                    Every integration point should have a defined
+                    purpose, signal path, expected response and
+                    verification test.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+<!-- =========================================================
+     LESSON 09 — CCTV INTEGRATION
+========================================================= -->
+
+<section
+    id="cctv"
+    class="lesson-section"
+>
+
+    <div class="section-number">
+        09
+    </div>
+
+    <div class="section-kicker">
+        VIDEO VERIFICATION
+    </div>
+
+    <h2>
+        CCTV Integration
+    </h2>
+
+    <p class="lead">
+        CCTV provides the visual verification layer that complements
+        perimeter detection. The electric fence can indicate that a
+        security event may have occurred, while correctly designed
+        video surveillance can provide the visual information needed
+        to assess the event.
+    </p>
+
+
+    <div class="info-card">
+
+        <h3>
+            CCTV Integration Objectives
+        </h3>
+
+        <div class="feature-grid">
+
+            <div class="feature-item">
+                <span>01</span>
+                Identify the affected perimeter area
+            </div>
+
+            <div class="feature-item">
+                <span>02</span>
+                Provide visual verification
+            </div>
+
+            <div class="feature-item">
+                <span>03</span>
+                Support response decisions
+            </div>
+
+            <div class="feature-item">
+                <span>04</span>
+                Support incident investigation
+            </div>
+
+            <div class="feature-item">
+                <span>05</span>
+                Improve situational awareness
+            </div>
+
+            <div class="feature-item">
+                <span>06</span>
+                Provide event-associated video evidence
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Camera Positioning
+    </h3>
+
+    <p>
+        Camera positioning should begin with the security task rather
+        than with the camera specification. The designer should
+        establish the target area, target distance, required field of
+        view, mounting height, lighting conditions and required level
+        of image detail before selecting the final camera and lens.
+    </p>
+
+
+    <h3>
+        Detection, Recognition and Identification
+    </h3>
+
+    <p>
+        Different security tasks require different amounts of image
+        information. Detecting movement near a perimeter generally
+        requires less detail than recognising a person, while
+        identification requires substantially more usable image
+        information.
+    </p>
+
+
+    <div class="cctv-levels">
+
+        <div class="cctv-level">
+
+            <span class="cctv-number">
+                01
+            </span>
+
+            <strong>
+                DETECTION
+            </strong>
+
+            <p>
+                Establish that activity or movement is occurring.
+            </p>
+
+        </div>
+
+
+        <div class="cctv-level">
+
+            <span class="cctv-number">
+                02
+            </span>
+
+            <strong>
+                RECOGNITION
+            </strong>
+
+            <p>
+                Determine whether a person or object is familiar or
+                previously known.
+            </p>
+
+        </div>
+
+
+        <div class="cctv-level">
+
+            <span class="cctv-number">
+                03
+            </span>
+
+            <strong>
+                IDENTIFICATION
+            </strong>
+
+            <p>
+                Obtain sufficient image detail to support
+                identification where conditions permit.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Pixel Density
+    </h3>
+
+    <p>
+        Camera performance should be evaluated at the actual target
+        distance. Resolution alone does not guarantee useful
+        identification. Lens selection, sensor characteristics,
+        compression, field of view, mounting position and target
+        distance all influence the amount of usable image information
+        available at the perimeter.
+    </p>
+
+
+    <div class="technical-card">
+
+        <div class="technical-header">
+
+            <span class="technical-label">
+                CCTV DESIGN CHECK
+            </span>
+
+            <span class="technical-symbol">
+                ◉
+            </span>
+
+        </div>
+
+        <h3>
+            Evaluate The Actual Scene
+        </h3>
+
+        <ul>
+
+            <li>
+                Target distance
+            </li>
+
+            <li>
+                Horizontal field of view
+            </li>
+
+            <li>
+                Lens focal length
+            </li>
+
+            <li>
+                Mounting height
+            </li>
+
+            <li>
+                Target size
+            </li>
+
+            <li>
+                Lighting conditions
+            </li>
+
+            <li>
+                Backlighting and glare
+            </li>
+
+            <li>
+                Night-time performance
+            </li>
+
+            <li>
+                Weather conditions
+            </li>
+
+            <li>
+                Required evidence quality
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <h3>
+        Event Association
+    </h3>
+
+    <p>
+        Where compatible equipment supports event association, a
+        fence-zone alarm can trigger or reference the relevant CCTV
+        camera, preset, recording bookmark or monitoring view.
+    </p>
+
+    <p>
+        This reduces the operator's search area and can significantly
+        reduce the time required to assess an event.
+    </p>
+
+
+    <h3>
+        Night-Time Performance
+    </h3>
+
+    <p>
+        Night-time performance must be assessed under realistic site
+        conditions. Infrared illumination, low-light capability,
+        ambient lighting, shadows, glare and reflective surfaces can
+        all influence the quality of the resulting image.
+    </p>
+
+
+    <div class="warning-card">
+
+        <div class="warning-icon">
+            ◉
+        </div>
+
+        <div>
+
+            <h3>
+                HIGH RESOLUTION DOES NOT EQUAL GOOD SECURITY COVERAGE
+            </h3>
+
+            <p>
+                A high-resolution camera can still provide poor
+                security information if it is positioned incorrectly,
+                uses an unsuitable lens or lacks adequate illumination.
+                Always evaluate the complete camera system at the
+                intended target location.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        CCTV Storage and Evidence
+    </h3>
+
+    <p>
+        The design should also consider recording duration, storage
+        capacity, time synchronisation, event bookmarks and access
+        to recorded footage. If video is intended to support incident
+        investigation, the recording system must preserve enough
+        usable information for the intended purpose.
+    </p>
+
+
+    <div class="success-card">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <div>
+
+            <h3>
+                LESSON 09 KEY TAKEAWAY
+            </h3>
+
+            <p>
+                CCTV should be designed around the security task.
+                Camera position, lens selection, lighting, target
+                distance and event association are as important as
+                nominal camera resolution.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     LESSON 10 — ALARM INTEGRATION
+========================================================= -->
+
+<section
+    id="alarms"
+    class="lesson-section"
+>
+
+    <div class="section-number">
+        10
+    </div>
+
+    <div class="section-kicker">
+        ALARM ENGINEERING
+    </div>
+
+    <h2>
+        Alarm Integration
+    </h2>
+
+    <p class="lead">
+        Alarm integration converts technical events generated by
+        the perimeter into structured information that can be
+        assessed, prioritised and acted upon.
+    </p>
+
+
+    <div class="alarm-grid">
+
+        <div class="alarm-state normal">
+
+            <span class="alarm-icon">
+                ✓
+            </span>
+
+            <strong>
+                NORMAL
+            </strong>
+
+            <small>
+                System operating within expected parameters
+            </small>
+
+        </div>
+
+
+        <div class="alarm-state warning">
+
+            <span class="alarm-icon">
+                ⚠
+            </span>
+
+            <strong>
+                FAULT
+            </strong>
+
+            <small>
+                Technical condition requiring investigation
+            </small>
+
+        </div>
+
+
+        <div class="alarm-state critical">
+
+            <span class="alarm-icon">
+                !
+            </span>
+
+            <strong>
+                SECURITY ALARM
+            </strong>
+
+            <small>
+                Event requiring verification and response
+            </small>
+
+        </div>
+
+
+        <div class="alarm-state offline">
+
+            <span class="alarm-icon">
+                ×
+            </span>
+
+            <strong>
+                COMMUNICATION
+            </strong>
+
+            <small>
+                Monitoring or communication path unavailable
+            </small>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Signal Classification
+    </h3>
+
+    <p>
+        A professional architecture should distinguish between
+        normal operation, security events and technical failures
+        wherever the selected equipment supports such classification.
+    </p>
+
+
+    <div class="signal-table">
+
+        <div class="signal-row signal-heading">
+
+            <span>
+                CONDITION
+            </span>
+
+            <span>
+                MEANING
+            </span>
+
+            <span>
+                TYPICAL ACTION
+            </span>
+
+        </div>
+
+
+        <div class="signal-row">
+
+            <span>
+                Normal
+            </span>
+
+            <span>
+                System operating normally
+            </span>
+
+            <span>
+                No intervention
+            </span>
+
+        </div>
+
+
+        <div class="signal-row">
+
+            <span>
+                Fence Alarm
+            </span>
+
+            <span>
+                Possible security event
+            </span>
+
+            <span>
+                Verify and assess
+            </span>
+
+        </div>
+
+
+        <div class="signal-row">
+
+            <span>
+                Fence Fault
+            </span>
+
+            <span>
+                Technical abnormality
+            </span>
+
+            <span>
+                Investigate system
+            </span>
+
+        </div>
+
+
+        <div class="signal-row">
+
+            <span>
+                Power Failure
+            </span>
+
+            <span>
+                Primary supply unavailable
+            </span>
+
+            <span>
+                Verify backup condition
+            </span>
+
+        </div>
+
+
+        <div class="signal-row">
+
+            <span>
+                Communication Failure
+            </span>
+
+            <span>
+                Monitoring path unavailable
+            </span>
+
+            <span>
+                Investigate communication path
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <h3>
+        Alarm Fatigue
+    </h3>
+
+    <p>
+        Repeated nuisance alarms can create
+        <strong>alarm fatigue</strong>. When operators are exposed
+        to large numbers of non-actionable alerts, genuine security
+        events can become harder to recognise and prioritise.
+    </p>
+
+    <p>
+        The correct engineering response is to investigate the
+        underlying cause of repeated nuisance events rather than
+        simply disabling or permanently suppressing the alarm.
+    </p>
+
+
+    <div class="info-card">
+
+        <h3>
+            Common Sources of Nuisance Events
+        </h3>
+
+        <ul>
+
+            <li>
+                Vegetation contacting conductors
+            </li>
+
+            <li>
+                Poor mechanical tension
+            </li>
+
+            <li>
+                Damaged or deteriorated insulation
+            </li>
+
+            <li>
+                Environmental contamination
+            </li>
+
+            <li>
+                Incorrect system configuration
+            </li>
+
+            <li>
+                Intermittent electrical faults
+            </li>
+
+            <li>
+                Communication instability
+            </li>
+
+            <li>
+                Inadequate maintenance
+            </li>
+
+        </ul>
+
+    </div>
+
+
+    <h3>
+        Alarm Verification
+    </h3>
+
+    <p>
+        Where the security architecture includes CCTV or other
+        verification technologies, alarm events should be associated
+        with the appropriate verification process. The objective is
+        to provide the operator with enough information to distinguish
+        a likely genuine security event from a technical or
+        environmental condition.
+    </p>
+
+
+    <div class="process-flow">
+
+        <div class="process-node">
+
+            <span>
+                01
+            </span>
+
+            <strong>
+                DETECT
+            </strong>
+
+            <small>
+                Event occurs
+            </small>
+
+        </div>
+
+
+        <div class="process-arrow">
+ 
