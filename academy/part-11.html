@@ -4086,4 +4086,546 @@ body {
     <p>
         The objective is therefore not to maximise the number of
         zones. The objective is to create the <strong>most useful
-        zoning architecture for the security requirement</stron
+        zoning architecture for the security requirement</strong>most useful
+        zoning architecture for the security requirement</strong>.
+    </p>
+
+
+    <!-- ================================================
+         ZONE DESIGN PRINCIPLE
+    ================================================= -->
+
+    <div class="principle-card">
+
+        <div class="principle-mark">
+            Z
+        </div>
+
+        <div class="principle-content">
+
+            <span class="card-label">
+                DESIGN PRINCIPLE
+            </span>
+
+            <h3>
+                Zone Quality Over Zone Quantity
+            </h3>
+
+            <p>
+                The purpose of zoning is to improve security visibility,
+                fault localisation and operational control. Adding
+                zones without a defined operational benefit can make a
+                system unnecessarily complicated without improving its
+                security performance.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================
+         LOGICAL ZONING
+    ================================================= -->
+
+    <h3>
+        Logical Zoning Example
+    </h3>
+
+    <p>
+        A practical zoning architecture should divide the property
+        according to meaningful physical and security boundaries.
+        The following example demonstrates how a perimeter could be
+        divided into four logical areas.
+    </p>
+
+
+    <div class="zone-example">
+
+        <div class="zone-example-header">
+
+            <span>
+                SAMPLE PROPERTY
+            </span>
+
+            <small>
+                LOGICAL PERIMETER ZONING
+            </small>
+
+        </div>
+
+
+        <div class="property-zone-layout">
+
+
+            <div class="property-zone zone-front">
+
+                <span class="zone-tag">
+                    ZONE 01
+                </span>
+
+                <strong>
+                    FRONT
+                </strong>
+
+                <small>
+                    Main approach
+                </small>
+
+            </div>
+
+
+            <div class="property-zone zone-east">
+
+                <span class="zone-tag">
+                    ZONE 02
+                </span>
+
+                <strong>
+                    EAST
+                </strong>
+
+                <small>
+                    Side boundary
+                </small>
+
+            </div>
+
+
+            <div class="property-zone zone-rear">
+
+                <span class="zone-tag">
+                    ZONE 03
+                </span>
+
+                <strong>
+                    REAR
+                </strong>
+
+                <small>
+                    Higher-risk area
+                </small>
+
+            </div>
+
+
+            <div class="property-zone zone-west">
+
+                <span class="zone-tag">
+                    ZONE 04
+                </span>
+
+                <strong>
+                    WEST
+                </strong>
+
+                <small>
+                    Side boundary
+                </small>
+
+            </div>
+
+
+            <div class="property-house">
+
+                <span>
+                    PROPERTY
+                </span>
+
+                <small>
+                    PROTECTED AREA
+                </small>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================
+         ZONE NAMING
+    ================================================= -->
+
+    <h3>
+        Zone Identification
+    </h3>
+
+    <p>
+        Zone identification should remain consistent throughout the
+        entire project. A zone shown on the site drawing should use
+        the same identifier in the equipment schedule, alarm
+        configuration, commissioning report and maintenance
+        documentation.
+    </p>
+
+
+    <div class="naming-grid">
+
+
+        <div class="naming-card">
+
+            <span class="naming-number">
+                01
+            </span>
+
+            <h4>
+                Site Drawing
+            </h4>
+
+            <p>
+                ZONE 01 — FRONT
+            </p>
+
+        </div>
+
+
+        <div class="naming-card">
+
+            <span class="naming-number">
+                02
+            </span>
+
+            <h4>
+                Equipment Schedule
+            </h4>
+
+            <p>
+                ZONE 01 — FRONT BOUNDARY
+            </p>
+
+        </div>
+
+
+        <div class="naming-card">
+
+            <span class="naming-number">
+                03
+            </span>
+
+            <h4>
+                Alarm System
+            </h4>
+
+            <p>
+                Z01 — FRONT
+            </p>
+
+        </div>
+
+
+        <div class="naming-card">
+
+            <span class="naming-number">
+                04
+            </span>
+
+            <h4>
+                Maintenance Record
+            </h4>
+
+            <p>
+                FRONT / ZONE 01
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ================================================
+         REQUIREMENTS TRACEABILITY
+    ================================================= -->
+
+    <div class="technical-card">
+
+        <div class="technical-icon">
+            #
+        </div>
+
+        <div>
+
+            <span class="card-label">
+                TRACEABILITY
+            </span>
+
+            <h4>
+                One Zone — One Identity
+            </h4>
+
+            <p>
+                Consistent naming reduces confusion during installation,
+                commissioning, fault diagnosis and future maintenance.
+                A technician should be able to identify the physical
+                perimeter represented by a zone without relying on
+                personal knowledge of the original installer.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================
+         ZONE FAULT INVESTIGATION
+    ================================================= -->
+
+    <h3>
+        Zone Fault Investigation
+    </h3>
+
+    <p>
+        One of the major advantages of logical zoning is the ability
+        to narrow an abnormal event to a defined physical section.
+        This does not eliminate the need for systematic testing, but
+        it reduces the search area and allows the technician to work
+        from a known starting point.
+    </p>
+
+
+    <div class="diagnostic-flow">
+
+
+        <div class="diagnostic-step">
+
+            <span>
+                01
+            </span>
+
+            <strong>
+                EVENT
+            </strong>
+
+            <small>
+                Abnormal condition reported
+            </small>
+
+        </div>
+
+
+        <div class="diagnostic-arrow">
+            →
+        </div>
+
+
+        <div class="diagnostic-step">
+
+            <span>
+                02
+            </span>
+
+            <strong>
+                IDENTIFY
+            </strong>
+
+            <small>
+                Determine affected zone
+            </small>
+
+        </div>
+
+
+        <div class="diagnostic-arrow">
+            →
+        </div>
+
+
+        <div class="diagnostic-step">
+
+            <span>
+                03
+            </span>
+
+            <strong>
+                TEST
+            </strong>
+
+            <small>
+                Follow approved procedure
+            </small>
+
+        </div>
+
+
+        <div class="diagnostic-arrow">
+            →
+        </div>
+
+
+        <div class="diagnostic-step">
+
+            <span>
+                04
+            </span>
+
+            <strong>
+                VERIFY
+            </strong>
+
+            <small>
+                Confirm cause and corrective action
+            </small>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ================================================
+         ZONE FAULT TYPES
+    ================================================= -->
+
+    <h3>
+        Typical Zone Conditions
+    </h3>
+
+    <div class="condition-grid">
+
+
+        <div class="condition-card">
+
+            <span class="condition-icon">
+                ⚡
+            </span>
+
+            <h4>
+                Electrical Fault
+            </h4>
+
+            <p>
+                An abnormal electrical condition affecting the
+                monitored zone.
+            </p>
+
+        </div>
+
+
+        <div class="condition-card">
+
+            <span class="condition-icon">
+                ◇
+            </span>
+
+            <h4>
+                Conductor Fault
+            </h4>
+
+            <p>
+                A conductor-related problem that changes the expected
+                electrical behaviour of the zone.
+            </p>
+
+        </div>
+
+
+        <div class="condition-card">
+
+            <span class="condition-icon">
+                ≋
+            </span>
+
+            <h4>
+                Environmental Leakage
+            </h4>
+
+            <p>
+                Vegetation, contamination, moisture or other
+                environmental conditions can influence fence
+                performance.
+            </p>
+
+        </div>
+
+
+        <div class="condition-card">
+
+            <span class="condition-icon">
+                !
+            </span>
+
+            <h4>
+                Monitoring Fault
+            </h4>
+
+            <p>
+                The physical fence may remain intact while the
+                monitoring or communication subsystem reports an
+                abnormal condition.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="warning-card">
+
+        <div class="card-icon">
+            ⚠
+        </div>
+
+        <div>
+
+            <h3>
+                Diagnose Before Replacing
+            </h3>
+
+            <p>
+                A reported zone fault does not automatically identify
+                the failed component. Follow the manufacturer's
+                approved diagnostic process and verify the fault before
+                replacing equipment.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================
+         ZONING AND MAINTAINABILITY
+    ================================================= -->
+
+    <h3>
+        Zoning and Maintainability
+    </h3>
+
+    <p>
+        A well-designed zone architecture should make routine
+        maintenance easier rather than harder. Zone identifiers,
+        drawings, cable routes and equipment schedules should allow
+        a competent technician to understand the system without
+        depending on undocumented knowledge from the original
+        installation team.
+    </p>
+
+
+    <div class="success-card">
+
+        <div class="card-icon">
+            ✓
+        </div>
+
+        <div>
+
+            <h3>
+                Professional Principle
+            </h3>
+
+            <p>
+                The best zoning architecture is not the one with the
+                most zones. It is the one that provides the clearest
+                relationship between physical location, electrical
+                behaviour, security risk and operational response.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    </section>
