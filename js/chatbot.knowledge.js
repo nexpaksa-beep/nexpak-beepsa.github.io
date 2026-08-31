@@ -8039,7 +8039,7 @@
                ACCESS CONTROL PRICING
             ----------------------------------------------------- */
 
-            pricingGuidance: {
+                        pricingGuidance: {
 
                 principle:
                     'Access-control pricing depends on the number of doors, credential technology, controller capacity, locking hardware, power requirements, software and installation complexity.',
@@ -8058,4 +8058,715 @@
 
                     'Locking hardware',
 
+                    'Exit devices',
+
+                    'Power supply',
+
+                    'Battery backup',
+
+                    'Software',
+
+                    'Networking',
+
+                    'Installation',
+
+                    'Integration with CCTV',
+
+                    'Integration with alarm systems',
+
+                    'Integration with gate automation'
+
+                ],
+
+                responseWhenAskedPrice:
+                    'The cost depends mainly on how many doors you want to control, how users will authenticate and what locking and management equipment is required.',
+
+                importantRule:
+                    'Never provide a fixed access-control price without knowing the number of controlled entry points and the required hardware.'
+
+
+            },
+
+
+            /* -----------------------------------------------------
+               COMMON ACCESS CONTROL QUESTIONS
+            ----------------------------------------------------- */
+
+            commonQuestions: [
+
+                'How much does access control cost?',
+
+                'Can I use a fingerprint reader?',
+
+                'Can I use a keypad?',
+
+                'Can I use RFID cards?',
+
+                'Can I control access from my phone?',
+
+                'Can access control work with a gate motor?',
+
+                'Can access control work with CCTV?',
+
+                'Can access control work with an alarm?',
+
+                'Can I control multiple doors?',
+
+                'Can I see who entered?',
+
+                'Can I remove a user when they leave the company?',
+
+                'Can I give different employees different access permissions?',
+
+                'Can I restrict access by time?',
+
+                'Can I have different permissions for different employees?',
+
+                'Can I use access control on a pedestrian gate?',
+
+                'Can access control work during a power failure?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               ACCESS CONTROL SCENARIOS
+            ----------------------------------------------------- */
+
+            scenarios: {
+
+                singleDoor: {
+
+                    description:
+                        'Customer wants to control access through one pedestrian door.',
+
+                    askFirst: [
+
+                        'What type of door is it?',
+
+                        'How many people need access?',
+
+                        'How should users authenticate?',
+
+                        'Do you need an event history?',
+
+                        'Do you require battery backup?'
+
+                    ]
+
+                },
+
+
+                multipleDoors: {
+
+                    description:
+                        'Customer wants to control several doors within a business or facility.',
+
+                    askFirst: [
+
+                        'How many doors need access control?',
+
+                        'How many users require access?',
+
+                        'Do different users need different permissions?',
+
+                        'Do you need time-based access?',
+
+                        'Do you need centralized management?',
+
+                        'Do you need event reporting?',
+
+                        'Do you want CCTV integration?'
+
+                    ]
+
+                },
+
+
+                gateAccess: {
+
+                    description:
+                        'Customer wants controlled access through a vehicle or pedestrian gate.',
+
+                    askFirst: [
+
+                        'Is the gate sliding or swinging?',
+
+                        'Is a gate motor already installed?',
+
+                        'How should users gain access?',
+
+                        'How many users or vehicles require access?',
+
+                        'Do you need an intercom?',
+
+                        'Do you need CCTV verification?',
+
+                        'Do you require remote access?',
+
+                        'Do you require battery backup?'
+
+                    ]
+
+                },
+
+
+                employeeAccess: {
+
+                    description:
+                        'Business wants to manage employee access.',
+
+                    askFirst: [
+
+                        'How many employees need access?',
+
+                        'Do all employees require the same access permissions?',
+
+                        'Do access permissions need to change according to working hours?',
+
+                        'Do you need an access history?',
+
+                        'Do you need to remove users when employees leave?',
+
+                        'Do you need multiple doors controlled from one system?'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               ACCESS CREDENTIAL MANAGEMENT
+            ----------------------------------------------------- */
+
+            credentialManagement: {
+
+                principle:
+                    'Access credentials should be assigned and managed according to the requirements of the customer and the capabilities of the selected system.',
+
+                commonCredentialTypes: [
+
+                    'PIN',
+
+                    'RFID card',
+
+                    'RFID tag',
+
+                    'Fingerprint',
+
+                    'Facial credential',
+
+                    'Mobile credential',
+
+                    'Remote control where supported'
+
+                ],
+
+                managementQuestions: [
+
+                    'How many credentials are required?',
+
+                    'Do different users require different permissions?',
+
+                    'Do credentials need to be disabled remotely?',
+
+                    'Do you require an access history?',
+
+                    'Do you need temporary access for visitors or contractors?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               TIME-BASED ACCESS
+            ----------------------------------------------------- */
+
+            schedules: {
+
+                definition:
+                    'Some access-control systems can restrict user access according to configured schedules.',
+
+                examples: [
+
+                    'Staff access during working hours',
+
+                    'Management access outside normal hours',
+
+                    'Restricted weekend access',
+
+                    'Temporary contractor access',
+
+                    'Scheduled visitor access'
+
+                ],
+
+                salesQuestion:
+                    'Do you want different users to have access at different times?'
+
+            },
+
+
+            /* -----------------------------------------------------
+               EVENT LOGGING
+            ----------------------------------------------------- */
+
+            eventLogging: {
+
+                definition:
+                    'Compatible access-control systems can record access events for later review.',
+
+                possibleInformation: [
+
+                    'User identity',
+
+                    'Credential used',
+
+                    'Door or entry point',
+
+                    'Date',
+
+                    'Time',
+
+                    'Access granted',
+
+                    'Access denied'
+
+                ],
+
+                importantRule:
+                    'The exact event information available depends on the selected access-control system.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               VISITOR ACCESS
+            ----------------------------------------------------- */
+
+            visitorManagement: {
+
+                possibleMethods: [
+
+                    'Intercom',
+
+                    'Temporary PIN',
+
+                    'Temporary RFID credential',
+
+                    'Reception-controlled access',
+
+                    'Mobile visitor access where supported'
+
+                ],
+
+                salesQuestions: [
+
+                    'Do you regularly have visitors?',
+
+                    'Do visitors need temporary access?',
+
+                    'Do you need to know when visitors enter and leave?',
+
+                    'Do you want visitors verified through an intercom or video system?'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               ACCESS CONTROL TROUBLESHOOTING
+            ----------------------------------------------------- */
+
+            troubleshooting: {
+
+                credentialNotWorking: [
+
+                    'Credential not enrolled',
+
+                    'Credential disabled',
+
+                    'Incorrect credential type',
+
+                    'Reader fault',
+
+                    'Controller communication problem',
+
+                    'Power problem',
+
+                    'Access permission issue'
+
+                ],
+
+
+                doorNotReleasing: [
+
+                    'Lock power problem',
+
+                    'Controller problem',
+
+                    'Incorrect configuration',
+
+                    'Lock fault',
+
+                    'Exit device problem',
+
+                    'Mechanical door issue',
+
+                    'Wiring problem'
+
+                ],
+
+
+                intermittentAccess: [
+
+                    'Power instability',
+
+                    'Loose connection',
+
+                    'Network communication issue',
+
+                    'Reader problem',
+
+                    'Credential problem',
+
+                    'Controller issue',
+
+                    'Environmental interference'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               ACCESS CONTROL SALES RULES
+            ----------------------------------------------------- */
+
+            salesRules: [
+
+                'Start with the entry point and customer objective.',
+
+                'Determine the number of users before recommending a system.',
+
+                'Determine the required credential type.',
+
+                'Determine whether event logging is required.',
+
+                'Determine whether users require different permissions.',
+
+                'Determine whether time schedules are required.',
+
+                'Determine whether the system must integrate with a gate motor.',
+
+                'Determine whether CCTV integration is required.',
+
+                'Determine whether battery backup is required.',
+
+                'Do not recommend equipment based only on price.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               ACCESS CONTROL SAFETY RULES
+            ----------------------------------------------------- */
+
+            safetyRules: [
+
+                'Do not recommend locking hardware without considering the door and emergency-release requirements.',
+
+                'Do not claim a particular reader will work with an existing controller without checking compatibility.',
+
+                'Do not promise biometric performance without considering the actual equipment and environment.',
+
+                'Do not invent user capacity.',
+
+                'Do not invent current product pricing.',
+
+                'Recommend professional installation for commercial or complex access-control systems.',
+
+                'Do not advise bypassing emergency or safety-release mechanisms.',
+
+                'Do not advise disabling access-control safety functions simply to solve a fault.'
+
+            ]
+
+        },
+
+
+        /* =========================================================
+           21. ACCESS CONTROL SALES CONVERSATION ENGINE
+        ========================================================= */
+
+        accessControlSalesEngine: {
+
+            objective:
+                'Qualify the customer before recommending access-control equipment.',
+
+            openingQuestions: [
+
+                'What entrance are you trying to control?',
+
+                'How many people need access?',
+
+                'How would you like users to gain access?',
+
+                'Do you need a record of who entered and when?'
+
+            ],
+
+
+            decisionLogic: {
+
+                residential:
+                    'Focus on simple, reliable access methods such as keypad, RFID, biometric or mobile access depending on the customer requirement.',
+
+                commercial:
+                    'Focus on user management, permissions, event logging, multiple doors and integration.',
+
+                gate:
+                    'Determine gate type, existing automation and preferred access method before recommending equipment.',
+
+                upgrade:
+                    'Identify the existing controller, readers and locks before suggesting replacement equipment.',
+
+                employeeManagement:
+                    'Prioritize user permissions, schedules, credential management and event history.',
+
+                visitorManagement:
+                    'Prioritize intercom, temporary credentials, visitor verification and controlled release.'
+
+            },
+
+
+            closingStrategy: {
+
+                equipmentOnly:
+                    'Determine the required controller, readers, locks and accessories before recommending equipment.',
+
+                installation:
+                    'Gather sufficient property information for a quotation or recommend a site assessment where necessary.',
+
+                upgrade:
+                    'Identify the existing system before suggesting replacement equipment.',
+
+                multipleDoors:
+                    'Determine the number of doors and users before selecting controller capacity.',
+
+                highIntent:
+                    'When the customer clearly wants access control installed, move toward collecting the information required for a quotation.'
+
+            }
+
+        },
+
+
+        /* =========================================================
+           22. INTERCOM SYSTEMS — ADVANCED KNOWLEDGE
+        ========================================================= */
+
+        intercomAdvanced: {
+
+            name: 'Intercom Systems',
+
+            category: 'Visitor Communication & Access',
+
+            definition:
+                'An intercom allows occupants, reception staff or security personnel to communicate with visitors before granting access where compatible equipment is installed.',
+
+            simpleExplanation:
+                'A visitor can contact the person inside the property, who can communicate with them and, on suitable systems, release a gate or door remotely.',
+
+
+            /* -----------------------------------------------------
+               INTERCOM TYPES
+            ----------------------------------------------------- */
+
+            types: {
+
+                audio: {
+
+                    name: 'Audio Intercom',
+
+                    description:
+                        'Provides voice communication between the visitor station and the internal station or authorized user.',
+
+                    suitableFor: [
+
+                        'Residential entrances',
+
+                        'Pedestrian gates',
+
+                        'Vehicle gates',
+
+                        'Small businesses'
+
+                    ]
+
+                },
+
+
+                video: {
+
+                    name: 'Video Intercom',
+
+                    description:
+                        'Adds video communication so the occupant can visually verify the visitor on compatible equipment.',
+
+                    advantages: [
+
+                        'Visual visitor verification',
+
+                        'Improved situational awareness',
+
+                        'Possible integration with access control',
+
+                        'Possible mobile viewing on supported systems'
+
+                    ]
+
+                },
+
+
+                ip: {
+
+                    name: 'IP Intercom',
+
+                    description:
+                        'Uses network infrastructure to communicate between compatible intercom devices.',
+
+                    considerations: [
+
+                        'Network infrastructure',
+
+                        'Power requirements',
+
+                        'PoE where supported',
+
+                        'Network security',
+
+                        'Internet connectivity for remote functions where required'
+
+                    ]
+
+                },
+
+
+                wireless: {
+
+                    name: 'Wireless Intercom',
+
+                    description:
+                        'Uses wireless communication between compatible intercom devices.',
+
+                    considerations: [
+
+                        'Wireless range',
+
+                        'Signal strength',
+
+                        'Power',
+
+                        'Environmental conditions',
+
+                        'Device compatibility'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               INTERCOM COMPONENTS
+            ----------------------------------------------------- */
+
+            components: {
+
+                outdoorStation: {
+
+                    name: 'Outdoor Station',
+
+                    function:
+                        'Provides the visitor-facing communication interface and may include a camera, microphone, speaker, call button or access reader depending on the model.'
+
+                },
+
+
+                indoorStation: {
+
+                    name: 'Indoor Station',
+
+                    function:
+                        'Allows the occupant or staff member to answer and communicate with the visitor and may provide door or gate release functions.'
+
+                },
+
+
+                mobileApplication: {
+
+                    name: 'Mobile Intercom Application',
+
+                    function:
+                        'Compatible systems may allow calls or visitor notifications to be received through a mobile application.'
+
+                },
+
+
+                doorRelease: {
+
+                    name: 'Door / Gate Release',
+
+                    function:
+                        'Allows an authorized person to release a compatible door or gate after communicating with the visitor.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               INTERCOM SALES QUALIFICATION
+            ----------------------------------------------------- */
+
+            qualificationQuestions: [
+
+                'Is the intercom for a home or business?',
+
+                'Is it for a pedestrian door, pedestrian gate or vehicle gate?',
+
+                'Do you need audio or video?',
+
+                'How far is the entrance from the building?',
+
+                'How many users need to answer the intercom?',
+
+                'Do you want to answer calls from your phone?',
+
+                'Do you want remote gate or door release?',
+
+                'Do you need access-control integration?',
+
+                'Do you need CCTV integration?',
+
+                'Is there existing intercom equipment?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               INTERCOM SCENARIOS
+            ----------------------------------------------------- */
+
+            scenarios: {
+
+                residential: {
+
+       
                
