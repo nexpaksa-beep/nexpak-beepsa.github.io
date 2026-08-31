@@ -9455,4 +9455,707 @@
                     'Recommend correcting mechanical gate problems before or as part of automation installation.',
 
                 integratedSecurity:
-                    'Determine whether the customer wants remote controls, access control, intercom or CCTV integra
+                    'Determine whether the customer wants remote controls, access control, intercom or CCTV                
+                    
+
+            }
+
+        },
+
+
+        /* =========================================================
+           26. GATE AUTOMATION PRICING & TROUBLESHOOTING
+        ========================================================= */
+
+        gateAutomationSupport: {
+
+            pricingGuidance: {
+
+                principle:
+                    'Gate automation pricing depends on gate type, gate size and weight, usage frequency, motor capacity, existing gate condition, accessories, backup power and installation complexity.',
+
+                factors: [
+
+                    'Gate type',
+
+                    'Gate dimensions',
+
+                    'Gate weight',
+
+                    'Gate condition',
+
+                    'Motor type',
+
+                    'Usage frequency',
+
+                    'Remote controls',
+
+                    'Safety beams',
+
+                    'Battery backup',
+
+                    'Solar backup where appropriate',
+
+                    'Intercom',
+
+                    'Access control',
+
+                    'CCTV',
+
+                    'Installation requirements',
+
+                    'Electrical requirements'
+
+                ],
+
+                responseWhenAskedPrice:
+                    'The correct gate automation price depends on the type and condition of the gate, its size and usage frequency, and which access and safety features you require. I can help determine the correct specification first.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               GATE MOTOR TROUBLESHOOTING
+            ----------------------------------------------------- */
+
+            troubleshooting: {
+
+                gateNotMoving: [
+
+                    'No mains power',
+
+                    'Flat or failed backup battery',
+
+                    'Motor fault',
+
+                    'Control-board fault',
+
+                    'Remote-control problem',
+
+                    'Safety beam interruption',
+
+                    'Manual release engaged',
+
+                    'Mechanical obstruction',
+
+                    'Gate binding',
+
+                    'Track problem',
+
+                    'Hinge problem'
+
+                ],
+
+
+                gateMovesSlowly: [
+
+                    'Mechanical resistance',
+
+                    'Gate alignment problem',
+
+                    'Track or hinge problem',
+
+                    'Battery condition',
+
+                    'Motor configuration',
+
+                    'Excessive gate load',
+
+                    'Motor wear'
+
+                ],
+
+
+                gateStopsBeforeClosing: [
+
+                    'Safety beam interruption',
+
+                    'Obstacle detection',
+
+                    'Mechanical resistance',
+
+                    'Incorrect travel limits',
+
+                    'Gate alignment',
+
+                    'Control-board issue'
+
+                ],
+
+
+                remoteNotWorking: [
+
+                    'Flat remote battery',
+
+                    'Remote not programmed',
+
+                    'Receiver problem',
+
+                    'Range issue',
+
+                    'Radio interference',
+
+                    'Motor power problem'
+
+                ],
+
+
+                batteryProblems: [
+
+                    'Battery age',
+
+                    'Incorrect charging',
+
+                    'Power failure',
+
+                    'Battery failure',
+
+                    'Excessive load',
+
+                    'Incorrect battery specification'
+
+                ]
+
+            },
+
+
+            safetyRules: [
+
+                'Never advise bypassing safety beams or other safety devices as a permanent solution.',
+
+                'Do not recommend forcing a gate when the motor or mechanical system is binding.',
+
+                'Do not claim a motor is suitable without sufficient gate information.',
+
+                'Do not advise customers to work on mains-voltage wiring themselves.',
+
+                'Recommend qualified technical assistance for electrical faults.',
+
+                'Recommend mechanical inspection where gate movement is abnormal.',
+
+                'Do not promise battery runtime without knowing the system load and battery condition.'
+
+            ]
+
+        },
+
+
+        /* =========================================================
+           27. ELECTRIC FENCING — ADVANCED KNOWLEDGE
+        ========================================================= */
+
+        electricFencingAdvanced: {
+
+            name: 'Electric Fencing',
+
+            category: 'Perimeter Security',
+
+            definition:
+                'An electric fence is a security or agricultural barrier that uses an energizer to deliver controlled high-voltage pulses onto insulated conductors. The system is designed to deter intrusion or contain animals depending on its intended application.',
+
+            simpleExplanation:
+                'The energizer sends short electrical pulses through the fence conductors. When the system is correctly installed, insulated and earthed, an appropriate pulse can be detected when the circuit is completed.',
+
+
+            /* -----------------------------------------------------
+               CORE COMPONENTS
+            ----------------------------------------------------- */
+
+            components: {
+
+                energizer: {
+
+                    name: 'Fence Energizer',
+
+                    function:
+                        'Generates the electrical pulses supplied to the electric fence.',
+
+                    considerations: [
+
+                        'Fence length',
+
+                        'Fence load',
+
+                        'Vegetation',
+
+                        'Insulation quality',
+
+                        'Number of fence sections',
+
+                        'Required performance',
+
+                        'Power source',
+
+                        'Battery backup',
+
+                        'Solar requirements',
+
+                        'Alarm capability'
+
+                    ]
+
+                },
+
+
+                conductors: {
+
+                    name: 'Fence Conductors',
+
+                    function:
+                        'Carry the energizer pulse around the protected perimeter or designated fence zone.',
+
+                    considerations: [
+
+                        'Conductor material',
+
+                        'Wire condition',
+
+                        'Wire tension',
+
+                        'Number of strands',
+
+                        'Fence configuration',
+
+                        'Corrosion',
+
+                        'Mechanical damage'
+
+                    ]
+
+                },
+
+
+                insulators: {
+
+                    name: 'Insulators',
+
+                    function:
+                        'Electrically isolate the fence conductors from the supporting structure.',
+
+                    commonApplications: [
+
+                        'Wall-top electric fencing',
+
+                        'Steel posts',
+
+                        'Concrete structures',
+
+                        'Wooden posts',
+
+                        'Security fence structures'
+
+                    ],
+
+                    importantRule:
+                        'Poor insulation can cause leakage and reduce fence performance.'
+
+                },
+
+
+                earthSystem: {
+
+                    name: 'Earth System',
+
+                    function:
+                        'Provides the required return path for the electrical pulse in systems designed around an earth return.',
+
+                    considerations: [
+
+                        'Earth rods',
+
+                        'Earth connections',
+
+                        'Soil conditions',
+
+                        'Earth resistance',
+
+                        'Corrosion',
+
+                        'Cable condition',
+
+                        'Separation from unsuitable electrical systems'
+
+                    ]
+
+                },
+
+
+                warningSigns: {
+
+                    name: 'Warning Signs',
+
+                    function:
+                        'Warn people that an electric fence is present where required.',
+
+                    importantRule:
+                        'Warning signage should be installed according to the applicable requirements for the installation.'
+
+                },
+
+
+                gateConnections: {
+
+                    name: 'Gate Connections',
+
+                    function:
+                        'Maintain electrical continuity or provide appropriate insulated transitions across gate openings.',
+
+                    considerations: [
+
+                        'Gate construction',
+
+                        'Gate hardware',
+
+                        'Underground cable',
+
+                        'Insulation',
+
+                        'Mechanical movement',
+
+                        'Electrical continuity'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               ELECTRIC FENCE TYPES
+            ----------------------------------------------------- */
+
+            fenceApplications: {
+
+                wallTop: {
+
+                    name: 'Wall-Top Electric Fence',
+
+                    description:
+                        'Electric-fence conductors are installed above or along a suitable wall structure to provide an additional perimeter-security layer.',
+
+                    considerations: [
+
+                        'Wall construction',
+
+                        'Bracket spacing',
+
+                        'Fence height',
+
+                        'Conductor spacing',
+
+                        'Insulator quality',
+
+                        'Gate and driveway crossings',
+
+                        'Vegetation',
+
+                        'Existing security systems'
+
+                    ]
+
+                },
+
+
+                standaloneSecurity: {
+
+                    name: 'Standalone Security Fence',
+
+                    description:
+                        'Electric-fence conductors form part of a dedicated perimeter barrier.',
+
+                    considerations: [
+
+                        'Fence structure',
+
+                        'Access points',
+
+                        'Zone configuration',
+
+                        'Energizer capacity',
+
+                        'Earth system',
+
+                        'Vegetation',
+
+                        'Alarm integration'
+
+                    ]
+
+                },
+
+
+                agricultural: {
+
+                    name: 'Agricultural Electric Fence',
+
+                    description:
+                        'Electric fencing can be used for livestock containment or agricultural applications where the system is designed for that purpose.',
+
+                    considerations: [
+
+                        'Animal type',
+
+                        'Fence length',
+
+                        'Vegetation',
+
+                        'Terrain',
+
+                        'Energizer requirements',
+
+                        'Gate crossings',
+
+                        'Earth system',
+
+                        'Power availability'
+
+                    ],
+
+                    importantRule:
+                        'Do not automatically treat an agricultural fence as equivalent to a security fence. The design objective and equipment requirements can differ.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               ELECTRIC FENCE QUALIFICATION
+            ----------------------------------------------------- */
+
+            qualificationQuestions: [
+
+                'Is the fence for security or agricultural use?',
+
+                'How long is the perimeter approximately?',
+
+                'Is the fence going onto an existing wall or fence?',
+
+                'What type of wall or fence structure is available?',
+
+                'How many gates or access points are there?',
+
+                'Are there trees or vegetation close to the fence?',
+
+                'Is there an existing electric fence energizer?',
+
+                'Is the system new or an upgrade?',
+
+                'Are you experiencing an alarm or fault?',
+
+                'Is mains power available?',
+
+                'Do you require battery backup?',
+
+                'Do you require solar backup or solar operation?',
+
+                'Do you want integration with an alarm system?',
+
+                'Do you require monitoring?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               ELECTRIC FENCE DESIGN PRINCIPLES
+            ----------------------------------------------------- */
+
+            designPrinciples: {
+
+                perimeter:
+                    'The perimeter should be divided and designed according to the physical layout, security objective and system requirements.',
+
+                zoning:
+                    'Dividing a large perimeter into suitable zones can help identify faults and improve maintenance and troubleshooting.',
+
+                insulation:
+                    'Conductors must remain properly insulated from supporting structures to reduce unwanted electrical leakage.',
+
+                vegetation:
+                    'Vegetation contacting conductors can create leakage and reduce system performance.',
+
+                earthing:
+                    'A properly designed and maintained earth system is essential to the operation of many electric-fence systems.',
+
+                accessPoints:
+                    'Gates and other access points require appropriate electrical continuity, insulation and mechanical consideration.',
+
+                maintenance:
+                    'Regular inspection helps identify vegetation, damaged conductors, failed insulators, loose connections and other performance problems.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               ELECTRIC FENCE FAULT SYMPTOMS
+            ----------------------------------------------------- */
+
+            faultSymptoms: {
+
+                lowVoltage: [
+
+                    'Vegetation contacting conductors',
+
+                    'Damaged insulation',
+
+                    'Poor earth connection',
+
+                    'Broken conductor',
+
+                    'Loose connection',
+
+                    'Faulty energizer',
+
+                    'Excessive fence loading',
+
+                    'Damaged underground cable'
+
+                ],
+
+
+                intermittentFault: [
+
+                    'Vegetation moving in wind',
+
+                    'Loose connection',
+
+                    'Intermittent insulation breakdown',
+
+                    'Moisture',
+
+                    'Damaged cable',
+
+                    'Gate connection problem',
+
+                    'Mechanical movement'
+
+                ],
+
+
+                energizerAlarm: [
+
+                    'Fence fault',
+
+                    'Low fence voltage',
+
+                    'Earth fault',
+
+                    'Broken conductor',
+
+                    'Excessive leakage',
+
+                    'Gate connection problem',
+
+                    'System configuration issue'
+
+                ]
+
+            }
+
+        },
+
+
+        /* =========================================================
+           28. ELECTRIC FENCING SALES ENGINE
+        ========================================================= */
+
+        electricFencingSalesEngine: {
+
+            objective:
+                'Determine the customer perimeter-security requirement before recommending an electric-fence solution.',
+
+            openingQuestions: [
+
+                'Is the electric fence for security or agricultural use?',
+
+                'Approximately how long is the perimeter?',
+
+                'Is the installation going onto an existing wall or fence?',
+
+                'How many gates or access points are there?',
+
+                'Do you have an existing electric fence system?'
+
+            ],
+
+
+            decisionLogic: {
+
+                newInstallation:
+                    'Determine perimeter length, structure, access points, vegetation, energizer requirements, zoning and power requirements.',
+
+                wallTop:
+                    'Assess wall construction, mounting options, brackets, conductor layout, access points and surrounding vegetation.',
+
+                existingFence:
+                    'Identify the existing energizer, system configuration, fault symptoms and condition of conductors and insulators.',
+
+                lowVoltage:
+                    'Investigate vegetation, insulation, earth connections, conductors, gates and energizer performance before recommending replacement equipment.',
+
+                agricultural:
+                    'Determine animal type, perimeter length, terrain, vegetation and power availability before recommending equipment.',
+
+                security:
+                    'Prioritize perimeter coverage, detection, deterrence, zoning, alarm integration and maintainability.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               ELECTRIC FENCE PRICING
+            ----------------------------------------------------- */
+
+            pricingGuidance: {
+
+                principle:
+                    'Electric-fence pricing depends on perimeter length, fence configuration, number of conductors, mounting structure, energizer, zoning, gates, power requirements and installation complexity.',
+
+                factors: [
+
+                    'Perimeter length',
+
+                    'Number of fence strands',
+
+                    'Fence configuration',
+
+                    'Wall or fence structure',
+
+                    'Brackets',
+
+                    'Insulators',
+
+                    'Energizer',
+
+                    'Earth system',
+
+                    'Gate connections',
+
+                    'Underground cable',
+
+                    'Warning signage',
+
+                    'Fence zoning',
+
+                    'Alarm integration',
+
+                    'Battery backup',
+
+                    'Solar requirements',
+
+                    'Vegetation clearing',
+
+                    'Installation complexity'
+
+                ],
+
+                responseWhenAskedPrice:
+                    'Electric-fence pricing is normally determined by the perimeter length and installation configuration. I would first need to understand the perimeter, wall or fence type, number of gates and whether this is a new installation or an upgrade.',
+
+                importantRule:
+                    'Do not automatically quote a fixed price per metre without confirming the installation requirements.'
+
+            }
+
+        },
