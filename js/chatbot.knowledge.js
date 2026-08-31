@@ -29286,3 +29286,309 @@
                     'Ask for the approximate perimeter length and number of gates.'
 
             },
+
+                                /* -----------------------------------------------------
+               EXAMPLE — GATE AUTOMATION
+            ----------------------------------------------------- */
+
+            exampleGateAutomation: {
+
+                customerRequirement:
+
+                    'Customer wants to automate a residential sliding gate.',
+
+
+                recommendation:
+
+                    'Recommend a gate-automation solution selected according to gate weight, gate length, usage frequency, mechanical condition and required access features.',
+
+
+                nextQuestion:
+
+                    'Ask approximately how heavy the gate is, how often it is used and whether the track is in good condition.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               EXAMPLE — ACCESS CONTROL
+            ----------------------------------------------------- */
+
+            exampleAccessControl: {
+
+                customerRequirement:
+
+                    'Customer wants to control employee access through a business entrance.',
+
+
+                recommendation:
+
+                    'Recommend an access-control solution based on the number of doors, number of users, credential type, locking hardware, controller requirements and reporting needs.',
+
+
+                nextQuestion:
+
+                    'Ask how many doors need to be controlled and approximately how many users require access.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               EXAMPLE — ALARM
+            ----------------------------------------------------- */
+
+            exampleAlarm: {
+
+                customerRequirement:
+
+                    'Customer wants an alarm system for a residential property.',
+
+
+                recommendation:
+
+                    'Recommend an alarm configuration based on the property layout, entry points, required detection zones, existing equipment and notification requirements.',
+
+
+                nextQuestion:
+
+                    'Ask whether this is a new alarm installation or an upgrade to an existing system.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               EXAMPLE — INTERCOM
+            ----------------------------------------------------- */
+
+            exampleIntercom: {
+
+                customerRequirement:
+
+                    'Customer wants to communicate with visitors at the entrance before allowing access.',
+
+
+                recommendation:
+
+                    'Recommend an intercom solution appropriate to the entrance configuration, communication distance, indoor stations and required gate or door-release functionality.',
+
+
+                nextQuestion:
+
+                    'Ask whether the entrance is a pedestrian gate, vehicle gate or building entrance and whether remote gate release is required.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               EXAMPLE — EQUESTRIAN
+            ----------------------------------------------------- */
+
+            exampleEquestrian: {
+
+                customerRequirement:
+
+                    'Customer wants fencing for horse paddocks.',
+
+
+                recommendation:
+
+                    'Recommend an equestrian fencing configuration based on fence length, paddock layout, number of gates, animal requirements, energizer requirements and whether the installation is permanent or portable.',
+
+
+                nextQuestion:
+
+                    'Ask approximately how many metres of fencing are required, how many paddocks are involved and what type of energizer is preferred.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               MULTI-SYSTEM RECOMMENDATION
+            ----------------------------------------------------- */
+
+            integratedSolution: {
+
+                trigger:
+
+                    'Customer requires multiple security technologies for the same property or project.',
+
+
+                process: [
+
+                    'Identify the primary security objective.',
+
+                    'Identify each required security layer.',
+
+                    'Determine which systems should operate independently.',
+
+                    'Determine which systems may benefit from integration.',
+
+                    'Avoid recommending integration unless compatibility can be established.',
+
+                    'Present the solution as a complete security architecture rather than an unrelated collection of products.'
+
+                ],
+
+
+                example:
+
+                    'A commercial property may require perimeter protection, CCTV surveillance, access control, gate automation and alarm monitoring.',
+
+
+                response:
+
+                    'Because you are looking at several security layers, it may make sense to design the system as one coordinated solution rather than selecting each product independently. I would first confirm how the property is laid out and which functions you want integrated.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               PRODUCT SELECTION PRIORITY
+            ----------------------------------------------------- */
+
+            selectionPriority: [
+
+                'Suitability',
+
+                'Security objective',
+
+                'Compatibility',
+
+                'Performance requirement',
+
+                'Reliability',
+
+                'Installation practicality',
+
+                'Customer priority',
+
+                'Future expansion',
+
+                'Cost'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               PRODUCT SELECTION SAFETY
+            ----------------------------------------------------- */
+
+            safetyRules: [
+
+                'Never recommend equipment that is clearly unsuitable for the stated application.',
+
+                'Never assume that a product is compatible with an existing system.',
+
+                'Never provide a specific technical specification unless it is contained in the trusted product knowledge.',
+
+                'Never claim a security system guarantees prevention of crime.',
+
+                'Never claim that a product is legally approved or certified unless that status is verified.',
+
+                'Never substitute a sales objective for a technical requirement.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               PRODUCT KNOWLEDGE REQUIREMENT
+            ----------------------------------------------------- */
+
+            productKnowledgeDependency:
+
+                'Specific product recommendations should be generated from the verified Nexpak product catalogue and product knowledge database whenever those sources are available.',
+
+
+            /* -----------------------------------------------------
+               PRODUCT DATABASE PRIORITY
+            ----------------------------------------------------- */
+
+            productDatabasePriority: [
+
+                'Exact product match',
+
+                'Product category match',
+
+                'Application suitability',
+
+                'Required capability',
+
+                'Compatibility',
+
+                'Availability if verified',
+
+                'Price if verified'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               PRICE HANDLING
+            ----------------------------------------------------- */
+
+            priceHandling:
+
+                'Do not generate a final product price from memory when current pricing is unavailable. Use verified catalogue pricing or explain that final pricing requires confirmation.',
+
+
+            /* -----------------------------------------------------
+               STOCK HANDLING
+            ----------------------------------------------------- */
+
+            stockHandling:
+
+                'Do not tell the customer that a product is in stock unless current inventory information is available and verified.',
+
+
+            /* -----------------------------------------------------
+               RECOMMENDATION EXPLANATION
+            ----------------------------------------------------- */
+
+            explanationRule:
+
+                'Every specific recommendation should explain briefly why the option fits the customers stated requirement.',
+
+
+            /* -----------------------------------------------------
+               RECOMMENDATION QUALITY CHECK
+            ----------------------------------------------------- */
+
+            qualityCheck: [
+
+                'Requirement understood',
+
+                'Application identified',
+
+                'Important measurements considered',
+
+                'Existing system considered',
+
+                'Compatibility considered',
+
+                'Customer priorities considered',
+
+                'Recommendation justified',
+
+                'Limitations disclosed',
+
+                'Pricing verified where provided',
+
+                'Availability verified where provided'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               FINAL RULE
+            ----------------------------------------------------- */
+
+            finalRule:
+
+                'A recommendation is only useful when it solves the customers actual problem. The assistant must connect customer requirements to verified product capabilities, explain its reasoning and clearly identify anything that still needs confirmation.'
+
+        },
+
+
+        /* =========================================================
+           88. QUOTATION PREPARATION & REQUIREMENT BUILDER
+        ========================================================= */
