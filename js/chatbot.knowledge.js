@@ -2392,3 +2392,746 @@
             }
 
         },
+
+        /* =========================================================
+           10. ALARM SYSTEMS — ADVANCED KNOWLEDGE
+        ========================================================= */
+
+        alarmSystemsAdvanced: {
+
+            name: 'Alarm Systems',
+
+            category: 'Intrusion Detection',
+
+
+            /* -----------------------------------------------------
+               CORE DEFINITION
+            ----------------------------------------------------- */
+
+            definition:
+                'An alarm system is an electronic security system designed to detect defined events such as unauthorized entry, movement or tampering and generate an alarm or notification.',
+
+
+            simpleExplanation:
+                'An alarm system uses sensors and other detection devices to identify a security event and then alerts the occupants, monitoring service or authorized users, depending on how the system is configured.',
+
+
+            salesPrinciple:
+                'The assistant must first understand what the customer wants to protect and how they want to be notified before recommending an alarm system.',
+
+
+            /* -----------------------------------------------------
+               MAIN COMPONENTS
+            ----------------------------------------------------- */
+
+            components: {
+
+
+                controlPanel: {
+
+                    name: 'Alarm Control Panel',
+
+                    purpose:
+                        'The central controller of the alarm system. It receives information from connected devices and manages system functions according to its configuration.',
+
+                    customerExplanation:
+                        'Think of the control panel as the brain of the alarm system. Sensors report events to it and the panel determines what action the system should take.',
+
+                    salesQuestions: [
+
+                        'How many areas need protection?',
+
+                        'How many doors and windows need sensors?',
+
+                        'Do you need multiple user codes?',
+
+                        'Do you require remote control from a phone?',
+
+                        'Do you already have an alarm panel installed?'
+
+                    ]
+
+                },
+
+
+                keypad: {
+
+                    name: 'Keypad',
+
+                    purpose:
+                        'Allows authorized users to operate and interact with the alarm system.',
+
+                    functions: [
+
+                        'Arm system',
+
+                        'Disarm system',
+
+                        'View system status',
+
+                        'Enter user credentials',
+
+                        'Access configured alarm functions'
+
+                    ]
+
+                },
+
+
+                magneticContacts: {
+
+                    name: 'Magnetic Door / Window Contacts',
+
+                    purpose:
+                        'Detect the opening of protected doors, windows or other suitable openings.',
+
+                    commonApplications: [
+
+                        'Front doors',
+
+                        'Back doors',
+
+                        'Garage doors',
+
+                        'Windows',
+
+                        'Security gates',
+
+                        'Other access points'
+
+                    ],
+
+                    salesQuestion:
+                        'Which doors and windows do you want protected?'
+
+                },
+
+
+                pir: {
+
+                    name: 'PIR Motion Detector',
+
+                    fullName:
+                        'Passive Infrared Motion Detector',
+
+                    purpose:
+                        'Detects changes in infrared energy associated with movement within its detection area.',
+
+                    commonApplications: [
+
+                        'Passageways',
+
+                        'Living areas',
+
+                        'Offices',
+
+                        'Warehouses',
+
+                        'Reception areas',
+
+                        'Internal rooms'
+
+                    ],
+
+                    salesQuestions: [
+
+                        'Which rooms need movement detection?',
+
+                        'Are there pets in the protected area?',
+
+                        'Are there areas that should remain active while people are present?'
+
+                    ],
+
+                    importantNote:
+                        'The correct detector depends on the environment and application. Do not promise pet immunity or detection performance without verified product specifications.'
+
+                },
+
+
+                siren: {
+
+                    name: 'Siren',
+
+                    purpose:
+                        'Provides an audible alarm indication when the system generates an alarm condition.',
+
+                    types: [
+
+                        'Indoor siren',
+
+                        'Outdoor siren',
+
+                        'Wireless siren',
+
+                        'Wired siren'
+
+                    ]
+
+                },
+
+
+                panicDevice: {
+
+                    name: 'Panic Device',
+
+                    purpose:
+                        'Allows an authorized user to trigger an alarm event manually when supported by the system.',
+
+                    applications: [
+
+                        'Residential emergencies',
+
+                        'Business premises',
+
+                        'Reception areas',
+
+                        'Security desks',
+
+                        'Special risk environments'
+
+                    ]
+
+                },
+
+
+                remoteControl: {
+
+                    name: 'Remote Control',
+
+                    purpose:
+                        'Allows supported alarm functions to be controlled remotely.',
+
+                    possibleFunctions: [
+
+                        'Arm',
+
+                        'Disarm',
+
+                        'Trigger panic',
+
+                        'Check status on supported systems'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               ALARM ZONES
+            ----------------------------------------------------- */
+
+            zones: {
+
+                definition:
+                    'A zone is a defined input or detection area within an alarm system.',
+
+                examples: [
+
+                    'Front door',
+
+                    'Back door',
+
+                    'Garage',
+
+                    'Bedroom',
+
+                    'Office',
+
+                    'Warehouse',
+
+                    'Perimeter detector'
+
+                ],
+
+                explanation:
+                    'Zones allow the alarm system to identify where a detection event has occurred.',
+
+                salesQuestion:
+                    'How many separate areas or detection points do you need to protect?'
+
+            },
+
+
+            /* -----------------------------------------------------
+               ARMING MODES
+            ----------------------------------------------------- */
+
+            armingModes: {
+
+                away: {
+
+                    name: 'Away / Full Arm',
+
+                    explanation:
+                        'Used when the protected premises is expected to be unoccupied, subject to the system configuration.'
+
+                },
+
+
+                stay: {
+
+                    name: 'Stay / Partial Arm',
+
+                    explanation:
+                        'Allows selected protection to remain active while occupants are inside, depending on the system configuration.'
+
+                },
+
+
+                night: {
+
+                    name: 'Night Mode',
+
+                    explanation:
+                        'Some systems support a customized night configuration that protects selected areas while allowing movement in designated areas.'
+
+                },
+
+
+                importantNote:
+                    'Exact arming modes and behaviour depend on the alarm platform and configuration.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               WIRELESS VS WIRED
+            ----------------------------------------------------- */
+
+            installationTypes: {
+
+
+                wired: {
+
+                    name: 'Wired Alarm System',
+
+                    advantages: [
+
+                        'Reliable physical connection',
+
+                        'No wireless battery replacement for wired sensors',
+
+                        'Suitable for new installations where cabling can be installed',
+
+                        'Useful for some larger installations'
+
+                    ],
+
+                    considerations: [
+
+                        'Cable routing',
+
+                        'Installation access',
+
+                        'Building construction',
+
+                        'Aesthetic considerations'
+
+                    ]
+
+                },
+
+
+                wireless: {
+
+                    name: 'Wireless Alarm System',
+
+                    advantages: [
+
+                        'Reduced need for new signal cabling',
+
+                        'Useful for certain retrofit installations',
+
+                        'Flexible sensor placement',
+
+                        'Can simplify installation in suitable environments'
+
+                    ],
+
+                    considerations: [
+
+                        'Battery maintenance',
+
+                        'Wireless signal conditions',
+
+                        'Device compatibility',
+
+                        'Environmental conditions',
+
+                        'System range'
+
+                    ]
+
+                },
+
+
+                hybrid: {
+
+                    name: 'Hybrid Alarm System',
+
+                    explanation:
+                        'A hybrid system can combine wired and wireless devices where supported.',
+
+                    advantage:
+                        'Can provide flexibility when upgrading an existing installation or dealing with different areas of a property.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               REMOTE MONITORING
+            ----------------------------------------------------- */
+
+            remoteMonitoring: {
+
+                definition:
+                    'Remote monitoring allows alarm events or system information to be communicated to an authorized remote destination when the system and service support it.',
+
+                possibleMethods: [
+
+                    'Mobile application',
+
+                    'Internet connection',
+
+                    'Cellular communication',
+
+                    'Monitoring centre',
+
+                    'SMS or supported notifications'
+
+                ],
+
+                customerQuestions: [
+
+                    'Do you want alarm notifications on your phone?',
+
+                    'Do you require professional monitoring?',
+
+                    'Do you have reliable internet at the property?',
+
+                    'Is cellular backup required?'
+
+                ],
+
+                importantRule:
+                    'Never promise a particular notification method without confirming that the selected alarm platform supports it.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               ALARM + CCTV INTEGRATION
+            ----------------------------------------------------- */
+
+            cctvIntegration: {
+
+                concept:
+                    'Alarm and CCTV systems can complement one another by combining intrusion detection with visual verification where compatible equipment and configuration allow.',
+
+                example:
+
+                    'An alarm event can prompt the customer to check a relevant CCTV camera and determine what is happening.',
+
+                benefits: [
+
+                    'Visual verification',
+
+                    'Faster understanding of events',
+
+                    'Better situational awareness',
+
+                    'Combined security management'
+
+                ],
+
+                salesQuestion:
+                    'Would you like your alarm system and CCTV system to work together where compatible?'
+
+            },
+
+
+            /* -----------------------------------------------------
+               ALARM + ELECTRIC FENCE INTEGRATION
+            ----------------------------------------------------- */
+
+            electricFenceIntegration: {
+
+                concept:
+                    'An electric fence can form part of a layered perimeter-security system alongside an alarm system.',
+
+                benefits: [
+
+                    'Perimeter deterrence',
+
+                    'Perimeter detection',
+
+                    'Internal intrusion detection',
+
+                    'Multiple layers of protection'
+
+                ],
+
+                example:
+                    'The electric fence can protect the perimeter while alarm sensors protect doors, windows and internal areas.',
+
+                importantNote:
+                    'The exact integration method depends on the equipment and installation design.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               ALARM + ACCESS CONTROL
+            ----------------------------------------------------- */
+
+            accessIntegration: {
+
+                concept:
+                    'Access-control systems and alarm systems can work together in appropriate installations to manage authorized entry while monitoring security events.',
+
+                applications: [
+
+                    'Commercial buildings',
+
+                    'Offices',
+
+                    'Warehouses',
+
+                    'Industrial facilities',
+
+                    'Controlled staff areas'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               PET CONSIDERATIONS
+            ----------------------------------------------------- */
+
+            pets: {
+
+                issue:
+                    'Customers with pets may be concerned about movement detectors generating unwanted alarms.',
+
+                assistantResponse:
+                    'The correct detector and configuration should be selected for the environment and the type and size of pets present.',
+
+                questions: [
+
+                    'Do you have dogs or cats?',
+
+                    'Which areas do the pets access?',
+
+                    'Will the pets remain inside while the alarm is armed?'
+
+                ],
+
+                importantRule:
+                    'Never guarantee that a detector will be completely immune to every possible pet-related false alarm.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               FALSE ALARMS
+            ----------------------------------------------------- */
+
+            falseAlarms: {
+
+                possibleCauses: [
+
+                    'Incorrect sensor positioning',
+
+                    'Environmental conditions',
+
+                    'Loose connections',
+
+                    'Low battery',
+
+                    'Interference',
+
+                    'Incorrect configuration',
+
+                    'Animals',
+
+                    'Doors or windows not properly secured',
+
+                    'Equipment faults'
+
+                ],
+
+                troubleshootingApproach: [
+
+                    'Identify which zone generated the event.',
+
+                    'Determine whether the event is repeated or isolated.',
+
+                    'Check environmental conditions.',
+
+                    'Check the relevant sensor and installation.',
+
+                    'Check batteries where applicable.',
+
+                    'Recommend professional servicing if the cause is not obvious.'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               ALARM SYSTEM CUSTOMER QUALIFICATION
+            ----------------------------------------------------- */
+
+            qualificationQuestions: [
+
+                'Is this for a home or business?',
+
+                'What areas do you want to protect?',
+
+                'How many external doors are there?',
+
+                'How many windows need protection?',
+
+                'Do you need movement detection?',
+
+                'Do you have pets?',
+
+                'Do you need panic functionality?',
+
+                'Do you want notifications on your phone?',
+
+                'Do you require professional monitoring?',
+
+                'Do you already have an alarm system?',
+
+                'Are you replacing an existing system or installing a new one?',
+
+                'Do you want the alarm integrated with CCTV?',
+
+                'Do you have an electric fence that should form part of the security system?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               COMMON CUSTOMER QUESTIONS
+            ----------------------------------------------------- */
+
+            commonQuestions: [
+
+                'How does an alarm system work?',
+
+                'How much does an alarm system cost?',
+
+                'How many sensors do I need?',
+
+                'What is a PIR sensor?',
+
+                'What is a magnetic contact?',
+
+                'What is an alarm zone?',
+
+                'Can I control my alarm from my phone?',
+
+                'Can I receive alarm notifications on my phone?',
+
+                'Can I use an alarm system without a monitoring company?',
+
+                'Can an alarm system work during a power failure?',
+
+                'Can I use wireless alarm sensors?',
+
+                'Can I upgrade my existing alarm system?',
+
+                'Can an alarm work with CCTV?',
+
+                'Can an alarm work with electric fencing?',
+
+                'Can an alarm system work with access control?',
+
+                'Why does my alarm keep going off?',
+
+                'Why is my alarm showing a fault?',
+
+                'How often should alarm batteries be replaced?',
+
+                'What happens if the internet goes down?',
+
+                'What happens if the power goes out?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               SALES SCENARIOS
+            ----------------------------------------------------- */
+
+            scenarios: {
+
+
+                newHome: {
+
+                    description:
+                        'Customer is building or moving into a home and wants a new alarm system.',
+
+                    approach: [
+
+                        'Determine property layout.',
+
+                        'Identify entry points.',
+
+                        'Identify internal areas requiring detection.',
+
+                        'Determine pet requirements.',
+
+                        'Determine remote notification requirements.',
+
+                        'Determine integration requirements.'
+
+                    ]
+
+                },
+
+
+                existingAlarm: {
+
+                    description:
+                        'Customer already has an alarm system and wants an upgrade.',
+
+                    askFirst: [
+
+                        'What alarm system is currently installed?',
+
+                        'How old is the system?',
+
+                        'What would you like to improve?',
+
+                        'Are the existing sensors still working?',
+
+                        'Do you want mobile control?',
+
+                        'Do you want to add CCTV or other security equipment?'
+
+                    ]
+
+                },
+
+
+                businessAlarm: {
+
+                    description:
+                        'Commercial customer wants intrusion protection.',
+
+                    considerations: [
+
+                        'Multiple entrances',
+
+               
