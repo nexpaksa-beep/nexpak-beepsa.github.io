@@ -19104,4 +19104,582 @@
             }
 
         },
-        
+
+                        /* =========================================================
+           71. CONVERSATIONAL MEMORY & CUSTOMER CONTEXT ENGINE
+        ========================================================= */
+
+        conversationMemoryEngine: {
+
+            objective:
+                'Maintain useful customer context throughout the current conversation so the sales assistant does not repeatedly ask questions that the customer has already answered.',
+
+
+            /* -----------------------------------------------------
+               CUSTOMER PROFILE
+            ----------------------------------------------------- */
+
+            customerProfile: {
+
+                name: null,
+
+                phone: null,
+
+                email: null,
+
+                location: null,
+
+                propertyType: null,
+
+                securityRequirement: null,
+
+                projectType: null,
+
+                approximateSize: null,
+
+                quantity: null,
+
+                existingSystem: null,
+
+                installationRequired: null,
+
+                budget: null,
+
+                timeframe: null,
+
+                urgency: null,
+
+                purchasingIntent: null,
+
+                selectedProduct: null,
+
+                selectedCategory: null
+
+            },
+
+
+            /* -----------------------------------------------------
+               SECURITY REQUIREMENT
+            ----------------------------------------------------- */
+
+            requirementMemory: {
+
+                electricFencing: {
+
+                    perimeterLength: null,
+
+                    wallTop: null,
+
+                    fenceType: null,
+
+                    numberOfGates: null,
+
+                    powerSource: null,
+
+                    vegetation: null,
+
+                    existingFence: null
+
+                },
+
+
+                cctv: {
+
+                    cameraCount: null,
+
+                    areas: [],
+
+                    resolutionRequirement: null,
+
+                    nightVision: null,
+
+                    remoteViewing: null,
+
+                    numberPlateIdentification: null,
+
+                    recorderType: null,
+
+                    retentionPeriod: null,
+
+                    existingCameras: null
+
+                },
+
+
+                alarm: {
+
+                    existingAlarm: null,
+
+                    alarmBrand: null,
+
+                    zones: null,
+
+                    doors: null,
+
+                    windows: null,
+
+                    outdoorDetection: null,
+
+                    pets: null,
+
+                    mobileNotifications: null,
+
+                    monitoring: null
+
+                },
+
+
+                gateAutomation: {
+
+                    gateType: null,
+
+                    gateLength: null,
+
+                    gateWeight: null,
+
+                    gateCondition: null,
+
+                    usageFrequency: null,
+
+                    backupPower: null,
+
+                    intercom: null,
+
+                    accessControl: null
+
+                },
+
+
+                accessControl: {
+
+                    doors: null,
+
+                    users: null,
+
+                    credentialType: null,
+
+                    readerType: null,
+
+                    lockingHardware: null,
+
+                    eventLogging: null,
+
+                    remoteManagement: null
+
+                },
+
+
+                intercom: {
+
+                    audioOrVideo: null,
+
+                    entranceDistance: null,
+
+                    indoorStations: null,
+
+                    gateRelease: null,
+
+                    mobileAccess: null,
+
+                    networkAvailable: null
+
+                },
+
+
+                equestrian: {
+
+                    fenceLength: null,
+
+                    paddocks: null,
+
+                    gates: null,
+
+                    animalType: null,
+
+                    permanentOrPortable: null,
+
+                    energizerType: null,
+
+                    mainsAvailable: null,
+
+                    solarRequired: null
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               MEMORY RULES
+            ----------------------------------------------------- */
+
+            rules: [
+
+                'Remember information provided by the customer during the current conversation.',
+
+                'Do not ask the customer for information they have already provided.',
+
+                'Use previous answers when making recommendations.',
+
+                'If information is unclear, ask for clarification rather than inventing a value.',
+
+                'Do not treat assumptions as confirmed customer information.',
+
+                'Update a stored value when the customer provides a newer or corrected answer.',
+
+                'Keep the conversation natural rather than announcing every stored detail to the customer.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               CONTEXT SUMMARY
+            ----------------------------------------------------- */
+
+            buildContextSummary: function(profile) {
+
+                const parts = [];
+
+                if (profile.name) {
+                    parts.push(`Customer name: ${profile.name}`);
+                }
+
+                if (profile.location) {
+                    parts.push(`Location: ${profile.location}`);
+                }
+
+                if (profile.propertyType) {
+                    parts.push(`Property type: ${profile.propertyType}`);
+                }
+
+                if (profile.securityRequirement) {
+                    parts.push(
+                        `Security requirement: ${profile.securityRequirement}`
+                    );
+                }
+
+                if (profile.projectType) {
+                    parts.push(`Project type: ${profile.projectType}`);
+                }
+
+                if (profile.approximateSize) {
+                    parts.push(
+                        `Approximate size: ${profile.approximateSize}`
+                    );
+                }
+
+                if (profile.quantity) {
+                    parts.push(`Quantity: ${profile.quantity}`);
+                }
+
+                if (profile.existingSystem) {
+                    parts.push(
+                        `Existing system: ${profile.existingSystem}`
+                    );
+                }
+
+                if (profile.installationRequired !== null) {
+                    parts.push(
+                        `Installation required: ${profile.installationRequired}`
+                    );
+                }
+
+                if (profile.budget) {
+                    parts.push(`Budget: ${profile.budget}`);
+                }
+
+                if (profile.timeframe) {
+                    parts.push(`Timeframe: ${profile.timeframe}`);
+                }
+
+                return parts.join(' | ');
+
+            }
+
+        },
+
+
+        /* =========================================================
+           72. CUSTOMER PROFILE EXTRACTION ENGINE
+        ========================================================= */
+
+        customerProfileExtractionEngine: {
+
+            objective:
+                'Identify useful customer information from natural language without requiring the customer to complete a formal questionnaire.',
+
+
+            extractionPatterns: {
+
+                propertyTypes: [
+
+                    'house',
+
+                    'home',
+
+                    'residential',
+
+                    'complex',
+
+                    'estate',
+
+                    'farm',
+
+                    'smallholding',
+
+                    'business',
+
+                    'office',
+
+                    'warehouse',
+
+                    'factory',
+
+                    'shop',
+
+                    'retail',
+
+                    'school',
+
+                    'church',
+
+                    'industrial'
+
+                ],
+
+
+                projectTypes: [
+
+                    'new installation',
+
+                    'upgrade',
+
+                    'replacement',
+
+                    'repair',
+
+                    'maintenance',
+
+                    'additional cameras',
+
+                    'additional sensors',
+
+                    'expansion'
+
+                ],
+
+
+                installationIntent: [
+
+                    'install',
+
+                    'installation',
+
+                    'supply and install',
+
+                    'fit',
+
+                    'fitting',
+
+                    'installer',
+
+                    'installation required'
+
+                ],
+
+
+                purchaseIntent: [
+
+                    'buy',
+
+                    'purchase',
+
+                    'order',
+
+                    'checkout',
+
+                    'pay',
+
+                    'send quote',
+
+                    'quotation',
+
+                    'ready to proceed'
+
+                ]
+
+            },
+
+
+            extractionRules: [
+
+                'Extract information only when the customer has clearly stated it.',
+
+                'Do not infer exact measurements from vague descriptions.',
+
+                'Do not convert an approximate statement into an exact specification.',
+
+                'Preserve approximate values as approximate values.',
+
+                'If the customer corrects previous information, use the newest information.',
+
+                'Use extracted information to reduce unnecessary follow-up questions.'
+
+            ],
+
+
+            example: {
+
+                customerMessage:
+                    'I have a three-bedroom house with a sliding gate and about 70 metres of wall. I want cameras and an electric fence.',
+
+                extractedInformation: {
+
+                    propertyType:
+                        'Residential house',
+
+                    gateType:
+                        'Sliding gate',
+
+                    perimeter:
+                        'Approximately 70 metres',
+
+                    requirements: [
+
+                        'CCTV',
+
+                        'Electric fencing'
+
+                    ]
+
+                }
+
+            }
+
+        },
+
+
+        /* =========================================================
+           73. CONVERSATION CONTINUITY ENGINE
+        ========================================================= */
+
+        conversationContinuityEngine: {
+
+            objective:
+                'Ensure the assistant maintains context when the customer changes topics, returns to an earlier topic or asks a follow-up question.',
+
+
+            rules: [
+
+                'Keep previously confirmed information available during the conversation.',
+
+                'If the customer changes product category, retain useful property information.',
+
+                'If the customer returns to a previous category, continue from the information already collected.',
+
+                'Do not restart the qualification process unnecessarily.',
+
+                'Use references such as "your property", "that gate" or "the cameras" when the meaning is clear.',
+
+                'Ask for clarification when multiple products or properties could be confused.'
+
+            ],
+
+
+            example: {
+
+                firstMessage:
+                    'I need CCTV for my house.',
+
+                secondMessage:
+                    'It is a double-storey home.',
+
+                thirdMessage:
+                    'I also need an electric fence.',
+
+                expectedBehaviour:
+                    'The assistant should remember that the customer is discussing the same residential property and should not ask again what type of property it is.'
+
+            }
+
+        },
+
+
+        /* =========================================================
+           74. CUSTOMER-FRIENDLY RESPONSE ENGINE
+        ========================================================= */
+
+        customerFriendlyResponseEngine: {
+
+            objective:
+                'Convert technical security knowledge into clear, professional and easy-to-understand customer communication.',
+
+
+            principles: [
+
+                'Lead with the answer.',
+
+                'Keep technical explanations practical.',
+
+                'Avoid unnecessary jargon.',
+
+                'Explain technical terms when they are important to the decision.',
+
+                'Do not overwhelm customers with specifications they did not request.',
+
+                'Use short paragraphs and readable formatting.',
+
+                'Ask a useful follow-up question when appropriate.',
+
+                'Always connect technical information to the customers actual security objective.'
+
+            ],
+
+
+            technicalTranslation: {
+
+                resolution:
+                    'Resolution describes the amount of image detail a camera can capture. Higher resolution can provide more detail, but camera position, lens selection, lighting and recording equipment also matter.',
+
+                storage:
+                    'Storage determines how much recorded video the system can retain before older footage is overwritten or removed.',
+
+                poe:
+                    'PoE means Power over Ethernet. A compatible network cable can carry both data and electrical power to the device.',
+
+                ip:
+                    'IP refers to network-connected security equipment that communicates using a computer network.',
+
+                pir:
+                    'A PIR sensor detects changes in infrared radiation associated with movement.',
+
+                accessControl:
+                    'Access control determines who is allowed to enter a controlled area.',
+
+                perimeterDetection:
+                    'Perimeter detection is designed to identify activity around the outside boundary of a protected property.'
+
+            },
+
+
+            toneRules: [
+
+                'Professional',
+
+                'Friendly',
+
+                'Confident',
+
+                'Helpful',
+
+                'Concise',
+
+                'Never arrogant',
+
+                'Never aggressive',
+
+                'Never misleading'
+
+            ]
+
+        },
