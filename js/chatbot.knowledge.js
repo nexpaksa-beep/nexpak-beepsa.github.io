@@ -19683,3 +19683,470 @@
             ]
 
         },
+
+                    /* =========================================================
+           72. CUSTOMER PROFILE EXTRACTION ENGINE
+        ========================================================= */
+
+        customerProfileExtractionEngine: {
+
+            objective:
+                'Identify useful customer information from natural language without requiring the customer to complete a formal questionnaire.',
+
+
+            /* -----------------------------------------------------
+               PROPERTY TYPES
+            ----------------------------------------------------- */
+
+            propertyTypes: [
+
+                'house',
+
+                'home',
+
+                'residential',
+
+                'complex',
+
+                'estate',
+
+                'farm',
+
+                'smallholding',
+
+                'business',
+
+                'office',
+
+                'warehouse',
+
+                'factory',
+
+                'shop',
+
+                'retail',
+
+                'school',
+
+                'church',
+
+                'industrial',
+
+                'commercial',
+
+                'agricultural',
+
+                'equestrian'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               PROJECT TYPES
+            ----------------------------------------------------- */
+
+            projectTypes: [
+
+                'new installation',
+
+                'upgrade',
+
+                'replacement',
+
+                'repair',
+
+                'maintenance',
+
+                'expansion',
+
+                'additional cameras',
+
+                'additional sensors',
+
+                'additional doors',
+
+                'additional gates'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               INSTALLATION INTENT
+            ----------------------------------------------------- */
+
+            installationIntent: [
+
+                'install',
+
+                'installation',
+
+                'supply and install',
+
+                'fit',
+
+                'fitting',
+
+                'installer',
+
+                'installation required',
+
+                'install for me',
+
+                'can you install'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               PURCHASE INTENT
+            ----------------------------------------------------- */
+
+            purchaseIntent: [
+
+                'buy',
+
+                'purchase',
+
+                'order',
+
+                'checkout',
+
+                'pay',
+
+                'send quote',
+
+                'quotation',
+
+                'ready to proceed',
+
+                'want to buy',
+
+                'place an order'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               INFORMATION EXTRACTION RULES
+            ----------------------------------------------------- */
+
+            extractionRules: [
+
+                'Extract information only when the customer has clearly stated it.',
+
+                'Do not infer exact measurements from vague descriptions.',
+
+                'Do not convert approximate measurements into exact measurements.',
+
+                'Preserve approximate values as approximate values.',
+
+                'If the customer corrects previous information, use the newest information.',
+
+                'Use extracted information to reduce unnecessary follow-up questions.',
+
+                'Never invent missing customer information.',
+
+                'Never assume a property type when the customer has not provided one.',
+
+                'Never assume installation is required unless the customer indicates it.',
+
+                'Never assume a budget unless the customer provides one.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               NATURAL LANGUAGE EXAMPLES
+            ----------------------------------------------------- */
+
+            examples: {
+
+                exampleOne: {
+
+                    customerMessage:
+                        'I have a three-bedroom house with a sliding gate and about 70 metres of wall. I want cameras and an electric fence.',
+
+                    extractedInformation: {
+
+                        propertyType:
+                            'Residential house',
+
+                        gateType:
+                            'Sliding gate',
+
+                        perimeter:
+                            'Approximately 70 metres',
+
+                        requirements: [
+
+                            'CCTV',
+
+                            'Electric fencing'
+
+                        ]
+
+                    }
+
+                },
+
+
+                exampleTwo: {
+
+                    customerMessage:
+                        'I run a small warehouse and need cameras at the entrance and loading area.',
+
+                    extractedInformation: {
+
+                        propertyType:
+                            'Commercial warehouse',
+
+                        securityRequirement:
+                            'CCTV',
+
+                        areas: [
+
+                            'Entrance',
+
+                            'Loading area'
+
+                        ]
+
+                    }
+
+                },
+
+
+                exampleThree: {
+
+                    customerMessage:
+                        'My electric fence is already there but it keeps going into alarm when it rains.',
+
+                    extractedInformation: {
+
+                        projectType:
+                            'Existing system fault',
+
+                        securityRequirement:
+                            'Electric fencing',
+
+                        environmentalCondition:
+                            'Rain-related fault',
+
+                        existingSystem:
+                            true
+
+                    }
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               INFORMATION CONFIDENCE
+            ----------------------------------------------------- */
+
+            confidenceLevels: {
+
+                confirmed:
+                    'Customer directly stated the information.',
+
+                probable:
+                    'Customer wording strongly suggests the information but confirmation may still be useful.',
+
+                unknown:
+                    'The information has not been provided.',
+
+                rule:
+                    'Only confirmed information should be treated as a definite customer requirement.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               UPDATE LOGIC
+            ----------------------------------------------------- */
+
+            updateLogic: {
+
+                principle:
+                    'Customer information should remain flexible and update whenever the customer provides corrected or more specific information.',
+
+                example:
+
+                    'If the customer initially says the perimeter is approximately 50 metres and later says it is actually closer to 80 metres, use the newer 80-metre estimate.'
+
+            }
+
+        },
+
+
+        /* =========================================================
+           73. CONVERSATION CONTINUITY ENGINE
+        ========================================================= */
+
+        conversationContinuityEngine: {
+
+            objective:
+                'Maintain context throughout the conversation so the assistant behaves like a knowledgeable salesperson rather than restarting the conversation after every customer message.',
+
+
+            /* -----------------------------------------------------
+               CORE CONTINUITY RULES
+            ----------------------------------------------------- */
+
+            rules: [
+
+                'Remember previously confirmed information during the conversation.',
+
+                'Do not ask the customer for information they have already provided.',
+
+                'Use previous answers when making recommendations.',
+
+                'If information is unclear, ask for clarification rather than guessing.',
+
+                'Do not treat assumptions as confirmed information.',
+
+                'Update stored information when the customer provides a correction.',
+
+                'Keep useful property information when the customer changes product categories.',
+
+                'Do not restart the qualification process unnecessarily.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               TOPIC CONTINUITY
+            ----------------------------------------------------- */
+
+            topicContinuity: {
+
+                principle:
+                    'The customer may discuss several security products during the same conversation. The assistant should maintain the property and customer context while switching between products.',
+
+
+                example: {
+
+                    customerOne:
+                        'I need CCTV for my house.',
+
+                    customerTwo:
+                        'It is a double-storey home.',
+
+                    customerThree:
+                        'I also need an electric fence.',
+
+                    expectedBehaviour:
+                        'Remember that the electric fence is for the same residential property unless the customer indicates otherwise.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               FOLLOW-UP QUESTIONS
+            ----------------------------------------------------- */
+
+            followUpRules: [
+
+                'Ask only for information that is still missing.',
+
+                'Ask the most important question first.',
+
+                'Avoid repeating previously answered questions.',
+
+                'Use the customers previous answer to make the next question relevant.',
+
+                'If several pieces of information are missing, collect them progressively rather than presenting a long questionnaire.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               CONTEXT REFERENCES
+            ----------------------------------------------------- */
+
+            naturalReferences: [
+
+                'your property',
+
+                'your home',
+
+                'your business',
+
+                'the gate',
+
+                'the cameras',
+
+                'the existing system',
+
+                'the perimeter',
+
+                'the installation'
+
+            ],
+
+
+            referenceRule:
+                'Use natural contextual references when there is only one logical subject. Ask for clarification when multiple properties, gates, systems or projects could be confused.',
+
+
+            /* -----------------------------------------------------
+               TOPIC SWITCHING
+            ----------------------------------------------------- */
+
+            topicSwitching: {
+
+                example:
+
+                    'Customer: I need CCTV. Assistant: What would you like to monitor? Customer: The driveway. Assistant: How far is the driveway from where the camera could be mounted? Customer: I also need an electric fence.',
+
+                expectedBehaviour:
+
+                    'The assistant should retain the driveway CCTV requirement and recognise that the customer has now introduced a second security requirement.',
+
+                rule:
+
+                    'Do not discard previous requirements when a new security category is introduced.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               RETURNING TO PREVIOUS TOPIC
+            ----------------------------------------------------- */
+
+            returningToTopic: {
+
+                example:
+
+                    'Customer discusses CCTV, then asks about gate automation, then returns to CCTV.',
+
+                expectedBehaviour:
+
+                    'Continue the CCTV discussion using information already collected instead of starting the CCTV qualification process again.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               MEMORY SAFETY
+            ----------------------------------------------------- */
+
+            memorySafety: [
+
+                'Do not invent customer details.',
+
+                'Do not claim the customer said something they did not say.',
+
+                'Do not expose internal memory structures to the customer.',
+
+                'Do not reveal private customer information unnecessarily.',
+
+                'Use only information relevant to the current sales conversation.'
+
+            ]
+
+        },
