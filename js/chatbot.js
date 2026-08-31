@@ -913,4 +913,518 @@ function init() {
         background: linear-gradient(135deg, #1a5f2a 0%, #2d8b3f 100%);
         color: white;
         align-self: flex-end;
-        border-botto
+                border-bottom-right-radius: 4px;
+      }
+
+      .quick-actions {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+
+      .quick-actions button {
+        background: #e8f5e9;
+        color: #1a5f2a;
+        border: 1px solid #1a5f2a;
+        padding: 8px 14px;
+        border-radius: 20px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .quick-actions button:hover {
+        background: #1a5f2a;
+        color: white;
+      }
+
+      .lead-form {
+        padding: 12px 16px;
+        background: white;
+        border-top: 1px solid #eee;
+      }
+
+      .lead-form h4 {
+        margin: 0 0 10px 0;
+        font-size: 14px;
+        color: #1a5f2a;
+      }
+
+      .lead-form input,
+      .lead-form select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 8px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+
+      .lead-form button {
+        width: 100%;
+        background: linear-gradient(135deg, #1a5f2a 0%, #2d8b3f 100%);
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      .chat-input-area {
+        display: flex;
+        gap: 8px;
+        padding: 12px 16px;
+        border-top: 1px solid #eee;
+        background: white;
+      }
+
+      #chat-input {
+        flex: 1;
+        padding: 12px 16px;
+        border: 1px solid #ddd;
+        border-radius: 24px;
+        outline: none;
+        font-size: 14px;
+      }
+
+      #chat-input:focus {
+        border-color: #1a5f2a;
+      }
+
+      #send-btn {
+        background: #1a5f2a;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 24px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background 0.2s;
+      }
+
+      #send-btn:hover {
+        background: #2d8b3f;
+      }
+
+      @media (max-width: 480px) {
+
+        .chat-window {
+          width: calc(100vw - 30px);
+          height: calc(100vh - 140px);
+          right: -15px;
+        }
+
+      }
+
+    </style>
+  `;
+
+  document.body.insertAdjacentHTML('beforeend', html);
+
+  // Event Listeners
+  document.getElementById('chat-toggle')
+    .addEventListener('click', toggleChat);
+
+  document.getElementById('chat-minimize')
+    .addEventListener('click', toggleChat);
+
+  document.getElementById('send-btn')
+    .addEventListener('click', () => sendMessage());
+
+  document.getElementById('chat-input')
+    .addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') sendMessage();
+    });
+
+  // Initialize Automatic Screen Floating Motion
+  initFloatingBot();
+}
+
+
+// =========================================================
+// AUTOMATIC SCREEN FLOATING & BOUNCING LOGIC
+// =========================================================
+
+function initFloatingBot() {
+
+  const chatbotEl = document.getElementById('nexpak-chatbot');
+
+  let posX = window.innerWidth - 220;
+  let posY = window.innerHeight - 100;
+
+  let vx = 1.0;
+  let vy = 0.8;
+
+  let isHovered = false;
+
+  chatbotEl.style.left = posX + 'px';
+  chatbotEl.style.top = posY + 'px';
+
+  chatbotEl.addEventListener('mouseenter', () => {
+    isHovered = true;
+  });
+
+  chatbotEl.addEventListener('mouseleave', () => {
+    isHovered = false;
+  });
+
+  function floatLoop() {
+
+    // Float across screen only when chat is closed
+    // and not actively hovered
+    if (!chatOpen && !isHovered) {
+
+      const toggleBtn =
+        document.getElementById('chat-toggle');
+
+      const rect =
+        toggleBtn.getBoundingClientRect();
+
+      const width = rect.width || 180;
+      const height = rect.height || 60;
+
+      posX += vx;
+      posY += vy;
+
+      // Horizontal boundary detection
+      if (posX <= 10) {
+
+        posX = 10;
+        vx = -vx;
+
+      } else if (
+        posX + width >= window.innerWidth - 10
+      ) {
+
+        posX =
+          window.innerWidth - width - 10;
+
+        vx = -vx;
+
+      }
+
+      // Vertical boundary detection
+      if (posY <= 10) {
+
+        posY = 10;
+        vy = -vy;
+
+      } else if (
+        posY + height >= window.innerHeight - 10
+      ) {
+
+        posY =
+          window.innerHeight - height - 10;
+
+        vy = -vy;
+
+      }
+
+      chatbotEl.style.left = posX + 'px';
+      chatbotEl.style.top = posY + 'px';
+      chatbotEl.style.bottom = 'auto';
+      chatbotEl.style.right = 'auto';
+    }
+
+    requestAnimationFrame(floatLoop);
+  }
+
+  requestAnimationFrame(floatLoop);
+}
+
+
+// =========================================================
+// TOGGLE CHAT
+// =========================================================
+
+function toggleChat() {
+
+  chatOpen = !chatOpen;
+
+  document.getElementById('chat-window')
+    .classList.toggle('open', chatOpen);
+
+  if (chatOpen) {
+
+    ga('send', 'event', 'Chat', 'Chat Opened');
+
+    document.getElementById('chat-input').focus();
+  }
+}
+
+
+// =========================================================
+// SEND MESSAGE
+// =========================================================
+
+function sendMessage(input) {
+
+  const messageInput =
+    document.getElementById('chat-input');
+
+  const message =
+    input || messageInput.value.trim();
+
+  if (!message) return;
+
+  addMessage(message, 'user');
+
+  if (!input) {
+    messageInput.value = '';
+  }
+
+  messageCount++;
+
+  ga(
+    'send',
+    'event',
+    'Chat',
+    'Message Sent',
+    message
+  );
+
+  setTimeout(() => {
+
+    addMessage(
+      getResponse(message),
+      'bot'
+    );
+
+  }, 600);
+}
+
+
+// =========================================================
+// ADD MESSAGE
+// =========================================================
+
+function addMessage(content, sender) {
+
+  const container =
+    document.getElementById('chat-messages');
+
+  const div =
+    document.createElement('div');
+
+  div.className =
+    `message ${sender}-message`;
+
+  div.innerHTML =
+    `<div class="message-content">${content}</div>`;
+
+  container.appendChild(div);
+
+  container.scrollTop =
+    container.scrollHeight;
+}
+
+
+// =========================================================
+// BOT RESPONSE ENGINE
+// =========================================================
+
+function getResponse(msg) {
+
+  const m = msg.toLowerCase();
+
+  if (
+    m.includes('quote') ||
+    m.includes('price') ||
+    m.includes('cost')
+  ) {
+
+    ga(
+      'send',
+      'event',
+      'Chat',
+      'Quote Requested'
+    );
+
+    if (!leadCaptured) {
+
+      document.getElementById('lead-form')
+        .style.display = 'block';
+
+      return "I'd be happy to help you get a <strong>FREE quote</strong>! Please fill in your details below:";
+    }
+
+    return "Our team will contact you within 24 hours with your custom quote.";
+  }
+
+
+  if (
+    m.includes('product') ||
+    m.includes('service')
+  ) {
+
+    ga(
+      'send',
+      'event',
+      'Chat',
+      'Products Viewed'
+    );
+
+    return `We offer complete security solutions:
+      <br><br>
+      <strong>Electric Fencing</strong> From R350/m | SAID Approved
+      <br>
+      <strong>CCTV Systems</strong> From R4,500 | HD/4K Cameras
+      <br>
+      <strong>Access Control</strong> From R8,000 | Biometric
+      <br>
+      <strong>Gate Automation</strong> From R12,000 | Smart Ready
+      <br>
+      <strong>Equestrian Fencing</strong> Full Range Available`;
+  }
+
+
+  if (
+    m.includes('electric') ||
+    m.includes('fencing')
+  ) {
+
+    return "Our <strong>electric fencing</strong> is SAID approved with 12-month warranty. Price starts from R350/m. Would you like a free quote?";
+  }
+
+
+  if (
+    m.includes('cctv') ||
+    m.includes('camera')
+  ) {
+
+    return "Our <strong>CCTV systems</strong> offer HD/4K quality with night vision and remote viewing. Starting from R4,500.";
+  }
+
+
+  if (
+    m.includes('equestrian') ||
+    m.includes('horse') ||
+    m.includes('paddock')
+  ) {
+
+    return "We have a complete range of <strong>equestrian fencing products</strong>: Polytape, Rope, Insulators, Solar Energizers, Gate Hardware.";
+  }
+
+
+  if (
+    m.includes('contact') ||
+    m.includes('phone')
+  ) {
+
+    return `<strong>${CONFIG.companyPhone}</strong><br><strong>${CONFIG.companyEmail}</strong><br><br>Hours: ${CONFIG.businessHours}`;
+  }
+
+
+  if (
+    m.includes('delivery') ||
+    m.includes('shipping')
+  ) {
+
+    return "Courier delivery available: Gauteng R200, Durban R650, Cape Town R800. Distance-based calculation also available.";
+  }
+
+
+  return `I can help you with:
+    <br>• Security Systems
+    <br>• Equestrian Products
+    <br>• Free Quotes
+    <br>• Contact Details
+    <br><br>
+    What would you like to know?`;
+}
+
+
+// =========================================================
+// SUBMIT LEAD
+// =========================================================
+
+function submitLead() {
+
+  const name =
+    document.getElementById('lead-name')
+      .value.trim();
+
+  const email =
+    document.getElementById('lead-email')
+      .value.trim();
+
+  const phone =
+    document.getElementById('lead-phone')
+      .value.trim();
+
+  const interest =
+    document.getElementById('lead-interest')
+      .value;
+
+  if (!name || !email) {
+
+    alert(
+      'Please enter your name and email'
+    );
+
+    return;
+  }
+
+  leadCaptured = true;
+
+  document.getElementById('lead-form')
+    .style.display = 'none';
+
+  ga(
+    'send',
+    'event',
+    'Lead',
+    'Lead Captured',
+    interest
+  );
+
+  console.log('NEW LEAD:', {
+    name,
+    email,
+    phone,
+    interest,
+    timestamp:
+      new Date().toISOString()
+  });
+
+  addMessage(
+    `Thank you ${name}! We'll contact you at ${email} within 24 hours.`,
+    'bot'
+  );
+}
+
+
+// =========================================================
+// INITIALIZE
+// =========================================================
+
+if (document.readyState === 'loading') {
+
+  document.addEventListener(
+    'DOMContentLoaded',
+    init
+  );
+
+} else {
+
+  init();
+}
+
+
+// =========================================================
+// PUBLIC CHAT API
+// =========================================================
+
+window.nexpakChat = {
+
+  send: sendMessage,
+
+  submitLead: submitLead
+
+};
+
+})();
