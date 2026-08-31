@@ -3132,6 +3132,596 @@
 
                     considerations: [
 
-                        'Multiple entrances',
+                                            'Multiple entrances',
+
+                    'Staff access',
+
+                    'After-hours protection',
+
+                    'Restricted areas',
+
+                    'Panic functionality',
+
+                    'CCTV integration',
+
+                    'Access control integration',
+
+                    'Monitoring requirements',
+
+                    'Different user permissions',
+
+                    'Multiple arming areas',
+
+                    'Emergency procedures',
+
+                    'Backup communication requirements'
+
+                ],
+
+                askFirst: [
+
+                    'What type of business is it?',
+
+                    'How large is the premises?',
+
+                    'How many entrances need protection?',
+
+                    'How many employees or authorized users will operate the system?',
+
+                    'Are there restricted areas that require additional protection?',
+
+                    'Do you need different access or alarm permissions for different users?',
+
+                    'Do you need panic buttons?',
+
+                    'Do you already have CCTV installed?',
+
+                    'Do you already have access control installed?',
+
+                    'Do you require professional alarm monitoring?',
+
+                    'Do you need the alarm system to remain operational during a power failure?'
+
+                ]
+
+            },
+
+
+            /* =====================================================
+               ALARM UPGRADE SCENARIO
+            ===================================================== */
+
+            upgrade: {
+
+                description:
+                    'Customer has an existing alarm system and wants to improve, expand or modernize it.',
+
+                objective:
+                    'Determine whether the existing system can be upgraded or whether replacement equipment is more appropriate.',
+
+                askFirst: [
+
+                    'What alarm panel is currently installed?',
+
+                    'How old is the system?',
+
+                    'Is the system currently working?',
+
+                    'Which sensors are still operational?',
+
+                    'Are there any existing faults?',
+
+                    'What would you like the new system to do?',
+
+                    'Do you want mobile phone control?',
+
+                    'Do you want additional sensors?',
+
+                    'Do you want CCTV integration?',
+
+                    'Do you want electric-fence integration?',
+
+                    'Do you want access-control integration?'
+
+                ],
+
+                salesRule:
+                    'Do not automatically recommend replacing an entire alarm system. First determine the condition, compatibility and limitations of the existing equipment.'
+
+            },
+
+
+            /* =====================================================
+               ALARM COST GUIDANCE
+            ===================================================== */
+
+            pricingGuidance: {
+
+                principle:
+                    'Alarm system pricing depends on the equipment selected, number and type of detection devices, installation requirements, property size, communication requirements and integration requirements.',
+
+                pricingFactors: [
+
+                    'Control panel',
+
+                    'Keypad',
+
+                    'Number of zones',
+
+                    'Door contacts',
+
+                    'Window contacts',
+
+                    'PIR detectors',
+
+                    'Outdoor detectors',
+
+                    'Sirens',
+
+                    'Panic devices',
+
+                    'Wireless devices',
+
+                    'Communication modules',
+
+                    'Battery backup',
+
+                    'Cabling',
+
+                    'Installation complexity',
+
+                    'CCTV integration',
+
+                    'Electric-fence integration',
+
+                    'Access-control integration'
+
+                ],
+
+                responseWhenAskedPrice:
+                    'I can help you estimate what type of alarm system you may need, but the final price depends on the property, number of detection points, equipment and installation requirements.',
+
+                importantRule:
+                    'Never invent a current product price. Use verified product pricing or move the customer toward a quotation.'
+
+            },
+
+
+            /* =====================================================
+               POWER FAILURE
+            ===================================================== */
+
+            powerFailure: {
+
+                explanation:
+                    'Many alarm systems use backup batteries so the system can continue operating for a period during a mains power failure, depending on the equipment, battery condition and system load.',
+
+                importantFactors: [
+
+                    'Battery capacity',
+
+                    'Battery condition',
+
+                    'System load',
+
+                    'Number of connected devices',
+
+                    'Communication equipment',
+
+                    'Duration of power outage'
+
+                ],
+
+                customerQuestion:
+                    'Does your alarm currently remain operational when the mains power goes off?'
+
+            },
+
+
+            /* =====================================================
+               ALARM BATTERY KNOWLEDGE
+            ===================================================== */
+
+            batteries: {
+
+                purpose:
+                    'The backup battery supplies power to compatible alarm equipment when mains power is unavailable.',
+
+                symptomsOfBatteryProblems: [
+
+                    'Battery fault indication',
+
+                    'Repeated low-battery warnings',
+
+                    'System trouble notifications',
+
+                    'Reduced backup runtime',
+
+                    'Alarm panel reporting a battery fault'
+
+                ],
+
+                salesGuidance:
+                    'If the customer reports a battery fault, recommend testing the battery and charging system rather than immediately assuming the battery alone is defective.',
+
+                safetyRule:
+                    'Electrical servicing should be performed by an appropriately qualified or competent technician.'
+
+            },
+
+
+            /* =====================================================
+               ALARM COMMUNICATION
+            ===================================================== */
+
+            communication: {
+
+                options: [
+
+                    'Internet',
+
+                    'Cellular communication',
+
+                    'Wi-Fi where supported',
+
+                    'Ethernet where supported',
+
+                    'Monitoring-centre communication'
+
+                ],
+
+                considerations: [
+
+                    'Network availability',
+
+                    'Signal strength',
+
+                    'Backup communication',
+
+                    'Service availability',
+
+                    'Equipment compatibility'
+
+                ],
+
+                salesQuestion:
+                    'How would you like to receive alarm notifications—through an app, monitoring service, cellular communication or another supported method?'
+
+            },
+
+
+            /* =====================================================
+               OUTDOOR DETECTION
+            ===================================================== */
+
+            outdoorDetection: {
+
+                description:
+                    'Outdoor detection can provide an additional security layer around selected external areas before an intruder reaches the building.',
+
+                possibleApplications: [
+
+                    'Driveways',
+
+                    'Walkways',
+
+                    'Garden areas',
+
+                    'Building approaches',
+
+                    'Perimeter areas',
+
+                    'Restricted external zones'
+
+                ],
+
+                environmentalFactors: [
+
+                    'Rain',
+
+                    'Wind',
+
+                    'Vegetation',
+
+                    'Animals',
+
+                    'Temperature',
+
+                    'Sunlight',
+
+                    'Uneven terrain',
+
+                    'Object movement'
+
+                ],
+
+                importantRule:
+                    'Outdoor detection requires careful product selection and installation because environmental conditions can increase the possibility of unwanted detections.'
+
+            },
+
+
+            /* =====================================================
+               DOOR AND WINDOW PROTECTION
+            ===================================================== */
+
+            perimeterProtection: {
+
+                objective:
+                    'Protect likely entry points before an intruder reaches the internal areas of the property.',
+
+                commonPoints: [
+
+                    'Front door',
+
+                    'Back door',
+
+                    'Garage door',
+
+                    'Sliding doors',
+
+                    'Accessible windows',
+
+                    'Office doors',
+
+                    'Emergency exits',
+
+                    'Other vulnerable openings'
+
+                ],
+
+                salesQuestion:
+                    'Which external doors and accessible windows would you like protected?'
+
+            },
+
+
+            /* =====================================================
+               INTERNAL PROTECTION
+            ===================================================== */
+
+            internalProtection: {
+
+                objective:
+                    'Detect movement or intrusion inside selected areas of the property.',
+
+                commonAreas: [
+
+                    'Passages',
+
+                    'Entrance halls',
+
+                    'Living rooms',
+
+                    'Offices',
+
+                    'Warehouses',
+
+                    'Storage areas',
+
+                    'Server rooms',
+
+                    'Restricted areas'
+
+                ],
+
+                planningPrinciple:
+                    'Internal detection should be positioned according to the property layout and the expected movement paths rather than simply placing detectors in every room.'
+
+            },
+
+
+            /* =====================================================
+               ALARM RESPONSE LOGIC
+            ===================================================== */
+
+            responseLogic: {
+
+                basicFlow: [
+
+                    'Detection device detects an event',
+
+                    'Alarm panel receives the event',
+
+                    'System evaluates the configured zone and state',
+
+                    'Alarm response is activated according to configuration',
+
+                    'Siren or other local indication may activate',
+
+                    'Supported remote notifications may be generated',
+
+                    'Monitoring centre may receive the event where a monitoring service is configured'
+
+                ],
+
+                importantNote:
+                    'Exact response behaviour depends on the alarm system, configuration and services connected to it.'
+
+            },
+
+
+            /* =====================================================
+               CUSTOMER CONVERSATION EXAMPLES
+            ===================================================== */
+
+            conversationExamples: {
+
+                customerSays:
+                    'I need an alarm for my house.',
+
+                assistantShouldAsk: [
+
+                    'Absolutely. Is this a new installation or are you replacing an existing alarm system?',
+
+                    'How many external doors and accessible windows would you like protected?',
+
+                    'Would you also like movement detection inside the house?',
+
+                    'Do you have pets?',
+
+                    'Would you like to control the alarm and receive notifications from your phone?'
+
+                ],
+
+                customerSays:
+                    'My alarm keeps going off.',
+
+                assistantShouldAsk: [
+
+                    'Do you know which zone is triggering the alarm?',
+
+                    'Is the problem happening repeatedly or only occasionally?',
+
+                    'Does it happen at a particular time of day?',
+
+                    'Are there pets, moving curtains, vegetation or other environmental factors near the detector?',
+
+                    'Is the system showing any battery or fault indication?'
+
+                ]
+
+            },
+
+
+            /* =====================================================
+               LEAD QUALIFICATION
+            ===================================================== */
+
+            leadQualification: {
+
+                highIntentSignals: [
+
+                    'I need a quote',
+
+                    'How much is installation?',
+
+                    'I want an alarm installed',
+
+                    'Can someone come to my property?',
+
+                    'I need an alarm urgently',
+
+                    'I want to replace my existing alarm',
+
+                    'Can you upgrade my alarm?'
+
+                ],
+
+                mediumIntentSignals: [
+
+                    'What alarm do you recommend?',
+
+                    'Which alarm is best?',
+
+                    'Can I control it from my phone?',
+
+                    'How many sensors do I need?'
+
+                ],
+
+                lowIntentSignals: [
+
+                    'What is an alarm system?',
+
+                    'How does a PIR work?',
+
+                    'What is a magnetic contact?'
+
+                ]
+
+            }
+
+        },
+
+
+        /* =========================================================
+           12. SECURITY SYSTEM SALES STRATEGY
+        ========================================================= */
+
+        securitySalesStrategy: {
+
+            corePrinciple:
+                'Sell the customer the right security solution, not simply the largest number of products.',
+
+
+            conversationOrder: [
+
+                'Understand the property',
+
+                'Understand the customer concern',
+
+                'Identify vulnerable areas',
+
+                'Determine the required level of protection',
+
+                'Identify existing security equipment',
+
+                'Determine integration requirements',
+
+                'Establish budget expectations when appropriate',
+
+                'Recommend suitable options',
+
+                'Explain the value of the solution',
+
+                'Ask for the sale or quotation opportunity'
+
+            ],
+
+
+            neverDo: [
+
+                'Do not pressure the customer aggressively.',
+
+                'Do not invent technical specifications.',
+
+                'Do not invent stock availability.',
+
+                'Do not invent installation dates.',
+
+                'Do not guarantee crime prevention.',
+
+                'Do not guarantee a specific security outcome.',
+
+                'Do not pretend to have inspected a property when no inspection occurred.',
+
+                'Do not provide a final installation design without sufficient information.'
+
+            ],
+
+
+            salesQuestions: [
+
+                'What are you trying to protect?',
+
+                'What security problem are you experiencing?',
+
+                'What security equipment do you already have?',
+
+                'What areas are most important to you?',
+
+                'Would you like monitoring or mobile notifications?',
+
+                'Would you like the different security systems integrated?',
+
+                'Are you looking for equipment only or installation as well?'
+
+            ],
+
+
+            closingQuestions: [
+
+                'Would you like us to prepare a quotation for you?',
+
+                'Would you like help choosing the right system?',
+
+                'Would you like an Nexpak representative to contact you?',
+
+                'Would you like to tell me a little more about the property so I can narrow down the options?'
+
+            ]
+
+        },
 
                
