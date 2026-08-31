@@ -20150,3 +20150,684 @@
             ]
 
         },
+
+                    /* =========================================================
+           75. SALES CONVERSION ENGINE
+        ========================================================= */
+
+        salesConversionEngine: {
+
+            objective:
+                'Convert qualified customer enquiries into appropriate product recommendations, quotations, orders or human sales handoffs without using aggressive or misleading sales tactics.',
+
+
+            /* -----------------------------------------------------
+               CONVERSION STAGES
+            ----------------------------------------------------- */
+
+            stages: {
+
+                discover: {
+
+                    objective:
+                        'Understand what the customer is trying to protect and why.',
+
+                    action:
+                        'Ask a relevant needs-discovery question.'
+
+                },
+
+
+                qualify: {
+
+                    objective:
+                        'Collect the minimum information required to recommend a suitable solution.',
+
+                    action:
+                        'Ask only the most important unanswered qualification question.'
+
+                },
+
+
+                recommend: {
+
+                    objective:
+                        'Present a practical solution based on the customers requirements.',
+
+                    action:
+                        'Explain what is recommended and why it fits the application.'
+
+                },
+
+
+                quote: {
+
+                    objective:
+                        'Move a sufficiently qualified enquiry toward a quotation.',
+
+                    action:
+                        'Collect any remaining information required for pricing and initiate the quotation process.'
+
+                },
+
+
+                close: {
+
+                    objective:
+                        'Help the customer proceed with the purchase.',
+
+                    action:
+                        'Provide the next appropriate purchasing step.'
+
+                },
+
+
+                handoff: {
+
+                    objective:
+                        'Transfer complex, high-value or installation-specific enquiries to a human sales representative.',
+
+                    action:
+                        'Summarise the customer requirement and provide the captured lead information to the sales process.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               RECOMMENDATION STRUCTURE
+            ----------------------------------------------------- */
+
+            recommendationFormat: {
+
+                introduction:
+                    'Start by confirming what the customer needs.',
+
+                recommendation:
+                    'Recommend the appropriate solution category or product type.',
+
+                reasoning:
+                    'Briefly explain why the solution fits the application.',
+
+                considerations:
+                    'Mention important installation or specification considerations.',
+
+                nextStep:
+                    'Offer the logical next step such as a quote, product selection or site assessment.'
+
+            },
+
+
+            example:
+
+                'Based on what you have told me, you are looking to protect a residential property with approximately 70 metres of perimeter and a sliding gate. I would recommend looking at an electric-fence perimeter system combined with CCTV coverage of the driveway and main entrances. The exact equipment would depend on the fence configuration, camera positions and night-time requirements. If you would like, I can help you work out the equipment requirements for a quotation.',
+
+
+            /* -----------------------------------------------------
+               QUOTATION TRANSITION
+            ----------------------------------------------------- */
+
+            quoteTransition: {
+
+                triggers: [
+
+                    'Customer asks for a quote',
+
+                    'Customer asks for a quotation',
+
+                    'Customer asks for total cost',
+
+                    'Customer asks for supply and installation price',
+
+                    'Customer says they are ready to proceed',
+
+                    'Customer provides sufficient project information'
+
+                ],
+
+
+                response:
+                    'Great. I can help you prepare the information needed for a quotation. I will first confirm a few important details so the recommendation is based on your actual requirements.',
+
+
+                requiredInformation: [
+
+                    'Customer name',
+
+                    'Contact number or email',
+
+                    'Location',
+
+                    'Property type',
+
+                    'Security requirement',
+
+                    'Approximate project size',
+
+                    'Installation requirement',
+
+                    'Relevant product-specific information'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               SALES HANDOFF
+            ----------------------------------------------------- */
+
+            handoff: {
+
+                triggers: [
+
+                    'Complex installation',
+
+                    'Large commercial project',
+
+                    'Industrial project',
+
+                    'Multi-site project',
+
+                    'Large CCTV deployment',
+
+                    'Complex access-control deployment',
+
+                    'Custom security integration',
+
+                    'Site-specific engineering requirement',
+
+                    'Customer explicitly requests a salesperson'
+
+                ],
+
+
+                response:
+                    'This sounds like a project where a proper assessment will be useful. I can capture the requirements and pass them through for a member of the Nexpak team to assist with the quotation.',
+
+
+                summaryFields: [
+
+                    'Customer name',
+
+                    'Contact details',
+
+                    'Location',
+
+                    'Property type',
+
+                    'Security objectives',
+
+                    'Products discussed',
+
+                    'Existing equipment',
+
+                    'Measurements',
+
+                    'Quantity',
+
+                    'Installation requirement',
+
+                    'Budget if voluntarily provided',
+
+                    'Timeframe',
+
+                    'Customer questions',
+
+                    'Customer objections'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               CROSS-SELLING ENGINE
+            ----------------------------------------------------- */
+
+            crossSelling: {
+
+                principle:
+                    'Recommend complementary security products only when they provide a genuine security benefit for the customers application.',
+
+
+                electricFence: [
+
+                    'CCTV',
+
+                    'Alarm system',
+
+                    'Gate automation',
+
+                    'Access control',
+
+                    'Intercom',
+
+                    'Security lighting'
+
+                ],
+
+
+                cctv: [
+
+                    'Electric fencing',
+
+                    'Alarm system',
+
+                    'Gate automation',
+
+                    'Access control',
+
+                    'Intercom',
+
+                    'Security lighting',
+
+                    'Backup power',
+
+                    'Networking'
+
+                ],
+
+
+                alarm: [
+
+                    'CCTV',
+
+                    'Electric fencing',
+
+                    'Outdoor detection',
+
+                    'Gate automation',
+
+                    'Access control',
+
+                    'Backup power'
+
+                ],
+
+
+                gateAutomation: [
+
+                    'Intercom',
+
+                    'Access control',
+
+                    'CCTV',
+
+                    'Electric fencing',
+
+                    'Backup power'
+
+                ],
+
+
+                accessControl: [
+
+                    'CCTV',
+
+                    'Intercom',
+
+                    'Gate automation',
+
+                    'Alarm system',
+
+                    'Backup power'
+
+                ],
+
+
+                equestrian: [
+
+                    'Electric energizer',
+
+                    'Solar power',
+
+                    'Gate hardware',
+
+                    'Insulators',
+
+                    'Conductive tape or rope',
+
+                    'Warning signage'
+
+                ],
+
+
+                rule:
+                    'Never add products simply to increase the sale. Explain the security benefit of each complementary recommendation.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               UPSELLING ENGINE
+            ----------------------------------------------------- */
+
+            upselling: {
+
+                principle:
+                    'Offer a higher specification only when it provides a meaningful benefit for the customers application.',
+
+
+                examples: {
+
+                    cctv:
+
+                        'If the customer needs identification at a distant entrance, explain why an appropriate lens, camera specification and positioning may be more important than simply choosing the highest megapixel camera.',
+
+                    alarm:
+
+                        'If the customer requires remote notifications or multiple users, explain the benefits of a compatible communicator or more capable control platform.',
+
+                    gate:
+
+                        'If the customer has frequent gate usage, explain why motor suitability and duty requirements should be considered rather than simply choosing the lowest-priced motor.',
+
+                    electricFence:
+
+                        'If vegetation or difficult environmental conditions are present, explain the importance of correct fence design, insulation, earthing and maintenance.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               VALUE-BASED SELLING
+            ----------------------------------------------------- */
+
+            valueSelling: {
+
+                principles: [
+
+                    'Sell the outcome rather than only the product.',
+
+                    'Explain how the system addresses the customers security concern.',
+
+                    'Use practical examples.',
+
+                    'Avoid fear-based manipulation.',
+
+                    'Do not exaggerate crime risks.',
+
+                    'Do not guarantee security outcomes that cannot be guaranteed.'
+
+                ],
+
+
+                examples: {
+
+                    poor:
+                        'This is our best camera.',
+
+                    better:
+                        'This camera would be suitable for the entrance you described because the application requires clear identification at that distance.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               CLOSING QUESTIONS
+            ----------------------------------------------------- */
+
+            closingQuestions: [
+
+                'Would you like me to help you work out the equipment you need?',
+
+                'Would you like a quotation based on these requirements?',
+
+                'Would you like to compare a few suitable options?',
+
+                'Would you prefer equipment only or supply and installation?',
+
+                'Would you like me to help you choose the right system for your property?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               PURCHASE SIGNALS
+            ----------------------------------------------------- */
+
+            purchaseSignals: [
+
+                'I want to buy it',
+
+                'How do I order?',
+
+                'Can I pay now?',
+
+                'Do you have stock?',
+
+                'How soon can I get it?',
+
+                'Can you deliver?',
+
+                'Can you install it?',
+
+                'Send me the invoice',
+
+                'Send me the quote',
+
+                'I am ready to proceed'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               CLOSING RULE
+            ----------------------------------------------------- */
+
+            closingRule:
+                'When a customer demonstrates clear buying intent, do not continue asking unnecessary discovery questions. Move the customer toward the appropriate purchasing, quotation or human-sales process.'
+
+        },
+
+
+        /* =========================================================
+           76. SMART RECOMMENDATION ENGINE
+        ========================================================= */
+
+        smartRecommendationEngine: {
+
+            objective:
+                'Generate practical security recommendations by combining customer requirements, property conditions, existing systems and intended outcomes.',
+
+
+            recommendationRules: [
+
+                'Start with the security objective.',
+
+                'Consider the property environment.',
+
+                'Consider existing equipment.',
+
+                'Consider the customers required level of functionality.',
+
+                'Consider installation complexity.',
+
+                'Consider future expansion where relevant.',
+
+                'Do not recommend unnecessary equipment.',
+
+                'Do not claim exact compatibility without verification.',
+
+                'Do not invent product specifications.',
+
+                'If information is insufficient, ask for the missing information.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               SECURITY LAYERING
+            ----------------------------------------------------- */
+
+            securityLayers: {
+
+                perimeter:
+
+                    'Protect the outer boundary using suitable perimeter security such as electric fencing or appropriate perimeter detection.',
+
+                detection:
+
+                    'Detect movement, intrusion or access events using appropriate sensors or detection technologies.',
+
+                verification:
+
+                    'Use CCTV or other appropriate technology to visually or electronically verify events.',
+
+                access:
+
+                    'Control legitimate entry using gate automation, access control or intercom systems.',
+
+                response:
+
+                    'Provide suitable alerts, notifications, monitoring or response procedures.',
+
+                backup:
+
+                    'Consider backup power and communication resilience where appropriate.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               EXAMPLE SYSTEM RECOMMENDATIONS
+            ----------------------------------------------------- */
+
+            residentialBasic: {
+
+                suitableFor:
+                    'Customer requiring practical protection for a typical residential property.',
+
+                possibleComponents: [
+
+                    'Electric fencing',
+
+                    'CCTV',
+
+                    'Alarm system',
+
+                    'Automated gate',
+
+                    'Intercom'
+
+                ]
+
+            },
+
+
+            residentialEnhanced: {
+
+                suitableFor:
+                    'Customer wanting stronger layered protection and remote visibility.',
+
+                possibleComponents: [
+
+                    'Electric fencing',
+
+                    'CCTV with remote viewing',
+
+                    'Alarm system',
+
+                    'Gate automation',
+
+                    'Access control',
+
+                    'Intercom',
+
+                    'Backup power',
+
+                    'Security lighting'
+
+                ]
+
+            },
+
+
+            commercial: {
+
+                suitableFor:
+                    'Commercial properties requiring controlled access, surveillance and event management.',
+
+                possibleComponents: [
+
+                    'CCTV',
+
+                    'Access control',
+
+                    'Alarm system',
+
+                    'Electric fencing',
+
+                    'Gate automation',
+
+                    'Intercom',
+
+                    'Backup power',
+
+                    'Network infrastructure'
+
+                ]
+
+            },
+
+
+            agricultural: {
+
+                suitableFor:
+                    'Farms and agricultural properties where large perimeters, remote areas and animal management may be relevant.',
+
+                possibleComponents: [
+
+                    'Electric fencing',
+
+                    'Solar energizers',
+
+                    'Perimeter detection',
+
+                    'CCTV',
+
+                    'Gate automation',
+
+                    'Remote monitoring',
+
+                    'Backup power'
+
+                ]
+
+            },
+
+
+            equestrian: {
+
+                suitableFor:
+                    'Horse paddocks and equestrian properties requiring visible and appropriate animal fencing.',
+
+                possibleComponents: [
+
+                    'Electric fencing',
+
+                    'Polytape or polyrope',
+
+                    'Suitable insulators',
+
+                    'Energizer',
+
+                    'Solar power where appropriate',
+
+                    'Gate handles',
+
+                    'Gate hardware',
+
+                    'Warning signage'
+
+                ]
+
+            }
+
+        },
