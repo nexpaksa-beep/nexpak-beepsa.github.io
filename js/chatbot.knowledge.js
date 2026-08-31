@@ -21792,6 +21792,780 @@
         },
 
 
-        /* =========================================================
+                /* =========================================================
            76. SMART RECOMMENDATION ENGINE
+        ========================================================= */
+
+        smartRecommendationEngine: {
+
+            objective:
+                'Generate practical security recommendations by combining the customers security objective, property type, environment, existing equipment, required functionality and project conditions.',
+
+
+            /* -----------------------------------------------------
+               CORE RECOMMENDATION RULES
+            ----------------------------------------------------- */
+
+            rules: [
+
+                'Start with the customers security objective.',
+
+                'Determine what the customer is actually trying to achieve.',
+
+                'Consider the property environment.',
+
+                'Consider existing security equipment.',
+
+                'Consider the customers required functionality.',
+
+                'Consider installation complexity.',
+
+                'Consider future expansion where relevant.',
+
+                'Recommend only equipment that serves a genuine purpose.',
+
+                'Do not automatically recommend the most expensive solution.',
+
+                'Do not recommend the cheapest solution simply because it is cheaper.',
+
+                'Do not invent product specifications.',
+
+                'Do not claim compatibility without verification.',
+
+                'Do not provide an exact system design when important site information is missing.',
+
+                'Clearly identify when a site assessment is recommended.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               SECURITY OBJECTIVES
+            ----------------------------------------------------- */
+
+            objectives: {
+
+                deterrence:
+
+                    'Customer wants to discourage unauthorised access or intrusion.',
+
+                detection:
+
+                    'Customer wants the system to identify an intrusion or security event.',
+
+                verification:
+
+                    'Customer wants to determine what caused an alarm or detected event.',
+
+                identification:
+
+                    'Customer needs enough information to identify a person, vehicle or event.',
+
+                accessManagement:
+
+                    'Customer needs to control and manage who can enter a property or area.',
+
+                monitoring:
+
+                    'Customer wants visibility of the property locally or remotely.',
+
+                convenience:
+
+                    'Customer wants easier control of gates, doors or security equipment.',
+
+                animalManagement:
+
+                    'Customer needs electric fencing for livestock, horses or agricultural purposes.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               SECURITY LAYERING
+            ----------------------------------------------------- */
+
+            securityLayers: {
+
+                perimeter: {
+
+                    purpose:
+                        'Protect the outer boundary and provide an early deterrent or detection layer.',
+
+                    examples: [
+
+                        'Electric fencing',
+
+                        'Perimeter detection',
+
+                        'Security walls',
+
+                        'Appropriate boundary systems'
+
+                    ]
+
+                },
+
+
+                detection: {
+
+                    purpose:
+                        'Detect movement, intrusion or access events.',
+
+                    examples: [
+
+                        'Alarm sensors',
+
+                        'PIR detection',
+
+                        'Perimeter detection',
+
+                        'Gate contacts',
+
+                        'Door contacts',
+
+                        'Electric-fence monitoring'
+
+                    ]
+
+                },
+
+
+                verification: {
+
+                    purpose:
+                        'Determine what is happening after an event is detected.',
+
+                    examples: [
+
+                        'CCTV',
+
+                        'Video verification',
+
+                        'Video intercom'
+
+                    ]
+
+                },
+
+
+                access: {
+
+                    purpose:
+                        'Control legitimate entry and exit.',
+
+                    examples: [
+
+                        'Gate automation',
+
+                        'Access control',
+
+                        'Intercom',
+
+                        'Keypad',
+
+                        'Card or tag systems',
+
+                        'Biometric systems'
+
+                    ]
+
+                },
+
+
+                response: {
+
+                    purpose:
+                        'Provide appropriate notification or response after a security event.',
+
+                    examples: [
+
+                        'Alarm notification',
+
+                        'Mobile notifications',
+
+                        'Monitoring services',
+
+                        'Security response procedures'
+
+                    ]
+
+                },
+
+
+                resilience: {
+
+                    purpose:
+                        'Maintain important security functions during suitable failure conditions.',
+
+                    examples: [
+
+                        'Backup power',
+
+                        'Battery backup',
+
+                        'Communication redundancy',
+
+                        'Network resilience'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               RESIDENTIAL RECOMMENDATIONS
+            ----------------------------------------------------- */
+
+            residential: {
+
+                basic: {
+
+                    suitableFor:
+                        'Customers looking for practical protection for a typical residential property.',
+
+                    possibleComponents: [
+
+                        'Electric fencing',
+
+                        'Alarm system',
+
+                        'CCTV',
+
+                        'Gate automation',
+
+                        'Intercom'
+
+                    ]
+
+                },
+
+
+                enhanced: {
+
+                    suitableFor:
+                        'Customers wanting layered protection and improved remote visibility.',
+
+                    possibleComponents: [
+
+                        'Electric fencing',
+
+                        'CCTV with remote viewing',
+
+                        'Alarm system',
+
+                        'Gate automation',
+
+                        'Access control',
+
+                        'Video intercom',
+
+                        'Backup power',
+
+                        'Security lighting'
+
+                    ]
+
+                },
+
+
+                recommendationRule:
+                    'Select components according to the customers actual property and security requirements rather than automatically recommending every available system.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               COMMERCIAL RECOMMENDATIONS
+            ----------------------------------------------------- */
+
+            commercial: {
+
+                priorities: [
+
+                    'Entrances',
+
+                    'Staff access',
+
+                    'Visitor access',
+
+                    'Stock areas',
+
+                    'Loading areas',
+
+                    'Perimeter',
+
+                    'Vehicle movement',
+
+                    'Restricted areas',
+
+                    'Incident verification',
+
+                    'Recorded evidence'
+
+                ],
+
+
+                possibleComponents: [
+
+                    'CCTV',
+
+                    'Access control',
+
+                    'Alarm system',
+
+                    'Electric fencing',
+
+                    'Gate automation',
+
+                    'Intercom',
+
+                    'Backup power',
+
+                    'Network infrastructure'
+
+                ],
+
+
+                recommendationRule:
+                    'Commercial recommendations should account for user numbers, access points, operating hours, recording requirements and future expansion.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               INDUSTRIAL RECOMMENDATIONS
+            ----------------------------------------------------- */
+
+            industrial: {
+
+                priorities: [
+
+                    'Large perimeter',
+
+                    'Multiple access points',
+
+                    'Vehicle access',
+
+                    'Staff access',
+
+                    'Restricted zones',
+
+                    'Loading areas',
+
+                    'Warehouse areas',
+
+                    'High-value assets',
+
+                    'Long-term recording',
+
+                    'System resilience'
+
+                ],
+
+
+                possibleComponents: [
+
+                    'Perimeter security',
+
+                    'CCTV',
+
+                    'Access control',
+
+                    'Alarm systems',
+
+                    'Gate automation',
+
+                    'Intercom',
+
+                    'Backup power',
+
+                    'Network infrastructure',
+
+                    'Integrated security management'
+
+                ],
+
+
+                rule:
+                    'Large industrial projects may require site assessment and professional system design before equipment is specified.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               AGRICULTURAL RECOMMENDATIONS
+            ----------------------------------------------------- */
+
+            agricultural: {
+
+                priorities: [
+
+                    'Large perimeter',
+
+                    'Remote areas',
+
+                    'Long cable runs',
+
+                    'Power availability',
+
+                    'Environmental conditions',
+
+                    'Animal management',
+
+                    'Remote monitoring',
+
+                    'Gate access'
+
+                ],
+
+
+                possibleComponents: [
+
+                    'Electric fencing',
+
+                    'Solar energizers',
+
+                    'Perimeter detection',
+
+                    'CCTV',
+
+                    'Gate automation',
+
+                    'Remote monitoring',
+
+                    'Backup power'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               EQUESTRIAN RECOMMENDATIONS
+            ----------------------------------------------------- */
+
+            equestrian: {
+
+                priorities: [
+
+                    'Animal safety',
+
+                    'Fence visibility',
+
+                    'Appropriate conductor selection',
+
+                    'Reliable energizer',
+
+                    'Suitable insulation',
+
+                    'Gate safety',
+
+                    'Power availability',
+
+                    'Permanent or portable configuration'
+
+                ],
+
+
+                possibleComponents: [
+
+                    'Electric fencing',
+
+                    'Polytape',
+
+                    'Polyrope',
+
+                    'Suitable insulators',
+
+                    'Energizer',
+
+                    'Solar power',
+
+                    'Gate handles',
+
+                    'Gate hardware',
+
+                    'Warning signage'
+
+                ],
+
+
+                rule:
+                    'Horse and livestock fencing recommendations must consider animal safety and the specific fencing application rather than treating the installation as identical to a security perimeter.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               PRODUCT SELECTION LOGIC
+            ----------------------------------------------------- */
+
+            productSelection: {
+
+                cctv: {
+
+                    consider: [
+
+                        'Area to monitor',
+
+                        'Target distance',
+
+                        'Lighting',
+
+                        'Required image detail',
+
+                        'Camera position',
+
+                        'Indoor or outdoor environment',
+
+                        'Recording requirement',
+
+                        'Remote viewing',
+
+                        'Number of cameras',
+
+                        'Future expansion'
+
+                    ]
+
+                },
+
+
+                electricFencing: {
+
+                    consider: [
+
+                        'Perimeter length',
+
+                        'Fence configuration',
+
+                        'Wall or pole installation',
+
+                        'Number of strands',
+
+                        'Vegetation',
+
+                        'Earthing',
+
+                        'Energizer suitability',
+
+                        'Power availability',
+
+                        'Existing fence condition'
+
+                    ]
+
+                },
+
+
+                alarm: {
+
+                    consider: [
+
+                        'Property size',
+
+                        'Entrances',
+
+                        'Doors',
+
+                        'Windows',
+
+                        'Detection areas',
+
+                        'Existing alarm',
+
+                        'Pets',
+
+                        'Remote notifications',
+
+                        'Monitoring requirements',
+
+                        'Future expansion'
+
+                    ]
+
+                },
+
+
+                gateAutomation: {
+
+                    consider: [
+
+                        'Sliding or swing gate',
+
+                        'Gate weight',
+
+                        'Gate length',
+
+                        'Gate condition',
+
+                        'Usage frequency',
+
+                        'Power availability',
+
+                        'Manual release',
+
+                        'Backup power',
+
+                        'Intercom',
+
+                        'Access control'
+
+                    ]
+
+                },
+
+
+                accessControl: {
+
+                    consider: [
+
+                        'Number of doors',
+
+                        'Number of users',
+
+                        'Credential type',
+
+                        'Reader type',
+
+                        'Controller capacity',
+
+                        'Locking hardware',
+
+                        'Power requirements',
+
+                        'Event logging',
+
+                        'Remote management',
+
+                        'Future expansion'
+
+                    ]
+
+                },
+
+
+                intercom: {
+
+                    consider: [
+
+                        'Gate or entrance type',
+
+                        'Audio or video requirement',
+
+                        'Distance',
+
+                        'Indoor stations',
+
+                        'Gate release',
+
+                        'Mobile access',
+
+                        'Network availability'
+
+                    ]
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               INSUFFICIENT INFORMATION
+            ----------------------------------------------------- */
+
+            insufficientInformation: {
+
+                rule:
+                    'If the available information is insufficient to make a responsible recommendation, the assistant should ask the most important missing question instead of guessing.',
+
+
+                examples: {
+
+                    cctv:
+                        'Before recommending a specific camera, determine what the customer needs the camera to see and approximately how far away the target is.',
+
+                    electricFence:
+                        'Before recommending an energizer, determine the approximate fence length and configuration.',
+
+                    gateMotor:
+                        'Before recommending a motor, determine whether the gate is sliding or swing type and establish its approximate size and condition.',
+
+                    accessControl:
+                        'Before recommending a system, determine the number of controlled doors and approximate number of users.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               SITE ASSESSMENT
+            ----------------------------------------------------- */
+
+            siteAssessment: {
+
+                recommendWhen: [
+
+                    'Large or complex property',
+
+                    'Unusual installation conditions',
+
+                    'Long perimeter',
+
+                    'Complex CCTV coverage',
+
+                    'Difficult cable routes',
+
+                    'Multiple buildings',
+
+                    'Integrated security system',
+
+                    'Large commercial installation',
+
+                    'Industrial installation',
+
+                    'Customer is unsure of measurements'
+
+                ],
+
+
+                response:
+                    'For a project like this, a site assessment can help confirm the measurements, equipment positions, cable routes and installation requirements before the final quotation is prepared.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               RECOMMENDATION CONFIDENCE
+            ----------------------------------------------------- */
+
+            confidence: {
+
+                high:
+                    'Enough customer information is available to make a practical recommendation.',
+
+                medium:
+                    'A likely solution can be suggested, but one or more important details still need confirmation.',
+
+                low:
+                    'The customers requirement is not sufficiently defined. Ask a discovery question before recommending equipment.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               FINAL RECOMMENDATION RULE
+            ----------------------------------------------------- */
+
+            finalRule:
+                'The assistant must recommend the most appropriate practical solution supported by the information available, clearly identify uncertainties and avoid inventing specifications, prices, compatibility or installation requirements.'
+
+        },
+
+
+        /* =========================================================
+           77. SMART SALES CONVERSATION ROUTER
         ========================================================= */
