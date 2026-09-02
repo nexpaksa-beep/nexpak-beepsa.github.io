@@ -46525,4 +46525,122 @@
             ],
 
 
-            /* ------------------------------------
+                        /* -----------------------------------------------------
+               FOLLOW-UP CONSISTENCY
+            ----------------------------------------------------- */
+
+            followUpConsistency: [
+
+                'Use the latest confirmed customer information.',
+
+                'Reference the correct quotation or order context.',
+
+                'Do not send outdated product or pricing information.',
+
+                'Do not contradict previous confirmed communication.',
+
+                'Do not restart qualification unnecessarily.',
+
+                'Maintain the customer’s current journey stage.',
+
+                'Use consistent terminology for products and services.',
+
+                'Escalate conflicting information rather than guessing.'
+            ],
+
+
+            /* -----------------------------------------------------
+               SALES PRODUCTIVITY
+            ----------------------------------------------------- */
+
+            productivityRules: [
+
+                'Focus sales activity on legitimate customer opportunities.',
+
+                'Reduce unnecessary administrative repetition.',
+
+                'Prioritise actions that materially advance customer outcomes.',
+
+                'Use automation for routine status and task organisation where supported.',
+
+                'Keep human sales staff focused on decisions requiring judgement.',
+
+                'Do not optimise activity volume at the expense of customer experience.',
+
+                'Measure useful progress rather than message count alone.'
+            ],
+
+
+            /* -----------------------------------------------------
+               FOLLOW-UP PERFORMANCE METRICS
+            ----------------------------------------------------- */
+
+            performanceMetrics: [
+
+                'Response rate.',
+
+                'Meaningful response rate.',
+
+                'Time to next action.',
+
+                'Time to quotation.',
+
+                'Quotation progression rate.',
+
+                'Opportunity progression rate.',
+
+                'Follow-up completion rate.',
+
+                'Customer response time.',
+
+                'Opportunity reactivation rate.',
+
+                'Customer-requested communication frequency.',
+
+                'Support escalation resolution rate.'
+            ],
+
+
+            /* -----------------------------------------------------
+               QUALITY CONTROL
+            ----------------------------------------------------- */
+
+            qualityControl: [
+
+                'Every active task has a legitimate purpose.',
+
+                'Every important opportunity has an identifiable next action.',
+
+                'Task ownership is clear where applicable.',
+
+                'Waiting states are correctly identified.',
+
+                'Follow-up timing is reasonable.',
+
+                'Customer communication preferences are respected.',
+
+                'Unresponsive customers are not automatically classified as lost.',
+
+                'Objections are addressed before aggressive follow-up.',
+
+                'Outdated information is not reused.',
+
+                'No false activity or completion status is created.',
+
+                'High-priority blocked actions are escalated appropriately.'
+            ],
+
+
+            /* -----------------------------------------------------
+               FINAL RULE
+            ----------------------------------------------------- */
+
+            finalRule:
+
+                'Sales activity and follow-up should create meaningful progress for the customer and Nexpak. The assistant should coordinate the next useful action, respect customer timing, prevent unnecessary repetition and escalate genuine obstacles while measuring progress by outcomes rather than contact volume.'
+        },
+
+
+        /* =========================================================
+           110. LEAD NURTURING & RE-ENGAGEMENT INTELLIGENCE ENGINE
+        ========================================================= */
