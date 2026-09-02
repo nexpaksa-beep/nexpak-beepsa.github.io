@@ -39175,6 +39175,680 @@
         },
 
 
-        /* =========================================================
+                /* =========================================================
            100. QUOTATION PREPARATION & COMMERCIAL CONFIGURATION ENGINE
         ========================================================= */
+
+        quotationPreparationCommercialConfigurationEngine: {
+
+            objective:
+
+                'Convert a validated security-system requirement and preliminary bill of materials into a structured quotation-ready configuration while clearly separating confirmed commercial information from estimates, exclusions, assumptions and items requiring human confirmation.',
+
+
+            principle:
+
+                'A quotation should accurately represent the proposed scope of work, equipment, quantities, services, assumptions and commercial conditions without creating unsupported prices, promises or commitments.',
+
+
+            /* -----------------------------------------------------
+               QUOTATION FOUNDATION
+            ----------------------------------------------------- */
+
+            quotationFoundation: [
+
+                'Start with a validated customer requirement.',
+
+                'Use the latest approved system configuration.',
+
+                'Use the latest validated bill of materials.',
+
+                'Confirm quantities before pricing where possible.',
+
+                'Separate equipment from installation and services.',
+
+                'Identify optional items separately.',
+
+                'Identify site-dependent items.',
+
+                'Identify exclusions clearly.',
+
+                'Identify assumptions that affect the quotation.',
+
+                'Use current verified pricing when pricing is available.',
+
+                'Never invent a price, discount, stock position or delivery promise.',
+
+                'Escalate quotation preparation when commercial authority or technical confirmation is required.'
+            ],
+
+
+            /* -----------------------------------------------------
+               QUOTATION READINESS
+            ----------------------------------------------------- */
+
+            quotationReadiness: {
+
+                ready:
+
+                    'The customer requirement, system scope, major quantities and commercial inputs are sufficiently confirmed to prepare a quotation.',
+
+                partiallyReady:
+
+                    'The general solution is understood but one or more important technical, measurement or commercial inputs remain outstanding.',
+
+                notReady:
+
+                    'The available information is insufficient to produce a responsible quotation.'
+            },
+
+
+            readinessChecks: [
+
+                'Customer requirement is understood.',
+
+                'Property or application is identified.',
+
+                'Protected areas are identified.',
+
+                'System type is confirmed.',
+
+                'Major equipment categories are identified.',
+
+                'Required quantities are known or clearly marked as site dependent.',
+
+                'Installation requirements are understood to the appropriate level.',
+
+                'Important compatibility requirements are addressed.',
+
+                'Pricing source is current and verified where pricing is being provided.',
+
+                'Commercial assumptions are identified.',
+
+                'Exclusions are identified.',
+
+                'Required human approval is identified.'
+            ],
+
+
+            /* -----------------------------------------------------
+               QUOTATION STRUCTURE
+            ----------------------------------------------------- */
+
+            quotationStructure: {
+
+                customerInformation: [
+
+                    'Customer name',
+
+                    'Contact information',
+
+                    'Project or property description',
+
+                    'Quotation reference where applicable'
+                ],
+
+                projectScope: [
+
+                    'Security objective',
+
+                    'Protected areas',
+
+                    'Proposed system',
+
+                    'Main functions',
+
+                    'Installation scope'
+                ],
+
+                equipment: [
+
+                    'Product description',
+
+                    'Category',
+
+                    'Quantity',
+
+                    'Relevant specification',
+
+                    'Unit price where verified',
+
+                    'Line total where verified'
+                ],
+
+                services: [
+
+                    'Site assessment',
+
+                    'Installation',
+
+                    'Configuration',
+
+                    'Programming',
+
+                    'Commissioning',
+
+                    'Training',
+
+                    'Maintenance where applicable'
+                ],
+
+                commercialInformation: [
+
+                    'Subtotal',
+
+                    'Applicable taxes',
+
+                    'Discounts where authorised',
+
+                    'Delivery or logistics charges where applicable',
+
+                    'Total quotation value',
+
+                    'Quotation validity period where defined',
+
+                    'Payment requirements where defined'
+                ],
+
+                conditions: [
+
+                    'Assumptions',
+
+                    'Exclusions',
+
+                    'Site requirements',
+
+                    'Customer responsibilities',
+
+                    'Technical limitations',
+
+                    'Warranty conditions where verified'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               EQUIPMENT VS SERVICES
+            ----------------------------------------------------- */
+
+            scopeSeparation: {
+
+                equipment:
+
+                    'Physical security products and supporting equipment supplied as part of the solution.',
+
+                installation:
+
+                    'Physical installation work required to deploy the proposed system.',
+
+                configuration:
+
+                    'Programming, configuration or system setup required for operation.',
+
+                commissioning:
+
+                    'Testing and verification performed before handover.',
+
+                training:
+
+                    'Customer instruction required to operate relevant system functions.',
+
+                maintenance:
+
+                    'Ongoing servicing or support that is separately included or proposed.',
+
+                rule:
+
+                    'Do not combine unrelated costs into a single unexplained amount when the customer needs to understand the scope.'
+            },
+
+
+            /* -----------------------------------------------------
+               PRICING SOURCE CONTROL
+            ----------------------------------------------------- */
+
+            pricingSourceControl: {
+
+                verified:
+
+                    'Pricing has been obtained from an authorised and current source.',
+
+                customerSupplied:
+
+                    'Pricing or budget information was supplied directly by the customer.',
+
+                estimated:
+
+                    'A preliminary estimate is being used and has not been confirmed as a final selling price.',
+
+                unavailable:
+
+                    'Current pricing is not available and must not be fabricated.'
+            },
+
+
+            pricingRules: [
+
+                'Use the most current verified price available.',
+
+                'Do not assume an old price remains current.',
+
+                'Do not fabricate a product price.',
+
+                'Do not fabricate installation charges.',
+
+                'Do not fabricate delivery charges.',
+
+                'Do not fabricate discounts.',
+
+                'Do not claim a promotional price unless the promotion is verified.',
+
+                'Do not claim a price is final when approval is still required.',
+
+                'Clearly distinguish estimates from confirmed commercial values.'
+            ],
+
+
+            /* -----------------------------------------------------
+               DISCOUNT CONTROL
+            ----------------------------------------------------- */
+
+            discountHandling: {
+
+                authorised:
+
+                    'A discount that has been approved under the applicable commercial rules.',
+
+                customerRequested:
+
+                    'A discount requested by the customer but not yet approved.',
+
+                promotional:
+
+                    'A discount associated with a verified promotional campaign.',
+
+                unsupported:
+
+                    'A discount invented or offered without authority.' 
+            },
+
+            discountRules: [
+
+                'Never invent a discount percentage.',
+
+                'Never promise a discount that requires management approval.',
+
+                'Never reduce a quotation simply to close a sale without commercial authority.',
+
+                'Explain that requested discounts may require confirmation.',
+
+                'Do not misrepresent the original price to make a discount appear larger.'
+            ],
+
+
+            /* -----------------------------------------------------
+               VAT & TAX HANDLING
+            ----------------------------------------------------- */
+
+            taxHandling: {
+
+                rule:
+
+                    'Tax treatment must follow the applicable commercial and legal requirements used by the business.',
+
+                displayOptions: [
+
+                    'Tax-exclusive pricing where appropriate.',
+
+                    'Tax-inclusive pricing where appropriate.',
+
+                    'Clearly labelled totals.'
+                ],
+
+                validation:
+
+                    'Do not guess tax treatment when the applicable commercial setup is unknown.'
+            },
+
+
+            /* -----------------------------------------------------
+               INSTALLATION PRICING
+            ----------------------------------------------------- */
+
+            installationPricing: {
+
+                factors: [
+
+                    'System complexity',
+
+                    'Installation time',
+
+                    'Site accessibility',
+
+                    'Cable routing',
+
+                    'Mounting requirements',
+
+                    'Existing infrastructure',
+
+                    'Required equipment',
+
+                    'Travel or logistics',
+
+                    'Additional labour requirements',
+
+                    'Testing and commissioning'
+                ],
+
+                rule:
+
+                    'Installation pricing should reflect the actual scope and known site conditions rather than an arbitrary percentage of equipment cost.',
+
+                siteDependent:
+
+                    'Where site conditions materially affect labour or installation cost, identify the item as subject to site assessment.'
+            },
+
+
+            /* -----------------------------------------------------
+               DELIVERY & LOGISTICS
+            ----------------------------------------------------- */
+
+            deliveryHandling: {
+
+                considerations: [
+
+                    'Customer location',
+
+                    'Equipment size',
+
+                    'Equipment quantity',
+
+                    'Delivery method',
+
+                    'Delivery responsibility',
+
+                    'Delivery charge',
+
+                    'Collection option where available',
+
+                    'Lead time where verified'
+                ],
+
+                rules: [
+
+                    'Do not promise delivery dates without verified logistics information.',
+
+                    'Do not invent delivery charges.',
+
+                    'Separate delivery charges from equipment pricing where appropriate.',
+
+                    'Identify whether delivery is included or excluded.',
+
+                    'Confirm unusual or remote delivery requirements.'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               QUOTATION OPTIONS
+            ----------------------------------------------------- */
+
+            quotationOptions: {
+
+                goodBetterBest: {
+
+                    good:
+
+                        'Essential configuration designed to meet the primary requirement.',
+
+                    better:
+
+                        'Enhanced configuration adding meaningful usability, monitoring or resilience.',
+
+                    best:
+
+                        'Comprehensive configuration addressing broader security and operational requirements.'
+                },
+
+                rules: [
+
+                    'Each option must have a clear purpose.',
+
+                    'Differences between options must be easy to understand.',
+
+                    'Do not deliberately make the lowest option inadequate merely to push the customer toward a higher option.',
+
+                    'Do not describe the most expensive option as automatically the safest.',
+
+                    'Allow the customer to compare meaningful differences.'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               QUOTATION EXCLUSIONS
+            ----------------------------------------------------- */
+
+            exclusions: [
+
+                'Civil works not included.',
+
+                'Electrical work outside the stated installation scope.',
+
+                'Network infrastructure not included unless specified.',
+
+                'Structural repairs not included unless specified.',
+
+                'Gate repairs not included unless specified.',
+
+                'Existing equipment replacement not included unless specified.',
+
+                'Additional cabling caused by unforeseen site conditions.',
+
+                'Additional equipment required due to conditions not disclosed or visible during preliminary assessment.',
+
+                'Third-party services not included unless specified.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CUSTOMER RESPONSIBILITIES
+            ----------------------------------------------------- */
+
+            customerResponsibilities: [
+
+                'Provide accurate project information.',
+
+                'Provide access to the property when required.',
+
+                'Provide required access permissions.',
+
+                'Identify known site restrictions.',
+
+                'Provide suitable power where required unless power provision is included in the scope.',
+
+                'Provide required network or internet services where applicable.',
+
+                'Provide authorised users or access information when required.',
+
+                'Approve the final configuration before installation.'
+            ],
+
+
+            /* -----------------------------------------------------
+               QUOTATION ASSUMPTIONS
+            ----------------------------------------------------- */
+
+            assumptionRules: [
+
+                'State assumptions that materially affect cost or scope.',
+
+                'Do not hide site-dependent assumptions.',
+
+                'Do not treat assumptions as confirmed facts.',
+
+                'Request clarification when an assumption could materially change the quotation.',
+
+                'Update the quotation when a material assumption is disproved.'
+            ],
+
+
+            /* -----------------------------------------------------
+               SCOPE CHANGE MANAGEMENT
+            ----------------------------------------------------- */
+
+            scopeChangeHandling: {
+
+                definition:
+
+                    'A scope change occurs when the customer requirement, site condition, equipment selection, quantity or installation requirement changes after the original scope was established.',
+
+                triggers: [
+
+                    'Additional cameras requested.',
+
+                    'Additional fence length identified.',
+
+                    'Additional gates added.',
+
+                    'Additional access points added.',
+
+                    'Different equipment selected.',
+
+                    'Additional cabling required.',
+
+                    'Existing infrastructure found to be unsuitable.',
+
+                    'Customer changes the security objective.',
+
+                    'Additional installation work becomes necessary.'
+                ],
+
+                rules: [
+
+                    'Document material scope changes.',
+
+                    'Recalculate affected quantities.',
+
+                    'Recalculate affected pricing.',
+
+                    'Explain the reason for the change.',
+
+                    'Obtain customer approval where required.',
+
+                    'Do not silently change the quotation.'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               QUOTATION VERSION CONTROL
+            ----------------------------------------------------- */
+
+            versionControl: {
+
+                rule:
+
+                    'Every material quotation revision should remain distinguishable from earlier versions.',
+
+                recommendedInformation: [
+
+                    'Quotation version',
+
+                    'Revision date',
+
+                    'Changed items',
+
+                    'Reason for change',
+
+                    'Updated totals',
+
+                    'Customer approval status'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               QUOTATION VALIDATION
+            ----------------------------------------------------- */
+
+            quotationValidation: [
+
+                'Customer details are correct.',
+
+                'Project description is correct.',
+
+                'Equipment quantities match the latest system design.',
+
+                'Equipment descriptions are accurate.',
+
+                'Services match the defined scope.',
+
+                'Optional items are clearly separated.',
+
+                'Pricing is based on verified information where presented as final.',
+
+                'Taxes are handled correctly.',
+
+                'Delivery charges are correctly identified.',
+
+                'Discounts are authorised.',
+
+                'Assumptions are visible.',
+
+                'Exclusions are visible.',
+
+                'Customer responsibilities are clear.',
+
+                'Scope changes are documented.',
+
+                'Quotation totals have been checked.',
+
+                'The quotation does not contain unsupported promises.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CUSTOMER-FACING QUOTATION SUMMARY
+            ----------------------------------------------------- */
+
+            customerSummaryFormat: {
+
+                opening:
+
+                    'Briefly confirm the customers requested security objective.',
+
+                solution:
+
+                    'Describe the proposed security solution in practical terms.',
+
+                included:
+
+                    'Summarise the main equipment and services included.',
+
+                options:
+
+                    'Present alternative configurations where appropriate.',
+
+                investment:
+
+                    'Present verified commercial values clearly.',
+
+                assumptions:
+
+                    'Identify important assumptions.',
+
+                exclusions:
+
+                    'Identify important exclusions.',
+
+                nextStep:
+
+                    'Explain how the customer can proceed or what information is still required.'
+            },
+
+
+            /* -----------------------------------------------------
+               COMMERCIAL SAFETY RULES
+            --------------------------------------------------
