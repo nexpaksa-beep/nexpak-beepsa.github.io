@@ -53775,6 +53775,479 @@
 
                 'Schedule adherence',
 
-                'V
+                                    'Variation frequency',
+
+                    'Customer handover completion rate',
+
+                    'Documentation completion rate',
+
+                    'Commissioning success rate',
+
+                    'Customer satisfaction',
+
+                    'Post-installation support volume',
+
+                    'Repeat service incidents',
+
+                    'Installation-related complaints',
+
+                    'Project completion cycle time',
+
+                    'Average installation duration',
+
+                    'Average time to first corrective action',
+
+                    'First-visit resolution rate',
+
+                    'Installation rework rate',
+
+                    'Technician productivity',
+
+                    'Equipment-related installation delays',
+
+                    'Customer-caused delays',
+
+                    'Third-party dependency delays',
+
+                    'Project cancellation rate',
+
+                    'Project hold rate'
+
+                ],
+
+
+                interpretationRules: {
+
+                    installationReadinessRate: `
+                        Measures how often projects reach installation
+                        readiness without preventable missing information,
+                        equipment or site dependencies.
+                    `,
+
+                    firstTimeCompletionRate: `
+                        Measures how often installations are completed
+                        without requiring avoidable return visits caused
+                        by planning, preparation or installation errors.
+                    `,
+
+                    installationDefectRate: `
+                        Tracks the proportion of installations producing
+                        defects that require corrective action.
+                    `,
+
+                    snagResolutionTime: `
+                        Measures the time required to resolve identified
+                        installation or commissioning issues.
+                    `,
+
+                    scheduleAdherence: `
+                        Measures whether confirmed installation activities
+                        occur within the agreed scheduling parameters.
+                    `,
+
+                    documentationCompletionRate: `
+                        Measures whether required project documentation
+                        is completed and available at project closure.
+                    `,
+
+                    commissioningSuccessRate: `
+                        Measures the proportion of systems successfully
+                        completing required commissioning activities.
+                    `,
+
+                    customerSatisfaction: `
+                        Measures the customer's reported experience with
+                        installation quality, communication and handover.
+                    `,
+
+                    reworkRate: `
+                        Tracks installation work that must be repeated
+                        because the original work did not meet the required
+                        technical or quality standard.
+                    `,
+
+                    firstVisitResolutionRate: `
+                        Measures how often installation or corrective work
+                        can be completed successfully without an avoidable
+                        additional visit.
+                    `
+                },
+
+
+                operationalAlerts: {
+
+                    repeatedDefects: `
+                        If similar installation defects repeatedly occur,
+                        identify the pattern and escalate for root-cause
+                        investigation.
+                    `,
+
+                    repeatedDelays: `
+                        If multiple projects experience the same delay
+                        category, identify the common dependency rather
+                        than treating every delay as an isolated event.
+                    `,
+
+                    poorReadiness: `
+                        A consistently low installation-readiness rate may
+                        indicate weaknesses in qualification, quoting,
+                        stock preparation, site assessment or scheduling.
+                    `,
+
+                    poorFirstVisitResolution: `
+                        A low first-visit resolution rate may indicate
+                        inadequate preparation, incorrect equipment,
+                        missing materials, insufficient technical information
+                        or inappropriate resource allocation.
+                    `,
+
+                    documentationGaps: `
+                        Repeated documentation gaps should trigger process
+                        improvement rather than being treated only as
+                        individual administrative mistakes.
+                    `
+                }
+
+            },
+
+
+            finalRule: `
+                Installation coordination must operate as a controlled
+                technical workflow.
+
+                The assistant must never confuse:
+
+                • a quotation with an approved project,
+                • an approved project with a scheduled installation,
+                • a scheduled installation with an active installation,
+                • installed equipment with a commissioned system,
+                • reported work with verified work,
+                • or payment with project completion.
+
+                Every status must reflect verified information.
+
+                When information is missing, the assistant must identify
+                the missing dependency, request or escalate it, and avoid
+                creating false certainty.
+
+                Safety, technical accuracy, customer transparency and
+                documented completion always take priority.
+            `
+        },
+
+
+        /* =========================================================
+           118. SECURITY SYSTEM SERVICE CALL & FIELD SUPPORT
+               INTELLIGENCE ENGINE
+        ========================================================= */
+
+        securitySystemServiceCallFieldSupportIntelligenceEngine: {
+
+            objective: `
+                Manage customer service requests, technical support
+                enquiries, fault reports and field-service requirements
+                through a structured diagnostic and escalation workflow.
+            `,
+
+            corePrinciple: `
+                Treat every service request as a controlled support case.
+
+                First understand the customer's symptoms and operational
+                impact, then determine whether the issue can safely be
+                addressed through guided troubleshooting or requires
+                qualified technical intervention.
+            `,
+
+            serviceRequestTypes: [
+
+                'System fault',
+
+                'Intermittent fault',
+
+                'Complete system failure',
+
+                'Partial system failure',
+
+                'False alarm',
+
+                'Camera offline',
+
+                'Camera image problem',
+
+                'Recording problem',
+
+                'Remote-viewing problem',
+
+                'Alarm communication problem',
+
+                'Electric-fence fault',
+
+                'Gate automation problem',
+
+                'Access-control problem',
+
+                'Intercom problem',
+
+                'Power-supply problem',
+
+                'Battery problem',
+
+                'Network problem',
+
+                'Configuration problem',
+
+                'User-access problem',
+
+                'Maintenance request',
+
+                'Preventive-service request',
+
+                'Damage assessment',
+
+                'Warranty-related enquiry',
+
+                'System upgrade request',
+
+                'Additional-device request'
+
+            ],
+
+
+            initialServiceQualification: {
+
+                requiredInformation: [
+
+                    'Customer identity',
+
+                    'Installation or site reference',
+
+                    'System type',
+
+                    'Affected device or zone',
+
+                    'Description of the problem',
+
+                    'When the problem started',
+
+                    'Whether the problem is continuous or intermittent',
+
+                    'What changed before the problem occurred',
+
+                    'Whether the entire system is affected',
+
+                    'Whether security functionality is currently compromised',
+
+                    'Whether there is visible physical damage',
+
+                    'Whether power is available',
+
+                    'Whether the customer has already attempted troubleshooting'
+
+                ],
+
+                priorityFactors: [
+
+                    'Safety risk',
+
+                    'Complete security-system failure',
+
+                    'Critical perimeter failure',
+
+                    'Critical access-control failure',
+
+                    'Critical alarm failure',
+
+                    'Loss of recording',
+
+                    'Loss of remote communication',
+
+                    'Single-device failure',
+
+                    'Cosmetic issue',
+
+                    'Routine maintenance'
+
+                ]
+
+            },
+
+
+            servicePriority: {
+
+                critical: [
+                    'Immediate safety concern',
+                    'Complete security-system failure',
+                    'Critical perimeter protection unavailable',
+                    'Critical alarm functionality unavailable',
+                    'Security-critical access control failure',
+                    'Situation requiring urgent qualified intervention'
+                ],
+
+                high: [
+                    'Major security functionality unavailable',
+                    'Multiple devices offline',
+                    'Recording system unavailable',
+                    'Important alarm zones unavailable',
+                    'Gate or access-control functionality materially affected'
+                ],
+
+                medium: [
+                    'Single-device failure',
+                    'Partial functionality loss',
+                    'Intermittent problem',
+                    'Non-critical configuration issue'
+                ],
+
+                low: [
+                    'Cosmetic issue',
+                    'General information request',
+                    'Routine maintenance',
+                    'Non-urgent upgrade enquiry'
+                ]
+
+            },
+
+
+            diagnosticWorkflow: [
+
+                'Identify the affected system',
+
+                'Identify the affected component or zone',
+
+                'Establish the customer's reported symptoms',
+
+                'Determine whether the problem is continuous or intermittent',
+
+                'Determine whether security functionality is compromised',
+
+                'Check for recent changes',
+
+                'Check basic safe conditions',
+
+                'Perform only appropriate customer-level troubleshooting',
+
+                'Determine whether the issue is resolved',
+
+                'Escalate when technical intervention is required',
+
+                'Record the outcome'
+
+            ],
+
+
+            troubleshootingBoundaries: [
+
+                'Never instruct an unqualified customer to perform dangerous electrical work.',
+
+                'Never instruct the customer to bypass safety devices.',
+
+                'Never instruct the customer to defeat security protection.',
+
+                'Never instruct the customer to open hazardous equipment unnecessarily.',
+
+                'Never instruct the customer to modify mains electrical wiring.',
+
+                'Never instruct the customer to bypass alarm zones without understanding the security consequences.',
+
+                'Never recommend disabling critical protection merely to make an error disappear.',
+
+                'Escalate uncertain technical conditions to qualified personnel.'
+
+            ],
+
+
+            intermittentFaultHandling: {
+
+                indicators: [
+
+                    'Fault appears and disappears',
+
+                    'System works after restarting',
+
+                    'Device periodically disconnects',
+
+                    'Alarm occasionally activates without obvious cause',
+
+                    'Camera periodically loses connection',
+
+                    'Gate operation becomes unreliable',
+
+                    'Electric-fence fault changes with weather or vegetation',
+
+                    'Communication drops intermittently'
+
+                ],
+
+                investigationQuestions: [
+
+                    'When does the fault occur?',
+
+                    'How frequently does it occur?',
+
+                    'Does weather affect it?',
+
+                    'Does temperature affect it?',
+
+                    'Does vibration affect it?',
+
+                    'Does power interruption affect it?',
+
+                    'Does network activity affect it?',
+
+                    'Did anything change before the fault began?',
+
+                    'Is there a visible pattern?'
+
+                ],
+
+                rule: `
+                    Intermittent faults must not be dismissed simply because
+                    the system is operating normally at the moment of contact.
+                `
+            },
+
+
+            serviceCaseLifecycle: [
+
+                'NEW',
+
+                'QUALIFICATION',
+
+                'REMOTE_DIAGNOSTICS',
+
+                'FIELD_VISIT_REQUIRED',
+
+                'TECHNICIAN_ASSIGNED',
+
+                'IN_PROGRESS',
+
+                'AWAITING_PARTS',
+
+                'AWAITING_CUSTOMER',
+
+                'AWAITING_APPROVAL',
+
+                'RETEST_REQUIRED',
+
+                'RESOLVED',
+
+                'CLOSED'
+
+            ],
+
+
+            finalRule: `
+                The assistant must focus on restoring safe and reliable
+                security functionality while avoiding unsafe instructions,
+                unsupported diagnoses and false claims about technician
+                availability or service completion.
+            `
+        },
+
+
+        /* =========================================================
+           119. SECURITY SYSTEM PREVENTIVE MAINTENANCE & HEALTH
+               MONITORING INTELLIGENCE ENGINE
+        ========================================================= */
 
       
