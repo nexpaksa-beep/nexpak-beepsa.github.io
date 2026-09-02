@@ -32700,7 +32700,652 @@
 
         },
 
-
         /* =========================================================
            93. LEAD SCORING & SALES PRIORITISATION ENGINE
+        ========================================================= */
+
+        leadScoringSalesPrioritisationEngine: {
+
+            objective:
+                'Evaluate customer buying intent and project readiness so that genuine sales opportunities can be prioritised without making unsupported assumptions about the customer.',
+
+
+            /* -----------------------------------------------------
+               CORE PRINCIPLE
+            ----------------------------------------------------- */
+
+            principle:
+
+                'Lead scoring should be based on observable customer behaviour and information voluntarily provided during the conversation, not on assumptions about the customer.',
+
+
+            /* -----------------------------------------------------
+               SCORE RANGE
+            ----------------------------------------------------- */
+
+            scoreRange: {
+
+                minimum: 0,
+
+                maximum: 100,
+
+                interpretation: {
+
+                    '0-19':
+                        'Very low or undefined buying intent.',
+
+                    '20-39':
+                        'Early-stage interest or information gathering.',
+
+                    '40-59':
+                        'Qualified interest with some project information available.',
+
+                    '60-79':
+                        'Strong sales opportunity with identifiable requirements.',
+
+                    '80-100':
+                        'High-intent customer who appears ready for quotation, purchase or human sales assistance.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               SCORING FACTORS
+            ----------------------------------------------------- */
+
+            scoringFactors: {
+
+                productInterest: {
+
+                    points: 10,
+
+                    description:
+                        'Customer clearly identifies a product or security category they are interested in.'
+
+                },
+
+
+                clearSecurityObjective: {
+
+                    points: 10,
+
+                    description:
+                        'Customer clearly explains what security problem they want to solve.'
+
+                },
+
+
+                propertyInformation: {
+
+                    points: 5,
+
+                    description:
+                        'Customer provides useful information about the property or application.'
+
+                },
+
+
+                measurementsProvided: {
+
+                    points: 10,
+
+                    description:
+                        'Customer provides measurements such as fence length, camera distance, number of doors or gate dimensions.'
+
+                },
+
+
+                existingSystemInformation: {
+
+                    points: 5,
+
+                    description:
+                        'Customer provides useful information about an existing security system.'
+
+                },
+
+
+                budgetProvided: {
+
+                    points: 10,
+
+                    description:
+                        'Customer voluntarily provides an approximate budget or price range.'
+
+                },
+
+
+                timeframeProvided: {
+
+                    points: 10,
+
+                    description:
+                        'Customer provides a clear project or purchasing timeframe.'
+
+                },
+
+
+                quotationRequested: {
+
+                    points: 20,
+
+                    description:
+                        'Customer explicitly requests a quotation or pricing proposal.'
+
+                },
+
+
+                contactDetailsProvided: {
+
+                    points: 10,
+
+                    description:
+                        'Customer voluntarily provides contact information for follow-up.'
+
+                },
+
+
+                purchaseIntent: {
+
+                    points: 15,
+
+                    description:
+                        'Customer explicitly indicates that they want to purchase or proceed.'
+
+                },
+
+
+                comparisonIntent: {
+
+                    points: 5,
+
+                    description:
+                        'Customer is actively comparing solutions before making a purchasing decision.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               NEGATIVE SIGNALS
+            ----------------------------------------------------- */
+
+            negativeFactors: {
+
+                informationOnly: {
+
+                    points: -5,
+
+                    description:
+                        'Customer clearly states they are only researching.'
+
+                },
+
+
+                noCurrentProject: {
+
+                    points: -5,
+
+                    description:
+                        'Customer indicates that there is currently no active project.'
+
+                },
+
+
+                explicitNoInterest: {
+
+                    points: -20,
+
+                    description:
+                        'Customer clearly states that they are not interested.'
+
+                },
+
+
+                stopCommunication: {
+
+                    points: -50,
+
+                    description:
+                        'Customer explicitly requests that communication stop.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               SCORING RULES
+            ----------------------------------------------------- */
+
+            rules: [
+
+                'Do not assign points for information that the customer has not provided.',
+
+                'Do not infer income, wealth, property value or purchasing ability.',
+
+                'Do not classify a customer as high intent merely because they ask about price.',
+
+                'A quotation request is a strong buying signal but does not guarantee a purchase.',
+
+                'A customer comparing suppliers may still have high buying intent.',
+
+                'A customer asking technical questions may be highly interested even without requesting a quotation.',
+
+                'Negative signals should reduce prioritisation but should not cause disrespectful treatment.',
+
+                'Customer consent and communication preferences take priority over lead score.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               BUYING INTENT LEVELS
+            ----------------------------------------------------- */
+
+            buyingIntent: {
+
+                unknown:
+
+                    'No reliable indication of purchasing intent has been established.',
+
+
+                research:
+
+                    'Customer is primarily gathering information.',
+
+
+                interested:
+
+                    'Customer has a genuine security requirement but has not indicated immediate purchasing intent.',
+
+
+                evaluating:
+
+                    'Customer is comparing products, specifications, suppliers or prices.',
+
+
+                qualified:
+
+                    'Customer has supplied sufficient project information to identify a likely solution.',
+
+
+                highIntent:
+
+                    'Customer has demonstrated strong purchase intent or requested a quotation.',
+
+
+                readyToProceed:
+
+                    'Customer clearly indicates that they want to move forward.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               LEAD QUALITY
+            ----------------------------------------------------- */
+
+            leadQuality: {
+
+                unqualified:
+
+                    'Insufficient information is available to determine the project requirement.',
+
+
+                partiallyQualified:
+
+                    'The general requirement is known but important information is still missing.',
+
+
+                qualified:
+
+                    'The primary requirement and important project factors are understood.',
+
+
+                salesReady:
+
+                    'The customer has enough information and intent to justify human sales follow-up or quotation preparation.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               SALES PRIORITY
+            ----------------------------------------------------- */
+
+            priority: {
+
+                low:
+
+                    'Customer is primarily researching or has not demonstrated an active project.',
+
+
+                medium:
+
+                    'Customer has a genuine requirement and is evaluating options.',
+
+
+                high:
+
+                    'Customer has a defined project, strong interest and useful qualification information.',
+
+
+                urgent:
+
+                    'Customer explicitly requests immediate human assistance, quotation action or urgent support.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               PRODUCT-SPECIFIC SIGNALS
+            ----------------------------------------------------- */
+
+            productSignals: {
+
+                electricFencing: [
+
+                    'Approximate perimeter length provided.',
+
+                    'Number of gates provided.',
+
+                    'Existing fence or wall information provided.',
+
+                    'Customer identifies security objective.',
+
+                    'Customer asks for quotation.'
+
+                ],
+
+
+                cctv: [
+
+                    'Number of areas provided.',
+
+                    'Number of cameras discussed.',
+
+                    'Camera-to-target distance provided.',
+
+                    'Recording requirement identified.',
+
+                    'Remote-viewing requirement identified.',
+
+                    'Number-plate identification requirement identified.',
+
+                    'Quotation requested.'
+
+                ],
+
+
+                accessControl: [
+
+                    'Number of doors provided.',
+
+                    'Number of users provided.',
+
+                    'Credential type discussed.',
+
+                    'Existing access-control system identified.',
+
+                    'Integration requirements identified.',
+
+                    'Quotation requested.'
+
+                ],
+
+
+                gateAutomation: [
+
+                    'Gate type identified.',
+
+                    'Gate weight or approximate dimensions provided.',
+
+                    'Usage frequency discussed.',
+
+                    'Power availability discussed.',
+
+                    'Existing motor identified.',
+
+                    'Quotation requested.'
+
+                ],
+
+
+                alarmSystems: [
+
+                    'Property type identified.',
+
+                    'Number of zones or protected areas discussed.',
+
+                    'Existing alarm identified.',
+
+                    'Monitoring requirement identified.',
+
+                    'Mobile-control requirement identified.',
+
+                    'Quotation requested.'
+
+                ],
+
+
+                equestrianFencing: [
+
+                    'Fence length provided.',
+
+                    'Number of paddocks provided.',
+
+                    'Number of gates provided.',
+
+                    'Permanent or portable requirement identified.',
+
+                    'Energizer requirement identified.',
+
+                    'Installation requirement identified.',
+
+                    'Quotation requested.'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               LEAD STAGE TRANSITIONS
+            ----------------------------------------------------- */
+
+            stageTransitions: {
+
+                new:
+
+                    'Customer has just started the conversation.',
+
+
+                engaged:
+
+                    'Customer is actively asking relevant questions.',
+
+
+                qualified:
+
+                    'Primary requirement and useful project details have been established.',
+
+
+                solutionPresented:
+
+                    'A suitable product or system configuration has been discussed.',
+
+
+                quoteRequested:
+
+                    'Customer has requested pricing or a formal quotation.',
+
+
+                salesHandoff:
+
+                    'Human sales involvement is appropriate.',
+
+
+                negotiation:
+
+                    'Customer is discussing pricing, configuration or commercial terms.',
+
+
+                readyToBuy:
+
+                    'Customer has indicated clear intent to proceed.',
+
+
+                closedWon:
+
+                    'Purchase or confirmed sales action has been completed.',
+
+
+                closedLost:
+
+                    'Customer clearly declines the opportunity or confirms that the project is no longer proceeding.',
+
+
+                futureOpportunity:
+
+                    'Customer remains interested but intends to proceed later.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               SCORE UPDATE
+            ----------------------------------------------------- */
+
+            updateLogic: [
+
+                'Recalculate when meaningful new customer information is provided.',
+
+                'Increase score when buying intent becomes clearer.',
+
+                'Decrease score when the customer explicitly withdraws interest.',
+
+                'Do not repeatedly add points for the same information.',
+
+                'Do not allow the score to exceed 100.',
+
+                'Do not allow the score to fall below 0.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               HUMAN SALES PRIORITY
+            ----------------------------------------------------- */
+
+            humanSalesPriority: {
+
+                highIntent:
+
+                    'Prioritise for sales follow-up when a valid contact mechanism exists.',
+
+
+                quoteRequested:
+
+                    'Prioritise quotation processing.',
+
+
+                technicalComplexity:
+
+                    'Consider technical review before quotation where necessary.',
+
+
+                largeProject:
+
+                    'Prioritise commercial review when the project scope is substantial or complex.',
+
+
+                supportIssue:
+
+                    'Route to support rather than treating the interaction as a new sales lead.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               LEAD SUMMARY
+            ----------------------------------------------------- */
+
+            leadSummary:
+
+                'LEAD SUMMARY\n\nCustomer: [name]\nContact: [contact]\nProduct Interest: [product]\nObjective: [objective]\nProperty: [property]\n\nBuying Intent: [intent]\nLead Score: [score]/100\nLead Quality: [quality]\nSales Stage: [stage]\nPriority: [priority]\n\nBudget: [budget]\nTimeframe: [timeframe]\n\nKnown Requirements: [requirements]\nMissing Information: [missing information]\nObjections: [objections]\n\nRecommended Next Action: [next action]',
+
+
+            /* -----------------------------------------------------
+               PRIVACY & DATA MINIMISATION
+            ----------------------------------------------------- */
+
+            dataMinimisation: [
+
+                'Only collect information relevant to the sales or support requirement.',
+
+                'Do not request unnecessary personal information.',
+
+                'Do not infer sensitive personal characteristics.',
+
+                'Do not collect information unrelated to the customer request.',
+
+                'Respect customer requests regarding communication.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               LEAD SCORE DOES NOT EQUAL CUSTOMER VALUE
+            ----------------------------------------------------- */
+
+            importantRule:
+
+                'Lead score represents interaction and purchasing intent only. It must never be interpreted as a measure of the customers personal worth, wealth or importance.',
+
+
+            /* -----------------------------------------------------
+               FINAL SALES ACTION
+            ----------------------------------------------------- */
+
+            nextActionLogic: {
+
+                low:
+
+                    'Continue providing useful information and identify the customers objective.',
+
+
+                medium:
+
+                    'Continue qualification and help the customer compare suitable options.',
+
+
+                high:
+
+                    'Move toward recommendation, quotation or human sales assistance.',
+
+
+                urgent:
+
+                    'Prioritise the appropriate human handoff or support pathway.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               FINAL RULE
+            ----------------------------------------------------- */
+
+            finalRule:
+
+                'The assistant should identify genuine sales opportunities from customer-provided information, prioritise customers appropriately and guide each conversation toward the most useful next action without making unsupported assumptions or applying pressure.'
+
+        },
+
+
+        /* =========================================================
+           94. SALES PIPELINE & OPPORTUNITY MANAGEMENT ENGINE
         ========================================================= */
