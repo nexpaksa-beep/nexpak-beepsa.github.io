@@ -41117,4 +41117,646 @@
 
             finalRule:
 
-                'A customer conversion is complete only when the customer decision, selected solution, order information, commercial reference, payment status and fulfilment requirements are sufficiently validated for the applicable next stage, with no unverified commitment represented as conf
+                                'A customer conversion is complete only when the customer decision, selected solution, order information, commercial reference, payment status and fulfilment requirements are sufficiently validated for the applicable next stage, with no unverified commitment represented as confirmed.'
+        },
+
+
+        /* =========================================================
+           102. CUSTOMER ONBOARDING & POST-SALE ACTIVATION ENGINE
+        ========================================================= */
+
+        customerOnboardingPostSaleActivationEngine: {
+
+            /* -----------------------------------------------------
+               OBJECTIVE
+            ----------------------------------------------------- */
+
+            objective:
+
+                'Ensure every newly converted customer moves smoothly from order confirmation into a structured post-sale experience, with clear communication, correct documentation, installation or fulfilment coordination, system activation and customer support.',
+
+
+            /* -----------------------------------------------------
+               CORE PRINCIPLE
+            ----------------------------------------------------- */
+
+            principle:
+
+                'The sale does not end when payment is received. A successful conversion becomes a successful customer relationship only when the customer receives the correct products or service, understands the next steps and has a clear path to support.',
+
+
+            /* -----------------------------------------------------
+               ONBOARDING STAGES
+            ----------------------------------------------------- */
+
+            onboardingStages: [
+
+                'orderConfirmed',
+
+                'customerWelcomed',
+
+                'documentationPrepared',
+
+                'fulfilmentPrepared',
+
+                'deliveryOrCollection',
+
+                'installationPreparation',
+
+                'installation',
+
+                'systemConfiguration',
+
+                'testingAndCommissioning',
+
+                'customerHandover',
+
+                'supportActivation',
+
+                'postSaleFollowUp',
+
+                'customerCompletion'
+            ],
+
+
+            /* -----------------------------------------------------
+               CUSTOMER WELCOME
+            ----------------------------------------------------- */
+
+            customerWelcome: [
+
+                'Acknowledge the confirmed order where confirmation has been verified.',
+
+                'Thank the customer for choosing the business.',
+
+                'Explain the immediate next step.',
+
+                'Clearly identify anything still pending.',
+
+                'Avoid promising dates that have not been confirmed.',
+
+                'Provide relevant contact information through approved business channels.',
+
+                'Set realistic expectations regarding fulfilment, delivery or installation.',
+
+                'Maintain a professional and reassuring tone.'
+            ],
+
+
+            /* -----------------------------------------------------
+               ONBOARDING DATA
+            ----------------------------------------------------- */
+
+            onboardingData: [
+
+                'Customer name.',
+
+                'Business name where applicable.',
+
+                'Verified contact details.',
+
+                'Order reference.',
+
+                'Quotation reference where applicable.',
+
+                'Confirmed product configuration.',
+
+                'Installation scope where applicable.',
+
+                'Delivery or collection requirements.',
+
+                'Site information where applicable.',
+
+                'Customer-specific instructions.',
+
+                'Payment status.',
+
+                'Fulfilment status.',
+
+                'Installation status.',
+
+                'Outstanding actions.',
+
+                'Support requirements.'
+            ],
+
+
+            /* -----------------------------------------------------
+               DOCUMENTATION CONTROL
+            ----------------------------------------------------- */
+
+            documentationControl: [
+
+                'Use the confirmed order or quotation version.',
+
+                'Ensure customer-facing documentation reflects the approved scope.',
+
+                'Provide applicable invoices or order documentation through approved channels.',
+
+                'Provide installation documentation where applicable.',
+
+                'Provide relevant product documentation where appropriate.',
+
+                'Record material configuration changes.',
+
+                'Do not provide documents containing incorrect customer or order information.',
+
+                'Do not expose internal information that the customer does not need.',
+
+                'Escalate documentation discrepancies before they create downstream errors.'
+            ],
+
+
+            /* -----------------------------------------------------
+               FULFILMENT PREPARATION
+            ----------------------------------------------------- */
+
+            fulfilmentPreparation: [
+
+                'Verify the order is eligible for fulfilment.',
+
+                'Verify required payment conditions have been satisfied where applicable.',
+
+                'Verify product quantities.',
+
+                'Verify stock or allocation status where required.',
+
+                'Verify delivery or collection requirements.',
+
+                'Verify installation requirements.',
+
+                'Identify any outstanding approval.',
+
+                'Identify any customer dependency that could delay fulfilment.',
+
+                'Do not represent the order as fulfilment-ready when required conditions remain unresolved.'
+            ],
+
+
+            /* -----------------------------------------------------
+               DELIVERY AND COLLECTION
+            ----------------------------------------------------- */
+
+            deliveryCollection: {
+
+                deliveryRules: [
+
+                    'Confirm the delivery destination.',
+
+                    'Confirm the applicable delivery method.',
+
+                    'Use verified delivery information.',
+
+                    'Provide tracking information only when actually available.',
+
+                    'Do not claim dispatch without verified dispatch status.',
+
+                    'Do not claim delivery without verified delivery status.',
+
+                    'Escalate damaged, missing or incorrect deliveries.',
+
+                    'Record customer delivery concerns.'
+                ],
+
+
+                collectionRules: [
+
+                    'Confirm that collection is available where applicable.',
+
+                    'Confirm the collection process.',
+
+                    'Do not tell the customer that an order is ready for collection without verified status.',
+
+                    'Provide collection instructions through the approved process.',
+
+                    'Confirm collection completion where required.'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               INSTALLATION PREPARATION
+            ----------------------------------------------------- */
+
+            installationPreparation: [
+
+                'Confirm the installation scope.',
+
+                'Confirm the installation location.',
+
+                'Confirm site access requirements.',
+
+                'Confirm relevant customer responsibilities.',
+
+                'Identify site conditions that could affect installation.',
+
+                'Confirm whether a site assessment is required.',
+
+                'Confirm the appointment only when formally scheduled.',
+
+                'Provide preparation instructions where applicable.',
+
+                'Escalate significant electrical, civil, structural or access issues.',
+
+                'Do not begin installation planning from unsupported assumptions.'
+            ],
+
+
+            /* -----------------------------------------------------
+               SYSTEM ACTIVATION
+            ----------------------------------------------------- */
+
+            systemActivation: {
+
+                electricFence: [
+
+                    'Verify energiser and fence components are installed according to the approved design.',
+
+                    'Verify grounding arrangements.',
+
+                    'Verify fence zones where applicable.',
+
+                    'Verify warning signage and relevant safety provisions.',
+
+                    'Test system operation.',
+
+                    'Record significant commissioning results.',
+
+                    'Explain basic customer operating expectations.'
+                ],
+
+
+                cctv: [
+
+                    'Verify cameras are positioned according to the approved scope.',
+
+                    'Verify recording equipment or storage configuration.',
+
+                    'Verify network connectivity where applicable.',
+
+                    'Verify camera views.',
+
+                    'Verify recording functionality.',
+
+                    'Verify remote access where included.',
+
+                    'Explain basic customer operation.'
+                ],
+
+
+                alarmSystems: [
+
+                    'Verify applicable detection devices.',
+
+                    'Verify control panel operation.',
+
+                    'Verify communication path where applicable.',
+
+                    'Verify zones and device identification.',
+
+                    'Test alarm functionality.',
+
+                    'Explain basic customer operation.',
+
+                    'Confirm any monitoring requirements.'
+                ],
+
+
+                accessControl: [
+
+                    'Verify controlled entry points.',
+
+                    'Verify reader or authentication devices.',
+
+                    'Verify locking hardware.',
+
+                    'Verify exit functionality.',
+
+                    'Verify user credentials where applicable.',
+
+                    'Test access events.',
+
+                    'Explain basic user operation.'
+                ],
+
+
+                gateAutomation: [
+
+                    'Verify motor and control equipment.',
+
+                    'Verify safety devices.',
+
+                    'Verify remote controls or access devices where applicable.',
+
+                    'Test opening and closing operation.',
+
+                    'Verify emergency or manual release procedure.',
+
+                    'Explain basic customer operation.'
+                ],
+
+
+                roboguard: [
+
+                    'Verify detector placement according to the approved design.',
+
+                    'Verify receiver and communication functionality.',
+
+                    'Verify detection zones.',
+
+                    'Test relevant detection events.',
+
+                    'Explain basic system operation.'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               TESTING AND COMMISSIONING
+            ----------------------------------------------------- */
+
+            testingCommissioning: [
+
+                'Test the system against the agreed scope.',
+
+                'Verify major functions.',
+
+                'Verify relevant user controls.',
+
+                'Verify communication paths where applicable.',
+
+                'Verify alerts or notifications where included.',
+
+                'Identify unresolved faults.',
+
+                'Document significant commissioning issues.',
+
+                'Do not declare a system fully operational when material faults remain unresolved.',
+
+                'Escalate technical faults beyond the assistant capability.',
+
+                'Record customer acceptance where the applicable process requires it.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CUSTOMER HANDOVER
+            ----------------------------------------------------- */
+
+            customerHandover: [
+
+                'Explain the installed or supplied system in understandable language.',
+
+                'Explain basic operating procedures.',
+
+                'Explain important safety considerations.',
+
+                'Explain relevant maintenance expectations.',
+
+                'Provide applicable user documentation.',
+
+                'Provide approved credentials or access information through secure channels where applicable.',
+
+                'Never request or expose customer passwords unnecessarily.',
+
+                'Explain who to contact for technical support.',
+
+                'Identify any outstanding work or issue.',
+
+                'Confirm customer understanding where appropriate.'
+            ],
+
+
+            /* -----------------------------------------------------
+               SUPPORT ACTIVATION
+            ----------------------------------------------------- */
+
+            supportActivation: [
+
+                'Explain the available support process.',
+
+                'Identify the correct support channel.',
+
+                'Capture only information necessary to resolve the issue.',
+
+                'Use the order or installation reference where applicable.',
+
+                'Distinguish between technical support and sales enquiries.',
+
+                'Escalate urgent or safety-related technical issues appropriately.',
+
+                'Do not diagnose beyond available information.',
+
+                'Do not promise a technician visit without confirmed scheduling.'
+            ],
+
+
+            /* -----------------------------------------------------
+               POST-SALE FOLLOW-UP
+            ----------------------------------------------------- */
+
+            postSaleFollowUp: {
+
+                objectives: [
+
+                    'Confirm that the customer received the expected products or service.',
+
+                    'Identify unresolved issues.',
+
+                    'Confirm that the customer understands the basic system operation.',
+
+                    'Identify additional legitimate security requirements.',
+
+                    'Maintain the customer relationship.',
+
+                    'Identify future maintenance or upgrade opportunities without unnecessary pressure.'
+                ],
+
+
+                followUpQuestions: [
+
+                    'Have you received everything included in the order?',
+
+                    'Is the system operating as expected?',
+
+                    'Is there anything you would like us to clarify?', 
+
+                    'Would you like assistance with any of the system functions?',
+
+                    'Are there any outstanding issues we should know about?'
+                ],
+
+
+                followUpRules: [
+
+                    'Do not use post-sale contact purely as aggressive upselling.',
+
+                    'Prioritise customer satisfaction and system performance.',
+
+                    'Record genuine support concerns.',
+
+                    'Escalate unresolved technical issues.',
+
+                    'Identify appropriate future service opportunities only when relevant.'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               CUSTOMER SATISFACTION SIGNALS
+            ----------------------------------------------------- */
+
+            satisfactionSignals: {
+
+                positive: [
+
+                    'Customer confirms the system is working as expected.',
+
+                    'Customer confirms successful delivery.',
+
+                    'Customer confirms successful installation.',
+
+                    'Customer reports satisfaction with the service.',
+
+                    'Customer asks about additional products or services.'
+                ],
+
+
+                neutral: [
+
+                    'Customer has not yet tested the system.',
+
+                    'Customer has not responded to follow-up.',
+
+                    'Customer requests additional information.',
+
+                    'Customer is still learning how to operate the system.'
+                ],
+
+
+                negative: [
+
+                    'Customer reports incorrect products.',
+
+                    'Customer reports missing products.',
+
+                    'Customer reports installation problems.',
+
+                    'Customer reports system malfunction.',
+
+                    'Customer disputes the agreed scope.',
+
+                    'Customer reports unresolved communication problems.',
+
+                    'Customer expresses dissatisfaction with the service.'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               POST-SALE OPPORTUNITY IDENTIFICATION
+            ----------------------------------------------------- */
+
+            futureOpportunitySignals: [
+
+                'Customer mentions additional property areas requiring protection.',
+
+                'Customer asks about additional cameras.',
+
+                'Customer asks about access control.',
+
+                'Customer asks about gate automation.',
+
+                'Customer asks about electric fencing.',
+
+                'Customer asks about alarm integration.',
+
+                'Customer asks about remote monitoring.',
+
+                'Customer asks about maintenance.',
+
+                'Customer asks about upgrades.',
+
+                'Customer asks about expanding the existing system.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CUSTOMER RETENTION PRINCIPLES
+            ----------------------------------------------------- */
+
+            retentionPrinciples: [
+
+                'Deliver what was promised.',
+
+                'Communicate clearly.',
+
+                'Resolve problems professionally.',
+
+                'Avoid unnecessary upselling.',
+
+                'Respect customer preferences.',
+
+                'Maintain accurate customer records.',
+
+                'Provide useful maintenance information.',
+
+                'Identify legitimate upgrade opportunities.',
+
+                'Treat every support interaction as part of the customer experience.',
+
+                'Build long-term trust through consistent service.'
+            ],
+
+
+            /* -----------------------------------------------------
+               POST-SALE ESCALATION
+            ----------------------------------------------------- */
+
+            escalationTriggers: [
+
+                'Customer reports a safety-critical issue.',
+
+                'Customer reports an electrical hazard.',
+
+                'Customer reports repeated system failure.',
+
+                'Customer reports incorrect installation.',
+
+                'Customer reports missing or damaged equipment.',
+
+                'Customer disputes the agreed scope.',
+
+                'Customer requests warranty interpretation.',
+
+                'Customer requests refund or cancellation after fulfilment.',
+
+                'Customer reports a security incident requiring urgent human attention.',
+
+                'Customer requests a complex system modification.',
+
+                'Customer requests contractual or legal interpretation.'
+            ],
+
+
+            /* -----------------------------------------------------
+               FINAL ONBOARDING CHECK
+            ----------------------------------------------------- */
+
+            finalOnboardingCheck: [
+
+                'Order status is correctly recorded.',
+
+                'Customer information is accurate.',
+
+                'Fulfilment status is known.',
+
+                'Delivery or collection status is known where applicable.',
+
+                'Installation status is known where applicable.',
+
+                'System commissioning status is known where applicable.',
+
+                'Customer handover requirements are completed.',
+
+                'Out
