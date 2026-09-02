@@ -54245,9 +54245,875 @@
         },
 
 
-        /* =========================================================
+                /* =========================================================
            119. SECURITY SYSTEM PREVENTIVE MAINTENANCE & HEALTH
                MONITORING INTELLIGENCE ENGINE
         ========================================================= */
+
+        securitySystemPreventiveMaintenanceHealthMonitoringIntelligenceEngine: {
+
+            objective: `
+                Monitor, plan and support preventive maintenance for
+                security systems in order to reduce avoidable failures,
+                improve system reliability, extend equipment service life
+                and maintain effective security performance.
+            `,
+
+            corePrinciple: `
+                A security system should not be treated as maintenance-free
+                simply because it is currently operational.
+
+                Preventive maintenance must focus on identifying degradation,
+                environmental exposure, battery condition, physical damage,
+                configuration issues, connectivity problems and other
+                indicators before they develop into security-impacting
+                failures.
+            `,
+
+
+            maintenanceCategories: [
+
+                'Routine inspection',
+
+                'Preventive maintenance',
+
+                'Corrective maintenance',
+
+                'Emergency maintenance',
+
+                'System health assessment',
+
+                'Battery inspection',
+
+                'Power-system inspection',
+
+                'Network inspection',
+
+                'Physical equipment inspection',
+
+                'Configuration review',
+
+                'Firmware review where appropriate',
+
+                'Recording-system review',
+
+                'Alarm-system review',
+
+                'Electric-fence inspection',
+
+                'Gate automation inspection',
+
+                'Access-control inspection',
+
+                'Intercom inspection',
+
+                'Documentation review'
+
+            ],
+
+
+            maintenanceObjectives: [
+
+                'Identify developing faults early',
+
+                'Reduce unexpected system downtime',
+
+                'Maintain reliable security coverage',
+
+                'Maintain equipment condition',
+
+                'Identify environmental deterioration',
+
+                'Identify battery degradation',
+
+                'Identify connectivity problems',
+
+                'Identify configuration anomalies',
+
+                'Verify critical security functions',
+
+                'Maintain accurate system documentation',
+
+                'Improve customer awareness of system condition',
+
+                'Support predictable maintenance planning'
+
+            ],
+
+
+            systemHealthDimensions: {
+
+                physicalCondition: [
+
+                    'Equipment mounting',
+
+                    'Enclosures',
+
+                    'Weather exposure',
+
+                    'Corrosion',
+
+                    'Physical damage',
+
+                    'Cable condition',
+
+                    'Connector condition',
+
+                    'Security of equipment'
+
+                ],
+
+
+                electricalCondition: [
+
+                    'Power availability',
+
+                    'Power-supply condition',
+
+                    'Battery condition',
+
+                    'Backup-power condition',
+
+                    'Fuse or protection condition where applicable',
+
+                    'Earthing or grounding condition where applicable',
+
+                    'Visible electrical damage'
+
+                ],
+
+
+                communicationCondition: [
+
+                    'Network connectivity',
+
+                    'Device communication',
+
+                    'Internet connectivity where applicable',
+
+                    'Signal stability',
+
+                    'Wireless connectivity where applicable',
+
+                    'Remote-access functionality'
+
+                ],
+
+
+                functionalCondition: [
+
+                    'Alarm operation',
+
+                    'Detection devices',
+
+                    'Camera operation',
+
+                    'Recording',
+
+                    'Remote viewing',
+
+                    'Gate operation',
+
+                    'Access control',
+
+                    'Intercom',
+
+                    'Electric-fence functionality',
+
+                    'Notifications',
+
+                    'System integrations'
+
+                ],
+
+
+                documentationCondition: [
+
+                    'Current equipment list',
+
+                    'Current device locations',
+
+                    'Current zone configuration',
+
+                    'Current user information',
+
+                    'Current support records',
+
+                    'Current service history',
+
+                    'Current warranty information where applicable'
+
+                ]
+
+            },
+
+
+            preventiveInspectionWorkflow: [
+
+                'Review previous service history',
+
+                'Review known recurring issues',
+
+                'Confirm customer-reported concerns',
+
+                'Inspect system condition',
+
+                'Inspect power and backup systems',
+
+                'Inspect physical equipment',
+
+                'Inspect relevant cabling',
+
+                'Check communication paths',
+
+                'Test critical functions',
+
+                'Identify developing faults',
+
+                'Record findings',
+
+                'Classify findings',
+
+                'Recommend corrective action where necessary',
+
+                'Schedule follow-up work where appropriate',
+
+                'Update maintenance records'
+
+            ],
+
+
+            maintenanceFrequencyFactors: [
+
+                'System type',
+
+                'Equipment age',
+
+                'Environmental exposure',
+
+                'Outdoor installation',
+
+                'Coastal or corrosive environment',
+
+                'Dust exposure',
+
+                'High-temperature exposure',
+
+                'High-traffic environment',
+
+                'Criticality of the protected site',
+
+                'Battery-dependent equipment',
+
+                'Wireless equipment',
+
+                'Gate automation usage',
+
+                'Electric-fence vegetation exposure',
+
+                'Customer operating conditions',
+
+                'Manufacturer recommendations where available'
+
+            ],
+
+
+            maintenancePlanningRule: `
+                Maintenance frequency must be based on the actual system,
+                environment, equipment requirements and manufacturer
+                recommendations where available.
+
+                Do not invent a universal maintenance interval for every
+                security system.
+            `,
+
+
+            batteryHealthManagement: {
+
+                systems: [
+
+                    'Alarm panels',
+
+                    'Gate automation',
+
+                    'Access-control systems',
+
+                    'Intercom systems',
+
+                    'CCTV backup systems',
+
+                    'Communication equipment',
+
+                    'Other battery-backed security equipment'
+
+                ],
+
+                indicators: [
+
+                    'Battery age',
+
+                    'Low-battery indication',
+
+                    'Repeated battery faults',
+
+                    'Reduced backup duration',
+
+                    'Charging problems',
+
+                    'Visible swelling or damage',
+
+                    'Corrosion',
+
+                    'Unexpected system resets',
+
+                    'Battery failure during power interruption'
+
+                ],
+
+                rules: [
+
+                    'Do not assume battery condition from age alone.',
+
+                    'Do not assume a battery is healthy because the system is currently powered.',
+
+                    'Follow appropriate manufacturer specifications.',
+
+                    'Escalate damaged, swollen or unsafe batteries.',
+
+                    'Do not instruct customers to handle hazardous battery conditions unsafely.'
+
+                ]
+
+            },
+
+
+            electricFenceMaintenance: {
+
+                inspectionAreas: [
+
+                    'Energizer condition',
+
+                    'Fence voltage indication where available',
+
+                    'Fence current or load indication where available',
+
+                    'Earth system',
+
+                    'Fence wires',
+
+                    'Insulators',
+
+                    'Strain points',
+
+                    'Joints',
+
+                    'Connectors',
+
+                    'Vegetation',
+
+                    'Physical damage',
+
+                    'Gate crossings',
+
+                    'Warning signs',
+
+                    'Alarm functionality',
+
+                    'Lightning protection where applicable'
+
+                ],
+
+                environmentalFactors: [
+
+                    'Vegetation growth',
+
+                    'Wet conditions',
+
+                    'Storm damage',
+
+                    'Corrosion',
+
+                    'Animal interference',
+
+                    'Tree branches',
+
+                    'Fence movement',
+
+                    'Insulator deterioration'
+
+                ],
+
+                rule: `
+                    Electric-fence maintenance must consider both the
+                    electrical performance of the system and the physical
+                    condition of the fence installation.
+                `
+
+            },
+
+
+            cctvMaintenance: {
+
+                inspectionAreas: [
+
+                    'Camera physical condition',
+
+                    'Lens condition',
+
+                    'Image quality',
+
+                    'Night performance',
+
+                    'Infrared performance where applicable',
+
+                    'Camera alignment',
+
+                    'Mounting stability',
+
+                    'Cable condition',
+
+                    'Network connectivity',
+
+                    'Recording status',
+
+                    'Storage health',
+
+                    'Time and date accuracy',
+
+                    'Remote viewing',
+
+                    'Motion detection',
+
+                    'Analytics where applicable',
+
+                    'Power supply'
+
+                ],
+
+                performanceIndicators: [
+
+                    'Camera online status',
+
+                    'Recording continuity',
+
+                    'Image clarity',
+
+                    'Coverage alignment',
+
+                    'Storage availability',
+
+                    'Network stability',
+
+                    'Remote-access availability'
+
+                ]
+
+            },
+
+
+            alarmSystemMaintenance: {
+
+                inspectionAreas: [
+
+                    'Control panel',
+
+                    'Backup battery',
+
+                    'Keypads',
+
+                    'Detection devices',
+
+                    'Door contacts',
+
+                    'PIR detectors',
+
+                    'Outdoor detectors',
+
+                    'Siren operation',
+
+                    'Communication module',
+
+                    'Alarm notifications',
+
+                    'User configuration',
+
+                    'Zone configuration',
+
+                    'Event history',
+
+                    'Tamper conditions'
+
+                ],
+
+                functionalChecks: [
+
+                    'Arm/disarm operation',
+
+                    'Detection testing',
+
+                    'Alarm activation',
+
+                    'Siren operation',
+
+                    'Notification delivery',
+
+                    'Backup-power operation',
+
+                    'Communication status'
+
+                ]
+
+            },
+
+
+            gateAutomationMaintenance: {
+
+                inspectionAreas: [
+
+                    'Motor condition',
+
+                    'Gate movement',
+
+                    'Mechanical components',
+
+                    'Limit systems',
+
+                    'Safety devices',
+
+                    'Remote controls',
+
+                    'Access-control interface',
+
+                    'Intercom interface',
+
+                    'Battery backup',
+
+                    'Power supply',
+
+                    'Manual release',
+
+                    'Physical obstructions'
+
+                ],
+
+                safetyRule: `
+                    Gate automation is a moving system and must be treated
+                    as a safety-critical installation where applicable.
+                    Never recommend bypassing safety devices simply to
+                    restore operation.
+                `
+
+            },
+
+
+            accessControlMaintenance: {
+
+                inspectionAreas: [
+
+                    'Controller',
+
+                    'Readers',
+
+                    'Credentials',
+
+                    'Locks',
+
+                    'Exit devices',
+
+                    'Door position monitoring',
+
+                    'Power supplies',
+
+                    'Backup power',
+
+                    'Network communication',
+
+                    'User database',
+
+                    'Access permissions',
+
+                    'Event logs',
+
+                    'Integration points'
+
+                ],
+
+                securityChecks: [
+
+                    'Unauthorised credentials removed where appropriate',
+
+                    'Inactive users reviewed',
+
+                    'Access permissions remain appropriate',
+
+                    'Door hardware operates correctly',
+
+                    'Emergency egress requirements remain functional',
+
+                    'System events are recorded where required'
+
+                ]
+
+            },
+
+
+            intercomMaintenance: {
+
+                inspectionAreas: [
+
+                    'Outdoor station',
+
+                    'Indoor station',
+
+                    'Microphone',
+
+                    'Speaker',
+
+                    'Call functionality',
+
+                    'Door-release interface',
+
+                    'Camera where applicable',
+
+                    'Network connection',
+
+                    'Power supply',
+
+                    'Remote functionality where applicable'
+
+                ]
+
+            },
+
+
+            healthStatusModel: {
+
+                states: [
+
+                    'HEALTHY',
+
+                    'HEALTHY_WITH_OBSERVATIONS',
+
+                    'MAINTENANCE_RECOMMENDED',
+
+                    'DEGRADED',
+
+                    'FAULT_DETECTED',
+
+                    'CRITICAL',
+
+                    'UNKNOWN'
+
+                ],
+
+                rules: [
+
+                    'HEALTHY means no known material issue has been identified.',
+
+                    'HEALTHY_WITH_OBSERVATIONS means minor conditions should be monitored.',
+
+                    'MAINTENANCE_RECOMMENDED means corrective or preventive action should be considered.',
+
+                    'DEGRADED means system performance is materially reduced.',
+
+                    'FAULT_DETECTED means a known technical problem requires investigation or correction.',
+
+                    'CRITICAL means security functionality or safety is materially compromised.',
+
+                    'UNKNOWN means insufficient information exists to determine system condition.'
+
+                ]
+
+            },
+
+
+            maintenanceFindingClassification: {
+
+                observation: `
+                    A condition has been noticed but does not necessarily
+                    require immediate corrective action.
+                `,
+
+                recommendation: `
+                    Preventive or corrective work should be considered based
+                    on risk, system importance and technical assessment.
+                `,
+
+                defect: `
+                    A confirmed condition that does not meet the required
+                    operational or installation standard.
+                `,
+
+                criticalDefect: `
+                    A condition that materially compromises security,
+                    safety or essential system functionality.
+                `
+
+            },
+
+
+            predictiveIndicators: [
+
+                'Increasing fault frequency',
+
+                'Repeated communication failures',
+
+                'Repeated battery warnings',
+
+                'Increasing camera dropouts',
+
+                'Recurring false alarms',
+
+                'Repeated gate failures',
+
+                'Increasing electric-fence faults',
+
+                'Repeated power interruptions',
+
+                'Storage warnings',
+
+                'Progressively declining system performance',
+
+                'Recurring environmental damage',
+
+                'Repeated service calls for the same component'
+
+            ],
+
+
+            recurringFaultAnalysis: {
+
+                trigger: `
+                    When the same fault or component repeatedly generates
+                    service requests, the assistant should consider whether
+                    corrective replacement, redesign, environmental mitigation
+                    or deeper technical investigation is more appropriate
+                    than repeatedly treating the symptom.
+                `,
+
+                questions: [
+
+                    'Is the same component repeatedly failing?',
+
+                    'Is the same location repeatedly affected?',
+
+                    'Is there an environmental cause?',
+
+                    'Is there a power-related cause?',
+
+                    'Is there a network-related cause?',
+
+                    'Was the original repair temporary?',
+
+                    'Has the equipment reached the end of its useful service life?',
+
+                    'Would a system upgrade provide a more reliable solution?'
+
+                ]
+
+            },
+
+
+            maintenanceRecommendationEngine: {
+
+                recommendationLevels: [
+
+                    'MONITOR',
+
+                    'PLAN_MAINTENANCE',
+
+                    'SCHEDULE_SERVICE',
+
+                    'URGENT_SERVICE',
+
+                    'IMMEDIATE_ESCALATION'
+
+                ],
+
+                decisionFactors: [
+
+                    'Security impact',
+
+                    'Safety impact',
+
+                    'Fault frequency',
+
+                    'Equipment condition',
+
+                    'Environmental exposure',
+
+                    'Customer operating requirements',
+
+                    'Equipment age',
+
+                    'Availability of replacement components',
+
+                    'Manufacturer guidance',
+
+                    'Cost-effectiveness',
+
+                    'Risk of continued operation'
+
+                ]
+
+            },
+
+
+            customerMaintenanceCommunication: {
+
+                principles: [
+
+                    'Explain the observed condition clearly.',
+
+                    'Separate confirmed findings from assumptions.',
+
+                    'Explain the potential impact.',
+
+                    'Recommend appropriate next steps.',
+
+                    'Avoid unnecessary fear-based language.',
+
+                    'Do not exaggerate the urgency of minor conditions.',
+
+                    'Clearly identify genuine security or safety risks.',
+
+                    'Explain when professional inspection is required.'
+
+                ],
+
+                prohibitedApproach: [
+
+                    'Fear-based upselling',
+
+                    'Invented failure predictions',
+
+                    'Unsupported claims of imminent system failure',
+
+                    'Unnecessary replacement recommendations',
+
+                    'Pressure based on unverified risk'
+
+                ]
+
+            },
+
+
+            maintenanceRecordRequirements: [
+
+                'Service date',
+
+                'System type',
+
+                'Equipment inspected',
+
+                'Reported symptoms',
+
+                'Inspection findings',
+
+                'Tests performed',
+
+                'Faults identified',
+
+                'Correctiv
 
       
