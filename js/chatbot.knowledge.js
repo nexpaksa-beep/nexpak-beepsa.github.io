@@ -55569,9 +55569,798 @@
         },
 
 
-        /* =========================================================
+                /* =========================================================
            120. SECURITY SYSTEM WARRANTY, RETURNS & RMA
-               INTELLIGENCE ENGINE
+               INTELLIGENCE ENGINE — FINAL SECTION
         ========================================================= */
+
+        securitySystemWarrantyReturnsRmaIntelligenceEngine: {
+
+            objective: [
+
+                'Manage warranty, returns, defective-product reports and RMA conversations accurately and professionally.',
+
+                'Protect legitimate customer interests while preventing unsupported warranty commitments.',
+
+                'Separate product defects from installation, configuration, environmental and system-related faults.',
+
+                'Collect the information required to assess a warranty or return request.',
+
+                'Provide clear next steps without promising an outcome before verification.',
+
+                'Maintain a complete and traceable warranty case history.'
+
+            ],
+
+
+            corePrinciples: [
+
+                'A reported product fault is a claim requiring assessment, not automatic proof of a product defect.',
+
+                'Warranty eligibility must be determined using the applicable verified warranty terms, purchase information, product information and evidence surrounding the failure.',
+
+                'The assistant must never invent warranty periods, exclusions, RMA numbers, refund rules, replacement approvals or manufacturer decisions.',
+
+                'The assistant must never guarantee a warranty outcome before the appropriate assessment has been completed.',
+
+                'When information is unavailable or ambiguous, escalate to an authorised Nexpak representative.',
+
+                'Every warranty interaction should leave a clear record of what was reported, what was checked and what remains outstanding.'
+
+            ],
+
+
+            caseTypes: [
+
+                'Suspected defective product',
+
+                'Product failure',
+
+                'Dead-on-arrival report',
+
+                'Intermittent fault',
+
+                'Early-life failure',
+
+                'Physical damage report',
+
+                'Transit damage',
+
+                'Incorrect product supplied',
+
+                'Incorrect quantity supplied',
+
+                'Missing component',
+
+                'Compatibility problem',
+
+                'Performance complaint',
+
+                'Customer return request',
+
+                'Replacement request',
+
+                'Refund or credit request',
+
+                'Manufacturer RMA',
+
+                'Warranty inspection',
+
+                'Repeated product failure',
+
+                'Unresolved warranty dispute'
+
+            ],
+
+
+            warrantyIntake: {
+
+                requiredInformation: [
+
+                    'Customer name or account reference where available',
+
+                    'Order or invoice reference',
+
+                    'Purchase date where available',
+
+                    'Product name',
+
+                    'Product model',
+
+                    'Serial number where applicable',
+
+                    'Quantity affected',
+
+                    'Date problem was first noticed',
+
+                    'Description of the reported fault',
+
+                    'Operating conditions',
+
+                    'Installation status',
+
+                    'Installer information where relevant',
+
+                    'Troubleshooting already performed',
+
+                    'Photographs or video where useful',
+
+                    'Visible damage information',
+
+                    'Relevant system configuration',
+
+                    'Recent electrical, environmental or system changes'
+
+                ],
+
+
+                qualificationQuestions: [
+
+                    'Which product is experiencing the problem?',
+
+                    'What is the model number?',
+
+                    'Do you have the invoice or order number?',
+
+                    'When was the product purchased?',
+
+                    'When did the problem first occur?',
+
+                    'What exactly is the product doing or not doing?',
+
+                    'Was it working correctly before the problem appeared?',
+
+                    'Was the product installed or tested?',
+
+                    'Who installed the product where applicable?',
+
+                    'Has anything recently changed in the system?',
+
+                    'Has the equipment experienced lightning, surge, water, impact or unusual environmental conditions?',
+
+                    'Has the equipment been modified or repaired?',
+
+                    'What troubleshooting has already been performed?'
+
+                ]
+
+            },
+
+
+            proofOfPurchase: {
+
+                principle: [
+
+                    'Proof of purchase may be required to establish the transaction and applicable warranty pathway.',
+
+                    'If the customer cannot immediately locate an invoice, the assistant should not automatically reject the request.',
+
+                    'Where authorised systems permit transaction lookup, the case may be escalated for record verification.'
+
+                ],
+
+
+                possibleEvidence: [
+
+                    'Nexpak invoice',
+
+                    'Nexpak order reference',
+
+                    'Sales receipt',
+
+                    'Account transaction reference',
+
+                    'Authorised purchase documentation',
+
+                    'Other evidence accepted by the applicable policy'
+
+                ],
+
+
+                rules: [
+
+                    'Never fabricate an invoice.',
+
+                    'Never fabricate an order number.',
+
+                    'Never claim that a transaction has been verified unless the system confirms it.',
+
+                    'Never alter transaction information.',
+
+                    'Escalate when purchase verification cannot be completed.'
+
+                ]
+
+            },
+
+
+            productIdentification: {
+
+                requiredFields: [
+
+                    'Product category',
+
+                    'Product name',
+
+                    'Manufacturer',
+
+                    'Model',
+
+                    'Serial number where applicable',
+
+                    'Quantity',
+
+                    'Purchase reference',
+
+                    'Installation location where relevant'
+
+                ],
+
+
+                rule: [
+
+                    'Correct product identification is required before making product-specific warranty claims.',
+
+                    'If the customer cannot identify the exact model, request a photograph of the product label or escalate for assistance where appropriate.',
+
+                    'Do not guess the model from appearance alone.'
+
+                ]
+
+            },
+
+
+            productVsInstallationAssessment: {
+
+                principle: [
+
+                    'A product that is not operating correctly does not automatically have a product defect.',
+
+                    'The fault may originate from power, wiring, configuration, installation, networking, accessories, environment or another connected system component.',
+
+                    'The assistant must remain neutral until sufficient evidence is available.'
+
+                ],
+
+
+                potentialProductFaultIndicators: [
+
+                    'Failure persists under verified correct operating conditions.',
+
+                    'Fault can be reproduced consistently.',
+
+                    'Manufacturer diagnostic procedure identifies a product fault.',
+
+                    'Equipment behaves abnormally independent of external system conditions.',
+
+                    'Qualified technical assessment confirms equipment failure.'
+
+                ],
+
+
+                potentialExternalFaultIndicators: [
+
+                    'Incorrect power supply',
+
+                    'Incorrect voltage',
+
+                    'Incorrect polarity',
+
+                    'Loose or damaged wiring',
+
+                    'Poor termination',
+
+                    'Incorrect programming',
+
+                    'Incorrect network configuration',
+
+                    'Incorrect accessory',
+
+                    'Inadequate power capacity',
+
+                    'Incorrect installation',
+
+                    'Environmental interference',
+
+                    'Lightning or surge event',
+
+                    'Physical damage',
+
+                    'Third-party equipment fault'
+
+                ],
+
+
+                decisionRule: [
+
+                    'Do not classify an installation fault as a product warranty defect without evidence.',
+
+                    'Do not blame the customer or installer without evidence.',
+
+                    'When both product and installation factors are possible, escalate for technical assessment.'
+
+                ]
+
+            },
+
+
+            manufacturerWarranty: {
+
+                principles: [
+
+                    'Warranty conditions may differ between products and manufacturers.',
+
+                    'The applicable warranty terms must be verified before communicating specific warranty coverage.',
+
+                    'The assistant must not assume that all Nexpak products have identical warranty conditions.',
+
+                    'The assistant must not assume that a manufacturer will automatically approve a claim.'
+
+                ],
+
+
+                process: [
+
+                    'Identify product and manufacturer.',
+
+                    'Verify applicable warranty information where authorised data exists.',
+
+                    'Establish purchase information.',
+
+                    'Document reported fault.',
+
+                    'Collect relevant evidence.',
+
+                    'Perform safe initial troubleshooting where appropriate.',
+
+                    'Escalate for technical or manufacturer assessment where required.',
+
+                    'Record the confirmed outcome.'
+
+                ]
+
+            },
+
+
+            potentialWarrantyExclusions: {
+
+                categories: [
+
+                    'Physical damage',
+
+                    'Incorrect installation',
+
+                    'Incorrect electrical supply',
+
+                    'Lightning damage',
+
+                    'Electrical surge damage',
+
+                    'Water or moisture damage',
+
+                    'Unauthorised modification',
+
+                    'Tampering',
+
+                    'Improper use',
+
+                    'Neglect',
+
+                    'Unauthorised repair',
+
+                    'Normal wear and tear',
+
+                    'Consumable components where applicable',
+
+                    'Environmental damage',
+
+                    'Incompatible accessories',
+
+                    'Damage caused by external equipment',
+
+                    'Operation outside manufacturer specifications'
+
+                ],
+
+
+                importantRule: [
+
+                    'These categories are potential considerations only.',
+
+                    'They must not be presented as the exact exclusion terms of a specific product warranty unless verified.',
+
+                    'The assistant must not automatically deny a claim based only on suspicion.',
+
+                    'The actual warranty terms and evidence must determine the appropriate outcome.'
+
+                ]
+
+            },
+
+
+            returnAssessment: {
+
+                requiredInformation: [
+
+                    'Order reference',
+
+                    'Customer information',
+
+                    'Product information',
+
+                    'Quantity',
+
+                    'Reason for return',
+
+                    'Purchase date where available',
+
+                    'Product condition',
+
+                    'Packaging condition where relevant',
+
+                    'Accessories included',
+
+                    'Whether the product has been installed',
+
+                    'Whether the product has been powered or configured',
+
+                    'Evidence supporting the return request'
+
+                ],
+
+
+                possibleReasons: [
+
+                    'Defective product',
+
+                    'Incorrect product supplied',
+
+                    'Incorrect quantity supplied',
+
+                    'Transit damage',
+
+                    'Missing component',
+
+                    'Compatibility issue',
+
+                    'Customer return request',
+
+                    'Performance concern',
+
+                    'Other verified reason'
+
+                ],
+
+
+                rules: [
+
+                    'Do not promise that a return will be approved before policy verification.',
+
+                    'Do not promise a refund before the applicable process confirms eligibility.',
+
+                    'Do not promise replacement before the claim has been assessed.',
+
+                    'Escalate unclear or disputed return cases.'
+
+                ]
+
+            },
+
+
+            rmaLifecycle: [
+
+                'Case Created',
+
+                'Customer Information Collected',
+
+                'Purchase Verification',
+
+                'Product Identification',
+
+                'Fault Description',
+
+                'Initial Troubleshooting',
+
+                'Warranty Assessment',
+
+                'Evidence Collection',
+
+                'RMA Review',
+
+                'Return Authorisation',
+
+                'Product Returned',
+
+                'Product Received',
+
+                'Inspection',
+
+                'Testing',
+
+                'Technical Decision',
+
+                'Commercial Decision',
+
+                'Customer Notification',
+
+                'Resolution',
+
+                'Case Closure'
+
+            ],
+
+
+            rmaStatuses: [
+
+                'New',
+
+                'Information Required',
+
+                'Awaiting Evidence',
+
+                'Under Assessment',
+
+                'Awaiting Return',
+
+                'RMA Requested',
+
+                'RMA Authorised',
+
+                'Product Received',
+
+                'Under Inspection',
+
+                'Under Testing',
+
+                'Approved',
+
+                'Declined',
+
+                'Replacement Pending',
+
+                'Repair Pending',
+
+                'Credit Pending',
+
+                'Refund Pending',
+
+                'Resolved',
+
+                'Closed'
+
+            ],
+
+
+            doaHandling: {
+
+                principle: [
+
+                    'A product reported as dead on arrival should receive appropriate attention while still following the required verification process.',
+
+                    'The assistant must distinguish between a genuine product failure and an installation, connection or power issue.'
+
+                ],
+
+
+                checks: [
+
+                    'Confirm correct product identification.',
+
+                    'Confirm correct installation or test procedure where applicable.',
+
+                    'Confirm appropriate power source.',
+
+                    'Confirm obvious connections.',
+
+                    'Check for visible transit damage.',
+
+                    'Check whether required accessories are present.',
+
+                    'Determine whether the fault can be safely reproduced.'
+
+                ],
+
+
+                safetyRule: [
+
+                    'Never instruct an unqualified customer to perform dangerous electrical testing.',
+
+                    'Never instruct a customer to bypass protective devices.',
+
+                    'Never instruct a customer to open equipment where doing so could create an electrical or safety hazard.'
+
+                ]
+
+            },
+
+
+            troubleshootingBeforeReturn: {
+
+                purpose: [
+
+                    'Resolve simple issues without unnecessary returns.',
+
+                    'Identify obvious installation or configuration problems.',
+
+                    'Provide useful diagnostic information for technical assessment.'
+
+                ],
+
+
+                safeExamples: [
+
+                    'Confirm visible connections.',
+
+                    'Confirm equipment status indicators.',
+
+                    'Confirm basic settings.',
+
+                    'Confirm network connectivity where applicable.',
+
+                    'Restart equipment where permitted by manufacturer procedure.',
+
+                    'Confirm that the correct accessories are being used.',
+
+                    'Confirm that the reported symptom can be reproduced.'
+
+                ],
+
+
+                prohibitedActions: [
+
+                    'Do not recommend unsafe live testing.',
+
+                    'Do not recommend bypassing safety equipment.',
+
+                    'Do not recommend defeating protective devices.',
+
+                    'Do not instruct customers to modify equipment to force a failure.',
+
+                    'Do not recommend opening mains-powered equipment without appropriate qualification and safety procedures.'
+
+                ]
+
+            },
+
+
+            evidenceManagement: {
+
+                usefulEvidence: [
+
+                    'Invoice',
+
+                    'Order reference',
+
+                    'Product label',
+
+                    'Model number',
+
+                    'Serial number',
+
+                    'Photographs',
+
+                    'Video',
+
+                    'Error messages',
+
+                    'Diagnostic information',
+
+                    'Installation photographs',
+
+                    'Wiring information where relevant',
+
+                    'Technician findings',
+
+                    'Test results'
+
+                ],
+
+
+                principles: [
+
+                    'Request only evidence reasonably necessary for the case.',
+
+                    'Do not request unnecessary personal information.',
+
+                    'Protect customer information.',
+
+                    'Use collected information only for legitimate service, warranty and return purposes.',
+
+                    'Never fabricate evidence or test results.'
+
+                ]
+
+            },
+
+
+            rmaAuthorisation: {
+
+                principle: [
+
+                    'Return authorisation must come through an approved Nexpak process or authorised representative.',
+
+                    'The assistant must never generate a fictional RMA number.',
+
+                    'The assistant must never tell a customer that a return has been approved unless the approval is confirmed.'
+
+                ],
+
+
+                states: [
+
+                    'Not Requested',
+
+                    'Requested',
+
+                    'Awaiting Review',
+
+                    'Approved',
+
+                    'Declined',
+
+                    'More Information Required'
+
+                ]
+
+            },
+
+
+            returnedProductInspection: {
+
+                inspectionAreas: [
+
+                    'Physical condition',
+
+                    'Product identity',
+
+                    'Serial number',
+
+                    'Accessories',
+
+                    'Power-up condition',
+
+                    'Fault reproduction',
+
+                    'Diagnostic results',
+
+                    'Configuration',
+
+                    'Signs of tampering',
+
+                    'Environmental damage',
+
+                    'Installation-related damage',
+
+                    'Unauthorised modification',
+
+                    'Technician findings'
+
+                ],
+
+
+                principle: [
+
+                    'Returned products should be assessed according to the applicable technical and warranty process.',
+
+                    'Inspection results must be based on actual findings.',
+
+                    'The assistant must never claim that a returned product passed or failed inspection without verified inspection data.'
+
+                ]
+
+            },
+
+
+            outcomeManagement: {
+
+                possibleOutcomes: [
+
+                    'Warranty accepted',
+
+                    'Warranty declined',
+
+                    'Replacement approved',
+
+   
 
       
