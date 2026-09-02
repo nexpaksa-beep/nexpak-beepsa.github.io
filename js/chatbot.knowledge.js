@@ -37024,6 +37024,646 @@
         },
 
 
-        /* =========================================================
+                /* =========================================================
            98. SYSTEM DESIGN & CONFIGURATION ASSISTANT ENGINE
         ========================================================= */
+
+        systemDesignConfigurationAssistantEngine: {
+
+            objective:
+
+                'Translate validated customer requirements into a logical, practical and scalable security-system design while clearly identifying required components, optional enhancements, technical dependencies, assumptions and situations requiring human engineering review.',
+
+
+            principle:
+
+                'A security system should be designed around the required security outcome, property conditions and operating environment rather than around individual products.',
+
+
+            /* -----------------------------------------------------
+               DESIGN FOUNDATION
+            ----------------------------------------------------- */
+
+            designFoundation: [
+
+                'Start with the customers stated security objective.',
+
+                'Define what must be protected.',
+
+                'Identify where protection is required.',
+
+                'Determine how an event should be detected.',
+
+                'Determine how an event should be verified where required.',
+
+                'Determine how authorised users should be notified.',
+
+                'Determine whether access control or automation is required.',
+
+                'Identify power and communication requirements.',
+
+                'Identify backup and resilience requirements.',
+
+                'Check compatibility between system components.',
+
+                'Allow for realistic installation conditions.',
+
+                'Allow for future expansion where appropriate.',
+
+                'Clearly separate confirmed information from assumptions.',
+
+                'Escalate complex engineering decisions when available information is insufficient.'
+            ],
+
+
+            /* -----------------------------------------------------
+               SYSTEM DESIGN WORKFLOW
+            ----------------------------------------------------- */
+
+            designWorkflow: [
+
+                '1. Capture the customer requirement.',
+
+                '2. Define the security objective.',
+
+                '3. Define the property or application.',
+
+                '4. Identify protected zones.',
+
+                '5. Identify likely threat or event points.',
+
+                '6. Select appropriate detection methods.',
+
+                '7. Determine verification requirements.',
+
+                '8. Determine notification requirements.',
+
+                '9. Determine access-control or automation requirements.',
+
+                '10. Determine power requirements.',
+
+                '11. Determine communication requirements.',
+
+                '12. Determine backup requirements.',
+
+                '13. Select compatible product categories.',
+
+                '14. Determine quantities and capacity.',
+
+                '15. Check system expansion requirements.',
+
+                '16. Identify installation constraints.',
+
+                '17. Validate the proposed architecture.',
+
+                '18. Separate essential components from optional enhancements.',
+
+                '19. Identify information still requiring confirmation.',
+
+                '20. Produce a structured design summary or prepare the opportunity for human review.'
+            ],
+
+
+            /* -----------------------------------------------------
+               DESIGN INPUTS
+            ----------------------------------------------------- */
+
+            designInputs: {
+
+                customerObjective: [
+                    'Deterrence',
+                    'Intrusion detection',
+                    'Video surveillance',
+                    'Access control',
+                    'Perimeter protection',
+                    'Gate automation',
+                    'Alarm notification',
+                    'Asset protection',
+                    'Livestock or equestrian boundary protection',
+                    'Integrated security'
+                ],
+
+                propertyInformation: [
+                    'Property type',
+                    'Property size',
+                    'Building layout',
+                    'Boundary layout',
+                    'Entrance points',
+                    'Vehicle access points',
+                    'Pedestrian access points',
+                    'High-risk areas',
+                    'Existing security infrastructure'
+                ],
+
+                technicalInformation: [
+                    'Available electrical supply',
+                    'Backup power availability',
+                    'Internet availability',
+                    'Mobile-network availability where relevant',
+                    'Existing network infrastructure',
+                    'Existing security equipment',
+                    'Cable routes',
+                    'Equipment mounting locations',
+                    'Environmental conditions'
+                ],
+
+                operationalInformation: [
+                    'Number of users',
+                    'Operating hours',
+                    'Required monitoring hours',
+                    'Remote-access requirements',
+                    'Access-control requirements',
+                    'Notification requirements',
+                    'Maintenance expectations'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               SECURITY ARCHITECTURE LAYERS
+            ----------------------------------------------------- */
+
+            architectureLayers: {
+
+                perimeter: {
+
+                    purpose:
+                        'Create an external security boundary where appropriate.',
+
+                    examples: [
+                        'Electric fencing',
+                        'Perimeter detection',
+                        'Physical fencing',
+                        'Gate protection',
+                        'Boundary monitoring'
+                    ]
+                },
+
+                detection: {
+
+                    purpose:
+                        'Identify a potentially relevant security event.',
+
+                    examples: [
+                        'CCTV cameras',
+                        'Alarm sensors',
+                        'Electric-fence monitoring',
+                        'Beam or perimeter detection',
+                        'Specialised detection systems'
+                    ]
+                },
+
+                verification: {
+
+                    purpose:
+                        'Provide information that helps determine whether a detected event is genuine and what is occurring.',
+
+                    examples: [
+                        'CCTV footage',
+                        'Live video',
+                        'Recorded video',
+                        'Visual inspection',
+                        'Alarm event information'
+                    ]
+                },
+
+                access: {
+
+                    purpose:
+                        'Control authorised movement through protected entry points.',
+
+                    examples: [
+                        'Access-control systems',
+                        'Keypads',
+                        'Tags or credentials',
+                        'Intercom systems',
+                        'Gate automation'
+                    ]
+                },
+
+                notification: {
+
+                    purpose:
+                        'Inform authorised users when a relevant event occurs.',
+
+                    examples: [
+                        'Alarm notifications',
+                        'Mobile notifications',
+                        'Monitoring-centre communication',
+                        'Audible or visual local alerts'
+                    ]
+                },
+
+                power: {
+
+                    purpose:
+                        'Provide reliable operating power to the security system.',
+
+                    considerations: [
+                        'Primary power',
+                        'Battery backup',
+                        'Power consumption',
+                        'Backup duration',
+                        'Power-failure behaviour',
+                        'Protection of power equipment'
+                    ]
+                },
+
+                communication: {
+
+                    purpose:
+                        'Provide required communication between system components and authorised users.',
+
+                    options: [
+                        'Wired network',
+                        'Wireless network',
+                        'Internet connection',
+                        'Mobile communication',
+                        'Local communication'
+                    ]
+                },
+
+                management: {
+
+                    purpose:
+                        'Provide the user interface through which the system is monitored, controlled or configured.',
+
+                    examples: [
+                        'Mobile application',
+                        'Web interface',
+                        'Recorder interface',
+                        'Access-control software',
+                        'Alarm control interface'
+                    ]
+                }
+            },
+
+
+            /* -----------------------------------------------------
+               SINGLE-SYSTEM VS INTEGRATED-SYSTEM DESIGN
+            ----------------------------------------------------- */
+
+            architectureTypes: {
+
+                singlePurpose: {
+
+                    description:
+                        'A system designed primarily to perform one security function.',
+
+                    examples: [
+                        'Standalone CCTV system',
+                        'Standalone electric fence',
+                        'Standalone gate motor',
+                        'Standalone access-control system'
+                    ]
+                },
+
+                integrated: {
+
+                    description:
+                        'Multiple security functions designed to operate together as part of a broader security solution.',
+
+                    examples: [
+                        'Electric fence with CCTV verification',
+                        'CCTV with access control',
+                        'Alarm with CCTV verification',
+                        'Gate automation with intercom and access control',
+                        'Integrated perimeter and building security'
+                    ],
+
+                    designRule:
+                        'Integration should only be recommended when it provides a meaningful operational or security benefit and the required compatibility is confirmed.'
+                }
+            },
+
+
+            /* -----------------------------------------------------
+               FUNCTION-TO-PRODUCT MAPPING
+            ----------------------------------------------------- */
+
+            functionMapping: {
+
+                perimeterDeterrence: [
+                    'Electric fencing',
+                    'Physical perimeter barriers',
+                    'Gate security'
+                ],
+
+                perimeterDetection: [
+                    'Electric-fence energiser and monitoring',
+                    'Perimeter detection systems',
+                    'CCTV',
+                    'Specialised intrusion detection'
+                ],
+
+                visualVerification: [
+                    'HD CCTV',
+                    'IP CCTV',
+                    'Suitable cameras',
+                    'Recording equipment'
+                ],
+
+                intrusionAlarm: [
+                    'Alarm control equipment',
+                    'Detection sensors',
+                    'Alarm notification equipment'
+                ],
+
+                controlledEntry: [
+                    'Access-control equipment',
+                    'Keypads',
+                    'Credentials',
+                    'Intercoms'
+                ],
+
+                automatedEntry: [
+                    'Gate motors',
+                    'Gate-control equipment',
+                    'Remote controls',
+                    'Intercom integration where compatible'
+                ],
+
+                specialistPerimeterDetection: [
+                    'Roboguard',
+                    'Appropriate specialised detection equipment'
+                ],
+
+                agriculturalOrEquestrianProtection: [
+                    'Electric-fence systems',
+                    'Appropriate agricultural energisers',
+                    'Equestrian-compatible fencing components',
+                    'Relevant perimeter accessories'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               ELECTRIC FENCE DESIGN LOGIC
+            ----------------------------------------------------- */
+
+            electricFenceDesign: {
+
+                primaryInputs: [
+
+                    'Total fence length',
+
+                    'Number of fence zones',
+
+                    'Number of strands',
+
+                    'Fence construction type',
+
+                    'Boundary geometry',
+
+                    'Vegetation conditions',
+
+                    'Expected vegetation loading',
+
+                    'Grounding conditions',
+
+                    'Gate locations',
+
+                    'Gate type',
+
+                    'Existing fence condition',
+
+                    'Required monitoring or zoning'
+                ],
+
+                designFactors: [
+
+                    'Fence length',
+
+                    'Number of conductors',
+
+                    'Insulation quality',
+
+                    'Vegetation loading',
+
+                    'Ground-return conditions',
+
+                    'Earth-system quality',
+
+                    'Zone requirements',
+
+                    'Gate crossings',
+
+                    'Surge protection',
+
+                    'Energiser suitability',
+
+                    'Compliance requirements',
+
+                    'Maintenance accessibility'
+                ],
+
+                sizingRule:
+
+                    'Do not select an energiser or fence configuration from fence length alone. Consider the complete electrical load, fence construction, vegetation, grounding and environmental conditions.',
+
+                zoningRule:
+
+                    'Use separate zones when the property layout, fault isolation, monitoring requirements or operational requirements justify independent sections.',
+
+                validationRule:
+
+                    'A final electric-fence design should be verified against actual site conditions, applicable requirements and the selected equipment specifications.'
+            },
+
+
+            /* -----------------------------------------------------
+               CCTV DESIGN LOGIC
+            ----------------------------------------------------- */
+
+            cctvDesign: {
+
+                primaryInputs: [
+
+                    'Number of areas requiring surveillance',
+
+                    'Camera positions',
+
+                    'Required viewing direction',
+
+                    'Required identification level',
+
+                    'Day and night conditions',
+
+                    'Lighting conditions',
+
+                    'Distance to target',
+
+                    'Recording requirements',
+
+                    'Remote viewing requirements',
+
+                    'Network infrastructure',
+
+                    'Storage requirements'
+                ],
+
+                cameraSelectionFactors: [
+
+                    'Viewing purpose',
+
+                    'Field of view',
+
+                    'Target distance',
+
+                    'Lighting',
+
+                    'Night performance',
+
+                    'Resolution',
+
+                    'Lens characteristics',
+
+                    'Mounting location',
+
+                    'Environmental exposure',
+
+                    'Required identification detail'
+                ],
+
+                recorderFactors: [
+
+                    'Number of cameras',
+
+                    'Recording resolution',
+
+                    'Recording frame rate',
+
+                    'Retention period',
+
+                    'Motion recording requirements',
+
+                    'Continuous recording requirements',
+
+                    'Storage capacity',
+
+                    'Future expansion'
+                ],
+
+                storageRule:
+
+                    'Do not promise a specific retention period without considering camera count, resolution, recording mode, frame rate, storage capacity and other relevant settings.',
+
+                cameraPlacementRule:
+
+                    'Camera quantity should be based on coverage objectives and required image detail rather than simply dividing the property into equal areas.',
+
+                nightVisionRule:
+
+                    'Night performance depends on camera capability, scene conditions, lighting, distance and environmental factors. Do not assume that every camera provides the same usable night image.' 
+            },
+
+
+            /* -----------------------------------------------------
+               ACCESS CONTROL DESIGN
+            ----------------------------------------------------- */
+
+            accessControlDesign: {
+
+                primaryInputs: [
+
+                    'Number of entry points',
+
+                    'Number of authorised users',
+
+                    'Entry and exit requirements',
+
+                    'Credential type',
+
+                    'Access schedules',
+
+                    'Visitor requirements',
+
+                    'Audit requirements',
+
+                    'Power availability',
+
+                    'Door or gate hardware',
+
+                    'Integration requirements'
+                ],
+
+                designFactors: [
+
+                    'User capacity',
+
+                    'Credential capacity',
+
+                    'Entry-point capacity',
+
+                    'Fail-safe or fail-secure requirements',
+
+                    'Emergency egress',
+
+                    'Battery backup',
+
+                    'Weather exposure',
+
+                    'Physical mounting',
+
+                    'Intercom requirements',
+
+                    'Integration compatibility'
+                ],
+
+                validationRule:
+
+                    'Access-control design must consider the physical locking hardware and emergency requirements, not only the electronic controller.'
+            },
+
+
+            /* -----------------------------------------------------
+               GATE AUTOMATION DESIGN
+            ----------------------------------------------------- */
+
+            gateAutomationDesign: {
+
+                primaryInputs: [
+
+                    'Gate type',
+
+                    'Gate construction',
+
+                    'Gate weight',
+
+                    'Gate length',
+
+                    'Opening frequency',
+
+                    'Gate condition',
+
+                    'Slope or operating conditions',
+
+                    'Available power',
+
+                    'Backup requirements',
+
+                    'Safety requirements',
+
+                    'Access-control requirements'
+                ],
+
+                gateTypes: [
+
+                    'Sliding gate',
+
+                    'Swing gate',
+
+                    'Pedestrian gate',
+
+                    'Specialised gate configuration'
+                ],
+
+                selectionRule:
+
+                    'Gate motor selection must be based on the actual gate characteristics and operating duty rather than gate appearance alone.',
+
+                conditionRule:
+
+                    'A motor should not be used to compensate for a mechanically defective, excessively resistant or incorrectly aligned gate.',
+
+    
