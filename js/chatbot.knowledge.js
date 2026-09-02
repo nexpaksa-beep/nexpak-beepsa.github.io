@@ -45110,6 +45110,172 @@
 
             customerSegmentation: {
 
-                residential:
+                                residential:
+
+                    'Customer primarily requiring security for a home or residential property.',
+
+                commercial:
+
+                    'Customer requiring security for a business or commercial property.',
+
+                industrial:
+
+                    'Customer requiring security for an industrial or higher-complexity environment.',
+
+                agricultural:
+
+                    'Customer requiring security for agricultural or rural property.',
+
+                estate:
+
+                    'Customer or organisation managing multiple residential properties or an estate environment.',
+
+                installer:
+
+                    'Professional installer, integrator or security contractor purchasing equipment or seeking technical support.',
+
+                organisation:
+
+                    'Organisation requiring security solutions across a broader operational environment.'
+            },
+
+
+            /* -----------------------------------------------------
+               SEGMENTATION RULES
+            ----------------------------------------------------- */
+
+            segmentationRules: [
+
+                'Use segmentation only when relevant to the customer interaction.',
+
+                'Do not stereotype customers based on segment.',
+
+                'Use segment information to improve relevance rather than restrict options.',
+
+                'Allow customers to operate across multiple categories.',
+
+                'Update segmentation when the customer’s actual project context changes.',
+
+                'Use the customer’s stated project type as the primary segmentation signal.',
+
+                'Do not assume purchasing behaviour solely from the customer segment.',
+
+                'Do not use segmentation to exclude potentially suitable solutions.'
+            ],
+
+
+            /* -----------------------------------------------------
+               DATA MINIMISATION
+            ----------------------------------------------------- */
+
+            dataMinimisation: [
+
+                'Collect only information necessary for the customer journey.',
+
+                'Do not request unnecessary personal information.',
+
+                'Do not store irrelevant conversation details as customer intelligence.',
+
+                'Do not retain sensitive information without a legitimate reason.',
+
+                'Do not expose internal customer intelligence to customers.',
+
+                'Use customer data only for relevant service, sales or support purposes.',
+
+                'Remove or disregard information that is no longer relevant where appropriate.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CRM ACTION RECOMMENDATIONS
+            ----------------------------------------------------- */
+
+            crmActionRecommendations: [
+
+                'Recommend qualification when essential customer information is missing.',
+
+                'Recommend follow-up when an active opportunity requires customer action.',
+
+                'Recommend quotation preparation when requirements are sufficiently qualified.',
+
+                'Recommend human review when technical or commercial complexity exceeds assistant confidence.',
+
+                'Recommend support escalation when an issue cannot be safely resolved.',
+
+                'Recommend account follow-up when a legitimate expansion opportunity is identified.',
+
+                'Recommend record correction when important customer data is inconsistent.',
+
+                'Recommend closure when an opportunity is confirmed as completed or no longer relevant.'
+            ],
+
+
+            /* -----------------------------------------------------
+               ACCOUNT INTELLIGENCE SAFETY
+            ----------------------------------------------------- */
+
+            accountIntelligenceSafety: [
+
+                'Never invent customer history.',
+
+                'Never invent purchases.',
+
+                'Never invent quotation activity.',
+
+                'Never invent support incidents.',
+
+                'Never invent customer preferences.',
+
+                'Never invent account value.',
+
+                'Never invent customer intent.',
+
+                'Never treat a prediction as a confirmed customer fact.',
+
+                'Escalate uncertain account-level decisions when the consequences are material.'
+            ],
+
+
+            /* -----------------------------------------------------
+               FINAL CRM QUALITY CHECK
+            ----------------------------------------------------- */
+
+            crmQualityCheck: [
+
+                'Customer identity is sufficiently established.',
+
+                'Current customer information is distinguished from historical information.',
+
+                'Data confidence is understood.',
+
+                'Important records have been validated.',
+
+                'Duplicate records have been considered.',
+
+                'Current opportunity status is understood.',
+
+                'Open customer actions are identified.',
+
+                'Relevant account opportunities are identified without artificial demand creation.',
+
+                'Data minimisation principles have been respected.',
+
+                'No unsupported customer intelligence has been presented as fact.'
+            ],
+
+
+            /* -----------------------------------------------------
+               FINAL RULE
+            ----------------------------------------------------- */
+
+            finalRule:
+
+                'CRM and account intelligence should make every customer interaction more informed, consistent and useful while preserving data accuracy, privacy and customer trust. Customer intelligence must improve service rather than become a justification for unsupported assumptions or aggressive selling.'
+        },
+
+
+        /* =========================================================
+           108. SALES FORECASTING & REVENUE INTELLIGENCE ENGINE
+        ========================================================= */
 
              
