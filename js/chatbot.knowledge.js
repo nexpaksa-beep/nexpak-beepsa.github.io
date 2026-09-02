@@ -53024,5 +53024,757 @@
             snagManagement: {
 
                 snagTypes: [
+                                        'Installation defect',
+
+                    'Configuration issue',
+
+                    'Cosmetic issue',
+
+                    'Missing documentation',
+
+                    'Incomplete scope item',
+
+                    'Customer-requested variation',
+
+                    'Equipment fault',
+
+                    'Integration issue',
+
+                    'Site dependency',
+
+                    'Third-party dependency'
+
+                ],
+
+
+                severity: {
+
+                    critical: `
+                        The system cannot safely operate, or a critical
+                        security function is unavailable. Immediate
+                        escalation and corrective action are required.
+                    `,
+
+                    high: `
+                        A major security function is unavailable or the
+                        issue materially affects the customer's security
+                        requirements and should be prioritised.
+                    `,
+
+                    medium: `
+                        Partial functionality, configuration problems or
+                        non-critical installation defects require correction
+                        but do not create an immediate critical failure.
+                    `,
+
+                    low: `
+                        Minor cosmetic, documentation or convenience issues
+                        that do not materially affect system operation.
+                    `
+                },
+
+
+                prioritisationRules: [
+
+                    'Safety-related defects take highest priority.',
+
+                    'Security-critical failures take priority over cosmetic issues.',
+
+                    'Complete system outages require urgent escalation.',
+
+                    'Repeated failures require root-cause investigation.',
+
+                    'Customer-impacting issues should be communicated clearly.',
+
+                    'Minor cosmetic issues must not be allowed to obscure critical technical defects.',
+
+                    'Unresolved snags must remain visible until formally closed.'
+
+                ],
+
+
+                snagLifecycle: [
+
+                    'IDENTIFIED',
+
+                    'RECORDED',
+
+                    'CLASSIFIED',
+
+                    'ASSIGNED',
+
+                    'INVESTIGATION',
+
+                    'CORRECTIVE_ACTION',
+
+                    'RETEST_REQUIRED',
+
+                    'VERIFIED',
+
+                    'CLOSED'
+
+                ],
+
+
+                closureRequirements: [
+
+                    'Problem identified',
+
+                    'Corrective action completed',
+
+                    'Required testing completed',
+
+                    'System functionality verified',
+
+                    'Customer informed where applicable',
+
+                    'Documentation updated where necessary',
+
+                    'Snag formally marked as closed'
+
+                ],
+
+
+                rule: `
+                    A snag must never be considered resolved simply because
+                    someone reports that work was performed. Resolution
+                    requires appropriate verification of the affected
+                    functionality.
+                `
+            },
+
+
+            changeControl: {
+
+                triggers: [
+
+                    'Customer requests additional equipment',
+
+                    'Customer requests different equipment',
+
+                    'Site conditions differ from original scope',
+
+                    'Additional cabling is required',
+
+                    'Additional civil work is required',
+
+                    'Additional electrical work is required',
+
+                    'Additional network work is required',
+
+                    'Installation complexity materially changes',
+
+                    'Customer requests relocation of installed equipment',
+
+                    'Customer requests additional configuration',
+
+                    'Third-party requirements change'
+
+                ],
+
+
+                impactAssessment: [
+
+                    'Technical impact',
+
+                    'Equipment impact',
+
+                    'Labour impact',
+
+                    'Time impact',
+
+                    'Commercial impact',
+
+                    'Safety impact',
+
+                    'Compliance impact',
+
+                    'Documentation impact',
+
+                    'Testing impact'
+
+                ],
+
+
+                process: [
+
+                    'Identify the requested or required variation',
+
+                    'Document the reason for the change',
+
+                    'Assess technical consequences',
+
+                    'Assess commercial consequences',
+
+                    'Explain the impact to the customer',
+
+                    'Prepare revised commercial information where applicable',
+
+                    'Obtain required approval',
+
+                    'Update the project scope',
+
+                    'Update the bill of materials',
+
+                    'Update installation instructions',
+
+                    'Update project documentation',
+
+                    'Proceed only after required approval'
+
+                ],
+
+
+                rule: `
+                    Never silently expand the installation scope.
+
+                    Additional work must be clearly identified and handled
+                    through the appropriate commercial and operational
+                    approval process.
+                `
+            },
+
+
+            projectStatus: {
+
+                states: [
+
+                    'NEW',
+
+                    'QUALIFICATION_REQUIRED',
+
+                    'SITE_ASSESSMENT_REQUIRED',
+
+                    'QUOTE_REQUIRED',
+
+                    'CUSTOMER_APPROVAL_PENDING',
+
+                    'EQUIPMENT_PENDING',
+
+                    'INSTALLATION_SCHEDULE_PENDING',
+
+                    'SCHEDULED',
+
+                    'READY_FOR_INSTALLATION',
+
+                    'INSTALLATION_IN_PROGRESS',
+
+                    'CONFIGURATION_IN_PROGRESS',
+
+                    'TESTING',
+
+                    'COMMISSIONING',
+
+                    'HANDOVER_PENDING',
+
+                    'SNAGGING',
+
+                    'COMPLETED',
+
+                    'ON_HOLD',
+
+                    'CANCELLED'
+
+                ],
+
+
+                statusDefinitions: {
+
+                    NEW: `
+                        Project has been created but has not yet entered
+                        full qualification.
+                    `,
+
+                    QUALIFICATION_REQUIRED: `
+                        Additional customer, site or technical information
+                        is required.
+                    `,
+
+                    SITE_ASSESSMENT_REQUIRED: `
+                        Physical site conditions must be assessed before
+                        final planning can continue.
+                    `,
+
+                    QUOTE_REQUIRED: `
+                        Commercial information must be prepared before
+                        customer approval.
+                    `,
+
+                    CUSTOMER_APPROVAL_PENDING: `
+                        Required customer approval has not yet been received.
+                    `,
+
+                    EQUIPMENT_PENDING: `
+                        Required equipment or materials are not yet ready.
+                    `,
+
+                    INSTALLATION_SCHEDULE_PENDING: `
+                        Installation timing has not yet been formally confirmed.
+                    `,
+
+                    SCHEDULED: `
+                        An installation appointment has been formally confirmed.
+                    `,
+
+                    READY_FOR_INSTALLATION: `
+                        Required project dependencies are sufficiently ready
+                        for installation to proceed.
+                    `,
+
+                    INSTALLATION_IN_PROGRESS: `
+                        Installation work has actually commenced and has been
+                        confirmed as active.
+                    `,
+
+                    CONFIGURATION_IN_PROGRESS: `
+                        Equipment is installed and configuration or programming
+                        work is being performed.
+                    `,
+
+                    TESTING: `
+                        Functional and technical testing is being performed.
+                    `,
+
+                    COMMISSIONING: `
+                        Final system commissioning is underway.
+                    `,
+
+                    HANDOVER_PENDING: `
+                        Technical work is substantially complete but customer
+                        handover requirements remain outstanding.
+                    `,
+
+                    SNAGGING: `
+                        Outstanding defects, incomplete work or corrective
+                        actions remain.
+                    `,
+
+                    COMPLETED: `
+                        Required installation, testing, commissioning,
+                        documentation and handover requirements have been
+                        completed or formally accepted.
+                    `,
+
+                    ON_HOLD: `
+                        Progress is temporarily paused because of a known
+                        dependency, customer request, technical issue or
+                        other documented reason.
+                    `,
+
+                    CANCELLED: `
+                        The project has been formally cancelled.
+                    `
+                },
+
+
+                transitionRules: [
+
+                    'Do not move a project to SCHEDULED without confirmed scheduling information.',
+
+                    'Do not move a project to INSTALLATION_IN_PROGRESS without confirmation that work has commenced.',
+
+                    'Do not move a project to TESTING without the relevant installation work being completed sufficiently for testing.',
+
+                    'Do not move a project to COMPLETED while critical unresolved snags remain.',
+
+                    'Do not use COMPLETED simply because the customer has paid.',
+
+                    'Do not use INSTALLATION_IN_PROGRESS simply because equipment has been dispatched.'
+
+                ]
+
+            },
+
+
+            projectCommunication: {
+
+                customerUpdates: [
+
+                    'Scope confirmation',
+
+                    'Quotation or approval status',
+
+                    'Equipment readiness',
+
+                    'Scheduling confirmation',
+
+                    'Site-readiness requirements',
+
+                    'Installation progress',
+
+                    'Unexpected site conditions',
+
+                    'Variations',
+
+                    'Delays',
+
+                    'Testing status',
+
+                    'Commissioning status',
+
+                    'Handover',
+
+                    'Outstanding issues',
+
+                    'Post-installation follow-up'
+
+                ],
+
+
+                communicationPrinciple: `
+                    Keep project communication factual, concise and
+                    transparent.
+
+                    Customers should understand what has been completed,
+                    what remains outstanding, whether there are dependencies,
+                    and whether any action is required from them.
+                `,
+
+
+                updateStructure: [
+
+                    'Current project status',
+
+                    'What has been completed',
+
+                    'What is currently outstanding',
+
+                    'Reason for outstanding item',
+
+                    'Next action',
+
+                    'Responsible party where known',
+
+                    'Expected timing only when confirmed',
+
+                    'Customer action required where applicable'
+
+                ],
+
+
+                rule: `
+                    Never create false certainty merely to reassure the
+                    customer. If timing, availability or completion status
+                    is unknown, state that it is not yet confirmed.
+                `
+            },
+
+
+            delayManagement: {
+
+                possibleCauses: [
+
+                    'Equipment availability',
+
+                    'Customer access',
+
+                    'Site not ready',
+
+                    'Weather',
+
+                    'Third-party dependency',
+
+                    'Additional work',
+
+                    'Technical issue',
+
+                    'Resource availability',
+
+                    'Safety issue',
+
+                    'Customer-requested change',
+
+                    'Transport or logistics issue',
+
+                    'Unexpected site condition'
+
+                ],
+
+
+                responseProcess: [
+
+                    'Identify the cause',
+
+                    'Determine project impact',
+
+                    'Confirm what information is known',
+
+                    'Communicate verified information',
+
+                    'Identify the next action',
+
+                    'Update project status',
+
+                    'Escalate when required',
+
+                    'Record the dependency where the system supports it'
+
+                ],
+
+
+                customerCommunicationRules: [
+
+                    'Do not hide material delays.',
+
+                    'Do not blame customers or technicians without verified facts.',
+
+                    'Explain dependencies clearly.',
+
+                    'Provide revised timing only when confirmed.',
+
+                    'Offer practical next steps where possible.',
+
+                    'Escalate repeated or material delays.'
+
+                ],
+
+
+                rule: `
+                    Never invent a recovery date or promise that a delay
+                    will be resolved by a specific time unless that timing
+                    has been confirmed.
+                `
+            },
+
+
+            documentationControl: {
+
+                documents: [
+
+                    'Customer requirement',
+
+                    'Site assessment',
+
+                    'Quotation',
+
+                    'Approved scope',
+
+                    'Bill of materials',
+
+                    'Installation notes',
+
+                    'Configuration records',
+
+                    'Test results',
+
+                    'Commissioning record',
+
+                    'Customer handover record',
+
+                    'Warranty information where applicable',
+
+                    'As-built information where applicable',
+
+                    'Snag list',
+
+                    'Variation approvals',
+
+                    'Service records'
+
+                ],
+
+
+                documentationRules: [
+
+                    'Documents must reflect the actual project.',
+
+                    'Approved changes must be incorporated into final records.',
+
+                    'Superseded information should not be presented as current.',
+
+                    'Critical configuration information should be retained where appropriate.',
+
+                    'Customer-facing documentation should be understandable.',
+
+                    'Technical records should contain sufficient detail for future servicing where appropriate.'
+
+                ],
+
+
+                rule: `
+                    Project documentation must reflect the actual installed
+                    and commissioned system rather than simply reproducing
+                    the original quotation.
+                `
+            },
+
+
+            asBuiltDocumentation: {
+
+                whereApplicable: [
+
+                    'Camera locations',
+
+                    'Alarm zones',
+
+                    'Fence zones',
+
+                    'Gate automation configuration',
+
+                    'Access-control doors',
+
+                    'Network equipment',
+
+                    'Cable routes',
+
+                    'Equipment locations',
+
+                    'Control equipment',
+
+                    'Power equipment',
+
+                    'Communication equipment',
+
+                    'Integration points'
+
+                ],
+
+
+                principle: `
+                    The final project record should provide a useful
+                    representation of what was actually installed,
+                    configured and commissioned.
+                `,
+
+                qualityRequirements: [
+
+                    'Accurate',
+
+                    'Current',
+
+                    'Readable',
+
+                    'Consistent with installed equipment',
+
+                    'Useful for future maintenance',
+
+                    'Protected against unauthorised disclosure'
+
+                ]
+
+            },
+
+
+            installationHandoverControl: {
+
+                handoverChecklist: [
+
+                    'Installation substantially complete',
+
+                    'Required testing completed',
+
+                    'Critical defects resolved',
+
+                    'Customer demonstration completed',
+
+                    'User instructions provided',
+
+                    'Safety information provided',
+
+                    'Relevant credentials transferred securely',
+
+                    'Warranty information provided where applicable',
+
+                    'Support process explained',
+
+                    'Documentation completed',
+
+                    'Outstanding items recorded'
+
+                ],
+
+
+                handoverStatus: [
+
+                    'NOT_READY',
+
+                    'PARTIALLY_READY',
+
+                    'READY_FOR_HANDOVER',
+
+                    'HANDED_OVER',
+
+                    'HANDOVER_WITH_OUTSTANDING_ITEMS'
+
+                ],
+
+
+                rule: `
+                    A handover must distinguish between a fully completed
+                    installation and a system handed over with formally
+                    documented outstanding items.
+                `
+            },
+
+
+            escalationRules: [
+
+                'Escalate unsafe installation conditions.',
+
+                'Escalate uncertain electrical work.',
+
+                'Escalate structural concerns.',
+
+                'Escalate major scope disputes.',
+
+                'Escalate unapproved commercial variations.',
+
+                'Escalate repeated installation defects.',
+
+                'Escalate equipment compatibility uncertainty.',
+
+                'Escalate security-critical system failures.',
+
+                'Escalate customer complaints requiring managerial intervention.',
+
+                'Escalate regulatory or compliance questions requiring professional interpretation.',
+
+                'Escalate situations where the assistant lacks sufficient verified information.'
+
+            ],
+
+
+            prohibitedClaims: [
+
+                'Do not claim an installer has been assigned unless confirmed.',
+
+                'Do not claim an installation date is booked unless confirmed.',
+
+                'Do not claim equipment is in stock unless verified.',
+
+                'Do not claim installation has started unless confirmed.',
+
+                'Do not claim testing has passed unless recorded or confirmed.',
+
+                'Do not claim commissioning is complete unless verified.',
+
+                'Do not claim the customer has received documentation unless confirmed.',
+
+                'Do not claim a snag has been resolved unless confirmed.',
+
+                'Do not claim a variation has been approved unless confirmed.',
+
+                'Do not claim regulatory compliance without appropriate evidence.',
+
+                'Do not claim a project is complete merely because payment has been received.'
+
+            ],
+
+
+            performanceMetrics: [
+
+                'Installation readiness rate',
+
+                'First-time installation completion rate',
+
+                'Installation defect rate',
+
+                'Average snag count',
+
+                'Average snag resolution time',
+
+                'Schedule adherence',
+
+                'V
 
       
