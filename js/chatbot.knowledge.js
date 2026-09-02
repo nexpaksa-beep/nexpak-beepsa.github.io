@@ -55114,6 +55114,464 @@
 
                 'Faults identified',
 
-                'Correctiv
+                                    'Corrective actions',
+
+                    'Parts replaced',
+
+                    'Recommendations',
+
+                    'Outstanding issues',
+
+                    'Technician or service reference where available',
+
+                    'Customer acknowledgement where applicable'
+
+                ],
+
+
+                dataQualityRules: [
+
+                    'Record only information relevant to the maintenance activity.',
+
+                    'Use accurate service dates.',
+
+                    'Identify the equipment actually inspected.',
+
+                    'Separate customer-reported symptoms from technician-confirmed findings.',
+
+                    'Record tests that were actually performed.',
+
+                    'Record parts actually replaced.',
+
+                    'Do not mark recommended work as completed work.',
+
+                    'Do not create service records for work that did not occur.',
+
+                    'Protect customer and system information from unauthorised disclosure.'
+
+                ]
+
+            },
+
+
+            maintenanceScheduling: {
+
+                schedulingInputs: [
+
+                    'System type',
+
+                    'System criticality',
+
+                    'Previous service history',
+
+                    'Known recurring faults',
+
+                    'Equipment condition',
+
+                    'Manufacturer recommendations where available',
+
+                    'Environmental conditions',
+
+                    'Customer operating requirements',
+
+                    'Last maintenance date',
+
+                    'Outstanding recommendations'
+
+                ],
+
+                schedulingStates: [
+
+                    'NOT_DUE',
+
+                    'DUE',
+
+                    'OVERDUE',
+
+                    'URGENT',
+
+                    'SCHEDULED',
+
+                    'COMPLETED',
+
+                    'UNKNOWN'
+
+                ],
+
+                rule: `
+                    Never state that maintenance is overdue unless a reliable
+                    maintenance schedule or confirmed previous service date
+                    exists.
+                `
+            },
+
+
+            customerMaintenanceReminders: {
+
+                reminderTypes: [
+
+                    'Routine maintenance reminder',
+
+                    'Battery inspection reminder',
+
+                    'System health review',
+
+                    'Recommended service reminder',
+
+                    'Outstanding repair reminder',
+
+                    'Warranty-related maintenance reminder',
+
+                    'System upgrade review'
+
+                ],
+
+                communicationRules: [
+
+                    'Explain why the reminder is relevant.',
+
+                    'Avoid unnecessary urgency.',
+
+                    'Do not imply that maintenance was promised if it was not.',
+
+                    'Do not claim a reminder was sent unless the communication action is confirmed.',
+
+                    'Allow the customer to request further information or service.'
+
+                ]
+
+            },
+
+
+            systemUpgradeTriggers: [
+
+                'Repeated equipment failures',
+
+                'End-of-life equipment',
+
+                'Unavailable replacement components',
+
+                'Obsolete communication technology',
+
+                'Insufficient system capacity',
+
+                'Increasing maintenance cost',
+
+                'Changing customer requirements',
+
+                'New security requirements',
+
+                'Persistent reliability problems',
+
+                'Major property changes',
+
+                'Unsupported software or firmware',
+
+                'Significant performance limitations'
+
+            ],
+
+
+            upgradeRecommendationRules: [
+
+                'Determine whether maintenance can reasonably restore the required performance first.',
+
+                'Do not recommend replacement solely because equipment is old.',
+
+                'Consider reliability and supportability.',
+
+                'Consider compatibility with existing equipment.',
+
+                'Consider customer budget and operational requirements.',
+
+                'Clearly distinguish upgrade recommendations from mandatory repairs.',
+
+                'Obtain technical confirmation where compatibility is uncertain.'
+
+            ],
+
+
+            serviceHistoryIntelligence: {
+
+                analyse: [
+
+                    'Repeated faults',
+
+                    'Repeated component replacements',
+
+                    'Recurring false alarms',
+
+                    'Recurring communication failures',
+
+                    'Battery replacement history',
+
+                    'Maintenance frequency',
+
+                    'Previous upgrade recommendations',
+
+                    'Previous customer complaints',
+
+                    'Outstanding service items'
+
+                ],
+
+                objective: `
+                    Use historical service information to identify patterns
+                    that can improve reliability and customer support without
+                    assuming that historical problems are still present.
+                `
+            },
+
+
+            healthTrendAnalysis: {
+
+                trendStates: [
+
+                    'IMPROVING',
+
+                    'STABLE',
+
+                    'DEGRADING',
+
+                    'VOLATILE',
+
+                    'CRITICAL',
+
+                    'INSUFFICIENT_DATA'
+
+                ],
+
+                indicators: [
+
+                    'Fault frequency over time',
+
+                    'Service-call frequency',
+
+                    'Repeated component failures',
+
+                    'Battery performance',
+
+                    'Network stability',
+
+                    'Recording reliability',
+
+                    'Alarm reliability',
+
+                    'Electric-fence reliability',
+
+                    'Gate reliability',
+
+                    'Access-control reliability'
+
+                ],
+
+                rule: `
+                    Trend analysis must be based on actual historical data.
+                    The assistant must not invent trends from a single
+                    isolated service event.
+                `
+            },
+
+
+            maintenanceEscalationMatrix: {
+
+                immediate: [
+
+                    'Safety hazard',
+
+                    'Critical security failure',
+
+                    'Exposed dangerous electrical condition',
+
+                    'Critical perimeter protection failure',
+
+                    'Security system failure affecting a high-risk environment'
+
+                ],
+
+                urgent: [
+
+                    'Major system degradation',
+
+                    'Repeated critical faults',
+
+                    'Multiple security devices unavailable',
+
+                    'Important alarm or surveillance functionality unavailable'
+
+                ],
+
+                planned: [
+
+                    'Preventive maintenance due',
+
+                    'Battery replacement recommendation',
+
+                    'Minor equipment degradation',
+
+                    'Routine configuration review',
+
+                    'Documentation update'
+
+                ],
+
+                monitor: [
+
+                    'Minor cosmetic deterioration',
+
+                    'Non-critical observation',
+
+                    'Early-stage degradation requiring observation',
+
+                    'Low-impact environmental condition'
+
+                ]
+
+            },
+
+
+            maintenanceCustomerExperience: {
+
+                principles: [
+
+                    'Keep the customer informed.',
+
+                    'Explain technical findings in understandable language.',
+
+                    'Avoid unnecessary technical jargon.',
+
+                    'Explain the difference between a recommendation and a confirmed fault.',
+
+                    'Provide clear next steps.',
+
+                    'Respect the customer's budget constraints.',
+
+                    'Avoid pressure-based selling.',
+
+                    'Prioritise genuine security and safety requirements.'
+
+                ]
+
+            },
+
+
+            serviceContractSupport: {
+
+                potentialActivities: [
+
+                    'Scheduled inspections',
+
+                    'Preventive maintenance',
+
+                    'System health checks',
+
+                    'Priority fault response',
+
+                    'Battery inspections',
+
+                    'System performance reviews',
+
+                    'Documentation updates',
+
+                    'Upgrade planning'
+
+                ],
+
+                rules: [
+
+                    'Do not claim that a customer has a service contract unless verified.',
+
+                    'Do not claim a particular response time unless contract terms are confirmed.',
+
+                    'Do not imply that a service visit is included unless the applicable agreement confirms it.',
+
+                    'Escalate contract interpretation questions when necessary.'
+
+                ]
+
+            },
+
+
+            maintenanceReporting: {
+
+                reportSections: [
+
+                    'Customer and site reference',
+
+                    'System overview',
+
+                    'Inspection date',
+
+                    'Equipment inspected',
+
+                    'Reported concerns',
+
+                    'Observed condition',
+
+                    'Tests performed',
+
+                    'Confirmed faults',
+
+                    'Recommended actions',
+
+                    'Priority',
+
+                    'Outstanding items',
+
+                    'Follow-up requirements'
+
+                ],
+
+                reportPrinciple: `
+                    Maintenance reports should clearly distinguish observed
+                    facts, test results, recommendations and outstanding
+                    actions.
+                `
+            },
+
+
+            prohibitedClaims: [
+
+                'Do not claim maintenance was completed without confirmation.',
+
+                'Do not claim a technician attended without confirmation.',
+
+                'Do not claim a system passed a health check without evidence.',
+
+                'Do not claim a battery is defective without appropriate evidence.',
+
+                'Do not claim equipment requires replacement solely because it is old.',
+
+                'Do not claim a service contract exists without verification.',
+
+                'Do not claim a maintenance appointment is booked unless confirmed.',
+
+                'Do not claim a system is compliant without appropriate evidence.',
+
+                'Do not claim a fault has been permanently resolved without verification.'
+
+            ],
+
+
+            finalRule: `
+                Preventive maintenance must protect the customer's security
+                investment by identifying genuine risks early and ensuring
+                that maintenance decisions are evidence-based.
+
+                The assistant must never manufacture faults, exaggerate
+                deterioration, create false urgency or recommend unnecessary
+                replacement.
+
+                Where the available information is insufficient, the correct
+                response is to identify what must be inspected, tested or
+                confirmed by a qualified person before reaching a conclusion.
+            `
+        },
+
+
+        /* =========================================================
+           120. SECURITY SYSTEM WARRANTY, RETURNS & RMA
+               INTELLIGENCE ENGINE
+        ========================================================= */
 
       
