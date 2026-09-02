@@ -37664,6 +37664,557 @@
 
                 conditionRule:
 
-                    'A motor should not be used to compensate for a mechanically defective, excessively resistant or incorrectly aligned gate.',
+                    'A motor should not be used to compensate for a mechanically defective, excessively resistant or incorrectly aligned gate.',                integrationRule:
+
+                    'Gate automation may be integrated with access control, intercoms and other security systems when compatibility is confirmed.',
+
+                safetyConsiderations: [
+
+                    'Confirm that the gate structure is mechanically suitable for automation.',
+
+                    'Confirm that the gate moves freely through its complete operating cycle.',
+
+                    'Consider appropriate safety devices for the gate application.',
+
+                    'Consider obstruction detection and safe stopping requirements.',
+
+                    'Consider pedestrian and vehicle interaction with the gate.',
+
+                    'Consider emergency release requirements.',
+
+                    'Consider manual operation during power failure.',
+
+                    'Do not treat a remote control as a substitute for a complete gate safety system.',
+
+                    'Escalate unusual or high-risk gate applications for professional assessment.'
+                ],
+
+                dutyClassification: {
+
+                    lightDuty:
+
+                        'Lower-frequency residential or similar applications where operating demand is limited.',
+
+                    mediumDuty:
+
+                        'Applications with regular daily operation requiring greater operating capacity.',
+
+                    heavyDuty:
+
+                        'High-frequency, commercial, industrial or otherwise demanding applications requiring equipment selected for the expected duty cycle.'
+                },
+
+                automationDecisionFactors: [
+
+                    'Gate construction',
+
+                    'Gate dimensions',
+
+                    'Gate mass',
+
+                    'Operating frequency',
+
+                    'Gate condition',
+
+                    'Available power',
+
+                    'Required backup power',
+
+                    'Security level',
+
+                    'Access-control integration',
+
+                    'Intercom integration',
+
+                    'Safety requirements',
+
+                    'Environmental exposure',
+
+                    'Future operating requirements'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               INTEGRATED SECURITY DESIGN
+            ----------------------------------------------------- */
+
+            integratedSecurityDesign: {
+
+                objective:
+
+                    'Determine when multiple security technologies should operate together as one coordinated security solution.',
+
+                commonCombinations: [
+
+                    'Electric fence + CCTV',
+
+                    'Electric fence + alarm',
+
+                    'CCTV + access control',
+
+                    'Gate automation + intercom',
+
+                    'Gate automation + access control',
+
+                    'Alarm + CCTV verification',
+
+                    'Electric fence + CCTV + alarm',
+
+                    'Gate automation + access control + intercom',
+
+                    'Perimeter detection + CCTV verification'
+                ],
+
+                integrationBenefits: [
+
+                    'Improved event verification.',
+
+                    'Reduced reliance on a single security technology.',
+
+                    'Centralised management where supported.',
+
+                    'Improved user awareness.',
+
+                    'More efficient incident response.',
+
+                    'Improved access management.',
+
+                    'Better visibility of security events.'
+                ],
+
+                integrationRules: [
+
+                    'Each integrated component must have a defined purpose.',
+
+                    'Do not integrate systems merely because integration is technically possible.',
+
+                    'Confirm compatibility before promising integration.',
+
+                    'Identify whether integration is native, accessory-based or dependent on additional hardware.',
+
+                    'Consider what happens if one component becomes unavailable.',
+
+                    'Consider whether the customer actually benefits from the integration.',
+
+                    'Explain integration in terms of customer outcomes rather than technical terminology.'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               REDUNDANCY & RESILIENCE
+            ----------------------------------------------------- */
+
+            resilienceDesign: {
+
+                objective:
+
+                    'Identify important dependencies and reduce avoidable single points of failure.',
+
+                considerations: [
+
+                    'Primary power failure',
+
+                    'Battery failure',
+
+                    'Internet failure',
+
+                    'Network failure',
+
+                    'Communication failure',
+
+                    'Recorder failure',
+
+                    'Controller failure',
+
+                    'Physical cable damage',
+
+                    'Device failure',
+
+                    'Environmental damage'
+                ],
+
+                resilienceMethods: [
+
+                    'Battery backup',
+
+                    'Appropriate surge protection',
+
+                    'Communication redundancy where justified',
+
+                    'Local recording where appropriate',
+
+                    'Multiple detection technologies',
+
+                    'Independent security zones',
+
+                    'Protected equipment installation',
+
+                    'Appropriate maintenance planning'
+                ],
+
+                rule:
+
+                    'Redundancy should be based on the consequences of system failure and the customers security requirements rather than added indiscriminately.'
+            },
+
+
+            /* -----------------------------------------------------
+               ENVIRONMENTAL DESIGN
+            ----------------------------------------------------- */
+
+            environmentalDesign: {
+
+                considerations: [
+
+                    'Indoor installation',
+
+                    'Outdoor installation',
+
+                    'Rain exposure',
+
+                    'Dust',
+
+                    'Heat',
+
+                    'Cold',
+
+                    'Direct sunlight',
+
+                    'Humidity',
+
+                    'Corrosive environments',
+
+                    'Vegetation',
+
+                    'Animals',
+
+                    'Vibration',
+
+                    'Physical impact',
+
+                    'Lightning or surge exposure'
+                ],
+
+                designRule:
+
+                    'Equipment should be selected and installed according to the environmental conditions in which it must operate.',
+
+                warning:
+
+                    'Do not assume that equipment suitable for indoor use is automatically suitable for exposed outdoor installation.'
+            },
+
+
+            /* -----------------------------------------------------
+               INSTALLATION CONSTRAINTS
+            ----------------------------------------------------- */
+
+            installationConstraints: [
+
+                'Available mounting surfaces.',
+
+                'Cable routing limitations.',
+
+                'Distance between equipment.',
+
+                'Access to electrical supply.',
+
+                'Access to network infrastructure.',
+
+                'Height and physical access requirements.',
+
+                'Existing building structure.',
+
+                'Existing fencing.',
+
+                'Existing gate structure.',
+
+                'Drainage and water exposure.',
+
+                'Vegetation and landscaping.',
+
+                'Potential vandalism.',
+
+                'Maintenance access.',
+
+                'Legal or property restrictions.',
+
+                'Customer operational restrictions.'
+            ],
+
+
+            /* -----------------------------------------------------
+               SYSTEM SCALABILITY
+            ----------------------------------------------------- */
+
+            scalabilityDesign: {
+
+                principle:
+
+                    'A good security design should remain useful as the customers requirements change where practical and economically justified.',
+
+                considerations: [
+
+                    'Additional cameras',
+
+                    'Additional recording capacity',
+
+                    'Additional access users',
+
+                    'Additional access points',
+
+                    'Additional alarm zones',
+
+                    'Additional fence zones',
+
+                    'Additional gates',
+
+                    'Additional buildings',
+
+                    'Additional communication requirements'
+                ],
+
+                rule:
+
+                    'Identify system capacity limits before presenting a configuration as suitable for future expansion.',
+
+                recommendation:
+
+                    'Where expansion is likely, prioritise infrastructure and equipment that can accommodate the expected growth without unnecessary replacement.'
+            },
+
+
+            /* -----------------------------------------------------
+               CONFIGURATION DEPENDENCY ENGINE
+            ----------------------------------------------------- */
+
+            configurationDependencies: {
+
+                principle:
+
+                    'Some components cannot perform their intended function without supporting equipment, infrastructure or configuration.',
+
+                dependencyExamples: [
+
+                    'CCTV camera → recorder or appropriate storage solution',
+
+                    'IP camera → suitable network infrastructure',
+
+                    'Remote CCTV access → compatible network and internet communication',
+
+                    'Access reader → compatible controller and locking hardware',
+
+                    'Gate motor → suitable gate structure and power supply',
+
+                    'Electric fence → suitable energiser, conductors, insulation and earth system',
+
+                    'Alarm sensor → compatible control equipment and power',
+
+                    'Intercom → compatible entry hardware and communication path'
+                ],
+
+                rule:
+
+                    'When presenting a system configuration, identify important dependencies so the customer understands what is required for the complete solution to operate.'
+            },
+
+
+            /* -----------------------------------------------------
+               PRODUCT-TO-FUNCTION VALIDATION
+            ----------------------------------------------------- */
+
+            productFunctionValidation: [
+
+                'Every selected product must perform a defined system function.',
+
+                'The product must be suitable for the intended environment.',
+
+                'The product must have sufficient capacity for the requirement.',
+
+                'The product must be compatible with dependent components.',
+
+                'The product must support the required operating conditions.',
+
+                'The product must not be selected solely because it is more expensive.',
+
+                'A lower-cost product must not be selected when it fails an important requirement.',
+
+                'If product specifications are unknown, do not invent them.',
+
+                'If several products could satisfy the requirement, explain the relevant decision factors.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CONFIGURATION TIERS
+            ----------------------------------------------------- */
+
+            configurationTiers: {
+
+                essential: {
+
+                    description:
+
+                        'The minimum practical configuration required to achieve the customers primary security objective.',
+
+                    rule:
+
+                        'Do not remove a component that is essential to system operation merely to make the quoted price appear lower.'
+                },
+
+                enhanced: {
+
+                    description:
+
+                        'A stronger configuration that adds useful monitoring, convenience, resilience or verification capabilities.',
+
+                    rule:
+
+                        'Clearly explain the benefit provided by each enhancement.'
+                },
+
+                comprehensive: {
+
+                    description:
+
+                        'A broader integrated security solution designed to address multiple relevant security objectives.',
+
+                    rule:
+
+                        'Recommend only when the additional functions have a meaningful security or operational purpose.'
+                }
+            },
+
+
+            /* -----------------------------------------------------
+               DESIGN TRADE-OFF ENGINE
+            ----------------------------------------------------- */
+
+            designTradeOffs: {
+
+                commonTradeOffs: [
+
+                    'Coverage vs cost',
+
+                    'Resolution vs storage',
+
+                    'Detection sensitivity vs false alarms',
+
+                    'Capacity vs initial investment',
+
+                    'Redundancy vs cost',
+
+                    'Wireless convenience vs communication reliability',
+
+                    'Cable infrastructure vs installation complexity',
+
+                    'Automation convenience vs mechanical requirements'
+                ],
+
+                rule:
+
+                    'When a design involves a meaningful trade-off, explain the trade-off rather than presenting one option as universally superior.'
+            },
+
+
+            /* -----------------------------------------------------
+               CUSTOMER-FACING DESIGN EXPLANATION
+            ----------------------------------------------------- */
+
+            customerExplanation: {
+
+                principle:
+
+                    'Technical system design should be translated into language the customer can understand and use to make a decision.',
+
+                structure: [
+
+                    'What the system is designed to protect.',
+
+                    'How the system detects or controls the relevant event.',
+
+                    'How the customer receives information or alerts.',
+
+                    'What the main components do.',
+
+                    'Why the selected architecture is appropriate.',
+
+                    'What information still needs to be confirmed.',
+
+                    'What the next step should be.'
+                ],
+
+                languageRules: [
+
+                    'Avoid unnecessary technical jargon.',
+
+                    'Explain technical terms when they materially affect the decision.',
+
+                    'Use practical examples where useful.',
+
+                    'Do not overwhelm the customer with specifications that do not affect the decision.',
+
+                    'Keep technical accuracy when simplifying explanations.'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               FINAL CONFIGURATION VALIDATION
+            ----------------------------------------------------- */
+
+            finalConfigurationValidation: [
+
+                'The primary security objective is defined.',
+
+                'The protected areas are identified.',
+
+                'The security architecture is logical.',
+
+                'Every essential function has supporting equipment.',
+
+                'Major component dependencies are identified.',
+
+                'Power requirements are addressed.',
+
+                'Communication requirements are addressed.',
+
+                'Environmental conditions are considered.',
+
+                'Installation constraints are considered.',
+
+                'System capacity is appropriate.',
+
+                'Future expansion is considered where justified.',
+
+                'Integration requirements are validated.',
+
+                'Essential and optional components are separated.',
+
+                'Important assumptions are visible.',
+
+                'Unknown information is clearly identified.',
+
+                'Any required human technical review is triggered.',
+
+                'The design remains aligned with the customers actual security objective.'
+            ],
+
+
+            /* -----------------------------------------------------
+               FINAL RULE
+            ----------------------------------------------------- */
+
+            finalRule:
+
+                'A configuration should only be presented as a suitable proposed solution when its components, capacities, dependencies, operating conditions and security objectives have been logically aligned and any unresolved technical issues have been clearly identified.'
+        },
+
+
+        /* =========================================================
+           99. SYSTEM SIZING & BILL OF MATERIALS ENGINE
+        ========================================================= */
 
     
