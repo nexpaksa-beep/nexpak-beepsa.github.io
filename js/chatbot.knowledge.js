@@ -52194,8 +52194,835 @@
                 'Every meaningful customer interaction can provide useful intelligence. The assistant should capture feedback accurately, distinguish evidence from assumptions, identify recurring problems and help convert legitimate customer insight into better products, clearer communication, stronger technical support and a more reliable customer experience. Feedback must improve the business without compromising customer privacy, honesty or trust.'
         },
 
-
         /* =========================================================
            117. SECURITY SYSTEM INSTALLATION & PROJECT COORDINATION
                INTELLIGENCE ENGINE
         ========================================================= */
+
+        securitySystemInstallationProjectCoordinationIntelligenceEngine: {
+
+            objective: `
+                Coordinate and support the complete security-system
+                installation lifecycle from initial project preparation
+                through installation, commissioning, handover, snagging,
+                documentation and post-installation support.
+            `,
+
+            corePrinciple: `
+                Treat every installation as a controlled technical project,
+                not simply as a product delivery.
+
+                The assistant must ensure that the customer requirement,
+                proposed system, equipment, site conditions, installation
+                resources, technical dependencies, customer expectations
+                and completion requirements remain aligned throughout
+                the project lifecycle.
+            `,
+
+            projectLifecycle: [
+
+                'Customer requirement confirmation',
+
+                'Site and installation qualification',
+
+                'System scope definition',
+
+                'Equipment and material validation',
+
+                'Bill of materials confirmation',
+
+                'Installation planning',
+
+                'Technician and resource coordination',
+
+                'Customer scheduling',
+
+                'Site readiness verification',
+
+                'Installation execution',
+
+                'Configuration',
+
+                'Testing and commissioning',
+
+                'Customer demonstration',
+
+                'Handover',
+
+                'Snag resolution',
+
+                'Documentation completion',
+
+                'Post-installation support',
+
+                'Customer success follow-up'
+
+            ],
+
+
+            projectTypes: [
+
+                {
+                    type: 'electric_fencing',
+                    considerations: [
+
+                        'Fence perimeter',
+
+                        'Fence height and construction',
+
+                        'Energizer requirements',
+
+                        'Earthing',
+
+                        'Warning signage',
+
+                        'Gate interfaces',
+
+                        'Zone configuration',
+
+                        'Alarm integration',
+
+                        'Vegetation management',
+
+                        'Existing fence condition',
+
+                        'Legal and safety requirements'
+
+                    ]
+                },
+
+                {
+                    type: 'cctv',
+                    considerations: [
+
+                        'Camera locations',
+
+                        'Coverage requirements',
+
+                        'Lighting conditions',
+
+                        'Recording requirements',
+
+                        'Network infrastructure',
+
+                        'Cable routes',
+
+                        'Storage requirements',
+
+                        'Remote viewing',
+
+                        'Power requirements',
+
+                        'Privacy considerations',
+
+                        'Monitoring requirements'
+
+                    ]
+                },
+
+                {
+                    type: 'alarm',
+                    considerations: [
+
+                        'Property layout',
+
+                        'Entry points',
+
+                        'Detection zones',
+
+                        'Control panel location',
+
+                        'Keypad locations',
+
+                        'Siren locations',
+
+                        'Communication method',
+
+                        'User requirements',
+
+                        'Remote notification',
+
+                        'Integration requirements'
+
+                    ]
+                },
+
+                {
+                    type: 'gate_automation',
+                    considerations: [
+
+                        'Gate type',
+
+                        'Gate weight',
+
+                        'Gate dimensions',
+
+                        'Opening frequency',
+
+                        'Available power',
+
+                        'Battery backup',
+
+                        'Safety devices',
+
+                        'Access-control integration',
+
+                        'Intercom integration',
+
+                        'Manual override requirements'
+
+                    ]
+                },
+
+                {
+                    type: 'access_control',
+                    considerations: [
+
+                        'Number of controlled doors',
+
+                        'User count',
+
+                        'Credential type',
+
+                        'Door hardware',
+
+                        'Exit requirements',
+
+                        'Power requirements',
+
+                        'Network requirements',
+
+                        'Access levels',
+
+                        'Audit requirements',
+
+                        'Integration requirements'
+
+                    ]
+                },
+
+                {
+                    type: 'intercom',
+                    considerations: [
+
+                        'Entrance type',
+
+                        'Number of users',
+
+                        'Indoor stations',
+
+                        'Outdoor station',
+
+                        'Gate integration',
+
+                        'Door release',
+
+                        'Network requirements',
+
+                        'Power requirements',
+
+                        'Mobile functionality'
+
+                    ]
+                }
+
+            ],
+
+
+            preInstallationQualification: {
+
+                purpose: `
+                    Confirm that sufficient information exists before
+                    installation resources are committed.
+                `,
+
+                requiredInformation: [
+
+                    'Customer identity',
+
+                    'Installation address',
+
+                    'Contact details',
+
+                    'System type',
+
+                    'Confirmed scope',
+
+                    'Required equipment',
+
+                    'Site conditions',
+
+                    'Access requirements',
+
+                    'Preferred installation timing',
+
+                    'Special customer requirements',
+
+                    'Known technical constraints',
+
+                    'Existing infrastructure',
+
+                    'Power availability',
+
+                    'Network availability where applicable'
+
+                ],
+
+                rule: `
+                    Do not treat a project as installation-ready when
+                    critical information is still unknown.
+                `
+
+            },
+
+
+            siteReadinessAssessment: {
+
+                checklist: [
+
+                    'Installation area accessible',
+
+                    'Customer or authorised representative available',
+
+                    'Required electrical supply available',
+
+                    'Network infrastructure available where required',
+
+                    'Mounting surfaces suitable',
+
+                    'Cable routes accessible',
+
+                    'Existing infrastructure identified',
+
+                    'Required gates or doors operational where relevant',
+
+                    'Required civil work completed',
+
+                    'Vegetation or obstructions addressed where relevant',
+
+                    'Equipment delivery available',
+
+                    'Safety conditions acceptable'
+
+                ],
+
+                readinessStates: [
+
+                    'READY',
+
+                    'READY_WITH_MINOR_CONDITIONS',
+
+                    'PENDING_INFORMATION',
+
+                    'PENDING_SITE_WORK',
+
+                    'PENDING_EQUIPMENT',
+
+                    'PENDING_CUSTOMER_ACCESS',
+
+                    'NOT_READY'
+
+                ]
+
+            },
+
+
+            scopeDefinition: {
+
+                objective: `
+                    Create a clear boundary around what the installation
+                    includes and what falls outside the confirmed scope.
+                `,
+
+                scopeCategories: [
+
+                    'Equipment supplied',
+
+                    'Equipment installed',
+
+                    'Cabling',
+
+                    'Mounting',
+
+                    'Configuration',
+
+                    'Programming',
+
+                    'Testing',
+
+                    'Commissioning',
+
+                    'Customer training',
+
+                    'Documentation',
+
+                    'Removal of existing equipment where specifically included',
+
+                    'Civil work where specifically included',
+
+                    'Electrical work where specifically included',
+
+                    'Network work where specifically included'
+
+                ],
+
+                exclusions: [
+                    'Unconfirmed additional work',
+                    'Unapproved variations',
+                    'Assumed civil work',
+                    'Assumed electrical work',
+                    'Assumed network work',
+                    'Unspecified repairs'
+                ],
+
+                rule: `
+                    Never silently expand the installation scope because
+                    the customer or technician mentions additional work
+                    during the project.
+                `
+            },
+
+
+            billOfMaterialsValidation: {
+
+                verify: [
+
+                    'Correct product category',
+
+                    'Correct model',
+
+                    'Required quantity',
+
+                    'Accessories',
+
+                    'Mounting hardware',
+
+                    'Connectors',
+
+                    'Power supplies',
+
+                    'Batteries',
+
+                    'Cabling',
+
+                    'Storage media',
+
+                    'Network equipment where required',
+
+                    'Protection devices',
+
+                    'Integration accessories',
+
+                    'Consumables'
+
+                ],
+
+                validationRules: [
+
+                    'Every critical component must be accounted for.',
+
+                    'Do not assume an accessory is included unless confirmed.',
+
+                    'Do not substitute equipment without appropriate approval.',
+
+                    'Do not declare the bill of materials complete when required technical information is missing.'
+
+                ]
+
+            },
+
+
+            installationPlanning: {
+
+                planningFactors: [
+
+                    'Project scope',
+
+                    'Property size',
+
+                    'System complexity',
+
+                    'Number of devices',
+
+                    'Cable distance',
+
+                    'Access difficulty',
+
+                    'Working-at-height requirements',
+
+                    'Electrical requirements',
+
+                    'Network requirements',
+
+                    'Civil requirements',
+
+                    'Customer operating constraints',
+
+                    'Security requirements',
+
+                    'Testing requirements'
+
+                ],
+
+                planningOutput: [
+
+                    'Installation sequence',
+
+                    'Required equipment',
+
+                    'Required tools',
+
+                    'Required personnel',
+
+                    'Site dependencies',
+
+                    'Customer dependencies',
+
+                    'Testing requirements',
+
+                    'Handover requirements'
+
+                ],
+
+                rule: `
+                    Planning information must be based on confirmed
+                    requirements. Never invent installation duration,
+                    technician availability or completion dates.
+                `
+            },
+
+
+            equipmentReadiness: {
+
+                verifyBeforeDispatch: [
+
+                    'Correct equipment selected',
+
+                    'Correct quantities',
+
+                    'Equipment available',
+
+                    'Equipment condition acceptable',
+
+                    'Accessories available',
+
+                    'Required documentation available',
+
+                    'Configuration requirements understood',
+
+                    'Special tools identified',
+
+                    'Replacement or contingency items identified where appropriate'
+
+                ],
+
+                statusValues: [
+
+                    'READY',
+
+                    'PARTIALLY_READY',
+
+                    'PENDING_STOCK',
+
+                    'PENDING_CONFIGURATION',
+
+                    'PENDING_INFORMATION',
+
+                    'HOLD'
+
+                ]
+
+            },
+
+
+            technicianCoordination: {
+
+                requirements: [
+
+                    'Required technical skill identified',
+
+                    'Installation complexity assessed',
+
+                    'Specialist requirements identified',
+
+                    'Required tools identified',
+
+                    'Safety requirements communicated',
+
+                    'Project scope communicated',
+
+                    'Site information available',
+
+                    'Customer requirements communicated'
+
+                ],
+
+                rule: `
+                    The assistant must never claim that a technician,
+                    installer or project team has been assigned unless
+                    that assignment has actually been confirmed by the
+                    connected operational system or authorised staff.
+                `
+            },
+
+
+            customerScheduling: {
+
+                schedulingInformation: [
+
+                    'Preferred date',
+
+                    'Preferred time window',
+
+                    'Customer availability',
+
+                    'Site access requirements',
+
+                    'Keyholder information',
+
+                    'Gate access',
+
+                    'Building access',
+
+                    'Parking or loading restrictions',
+
+                    'Special site rules'
+
+                ],
+
+                communicationRules: [
+
+                    'Confirm agreed appointments clearly.',
+
+                    'Avoid vague scheduling language.',
+
+                    'Do not promise a date that has not been confirmed.',
+
+                    'Communicate changes as soon as they are known.',
+
+                    'Record customer scheduling constraints where the system supports it.'
+
+                ]
+
+            },
+
+
+            installationSequence: [
+
+                'Confirm project scope',
+
+                'Confirm site readiness',
+
+                'Verify equipment',
+
+                'Review safety requirements',
+
+                'Inspect installation area',
+
+                'Confirm installation positions',
+
+                'Install infrastructure',
+
+                'Install primary equipment',
+
+                'Install accessories',
+
+                'Complete cabling',
+
+                'Configure equipment',
+
+                'Integrate connected systems',
+
+                'Perform functional testing',
+
+                'Perform system-specific technical testing',
+
+                'Resolve identified defects',
+
+                'Complete commissioning',
+
+                'Demonstrate system to customer',
+
+                'Complete handover documentation'
+
+            ],
+
+
+            installationQualityControl: {
+
+                inspect: [
+
+                    'Correct equipment installed',
+
+                    'Correct quantities installed',
+
+                    'Secure mounting',
+
+                    'Professional cable routing',
+
+                    'Correct labelling',
+
+                    'Weather protection where required',
+
+                    'Appropriate equipment positioning',
+
+                    'Power connections',
+
+                    'Network connections',
+
+                    'Grounding or earthing where applicable',
+
+                    'Safety devices',
+
+                    'Warning signage where required',
+
+                    'System configuration',
+
+                    'Integration functionality',
+
+                    'User access configuration'
+
+                ],
+
+                rule: `
+                    A physically installed system is not considered
+                    complete until its required functionality has been
+                    tested and the project completion state has been
+                    confirmed.
+                `
+            },
+
+
+            safetyCoordination: {
+
+                principles: [
+
+                    'Identify electrical hazards',
+
+                    'Identify working-at-height hazards',
+
+                    'Identify access hazards',
+
+                    'Identify moving-gate hazards',
+
+                    'Identify exposed conductors',
+
+                    'Identify construction hazards',
+
+                    'Use appropriate isolation procedures',
+
+                    'Use appropriate personal protective equipment',
+
+                    'Keep unauthorised persons away from hazardous work areas',
+
+                    'Follow applicable laws, standards and professional practices'
+
+                ],
+
+                escalation: `
+                    Any installation condition presenting significant
+                    electrical, structural, fire, access-control or
+                    personal-safety risk must be escalated to a suitably
+                    qualified human professional.
+                `
+            },
+
+
+            commissioning: {
+
+                objective: `
+                    Confirm that the installed system operates according
+                    to the approved scope and intended functionality.
+                `,
+
+                testCategories: [
+
+                    'Power-up test',
+
+                    'Device communication test',
+
+                    'Functional test',
+
+                    'Alarm test',
+
+                    'Detection test',
+
+                    'Recording test',
+
+                    'Remote-access test where applicable',
+
+                    'Gate operation test',
+
+                    'Access-control test',
+
+                    'Intercom test',
+
+                    'Electric-fence system test',
+
+                    'Backup-power test where applicable',
+
+                    'Integration test',
+
+                    'User-interface test'
+
+                ],
+
+                completionRule: `
+                    Commissioning must be based on actual testing or
+                    verified installation records. Never state that a
+                    system has passed commissioning merely because the
+                    equipment was installed.
+                `
+            },
+
+
+            customerHandover: {
+
+                handoverItems: [
+
+                    'System overview',
+
+                    'Basic operation instructions',
+
+                    'User credentials where applicable',
+
+                    'Remote-access instructions where applicable',
+
+                    'Alarm procedures',
+
+                    'Maintenance guidance',
+
+                    'Safety information',
+
+                    'Warranty information where applicable',
+
+                    'Support contact information',
+
+                    'System documentation',
+
+                    'Outstanding items if any'
+
+                ],
+
+                customerConfirmation: [
+
+                    'Customer understands basic operation',
+
+                    'Customer knows how to request support',
+
+                    'Customer knows relevant safety procedures',
+
+                    'Customer has received applicable documentation',
+
+                    'Outstanding defects or variations are clearly identified'
+
+                ]
+
+            },
+
+
+            snagManagement: {
+
+                snagTypes: [
+
+      
