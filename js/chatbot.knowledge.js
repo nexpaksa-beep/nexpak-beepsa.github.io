@@ -35932,6 +35932,758 @@
         },
 
 
-        /* =========================================================
+                /* =========================================================
            97. CUSTOMER REQUIREMENT QUALIFICATION ENGINE
         ========================================================= */
+
+        customerRequirementQualificationEngine: {
+
+            objective:
+
+                'Systematically identify, clarify and validate the customers security requirements so that product recommendations, system designs, quotations and human sales handoffs are based on useful and accurate information.',
+
+
+            /* -----------------------------------------------------
+               CORE PRINCIPLE
+            ----------------------------------------------------- */
+
+            principle:
+
+                'Qualification should discover what the customer actually needs, not steer the customer toward a predetermined product.',
+
+
+            /* -----------------------------------------------------
+               QUALIFICATION OBJECTIVES
+            ----------------------------------------------------- */
+
+            objectives: [
+
+                'Identify the customers primary security concern.',
+
+                'Understand the property or application.',
+
+                'Identify the areas requiring protection.',
+
+                'Determine the required security outcome.',
+
+                'Identify existing security equipment.',
+
+                'Identify important physical constraints.',
+
+                'Identify relevant technical requirements.',
+
+                'Understand customer priorities.',
+
+                'Determine project timeframe.',
+
+                'Determine whether pricing or quotation is required.',
+
+                'Identify information that must be reviewed by a human professional.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               QUALIFICATION FRAMEWORK
+            ----------------------------------------------------- */
+
+            framework: {
+
+                objective:
+
+                    'What problem are you trying to solve?',
+
+
+                environment:
+
+                    'Where will the security system be installed or used?',
+
+
+                scope:
+
+                    'What areas, entrances, boundaries or assets need protection?',
+
+
+                existingSystem:
+
+                    'Is there already a security system installed?',
+
+
+                requirements:
+
+                    'What must the system be able to do?',
+
+
+                priorities:
+
+                    'What matters most to the customer?',
+
+
+                constraints:
+
+                    'Are there physical, technical, operational or budget constraints?',
+
+
+                timeframe:
+
+                    'When does the customer want to implement the solution?',
+
+
+                decision:
+
+                    'What information does the customer need before deciding?',
+
+
+                nextAction:
+
+                    'What is the most useful next step?'
+
+            },
+
+
+            /* -----------------------------------------------------
+               PRIMARY SECURITY OBJECTIVE
+            ----------------------------------------------------- */
+
+            securityObjectives: {
+
+                deterrence:
+
+                    'Discourage unauthorised access or intrusion.',
+
+
+                detection:
+
+                    'Identify an intrusion or security event.',
+
+
+                verification:
+
+                    'Provide visual or system information to verify an event.',
+
+
+                notification:
+
+                    'Alert authorised users when a relevant event occurs.',
+
+
+                accessManagement:
+
+                    'Control who can enter a protected area.',
+
+
+                monitoring:
+
+                    'Observe property, equipment or activity.',
+
+
+                automation:
+
+                    'Automate a physical security function such as gate operation.',
+
+
+                integratedProtection:
+
+                    'Combine multiple security functions into one coordinated solution.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               PROPERTY QUALIFICATION
+            ----------------------------------------------------- */
+
+            propertyQualification: {
+
+                residential:
+
+                    [
+
+                        'House type.',
+
+                        'Boundary type.',
+
+                        'Number of entrances.',
+
+                        'Garage or vehicle access.',
+
+                        'Existing security systems.',
+
+                        'Remote monitoring requirements.'
+
+                    ],
+
+
+                commercial:
+
+                    [
+
+                        'Building type.',
+
+                        'Operating hours.',
+
+                        'Number of staff or authorised users.',
+
+                        'Entry points.',
+
+                        'Restricted areas.',
+
+                        'Security risk areas.'
+
+                    ],
+
+
+                industrial:
+
+                    [
+
+                        'Site size.',
+
+                        'Perimeter type.',
+
+                        'Vehicle access.',
+
+                        'Pedestrian access.',
+
+                        'Operational areas.',
+
+                        'Environmental conditions.',
+
+                        'Existing security infrastructure.'
+
+                    ],
+
+
+                agricultural:
+
+                    [
+
+                        'Farm or property size.',
+
+                        'Boundary length.',
+
+                        'Paddocks or protected areas.',
+
+                        'Gate locations.',
+
+                        'Power availability.',
+
+                        'Terrain.',
+
+                        'Livestock considerations.',
+
+                        'Remote monitoring requirements.'
+
+                    ],
+
+
+                equestrian:
+
+                    [
+
+                        'Number of paddocks.',
+
+                        'Fence length.',
+
+                        'Gate count.',
+
+                        'Permanent or temporary fencing.',
+
+                        'Horse or livestock considerations.',
+
+                        'Energizer requirements.',
+
+                        'Power availability.'
+
+                    ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               SCOPE IDENTIFICATION
+            ----------------------------------------------------- */
+
+            scopeQuestions: [
+
+                'What part of the property needs protection?',
+
+                'Is the requirement for the entire property or selected areas?',
+
+                'How many entrances or access points are involved?',
+
+                'How many buildings or structures need protection?',
+
+                'Are there high-priority areas that require additional protection?',
+
+                'Is the project a new installation, upgrade or replacement?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               EXISTING SYSTEM QUALIFICATION
+            ----------------------------------------------------- */
+
+            existingSystemQuestions: [
+
+                'Do you already have a security system installed?',
+
+                'What equipment is currently installed?',
+
+                'How old is the existing system?',
+
+
+                'Is the system currently working?',
+
+
+                'What would you like to keep?',
+
+
+                'What would you like to replace?',
+
+
+                'What problems are you experiencing with the existing system?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               NEW INSTALLATION
+            ----------------------------------------------------- */
+
+            newInstallationQualification: [
+
+                'Identify the primary security objective.',
+
+                'Identify the property type.',
+
+                'Identify the areas requiring protection.',
+
+                'Determine the required system functions.',
+
+                'Determine important environmental conditions.',
+
+                'Determine relevant measurements.',
+
+                'Identify power and communication availability.',
+
+                'Determine the customers priorities.',
+
+                'Determine the required implementation timeframe.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               UPGRADE QUALIFICATION
+            ----------------------------------------------------- */
+
+            upgradeQualification: [
+
+                'Identify the existing equipment.',
+
+                'Identify the reason for upgrading.',
+
+                'Determine which equipment remains functional.',
+
+                'Determine whether the customer wants expansion or replacement.',
+
+                'Check compatibility requirements.',
+
+                'Identify performance problems.',
+
+                'Identify desired improvements.',
+
+                'Determine whether the existing infrastructure can support the proposed upgrade.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               REPLACEMENT QUALIFICATION
+            ----------------------------------------------------- */
+
+            replacementQualification: [
+
+                'Identify why the existing system is being replaced.',
+
+                'Determine whether the customer wants similar functionality or improved capability.',
+
+                'Identify existing infrastructure that may remain useful.',
+
+                'Identify the desired replacement technology.',
+
+                'Determine whether the project requires migration or complete replacement.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               MEASUREMENT COLLECTION
+            ----------------------------------------------------- */
+
+            measurementRules: [
+
+                'Ask only for measurements relevant to the proposed solution.',
+
+                'Clearly identify the unit of measurement.',
+
+                'Do not assume measurements.',
+
+                'Ask the customer to confirm unusual or uncertain measurements.',
+
+                'Where precise measurements are critical, recommend professional site verification.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               COMMON MEASUREMENTS
+            ----------------------------------------------------- */
+
+            measurementTypes: {
+
+                electricFence:
+
+                    [
+
+                        'Total perimeter length.',
+
+                        'Fence height where relevant.',
+
+                        'Gate widths.',
+
+                        'Number of gates.',
+
+                        'Number of corners or sections where relevant.'
+
+                    ],
+
+
+                cctv:
+
+                    [
+
+                        'Camera-to-target distance.',
+
+                        'Mounting height.',
+
+                        'Approximate area dimensions.',
+
+                        'Cable route distance where relevant.',
+
+                        'Number of required viewpoints.'
+
+                    ],
+
+
+                gateAutomation:
+
+                    [
+
+                        'Gate width.',
+
+                        'Gate height where relevant.',
+
+                        'Approximate gate weight.',
+
+                        'Gate type.',
+
+                        'Available mounting space.'
+
+                    ],
+
+
+                accessControl:
+
+                    [
+
+                        'Number of doors.',
+
+                        'Number of users.',
+
+                        'Distance between doors and control equipment where relevant.',
+
+                        'Available power and network infrastructure.'
+
+                    ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               POWER QUALIFICATION
+            ----------------------------------------------------- */
+
+            powerQualification: [
+
+                'Is mains power available at the installation location?',
+
+                'Is backup power required?',
+
+
+                'Are there frequent power interruptions?',
+
+
+                'Is solar or alternative power being considered?',
+
+
+                'Are there power limitations at remote locations?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               COMMUNICATION QUALIFICATION
+            ----------------------------------------------------- */
+
+            communicationQualification: [
+
+                'Is internet access available where required?',
+
+
+                'Is mobile network coverage available where required?',
+
+
+                'Is Wi-Fi available where appropriate?',
+
+
+                'Is a wired network available?',
+
+
+                'Does the customer require remote access?',
+
+
+                'Does the customer require remote notifications?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               PRIORITY IDENTIFICATION
+            ----------------------------------------------------- */
+
+            priorityIdentification: {
+
+                primaryQuestion:
+
+                    'What is most important to you when choosing the security system?',
+
+
+                commonPriorities: [
+
+                    'Security effectiveness.',
+
+                    'Reliability.',
+
+                    'Price.',
+
+                    'Ease of use.',
+
+                    'Remote access.',
+
+                    'Future expansion.',
+
+                    'Low maintenance.',
+
+                    'Professional installation.',
+
+                    'Fast implementation.'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               BUDGET QUALIFICATION
+            ----------------------------------------------------- */
+
+            budgetQualification: {
+
+                principle:
+
+                    'Budget questions should be used to understand the appropriate solution level, not to judge the customer or pressure them into spending more.',
+
+
+                approaches: [
+
+                    'Ask whether the customer has an approximate budget when appropriate.',
+
+                    'Offer a range of suitable configurations where exact pricing is unavailable.',
+
+                    'Separate essential protection from optional enhancements.',
+
+                    'Explain trade-offs when budget limitations affect system capability.',
+
+                    'Do not assume a budget when the customer has not provided one.'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               TIMEFRAME QUALIFICATION
+            ----------------------------------------------------- */
+
+            timeframeQualification: {
+
+                immediate:
+
+                    'Customer wants to proceed as soon as practical.',
+
+
+                shortTerm:
+
+                    'Customer expects to implement the project relatively soon.',
+
+
+                planned:
+
+                    'Customer has a defined future implementation period.',
+
+
+                future:
+
+                    'Customer is interested but has no immediate implementation date.',
+
+
+                unknown:
+
+                    'Customer has not provided a timeframe.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               DECISION-MAKER IDENTIFICATION
+            ----------------------------------------------------- */
+
+            decisionMakerHandling: [
+
+                'Do not assume that the person speaking is the sole decision-maker.',
+
+                'Ask whether anyone else needs to be involved when relevant.',
+
+                'Provide information that can be shared with other decision-makers.',
+
+                'Do not pressure customers to bypass internal approval processes.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               REQUIREMENT CONFIRMATION
+            ----------------------------------------------------- */
+
+            confirmationProcess: [
+
+                'Summarise the customers requirement before making a major recommendation.',
+
+                'Confirm important measurements.',
+
+                'Confirm the primary security objective.',
+
+                'Confirm important constraints.',
+
+                'Confirm whether the proposed scope matches what the customer requested.',
+
+                'Correct misunderstandings before progressing to quotation or purchase.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               QUALIFICATION SUMMARY
+            ----------------------------------------------------- */
+
+            qualificationSummary:
+
+                'CUSTOMER REQUIREMENT SUMMARY\n\nSecurity Objective: [objective]\nProperty Type: [property]\nProject Type: [new/upgrade/replacement]\n\nAreas To Protect:\n[areas]\n\nExisting System:\n[existing system]\n\nKey Requirements:\n[requirements]\n\nMeasurements:\n[measurements]\n\nPower:\n[power]\nCommunication:\n[communication]\n\nCustomer Priority:\n[priority]\nBudget:\n[budget]\nTimeframe:\n[timeframe]\n\nMissing Information:\n[missing information]\n\nRecommended Next Step:\n[next action]',
+
+
+            /* -----------------------------------------------------
+               QUALIFICATION COMPLETENESS
+            ----------------------------------------------------- */
+
+            completenessLevels: {
+
+                minimal:
+
+                    'Only the broad security objective is known.',
+
+
+                basic:
+
+                    'Security objective and property/application are known.',
+
+
+                useful:
+
+                    'Security objective, property, scope and major requirements are known.',
+
+
+                strong:
+
+                    'Important technical, physical, budget and timeframe information has been established.',
+
+
+                quotationReady:
+
+                    'The information required for appropriate quotation preparation is available or ready for human verification.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               QUESTION PRIORITISATION
+            ----------------------------------------------------- */
+
+            questionPriority: {
+
+                critical:
+
+                    'Questions whose answers could fundamentally change the recommended system.',
+
+
+                high:
+
+                    'Questions required for accurate configuration or quotation.',
+
+
+                medium:
+
+                    'Questions that improve recommendation quality.',
+
+
+                low:
+
+                    'Questions that are useful but not required for the current stage.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               ONE QUESTION AT A TIME
+            ----------------------------------------------------- */
+
+            conversationalQualification: [
+
+                'Avoid asking a long list of questions at once unless the customer requests a full questionnaire.',
+
+                'Ask the most important unanswered question first.',
+
+                'Use previous customer answers to avoid repeating questions.',
+
+                'Adapt the next question based on the answer provided.',
+
+                'Explain why a technical question matters when the reason may not be obvious.',
+
+                'Keep qualification conversational rather than making the customer feel like they are completing a form.'
+
+            ],
+
+
+            /* ------------------
