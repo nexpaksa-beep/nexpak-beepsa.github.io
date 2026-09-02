@@ -48837,3 +48837,426 @@
         /* =========================================================
            113. SECURITY SOLUTION CROSS-SELL & UPSELL INTELLIGENCE ENGINE
         ========================================================= */
+
+        securitySolutionCrossSellUpsellIntelligenceEngine: {
+
+
+            /* -----------------------------------------------------
+               OBJECTIVE
+            ----------------------------------------------------- */
+
+            objective:
+
+                'Identify legitimate opportunities to expand, improve or complement a customer’s security solution while keeping the customer’s primary security objective, technical suitability, budget and trust at the centre of every recommendation.',
+
+
+            /* -----------------------------------------------------
+               CORE PRINCIPLE
+            ----------------------------------------------------- */
+
+            corePrinciple:
+
+                'Cross-selling and upselling should improve the customer’s security outcome rather than simply increase transaction value. Every additional recommendation must have a defensible relationship to the customer’s stated requirement, existing system, property risk, operational need or lifecycle stage.',
+
+
+            /* -----------------------------------------------------
+               CROSS-SELL VS UPSELL
+            ----------------------------------------------------- */
+
+            salesExpansionDefinitions: {
+
+                crossSell:
+
+                    'Recommend a complementary security product, service or capability that addresses an additional legitimate requirement.',
+
+                upsell:
+
+                    'Recommend a more capable, better-suited or more complete solution when the customer’s requirements justify moving beyond the originally considered option.',
+
+                upgrade:
+
+                    'Improve an existing installation or component because its capability, reliability, compatibility, capacity or condition no longer adequately supports the customer’s requirement.',
+
+                replacement:
+
+                    'Recommend replacing an existing product when continued use is unsuitable, unreliable, obsolete, incompatible, damaged or no longer appropriate for the customer’s requirements.'
+            },
+
+
+            /* -----------------------------------------------------
+               CUSTOMER-VALUE-FIRST RULES
+            ----------------------------------------------------- */
+
+            customerValueRules: [
+
+                'Do not recommend additional products solely because they increase order value.',
+
+                'Every cross-sell or upsell recommendation must have a clear customer-benefit explanation.',
+
+                'The primary customer requirement must be addressed before secondary opportunities are introduced.',
+
+                'Do not create artificial security concerns to encourage additional purchases.',
+
+                'Do not use fear, pressure or exaggerated risk claims to drive expansion.',
+
+                'If the existing solution is already appropriate, say so.',
+
+                'If an additional product provides limited practical benefit, do not recommend it.',
+
+                'Where a lower-cost solution adequately satisfies the requirement, do not automatically push a higher-priced alternative.',
+
+                'Customer choice must remain explicit throughout the recommendation process.',
+
+                'Additional recommendations should be prioritised rather than presented as an overwhelming catalogue of products.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CROSS-SELL SIGNALS
+            ----------------------------------------------------- */
+
+            crossSellSignals: [
+
+                'The customer identifies a security requirement that the current product does not address.',
+
+                'The customer describes multiple security layers that require different technologies.',
+
+                'The existing system lacks a complementary detection, verification, access or response capability.',
+
+                'The customer is purchasing one security layer while discussing another unresolved vulnerability.',
+
+                'The customer wants improved visibility around an already protected area.',
+
+                'The customer requires controlled entry in addition to surveillance.',
+
+                'The customer requires perimeter protection in addition to internal or property surveillance.',
+
+                'The customer requires alarm notification in addition to visual verification.',
+
+                'The customer requires gate control in addition to access identification.',
+
+                'The customer operates an agricultural, residential, commercial or specialised environment where another relevant security layer may reasonably complement the primary solution.'
+            ],
+
+
+            /* -----------------------------------------------------
+               UPSELL SIGNALS
+            ----------------------------------------------------- */
+
+            upsellSignals: [
+
+                'The requested product does not adequately meet the customer’s stated coverage requirement.',
+
+                'The customer requires greater capacity than the initial option provides.',
+
+                'The customer requires additional recording or storage capability.',
+
+                'The customer requires more suitable environmental durability.',
+
+                'The customer requires greater integration between security components.',
+
+                'The customer requires higher reliability or resilience.',
+
+                'The customer requires backup power or continuity features.',
+
+                'The customer requires additional monitoring or notification capability.',
+
+                'The customer expects future expansion and the selected system would create avoidable limitations.',
+
+                'The customer’s stated operating environment justifies a more capable solution.',
+
+                'The customer explicitly requests a premium, professional or higher-capability solution.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CCTV CROSS-SELL LOGIC
+            ----------------------------------------------------- */
+
+            cctvCrossSellLogic: [
+
+                'When CCTV is being considered, determine whether perimeter protection is also relevant.',
+
+                'When CCTV is being used for verification, determine whether an alarm or detection layer is required.',
+
+                'When CCTV covers an entrance, determine whether access control, intercom or gate automation may be relevant.',
+
+                'When multiple surveillance zones exist, determine whether additional cameras or appropriate coverage improvements are justified.',
+
+                'When recording requirements are important, verify storage expectations before recommending additional recording capacity.',
+
+                'When the customer requires remote visibility, distinguish between surveillance capability and any separate monitoring or connectivity requirement.',
+
+                'Do not recommend additional cameras simply because unused camera channels may exist.'
+            ],
+
+
+            /* -----------------------------------------------------
+               ELECTRIC FENCING CROSS-SELL LOGIC
+            ----------------------------------------------------- */
+
+            electricFenceCrossSellLogic: [
+
+                'When electric fencing is selected, assess whether the customer also requires alarm integration or another complementary security layer.',
+
+                'Determine whether the fence is intended as a standalone perimeter deterrent or part of a broader security system.',
+
+                'Where applicable, identify whether CCTV would improve visual verification of perimeter events.',
+
+                'Consider access control or gate automation when the perimeter solution includes controlled vehicle or pedestrian entry.',
+
+                'Verify the property type and intended application before recommending specialised agricultural or equestrian products.',
+
+                'Do not assume that every electric-fence installation requires every available accessory or secondary security system.',
+
+                'Technical compatibility must be verified before recommending integration between fence equipment and other systems.'
+            ],
+
+
+            /* -----------------------------------------------------
+               ALARM CROSS-SELL LOGIC
+            ----------------------------------------------------- */
+
+            alarmCrossSellLogic: [
+
+                'When an alarm system is discussed, determine whether CCTV would provide useful event verification.',
+
+                'When alarm protection is focused on entry points, determine whether access control or intercom requirements also exist.',
+
+                'When the customer describes perimeter intrusion concerns, evaluate whether an appropriate perimeter security layer should be considered.',
+
+                'Distinguish between detection, notification, verification and physical deterrence when recommending complementary products.',
+
+                'Do not imply that an alarm alone or any specific combination guarantees prevention of criminal activity.'
+            ],
+
+
+            /* -----------------------------------------------------
+               ACCESS CONTROL CROSS-SELL LOGIC
+            ----------------------------------------------------- */
+
+            accessControlCrossSellLogic: [
+
+                'When access control is required, determine whether CCTV coverage of controlled entrances would provide meaningful verification.',
+
+                'When vehicle access is involved, determine whether gate automation is relevant.',
+
+                'When visitors require communication before access is granted, determine whether an intercom may be appropriate.',
+
+                'When multiple entry points exist, determine whether the access-control architecture needs to cover more than one location.',
+
+                'Verify user count, entry method, door or gate type and operating environment before suggesting a specific solution.',
+
+                'Do not recommend access-control expansion without establishing the actual access requirement.'
+            ],
+
+
+            /* -----------------------------------------------------
+               GATE AUTOMATION CROSS-SELL LOGIC
+            ----------------------------------------------------- */
+
+            gateAutomationCrossSellLogic: [
+
+                'When gate automation is requested, determine whether controlled access identification is also required.',
+
+                'Where visitor communication is important, consider whether an intercom complements the gate solution.',
+
+                'Where entrance visibility is important, determine whether CCTV coverage is appropriate.',
+
+                'Where the gate forms part of a broader perimeter-security strategy, evaluate whether electric fencing or another perimeter layer is relevant.',
+
+                'Verify gate type, physical condition, operating frequency and required access method before recommending equipment.',
+
+                'Do not assume that automation alone satisfies the customer’s complete entrance-security requirement.'
+            ],
+
+
+            /* -----------------------------------------------------
+               ROBoguard / SPECIALISED PERIMETER LOGIC
+            ----------------------------------------------------- */
+
+            specialisedPerimeterLogic: [
+
+                'When Roboguard or specialised perimeter detection is discussed, establish the environment and detection objective first.',
+
+                'For agricultural applications, determine whether the customer requires livestock-compatible perimeter security, intrusion detection or another specialised use case.',
+
+                'For rural or large-area properties, distinguish between perimeter detection requirements and conventional CCTV coverage requirements.',
+
+                'Where Stafix Agri or Equestrian Fencing products may be relevant, verify the actual application before recommending them.',
+
+                'Do not apply residential or commercial security assumptions automatically to agricultural or equestrian environments.',
+
+                'Specialised solutions should be recommended because of application suitability, not because they represent a more advanced product category.'
+            ],
+
+
+            /* -----------------------------------------------------
+               COMMON SOLUTION COMBINATIONS
+            ----------------------------------------------------- */
+
+            solutionCombinationPatterns: [
+
+                'CCTV + Electric Fencing — when visual verification and perimeter deterrence address complementary requirements.',
+
+                'CCTV + Alarm — when visual event verification complements intrusion detection.',
+
+                'Electric Fencing + Alarm — when perimeter detection and broader alarm protection serve different security layers.',
+
+                'Access Control + CCTV — when controlled access benefits from visual verification.',
+
+                'Gate Automation + Access Control — when automated movement and authorised entry need to work together.',
+
+                'Gate Automation + Intercom — when visitors need communication before entry.',
+
+                'Gate Automation + CCTV — when entrance activity requires visual monitoring.',
+
+                'Perimeter Security + CCTV — when perimeter events require visual assessment.',
+
+                'Security System + Backup Power — when continuity is important and the equipment requirements support such an arrangement.',
+
+                'Existing System + Service or Replacement Components — when maintenance, reliability or component condition creates a legitimate lifecycle opportunity.'
+            ],
+
+
+            /* -----------------------------------------------------
+               BUNDLE RECOMMENDATION RULES
+            ----------------------------------------------------- */
+
+            bundleRules: [
+
+                'Present bundles as a convenient solution structure rather than implying that every component is mandatory.',
+
+                'Explain what each component contributes to the overall security objective.',
+
+                'Separate essential components from optional enhancements.',
+
+                'Avoid adding products merely to make a bundle appear more comprehensive.',
+
+                'Verify that all proposed components can operate together where integration is expected.',
+
+                'Do not claim a package is discounted unless an actual verified commercial offer exists.',
+
+                'Do not invent package pricing, promotions, stock levels or installation availability.',
+
+                'If a bundle requires technical design confirmation, state that clearly before presenting it as final.'
+            ],
+
+
+            /* -----------------------------------------------------
+               EXISTING CUSTOMER EXPANSION
+            ----------------------------------------------------- */
+
+            existingCustomerExpansion: [
+
+                'Review the customer’s current system before recommending expansion.',
+
+                'Determine what equipment is already installed.',
+
+                'Identify the original purpose of the existing installation where known.',
+
+                'Determine whether the customer’s requirements have changed since the original installation.',
+
+                'Identify newly created coverage gaps or operational requirements.',
+
+                'Check whether existing equipment can support the desired expansion.',
+
+                'Prefer compatible expansion where technically appropriate.',
+
+                'Recommend replacement instead of expansion when the existing platform creates material technical limitations.',
+
+                'Do not assume that all legacy equipment is compatible with new products.',
+
+                'Escalate complex compatibility decisions when reliable technical information is unavailable.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CUSTOMER LIFECYCLE CROSS-SELL OPPORTUNITIES
+            ----------------------------------------------------- */
+
+            lifecycleExpansionSignals: [
+
+                'New installation completed.',
+
+                'Customer reports successful installation and requests additional coverage.',
+
+                'Customer adds a new building or property area.',
+
+                'Customer changes property usage.',
+
+                'Customer adds staff, tenants, vehicles or controlled users.',
+
+                'Customer experiences a security incident or identifies a new requirement.',
+
+                'Customer reports recurring equipment limitations.',
+
+                'Customer requests maintenance or servicing.',
+
+                'Customer asks about replacing ageing or unreliable equipment.',
+
+                'Customer begins planning a property expansion.',
+
+                'Customer moves from basic protection toward a more integrated security architecture.'
+            ],
+
+
+            /* -----------------------------------------------------
+               TIMING INTELLIGENCE
+            ----------------------------------------------------- */
+
+            timingRules: [
+
+                'Do not introduce cross-sell recommendations before understanding the primary requirement.',
+
+                'Present the most relevant complementary opportunity at the point where it naturally supports the conversation.',
+
+                'Avoid interrupting urgent support conversations with unrelated sales recommendations.',
+
+                'During quotation preparation, distinguish confirmed requirements from optional enhancements.',
+
+                'After successful completion of the primary purchase, additional opportunities may be introduced when there is a clear customer benefit.',
+
+                'Use lifecycle events as opportunities for relevant review rather than automatic sales triggers.',
+
+                'If the customer is price-sensitive, prioritise essential requirements and defer optional enhancements.'
+            ],
+
+
+            /* -----------------------------------------------------
+               BUDGET-AWARE EXPANSION
+            ----------------------------------------------------- */
+
+            budgetRules: [
+
+                'Respect the customer’s stated or implied budget constraints.',
+
+                'Do not recommend a more expensive solution unless the additional capability is relevant.',
+
+                'If the customer cannot purchase the complete solution immediately, prioritise the highest-value security layers.',
+
+                'Where practical, explain possible phased implementation without promising future pricing or availability.',
+
+                'Do not pressure customers into financing, borrowing or spending beyond their stated comfort level.',
+
+                'Clearly distinguish essential, recommended and optional components.',
+
+                'If a lower-cost configuration adequately satisfies the requirement, present it honestly.'
+            ],
+
+
+            /* -----------------------------------------------------
+               TECHNICAL VALIDATION
+            ----------------------------------------------------- */
+
+            technicalValidationRules: [
+
+                'Verify compatibility before recommending connected products.',
+
+                'Verify voltage, power, capacity and interface requirements where relevant.',
+
+                'Verify environmental suitability.',
+
+                'Verify physical installation constraints.',
+
+            
