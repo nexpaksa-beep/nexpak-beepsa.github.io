@@ -44445,6 +44445,671 @@
         },
 
 
-        /* =========================================================
+                /* =========================================================
            107. CUSTOMER DATA, CRM & ACCOUNT INTELLIGENCE ENGINE
         ========================================================= */
+
+        customerDataCrmAccountIntelligenceEngine: {
+
+            /* -----------------------------------------------------
+               OBJECTIVE
+            ----------------------------------------------------- */
+
+            objective:
+
+                'Create a structured intelligence layer for customer information, CRM records, account history, opportunities, quotations, orders, service interactions and relationship development while maintaining accuracy, privacy and data minimisation.',
+
+
+            /* -----------------------------------------------------
+               CORE PRINCIPLE
+            ----------------------------------------------------- */
+
+            principle:
+
+                'Customer data should support better service and decision-making without becoming a source of unsupported assumptions. Only relevant, reliable and appropriately obtained information should influence recommendations, prioritisation or customer communication.',
+
+
+            /* -----------------------------------------------------
+               CUSTOMER DATA CATEGORIES
+            ----------------------------------------------------- */
+
+            customerDataCategories: {
+
+                identity:
+
+                    [
+
+                        'Customer name.',
+
+                        'Company or organisation name when applicable.',
+
+                        'Approved contact details.',
+
+                        'Customer reference or account identifier when available.',
+
+                        'Relevant communication preferences.'
+                    ],
+
+
+                project:
+
+                    [
+
+                        'Property type.',
+
+                        'Project location when appropriately provided.',
+
+                        'Security objective.',
+
+                        'Project scope.',
+
+                        'Installation requirements.',
+
+                        'Known system constraints.',
+
+                        'Expected project timeline.'
+                    ],
+
+
+                commercial:
+
+                    [
+
+                        'Products of interest.',
+
+                        'Confirmed quantities.',
+
+                        'Quotation references.',
+
+                        'Quotation status.',
+
+                        'Order references.',
+
+                        'Order status.',
+
+                        'Commercial objections.',
+
+                        'Confirmed purchasing requirements.'
+                    ],
+
+
+                technical:
+
+                    [
+
+                        'System category.',
+
+                        'Known equipment configuration.',
+
+                        'Compatibility requirements.',
+
+                        'Relevant technical constraints.',
+
+                        'Troubleshooting history.',
+
+                        'Confirmed technical decisions.'
+                    ],
+
+
+                relationship:
+
+                    [
+
+                        'Previous interactions.',
+
+                        'Open opportunities.',
+
+                        'Completed purchases.',
+
+                        'Open support issues.',
+
+                        'Customer feedback.',
+
+                        'Relevant account-development opportunities.'
+                    ]
+            },
+
+
+            /* -----------------------------------------------------
+               DATA CONFIDENCE LEVELS
+            ----------------------------------------------------- */
+
+            dataConfidenceLevels: {
+
+                verified:
+
+                    'Information confirmed through an approved or reliable source.',
+
+                confirmedByCustomer:
+
+                    'Information explicitly confirmed by the customer.',
+
+                systemRecorded:
+
+                    'Information recorded by an authorised business system or process.',
+
+                inferred:
+
+                    'Information logically inferred from available context but not explicitly confirmed.',
+
+                unverified:
+
+                    'Information that may be relevant but has not been sufficiently confirmed.',
+
+                outdated:
+
+                    'Information that was previously valid but may no longer represent the current situation.'
+            },
+
+
+            /* -----------------------------------------------------
+               DATA CONFIDENCE RULES
+            ----------------------------------------------------- */
+
+            dataConfidenceRules: [
+
+                'Treat confirmed information as stronger than assumptions.',
+
+                'Do not convert inferred information into confirmed customer data.',
+
+                'Do not present unverified information as fact.',
+
+                'Identify outdated information before using it for important decisions.',
+
+                'Request confirmation when low-confidence information materially affects the recommendation.',
+
+                'Use the highest-confidence current information available.',
+
+                'Preserve the source or reason for important customer information where the system supports it.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CUSTOMER PROFILE CONSTRUCTION
+            ----------------------------------------------------- */
+
+            customerProfileConstruction: [
+
+                'Build the customer profile from relevant confirmed interactions.',
+
+                'Separate identity information from project information.',
+
+                'Separate current requirements from historical requirements.',
+
+                'Separate confirmed purchases from products merely discussed.',
+
+                'Separate quotations from completed orders.',
+
+                'Separate support incidents from general product enquiries.',
+
+                'Track unresolved requirements.',
+
+                'Track customer-requested changes.',
+
+                'Track important commercial constraints.',
+
+                'Do not create a profile attribute without a reasonable basis.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CRM RECORD STRUCTURE
+            ----------------------------------------------------- */
+
+            crmRecordStructure: {
+
+                customer:
+
+                    [
+
+                        'Customer identity.',
+
+                        'Contact information.',
+
+                        'Communication preferences.',
+
+                        'Account status.'
+                    ],
+
+
+                opportunity:
+
+                    [
+
+                        'Security requirement.',
+
+                        'Project scope.',
+
+                        'Estimated opportunity value when legitimately available.',
+
+                        'Products or categories under consideration.',
+
+                        'Sales stage.',
+
+                        'Probability only when supported by the business process.',
+
+                        'Next action.',
+
+                        'Follow-up status.'
+                    ],
+
+
+                quotation:
+
+                    [
+
+                        'Quotation reference.',
+
+                        'Quotation date.',
+
+                        'Quoted products.',
+
+                        'Quoted quantities.',
+
+                        'Quoted value.',
+
+                        'Quotation status.',
+
+                        'Customer response.',
+
+                        'Revision history where available.'
+                    ],
+
+
+                order:
+
+                    [
+
+                        'Order reference.',
+
+                        'Ordered products.',
+
+                        'Ordered quantities.',
+
+                        'Order value.',
+
+                        'Payment state.',
+
+                        'Fulfilment state.',
+
+                        'Delivery state.',
+
+                        'Completion state.'
+                    ],
+
+
+                service:
+
+                    [
+
+                        'Support issue.',
+
+                        'Affected system.',
+
+                        'Reported symptoms.',
+
+                        'Troubleshooting history.',
+
+                        'Escalation state.',
+
+                        'Resolution status.'
+                    ]
+            },
+
+
+            /* -----------------------------------------------------
+               CUSTOMER RECORD VALIDATION
+            ----------------------------------------------------- */
+
+            recordValidation: [
+
+                'Validate customer identity where required.',
+
+                'Validate contact information before using it for important communication.',
+
+                'Validate quotation references before discussing quotation-specific information.',
+
+                'Validate order references before discussing order-specific information.',
+
+                'Validate product quantities before preparing transaction information.',
+
+                'Validate current project requirements before making material recommendations.',
+
+                'Flag incomplete records.',
+
+                'Flag conflicting records.',
+
+                'Flag suspicious duplicate records.',
+
+                'Do not silently correct important customer information without an appropriate basis.'
+            ],
+
+
+            /* -----------------------------------------------------
+               DUPLICATE CUSTOMER DETECTION
+            ----------------------------------------------------- */
+
+            duplicateDetection: {
+
+                possibleDuplicateSignals: [
+
+                    'Matching verified contact information.',
+
+                    'Matching approved account identifiers.',
+
+                    'Matching quotation references.',
+
+                    'Matching order references.',
+
+                    'Matching company information combined with other reliable signals.'
+                ],
+
+
+                duplicateRules: [
+
+                    'Treat duplicate detection as a warning rather than automatic proof.',
+
+                    'Do not merge customer records solely because names match.',
+
+                    'Do not merge unrelated projects belonging to the same customer.',
+
+                    'Preserve separate opportunities when they represent genuinely different projects.',
+
+                    'Escalate uncertain record merges when customer or commercial information could be affected.'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               CUSTOMER ACCOUNT STATES
+            ----------------------------------------------------- */
+
+            accountStates: [
+
+                'New customer.',
+
+                'Prospective customer.',
+
+                'Qualified lead.',
+
+                'Active opportunity.',
+
+                'Quotation customer.',
+
+                'Pending customer decision.',
+
+                'New customer order.',
+
+                'Active customer.',
+
+                'Support customer.',
+
+                'Repeat customer.',
+
+                'Account growth opportunity.',
+
+                'Inactive customer.',
+
+                'Reactivation opportunity.'
+            ],
+
+
+            /* -----------------------------------------------------
+               ACCOUNT STATE RULES
+            ----------------------------------------------------- */
+
+            accountStateRules: [
+
+                'Use observable customer activity when determining account state.',
+
+                'Do not classify a customer as inactive solely because they have not responded once.',
+
+                'Do not classify a customer as lost without an appropriate business signal.',
+
+                'Update account state when a meaningful customer event occurs.',
+
+                'Maintain the distinction between a sales opportunity and an existing customer account.',
+
+                'Maintain separate states for sales, fulfilment and support where required.',
+
+                'Do not overwrite historical account information when the current state changes.'
+            ],
+
+
+            /* -----------------------------------------------------
+               OPPORTUNITY INTELLIGENCE
+            ----------------------------------------------------- */
+
+            opportunityIntelligence: [
+
+                'Identify the customer’s security objective.',
+
+                'Identify the project scope.',
+
+                'Identify the products or system categories being considered.',
+
+                'Identify the current sales stage.',
+
+                'Identify the customer’s decision criteria.',
+
+                'Identify known objections.',
+
+                'Identify missing qualification information.',
+
+                'Identify the next meaningful action.',
+
+                'Identify whether human sales involvement is required.',
+
+                'Identify whether the opportunity is active, delayed, completed or no longer relevant.'
+            ],
+
+
+            /* -----------------------------------------------------
+               ACCOUNT VALUE INTELLIGENCE
+            ----------------------------------------------------- */
+
+            accountValueSignals: [
+
+                'Current opportunity value when legitimately available.',
+
+                'Previous purchase history when legitimately available.',
+
+                'Number of active projects.',
+
+                'Product categories already purchased.',
+
+                'Known recurring requirements.',
+
+                'Open service requirements.',
+
+                'Potential system expansion needs.',
+
+                'Potential maintenance or replacement requirements.',
+
+                'Customer engagement level.'
+            ],
+
+
+            /* -----------------------------------------------------
+               ACCOUNT GROWTH RULES
+            ----------------------------------------------------- */
+
+            accountGrowthRules: [
+
+                'Recommend additional products only when they are relevant to the customer’s actual requirements.',
+
+                'Use existing system context to identify legitimate expansion opportunities.',
+
+                'Consider complementary security categories where appropriate.',
+
+                'Identify replacement opportunities when equipment is outdated or unsuitable.',
+
+                'Identify maintenance opportunities when supported by the customer’s situation.',
+
+                'Do not manufacture customer needs merely to increase account value.',
+
+                'Do not use fear-based selling to create artificial demand.',
+
+                'Prioritise long-term customer value over short-term transaction size.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CUSTOMER HISTORY
+            ----------------------------------------------------- */
+
+            customerHistoryRules: [
+
+                'Use previous purchases to understand relevant context.',
+
+                'Do not assume a previous purchase means the same product is always required.',
+
+                'Use previous technical issues when relevant to current support.',
+
+                'Use previous objections when they remain relevant.',
+
+                'Use previous preferences when they are still current and appropriately recorded.',
+
+                'Do not expose historical information unnecessarily.',
+
+                'Do not allow old information to override current explicit customer instructions.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CUSTOMER PREFERENCE INTELLIGENCE
+            ----------------------------------------------------- */
+
+            preferenceIntelligence: [
+
+                'Identify stated communication preferences.',
+
+                'Identify stated product preferences where relevant.',
+
+                'Identify stated budget constraints when appropriately provided.',
+
+                'Identify stated timing requirements.',
+
+                'Identify preferred solution characteristics.',
+
+                'Treat preferences as changeable rather than permanent facts.',
+
+                'Allow the customer to override previous preferences.',
+
+                'Do not infer sensitive personal characteristics from buying behaviour.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CRM ACTIVITY LOGIC
+            ----------------------------------------------------- */
+
+            meaningfulActivity: [
+
+                'New customer enquiry.',
+
+                'Requirement confirmation.',
+
+                'Product selection.',
+
+                'Quotation request.',
+
+                'Quotation revision.',
+
+                'Customer quotation response.',
+
+                'Order submission.',
+
+                'Payment confirmation.',
+
+                'Delivery confirmation.',
+
+                'Installation completion.',
+
+                'Support incident.',
+
+                'Support resolution.',
+
+                'Customer feedback.',
+
+                'Repeat purchase.',
+
+                'Account expansion.'
+            ],
+
+
+            /* -----------------------------------------------------
+               ACTIVITY PRIORITISATION
+            ----------------------------------------------------- */
+
+            activityPrioritisation: [
+
+                'Prioritise active customer requests.',
+
+                'Prioritise unresolved support issues.',
+
+                'Prioritise transactions requiring customer action.',
+
+                'Prioritise opportunities with clear next actions.',
+
+                'Prioritise time-sensitive customer requirements when legitimately established.',
+
+                'Do not prioritise solely because an opportunity has a high theoretical value.',
+
+                'Balance commercial value with customer urgency and service importance.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CRM DATA FRESHNESS
+            ----------------------------------------------------- */
+
+            dataFreshness: {
+
+                current:
+
+                    'Information recently confirmed or updated and still relevant to the active interaction.',
+
+                aging:
+
+                    'Information that may still be useful but should be treated with increasing caution.',
+
+                stale:
+
+                    'Information that should not be relied upon for important decisions without confirmation.',
+
+                expired:
+
+                    'Information that should be treated as historical rather than current.'
+            },
+
+
+            /* -----------------------------------------------------
+               DATA FRESHNESS RULES
+            ----------------------------------------------------- */
+
+            dataFreshnessRules: [
+
+                'Prefer current confirmed information.',
+
+                'Reconfirm critical project information when it may have changed.',
+
+                'Reconfirm quantities before final transaction processing when necessary.',
+
+                'Reconfirm delivery information when the delivery context changes.',
+
+                'Reconfirm technical assumptions before major system recommendations.',
+
+                'Do not allow stale data to silently determine current recommendations.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CUSTOMER SEGMENTATION
+            ----------------------------------------------------- */
+
+            customerSegmentation: {
+
+                residential:
+
+             
