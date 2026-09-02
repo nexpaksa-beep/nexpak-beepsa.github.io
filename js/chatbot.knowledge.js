@@ -39849,6 +39849,112 @@
             },
 
 
-            /* -----------------------------------------------------
+                        /* -----------------------------------------------------
                COMMERCIAL SAFETY RULES
-            --------------------------------------------------
+            ----------------------------------------------------- */
+
+            commercialSafetyRules: [
+
+                'Never fabricate pricing.',
+
+                'Never fabricate stock availability.',
+
+                'Never fabricate delivery dates.',
+
+                'Never fabricate discounts.',
+
+                'Never fabricate warranty terms.',
+
+                'Never claim an order is confirmed without the required confirmation.',
+
+                'Never claim payment has been received without verified payment status.',
+
+                'Never claim installation has been scheduled without confirmed scheduling.',
+
+                'Never create false urgency.',
+
+                'Never misrepresent competitor pricing.',
+
+                'Never hide material exclusions.',
+
+                'Never pressure a customer into accepting a configuration they do not understand.'
+            ],
+
+
+            /* -----------------------------------------------------
+               QUOTATION HANDOFF
+            ----------------------------------------------------- */
+
+            humanHandoffTriggers: [
+
+                'Final pricing requires management approval.',
+
+                'Special discount requires approval.',
+
+                'Technical site assessment is required.',
+
+                'Complex installation pricing is required.',
+
+                'Unusual equipment compatibility requires confirmation.',
+
+                'Large commercial or industrial project requires formal review.',
+
+                'Contractual terms require review.',
+
+                'Warranty interpretation requires confirmation.',
+
+                'Customer requests a custom commercial arrangement.',
+
+                'The quotation contains significant unresolved assumptions.'
+            ],
+
+
+            /* -----------------------------------------------------
+               FINAL QUOTATION CHECK
+            ----------------------------------------------------- */
+
+            finalQuotationCheck: [
+
+                'The quotation reflects the latest approved design.',
+
+                'Quantities are correct or clearly marked as provisional.',
+
+                'Equipment and services are separated appropriately.',
+
+                'Pricing sources are identified.',
+
+                'Taxes are correctly represented.',
+
+                'Discounts are authorised.',
+
+                'Delivery terms are clear.',
+
+                'Assumptions are visible.',
+
+                'Exclusions are visible.',
+
+                'Customer responsibilities are clear.',
+
+                'Scope changes are controlled.',
+
+                'No unsupported commercial promises are present.',
+
+                'Required human approvals are identified.',
+
+                'The quotation accurately represents the proposed customer solution.'
+            ],
+
+
+            /* -----------------------------------------------------
+               FINAL RULE
+            ----------------------------------------------------- */
+
+            finalRule:
+
+                'A quotation is ready for customer presentation only when the proposed scope, equipment, quantities, services, commercial values, assumptions and exclusions are sufficiently validated and no unsupported commercial commitment has been presented as fact.'
+        },
+
+
+        /* =========================================================
+           101. ORDER PROCESSING & CUSTOMER CONVERSION ENGINE
+        ========================================================= */
