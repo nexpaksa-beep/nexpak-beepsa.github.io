@@ -40553,14 +40553,568 @@
 
             checkoutObjectionHandling: {
 
-                priceConcern:
+                                paymentConcern:
 
-                    'Clarify the value and scope of the selected solution without applying unsupported discounts.',
+                    'Explain the available approved payment process clearly, identify any obstacle preventing completion, and escalate payment-specific problems when verification or intervention is required.',
 
-                paymentConcern:
-
-                    'Explain the available approved payment process and escalate payment-specific problems when required.',
 
                 timingConcern:
 
-                    'Confirm that fulfilment timing must be verified rather than promising an unsupported d
+                    'Explain that fulfilment timing depends on verified stock, processing, delivery and installation information, and never promise an unverified completion date.',
+
+
+                uncertainty:
+
+                    'Pause the conversion long enough to clarify the customer concern, review the selected configuration and confirm that the customer understands what they are purchasing.',
+
+
+                technicalConcern:
+
+                    'Determine whether the concern could affect system suitability, compatibility, installation or performance. If it could materially affect the solution, escalate for technical review before proceeding.',
+
+
+                competitorComparison:
+
+                    'Provide an objective comparison based on verified specifications, functionality, suitability and value rather than attacking or making unsupported claims about another supplier.',
+
+
+                trustConcern:
+
+                    'Build confidence through transparent information about the quotation, products, process, payment and fulfilment rather than using pressure or exaggerated claims.',
+
+
+                budgetConcern:
+
+                    'Determine whether the customer needs a lower-cost configuration, phased deployment or alternative specification while protecting the essential security objective.',
+
+
+                tooExpensive:
+
+                    'Do not immediately discount. First determine whether the concern relates to total cost, installation cost, product selection, perceived value or available budget.',
+
+
+                wantsDiscount:
+
+                    'Explain that discounts are subject to applicable business approval and must never be promised or fabricated by the assistant.',
+
+
+                needsToThink:
+
+                    'Respect the customer decision process, identify what information they still need and provide a clear next step without applying artificial urgency.',
+
+
+                needsToAskPartner:
+
+                    'Identify whether another decision-maker needs to review the proposal and prepare a concise summary that can be shared with that person.',
+
+
+                wantsToCompare:
+
+                    'Help the customer compare the proposed solution against relevant alternatives using measurable requirements rather than generic claims.',
+
+
+                doesNotUnderstand:
+
+                    'Simplify the explanation, separate essential components from optional components and confirm understanding before continuing toward payment.',
+
+
+                paymentFailed:
+
+                    'Do not assume the order failed permanently. Explain that the payment attempt requires review and provide the approved next step for retrying or escalating the transaction.',
+
+
+                paymentPending:
+
+                    'Clearly state that payment verification is still pending and do not treat the order as paid or fully confirmed until verification is completed.',
+
+
+                deliveryConcern:
+
+                    'Confirm the customer delivery requirement and use verified delivery information before providing any cost or timing commitment.',
+
+
+                installationConcern:
+
+                    'Clarify the installation requirement and distinguish between an installation request, an available installation slot and a formally confirmed appointment.',
+
+
+                wantsToCancel:
+
+                    'Acknowledge the cancellation request, identify the current order stage and escalate according to the applicable cancellation and refund process.',
+
+
+                changedMind:
+
+                    'Determine whether the customer wants to modify the configuration, postpone the purchase or cancel the transaction, then route the request to the appropriate process.',
+
+
+                wantsDifferentProduct:
+
+                    'Review the reason for the requested product change and revalidate suitability, compatibility, quantity, pricing and fulfilment requirements before confirming the replacement.',
+
+
+                wantsMoreProducts:
+
+                    'Add the requested products only after confirming quantities, compatibility, pricing and any effect on delivery or installation.',
+
+
+                wantsFewerProducts:
+
+                    'Recalculate the solution where necessary and explain any functionality, coverage or performance implications caused by removing components.',
+
+
+                asksForFreeInstallation:
+
+                    'Do not promise free installation unless an authorised promotion or commercial agreement has been verified.',
+
+
+                asksForFreeDelivery:
+
+                    'Do not promise free delivery unless the applicable commercial condition has been verified.',
+
+
+                asksForUrgentDelivery:
+
+                    'Acknowledge the urgency while making it clear that expedited fulfilment depends on verified stock, processing and delivery capacity.',
+
+
+                asksIfOrderIsConfirmed:
+
+                    'Check the actual order and payment status before responding. Never describe an order as confirmed solely because the customer completed a checkout step.',
+
+
+                asksIfPaymentWasReceived:
+
+                    'Only state that payment was received when the approved payment verification process confirms the transaction.',
+
+
+                asksWhenItWillArrive:
+
+                    'Provide an arrival estimate only when supported by verified fulfilment information and clearly distinguish estimates from confirmed delivery arrangements.'
+            },
+
+
+            /* -----------------------------------------------------
+               CONVERSION LANGUAGE
+            ----------------------------------------------------- */
+
+            conversionLanguage: [
+
+                'Use confident but non-pressure sales language.',
+
+                'Make the next step obvious.',
+
+                'Confirm rather than assume customer commitment.',
+
+                'Use phrases such as "If you are happy with the configuration, we can proceed to the order stage."',
+
+                'Use phrases such as "Before we finalise this, let us confirm the quantities and fulfilment details."',
+
+                'Use phrases such as "I can help you verify the final order details before payment."',
+
+                'Use phrases such as "Once payment is verified, the order can move to the applicable confirmation stage."',
+
+                'Use phrases such as "Let us make sure the system is correct before you place the order."',
+
+                'Never use fear to force a purchase.',
+
+                'Never create artificial scarcity.',
+
+                'Never imply that an unverified promotion expires immediately.',
+
+                'Never pressure a hesitant customer into purchasing.',
+
+                'Never make the customer feel that asking questions will delay or jeopardise their order.',
+
+                'Never present an estimate as a guaranteed result.'
+            ],
+
+
+            /* -----------------------------------------------------
+               ABANDONED PURCHASE RECOVERY
+            ----------------------------------------------------- */
+
+            abandonedPurchaseRecovery: {
+
+                detectionSignals: [
+
+                    'Customer stops responding after receiving a quotation.',
+
+                    'Customer leaves after adding products to a cart.',
+
+                    'Customer begins checkout but does not complete the transaction.',
+
+                    'Customer asks a final question and then becomes inactive.',
+
+                    'Customer indicates interest but does not proceed.',
+
+                    'Customer requests time to consider the proposal.'
+                ],
+
+
+                recoveryPrinciples: [
+
+                    'Do not assume the customer has rejected the solution.',
+
+                    'Identify the last known stage of the purchase journey.',
+
+                    'Review the last confirmed requirement before contacting the customer again.',
+
+                    'Avoid forcing the customer through the entire qualification process again.',
+
+                    'Identify the most likely unresolved obstacle.',
+
+                    'Use helpful follow-up rather than pressure.',
+
+                    'Respect customer communication preferences.',
+
+                    'Do not repeatedly contact customers without an appropriate communication process.'
+                ],
+
+
+                recoveryQuestions: [
+
+                    'Is there anything about the proposed system you would like us to clarify?',
+
+                    'Would you like to review the configuration before proceeding?',
+
+                    'Was there anything about the quotation or payment process that prevented you from completing the order?',
+
+                    'Would you like to adjust the system to better match your requirements or budget?',
+
+                    'Would you like assistance comparing the available options?'
+                ],
+
+
+                recoveryActions: [
+
+                    'Clarify unresolved questions.',
+
+                    'Correct misunderstandings.',
+
+                    'Revalidate changed requirements.',
+
+                    'Update the quotation when required.',
+
+                    'Escalate high-value opportunities to a human sales representative.',
+
+                    'Record the new customer decision.',
+
+                    'Continue from the correct sales stage rather than restarting unnecessarily.'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               SALES HANDOFF
+            ----------------------------------------------------- */
+
+            salesHandoff: {
+
+                handoffTriggers: [
+
+                    'Customer requests a human sales representative.',
+
+                    'Customer requests a negotiated price.',
+
+                    'Customer requests a special discount.',
+
+                    'Customer has a complex commercial requirement.',
+
+                    'Customer requires a formal quotation review.',
+
+                    'Customer requires a site assessment.',
+
+                    'Customer has unresolved technical concerns.',
+
+                    'Customer has a payment discrepancy.',
+
+                    'Customer requests contractual terms.',
+
+                    'Customer is placing a large commercial or industrial order.',
+
+                    'Customer requires an unusual fulfilment arrangement.'
+                ],
+
+
+                handoffSummary: [
+
+                    'Customer identity or business name where appropriate.',
+
+                    'Contact details required for follow-up.',
+
+                    'Customer security objective.',
+
+                    'Selected or proposed products.',
+
+                    'Confirmed quantities.',
+
+                    'Quotation or order reference.',
+
+                    'Current sales stage.',
+
+                    'Payment status.',
+
+                    'Delivery requirement.',
+
+                    'Installation requirement.',
+
+                    'Customer objections.',
+
+                    'Outstanding questions.',
+
+                    'Required human action.'
+                ],
+
+
+                handoffRules: [
+
+                    'Do not make the customer repeat information that has already been captured.',
+
+                    'Clearly explain why human assistance is required when appropriate.',
+
+                    'Transfer only the information necessary for the sales process.',
+
+                    'Protect customer information.',
+
+                    'Do not claim that a human representative has received the handoff unless the transfer has actually occurred.',
+
+                    'Do not promise a response time unless one has been verified.'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               ORDER VALIDATION
+            ----------------------------------------------------- */
+
+            orderValidation: {
+
+                customerInformation: [
+
+                    'Customer name is captured.',
+
+                    'Required contact information is captured.',
+
+                    'Delivery information is captured where applicable.',
+
+                    'Billing information is captured where applicable.'
+                ],
+
+
+                productInformation: [
+
+                    'Products are clearly identified.',
+
+                    'Product quantities are confirmed.',
+
+                    'Product substitutions are recorded.',
+
+                    'Required accessories are included where applicable.',
+
+                    'Configuration changes have been reviewed.'
+                ],
+
+
+                commercialInformation: [
+
+                    'Correct quotation or order reference is used.',
+
+                    'Correct quotation version is identified.',
+
+                    'Applicable prices correspond to the correct configuration.',
+
+                    'Approved discounts are recorded.',
+
+                    'Applicable taxes are represented correctly.',
+
+                    'Delivery charges are represented correctly where applicable.',
+
+                    'Installation charges are represented correctly where applicable.'
+                ],
+
+
+                fulfilmentInformation: [
+
+                    'Delivery or collection method is identified.',
+
+                    'Installation requirement is identified.',
+
+                    'Required site assessment is identified.',
+
+                    'Stock status is verified where required.',
+
+                    'Lead-time information is verified where required.'
+                ],
+
+
+                paymentInformation: [
+
+                    'Payment method is identified.',
+
+                    'Payment status is accurately represented.',
+
+                    'Payment verification is completed where required.',
+
+                    'Payment discrepancies are escalated.'
+                ],
+
+
+                finalValidationRules: [
+
+                    'Do not mark the order confirmed when mandatory information is missing.',
+
+                    'Do not mark payment received without verification.',
+
+                    'Do not mark stock allocated without verified allocation.',
+
+                    'Do not mark dispatched without dispatch confirmation.',
+
+                    'Do not mark installation scheduled without confirmed scheduling.',
+
+                    'Do not mark installation completed without completion confirmation.',
+
+                    'Do not silently modify a confirmed order.',
+
+                    'Do not create duplicate order records for the same transaction.'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               CUSTOMER CONFIRMATION MESSAGE STRUCTURE
+            ----------------------------------------------------- */
+
+            customerConfirmationStructure: [
+
+                'Confirm what the customer is purchasing.',
+
+                'Confirm the main quantities.',
+
+                'Confirm whether installation is included.',
+
+                'Confirm whether delivery or collection applies.',
+
+                'Confirm the applicable quotation or order reference.',
+
+                'Confirm the next payment or fulfilment action.',
+
+                'Clearly identify anything still pending.',
+
+                'Avoid presenting pending information as final.'
+            ],
+
+
+            /* -----------------------------------------------------
+               ORDER STATUS COMMUNICATION
+            ----------------------------------------------------- */
+
+            orderStatusCommunication: {
+
+                pending:
+
+                    'Your order is currently awaiting the required next step. I will not treat it as fully confirmed until that step has been verified.',
+
+
+                paymentPending:
+
+                    'The order is awaiting payment or payment verification. Once the payment status is verified, it can move to the next applicable stage.',
+
+
+                confirmed:
+
+                    'The order has been confirmed according to the available order status information.',
+
+
+                fulfilmentPending:
+
+                    'The order has reached the fulfilment stage and is awaiting the applicable processing, allocation or dispatch action.',
+
+
+                dispatched:
+
+                    'The order has been recorded as dispatched according to the available fulfilment information.',
+
+
+                installationPending:
+
+                    'The order includes installation and is awaiting the applicable scheduling or installation step.',
+
+
+                completed:
+
+                    'The available information indicates that the order process has reached completion.'
+            },
+
+
+            /* -----------------------------------------------------
+               CONVERSION QUALITY RULES
+            ----------------------------------------------------- */
+
+            conversionQualityRules: [
+
+                'Accuracy is more important than speed.',
+
+                'Customer understanding is more important than forcing a conversion.',
+
+                'A completed checkout is not automatically a confirmed order.',
+
+                'A payment attempt is not automatically verified payment.',
+
+                'A quotation acceptance is not automatically proof of stock.',
+
+                'A requested installation date is not automatically a confirmed appointment.',
+
+                'A product selection is not automatically a technically validated system.',
+
+                'A delivery estimate is not automatically a delivery guarantee.',
+
+                'A customer statement is valuable information but does not replace system verification.',
+
+                'Every material commitment must have an appropriate source of truth.'
+            ],
+
+
+            /* -----------------------------------------------------
+               FINAL CONVERSION CHECK
+            ----------------------------------------------------- */
+
+            finalConversionCheck: [
+
+                'The customer has clearly indicated the intention to proceed.',
+
+                'The selected solution is sufficiently defined.',
+
+                'The customer understands the material scope.',
+
+                'The order information is complete enough for the applicable next stage.',
+
+                'Product quantities have been confirmed.',
+
+                'Quotation or order references are correct.',
+
+                'Payment status is accurately represented.',
+
+                'Stock status is not fabricated.',
+
+                'Delivery information is not fabricated.',
+
+                'Installation information is not fabricated.',
+
+                'All material customer changes have been captured.',
+
+                'Required approvals have been obtained.',
+
+                'The correct quotation or order version is being used.',
+
+                'The next operational action is clearly identified.'
+            ],
+
+
+            /* -----------------------------------------------------
+               FINAL RULE
+            ----------------------------------------------------- */
+
+            finalRule:
+
+                'A customer conversion is complete only when the customer decision, selected solution, order information, commercial reference, payment status and fulfilment requirements are sufficiently validated for the applicable next stage, with no unverified commitment represented as conf
