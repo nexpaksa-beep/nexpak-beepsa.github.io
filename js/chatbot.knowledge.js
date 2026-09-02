@@ -34034,4 +34034,177 @@
 
                 'Avoid unnecessary sensitive personal information.'
 
-     
+                                 'Avoid unnecessary sensitive personal information.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               SALES DASHBOARD SUMMARY
+            ----------------------------------------------------- */
+
+            dashboardSummary:
+
+                'OPPORTUNITY SUMMARY\n\nOpportunity: [ID]\nCustomer: [name]\nProduct: [category]\n\nStage: [stage]\nLead Score: [score]/100\nPriority: [priority]\nHealth: [health]\nMomentum: [momentum]\n\nRequirement: [objective]\nScope: [scope]\nBudget: [budget]\nTimeframe: [timeframe]\n\nQuotation: [status]\n\nOutstanding Information:\n[missing information]\n\nObjections:\n[objections]\n\nNext Action:\n[next action]',
+
+
+            /* -----------------------------------------------------
+               STALLED OPPORTUNITY LOGIC
+            ----------------------------------------------------- */
+
+            stalledOpportunity: {
+
+                identifyWhen: [
+
+                    'Customer has not progressed the conversation.',
+
+                    'Required information remains outstanding.',
+
+                    'Quotation has been provided but the customer has not indicated a decision.'
+
+                ],
+
+
+                responseStrategy: [
+
+                    'Do not repeatedly send the same message.',
+
+                    'Provide useful information when following up.',
+
+                    'Ask one clear question at a time.',
+
+                    'Respect customer communication preferences.',
+
+                    'Move the opportunity to futureOpportunity when the customer indicates a later timeframe.'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               CLOSED-WON TRANSITION
+            ----------------------------------------------------- */
+
+            closedWonTransition: [
+
+                'Confirm the customer purchase action.',
+
+                'Record the final agreed solution where available.',
+
+                'Transfer the opportunity to the appropriate fulfilment process.',
+
+                'Provide installation or delivery expectations only when verified.',
+
+                'Offer relevant after-sales support information.',
+
+                'Maintain the customer relationship after the sale.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               CLOSED-LOST HANDLING
+            ----------------------------------------------------- */
+
+            closedLostHandling: {
+
+                reasons: [
+
+                    'Price',
+
+                    'Timing',
+
+                    'Competitor selected',
+
+                    'Project cancelled',
+
+                    'Requirement changed',
+
+                    'No longer required',
+
+                    'Unable to contact',
+
+                    'Customer declined'
+
+                ],
+
+
+                rule:
+
+                    'Only record a reason when it is explicitly known or reasonably supported by the conversation.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               FUTURE OPPORTUNITY
+            ----------------------------------------------------- */
+
+            futureOpportunityRules: [
+
+                'Ask the customer when they expect to revisit the project when appropriate.',
+
+                'Do not repeatedly contact customers without an appropriate reason or permission.',
+
+                'Keep the original requirement available for future context where permitted.',
+
+                'When the customer returns, use previous project information to reduce repetitive qualification.',
+
+                'Reconfirm important project details because requirements may have changed.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               DUPLICATE OPPORTUNITY PREVENTION
+            ----------------------------------------------------- */
+
+            duplicatePrevention: [
+
+                'Check whether the customer is discussing an existing active project.',
+
+                'Avoid creating multiple opportunities for the same clearly identified requirement.',
+
+                'Separate unrelated projects even when they involve the same customer.',
+
+                'If uncertainty exists, ask the customer whether the request relates to the existing project.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               PIPELINE SAFETY RULES
+            ----------------------------------------------------- */
+
+            safetyRules: [
+
+                'Never mark an opportunity Closed Won without confirmation of the relevant purchase action.',
+
+                'Never claim that a quotation was sent when it was not actually sent.',
+
+                'Never claim stock availability without verified inventory information.',
+
+                'Never claim installation availability without verified scheduling information.',
+
+                'Never fabricate customer records.',
+
+                'Never expose internal sales notes or scoring information unnecessarily to customers.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               FINAL RULE
+            ----------------------------------------------------- */
+
+            finalRule:
+
+                'The sales pipeline should give every genuine opportunity a clear and accurate progression path, preserve important customer requirements, identify the next useful action and support efficient human sales involvement without fabricating information or applying inappropriate pressure.'
+
+        },
+
+
+        /* =========================================================
+           95. PRODUCT RECOMMENDATION & SOLUTION MATCHING ENGINE
+        ========================================================= */
