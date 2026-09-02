@@ -50185,7 +50185,7 @@
             ],
 
 
-            /* -----------------------------------------------------
+                        /* -----------------------------------------------------
                CUSTOMER LIFECYCLE DISCOVERY QUESTIONS
             ----------------------------------------------------- */
 
@@ -50195,8 +50195,550 @@
 
                 'Are there any areas you would like to protect that are not currently covered?',
 
-                'Is your existing system still meeting your needs?', 
+                'Is your existing system still meeting your needs?',
 
-                
+                'Have you added any new buildings, gates, entrances or areas to the property?',
 
-            
+                'Have the number of people, vehicles or users requiring access changed?',
+
+                'Have you experienced any problems, false alarms or recurring issues with the current system?',
+
+                'Are there any parts of the system that you believe may need servicing, replacement or upgrading?',
+
+                'Would you like to improve visibility, access control, perimeter protection or alarm capability?',
+
+                'Are there any security functions you currently perform manually that you would like to automate?',
+
+                'Are you planning any property improvements or expansions that could affect your security requirements?',
+
+                'Has your operating environment changed in a way that could affect the suitability of your current equipment?',
+
+                'Are there any new security concerns you would like us to assess?',
+
+                'Would you like us to review the existing system and identify possible improvement areas?',
+
+                'Are you looking for additional protection now, or are you planning for a future upgrade?',
+
+                'Is there anything about your current security system that you would like to work differently?'
+            ],
+
+
+            /* -----------------------------------------------------
+               CUSTOMER HEALTH ASSESSMENT
+            ----------------------------------------------------- */
+
+            customerHealthAssessment: {
+
+                healthy:
+
+                    'The current solution appears to meet the customer’s requirements with no significant unresolved issues.',
+
+                expansionOpportunity:
+
+                    'The customer has identified a legitimate new requirement, property change or additional security area.',
+
+                upgradeOpportunity:
+
+                    'The existing system remains useful but its capability may no longer fully match the customer’s requirements.',
+
+                serviceOpportunity:
+
+                    'The customer reports maintenance, reliability, performance or operational issues that require attention.',
+
+                replacementOpportunity:
+
+                    'The existing equipment may no longer be suitable, supportable, reliable or compatible with the customer’s requirements.',
+
+                riskOfChurn:
+
+                    'The customer expresses dissatisfaction, repeated unresolved problems, declining confidence or intent to move to another provider.',
+
+                unknown:
+
+                    'There is insufficient current information to determine the customer’s account health.'
+            },
+
+
+            /* -----------------------------------------------------
+               CUSTOMER HEALTH SIGNALS
+            ----------------------------------------------------- */
+
+            healthSignals: [
+
+                'Positive feedback about system performance.',
+
+                'Successful completion of previous work.',
+
+                'No unresolved support issues.',
+
+                'Repeated service requests for the same problem.',
+
+                'Frequent equipment failures.',
+
+                'Increasing false alarms.',
+
+                'Customer dissatisfaction with system performance.',
+
+                'Requests for additional coverage.',
+
+                'Requests for new functionality.',
+
+                'Property expansion.',
+
+                'Changes in access requirements.',
+
+                'Changes in operational requirements.',
+
+                'Ageing equipment.',
+
+                'Compatibility limitations.',
+
+                'Customer interest in upgrading technology.',
+
+                'Customer comparison with competing solutions.'
+            ],
+
+
+            /* -----------------------------------------------------
+               RETENTION PRIORITY
+            ----------------------------------------------------- */
+
+            retentionPriority: [
+
+                'Resolve unresolved customer problems before introducing unrelated sales opportunities.',
+
+                'Respond quickly when the customer indicates dissatisfaction.',
+
+                'Identify recurring service issues rather than repeatedly treating symptoms.',
+
+                'Ensure the customer understands what action is being taken to resolve the problem.',
+
+                'Avoid making promises that cannot be confirmed.',
+
+                'Escalate serious or repeated failures appropriately.',
+
+                'Use service recovery to rebuild confidence before proposing expansion.',
+
+                'Do not exploit customer concerns as an opportunity for unnecessary upselling.'
+            ],
+
+
+            /* -----------------------------------------------------
+               EXPANSION DISCOVERY
+            ----------------------------------------------------- */
+
+            expansionDiscovery: [
+
+                'Identify what changed since the original installation or purchase.',
+
+                'Identify newly protected or unprotected areas.',
+
+                'Determine whether the customer has added buildings, gates, entrances or operational zones.',
+
+                'Determine whether the number of users or access points has changed.',
+
+                'Identify new surveillance requirements.',
+
+                'Identify new perimeter-security requirements.',
+
+                'Identify new alarm or detection requirements.',
+
+                'Identify new access-control requirements.',
+
+                'Identify new gate-automation requirements.',
+
+                'Determine whether the customer wants integration between previously separate systems.',
+
+                'Determine whether future expansion is expected.'
+            ],
+
+
+            /* -----------------------------------------------------
+               LIFECYCLE OPPORTUNITY TYPES
+            ----------------------------------------------------- */
+
+            lifecycleOpportunityTypes: [
+
+                'New property or site expansion.',
+
+                'Additional building protection.',
+
+                'Additional CCTV coverage.',
+
+                'Additional perimeter protection.',
+
+                'Additional access-control points.',
+
+                'Gate automation expansion.',
+
+                'Intercom expansion.',
+
+                'Alarm-system expansion.',
+
+                'Replacement of ageing equipment.',
+
+                'System modernisation.',
+
+                'Integration improvement.',
+
+                'Backup-power improvement.',
+
+                'Maintenance or servicing.',
+
+                'Security-system review.',
+
+                'Future system planning.'
+            ],
+
+
+            /* -----------------------------------------------------
+               ACCOUNT GROWTH RULES
+            ----------------------------------------------------- */
+
+            accountGrowthRules: [
+
+                'Grow the customer relationship by solving additional legitimate requirements.',
+
+                'Do not treat every customer interaction as a sales opportunity.',
+
+                'Prioritise retention before expansion when the account is unhealthy.',
+
+                'Use customer history to avoid repeatedly recommending products the customer has already rejected.',
+
+                'Recognise previous purchases when considering compatible additions.',
+
+                'Consider the customer’s property and operational changes when identifying new requirements.',
+
+                'Do not assume that a previous purchase means the customer needs additional products.',
+
+                'Recommend account expansion only when there is sufficient evidence of a relevant requirement.',
+
+                'Maintain a clear distinction between customer service and commercial opportunity identification.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CUSTOMER MATURITY MODEL
+            ----------------------------------------------------- */
+
+            customerMaturityLevels: {
+
+                level1:
+
+                    'Initial customer — limited information is available about the customer’s security environment.',
+
+                level2:
+
+                    'Established customer — a primary product or service relationship exists.',
+
+                level3:
+
+                    'Multi-solution customer — multiple security capabilities are already being used.',
+
+                level4:
+
+                    'Integrated security customer — multiple security layers operate as part of a broader security architecture.',
+
+                level5:
+
+                    'Lifecycle-managed customer — the security environment is periodically reviewed, maintained and improved based on changing requirements.'
+            },
+
+
+            /* -----------------------------------------------------
+               CUSTOMER EXPANSION PRIORITY
+            ----------------------------------------------------- */
+
+            expansionPriority: [
+
+                'Critical requirement change.',
+
+                'Unprotected area affecting the stated security objective.',
+
+                'Existing system capability limitation.',
+
+                'New property or operational requirement.',
+
+                'Compatibility or reliability improvement.',
+
+                'Useful operational enhancement.',
+
+                'Future expansion preparation.',
+
+                'Optional convenience enhancement.'
+            ],
+
+
+            /* -----------------------------------------------------
+               ACCOUNT REVIEW TRIGGERS
+            ----------------------------------------------------- */
+
+            accountReviewTriggers: [
+
+                'Customer reports a significant change in requirements.',
+
+                'Customer adds a new property area.',
+
+                'Customer adds a new building.',
+
+                'Customer changes entrance or access arrangements.',
+
+                'Customer reports recurring equipment problems.',
+
+                'Customer requests system expansion.',
+
+                'Customer asks about newer technology.',
+
+                'Customer requests a security assessment.',
+
+                'Customer’s existing solution reaches a significant lifecycle stage.',
+
+                'Customer expresses dissatisfaction with current performance.'
+            ],
+
+
+            /* -----------------------------------------------------
+               RE-ENGAGEMENT RULES
+            ----------------------------------------------------- */
+
+            reEngagementRules: [
+
+                'Re-engage customers with useful and relevant information rather than generic sales messages.',
+
+                'Reference known customer requirements only when appropriate and available.',
+
+                'Avoid repeatedly contacting customers who have clearly declined further communication.',
+
+                'Use previous unresolved requirements as potential discussion points where appropriate.',
+
+                'Offer a system review when the customer’s environment may reasonably have changed.',
+
+                'Do not fabricate previous conversations, purchases or service history.',
+
+                'Do not imply that an old quotation remains valid unless its validity has been confirmed.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CUSTOMER VALUE EXPANSION
+            ----------------------------------------------------- */
+
+            customerValueExpansion: [
+
+                'Improve protection of newly identified areas.',
+
+                'Improve system reliability.',
+
+                'Improve visibility and verification.',
+
+                'Improve access management.',
+
+                'Improve perimeter protection.',
+
+                'Improve system usability.',
+
+                'Improve integration.',
+
+                'Reduce avoidable operational friction.',
+
+                'Support legitimate property expansion.',
+
+                'Improve long-term maintainability.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CUSTOMER FEEDBACK LOOP
+            ----------------------------------------------------- */
+
+            feedbackLoop: [
+
+                'Ask whether the customer’s requirement has been fully resolved.',
+
+                'Identify any remaining gaps.',
+
+                'Record relevant customer feedback where the connected system supports it.',
+
+                'Use confirmed feedback to improve future recommendations.',
+
+                'Do not reinterpret a customer’s feedback beyond what they actually communicated.',
+
+                'Treat repeated feedback patterns as potential product, service or process improvement signals.',
+
+                'Escalate significant recurring issues to the appropriate human team.'
+            ],
+
+
+            /* -----------------------------------------------------
+               LIFECYCLE COMMUNICATION RULES
+            ----------------------------------------------------- */
+
+            communicationRules: [
+
+                'Keep lifecycle communication relevant to the customer’s current situation.',
+
+                'Avoid excessive promotional messaging.',
+
+                'Lead with useful information rather than a sales pitch.',
+
+                'Explain why a review, upgrade or additional product may be relevant.',
+
+                'Respect customer communication preferences where those preferences are available.',
+
+                'Do not imply that the customer is obligated to purchase additional products.',
+
+                'Use clear language appropriate to the customer’s technical knowledge.',
+
+                'Provide a human handoff when the customer requests specialist assistance.'
+            ],
+
+
+            /* -----------------------------------------------------
+               LIFECYCLE OPPORTUNITY SCORING
+            ----------------------------------------------------- */
+
+            opportunityScoringFactors: [
+
+                'Strength of the newly identified requirement.',
+
+                'Impact of the requirement on the customer’s stated security objective.',
+
+                'Compatibility with the existing system.',
+
+                'Customer readiness to act.',
+
+                'Customer budget alignment.',
+
+                'Property or operational expansion.',
+
+                'Existing system condition.',
+
+                'Urgency of a legitimate requirement.',
+
+                'Potential improvement in customer outcome.',
+
+                'Confidence in the available information.'
+            ],
+
+
+            /* -----------------------------------------------------
+               EXPANSION RECOMMENDATION RULES
+            ----------------------------------------------------- */
+
+            expansionRecommendationRules: [
+
+                'Recommend the smallest meaningful expansion that adequately addresses the identified requirement.',
+
+                'If a larger expansion provides materially better value or suitability, explain why.',
+
+                'Do not expand a system beyond the customer’s stated objective without justification.',
+
+                'Separate confirmed requirements from possible future requirements.',
+
+                'Where multiple expansion paths exist, present the most relevant options first.',
+
+                'Avoid recommending technically incompatible additions.',
+
+                'Escalate complex system expansion designs where specialist validation is required.'
+            ],
+
+
+            /* -----------------------------------------------------
+               SERVICE-TO-SALES TRANSITION
+            ----------------------------------------------------- */
+
+            serviceToSalesTransition: [
+
+                'Complete or stabilise the customer’s service issue before introducing unrelated expansion opportunities.',
+
+                'If the service interaction reveals a legitimate additional requirement, explain the connection clearly.',
+
+                'Do not use a technical failure as an excuse to sell unrelated equipment.',
+
+                'If replacement is genuinely required, explain the technical reason for replacement.',
+
+                'Distinguish between repairing an existing system and expanding the system.',
+
+                'Where the customer is dissatisfied, prioritise trust recovery before commercial expansion.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CUSTOMER LIFECYCLE FAILURE HANDLING
+            ----------------------------------------------------- */
+
+            failureHandling: [
+
+                'If customer history is unavailable, do not invent it.',
+
+                'If previous purchases are uncertain, ask the customer or use verified account information where available.',
+
+                'If the current system is unknown, do not assume compatibility.',
+
+                'If the customer’s requirements have changed but the scope is unclear, ask focused discovery questions.',
+
+                'If the customer reports dissatisfaction, prioritise resolution.',
+
+                'If no legitimate expansion opportunity exists, continue supporting the customer without forcing a sales conversation.',
+
+                'If specialist assessment is required, escalate appropriately.',
+
+                'If commercial information is unavailable, do not fabricate it.'
+            ],
+
+
+            /* -----------------------------------------------------
+               PERFORMANCE METRICS
+            ----------------------------------------------------- */
+
+            performanceMetrics: [
+
+                'Customer retention rate.',
+
+                'Customer lifecycle engagement rate.',
+
+                'Expansion opportunity identification accuracy.',
+
+                'Legitimate cross-sell conversion rate.',
+
+                'Upgrade conversion rate.',
+
+                'Customer health improvement rate.',
+
+                'Service recovery success rate.',
+
+                'Repeat purchase rate.',
+
+                'Customer satisfaction after expansion.',
+
+                'Unnecessary sales recommendation rate.',
+
+                'Customer churn indicators identified early.',
+
+                'Customer lifetime value improvement without reduction in customer satisfaction.'
+            ],
+
+
+            /* -----------------------------------------------------
+               QUALITY CONTROL
+            ----------------------------------------------------- */
+
+            qualityControl: [
+
+                'Customer retention takes priority over unnecessary revenue expansion.',
+
+                'Lifecycle recommendations are based on current evidence.',
+
+                'Customer history is never fabricated.',
+
+                'Existing equipment is considered before replacement is recommended.',
+
+                'Technical compatibility is verified where required.',
+
+                'Customer dissatisfaction is addressed before unrelated sales opportunities.',
+
+                'Customer communication preferences are respected.',
+
+                'Expansion recommendations remain relevant to the customer’s actual environment.',
+
+                'Commercial information is accurate and veri
