@@ -45943,6 +45943,586 @@
         },
 
 
-        /* =========================================================
+                /* =========================================================
            109. SALES ACTIVITY, TASK & FOLLOW-UP ORCHESTRATION ENGINE
-        ========================================================= */ 
+        ========================================================= */
+
+        salesActivityTaskFollowUpOrchestrationEngine: {
+
+            /* -----------------------------------------------------
+               OBJECTIVE
+            ----------------------------------------------------- */
+
+            objective:
+
+                'Coordinate sales activities, customer follow-ups, pending actions, reminders, opportunity tasks and next-step recommendations so that legitimate sales opportunities continue progressing without excessive, repetitive or inappropriate customer contact.',
+
+
+            /* -----------------------------------------------------
+               CORE PRINCIPLE
+            ----------------------------------------------------- */
+
+            principle:
+
+                'Every follow-up should have a legitimate purpose, be connected to the customer journey and provide useful progress rather than simply asking whether the customer has decided. Follow-up quality is more important than follow-up volume.',
+
+
+            /* -----------------------------------------------------
+               ACTIVITY CATEGORIES
+            ----------------------------------------------------- */
+
+            activityCategories: {
+
+                qualification:
+
+                    'Activities required to understand customer requirements and determine whether a legitimate opportunity exists.',
+
+                solutionDevelopment:
+
+                    'Activities required to develop, refine or validate the proposed security solution.',
+
+                quotation:
+
+                    'Activities related to quotation preparation, delivery, revision or clarification.',
+
+                decisionSupport:
+
+                    'Activities that help the customer evaluate options and make an informed decision.',
+
+                orderProcessing:
+
+                    'Activities required to progress a confirmed customer order.',
+
+                fulfilment:
+
+                    'Activities related to stock, delivery, installation or system activation where applicable.',
+
+                support:
+
+                    'Activities related to customer assistance, troubleshooting or service recovery.',
+
+                retention:
+
+                    'Activities intended to maintain a legitimate long-term customer relationship.',
+
+                accountGrowth:
+
+                    'Activities identifying relevant additional requirements within an existing customer relationship.'
+            },
+
+
+            /* -----------------------------------------------------
+               TASK PRIORITY
+            ----------------------------------------------------- */
+
+            taskPriority: {
+
+                critical:
+
+                    'Action required immediately because delay could materially affect customer safety, service continuity, transaction integrity or another important outcome.',
+
+                high:
+
+                    'Action has significant customer or commercial importance and should be addressed promptly.',
+
+                normal:
+
+                    'Action is important but does not require immediate intervention.',
+
+                low:
+
+                    'Action is useful but can reasonably wait behind higher-priority customer requirements.'
+            },
+
+
+            /* -----------------------------------------------------
+               PRIORITY RULES
+            ----------------------------------------------------- */
+
+            priorityRules: [
+
+                'Prioritise active customer requests over routine sales activity.',
+
+                'Prioritise unresolved support issues appropriately.',
+
+                'Prioritise confirmed transactions requiring action.',
+
+                'Prioritise opportunities with clear customer intent and a defined next step.',
+
+                'Prioritise time-sensitive requirements when the customer has explicitly established the urgency.',
+
+                'Do not prioritise an opportunity solely because its theoretical value is high.',
+
+                'Do not allow routine marketing activity to interfere with active service requirements.',
+
+                'Reassess task priority when new customer information becomes available.'
+            ],
+
+
+            /* -----------------------------------------------------
+               TASK CREATION TRIGGERS
+            ----------------------------------------------------- */
+
+            taskCreationTriggers: [
+
+                'Customer requests a quotation.',
+
+                'Customer requests a quotation revision.',
+
+                'Customer asks for technical verification.',
+
+                'Customer requires human assistance.',
+
+                'Customer provides missing qualification information.',
+
+                'Customer indicates a future purchasing timeframe.',
+
+                'Customer requests a follow-up.',
+
+                'Customer asks for product availability confirmation.',
+
+                'Customer requires delivery clarification.',
+
+                'Customer submits an order.',
+
+                'Customer reports an unresolved support issue.',
+
+                'Customer requests additional system information.',
+
+                'Customer indicates that another decision-maker must review the proposal.'
+            ],
+
+
+            /* -----------------------------------------------------
+               NEXT ACTION ENGINE
+            ----------------------------------------------------- */
+
+            nextActionEngine: {
+
+                qualification:
+
+                    'Identify the smallest missing piece of information required to progress the opportunity.',
+
+                recommendation:
+
+                    'Provide the most relevant solution information required for the customer to evaluate the recommendation.',
+
+                quotation:
+
+                    'Prepare or route the required information for quotation generation through the approved business process.',
+
+                decision:
+
+                    'Identify the customer’s remaining decision barrier and address it appropriately.',
+
+                order:
+
+                    'Guide the customer through the required ordering or confirmation process.',
+
+                fulfilment:
+
+                    'Identify the next confirmed fulfilment action.',
+
+                support:
+
+                    'Identify the next safe troubleshooting, service or escalation action.',
+
+                retention:
+
+                    'Identify a useful relationship or service action rather than an unnecessary sales contact.'
+            },
+
+
+            /* -----------------------------------------------------
+               FOLLOW-UP PURPOSE
+            ----------------------------------------------------- */
+
+            followUpPurposes: [
+
+                'Obtain information previously requested from the customer.',
+
+                'Answer a question that remained unresolved.',
+
+                'Confirm whether the customer requires further assistance.',
+
+                'Provide requested quotation information.',
+
+                'Clarify a quotation question.',
+
+                'Confirm a customer-requested change.',
+
+                'Assist with an identified ordering step.',
+
+                'Provide an agreed status update.',
+
+                'Resolve an outstanding support matter.',
+
+                'Re-engage a legitimate opportunity when there is a reasonable basis for doing so.'
+            ],
+
+
+            /* -----------------------------------------------------
+               FOLLOW-UP QUALITY RULES
+            ----------------------------------------------------- */
+
+            followUpQualityRules: [
+
+                'Every follow-up should have a clear reason.',
+
+                'Reference the relevant customer context where appropriate.',
+
+                'Do not ask generic questions when a specific question would be more useful.',
+
+                'Provide useful information whenever possible.',
+
+                'Do not create unnecessary customer work.',
+
+                'Do not repeatedly ask whether the customer is ready to buy.',
+
+                'Do not use artificial urgency.',
+
+                'Do not imply that an opportunity will disappear unless that is factually true.',
+
+                'Respect the customer’s stated communication preferences.',
+
+                'Stop or reduce follow-up when the customer clearly requests it.'
+            ],
+
+
+            /* -----------------------------------------------------
+               FOLLOW-UP TIMING
+            ----------------------------------------------------- */
+
+            followUpTimingPrinciples: [
+
+                'Use customer-requested timing when explicitly provided.',
+
+                'Use agreed business follow-up timing when established.',
+
+                'Consider the urgency of the customer requirement.',
+
+                'Consider the current sales stage.',
+
+                'Consider whether the customer is waiting for Nexpak or Nexpak is waiting for the customer.',
+
+                'Avoid excessive contact within short periods.',
+
+                'Increase follow-up relevance rather than simply increasing frequency.',
+
+                'Reassess timing when customer circumstances change.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CUSTOMER WAITING STATES
+            ----------------------------------------------------- */
+
+            waitingStates: {
+
+                waitingForCustomer:
+
+                    'Nexpak has provided the required information or action and the next meaningful step depends on the customer.',
+
+                waitingForNexpak:
+
+                    'The customer has provided the required information and the next meaningful step depends on Nexpak.',
+
+                waitingForVerification:
+
+                    'The next step depends on technical, commercial, stock, payment or another required verification.',
+
+                waitingForDecisionMaker:
+
+                    'The customer is awaiting internal approval or another authorised decision-maker.',
+
+                waitingForSiteInformation:
+
+                    'The opportunity requires measurements, photographs, site information or another project input.',
+
+                waitingForSupportResolution:
+
+                    'The customer issue remains open and requires additional technical or service action.'
+            },
+
+
+            /* -----------------------------------------------------
+               WAITING STATE RULES
+            ----------------------------------------------------- */
+
+            waitingStateRules: [
+
+                'Clearly identify who is expected to take the next action.',
+
+                'Do not repeatedly contact a customer when Nexpak is responsible for the next step.',
+
+                'Do not blame the customer for delays outside their control.',
+
+                'Provide status updates when Nexpak is responsible for a delay and an update is available.',
+
+                'Escalate internally when an important customer action is blocked by an unresolved Nexpak task.',
+
+                'Reassess the waiting state when new information is received.'
+            ],
+
+
+            /* -----------------------------------------------------
+               FOLLOW-UP MESSAGE CONTENT
+            ----------------------------------------------------- */
+
+            followUpContentRules: [
+
+                'State the reason for the follow-up.',
+
+                'Reference the relevant previous interaction when useful.',
+
+                'Keep the message proportional to the purpose.',
+
+                'State the specific information or action required.',
+
+                'Provide an easy path for the customer to respond.',
+
+                'Avoid unnecessary sales language.',
+
+                'Avoid repeating the entire quotation or technical explanation unless required.',
+
+                'Include the next step when one is known.'
+            ],
+
+
+            /* -----------------------------------------------------
+               UNRESPONSIVE CUSTOMER HANDLING
+            ----------------------------------------------------- */
+
+            unresponsiveCustomerRules: [
+
+                'Do not immediately classify an unresponsive customer as lost.',
+
+                'Consider how long the customer has been inactive.',
+
+                'Consider the importance of the outstanding action.',
+
+                'Consider whether the customer may be waiting for Nexpak.',
+
+                'Use a progressively lower-pressure approach when appropriate.',
+
+                'Provide useful information rather than repeated pressure.',
+
+                'Respect explicit requests to stop communication.',
+
+                'Close or pause the opportunity only when the available evidence supports doing so.'
+            ],
+
+
+            /* -----------------------------------------------------
+               RE-ENGAGEMENT STRATEGY
+            ----------------------------------------------------- */
+
+            reEngagementStrategy: [
+
+                'Review the original customer objective.',
+
+                'Review the last meaningful interaction.',
+
+                'Identify whether the original requirement may still be relevant.',
+
+                'Identify any known unresolved barrier.',
+
+                'Provide a useful reason for reconnecting.',
+
+                'Ask whether the project is still active when appropriate.',
+
+                'Do not assume the customer still wants the original solution.',
+
+                'Requalify materially changed requirements.'
+            ],
+
+
+            /* -----------------------------------------------------
+               FOLLOW-UP FAILURE DETECTION
+            ----------------------------------------------------- */
+
+            followUpFailureSignals: [
+
+                'Repeated messages receive no response.',
+
+                'Customer repeatedly postpones the project.',
+
+                'Customer explicitly requests no further contact.',
+
+                'Customer confirms the project is cancelled.',
+
+                'Customer confirms another supplier has been selected.',
+
+                'Customer requirements have materially changed.',
+
+                'Quotation information is no longer current.',
+
+                'The original opportunity no longer has a legitimate business basis.'
+            ],
+
+
+            /* -----------------------------------------------------
+               FOLLOW-UP ESCALATION
+            ----------------------------------------------------- */
+
+            escalationTriggers: [
+
+                'Customer reports a serious unresolved issue.',
+
+                'Customer is waiting on an important internal Nexpak action.',
+
+                'Customer requests management involvement.',
+
+                'Customer disputes significant commercial information.',
+
+                'Customer reports contradictory information from different channels.',
+
+                'Technical uncertainty could materially affect the proposed solution.',
+
+                'Customer dissatisfaction is escalating.',
+
+                'A confirmed transaction is blocked by an unresolved process issue.'
+            ],
+
+
+            /* -----------------------------------------------------
+               SALES ACTIVITY LOGGING
+            ----------------------------------------------------- */
+
+            activityLogging: [
+
+                'Record meaningful customer interactions where an approved CRM process exists.',
+
+                'Record significant qualification updates.',
+
+                'Record quotation activity.',
+
+                'Record important customer decisions.',
+
+                'Record order progression.',
+
+                'Record support escalation and resolution activity.',
+
+                'Record meaningful follow-up outcomes.',
+
+                'Avoid logging irrelevant conversational details.',
+
+                'Do not create false activity records.'
+            ],
+
+
+            /* -----------------------------------------------------
+               TASK STATUS
+            ----------------------------------------------------- */
+
+            taskStatuses: {
+
+                pending:
+
+                    'Task has been identified but has not yet been completed.',
+
+                inProgress:
+
+                    'Task is actively being worked on.',
+
+                waiting:
+
+                    'Task cannot progress until another person, system or event provides the required input.',
+
+                completed:
+
+                    'Task has been completed and the outcome is known.',
+
+                cancelled:
+
+                    'Task is no longer required.',
+
+                blocked:
+
+                    'Task cannot reasonably progress because of an unresolved dependency or issue.'
+            },
+
+
+            /* -----------------------------------------------------
+               TASK DEPENDENCIES
+            ----------------------------------------------------- */
+
+            taskDependencyRules: [
+
+                'Identify dependencies before assigning the next action.',
+
+                'Do not mark dependent tasks as completed prematurely.',
+
+                'Identify whether customer input is required.',
+
+                'Identify whether human approval is required.',
+
+                'Identify whether technical verification is required.',
+
+                'Identify whether commercial verification is required.',
+
+                'Identify whether stock or fulfilment confirmation is required.',
+
+                'Escalate blocked high-priority tasks appropriately.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CUSTOMER RESPONSE CLASSIFICATION
+            ----------------------------------------------------- */
+
+            responseClassification: {
+
+                positiveProgress:
+
+                    'Customer response advances the opportunity or resolves an outstanding requirement.',
+
+                informationProvided:
+
+                    'Customer provides requested information without yet indicating a purchasing decision.',
+
+                clarificationRequested:
+
+                    'Customer requires additional explanation before progressing.',
+
+                objectionRaised:
+
+                    'Customer identifies a concern that may prevent progression.',
+
+                delayRequested:
+
+                    'Customer explicitly requests additional time.',
+
+                negativeDecision:
+
+                    'Customer indicates that the current opportunity will not proceed.',
+
+                supportRequest:
+
+                    'Customer changes the interaction from sales progression to service or technical assistance.'
+            },
+
+
+            /* -----------------------------------------------------
+               RESPONSE-BASED ACTIONS
+            ----------------------------------------------------- */
+
+            responseActionRules: [
+
+                'Update the opportunity when a meaningful response changes its state.',
+
+                'Address objections before attempting further conversion.',
+
+                'Answer clarification requests before asking for a purchasing decision.',
+
+                'Respect requested delays.',
+
+                'Requalify when the customer materially changes the project.',
+
+                'Stop sales progression when the customer clearly indicates the opportunity will not proceed.',
+
+                'Prioritise support when a customer moves from sales discussion to an active service issue.'
+            ],
+
+
+            /* ------------------------------------
