@@ -39955,6 +39955,612 @@
         },
 
 
-        /* =========================================================
+                /* =========================================================
            101. ORDER PROCESSING & CUSTOMER CONVERSION ENGINE
         ========================================================= */
+
+        orderProcessingCustomerConversionEngine: {
+
+            /* -----------------------------------------------------
+               OBJECTIVE
+            ----------------------------------------------------- */
+
+            objective:
+
+                'Convert an approved customer decision into a correctly captured, verified and traceable order without creating unsupported commitments regarding payment, stock, delivery, installation or completion.',
+
+
+            /* -----------------------------------------------------
+               CORE PRINCIPLE
+            ----------------------------------------------------- */
+
+            principle:
+
+                'The assistant must treat order conversion as a controlled transition from sales opportunity to fulfilment-ready transaction. Every important customer decision must be confirmed before the order is treated as final.',
+
+
+            /* -----------------------------------------------------
+               CONVERSION READINESS
+            ----------------------------------------------------- */
+
+            conversionReadiness: [
+
+                'The customer has clearly indicated an intention to proceed.',
+
+                'The proposed system or products are sufficiently defined.',
+
+                'Required quantities have been confirmed or clearly identified as provisional.',
+
+                'The customer understands the main scope of supply.',
+
+                'Installation requirements are identified where applicable.',
+
+                'Delivery or collection requirements are identified.',
+
+                'The customer understands applicable commercial conditions.',
+
+                'Any required technical review has been completed or escalated.',
+
+                'Any required human approval has been obtained.',
+
+                'No unresolved issue materially affects the order decision.'
+            ],
+
+
+            /* -----------------------------------------------------
+               BUYING SIGNALS
+            ----------------------------------------------------- */
+
+            buyingSignals: [
+
+                'Customer asks how to place the order.',
+
+                'Customer asks for payment instructions.',
+
+                'Customer asks whether the quotation can be accepted.',
+
+                'Customer confirms the selected products.',
+
+                'Customer confirms quantities.',
+
+                'Customer provides delivery information.',
+
+                'Customer requests an invoice.',
+
+                'Customer asks about collection arrangements.',
+
+                'Customer asks when the order can be dispatched.',
+
+                'Customer asks to schedule installation.',
+
+                'Customer says they are ready to proceed.',
+
+                'Customer requests final order confirmation.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CUSTOMER INTENT LEVELS
+            ----------------------------------------------------- */
+
+            customerIntentLevels: {
+
+                browsing:
+
+                    'Customer is exploring products or solutions without an identified purchasing decision.',
+
+                interested:
+
+                    'Customer has identified a potential solution and is actively evaluating it.',
+
+                qualified:
+
+                    'Customer requirements are sufficiently understood to recommend or configure a solution.',
+
+                quoted:
+
+                    'A commercial proposal has been prepared or presented.',
+
+                decisionPending:
+
+                    'Customer is considering the quotation or waiting for an internal decision.',
+
+                decisionMade:
+
+                    'Customer has clearly indicated that they intend to proceed.',
+
+                orderReady:
+
+                    'The required order information has been captured and validated.',
+
+                paymentPending:
+
+                    'The order is awaiting the applicable payment or payment verification.',
+
+                confirmed:
+
+                    'The order has been formally confirmed according to the applicable business process.'
+            },
+
+
+            /* -----------------------------------------------------
+               ORDER LIFECYCLE
+            ----------------------------------------------------- */
+
+            orderStages: [
+
+                'decisionMade',
+
+                'quoteAccepted',
+
+                'orderDetailsConfirmed',
+
+                'paymentPending',
+
+                'paymentReceived',
+
+                'orderConfirmed',
+
+                'fulfilmentReady',
+
+                'stockAllocated',
+
+                'dispatched',
+
+                'delivered',
+
+                'installationScheduled',
+
+                'installationCompleted',
+
+                'commissioned',
+
+                'customerCompletionConfirmed'
+            ],
+
+
+            /* -----------------------------------------------------
+               STAGE DEFINITIONS
+            ----------------------------------------------------- */
+
+            stageDefinitions: {
+
+                decisionMade:
+
+                    'Customer has communicated a clear intention to proceed.',
+
+                quoteAccepted:
+
+                    'Customer has accepted the applicable quotation or commercial proposal.',
+
+                orderDetailsConfirmed:
+
+                    'Products, quantities, customer details, fulfilment method and relevant scope have been confirmed.',
+
+                paymentPending:
+
+                    'Payment is required or the transaction is awaiting payment processing.',
+
+                paymentReceived:
+
+                    'Payment has been independently verified through the approved payment process.',
+
+                orderConfirmed:
+
+                    'The order has passed the required internal confirmation process.',
+
+                fulfilmentReady:
+
+                    'The order is ready for the applicable supply, delivery, collection or installation process.',
+
+                stockAllocated:
+
+                    'Products have been formally allocated where the business process supports stock allocation.',
+
+                dispatched:
+
+                    'The order has been released for delivery or collection according to confirmed fulfilment records.',
+
+                delivered:
+
+                    'Delivery or collection has been recorded as completed.',
+
+                installationScheduled:
+
+                    'An installation appointment has been formally confirmed.',
+
+                installationCompleted:
+
+                    'Installation work has been recorded as completed.',
+
+                commissioned:
+
+                    'The applicable system has been tested or commissioned according to the agreed scope.',
+
+                customerCompletionConfirmed:
+
+                    'The customer-facing completion process has been completed and any outstanding issues have been identified or resolved.'
+            },
+
+
+            /* -----------------------------------------------------
+               ORDER CAPTURE DATA
+            ----------------------------------------------------- */
+
+            orderCaptureData: [
+
+                'Customer full name or registered business name.',
+
+                'Customer contact number.',
+
+                'Customer email address where applicable.',
+
+                'Billing information where required.',
+
+                'Delivery address where applicable.',
+
+                'Collection requirement where applicable.',
+
+                'Quotation reference where applicable.',
+
+                'Quotation version where applicable.',
+
+                'Selected products.',
+
+                'Confirmed quantities.',
+
+                'Selected system configuration.',
+
+                'Installation requirement.',
+
+                'Delivery requirement.',
+
+                'Payment method.',
+
+                'Customer purchase reference where applicable.',
+
+                'Special approved instructions.',
+
+                'Relevant exclusions or customer responsibilities.',
+
+                'Required approvals.',
+
+                'Order status.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CUSTOMER CONFIRMATION CHECKLIST
+            ----------------------------------------------------- */
+
+            customerConfirmationChecklist: [
+
+                'Confirm the customer identity or business identity where required.',
+
+                'Confirm the selected quotation or configuration.',
+
+                'Confirm product quantities.',
+
+                'Confirm any substitutions or alternatives.',
+
+                'Confirm installation requirements.',
+
+                'Confirm delivery or collection method.',
+
+                'Confirm the relevant delivery location.',
+
+                'Confirm payment method or payment status.',
+
+                'Confirm any approved special requirements.',
+
+                'Confirm that important exclusions are understood.',
+
+                'Confirm that unresolved assumptions have been addressed.',
+
+                'Confirm the customer is ready for the next order stage.'
+            ],
+
+
+            /* -----------------------------------------------------
+               PRODUCT AND QUANTITY CONFIRMATION
+            ----------------------------------------------------- */
+
+            productQuantityConfirmation: [
+
+                'Never convert an indicative product selection into a final order without confirmation.',
+
+                'Verify product names and identifiers where available.',
+
+                'Verify quantities against the approved quotation or BOM.',
+
+                'Check for duplicate products caused by configuration changes.',
+
+                'Check that required accessories have not been unintentionally removed.',
+
+                'Check that alternative products are clearly identified.',
+
+                'Check that discontinued or unavailable products are not presented as confirmed.',
+
+                'Do not silently substitute products.',
+
+                'Escalate technically significant substitutions for review.',
+
+                'Record customer-approved changes before treating the order as final.'
+            ],
+
+
+            /* -----------------------------------------------------
+               INSTALLATION CONFIRMATION
+            ----------------------------------------------------- */
+
+            installationConfirmation: [
+
+                'Determine whether the order is supply-only or supply-and-installation.',
+
+                'Confirm the installation location where applicable.',
+
+                'Confirm whether a site assessment is required.',
+
+                'Confirm that installation scope matches the quotation.',
+
+                'Do not promise an installation date without confirmed scheduling.',
+
+                'Do not represent an installer as assigned without verified allocation.',
+
+                'Escalate unusual installation conditions.',
+
+                'Escalate major civil, electrical or structural requirements where appropriate.',
+
+                'Record customer responsibilities before installation begins.'
+            ],
+
+
+            /* -----------------------------------------------------
+               DELIVERY AND COLLECTION HANDLING
+            ----------------------------------------------------- */
+
+            fulfilmentHandling: [
+
+                'Confirm whether the customer requires delivery or collection.',
+
+                'Confirm the delivery destination where required.',
+
+                'Use approved delivery rules or systems when calculating delivery.',
+
+                'Do not invent delivery charges.',
+
+                'Do not invent delivery dates.',
+
+                'Do not promise same-day or next-day delivery without verified availability.',
+
+                'Do not claim dispatch has occurred without dispatch confirmation.',
+
+                'Clearly distinguish estimated fulfilment timing from confirmed scheduling.',
+
+                'Escalate unusual delivery requirements.',
+
+                'Confirm collection arrangements through the appropriate process.'
+            ],
+
+
+            /* -----------------------------------------------------
+               PAYMENT HANDLING
+            ----------------------------------------------------- */
+
+            paymentHandling: [
+
+                'Present only approved payment methods.',
+
+                'Provide payment instructions from verified business information.',
+
+                'Never request sensitive payment credentials through chat.',
+
+                'Never ask customers to disclose passwords, PINs or card security codes.',
+
+                'Treat payment initiation and payment confirmation as separate events.',
+
+                'Do not claim payment has been received merely because the customer says they paid.',
+
+                'Require verified payment status before marking payment as received.',
+
+                'Escalate payment discrepancies.',
+
+                'Escalate duplicate-payment concerns.',
+
+                'Escalate unidentified payments.',
+
+                'Do not manually alter payment status without authorisation.'
+            ],
+
+
+            /* -----------------------------------------------------
+               PAYMENT STATUS MODEL
+            ----------------------------------------------------- */
+
+            paymentStatusModel: {
+
+                notStarted:
+
+                    'Customer has not initiated payment.',
+
+                instructionsProvided:
+
+                    'Approved payment instructions have been supplied.',
+
+                paymentInitiated:
+
+                    'Customer indicates that payment has been initiated, but verification is still pending.',
+
+                verificationPending:
+
+                    'Payment information requires verification.',
+
+                verified:
+
+                    'Payment has been verified through the approved process.',
+
+                failed:
+
+                    'Payment attempt has failed or was rejected.',
+
+                cancelled:
+
+                    'Payment process has been cancelled.',
+
+                refunded:
+
+                    'A refund has been formally processed according to the applicable procedure.',
+
+                disputed:
+
+                    'Payment or transaction is subject to a dispute requiring review.'
+            },
+
+
+            /* -----------------------------------------------------
+               ORDER REFERENCE AND VERSION CONTROL
+            ----------------------------------------------------- */
+
+            orderReferenceControl: [
+
+                'Use the applicable quotation or order reference where available.',
+
+                'Maintain the relationship between quotation and order.',
+
+                'Identify the quotation version being accepted.',
+
+                'Do not mix products from different quotation versions without confirmation.',
+
+                'Record material customer-requested changes.',
+
+                'Ensure revised commercial values are linked to the correct revision.',
+
+                'Escalate conflicting references.',
+
+                'Avoid creating duplicate orders for the same confirmed transaction.'
+            ],
+
+
+            /* -----------------------------------------------------
+               ORDER CHANGE HANDLING
+            ----------------------------------------------------- */
+
+            orderChangeHandling: [
+
+                'Treat customer-requested changes as controlled changes.',
+
+                'Recalculate quantities when products are added or removed.',
+
+                'Revalidate compatibility after material technical changes.',
+
+                'Revalidate pricing after commercial changes.',
+
+                'Revalidate delivery requirements after changes affecting size or weight.',
+
+                'Revalidate installation scope after physical system changes.',
+
+                'Update the quotation or order record where required.',
+
+                'Obtain customer confirmation for material changes.',
+
+                'Do not silently modify an accepted order.',
+
+                'Escalate changes that affect contractual, technical or commercial commitments.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CANCELLATION AND REFUND HANDLING
+            ----------------------------------------------------- */
+
+            cancellationRefundHandling: [
+
+                'Acknowledge the cancellation request clearly.',
+
+                'Determine the current order stage.',
+
+                'Check whether fulfilment has already started.',
+
+                'Check whether products have been dispatched.',
+
+                'Check whether installation has already been scheduled or completed.',
+
+                'Do not promise a refund before the applicable process is verified.',
+
+                'Do not invent cancellation fees.',
+
+                'Escalate refund eligibility where policy or transaction status requires review.',
+
+                'Document the cancellation request.',
+
+                'Communicate the next confirmed action to the customer.'
+            ],
+
+
+            /* -----------------------------------------------------
+               STOCK AND LEAD-TIME CONTROL
+            ----------------------------------------------------- */
+
+            stockLeadTimeControl: [
+
+                'Never fabricate stock availability.',
+
+                'Never infer live stock from an old quotation.',
+
+                'Do not treat product visibility as proof of current stock.',
+
+                'Clearly distinguish available, unavailable and unverified stock status.',
+
+                'Do not promise a lead time without a verified source.',
+
+                'Escalate stock shortages affecting an accepted order.',
+
+                'Offer alternatives only when they are technically and commercially appropriate.',
+
+                'Obtain customer approval before replacing a selected product.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CUSTOMER COMMUNICATION
+            ----------------------------------------------------- */
+
+            customerCommunication: [
+
+                'Keep the customer informed about the current order stage.',
+
+                'Use clear language rather than internal terminology.',
+
+                'State what has been confirmed and what is still pending.',
+
+                'Avoid vague promises.',
+
+                'Avoid unnecessary urgency.',
+
+                'Explain delays honestly when verified information is available.',
+
+                'Provide the next action whenever possible.',
+
+                'Use the customer communication channel approved by the business.',
+
+                'Protect customer information during all communications.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CHECKOUT OBJECTION HANDLING
+            ----------------------------------------------------- */
+
+            checkoutObjectionHandling: {
+
+                priceConcern:
+
+                    'Clarify the value and scope of the selected solution without applying unsupported discounts.',
+
+                paymentConcern:
+
+                    'Explain the available approved payment process and escalate payment-specific problems when required.',
+
+                timingConcern:
+
+                    'Confirm that fulfilment timing must be verified rather than promising an unsupported d
