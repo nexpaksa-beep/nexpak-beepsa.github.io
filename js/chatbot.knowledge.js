@@ -38888,7 +38888,7 @@
             },
 
 
-            /* -----------------------------------------------------
+                        /* -----------------------------------------------------
                QUANTITY VALIDATION
             ----------------------------------------------------- */
 
@@ -38906,4 +38906,275 @@
 
                 'Duplicate components should be avoided.',
 
-                'Optional quantities should be clearly separated from essen
+                'Optional quantities should be clearly separated from essential quantities.',
+
+                'Final quantities should be reviewed before quotation or procurement.'
+            ],
+
+
+            /* -----------------------------------------------------
+               BILL OF MATERIALS STRUCTURE
+            ----------------------------------------------------- */
+
+            billOfMaterialsStructure: {
+
+                primaryEquipment: [
+
+                    'Main security equipment',
+
+                    'Controllers',
+
+                    'Recorders',
+
+                    'Energisers',
+
+                    'Gate motors',
+
+                    'Alarm panels',
+
+                    'Access-control controllers'
+                ],
+
+                fieldEquipment: [
+
+                    'Cameras',
+
+                    'Sensors',
+
+                    'Readers',
+
+                    'Intercom stations',
+
+                    'Detection devices',
+
+                    'Fence components'
+                ],
+
+                infrastructure: [
+
+                    'Power supplies',
+
+                    'Batteries',
+
+                    'Network switches',
+
+                    'Communication equipment',
+
+                    'Cabling',
+
+                    'Conduit or protective routing',
+
+                    'Mounting infrastructure'
+                ],
+
+                accessories: [
+
+                    'Connectors',
+
+                    'Termination components',
+
+                    'Brackets',
+
+                    'Warning signs',
+
+                    'Remote controls',
+
+                    'Interface modules',
+
+                    'Protective equipment'
+                ],
+
+                installationMaterials: [
+
+                    'Fasteners',
+
+                    'Cable management',
+
+                    'Termination materials',
+
+                    'Protective hardware',
+
+                    'Consumable installation materials'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               BOM CLASSIFICATION
+            ----------------------------------------------------- */
+
+            bomClassification: {
+
+                essential:
+
+                    'Required for the system to perform its primary intended function.',
+
+                recommended:
+
+                    'Provides a meaningful improvement in reliability, usability, protection or monitoring.',
+
+                optional:
+
+                    'Provides additional functionality that is not required for the primary system objective.',
+
+                siteDependent:
+
+                    'Quantity or selection depends on physical site conditions or measurements.',
+
+                verificationRequired:
+
+                    'Requires technical or manufacturer confirmation before final selection.'
+            },
+
+
+            /* -----------------------------------------------------
+               BOM ERROR PREVENTION
+            ----------------------------------------------------- */
+
+            bomErrorPrevention: [
+
+                'Do not omit supporting components required for operation.',
+
+                'Do not double-count shared infrastructure.',
+
+                'Do not assume every system requires identical accessories.',
+
+                'Do not use arbitrary percentages as material allowances without identifying the reason.',
+
+                'Do not fabricate measurements.',
+
+                'Do not fabricate product specifications.',
+
+                'Do not fabricate pricing.',
+
+                'Do not fabricate stock availability.',
+
+                'Do not represent a preliminary BOM as a final installation schedule when site information is incomplete.'
+            ],
+
+
+            /* -----------------------------------------------------
+               PRELIMINARY BOM RESPONSE
+            ----------------------------------------------------- */
+
+            responseFormat: {
+
+                systemSummary:
+
+                    'Brief description of the proposed system.',
+
+                designBasis:
+
+                    'Measurements, requirements and assumptions used for sizing.',
+
+                primaryEquipment:
+
+                    'Main equipment required for system operation.',
+
+                fieldEquipment:
+
+                    'Devices installed at protected locations.',
+
+                infrastructure:
+
+                    'Power, network, communication and physical infrastructure.',
+
+                accessories:
+
+                    'Supporting components required for installation or operation.',
+
+                quantities:
+
+                    'Quantities supported by known information.',
+
+                siteDependentItems:
+
+                    'Items requiring site measurements or technical confirmation.',
+
+                optionalItems:
+
+                    'Enhancements that are not essential to the core system.',
+
+                exclusions:
+
+                    'Known items or work not included in the preliminary BOM.',
+
+                verification:
+
+                    'Items requiring confirmation before final quotation or procurement.'
+            },
+
+
+            /* -----------------------------------------------------
+               SIZING CONFIDENCE
+            ----------------------------------------------------- */
+
+            sizingConfidence: {
+
+                high:
+
+                    'Measurements and technical requirements are sufficiently confirmed for a reliable preliminary configuration.',
+
+                medium:
+
+                    'The general system can be sized but important measurements or technical details remain to be confirmed.',
+
+                low:
+
+                    'Insufficient information exists to produce reliable quantities or equipment selections.'
+            },
+
+
+            /* -----------------------------------------------------
+               FINAL SIZING CHECK
+            ----------------------------------------------------- */
+
+            finalSizingCheck: [
+
+                'All major security functions are identified.',
+
+                'Required measurements are identified.',
+
+                'Known measurements are distinguished from estimates.',
+
+                'Unknown measurements are clearly identified.',
+
+                'Equipment capacity has been considered.',
+
+                'Power requirements have been considered.',
+
+                'Communication requirements have been considered.',
+
+                'Storage requirements have been considered where applicable.',
+
+                'Environmental conditions have been considered.',
+
+                'Future expansion has been considered where justified.',
+
+                'Essential components are included.',
+
+                'Supporting components are included.',
+
+                'Optional components are clearly separated.',
+
+                'Site-dependent quantities are clearly identified.',
+
+                'No unsupported specifications or quantities have been invented.',
+
+                'The BOM is suitable for the current level of project information.'
+            ],
+
+
+            /* -----------------------------------------------------
+               FINAL RULE
+            ----------------------------------------------------- */
+
+            finalRule:
+
+                'A bill of materials is reliable only when its quantities and component selections can be traced back to validated requirements, measurements, equipment capabilities and installation conditions; where those inputs are unavailable, the uncertainty must remain visible rather than being replaced with invented precision.'
+        },
+
+
+        /* =========================================================
+           100. QUOTATION PREPARATION & COMMERCIAL CONFIGURATION ENGINE
+        ========================================================= */
