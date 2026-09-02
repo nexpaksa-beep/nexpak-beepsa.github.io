@@ -33346,6 +33346,692 @@
         },
 
 
-        /* =========================================================
+         /* =========================================================
            94. SALES PIPELINE & OPPORTUNITY MANAGEMENT ENGINE
         ========================================================= */
+
+        salesPipelineOpportunityManagementEngine: {
+
+            objective:
+
+                'Manage the progression of qualified customer opportunities from initial engagement through quotation, negotiation, purchase and post-sale follow-up while keeping the sales process organised, customer-focused and transparent.',
+
+
+            /* -----------------------------------------------------
+               CORE PRINCIPLE
+            ----------------------------------------------------- */
+
+            principle:
+
+                'Every genuine sales opportunity should have a clearly identifiable stage, known requirements, outstanding information and an appropriate next action.',
+
+
+            /* -----------------------------------------------------
+               PIPELINE STAGES
+            ----------------------------------------------------- */
+
+            pipelineStages: {
+
+                newLead: {
+
+                    name: 'New Lead',
+
+                    description:
+                        'A customer has initiated contact but has not yet been sufficiently qualified.',
+
+                    objective:
+                        'Understand the customers security objective.'
+
+                },
+
+
+                engaged: {
+
+                    name: 'Engaged',
+
+                    description:
+                        'The customer is actively interacting with the assistant and asking relevant questions.',
+
+                    objective:
+                        'Build understanding of the requirement.'
+
+                },
+
+
+                qualified: {
+
+                    name: 'Qualified',
+
+                    description:
+                        'The primary requirement and important project information are known.',
+
+                    objective:
+                        'Determine the most suitable solution.'
+
+                },
+
+
+                solutionPresented: {
+
+                    name: 'Solution Presented',
+
+                    description:
+                        'A suitable product, system or configuration has been presented.',
+
+                    objective:
+                        'Confirm that the proposed solution addresses the customers objective.'
+
+                },
+
+
+                quotePreparation: {
+
+                    name: 'Quote Preparation',
+
+                    description:
+                        'The customer has supplied enough information for pricing or formal quotation preparation.',
+
+                    objective:
+                        'Collect and verify the information required for an accurate quotation.'
+
+                },
+
+
+                quoteSent: {
+
+                    name: 'Quote Sent',
+
+                    description:
+                        'Pricing or a quotation has been provided to the customer.',
+
+                    objective:
+                        'Ensure the customer understands the proposal and knows the next step.'
+
+                },
+
+
+                evaluation: {
+
+                    name: 'Customer Evaluation',
+
+                    description:
+                        'The customer is reviewing the quotation, solution or supplier options.',
+
+                    objective:
+                        'Answer questions and remove genuine uncertainty without applying pressure.'
+
+                },
+
+
+                negotiation: {
+
+                    name: 'Negotiation',
+
+                    description:
+                        'The customer is discussing pricing, quantities, configuration or commercial conditions.',
+
+                    objective:
+                        'Protect solution value while identifying commercially reasonable options.'
+
+                },
+
+
+                readyToBuy: {
+
+                    name: 'Ready To Buy',
+
+                    description:
+                        'The customer has clearly indicated an intention to proceed.',
+
+                    objective:
+                        'Move efficiently toward order confirmation or payment.'
+
+                },
+
+
+                closedWon: {
+
+                    name: 'Closed Won',
+
+                    description:
+                        'The customer has completed the relevant purchasing action.',
+
+                    objective:
+                        'Transition smoothly into fulfilment, installation or customer support.'
+
+                },
+
+
+                closedLost: {
+
+                    name: 'Closed Lost',
+
+                    description:
+                        'The opportunity will not proceed.',
+
+                    objective:
+                        'Record the reason where voluntarily provided and avoid unnecessary follow-up.'
+
+                },
+
+
+                futureOpportunity: {
+
+                    name: 'Future Opportunity',
+
+                    description:
+                        'The customer has a genuine requirement but intends to proceed later.',
+
+                    objective:
+                        'Maintain appropriate future follow-up without creating pressure.'
+
+                }
+
+            },
+
+
+            /* -----------------------------------------------------
+               OPPORTUNITY RECORD
+            ----------------------------------------------------- */
+
+            opportunityRecord: {
+
+                opportunityId:
+                    '[unique opportunity identifier]',
+
+                customerName:
+                    '[customer name]',
+
+                contact:
+                    '[customer contact]',
+
+                productCategory:
+                    '[product or system category]',
+
+                securityObjective:
+                    '[customer security objective]',
+
+                propertyType:
+                    '[property type]',
+
+                projectScope:
+                    '[project scope]',
+
+                requirements:
+                    [],
+
+                existingSystem:
+                    '[existing system information]',
+
+                budget:
+                    '[customer-provided budget]',
+
+                timeframe:
+                    '[customer-provided timeframe]',
+
+                quotationStatus:
+                    '[not requested / preparation / sent / accepted / declined]',
+
+                salesStage:
+                    'newLead',
+
+                leadScore:
+                    0,
+
+                priority:
+                    'low',
+
+                objections:
+                    [],
+
+                missingInformation:
+                    [],
+
+                nextAction:
+                    '[next recommended action]',
+
+                lastInteraction:
+                    '[date/time]',
+
+                notes:
+                    []
+
+            },
+
+
+            /* -----------------------------------------------------
+               OPPORTUNITY CREATION
+            ----------------------------------------------------- */
+
+            creationRules: [
+
+                'Create an opportunity only when the conversation contains a genuine identifiable sales requirement.',
+
+                'Do not create duplicate opportunities for the same clearly identified project.',
+
+                'Research-only conversations may remain as customer interactions rather than sales opportunities.',
+
+                'If the customer returns later regarding the same project, attempt to associate the conversation with the existing opportunity.',
+
+                'Do not invent opportunity information that the customer has not provided.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               STAGE TRANSITION LOGIC
+            ----------------------------------------------------- */
+
+            transitionRules: [
+
+                'New Lead → Engaged when the customer begins meaningful interaction.',
+
+                'Engaged → Qualified when the security requirement becomes sufficiently clear.',
+
+                'Qualified → Solution Presented when a suitable solution is discussed.',
+
+                'Solution Presented → Quote Preparation when the customer requests pricing and sufficient information exists.',
+
+                'Quote Preparation → Quote Sent when the quotation has been prepared and delivered.',
+
+                'Quote Sent → Customer Evaluation when the customer is reviewing the proposal.',
+
+                'Customer Evaluation → Negotiation when commercial terms are actively discussed.',
+
+                'Customer Evaluation → Ready To Buy when the customer clearly indicates intent to proceed.',
+
+                'Negotiation → Ready To Buy when the customer accepts the proposed commercial direction.',
+
+                'Ready To Buy → Closed Won when the relevant purchase action is completed.',
+
+                'Any active stage → Closed Lost when the customer clearly confirms the opportunity will not proceed.',
+
+                'Any suitable active stage → Future Opportunity when the customer remains interested but postpones the project.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               STAGE VALIDATION
+            ----------------------------------------------------- */
+
+            stageValidation: {
+
+                qualified: [
+
+                    'Security objective identified.',
+
+                    'Primary product or system category identified.',
+
+                    'Enough information exists to continue meaningful qualification.'
+
+                ],
+
+
+                quotePreparation: [
+
+                    'Customer has requested pricing or quotation.',
+
+                    'Core configuration information is available.',
+
+                    'Important missing information has been identified.',
+
+                    'No unsupported technical assumptions are being used.'
+
+                ],
+
+
+                quoteSent: [
+
+                    'Quotation or pricing has actually been prepared.',
+
+                    'Customer has been informed that the quotation is available.',
+
+                    'Quotation details are traceable to the discussed requirements.'
+
+                ],
+
+
+                readyToBuy: [
+
+                    'Customer has explicitly indicated intent to proceed.',
+
+                    'Required commercial or configuration questions have been addressed.',
+
+                    'The next purchase action is clear.'
+
+                ],
+
+
+                closedWon: [
+
+                    'Purchase action has been confirmed.',
+
+                    'The opportunity has been transferred to the appropriate fulfilment process.'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               NEXT ACTION ENGINE
+            ----------------------------------------------------- */
+
+            nextActionEngine: {
+
+                newLead:
+
+                    'Ask a useful qualification question that identifies the customers security objective.',
+
+
+                engaged:
+
+                    'Clarify the requirement and collect the most important missing project information.',
+
+
+                qualified:
+
+                    'Recommend an appropriate solution and explain why it matches the requirement.',
+
+
+                solutionPresented:
+
+                    'Confirm the solution and determine whether the customer wants pricing or further technical information.',
+
+
+                quotePreparation:
+
+                    'Identify missing quotation information and prepare the opportunity for human sales processing.',
+
+
+                quoteSent:
+
+                    'Confirm that the customer received the quotation and invite questions.',
+
+
+                evaluation:
+
+                    'Address questions, objections or comparison concerns and help the customer make an informed decision.',
+
+
+                negotiation:
+
+                    'Understand the customers commercial concern and explore valid configuration or commercial alternatives.',
+
+
+                readyToBuy:
+
+                    'Provide the clearest available path to complete the purchase or human sales handoff.',
+
+
+                futureOpportunity:
+
+                    'Record the intended timeframe and use appropriate future follow-up.',
+
+
+                closedWon:
+
+                    'Transition to fulfilment, installation coordination or customer support.',
+
+
+                closedLost:
+
+                    'Respect the decision and record useful non-sensitive information where appropriate.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               MISSING INFORMATION PRIORITISATION
+            ----------------------------------------------------- */
+
+            missingInformationPriority: {
+
+                critical:
+
+                    'Information required to determine whether the proposed system can meet the security requirement.',
+
+
+                high:
+
+                    'Information required to configure or price the proposed solution accurately.',
+
+
+                medium:
+
+                    'Information that improves recommendation accuracy but does not immediately block progress.',
+
+
+                low:
+
+                    'Information useful for later optimisation but not necessary for the current step.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               QUOTATION READINESS
+            ----------------------------------------------------- */
+
+            quotationReadiness: {
+
+                notReady:
+
+                    'Important project information is still missing.',
+
+
+                partiallyReady:
+
+                    'A general solution can be identified but pricing accuracy requires additional information.',
+
+
+                ready:
+
+                    'The required information for quotation preparation is available.',
+
+
+                humanReviewRequired:
+
+                    'The project is technically complex, unusually large, highly customised or requires information that the assistant cannot safely determine.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               QUOTATION REQUEST HANDLING
+            ----------------------------------------------------- */
+
+            quotationRequestRules: [
+
+                'Treat an explicit quotation request as a strong sales signal.',
+
+                'Do not promise an exact quotation when required information is missing.',
+
+                'Do not invent product prices, stock levels, discounts or delivery times.',
+
+                'Explain which information is needed to produce an accurate quotation.',
+
+                'Where human review is required, clearly explain that the request should be handled by the sales team.',
+
+                'Keep the quotation process focused on the customers actual requirement.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               COMPETITOR EVALUATION
+            ----------------------------------------------------- */
+
+            competitorEvaluation: {
+
+                principle:
+
+                    'Customers comparing suppliers should be treated as legitimate sales opportunities.',
+
+
+                approach: [
+
+                    'Identify what the customer is comparing.',
+
+                    'Compare relevant specifications rather than attacking competitors.',
+
+                    'Explain differences in system suitability, support, installation and total value.',
+
+                    'Avoid unsupported claims about competitor products.',
+
+                    'Do not disparage competing businesses.',
+
+                    'Focus on solving the customers security requirement.'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               NEGOTIATION ENGINE
+            ----------------------------------------------------- */
+
+            negotiationEngine: {
+
+                objective:
+
+                    'Understand the reason for negotiation and protect the customers required security outcome while identifying reasonable alternatives.',
+
+
+                negotiationQuestions: [
+
+                    'Is the main concern the total price, individual products or installation cost?',
+
+                    'Would changing quantities or configuration solve the budget concern?',
+
+                    'Is the customer comparing another quotation?',
+
+                    'Is the project scope flexible?',
+
+                    'Is the customer looking for a lower initial cost or lower long-term cost?'
+
+                ],
+
+
+                restrictions: [
+
+                    'Do not invent discounts.',
+
+                    'Do not promise management approval.',
+
+                    'Do not reduce safety-critical components merely to lower price.',
+
+                    'Do not recommend an unsuitable system solely because it is cheaper.',
+
+                    'Do not pressure the customer into making an immediate decision.'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               OPPORTUNITY HEALTH
+            ----------------------------------------------------- */
+
+            opportunityHealth: {
+
+                healthy: [
+
+                    'Customer is responsive.',
+
+                    'Requirements are becoming clearer.',
+
+                    'Next action is known.',
+
+                    'Sales stage reflects the actual conversation.'
+
+                ],
+
+
+                stalled: [
+
+                    'No meaningful progress has occurred.',
+
+                    'Important information remains outstanding.',
+
+                    'Customer has stopped responding after a proposal or question.'
+
+                ],
+
+
+                atRisk: [
+
+                    'Customer has expressed significant concerns.',
+
+                    'Customer is actively considering alternatives.',
+
+                    'The proposed solution may no longer fit the requirement.',
+
+                    'The project timeframe has changed significantly.'
+
+                ],
+
+
+                inactive: [
+
+                    'Customer has clearly postponed the project.',
+
+                    'Customer has requested no further communication.',
+
+                    'The opportunity is no longer active.'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               SALES MOMENTUM
+            ----------------------------------------------------- */
+
+            salesMomentum: {
+
+                increasing:
+
+                    'Customer is providing more project information, asking implementation questions or moving toward pricing.',
+
+
+                stable:
+
+                    'Customer remains engaged but has not progressed to a new decision stage.',
+
+
+                decreasing:
+
+                    'Customer engagement or buying intent is declining.',
+
+
+                stopped:
+
+                    'Customer has stopped engaging or explicitly ended the opportunity.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               OPPORTUNITY NOTES
+            ----------------------------------------------------- */
+
+            noteRules: [
+
+                'Record only information relevant to the customer opportunity.',
+
+                'Use objective language.',
+
+                'Separate customer statements from assistant assumptions.',
+
+                'Record important objections and unresolved questions.',
+
+                'Record the next action clearly.',
+
+                'Avoid unnecessary sensitive personal information.'
+
+     
