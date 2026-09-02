@@ -45873,5 +45873,76 @@
             ],
 
 
+                        /* -----------------------------------------------------
+               FORECAST ACTION ENGINE
+            ----------------------------------------------------- */
+
+            forecastActionEngine: {
+
+                qualificationNeeded:
+
+                    'Recommend gathering missing information before increasing forecast confidence.',
+
+                followUpNeeded:
+
+                    'Recommend appropriate follow-up when a legitimate active opportunity requires customer action.',
+
+                quotationReviewNeeded:
+
+                    'Recommend reviewing quotation status when customer feedback or decision activity is pending.',
+
+                technicalReviewNeeded:
+
+                    'Recommend technical verification when compatibility, configuration or site conditions remain uncertain.',
+
+                commercialReviewNeeded:
+
+                    'Recommend authorised commercial review when pricing, discounting or terms require confirmation.',
+
+                opportunityReactivation:
+
+                    'Recommend requalification when a previously inactive customer demonstrates new legitimate interest.'
+            },
+
+
             /* -----------------------------------------------------
-       
+               FORECAST QUALITY CONTROL
+            ----------------------------------------------------- */
+
+            forecastQualityControl: [
+
+                'Forecast source information is identifiable.',
+
+                'Opportunity stage is current.',
+
+                'Customer activity is meaningful.',
+
+                'Revenue categories are correctly separated.',
+
+                'Confirmed revenue is not mixed with speculative pipeline.',
+
+                'Forecast assumptions are identified.',
+
+                'Forecast confidence reflects actual evidence.',
+
+                'Known risks are visible.',
+
+                'Stale opportunities are not treated as active without qualification.',
+
+                'No revenue guarantee has been implied.'
+            ],
+
+
+            /* -----------------------------------------------------
+               FINAL RULE
+            ----------------------------------------------------- */
+
+            finalRule:
+
+                'Sales forecasting should help Nexpak understand where legitimate revenue opportunities exist, which opportunities require attention and where uncertainty remains, while never confusing customer interest, projected pipeline or probability-weighted estimates with confirmed revenue.'
+        },
+
+
+        /* =========================================================
+           109. SALES ACTIVITY, TASK & FOLLOW-UP ORCHESTRATION ENGINE
+        ========================================================= */ 
