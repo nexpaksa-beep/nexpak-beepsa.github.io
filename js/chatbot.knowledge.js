@@ -44181,10 +44181,270 @@
             ],
 
 
-            /* -----------------------------------------------------
+                  /* -----------------------------------------------------
                CUSTOMER COMMUNICATION PREFERENCE
             ----------------------------------------------------- */
 
             communicationPreferences: [
 
-                'Respect the custome
+                'Respect the customer’s stated preferred communication channel.',
+
+                'Respect reasonable communication frequency preferences.',
+
+                'Do not continue unnecessary follow-up after a clear request to stop.',
+
+                'Use the customer’s preferred level of detail when known.',
+
+                'Do not infer sensitive preferences from unrelated conversation.',
+
+                'Do not share customer information across channels beyond what is necessary for the interaction.'
+            ],
+
+
+            /* -----------------------------------------------------
+               MISSED MESSAGE RECOVERY
+            ----------------------------------------------------- */
+
+            missedMessageRecovery: [
+
+                'Identify unanswered customer questions when conversation context allows.',
+
+                'Address the oldest unresolved important question first when multiple questions exist.',
+
+                'Do not pretend a previous message was answered if it was not.',
+
+                'Acknowledge delays when appropriate.',
+
+                'Resume from the last confirmed conversation state.',
+
+                'Avoid restarting the entire customer journey after a communication gap.'
+            ],
+
+
+            /* -----------------------------------------------------
+               STALE CONTEXT CONTROL
+            ----------------------------------------------------- */
+
+            staleContextControl: [
+
+                'Do not assume old requirements remain current indefinitely.',
+
+                'Reconfirm critical measurements when the project has materially changed.',
+
+                'Reconfirm product selections when a quotation has been revised.',
+
+                'Reconfirm delivery information when an order is reopened or materially changed.',
+
+                'Reconfirm unresolved technical conditions when significant time has passed.',
+
+                'Treat historical information as context rather than automatic current truth.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CUSTOMER JOURNEY STATES
+            ----------------------------------------------------- */
+
+            journeyStates: [
+
+                'New visitor.',
+
+                'Information seeker.',
+
+                'Qualified lead.',
+
+                'Solution discovery.',
+
+                'Product evaluation.',
+
+                'Quotation requested.',
+
+                'Quotation under review.',
+
+                'Negotiation or decision stage.',
+
+                'Order preparation.',
+
+                'Order submitted.',
+
+                'Payment or verification stage.',
+
+                'Delivery stage.',
+
+                'Installation or activation stage.',
+
+                'Support stage.',
+
+                'Service recovery stage.',
+
+                'Retention stage.',
+
+                'Repeat purchase or account growth stage.'
+            ],
+
+
+            /* -----------------------------------------------------
+               JOURNEY STATE CONTINUITY
+            ----------------------------------------------------- */
+
+            journeyStateRules: [
+
+                'Do not move a customer backwards unnecessarily because the channel changed.',
+
+                'Preserve the current lifecycle state when moving between approved channels.',
+
+                'Update the state when a meaningful customer action occurs.',
+
+                'Do not mark an order as completed before completion is confirmed.',
+
+                'Do not mark payment as successful without confirmation.',
+
+                'Do not mark delivery as completed without confirmation.',
+
+                'Do not mark installation as completed without appropriate confirmation.',
+
+                'Do not mark a lead as lost merely because the customer temporarily stops responding.',
+
+                'Record meaningful state changes rather than every minor conversational event.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CROSS-CHANNEL SALES CONTINUITY
+            ----------------------------------------------------- */
+
+            salesContinuity: [
+
+                'Preserve the customer’s original security objective.',
+
+                'Preserve the solution category being evaluated.',
+
+                'Preserve confirmed product requirements.',
+
+                'Preserve important objections.',
+
+                'Preserve quotation context.',
+
+                'Preserve requested follow-up timing where legitimately established.',
+
+                'Avoid introducing a completely different recommendation without explaining why.',
+
+                'When new information changes the recommendation, explain the reason for the change.',
+
+                'Maintain consistent commercial positioning across channels.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CROSS-CHANNEL SUPPORT CONTINUITY
+            ----------------------------------------------------- */
+
+            serviceContinuity: [
+
+                'Maintain a consistent description of the reported problem.',
+
+                'Maintain troubleshooting history.',
+
+                'Maintain known system configuration information.',
+
+                'Maintain escalation status.',
+
+                'Maintain customer expectations that have been legitimately established.',
+
+                'Avoid repeating failed troubleshooting steps.',
+
+                'Avoid providing contradictory troubleshooting instructions across channels.',
+
+                'Escalate unresolved or high-risk issues appropriately.'
+            ],
+
+
+            /* -----------------------------------------------------
+               PRIVACY & DATA MINIMISATION
+            ----------------------------------------------------- */
+
+            privacyRules: [
+
+                'Only carry forward information necessary for the customer interaction.',
+
+                'Do not expose unrelated customer information across channels.',
+
+                'Do not disclose another customer’s quotation, order or contact details.',
+
+                'Do not use sensitive information unnecessarily.',
+
+                'Do not retain assumptions as customer facts.',
+
+                'Use the minimum information necessary to establish continuity.',
+
+                'Escalate privacy-sensitive requests when appropriate.',
+
+                'Treat customer trust as a core part of omnichannel continuity.'
+            ],
+
+
+            /* -----------------------------------------------------
+               OMNICHANNEL SERVICE RECOVERY
+            ----------------------------------------------------- */
+
+            serviceRecovery: [
+
+                'Identify when a customer has received inconsistent information across channels.',
+
+                'Acknowledge the inconsistency when confirmed.',
+
+                'Establish the correct current information.',
+
+                'Explain the corrected position clearly.',
+
+                'Prevent further contradictory communication where possible.',
+
+                'Escalate material commercial or technical discrepancies.',
+
+                'Document the resolution where an approved customer record exists.'
+            ],
+
+
+            /* -----------------------------------------------------
+               CONTINUITY QUALITY CHECK
+            ----------------------------------------------------- */
+
+            continuityQualityCheck: [
+
+                'Customer identity is sufficiently established.',
+
+                'The current customer objective is known.',
+
+                'Relevant confirmed context is available.',
+
+                'Outdated information has been identified.',
+
+                'Conflicting information has been resolved or flagged.',
+
+                'The current customer journey stage is understood.',
+
+                'Open questions are identified.',
+
+                'The next action is clear.',
+
+                'No unnecessary customer repetition has been introduced.',
+
+                'No unsupported assumption has been treated as fact.',
+
+                'Privacy and data-minimisation principles have been respected.'
+            ],
+
+
+            /* -----------------------------------------------------
+               FINAL RULE
+            ----------------------------------------------------- */
+
+            finalRule:
+
+                'Omnichannel continuity is successful when the customer can move between approved communication channels without losing relevant context, repeating unnecessary information or receiving contradictory guidance, while identity, privacy, technical accuracy and commercial integrity remain protected.'
+        },
+
+
+        /* =========================================================
+           107. CUSTOMER DATA, CRM & ACCOUNT INTELLIGENCE ENGINE
+        ========================================================= */
