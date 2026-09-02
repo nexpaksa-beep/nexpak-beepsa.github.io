@@ -38212,9 +38212,698 @@
                 'A configuration should only be presented as a suitable proposed solution when its components, capacities, dependencies, operating conditions and security objectives have been logically aligned and any unresolved technical issues have been clearly identified.'
         },
 
-
         /* =========================================================
            99. SYSTEM SIZING & BILL OF MATERIALS ENGINE
         ========================================================= */
 
-    
+        systemSizingBillOfMaterialsEngine: {
+
+            objective:
+
+                'Determine the appropriate system capacity, equipment quantities and supporting components required to translate a validated security-system concept into a practical bill of materials without inventing measurements, specifications, pricing or stock information.',
+
+
+            principle:
+
+                'System sizing must be driven by measurable requirements, equipment capabilities, environmental conditions and future needs rather than by arbitrary quantities or product popularity.',
+
+
+            /* -----------------------------------------------------
+               SIZING FOUNDATION
+            ----------------------------------------------------- */
+
+            sizingFoundation: [
+
+                'Start with the validated customer requirement.',
+
+                'Identify every functional requirement.',
+
+                'Identify the physical dimensions that affect system capacity.',
+
+                'Identify equipment-specific capacity limits.',
+
+                'Identify environmental loading.',
+
+                'Identify operating frequency where relevant.',
+
+                'Identify power requirements.',
+
+                'Identify communication requirements.',
+
+                'Identify storage requirements.',
+
+                'Identify expansion requirements.',
+
+                'Separate confirmed measurements from estimates.',
+
+                'Never create false precision when measurements are unavailable.'
+            ],
+
+
+            /* -----------------------------------------------------
+               MEASUREMENT CONFIDENCE
+            ----------------------------------------------------- */
+
+            measurementConfidence: {
+
+                confirmed: {
+
+                    description:
+
+                        'A measurement supplied by the customer, obtained from documentation or physically verified.',
+
+                    handling:
+
+                        'May be used directly in preliminary sizing subject to normal technical validation.'
+                },
+
+                estimated: {
+
+                    description:
+
+                        'A reasonable approximation that has not yet been physically verified.',
+
+                    handling:
+
+                        'May be used for preliminary discussion but must be clearly labelled as an estimate.'
+                },
+
+                unknown: {
+
+                    description:
+
+                        'A measurement that could materially affect equipment quantity, capacity or price but is unavailable.',
+
+                    handling:
+
+                        'Do not fabricate a value. Identify the measurement as requiring confirmation.'
+                }
+            },
+
+
+            /* -----------------------------------------------------
+               ELECTRIC FENCE SIZING
+            ----------------------------------------------------- */
+
+            electricFenceSizing: {
+
+                requiredInputs: [
+
+                    'Fence length',
+
+                    'Number of strands',
+
+                    'Number of fence sections',
+
+                    'Gate locations',
+
+                    'Gate crossings',
+
+                    'Vegetation conditions',
+
+                    'Fence construction',
+
+                    'Conductor arrangement',
+
+                    'Earth-system requirements',
+
+                    'Required monitoring zones'
+                ],
+
+                quantityFactors: [
+
+                    'Fence length',
+
+                    'Strand count',
+
+                    'Post spacing',
+
+                    'Insulator spacing',
+
+                    'Number of gates',
+
+                    'Number of corners',
+
+                    'Number of tension points',
+
+                    'Number of zones',
+
+                    'Cable routing distance'
+                ],
+
+                sizingRules: [
+
+                    'Do not calculate total conductor quantity from perimeter length alone when multiple strands are present.',
+
+                    'Allow for routing and termination requirements.',
+
+                    'Account for gates and sectionalised zones.',
+
+                    'Consider additional material required by the actual fence construction.',
+
+                    'Do not assume all fence sections have identical requirements.',
+
+                    'Verify energiser suitability against the complete electrical load.'
+                ],
+
+                preliminaryFormulaGuidance:
+
+                    'When appropriate measurements are known, conductor quantity may be estimated from fence length multiplied by the number of conductors, with additional allowance for routing and termination.',
+
+                warning:
+
+                    'Preliminary material calculations must not be treated as a final installation bill when site measurements or construction details remain unverified.'
+            },
+
+
+            /* -----------------------------------------------------
+               ELECTRIC FENCE COMPONENT CATEGORIES
+            ----------------------------------------------------- */
+
+            electricFenceBillOfMaterials: [
+
+                'Energiser',
+
+                'Electric-fence conductors',
+
+                'Insulators',
+
+                'Fence posts or brackets where applicable',
+
+                'Tensioning components',
+
+                'High-voltage cable',
+
+                'Gate handles or suitable gate hardware',
+
+                'Gate connections',
+
+                'Earth rods or grounding components',
+
+                'Earth cable',
+
+                'Warning signs',
+
+                'Zone or monitoring equipment where required',
+
+                'Surge protection',
+
+                'Termination components',
+
+                'Connectors',
+
+                'Mechanical mounting hardware'
+            ],
+
+
+            /* -----------------------------------------------------
+               CCTV CAMERA SIZING
+            ----------------------------------------------------- */
+
+            cctvCameraSizing: {
+
+                requiredInputs: [
+
+                    'Number of areas requiring surveillance',
+
+                    'Camera locations',
+
+                    'Coverage objective',
+
+                    'Target distance',
+
+                    'Required identification level',
+
+                    'Daylight conditions',
+
+                    'Night conditions',
+
+                    'Lighting availability',
+
+                    'Mounting height',
+
+                    'Viewing direction',
+
+                    'Potential obstructions'
+                ],
+
+                sizingRules: [
+
+                    'One camera does not automatically equal one protected area.',
+
+                    'One camera may cover multiple areas only when the required image detail remains adequate.',
+
+                    'Multiple cameras may be required for a single large or complex area.',
+
+                    'Camera placement should account for blind spots.',
+
+                    'Identification requirements should influence camera selection.',
+
+                    'Do not claim that a camera can identify a target at a specific distance without appropriate technical information.',
+
+                    'Avoid relying solely on camera resolution as a measure of surveillance effectiveness.'
+                ],
+
+                coverageClassification: {
+
+                    overview:
+
+                        'Provides general awareness of activity within an area.',
+
+                    detection:
+
+                        'Provides sufficient information to identify that an event or person may be present.',
+
+                    recognition:
+
+                        'Provides improved ability to recognise a known or familiar subject.',
+
+                    identification:
+
+                        'Provides substantially greater detail intended to support identification of a subject.'
+                },
+
+                rule:
+
+                    'Camera quantity and specification should be selected according to the required level of visual information rather than simply maximising camera count.'
+            },
+
+
+            /* -----------------------------------------------------
+               CCTV RECORDING SIZING
+            ----------------------------------------------------- */
+
+            cctvRecordingSizing: {
+
+                requiredInputs: [
+
+                    'Camera count',
+
+                    'Resolution',
+
+                    'Frame rate',
+
+                    'Compression settings',
+
+                    'Recording mode',
+
+                    'Motion activity',
+
+                    'Continuous recording requirement',
+
+                    'Retention period',
+
+                    'Storage technology',
+
+                    'Future expansion'
+                ],
+
+                recordingModes: {
+
+                    continuous:
+
+                        'Records continuously according to the configured recording parameters.',
+
+                    motion:
+
+                        'Records based on configured motion or event activity.',
+
+                    eventBased:
+
+                        'Records in response to defined security events or triggers.',
+
+                    hybrid:
+
+                        'Combines different recording strategies according to the security requirement.'
+                },
+
+                storageRule:
+
+                    'Storage capacity must be calculated from the actual recording configuration and required retention period rather than camera count alone.',
+
+                retentionRule:
+
+                    'Never guarantee a specific retention period without confirming the variables that determine storage consumption.'
+            },
+
+
+            /* -----------------------------------------------------
+               CCTV NETWORK SIZING
+            ----------------------------------------------------- */
+
+            cctvNetworkSizing: {
+
+                considerations: [
+
+                    'Number of IP cameras',
+
+                    'Camera bitrate',
+
+                    'Network topology',
+
+                    'Switch capacity',
+
+                    'PoE requirements',
+
+                    'Uplink capacity',
+
+                    'Cable distance',
+
+                    'Network segmentation',
+
+                    'Recorder connectivity',
+
+                    'Future expansion'
+                ],
+
+                rules: [
+
+                    'Confirm that network equipment can support the connected devices.',
+
+                    'Confirm PoE capacity where PoE cameras are used.',
+
+                    'Consider both port count and total power budget.',
+
+                    'Consider uplink requirements.',
+
+                    'Do not assume that an available network port automatically means sufficient PoE capacity.',
+
+                    'Allow for expansion when justified.'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               POE SIZING
+            ----------------------------------------------------- */
+
+            poeSizing: {
+
+                requiredInputs: [
+
+                    'Number of PoE devices',
+
+                    'Power requirement per device',
+
+                    'Total PoE power budget',
+
+                    'Switch port count',
+
+                    'Cable distance',
+
+                    'Device type',
+
+                    'Future expansion'
+                ],
+
+                validationRules: [
+
+                    'Total device power demand must be compatible with the switch power budget.',
+
+                    'The required number of PoE ports must be available.',
+
+                    'Cable distances must remain within applicable network limits.',
+
+                    'Higher-power devices must be specifically considered.',
+
+                    'Future capacity should be considered when expansion is expected.'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               ALARM SYSTEM SIZING
+            ----------------------------------------------------- */
+
+            alarmSizing: {
+
+                requiredInputs: [
+
+                    'Number of protected zones',
+
+                    'Number of detection devices',
+
+                    'Entry points',
+
+                    'User count',
+
+                    'Keypads or control interfaces',
+
+                    'Siren requirements',
+
+                    'Communication requirements',
+
+                    'Battery requirements',
+
+                    'Future expansion'
+                ],
+
+                sizingRules: [
+
+                    'Controller capacity must accommodate the required zones.',
+
+                    'User capacity must accommodate authorised users.',
+
+                    'Communication equipment must support the required notification method.',
+
+                    'Battery capacity should be appropriate to the expected load and required backup period.',
+
+                    'Expansion capacity should be considered where justified.'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               ACCESS CONTROL SIZING
+            ----------------------------------------------------- */
+
+            accessControlSizing: {
+
+                requiredInputs: [
+
+                    'Number of doors or gates',
+
+                    'Number of readers',
+
+                    'Number of users',
+
+                    'Credential types',
+
+                    'Controller capacity',
+
+                    'Locking hardware',
+
+                    'Exit devices',
+
+                    'Request-to-exit requirements',
+
+                    'Door position monitoring',
+
+                    'Power requirements',
+
+                    'Backup requirements'
+                ],
+
+                sizingRules: [
+
+                    'Controller capacity must match the number of controlled access points.',
+
+                    'Reader quantity must correspond to the actual entry and exit requirements.',
+
+                    'Credential capacity must support the required user population.',
+
+                    'Locking hardware must match the physical access point.',
+
+                    'Power supplies must support the complete connected load.',
+
+                    'Emergency egress requirements must not be ignored.'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               GATE AUTOMATION SIZING
+            ----------------------------------------------------- */
+
+            gateAutomationSizing: {
+
+                requiredInputs: [
+
+                    'Gate type',
+
+                    'Gate dimensions',
+
+                    'Gate mass',
+
+                    'Operating frequency',
+
+                    'Gate condition',
+
+                    'Opening speed requirements',
+
+                    'Power availability',
+
+                    'Backup requirements',
+
+                    'Safety equipment',
+
+                    'Access-control integration'
+                ],
+
+                sizingRules: [
+
+                    'Select equipment according to the manufacturers supported gate characteristics.',
+
+                    'Match equipment to expected operating duty.',
+
+                    'Account for safety and control accessories.',
+
+                    'Account for backup power where required.',
+
+                    'Do not select a motor based solely on a stated maximum weight.',
+
+                    'Verify the complete gate condition before final selection.'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               ROBoguard / PERIMETER DETECTION SIZING
+            ----------------------------------------------------- */
+
+            perimeterDetectionSizing: {
+
+                requiredInputs: [
+
+                    'Protected area',
+
+                    'Detection zones',
+
+                    'Terrain',
+
+                    'Detection range requirements',
+
+                    'Potential obstructions',
+
+                    'Vegetation',
+
+                    'Animal movement',
+
+                    'Environmental conditions',
+
+                    'Required notification method'
+                ],
+
+                sizingRules: [
+
+                    'Determine detection coverage from actual terrain and protected areas.',
+
+                    'Avoid creating blind zones between detection areas.',
+
+                    'Consider environmental interference.',
+
+                    'Consider legitimate movement that could cause unwanted activations.',
+
+                    'Confirm manufacturer coverage specifications before finalising quantities.'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               POWER SUPPLY SIZING
+            ----------------------------------------------------- */
+
+            powerSupplySizing: {
+
+                requiredInputs: [
+
+                    'Equipment quantity',
+
+                    'Voltage requirement',
+
+                    'Current consumption',
+
+                    'Peak consumption',
+
+                    'Normal operating consumption',
+
+                    'Battery requirement',
+
+                    'Backup duration',
+
+                    'Charging capacity'
+                ],
+
+                rules: [
+
+                    'Calculate the expected connected load.',
+
+                    'Consider peak demand where relevant.',
+
+                    'Ensure the power supply is suitable for the connected equipment.',
+
+                    'Consider battery charging requirements.',
+
+                    'Consider battery ageing and operating conditions.',
+
+                    'Do not assume nominal equipment count represents actual power demand.'
+                ]
+            },
+
+
+            /* -----------------------------------------------------
+               CABLE SIZING
+            ----------------------------------------------------- */
+
+            cableSizing: {
+
+                considerations: [
+
+                    'Cable type',
+
+                    'Cable distance',
+
+                    'Voltage',
+
+                    'Current',
+
+                    'Voltage drop',
+
+                    'Environmental exposure',
+
+                    'Mechanical protection',
+
+                    'Routing method',
+
+                    'Future capacity'
+                ],
+
+                rule:
+
+                    'Cable selection must be appropriate for the electrical, communication, environmental and mechanical requirements of the installation.',
+
+                warning:
+
+                    'Do not specify cable size solely from equipment quantity when distance, load or installation conditions are unknown.'
+            },
+
+
+            /* -----------------------------------------------------
+               QUANTITY VALIDATION
+            ----------------------------------------------------- */
+
+            quantityValidation: [
+
+                'Every quantity must have a logical basis.',
+
+                'Quantity calculations should reference measurements or system requirements.',
+
+                'Unknown measurements must not be converted into invented quantities.',
+
+                'Allowances should be identified as allowances.',
+
+                'Accessories required for operation should not be omitted.',
+
+                'Duplicate components should be avoided.',
+
+                'Optional quantities should be clearly separated from essen
