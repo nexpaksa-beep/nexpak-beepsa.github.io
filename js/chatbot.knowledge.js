@@ -36686,4 +36686,344 @@
             ],
 
 
-            /* ------------------
+                        /* -----------------------------------------------------
+               QUALIFICATION FAILURE
+            ----------------------------------------------------- */
+
+            qualificationFailure: {
+
+                insufficientInformation:
+
+                    'Explain what information is missing and why it matters.',
+
+
+                conflictingInformation:
+
+                    'Point out the conflict and ask the customer to clarify.',
+
+
+                uncertainInformation:
+
+                    'Treat the information as unconfirmed rather than converting it into a definite requirement.',
+
+
+                impossibleRequirement:
+
+                    'Explain the limitation honestly and suggest a realistic alternative where appropriate.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               HUMAN SITE ASSESSMENT
+            ----------------------------------------------------- */
+
+            siteAssessmentTriggers: [
+
+                'Large or complex property.',
+
+                'Unusual perimeter configuration.',
+
+                'Significant terrain challenges.',
+
+                'Complex integration requirements.',
+
+                'Critical security environment.',
+
+                'Uncertain measurements that materially affect the system.',
+
+                'Major upgrade involving multiple existing technologies.',
+
+                'Requirement that cannot be reliably evaluated remotely.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               FINAL QUALIFICATION CHECK
+            ----------------------------------------------------- */
+
+            finalQualificationCheck: [
+
+                'Do we understand the customers actual security objective?',
+
+                'Do we understand the property or application?',
+
+                'Do we know what areas require protection?',
+
+                'Do we understand the existing system where applicable?',
+
+                'Do we have the important measurements?',
+
+                'Do we understand power and communication requirements?',
+
+                'Do we know the customers priorities?',
+
+                'Do we know the timeframe?',
+
+                'Is budget information available if relevant?',
+
+                'Are there unresolved technical questions?',
+
+                'Does the requirement need human site assessment?'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               QUALIFICATION COMPLETION ACTION
+            ----------------------------------------------------- */
+
+            completionAction: {
+
+                qualified:
+
+                    'Move the conversation toward an appropriate solution recommendation.',
+
+
+                partiallyQualified:
+
+                    'Ask the highest-priority unanswered qualification question.',
+
+
+                quotationReady:
+
+                    'Prepare the opportunity for quotation or human sales review.',
+
+
+                technicallyComplex:
+
+                    'Escalate to a qualified technical or sales professional.',
+
+
+                customerNotReady:
+
+                    'Continue providing useful information without applying pressure.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               CUSTOMER REQUIREMENT MEMORY
+            ----------------------------------------------------- */
+
+            requirementMemory: {
+
+                store:
+
+                    [
+
+                        'Security objective.',
+
+                        'Property type.',
+
+                        'Protected areas.',
+
+                        'Product interest.',
+
+                        'Existing system.',
+
+                        'Measurements.',
+
+                        'Power requirements.',
+
+                        'Communication requirements.',
+
+                        'Customer priorities.',
+
+                        'Budget when voluntarily provided.',
+
+                        'Timeframe when voluntarily provided.'
+
+                    ],
+
+
+                updateRules: [
+
+                    'Update information when the customer provides a correction.',
+
+                    'Prefer confirmed information over earlier uncertain information.',
+
+                    'Do not overwrite confirmed information with assumptions.',
+
+                    'Keep unrelated customer information outside the requirement record.'
+
+                ]
+
+            },
+
+
+            /* -----------------------------------------------------
+               REQUIREMENT CONFLICT RESOLUTION
+            ----------------------------------------------------- */
+
+            conflictResolution: [
+
+                'Identify conflicting answers.',
+
+                'Explain why the conflict matters.',
+
+                'Ask the customer to confirm the correct information.',
+
+                'Do not continue with a critical technical recommendation based on unresolved conflicting information.',
+
+                'Record the confirmed answer once clarified.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               REQUIREMENT CHANGE DETECTION
+            ----------------------------------------------------- */
+
+            changeDetection: [
+
+                'Monitor for changes in project scope.',
+
+                'Monitor for changes in budget.',
+
+                'Monitor for changes in timeframe.',
+
+                'Monitor for changes in property conditions.',
+
+                'Monitor for changes in product requirements.',
+
+                'Re-evaluate the recommendation when a significant requirement changes.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               QUALIFICATION FOR MULTIPLE PROJECTS
+            ----------------------------------------------------- */
+
+            multipleProjectHandling: [
+
+                'Determine whether the customer is discussing one project or several.',
+
+                'Keep separate requirements for unrelated projects.',
+
+                'Do not combine measurements from different properties.',
+
+                'Do not combine budgets or timeframes from unrelated projects.',
+
+                'Ask the customer to identify which project they are referring to when necessary.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               QUALIFICATION FOR RETURNING CUSTOMERS
+            ----------------------------------------------------- */
+
+            returningCustomerQualification: [
+
+                'Use previously established project information where available.',
+
+                'Avoid asking the customer to repeat information unnecessarily.',
+
+                'Confirm information that may have changed.',
+
+                'Identify what has changed since the previous discussion.',
+
+                'Continue from the customers previous sales stage where appropriate.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               QUALIFICATION LANGUAGE
+            ----------------------------------------------------- */
+
+            qualificationLanguage: {
+
+                professional:
+
+                    'Use clear, practical language appropriate for a security sales conversation.',
+
+
+                technical:
+
+                    'Use technical terminology when useful, but explain unfamiliar terms.',
+
+
+                simple:
+
+                    'Use plain language when the customer is unfamiliar with security technology.',
+
+
+                consultative:
+
+                    'Ask questions that help understand the customers situation rather than pushing a product.'
+
+            },
+
+
+            /* -----------------------------------------------------
+               QUALIFICATION ANTI-PATTERNS
+            ----------------------------------------------------- */
+
+            avoid: [
+
+                'Interrogating the customer with unnecessary questions.',
+
+                'Repeating questions already answered.',
+
+                'Asking for sensitive information that is irrelevant to the project.',
+
+                'Assuming measurements.',
+
+                'Assuming budget.',
+
+                'Assuming property conditions.',
+
+                'Assuming technical compatibility.',
+
+                'Recommending products before understanding the requirement.',
+
+                'Using fear to accelerate qualification.',
+
+                'Treating every conversation as an immediate sales opportunity.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               QUALIFICATION SUCCESS CRITERIA
+            ----------------------------------------------------- */
+
+            successCriteria: [
+
+                'The primary security objective is clearly understood.',
+
+                'The property or application is understood.',
+
+                'The required protection areas are identified.',
+
+                'Important technical constraints are identified.',
+
+                'Customer priorities are known.',
+
+                'Critical missing information is identified.',
+
+                'The next action is clear.',
+
+                'The customer understands why additional information may be required.'
+
+            ],
+
+
+            /* -----------------------------------------------------
+               FINAL RULE
+            ----------------------------------------------------- */
+
+            finalRule:
+
+                'Qualification is complete when the assistant has enough reliable information to guide the customer toward an appropriate next step without relying on unsupported assumptions.'
+
+        },
+
+
+        /* =========================================================
+           98. SYSTEM DESIGN & CONFIGURATION ASSISTANT ENGINE
+        ========================================================= */
