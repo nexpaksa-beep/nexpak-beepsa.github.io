@@ -1,6 +1,7 @@
 /**
  * Nexpak Security Solutions - Upgraded AI Chatbot
  * Features: Realistic Robot Avatar, Robotic Waving Arm, Automatic Screen Floating
+ * Integrated with Knowledge Base
  */
 (function() {
 'use strict';
@@ -1224,110 +1225,74 @@ function addMessage(content, sender) {
 
 
 // =========================================================
-// BOT RESPONSE ENGINE
+// BOT RESPONSE ENGINE - INTEGRATED WITH KNOWLEDGE BASE
 // =========================================================
 
 function getResponse(msg) {
 
   const m = msg.toLowerCase();
 
-  if (
-    m.includes('quote') ||
-    m.includes('price') ||
-    m.includes('cost')
-  ) {
-
-    ga(
-      'send',
-      'event',
-      'Chat',
-      'Quote Requested'
-    );
-
-    if (!leadCaptured) {
-
-      document.getElementById('lead-form')
-        .style.display = 'block';
-
-      return "I'd be happy to help you get a <strong>FREE quote</strong>! Please fill in your details below:";
+  // KNOWLEDGE BASE RESPONSES
+  const KB = {
+    quote: {
+      keywords: ['quote', 'price', 'cost'],
+      event: 'Quote Requested',
+      response: () => {
+        if (!leadCaptured) {
+          document.getElementById('lead-form').style.display = 'block';
+          return "I'd be happy to help you get a <strong>FREE quote</strong>! Please fill in your details below:";
+        }
+        return "Our team will contact you within 24 hours with your custom quote.";
+      }
+    },
+    products: {
+      keywords: ['product', 'service'],
+      event: 'Products Viewed',
+      response: () => `We offer complete security solutions:
+        <br><br>
+        <strong>Electric Fencing</strong> From R350/m | SAID Approved
+        <br>
+        <strong>CCTV Systems</strong> From R4,500 | HD/4K Cameras
+        <br>
+        <strong>Access Control</strong> From R8,000 | Biometric
+        <br>
+        <strong>Gate Automation</strong> From R12,000 | Smart Ready
+        <br>
+        <strong>Equestrian Fencing</strong> Full Range Available`
+    },
+    electric: {
+      keywords: ['electric', 'fencing'],
+      response: () => "Our <strong>electric fencing</strong> is SAID approved with 12-month warranty. Price starts from R350/m. Would you like a free quote?"
+    },
+    cctv: {
+      keywords: ['cctv', 'camera'],
+      response: () => "Our <strong>CCTV systems</strong> offer HD/4K quality with night vision and remote viewing. Starting from R4,500."
+    },
+    equestrian: {
+      keywords: ['equestrian', 'horse', 'paddock'],
+      response: () => "We have a complete range of <strong>equestrian fencing products</strong>: Polytape, Rope, Insulators, Solar Energizers, Gate Hardware."
+    },
+    contact: {
+      keywords: ['contact', 'phone'],
+      response: () => `<strong>${CONFIG.companyPhone}</strong><br><strong>${CONFIG.companyEmail}</strong><br><br>Hours: ${CONFIG.businessHours}`
+    },
+    delivery: {
+      keywords: ['delivery', 'shipping'],
+      response: () => "Courier delivery available: Gauteng R200, Durban R650, Cape Town R800. Distance-based calculation also available."
     }
+  };
 
-    return "Our team will contact you within 24 hours with your custom quote.";
+  // Search through knowledge base
+  for (const [key, item] of Object.entries(KB)) {
+    if (item.keywords && item.keywords.some(kw => m.includes(kw))) {
+      if (item.event) {
+        ga('send', 'event', 'Chat', item.event);
+      }
+      return item.response();
+    }
   }
 
-
-  if (
-    m.includes('product') ||
-    m.includes('service')
-  ) {
-
-    ga(
-      'send',
-      'event',
-      'Chat',
-      'Products Viewed'
-    );
-
-    return `We offer complete security solutions:
-      <br><br>
-      <strong>Electric Fencing</strong> From R350/m | SAID Approved
-      <br>
-      <strong>CCTV Systems</strong> From R4,500 | HD/4K Cameras
-      <br>
-      <strong>Access Control</strong> From R8,000 | Biometric
-      <br>
-      <strong>Gate Automation</strong> From R12,000 | Smart Ready
-      <br>
-      <strong>Equestrian Fencing</strong> Full Range Available`;
-  }
-
-
-  if (
-    m.includes('electric') ||
-    m.includes('fencing')
-  ) {
-
-    return "Our <strong>electric fencing</strong> is SAID approved with 12-month warranty. Price starts from R350/m. Would you like a free quote?";
-  }
-
-
-  if (
-    m.includes('cctv') ||
-    m.includes('camera')
-  ) {
-
-    return "Our <strong>CCTV systems</strong> offer HD/4K quality with night vision and remote viewing. Starting from R4,500.";
-  }
-
-
-  if (
-    m.includes('equestrian') ||
-    m.includes('horse') ||
-    m.includes('paddock')
-  ) {
-
-    return "We have a complete range of <strong>equestrian fencing products</strong>: Polytape, Rope, Insulators, Solar Energizers, Gate Hardware.";
-  }
-
-
-  if (
-    m.includes('contact') ||
-    m.includes('phone')
-  ) {
-
-    return `<strong>${CONFIG.companyPhone}</strong><br><strong>${CONFIG.companyEmail}</strong><br><br>Hours: ${CONFIG.businessHours}`;
-  }
-
-
-  if (
-    m.includes('delivery') ||
-    m.includes('shipping')
-  ) {
-
-    return "Courier delivery available: Gauteng R200, Durban R650, Cape Town R800. Distance-based calculation also available.";
-  }
-
-
+  // Default fallback response
   return `I can help you with:
     <br>• Security Systems
     <br>• Equestrian Products
