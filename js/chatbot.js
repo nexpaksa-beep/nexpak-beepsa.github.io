@@ -1,7 +1,6 @@
 /**
- * Nexpak Security Solutions - Upgraded AI Chatbot
- * Features: Realistic Robot Avatar, Robotic Waving Arm, Automatic Screen Floating
- * Integrated with Knowledge Base
+ * Nexpak Security Solutions - Upgraded AI Chatbot with Integrated Knowledge Base
+ * Features: Realistic Robot Avatar, Robotic Waving Arm, Automatic Screen Floating, Full Knowledge Base API
  */
 (function() {
 'use strict';
@@ -17,12 +16,99 @@
 ga('create', 'UA-00f00e5ed65d35fc2d5d524170097219675283e9', 'auto');
 ga('send', 'pageview');
 
+// ======== INTEGRATED KNOWLEDGE BASE & API MODULE ========
+window.NEXPAK_KNOWLEDGE = {
+  companyProfile: {
+    name: 'Nexpak Security Solutions',
+    phone: '+27 83 630 8249',
+    email: 'info@nexpaksolutions.co.za',
+    hours: 'Mon-Fri: 8am-5pm, Sat: 8am-1pm'
+  },
+  productCategories: {
+    electricFencing: {
+      id: 'electric_fencing',
+      name: 'Electric Fencing',
+      shortDescription: 'High-voltage perimeter deterrent systems including energizers, brackets, wires, and earth spikes.',
+      customerBenefits: [
+        'Active physical deterrent against intruders before entry',
+        'Integrated alarm outputs triggered on wire tampering or cuts',
+        'Reliable backup battery operation during load shedding',
+        'SANS compliant high-voltage security solutions'
+      ]
+    },
+    cctv: {
+      id: 'cctv',
+      name: 'CCTV Surveillance',
+      shortDescription: 'Advanced HD analog and IP camera systems featuring night-vision and human/vehicle motion analytics.',
+      customerBenefits: [
+        'Live remote viewing via smartphone apps anywhere, anytime',
+        'High-definition 2MP to 4K crystal clear resolution options',
+        'AI human and vehicle detection to drastically reduce false alarms',
+        'Secure local hard drive storage or cloud backup options'
+      ]
+    },
+    accessControl: {
+      id: 'access-control',
+      name: 'Access Control',
+      shortDescription: 'Secure entry management using biometrics, RFID proximity tags, PIN keypads, and magnetic locks.',
+      customerBenefits: [
+        'Detailed audit trails of who enters and exits properties',
+        'Keyless entry convenience for employees and residents',
+        'Seamless integration with intercom and gate automation systems',
+        'Robust fail-safe or fail-secure locking hardware'
+      ]
+    },
+    gateAutomation: {
+      id: 'gate-automation',
+      name: 'Gate Automation',
+      shortDescription: 'Reliable sliding and swing gate motors equipped with safety safety beams and battery backup.',
+      customerBenefits: [
+        'Convenient automated entry straight from your vehicle',
+        'Built-in anti-crushing safety beams protecting children and pets',
+        'High-speed opening options for rapid access',
+        'Uninterrupted mechanical operation during power outages'
+      ]
+    },
+    equestrian: {
+      id: 'equestrian',
+      name: 'Equestrian Fencing',
+      shortDescription: 'Specialized safe fencing solutions including 40mm horse tape, specialized JVA energizers, and paddock accessories.',
+      customerBenefits: [
+        'High-visibility tape designed to prevent horse injury',
+        'Safe pulsed electrical deterrent specifically tuned for livestock',
+        'Durable UV-resistant materials built for South African weather',
+        'Easy to install and maintain paddock layouts'
+      ]
+    },
+    alarms: {
+      id: 'alarms',
+      name: 'Alarm Systems',
+      shortDescription: 'Comprehensive indoor and outdoor intrusion detection with reliable control panels and wireless beams.',
+      customerBenefits: [
+        'Instant alert notification via armed response or mobile link',
+        'Pet-friendly indoor motion sensors (PIRs)',
+        'Robust wireless Roboguard beam perimeter options',
+        'Partitioning zones for customized night-arm home security'
+      ]
+    }
+  }
+};
+
+window.NexpakKnowledgeAPI = {
+  getElectricFenceKnowledge: function() {
+    return {
+      name: 'Electric Fencing Systems',
+      definition: 'Electric fencing serves as both a physical barrier and a high-voltage psychological deterrent. It delivers a safe yet sharp deterrent pulse to intruders while continuously monitoring for wire cuts, shorts, or earth faults via intelligent energizers.'
+    };
+  }
+};
+
 // ======== COMPANY CONFIG ========
 const CONFIG = {
-  companyName: 'Nexpak Security Solutions',
-  companyPhone: '+27 83 630 8249',
-  companyEmail: 'info@nexpaksolutions.co.za',
-  businessHours: 'Mon-Fri: 8am-5pm, Sat: 8am-1pm'
+  companyName: window.NEXPAK_KNOWLEDGE.companyProfile.name,
+  companyPhone: window.NEXPAK_KNOWLEDGE.companyProfile.phone,
+  companyEmail: window.NEXPAK_KNOWLEDGE.companyProfile.email,
+  businessHours: window.NEXPAK_KNOWLEDGE.companyProfile.hours
 };
 
 let chatOpen = false;
@@ -131,7 +217,7 @@ function init() {
         <div id="chat-messages" class="chat-messages">
           <div class="message bot-message">
             <div class="message-content">
-              Hi there! Welcome to <strong>${CONFIG.companyName}</strong>.
+              Hi there! Welcome to <strong>${CONFIG.companyName}</strong>[span_1](start_span)[span_1](end_span).
               <br><br>
               I'm here to help you find the right security solution for your home or business.
               <div class="quick-actions">
@@ -583,381 +669,4 @@ function init() {
         background: rgba(255,255,255,0.2);
         border: none;
         color: white;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        cursor: pointer;
-        font-size: 20px;
-      }
-      
-      .chat-messages {
-        flex: 1;
-        display: flex;
-        overflow-y: auto;
-        padding: 16px;
-        flex-direction: column;
-        gap: 12px;
-        background: #f8f9fa;
-      }
-
-      .message {
-        max-width: 88%;
-        padding: 12px 16px;
-        border-radius: 16px;
-        font-size: 14px;
-        line-height: 1.5;
-      }
-
-      .bot-message {
-        background: white;
-        align-self: flex-start;
-        border-bottom-left-radius: 4px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      }
-
-      .user-message {
-        background: linear-gradient(135deg, #1a5f2a 0%, #2d8b3f 100%);
-        color: white;
-        align-self: flex-end;
-        border-bottom-right-radius: 4px;
-      }
-
-      .quick-actions {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-        margin-top: 12px;
-      }
-
-      .quick-actions button {
-        background: #e8f5e9;
-        color: #1a5f2a;
-        border: 1px solid #1a5f2a;
-        padding: 8px 14px;
-        border-radius: 20px;
-        font-size: 12px;
-        cursor: pointer;
-        transition: all 0.2s;
-      }
-
-      .quick-actions button:hover {
-        background: #1a5f2a;
-        color: white;
-      }
-
-      .lead-form {
-        padding: 12px 16px;
-        background: white;
-        border-top: 1px solid #eee;
-      }
-
-      .lead-form h4 { margin: 0 0 10px 0; font-size: 14px; color: #1a5f2a; }
-
-      .lead-form input,
-      .lead-form select {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 8px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        font-size: 14px;
-        box-sizing: border-box;
-      }
-
-      .lead-form button {
-        width: 100%;
-        background: linear-gradient(135deg, #1a5f2a 0%, #2d8b3f 100%);
-        color: white;
-        border: none;
-        padding: 12px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: 600;
-        font-size: 14px;
-      }
-
-      .chat-input-area {
-        display: flex;
-        gap: 8px;
-        padding: 12px 16px;
-        border-top: 1px solid #eee;
-        background: white;
-      }
-
-      #chat-input {
-        flex: 1;
-        padding: 12px 16px;
-        border: 1px solid #ddd;
-        border-radius: 24px;
-        outline: none;
-        font-size: 14px;
-      }
-
-      #chat-input:focus { border-color: #1a5f2a; }
-
-      #send-btn {
-        background: #1a5f2a;
-        color: white;
-        border: none;
-        padding: 12px 20px;
-        border-radius: 24px;
-        cursor: pointer;
-        font-weight: 600;
-        transition: background 0.2s;
-      }
-
-      #send-btn:hover { background: #2d8b3f; }
-
-      @media (max-width: 480px) {
-        .chat-window {
-          width: calc(100vw - 30px);
-          height: calc(100vh - 140px);
-          right: -15px;
-        }
-      }
-
-    </style>
-  `;
-
-  document.body.insertAdjacentHTML('beforeend', html);
-
-  // Event Listeners
-  document.getElementById('chat-toggle').addEventListener('click', toggleChat);
-  document.getElementById('chat-minimize').addEventListener('click', toggleChat);
-  document.getElementById('send-btn').addEventListener('click', () => sendMessage());
-  document.getElementById('chat-input').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') sendMessage();
-  });
-
-  initFloatingBot();
-}
-
-// =========================================================
-// AUTOMATIC SCREEN FLOATING & BOUNCING LOGIC
-// =========================================================
-
-function initFloatingBot() {
-  const chatbotEl = document.getElementById('nexpak-chatbot');
-
-  let posX = window.innerWidth - 220;
-  let posY = window.innerHeight - 100;
-  let vx = 1.0;
-  let vy = 0.8;
-  let isHovered = false;
-
-  chatbotEl.style.left = posX + 'px';
-  chatbotEl.style.top = posY + 'px';
-
-  chatbotEl.addEventListener('mouseenter', () => { isHovered = true; });
-  chatbotEl.addEventListener('mouseleave', () => { isHovered = false; });
-
-  function floatLoop() {
-    if (!chatOpen && !isHovered) {
-      const toggleBtn = document.getElementById('chat-toggle');
-      const rect = toggleBtn.getBoundingClientRect();
-      const width = rect.width || 180;
-      const height = rect.height || 60;
-
-      posX += vx;
-      posY += vy;
-
-      if (posX <= 10) {
-        posX = 10;
-        vx = -vx;
-      } else if (posX + width >= window.innerWidth - 10) {
-        posX = window.innerWidth - width - 10;
-        vx = -vx;
-      }
-
-      if (posY <= 10) {
-        posY = 10;
-        vy = -vy;
-      } else if (posY + height >= window.innerHeight - 10) {
-        posY = window.innerHeight - height - 10;
-        vy = -vy;
-      }
-
-      chatbotEl.style.left = posX + 'px';
-      chatbotEl.style.top = posY + 'px';
-      chatbotEl.style.bottom = 'auto';
-      chatbotEl.style.right = 'auto';
-    }
-
-    requestAnimationFrame(floatLoop);
-  }
-
-  requestAnimationFrame(floatLoop);
-}
-
-// =========================================================
-// TOGGLE CHAT
-// =========================================================
-
-function toggleChat() {
-  chatOpen = !chatOpen;
-  document.getElementById('chat-window').classList.toggle('open', chatOpen);
-
-  if (chatOpen) {
-    ga('send', 'event', 'Chat', 'Chat Opened');
-    document.getElementById('chat-input').focus();
-  }
-}
-
-// =========================================================
-// SEND MESSAGE
-// =========================================================
-
-function sendMessage(input) {
-  const messageInput = document.getElementById('chat-input');
-  const message = input || messageInput.value.trim();
-
-  if (!message) return;
-
-  addMessage(message, 'user');
-
-  if (!input) {
-    messageInput.value = '';
-  }
-
-  messageCount++;
-  ga('send', 'event', 'Chat', 'Message Sent', message);
-
-  setTimeout(() => {
-    addMessage(getResponse(message), 'bot');
-  }, 600);
-}
-
-// =========================================================
-// ADD MESSAGE
-// =========================================================
-
-function addMessage(content, sender) {
-  const container = document.getElementById('chat-messages');
-  const div = document.createElement('div');
-
-  div.className = `message ${sender}-message`;
-  div.innerHTML = `<div class="message-content">${content}</div>`;
-
-  container.appendChild(div);
-  container.scrollTop = container.scrollHeight;
-}
-
-
-// =========================================================
-// BOT RESPONSE ENGINE - UPGRADED WITH KNOWLEDGE BASE API
-// =========================================================
-
-function getResponse(msg) {
-  const m = msg.toLowerCase();
-
-  // 1. Check for Lead / Quote intent first
-  if (m.includes('quote') || m.includes('price') || m.includes('cost')) {
-    ga('send', 'event', 'Chat', 'Quote Requested');
-    if (!leadCaptured) {
-      document.getElementById('lead-form').style.display = 'block';
-      return "I'd be happy to help you get a <strong>FREE quote</strong>! Please fill in your details below:";
-    }
-    return "Our team will contact you within 24 hours with your custom quote.";
-  }
-
-  // 2. Check global knowledge base categories from chatbot-knowledge.js
-  if (window.NEXPAK_KNOWLEDGE && window.NEXPAK_KNOWLEDGE.productCategories) {
-    const categories = window.NEXPAK_KNOWLEDGE.productCategories;
-    
-    for (const key in categories) {
-      const cat = categories[key];
-      if (m.includes(cat.name.toLowerCase()) || (cat.id && m.includes(cat.id))) {
-        ga('send', 'event', 'Chat', 'Products Viewed');
-        let responseText = `<strong>${cat.name}</strong><br>${cat.shortDescription}`;
-        if (cat.customerBenefits && cat.customerBenefits.length > 0) {
-          responseText += `<br><br><strong>Key Benefits:</strong><br>• ` + cat.customerBenefits.slice(0, 4).join('<br>• ');
-        }
-        return responseText;
-      }
-    }
-  }
-
-  // 3. Check Electric Fencing specialized knowledge API if queried
-  if (m.includes('electric') || m.includes('fence') || m.includes('energizer')) {
-    ga('send', 'event', 'Chat', 'Products Viewed');
-    const ef = window.NexpakKnowledgeAPI ? window.NexpakKnowledgeAPI.getElectricFenceKnowledge() : null;
-    if (ef) {
-      return `<strong>${ef.name}</strong><br>${ef.definition}<br><br>Would you like to build an electric fence system or request a quote?`;
-    }
-  }
-
-  // 4. Contact & Business Info
-  if (m.includes('contact') || m.includes('phone') || m.includes('email') || m.includes('hours')) {
-    return `<strong>${CONFIG.companyPhone}</strong><br><strong>${CONFIG.companyEmail}</strong><br><br>Hours: ${CONFIG.businessHours}`;
-  }
-
-  // 5. Delivery / Shipping
-  if (m.includes('delivery') || m.includes('shipping')) {
-    return "Courier delivery available: Gauteng R200, Durban R650, Cape Town R800. Distance-based calculation also available.";
-  }
-
-  // 6. General Fallback with menu options
-  return `I can help you with Nexpak Security Solutions:
-    <br>• Electric Fencing & Perimeters
-    <br>• CCTV & IP Surveillance
-    <br>• Access Control & Alarms
-    <br>• Gate Automation & Equestrian Fencing
-    <br><br>
-    What specific security requirement are you looking into today?`;
-}
-
-
-// =========================================================
-// SUBMIT LEAD
-// =========================================================
-
-function submitLead() {
-  const name = document.getElementById('lead-name').value.trim();
-  const email = document.getElementById('lead-email').value.trim();
-  const phone = document.getElementById('lead-phone').value.trim();
-  const interest = document.getElementById('lead-interest').value;
-
-  if (!name || !email) {
-    alert('Please enter your name and email');
-    return;
-  }
-
-  leadCaptured = true;
-  document.getElementById('lead-form').style.display = 'none';
-
-  ga('send', 'event', 'Lead', 'Lead Captured', interest);
-
-  console.log('NEW LEAD:', {
-    name,
-    email,
-    phone,
-    interest,
-    timestamp: new Date().toISOString()
-  });
-
-  addMessage(`Thank you ${name}! We'll contact you at ${email} within 24 hours.`, 'bot');
-}
-
-
-// =========================================================
-// INITIALIZE
-// =========================================================
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init);
-} else {
-  init();
-}
-
-
-// =========================================================
-// PUBLIC CHAT API
-// =========================================================
-
-window.nexpakChat = {
-  send: sendMessage,
-  submitLead: submitLead
-};
-
-})();
-          
+        width: 3
