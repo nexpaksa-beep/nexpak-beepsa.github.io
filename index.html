@@ -1616,7 +1616,6 @@ document.querySelectorAll(".counter").forEach(counter => {
             Math.ceil(target / 100)
         );
 
-
     function updateCounter() {
 
         if (current < target) {
@@ -1624,4 +1623,19 @@ document.querySelectorAll(".counter").forEach(counter => {
             current += increment;
 
             counter.innerText =
-                current > targ
+                current > target
+                    ? target
+                    : current;
+
+            requestAnimationFrame(updateCounter);
+
+        } else {
+
+            counter.innerText = target;
+
+        }
+    }
+
+    updateCounter();
+
+});
