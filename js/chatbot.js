@@ -20,7 +20,7 @@ ga('send', 'pageview');
 // ======== COMPANY CONFIG ========
 const CONFIG = {
   companyName: 'Nexpak Security Solutions',
-  companyPhone: '+27 82 123 4567',
+  companyPhone: '+27 83 630 8249',
   companyEmail: 'info@nexpaksolutions.co.za',
   businessHours: 'Mon-Fri: 8am-5pm, Sat: 8am-1pm'
 };
