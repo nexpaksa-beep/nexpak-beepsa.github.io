@@ -1,0 +1,3201 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Electric Fencing: Project Planning & Installation Preparation | Advanced Module 12 — Nexpak Security Academy
+    </title>
+
+    <meta
+        name="description"
+        content="Advanced college-level module on electric-fence project planning: scope of work, materials and equipment planning, site preparation, installation safety, workmanship, quality control, testing, commissioning and professional handover."
+    >
+
+    <meta name="keywords" content="electric fence installation course, electric fencing project planning, security installation training, electric fence commissioning, SANS 10222 electric fence, security technician certification, electric fence quality control, perimeter security installation">
+    <meta name="author" content="Nexpak Security Academy">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://academy.nexpak.example/electric-fencing/part-12">
+
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Nexpak Security Academy">
+    <meta property="og:title" content="Advanced Electric Fencing Module 12 | Project Planning & Installation Preparation">
+    <meta property="og:description" content="Advanced college-level module on professional electric-fence project planning, scope definition, materials and safety planning, installation sequencing, quality control and commissioning.">
+    <meta property="og:url" content="https://academy.nexpak.example/electric-fencing/part-12">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Advanced Electric Fencing Module 12 | Project Planning & Installation Preparation">
+    <meta name="twitter:description" content="Professional-grade training on planning, executing and quality-controlling an electric-fence installation project, with an applied assessment quiz.">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "Electric Fencing — Advanced Module 12: Project Planning & Installation Preparation",
+        "description": "Advanced college-level module covering professional project planning, scope definition, materials and equipment planning, site preparation, installation safety, workmanship, quality control, inspection, testing, commissioning and handover for electric-fence installations.",
+        "provider": {
+            "@type": "Organization",
+            "name": "Nexpak Security Academy",
+            "sameAs": "https://academy.nexpak.example"
+        },
+        "educationalLevel": "Advanced / Undergraduate-equivalent",
+        "teaches": [
+            "Project scoping and planning",
+            "Materials and equipment planning",
+            "Installation safety planning",
+            "Workmanship and quality control",
+            "Testing, commissioning and handover"
+        ],
+        "hasCourseInstance": {
+            "@type": "CourseInstance",
+            "courseMode": "online",
+            "courseWorkload": "PT2H"
+        }
+    }
+    </script>
+
+    <style>
+        /* =========================================================
+           PART 12 — ADVANCED MODULE STYLESHEET
+           Theme: "Institute Navy & Gold" — academic / certification
+        ========================================================== */
+
+        :root {
+            --p12-navy: #0b1f3a;
+            --p12-navy-deep: #071527;
+            --p12-gold: #c8a55b;
+            --p12-gold-soft: #e9d9ae;
+            --p12-ink: #1c2430;
+            --p12-paper: #faf8f4;
+            --p12-line: #dfe3ea;
+            --p12-success: #1e6b4f;
+            --p12-success-bg: #eaf5ef;
+            --p12-warn: #8a4b12;
+            --p12-warn-bg: #fbf0e2;
+            --p12-radius: 10px;
+            --p12-shadow: 0 6px 24px rgba(11, 31, 58, 0.08);
+            --p12-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+            --p12-sans: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: var(--p12-sans);
+            color: var(--p12-ink);
+            background: var(--p12-paper);
+            line-height: 1.7;
+            font-size: 16.5px;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--p12-serif);
+            color: var(--p12-navy);
+            font-weight: 600;
+            letter-spacing: 0.2px;
+        }
+
+        p { margin: 0 0 1em 0; }
+
+        a { color: var(--p12-navy); }
+
+        /* ---------- HEADER ---------- */
+        .academy-header {
+            background: linear-gradient(120deg, var(--p12-navy-deep), var(--p12-navy));
+            border-bottom: 3px solid var(--p12-gold);
+        }
+        .header-content {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 18px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .academy-logo {
+            font-family: var(--p12-serif);
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.35rem;
+            letter-spacing: 1.5px;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+        .academy-logo span {
+            font-family: var(--p12-sans);
+            font-size: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            color: var(--p12-gold-soft);
+        }
+        .course-label {
+            font-size: 0.78rem;
+            letter-spacing: 2.5px;
+            color: var(--p12-gold);
+            border: 1px solid rgba(200,165,91,0.5);
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: rgba(200,165,91,0.08);
+        }
+
+        /* ---------- HERO ---------- */
+        .course-hero {
+            background:
+                radial-gradient(circle at 15% 20%, rgba(200,165,91,0.12), transparent 45%),
+                linear-gradient(180deg, var(--p12-navy), var(--p12-navy-deep));
+            color: #fff;
+            padding: 64px 28px 56px;
+        }
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .course-badge {
+            display: inline-block;
+            background: var(--p12-gold);
+            color: var(--p12-navy-deep);
+            font-weight: 700;
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            margin-bottom: 18px;
+        }
+        .course-hero h1 {
+            color: #fff;
+            font-size: 2.6rem;
+            margin: 0 0 8px 0;
+        }
+        .course-hero h2 {
+            color: var(--p12-gold-soft);
+            font-weight: 500;
+            font-size: 1.35rem;
+            margin: 0 0 18px 0;
+        }
+        .course-hero p {
+            color: rgba(255,255,255,0.82);
+            font-size: 1.05rem;
+            max-width: 640px;
+        }
+
+        /* ---------- LAYOUT ---------- */
+        .course-layout {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 40px 28px 80px;
+            display: grid;
+            grid-template-columns: 270px 1fr;
+            gap: 40px;
+            align-items: flex-start;
+        }
+        @media (max-width: 860px) {
+            .course-layout { grid-template-columns: 1fr; }
+        }
+
+        .sidebar { position: sticky; top: 20px; }
+        .sidebar-box {
+            background: #fff;
+            border: 1px solid var(--p12-line);
+            border-radius: var(--p12-radius);
+            padding: 20px;
+            box-shadow: var(--p12-shadow);
+        }
+        .sidebar-title {
+            font-family: var(--p12-sans);
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+            font-weight: 700;
+            color: var(--p12-navy);
+            border-bottom: 2px solid var(--p12-gold);
+            padding-bottom: 10px;
+            margin-bottom: 12px;
+        }
+        .lesson-nav { list-style: none; margin: 0; padding: 0; }
+        .lesson-nav li { margin-bottom: 2px; }
+        .lesson-nav a {
+            display: block;
+            text-decoration: none;
+            color: var(--p12-ink);
+            font-size: 0.88rem;
+            padding: 7px 10px;
+            border-radius: 6px;
+            transition: background 0.15s ease, color 0.15s ease;
+        }
+        .lesson-nav a:hover {
+            background: var(--p12-navy);
+            color: #fff;
+        }
+
+        .lesson-content { min-width: 0; }
+        .lesson-section {
+            background: #fff;
+            border: 1px solid var(--p12-line);
+            border-radius: var(--p12-radius);
+            padding: 34px 38px;
+            margin-bottom: 26px;
+            box-shadow: var(--p12-shadow);
+            position: relative;
+        }
+        .section-number {
+            position: absolute;
+            top: -18px;
+            left: 32px;
+            background: var(--p12-navy);
+            color: var(--p12-gold-soft);
+            font-family: var(--p12-serif);
+            font-weight: 700;
+            font-size: 0.95rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.18);
+        }
+        .lesson-section h2 { font-size: 1.55rem; margin-top: 6px; }
+        .lesson-section h3 { font-size: 1.15rem; margin-top: 1.6em; }
+        .lesson-section h4 { font-size: 1.02rem; color: var(--p12-warn); }
+        .lesson-section ul, .lesson-section ol { padding-left: 1.3em; }
+        .lesson-section li { margin-bottom: 0.5em; }
+
+        .info-card, .warning-card, .success-card, .advanced-panel {
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin: 22px 0;
+            border-left: 4px solid;
+        }
+        .info-card {
+            background: #f4f6fb;
+            border-color: var(--p12-navy);
+        }
+        .info-card h3 { margin-top: 0; color: var(--p12-navy); font-size: 1rem; letter-spacing: 0.3px; }
+        .warning-card {
+            background: var(--p12-warn-bg);
+            border-color: var(--p12-warn);
+        }
+        .warning-card h3 { margin-top: 0; color: var(--p12-warn); font-size: 1rem; }
+        .success-card {
+            background: var(--p12-success-bg);
+            border-color: var(--p12-success);
+        }
+        .success-card h3 { margin-top: 0; color: var(--p12-success); font-size: 1rem; }
+
+        /* ---------- ADVANCED / COLLEGE-LEVEL PANEL ---------- */
+        .advanced-panel {
+            background: #101c33;
+            color: #eef1f6;
+            border-color: var(--p12-gold);
+            box-shadow: var(--p12-shadow);
+        }
+        .advanced-panel h3, .advanced-panel h4 { color: var(--p12-gold-soft); }
+        .advanced-panel p { color: #d7dce6; }
+        .advanced-panel code, .advanced-panel .formula {
+            background: rgba(255,255,255,0.08);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: "SFMono-Regular", Consolas, monospace;
+            color: #f4e6c1;
+        }
+        .advanced-tag {
+            display: inline-block;
+            font-size: 0.66rem;
+            letter-spacing: 2px;
+            font-weight: 700;
+            color: var(--p12-navy-deep);
+            background: var(--p12-gold);
+            padding: 3px 10px;
+            border-radius: 999px;
+            margin-bottom: 10px;
+        }
+
+        /* ---------- QUIZ BOX ---------- */
+        .quiz-section {
+            background: #fff;
+            border: 1px solid var(--p12-line);
+            border-radius: var(--p12-radius);
+            padding: 34px 38px;
+            margin-bottom: 26px;
+            box-shadow: var(--p12-shadow);
+        }
+        .quiz-intro {
+            border-left: 4px solid var(--p12-gold);
+            background: #fbf7ee;
+            padding: 14px 18px;
+            border-radius: 6px;
+            margin-bottom: 22px;
+            font-size: 0.95rem;
+        }
+        .quiz-box {
+            border: 1px solid var(--p12-line);
+            border-radius: 8px;
+            padding: 18px 20px;
+            margin-bottom: 16px;
+            background: #fcfcfb;
+            transition: box-shadow 0.15s ease;
+        }
+        .quiz-box:hover { box-shadow: 0 3px 14px rgba(11,31,58,0.08); }
+        .quiz-number {
+            display: inline-block;
+            background: var(--p12-navy);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 2px 9px;
+            border-radius: 999px;
+            margin-right: 8px;
+        }
+        .quiz-question { font-weight: 600; color: var(--p12-navy); margin: 6px 0 12px 0; }
+        .quiz-options { list-style: none; margin: 0; padding: 0; }
+        .quiz-options li {
+            padding: 9px 12px;
+            margin-bottom: 6px;
+            border: 1px solid var(--p12-line);
+            border-radius: 6px;
+            font-size: 0.92rem;
+            background: #fff;
+        }
+        .quiz-options li b { color: var(--p12-navy); margin-right: 6px; }
+        .quiz-box details {
+            margin-top: 10px;
+        }
+        .quiz-box summary {
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--p12-success);
+            letter-spacing: 0.5px;
+            outline: none;
+        }
+        .quiz-answer {
+            margin-top: 8px;
+            padding: 10px 14px;
+            background: var(--p12-success-bg);
+            border-left: 3px solid var(--p12-success);
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+
+        /* ---------- NAVIGATION / FOOTER ---------- */
+        .part-navigation {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 0 28px 50px;
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+        }
+        .nav-button {
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 12px 22px;
+            border-radius: 8px;
+            background: var(--p12-navy);
+            color: #fff;
+            box-shadow: var(--p12-shadow);
+        }
+        .nav-button.previous { background: #fff; color: var(--p12-navy); border: 1px solid var(--p12-navy); }
+        .nav-button.next { background: var(--p12-navy); }
+
+        .academy-footer {
+            background: var(--p12-navy-deep);
+            color: rgba(255,255,255,0.75);
+            padding: 40px 28px;
+            text-align: center;
+        }
+        .footer-content { max-width: 700px; margin: 0 auto; }
+        .footer-content h3 { color: #fff; font-size: 1.1rem; letter-spacing: 1px; }
+        .footer-copy { font-size: 0.78rem; color: rgba(255,255,255,0.45); margin-top: 14px; }
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         ACADEMY HEADER
+    ========================================== -->
+
+    <header class="academy-header">
+
+        <div class="header-content">
+
+            <div class="academy-logo">
+
+                NEXPAK
+
+                <span>
+                    SECURITY ACADEMY
+                </span>
+
+            </div>
+
+
+            <div class="course-label">
+
+                ELECTRIC FENCING
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         COURSE HERO
+    ========================================== -->
+
+    <section class="course-hero">
+
+        <div class="hero-content">
+
+            <span class="course-badge">
+                ADVANCED MODULE 12 &middot; COLLEGE-LEVEL CERTIFICATE TRACK
+            </span>
+
+            <h1>
+                Module 12
+            </h1>
+
+            <h2>
+                Project Planning &amp;
+                Installation Preparation
+            </h2>
+
+            <p>
+                An advanced, applied treatment of project planning
+                for electric-fence installation: scoping,
+                resourcing, safety planning, workmanship standards,
+                verification and professional handover, presented
+                at a college / technikon level of rigour.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         COURSE LAYOUT
+    ========================================== -->
+
+    <div class="course-layout">
+
+
+        <!-- =====================================
+             SIDEBAR
+        ====================================== -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-box">
+
+                <div class="sidebar-title">
+                    PART 12 CURRICULUM
+                </div>
+
+
+                <ul class="lesson-nav">
+
+                    <li>
+                        <a href="#project-planning">
+                            01. Project Planning
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#scope">
+                            02. Defining the Scope of Work
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#materials">
+                            03. Materials Planning
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#equipment">
+                            04. Tools &amp; Equipment
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#site-preparation">
+                            05. Site Preparation
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#safety-planning">
+                            06. Installation Safety Planning
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#work-sequence">
+                            07. Installation Sequence
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#quality">
+                            08. Workmanship &amp; Quality Control
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#inspection">
+                            09. Installation Inspection
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#testing">
+                            10. Testing &amp; Verification
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#handover">
+                            11. Handover
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#records">
+                            12. Project Records
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =====================================
+             MAIN CONTENT
+        ====================================== -->
+
+        <main class="lesson-content">
+
+
+            <!-- =================================
+                 01. PROJECT PLANNING
+            ================================== -->
+
+            <section
+                id="project-planning"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    01
+                </div>
+
+                <h2>
+                    Project Planning
+                </h2>
+
+                <p>
+                    A professional electric-fence installation
+                    should be treated as a planned security project,
+                    not simply as a collection of installation tasks.
+                </p>
+
+                <p>
+                    Effective planning reduces delays, material
+                    shortages, unnecessary rework and avoidable
+                    safety risks.
+                </p>
+
+
+                <div class="advanced-panel">
+                    <span class="advanced-tag">Advanced Concept</span>
+                    <h3>Project Planning as a Formal Discipline</h3>
+                    <p>
+                        At an advanced practitioner level, project
+                        planning is best understood through the lens
+                        of project management theory rather than as
+                        an informal checklist. A <em>Work Breakdown
+                        Structure (WBS)</em> decomposes the
+                        installation into discrete, estimable
+                        activities (survey, procurement, groundworks,
+                        wiring, energiser installation, testing,
+                        commissioning), while a simple
+                        responsibility matrix (<code class="formula">RACI</code> —
+                        Responsible, Accountable, Consulted, Informed)
+                        clarifies who approves design deviations,
+                        who signs off tests, and who owns final
+                        acceptance.
+                    </p>
+                    <p>
+                        Treating planning this way also introduces
+                        the concept of the <em>critical path</em> —
+                        the sequence of dependent tasks that
+                        determines the minimum possible project
+                        duration. Delays to any task on the critical
+                        path (for example, energiser procurement)
+                        delay the entire handover date, whereas
+                        delays to non-critical tasks may not.
+                        Recognising which tasks sit on the critical
+                        path allows a technician or supervisor to
+                        prioritise attention correctly under time
+                        pressure.
+                    </p>
+                </div>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Before Work Begins
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Confirm the approved design.
+                        </li>
+
+                        <li>
+                            Confirm the scope of work.
+                        </li>
+
+                        <li>
+                            Review site conditions.
+                        </li>
+
+                        <li>
+                            Confirm required materials.
+                        </li>
+
+                        <li>
+                            Confirm tools and equipment.
+                        </li>
+
+                        <li>
+                            Identify safety requirements.
+                        </li>
+
+                        <li>
+                            Confirm access to the work area.
+                        </li>
+
+                        <li>
+                            Establish the planned work sequence.
+                        </li>
+
+                        <li>
+                            Confirm required inspections and
+                            testing.
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Review The Design
+                </h3>
+
+                <p>
+                    The installation team should understand the
+                    approved design before starting work.
+                </p>
+
+                <p>
+                    Any significant discrepancy between the design
+                    and actual site conditions should be identified
+                    and resolved through the appropriate process
+                    before proceeding.
+                </p>
+
+
+                <h3>
+                    Site Access
+                </h3>
+
+                <p>
+                    Access arrangements should be established in
+                    advance, particularly where work is being
+                    performed at occupied homes, businesses,
+                    industrial sites or controlled premises.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Never Rush The Preparation Stage
+                    </h3>
+
+                    <p>
+                        Starting installation without understanding
+                        the design, materials, site conditions and
+                        safety requirements can create problems that
+                        become much more expensive to correct later.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 02. DEFINING THE SCOPE
+            ================================== -->
+
+            <section
+                id="scope"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    02
+                </div>
+
+                <h2>
+                    Defining the Scope of Work
+                </h2>
+
+                <p>
+                    The scope of work defines exactly what the
+                    installation project is intended to deliver.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        A Scope May Define
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Areas to be protected
+                        </li>
+
+                        <li>
+                            Fence configuration
+                        </li>
+
+                        <li>
+                            Number and arrangement of zones
+                        </li>
+
+                        <li>
+                            Energizer installation
+                        </li>
+
+                        <li>
+                            Earth-system work
+                        </li>
+
+                        <li>
+                            High-voltage cable installation
+                        </li>
+
+                        <li>
+                            Gate interfaces
+                        </li>
+
+                        <li>
+                            Alarm integration
+                        </li>
+
+                        <li>
+                            CCTV integration
+                        </li>
+
+                        <li>
+                            Monitoring requirements
+                        </li>
+
+                        <li>
+                            Testing and commissioning
+                        </li>
+
+                        <li>
+                            Handover documentation
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Included And Excluded Work
+                </h3>
+
+                <p>
+                    A professional project should clearly distinguish
+                    between work included in the agreed scope and
+                    additional work that may require separate
+                    approval.
+                </p>
+
+
+                <h3>
+                    Site Changes
+                </h3>
+
+                <p>
+                    If actual site conditions differ significantly
+                    from the approved design, the change should be
+                    documented and reviewed before altering the
+                    installation.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Do Not Improvise Major Design Changes
+                    </h3>
+
+                    <p>
+                        Installation teams should not make
+                        significant design changes simply because
+                        the original plan appears inconvenient.
+                        Changes should be properly assessed and
+                        authorised.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 03. MATERIALS PLANNING
+            ================================== -->
+
+            <section
+                id="materials"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    03
+                </div>
+
+                <h2>
+                    Materials Planning
+                </h2>
+
+                <p>
+                    Correct material planning is essential for
+                    installation efficiency and system quality.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Typical Material Categories
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Conductors
+                        </li>
+
+                        <li>
+                            Insulators
+                        </li>
+
+                        <li>
+                            Posts and brackets
+                        </li>
+
+                        <li>
+                            Mechanical fixings
+                        </li>
+
+                        <li>
+                            High-voltage cable
+                        </li>
+
+                        <li>
+                            Earthing components
+                        </li>
+
+                        <li>
+                            Warning signs
+                        </li>
+
+                        <li>
+                            Gate components
+                        </li>
+
+                        <li>
+                            Energizer equipment
+                        </li>
+
+                        <li>
+                            Protection and enclosure components
+                        </li>
+
+                        <li>
+                            Alarm and monitoring interfaces
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Check Before Leaving For Site
+                </h3>
+
+                <p>
+                    Materials should be checked against the approved
+                    design and project requirements before
+                    travelling to the installation site.
+                </p>
+
+
+                <h3>
+                    Material Quality
+                </h3>
+
+                <p>
+                    Components should be suitable for their intended
+                    application and installed according to the
+                    manufacturer's requirements.
+                </p>
+
+
+                <h3>
+                    Avoid Substitution Without Review
+                </h3>
+
+                <p>
+                    If a specified component is unavailable, a
+                    substitute should not automatically be assumed
+                    to be equivalent.
+                </p>
+
+                <p>
+                    Compatibility, performance, environmental
+                    suitability and applicable requirements should
+                    be considered.
+                </p>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Professional Principle
+                    </h3>
+
+                    <p>
+                        Good preparation means the correct material
+                        arrives at the correct site at the correct
+                        time.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 04. TOOLS & EQUIPMENT
+            ================================== -->
+
+            <section
+                id="equipment"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    04
+                </div>
+
+                <h2>
+                    Tools &amp; Equipment
+                </h2>
+
+                <p>
+                    Professional workmanship depends on using
+                    suitable tools and test equipment correctly.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Tool Planning
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Hand tools appropriate to the work
+                        </li>
+
+                        <li>
+                            Measuring equipment
+                        </li>
+
+                        <li>
+                            Appropriate electrical test equipment
+                        </li>
+
+                        <li>
+                            Installation-specific tools
+                        </li>
+
+                        <li>
+                            Personal protective equipment
+                        </li>
+
+                        <li>
+                            Access equipment where required
+                        </li>
+
+                        <li>
+                            Equipment documentation
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Test Equipment
+                </h3>
+
+                <p>
+                    Test instruments should be suitable for the
+                    intended measurement and used according to their
+                    instructions.
+                </p>
+
+
+                <h3>
+                    Tool Condition
+                </h3>
+
+                <p>
+                    Damaged, unsuitable or poorly maintained tools
+                    can affect both workmanship and safety.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Never Guess A Measurement
+                    </h3>
+
+                    <p>
+                        Where a measurement is required, use suitable
+                        test equipment and follow the appropriate
+                        testing procedure.
+                    </p>
+
+                </div>
+
+  </section>
+
+                        <!-- =================================
+                 05. SITE PREPARATION
+            ================================== -->
+
+            <section
+                id="site-preparation"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    05
+                </div>
+
+                <h2>
+                    Site Preparation
+                </h2>
+
+                <p>
+                    Proper site preparation creates the conditions
+                    required for a safe, efficient and professional
+                    installation.
+                </p>
+
+                <p>
+                    The installation team should confirm the actual
+                    site conditions before physical work begins.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Site Preparation Checklist
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            ☐ Confirm the approved installation area
+                        </li>
+
+                        <li>
+                            ☐ Confirm access to the work area
+                        </li>
+
+                        <li>
+                            ☐ Inspect the existing perimeter
+                        </li>
+
+                        <li>
+                            ☐ Identify damaged structures
+                        </li>
+
+                        <li>
+                            ☐ Identify vegetation and obstructions
+                        </li>
+
+                        <li>
+                            ☐ Confirm gate locations
+                        </li>
+
+                        <li>
+                            ☐ Identify existing electrical services
+                        </li>
+
+                        <li>
+                            ☐ Identify relevant underground services
+                        </li>
+
+                        <li>
+                            ☐ Establish safe working areas
+                        </li>
+
+                        <li>
+                            ☐ Confirm material storage areas
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Existing Structures
+                </h3>
+
+                <p>
+                    Walls, fences, posts and other supporting
+                    structures should be assessed before components
+                    are attached.
+                </p>
+
+                <p>
+                    Defective structures may require repair before
+                    the electric-fence installation can proceed.
+                </p>
+
+
+                <h3>
+                    Vegetation
+                </h3>
+
+                <p>
+                    Vegetation close to the planned fence line should
+                    be identified and managed appropriately.
+                </p>
+
+                <p>
+                    Vegetation can create electrical leakage,
+                    mechanical interference and ongoing maintenance
+                    problems.
+                </p>
+
+
+                <h3>
+                    Underground Services
+                </h3>
+
+                <p>
+                    Where work involves drilling, excavation or
+                    routing cables through areas where underground
+                    services may exist, the relevant service
+                    information and safe-work procedures must be
+                    followed.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Stop If Conditions Are Unsafe
+                    </h3>
+
+                    <p>
+                        Installation work should not continue simply
+                        because the project has already been
+                        scheduled. Unsafe or unsuitable site
+                        conditions must be addressed before work
+                        proceeds.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 06. INSTALLATION SAFETY PLANNING
+            ================================== -->
+
+            <section
+                id="safety-planning"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    06
+                </div>
+
+                <h2>
+                    Installation Safety Planning
+                </h2>
+
+                <p>
+                    Electric-fence installation combines
+                    electrical work, mechanical work and work around
+                    an active security perimeter.
+                </p>
+
+                <p>
+                    Safety must therefore be planned before the
+                    installation begins.
+                </p>
+
+
+                <div class="advanced-panel">
+                    <span class="advanced-tag">Advanced Concept</span>
+                    <h3>Quantifying the Energiser Hazard</h3>
+                    <p>
+                        A rigorous understanding of electric-fence
+                        safety requires distinguishing between
+                        <em>voltage</em>, <em>stored energy</em> and
+                        <em>pulse duration</em> — three separate
+                        variables that together determine hazard
+                        level, rather than voltage alone. A compliant
+                        energiser (see <code class="formula">IEC 60335-2-76</code>)
+                        delivers a very short, high-voltage pulse
+                        (typically a few milliseconds) with a
+                        limited joule rating per pulse, which is what
+                        makes a correctly specified fence painful but
+                        not lethal to a healthy adult in normal
+                        conditions.
+                    </p>
+                    <p>
+                        Applied planning implication: a technician
+                        must never assume "the fence is off" is
+                        equivalent to "the fence is safe" — stored
+                        energy in capacitors within the energiser can
+                        persist briefly after power is removed, and
+                        multiple energisers or a mains fault
+                        superimposed on the fence line can raise
+                        both voltage and available energy beyond the
+                        design assumptions the standard relies on.
+                        Isolation and verification, not assumption,
+                        is the professional standard.
+                    </p>
+                </div>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Safety Planning Should Consider
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Electrical hazards
+                        </li>
+
+                        <li>
+                            Stored electrical energy
+                        </li>
+
+                        <li>
+                            Work at height
+                        </li>
+
+                        <li>
+                            Ladders and access equipment
+                        </li>
+
+                        <li>
+                            Power tools
+                        </li>
+
+                        <li>
+                            Sharp materials
+                        </li>
+
+                        <li>
+                            Weather conditions
+                        </li>
+
+                        <li>
+                            Public access
+                        </li>
+
+                        <li>
+                            Other contractors
+                        </li>
+
+                        <li>
+                            Existing electrical installations
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Isolate Before Working
+                </h3>
+
+                <p>
+                    Before working on an energised electric-fence
+                    system, the appropriate isolation and safety
+                    procedure must be followed.
+                </p>
+
+                <p>
+                    Technicians must understand the equipment being
+                    serviced and follow the manufacturer's
+                    instructions and applicable safety requirements.
+                </p>
+
+
+                <h3>
+                    Prevent Unauthorised Energisation
+                </h3>
+
+                <p>
+                    Where work requires a system to remain
+                    de-energised, suitable controls should be used
+                    to prevent accidental or unauthorised
+                    re-energisation.
+                </p>
+
+
+                <h3>
+                    Personal Protective Equipment
+                </h3>
+
+                <p>
+                    Appropriate personal protective equipment should
+                    be selected according to the hazards associated
+                    with the specific task.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Safety Comes Before Production
+                    </h3>
+
+                    <p>
+                        No installation deadline justifies bypassing
+                        a required safety procedure.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 07. INSTALLATION SEQUENCE
+            ================================== -->
+
+            <section
+                id="work-sequence"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    07
+                </div>
+
+                <h2>
+                    Installation Sequence
+                </h2>
+
+                <p>
+                    A logical installation sequence helps maintain
+                    consistency and reduces unnecessary rework.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Typical Project Sequence
+                    </h3>
+
+                    <ol>
+
+                        <li>
+                            Review the approved design.
+                        </li>
+
+                        <li>
+                            Prepare the work area.
+                        </li>
+
+                        <li>
+                            Establish the perimeter layout.
+                        </li>
+
+                        <li>
+                            Prepare supporting structures.
+                        </li>
+
+                        <li>
+                            Install posts, brackets or other supports.
+                        </li>
+
+                        <li>
+                            Install insulators.
+                        </li>
+
+                        <li>
+                            Install conductors according to the
+                            approved configuration.
+                        </li>
+
+                        <li>
+                            Complete appropriate connections.
+                        </li>
+
+                        <li>
+                            Install relevant high-voltage cabling.
+                        </li>
+
+                        <li>
+                            Complete earth-system installation as
+                            designed.
+                        </li>
+
+                        <li>
+                            Install and connect the energizer in
+                            accordance with manufacturer
+                            requirements.
+                        </li>
+
+                        <li>
+                            Complete alarm and monitoring
+                            interfaces where applicable.
+                        </li>
+
+                        <li>
+                            Perform inspection and testing.
+                        </li>
+
+                        <li>
+                            Correct identified defects.
+                        </li>
+
+                        <li>
+                            Complete commissioning and handover.
+                        </li>
+
+                    </ol>
+
+                </div>
+
+
+                <h3>
+                    Work In Logical Stages
+                </h3>
+
+                <p>
+                    Breaking the installation into logical stages
+                    makes it easier to inspect workmanship and
+                    identify problems before they become hidden by
+                    later work.
+                </p>
+
+
+                <h3>
+                    Do Not Energise Too Early
+                </h3>
+
+                <p>
+                    The system should only be energised and tested
+                    according to the appropriate commissioning and
+                    safety procedure.
+                </p>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Professional Principle
+                    </h3>
+
+                    <p>
+                        Build, inspect, verify and then proceed to
+                        the next stage.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 08. WORKMANSHIP & QUALITY CONTROL
+            ================================== -->
+
+            <section
+                id="quality"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    08
+                </div>
+
+                <h2>
+                    Workmanship &amp; Quality Control
+                </h2>
+
+                <p>
+                    Quality workmanship is one of the defining
+                    characteristics of a professional electric-fence
+                    installation.
+                </p>
+
+                <p>
+                    A system can contain good-quality components and
+                    still perform poorly if those components are
+                    installed incorrectly.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Quality Indicators
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Consistent installation
+                        </li>
+
+                        <li>
+                            Secure mechanical fixing
+                        </li>
+
+                        <li>
+                            Correct conductor arrangement
+                        </li>
+
+                        <li>
+                            Properly installed insulators
+                        </li>
+
+                        <li>
+                            Neat cable routing
+                        </li>
+
+                        <li>
+                            Protected connections
+                        </li>
+
+                        <li>
+                            Appropriate separation
+                        </li>
+
+                        <li>
+                            Clear labelling
+                        </li>
+
+                        <li>
+                            Accessible maintenance points
+                        </li>
+
+                        <li>
+                            Clean and professional finish
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Consistency
+                </h3>
+
+                <p>
+                    Components should be installed consistently
+                    across the perimeter while accommodating the
+                    actual site conditions and approved design.
+                </p>
+
+
+                <h3>
+                    Mechanical Security
+                </h3>
+
+                <p>
+                    Brackets, posts, insulators and other mechanical
+                    components must be securely installed and
+                    appropriate for their application.
+                </p>
+
+
+                <h3>
+                    Cable Management
+                </h3>
+
+                <p>
+                    High-voltage and other system cabling should be
+                    routed in accordance with the approved design,
+                    equipment requirements and applicable
+                    installation practices.
+                </p>
+
+
+                <h3>
+                    Workmanship Defects
+                </h3>
+
+                <p>
+                    Examples of workmanship problems can include
+                    loose components, poor alignment, damaged
+                    insulation, inadequate protection, untidy
+                    routing or undocumented deviations from the
+                    approved design.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Never Hide A Defect
+                    </h3>
+
+                    <p>
+                        If a workmanship problem is discovered,
+                        correct it or formally record it for
+                        appropriate resolution. Do not conceal a
+                        defect simply to make the installation appear
+                        complete.
+                    </p>
+
+                </div>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        The Professional Finish
+                    </h3>
+
+                    <p>
+                        A high-quality installation should look
+                        deliberate, organised and maintainable.
+                        Professional appearance is not merely
+                        cosmetic; it often reflects disciplined
+                        installation practice.
+                    </p>
+
+                </div>
+
+    </section>
+
+                        <!-- =================================
+                 09. INSTALLATION INSPECTION
+            ================================== -->
+
+            <section
+                id="inspection"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    09
+                </div>
+
+                <h2>
+                    Installation Inspection
+                </h2>
+
+                <p>
+                    Inspection is a critical stage of an electric-
+                    fence installation. It provides an opportunity
+                    to identify workmanship defects, installation
+                    deviations and incomplete work before the system
+                    is handed over.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Inspection Areas
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Supporting structures
+                        </li>
+
+                        <li>
+                            Posts and brackets
+                        </li>
+
+                        <li>
+                            Insulators
+                        </li>
+
+                        <li>
+                            Conductors
+                        </li>
+
+                        <li>
+                            Connections
+                        </li>
+
+                        <li>
+                            High-voltage cable routing
+                        </li>
+
+                        <li>
+                            Earth-system installation
+                        </li>
+
+                        <li>
+                            Energizer installation
+                        </li>
+
+                        <li>
+                            Warning signage
+                        </li>
+
+                        <li>
+                            Gates and access points
+                        </li>
+
+                        <li>
+                            Alarm interfaces
+                        </li>
+
+                        <li>
+                            Monitoring equipment
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Compare Against The Design
+                </h3>
+
+                <p>
+                    The completed installation should be compared
+                    with the approved design and project
+                    documentation.
+                </p>
+
+                <p>
+                    Differences should be identified and addressed
+                    through the appropriate project process.
+                </p>
+
+
+                <h3>
+                    Visual Quality Check
+                </h3>
+
+                <p>
+                    The technician should inspect the installation
+                    for obvious defects such as loose components,
+                    damaged insulation, poor routing, inconsistent
+                    workmanship or incomplete sections.
+                </p>
+
+
+                <h3>
+                    Inspection Before Energisation
+                </h3>
+
+                <p>
+                    Appropriate inspection should take place before
+                    the system is placed into normal operation.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Do Not Treat Testing As The First Inspection
+                    </h3>
+
+                    <p>
+                        Electrical measurements cannot replace a
+                        proper physical inspection of the
+                        installation.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 10. TESTING & VERIFICATION
+            ================================== -->
+
+            <section
+                id="testing"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    10
+                </div>
+
+                <h2>
+                    Testing &amp; Verification
+                </h2>
+
+                <p>
+                    Testing determines whether the completed system
+                    operates in accordance with its intended design,
+                    equipment requirements and applicable
+                    requirements.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Verification May Include
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Energizer operation
+                        </li>
+
+                        <li>
+                            Fence voltage measurements where
+                            appropriate
+                        </li>
+
+                        <li>
+                            Relevant fence-current measurements
+                        </li>
+
+                        <li>
+                            Earth-system verification
+                        </li>
+
+                        <li>
+                            Zone operation
+                        </li>
+
+                        <li>
+                            Alarm operation
+                        </li>
+
+                        <li>
+                            Power-supply operation
+                        </li>
+
+                        <li>
+                            Backup power operation where installed
+                        </li>
+
+                        <li>
+                            Monitoring communication where
+                            applicable
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Use Suitable Test Equipment
+                </h3>
+
+                <p>
+                    Measurements should be made using appropriate
+                    equipment and according to the applicable
+                    testing procedure.
+                </p>
+
+
+                <h3>
+                    Record Results
+                </h3>
+
+                <p>
+                    Relevant measurements should be recorded so
+                    that the completed installation has a useful
+                    commissioning record.
+                </p>
+
+
+                <h3>
+                    Compare With Expected Performance
+                </h3>
+
+                <p>
+                    Test results should be assessed against the
+                    applicable equipment specifications, system
+                    requirements and relevant standards.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Never Invent Test Results
+                    </h3>
+
+                    <p>
+                        If a measurement was not taken, it must not
+                        be recorded as though it was performed.
+                    </p>
+
+                    <p>
+                        Accurate records are an essential part of
+                        professional commissioning.
+                    </p>
+
+                </div>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Test, Then Confirm
+                    </h3>
+
+                    <p>
+                        A successful test is not simply a number on a
+                        meter. The technician must understand what
+                        the measurement means and whether the system
+                        is operating as intended.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 11. HANDOVER
+            ================================== -->
+
+            <section
+                id="handover"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    11
+                </div>
+
+                <h2>
+                    Professional Handover
+                </h2>
+
+                <p>
+                    Handover is the point at which the completed
+                    installation is formally transferred into
+                    operational use.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Handover Should Confirm
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Installation completion
+                        </li>
+
+                        <li>
+                            Inspection completion
+                        </li>
+
+                        <li>
+                            Testing completion
+                        </li>
+
+                        <li>
+                            Relevant alarms verified
+                        </li>
+
+                        <li>
+                            Monitoring interfaces verified where
+                            applicable
+                        </li>
+
+                        <li>
+                            Outstanding defects identified
+                        </li>
+
+                        <li>
+                            Customer documentation provided
+                        </li>
+
+                        <li>
+                            Relevant operating information explained
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Customer Orientation
+                </h3>
+
+                <p>
+                    The customer or responsible operator should
+                    receive appropriate information about normal
+                    system operation, relevant warnings and the
+                    correct procedure for reporting problems.
+                </p>
+
+
+                <h3>
+                    Maintenance Information
+                </h3>
+
+                <p>
+                    Where applicable, the customer should understand
+                    that the system requires ongoing inspection and
+                    maintenance.
+                </p>
+
+
+                <h3>
+                    Documentation
+                </h3>
+
+                <p>
+                    Relevant documents should be provided and
+                    retained according to the project's
+                    requirements.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Do Not Hand Over An Unverified System
+                    </h3>
+
+                    <p>
+                        A system should not be represented as fully
+                        commissioned if required inspection, testing
+                        or corrective work remains incomplete.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 12. PROJECT RECORDS
+            ================================== -->
+
+            <section
+                id="records"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    12
+                </div>
+
+                <h2>
+                    Project Records
+                </h2>
+
+                <p>
+                    Accurate project records provide a permanent
+                    reference for the installation and support
+                    future maintenance, fault finding and system
+                    upgrades.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Recommended Project Records
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Approved design documentation
+                        </li>
+
+                        <li>
+                            Site information
+                        </li>
+
+                        <li>
+                            Equipment schedule
+                        </li>
+
+                        <li>
+                            Installation records
+                        </li>
+
+                        <li>
+                            Test results
+                        </li>
+
+                        <li>
+                            Commissioning information
+                        </li>
+
+                        <li>
+                            Photographs where appropriate
+                        </li>
+
+                        <li>
+                            Identified defects
+                        </li>
+
+                        <li>
+                            Corrective actions
+                        </li>
+
+                        <li>
+                            Customer handover information
+                        </li>
+
+                        <li>
+                            Maintenance recommendations
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    As-Built Information
+                </h3>
+
+                <p>
+                    Where the completed installation differs from
+                    the original design, the final documentation
+                    should accurately reflect the installed system
+                    where required.
+                </p>
+
+
+                <h3>
+                    Future Maintenance
+                </h3>
+
+                <p>
+                    Good records allow future technicians to
+                    understand how the system was originally
+                    configured and what was verified during
+                    commissioning.
+                </p>
+
+
+                <h3>
+                    Protect Customer Information
+                </h3>
+
+                <p>
+                    Security documentation should be handled
+                    responsibly. Information about equipment
+                    locations, access points, monitoring systems and
+                    protected areas should not be unnecessarily
+                    disclosed.
+                </p>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Professional Principle
+                    </h3>
+
+                    <p>
+                        The project is not properly documented until
+                        another competent technician can understand
+                        what was installed and how it was verified.
+                    </p>
+
+                </div>
+
+                            </section>
+
+                        <!-- =================================
+                 13. FINAL QUALITY CONTROL
+            ================================== -->
+
+            <section
+                id="final-quality"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    13
+                </div>
+
+                <h2>
+                    Final Quality Control
+                </h2>
+
+                <p>
+                    Before an electric-fence installation is
+                    considered complete, the technician should
+                    perform a structured final quality-control
+                    inspection.
+                </p>
+
+                <p>
+                    The purpose is to confirm that the installation
+                    is complete, professionally executed,
+                    appropriately tested and properly documented.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Final Installation Checklist
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            ☐ Installation matches the approved design
+                        </li>
+
+                        <li>
+                            ☐ Supporting structures are secure
+                        </li>
+
+                        <li>
+                            ☐ Brackets are correctly installed
+                        </li>
+
+                        <li>
+                            ☐ Insulators are secure and undamaged
+                        </li>
+
+                        <li>
+                            ☐ Conductors are correctly installed
+                        </li>
+
+                        <li>
+                            ☐ Connections are secure and appropriate
+                        </li>
+
+                        <li>
+                            ☐ High-voltage cable routing is complete
+                        </li>
+
+                        <li>
+                            ☐ Earth-system installation is complete
+                        </li>
+
+                        <li>
+                            ☐ Energizer installation is complete
+                        </li>
+
+                        <li>
+                            ☐ Warning signs are installed where required
+                        </li>
+
+                        <li>
+                            ☐ Gates operate correctly
+                        </li>
+
+                        <li>
+                            ☐ No obvious mechanical defects remain
+                        </li>
+
+                        <li>
+                            ☐ No unnecessary vegetation interference
+                        </li>
+
+                        <li>
+                            ☐ Alarm interfaces have been verified
+                        </li>
+
+                        <li>
+                            ☐ Monitoring interfaces have been verified
+                        </li>
+
+                        <li>
+                            ☐ Required testing has been completed
+                        </li>
+
+                        <li>
+                            ☐ Results have been recorded
+                        </li>
+
+                        <li>
+                            ☐ Outstanding defects have been addressed
+                        </li>
+
+                        <li>
+                            ☐ Documentation has been completed
+                        </li>
+
+                        <li>
+                            ☐ Customer handover requirements have been
+                            completed
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Defect Management
+                </h3>
+
+                <p>
+                    Any defect discovered during final inspection
+                    should be assessed and corrected where
+                    appropriate before the system is handed over.
+                </p>
+
+                <p>
+                    Where a defect cannot immediately be corrected,
+                    it should be clearly documented and managed
+                    according to the project's procedures.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Never Sign Off What You Have Not Verified
+                    </h3>
+
+                    <p>
+                        Professional sign-off means that the
+                        technician is confirming work that has
+                        actually been inspected and verified.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 14. COMMISSIONING PRINCIPLES
+            ================================== -->
+
+            <section
+                id="commissioning"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    14
+                </div>
+
+                <h2>
+                    Commissioning Principles
+                </h2>
+
+                <p>
+                    Commissioning is more than switching an
+                    energizer on. It is the structured process of
+                    confirming that the completed system is ready
+                    for its intended operation.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Commissioning Should Establish
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            The installation is complete.
+                        </li>
+
+                        <li>
+                            The system has been appropriately
+                            inspected.
+                        </li>
+
+                        <li>
+                            Relevant electrical characteristics have
+                            been tested.
+                        </li>
+
+                        <li>
+                            Zones operate as intended.
+                        </li>
+
+                        <li>
+                            Relevant alarm functions operate as
+                            intended.
+                        </li>
+
+                        <li>
+                            Power arrangements operate as intended.
+                        </li>
+
+                        <li>
+                            Backup arrangements have been checked
+                            where applicable.
+                        </li>
+
+                        <li>
+                            Integrated security systems operate as
+                            intended.
+                        </li>
+
+                        <li>
+                            Required records have been completed.
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Baseline Information
+                </h3>
+
+                <p>
+                    Commissioning records can provide useful
+                    baseline information for future maintenance and
+                    fault diagnosis.
+                </p>
+
+
+                <h3>
+                    Customer Acceptance
+                </h3>
+
+                <p>
+                    Where the project requires formal customer
+                    acceptance, the appropriate completion and
+                    handover process should be followed.
+                </p>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Commissioning Mindset
+                    </h3>
+
+                    <p>
+                        Do not ask only whether the equipment turns
+                        on. Ask whether the complete security system
+                        performs its intended function safely and
+                        reliably.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 15. PROFESSIONAL WORKMANSHIP
+            ================================== -->
+
+            <section
+                id="professional-workmanship"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    15
+                </div>
+
+                <h2>
+                    Professional Workmanship
+                </h2>
+
+                <p>
+                    Professional workmanship separates a properly
+                    executed security installation from a basic
+                    installation that merely appears functional.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Professional Standards
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Work methodically.
+                        </li>
+
+                        <li>
+                            Follow the approved design.
+                        </li>
+
+                        <li>
+                            Use suitable materials.
+                        </li>
+
+                        <li>
+                            Use appropriate tools.
+                        </li>
+
+                        <li>
+                            Maintain clean installation practices.
+                        </li>
+
+                        <li>
+                            Protect completed work.
+                        </li>
+
+                        <li>
+                            Inspect your own work.
+                        </li>
+
+                        <li>
+                            Record relevant information.
+                        </li>
+
+                        <li>
+                            Correct defects before completion.
+                        </li>
+
+                        <li>
+                            Treat the customer's property with care.
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    The Installation Is Your Reputation
+                </h3>
+
+                <p>
+                    Customers often judge a security company by the
+                    quality of the installation they can see.
+                </p>
+
+                <p>
+                    Neat cable routing, consistent components,
+                    secure mechanical work and professional
+                    documentation demonstrate discipline and
+                    attention to detail.
+                </p>
+
+
+                <h3>
+                    Never Take Shortcuts
+                </h3>
+
+                <p>
+                    A shortcut that saves a few minutes during
+                    installation can create hours of troubleshooting
+                    later.
+                </p>
+
+                <div class="warning-card">
+
+                    <h3>
+                        A Working System Is Not Automatically A
+                        Professional System
+                    </h3>
+
+                    <p>
+                        Professional quality includes safety,
+                        reliability, compliance, maintainability,
+                        documentation and workmanship.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 16. PART 12 KNOWLEDGE CHECK
+            ================================== -->
+
+            <section
+                id="knowledge-check"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    ?
+                </div>
+
+                <h2>
+                    Part 12 Knowledge Check
+                </h2>
+
+                <p>
+                    Before progressing to the next part, the learner
+                    should be able to explain how an electric-fence
+                    project is prepared, installed, inspected,
+                    tested and handed over professionally.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        The Learner Should Be Able To Explain:
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Why project planning is important
+                        </li>
+
+                        <li>
+                            How the scope of work is established
+                        </li>
+
+                        <li>
+                            Why materials must be planned before
+                            installation
+                        </li>
+
+                        <li>
+                            Why suitable tools and test equipment
+                            are required
+                        </li>
+
+                        <li>
+                            How site conditions affect installation
+                        </li>
+
+                        <li>
+                            Why safety must be planned before work
+                            begins
+                        </li>
+
+                        <li>
+                            Why installation should follow a logical
+                            sequence
+                        </li>
+
+                        <li>
+                            What constitutes professional
+                            workmanship
+                        </li>
+
+                        <li>
+                            Why physical inspection is essential
+                        </li>
+
+                        <li>
+                            Why testing results should be recorded
+                        </li>
+
+                        <li>
+                            What professional handover involves
+                        </li>
+
+                        <li>
+                            Why project records are important
+                        </li>
+
+                        <li>
+                            What final quality control should verify
+                        </li>
+
+                        <li>
+                            The purpose of commissioning
+                        </li>
+
+                        <li>
+                            Why defects must not be concealed or
+                            ignored
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <!-- =================================
+                     PRACTICAL THINKING EXERCISE
+                ================================== -->
+
+                <div class="info-card">
+
+                    <h3>
+                        Professional Scenario
+                    </h3>
+
+                    <p>
+                        You arrive at a property and discover that
+                        the actual perimeter differs significantly
+                        from the approved design.
+                    </p>
+
+                    <p>
+                        The customer asks you to continue with the
+                        installation and "just make it work."
+                    </p>
+
+                    <h4>
+                        What should you do?
+                    </h4>
+
+                    <p>
+                        A professional technician should stop and
+                        assess the discrepancy rather than making
+                        undocumented major design changes.
+                    </p>
+
+                    <p>
+                        The difference should be communicated through
+                        the appropriate project process and the
+                        revised requirements should be established
+                        before proceeding.
+                    </p>
+
+                </div>
+
+
+                <!-- =================================
+                     SOUTH AFRICAN PROFESSIONAL NOTE
+                ================================== -->
+
+                <div class="warning-card">
+
+                    <h3>
+                        South African Compliance Reminder
+                    </h3>
+
+                    <p>
+                        Electric-fence work in South Africa must be
+                        performed with regard to the legislation,
+                        standards, certification requirements and
+                        other applicable requirements governing the
+                        particular installation.
+                    </p>
+
+                    <p>
+                        Learners must use the current applicable
+                        requirements and manufacturer documentation
+                        when carrying out real installations.
+                    </p>
+
+                    <p>
+                        This Academy is educational training and does
+                        not replace legally required certification,
+                        registration, inspection or professional
+                        authorisation where applicable.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 PART 12 GRADED ASSESSMENT QUIZ
+            ================================== -->
+
+            <section
+                id="module-quiz"
+                class="quiz-section"
+            >
+
+                <h2>
+                    Module 12 Assessment Quiz
+                </h2>
+
+                <div class="quiz-intro">
+                    Answer each question, then click
+                    <strong>"Show Answer"</strong> to check your
+                    reasoning. This assessment is written at an
+                    applied, advanced-practitioner standard: several
+                    questions require you to weigh competing
+                    priorities rather than recall a single fact.
+                </div>
+
+                <div class="quiz-box">
+                    <p class="quiz-question">
+                        <span class="quiz-number">Q1</span>
+                        A site survey reveals that the approved
+                        design cannot be followed exactly because of
+                        a boundary discrepancy. What is the
+                        professionally correct sequence of actions?
+                    </p>
+                    <ul class="quiz-options">
+                        <li><b>A.</b> Continue installing and adjust the line as you go, without recording the change.</li>
+                        <li><b>B.</b> Stop, document the discrepancy, escalate it through the project process, and obtain a revised design or written instruction before proceeding.</li>
+                        <li><b>C.</b> Ask the customer verbally what they want and proceed on their instruction alone.</li>
+                        <li><b>D.</b> Install to the original design regardless of the site conditions.</li>
+                    </ul>
+                    <details>
+                        <summary>Show Answer</summary>
+                        <div class="quiz-answer">
+                            <strong>Correct: B.</strong> Undocumented
+                            deviations expose the technician, the
+                            company and the customer to safety,
+                            contractual and compliance risk. A
+                            revised, approved instruction preserves
+                            an accurate record of what was actually
+                            built.
+                        </div>
+                    </details>
+                </div>
+
+                <div class="quiz-box">
+                    <p class="quiz-question">
+                        <span class="quiz-number">Q2</span>
+                        Why is a bill of materials prepared before
+                        installation rather than sourced as work
+                        proceeds?
+                    </p>
+                    <ul class="quiz-options">
+                        <li><b>A.</b> It is a formality with no real effect on the project.</li>
+                        <li><b>B.</b> It prevents the supplier from overcharging.</li>
+                        <li><b>C.</b> It reduces delays, avoids mismatched components, and allows quantities and specifications to be verified against the design before work starts.</li>
+                        <li><b>D.</b> It is only required for very large projects.</li>
+                    </ul>
+                    <details>
+                        <summary>Show Answer</summary>
+                        <div class="quiz-answer">
+                            <strong>Correct: C.</strong> Materials
+                            planning converts a design into a
+                            resourced, executable plan and removes a
+                            major source of on-site delay and
+                            rework.
+                        </div>
+                    </details>
+                </div>
+
+                <div class="quiz-box">
+                    <p class="quiz-question">
+                        <span class="quiz-number">Q3</span>
+                        Which statement best describes the
+                        relationship between installation sequencing
+                        and quality control?
+                    </p>
+                    <ul class="quiz-options">
+                        <li><b>A.</b> Sequencing and quality control are unrelated activities.</li>
+                        <li><b>B.</b> A logical sequence exists only to save time.</li>
+                        <li><b>C.</b> A logical sequence allows inspection points to be built into the workflow, so defects are caught before they are covered by later work.</li>
+                        <li><b>D.</b> Sequencing matters only for large teams.</li>
+                    </ul>
+                    <details>
+                        <summary>Show Answer</summary>
+                        <div class="quiz-answer">
+                            <strong>Correct: C.</strong> A planned
+                            sequence turns quality control from a
+                            single final check into a series of
+                            checkpoints distributed through the
+                            build, which is far more effective at
+                            catching defects early.
+                        </div>
+                    </details>
+                </div>
+
+                <div class="quiz-box">
+                    <p class="quiz-question">
+                        <span class="quiz-number">Q4</span>
+                        Commissioning is best described as:
+                    </p>
+                    <ul class="quiz-options">
+                        <li><b>A.</b> A visual inspection only.</li>
+                        <li><b>B.</b> A structured process of verifying that the installed system performs as designed, under realistic operating conditions, before it is handed to the customer.</li>
+                        <li><b>C.</b> An optional step that can be skipped if the installer is confident.</li>
+                        <li><b>D.</b> The same activity as testing individual components.</li>
+                    </ul>
+                    <details>
+                        <summary>Show Answer</summary>
+                        <div class="quiz-answer">
+                            <strong>Correct: B.</strong> Commissioning
+                            is a systems-level verification, distinct
+                            from component testing, and it is the
+                            step that provides evidence the
+                            installation is fit for purpose.
+                        </div>
+                    </details>
+                </div>
+
+                <div class="quiz-box">
+                    <p class="quiz-question">
+                        <span class="quiz-number">Q5</span>
+                        A minor defect is found during final
+                        inspection. The customer is in a hurry for
+                        handover. What is the correct professional
+                        response?
+                    </p>
+                    <ul class="quiz-options">
+                        <li><b>A.</b> Hide the defect and hope it is not noticed.</li>
+                        <li><b>B.</b> Refuse to hand over the system at all.</li>
+                        <li><b>C.</b> Record the defect, communicate it clearly to the customer, and agree a documented plan and timeframe for resolution.</li>
+                        <li><b>D.</b> Ignore it, since it is minor.</li>
+                    </ul>
+                    <details>
+                        <summary>Show Answer</summary>
+                        <div class="quiz-answer">
+                            <strong>Correct: C.</strong> Defects must
+                            never be concealed. Transparent
+                            documentation protects the customer, the
+                            technician and the company, and preserves
+                            trust in the handover process.
+                        </div>
+                    </details>
+                </div>
+
+                <div class="quiz-box">
+                    <p class="quiz-question">
+                        <span class="quiz-number">Q6</span>
+                        Project records (test results, photographs,
+                        as-built notes) are primarily valuable
+                        because they:
+                    </p>
+                    <ul class="quiz-options">
+                        <li><b>A.</b> Are required only for insurance claims.</li>
+                        <li><b>B.</b> Provide evidence of what was actually installed and tested, support future maintenance and fault-finding, and demonstrate due diligence if the installation is later questioned.</li>
+                        <li><b>C.</b> Have no practical use once the job is complete.</li>
+                        <li><b>D.</b> Exist only to satisfy the customer's curiosity.</li>
+                    </ul>
+                    <details>
+                        <summary>Show Answer</summary>
+                        <div class="quiz-answer">
+                            <strong>Correct: B.</strong> Records
+                            create an evidentiary and operational
+                            trail that outlives the installation
+                            visit itself — this is a defining
+                            feature of professional, rather than
+                            informal, practice.
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+
+            <!-- =================================
+                 PART 12 COMPLETE
+            ================================== -->
+
+            <section
+                id="part-complete"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    ✓
+                </div>
+
+                <h2>
+                    Part 12 Complete
+                </h2>
+
+                <p>
+                    The learner has now completed the professional
+                    project-planning and installation-preparation
+                    stage of the course.
+                </p>
+
+                <p>
+                    This part covered the process from preparing the
+                    project and site through installation,
+                    workmanship, inspection, testing, commissioning,
+                    documentation and customer handover.
+                </p>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Professional Installation Mindset
+                    </h3>
+
+                    <p>
+                        Plan before you install.
+                    </p>
+
+                    <p>
+                        Inspect while you work.
+                    </p>
+
+                    <p>
+                        Test before you hand over.
+                    </p>
+
+                    <p>
+                        Document what you installed.
+                    </p>
+
+                    <p>
+                        Never compromise safety or professional
+                        standards to save time.
+                    </p>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        The Next Stage
+                    </h3>
+
+                    <p>
+                        The next part will take the learner deeper
+                        into practical electric-fence installation
+                        methodology, including the physical
+                        construction of the perimeter system and the
+                        principles behind professional installation
+                        techniques.
+                    </p>
+
+                    <p>
+                        The emphasis will remain on safe,
+                        compliant, manufacturer-aligned and
+                        professional installation practice.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+                <!-- =========================================
+         PART NAVIGATION
+    ========================================== -->
+
+    <div class="part-navigation">
+
+        <a
+            href="part-11.html"
+            class="nav-button previous"
+        >
+            ← Previous Part
+        </a>
+
+
+        <a
+            href="part-13.html"
+            class="nav-button next"
+        >
+            Part 13 →
+        </a>
+
+    </div>
+
+
+</main>
+
+</div>
+
+
+<!-- =========================================
+     FOOTER
+========================================== -->
+
+<footer class="academy-footer">
+
+    <div class="footer-content">
+
+        <h3>
+            NEXPAK SECURITY ACADEMY
+        </h3>
+
+        <p>
+            Professional security training,
+            practical installation knowledge
+            and responsible industry practice.
+        </p>
+
+        <p class="footer-copy">
+            © 2026 Nexpak Security Solutions.
+            All Rights Reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+</body>
+
+</html>
