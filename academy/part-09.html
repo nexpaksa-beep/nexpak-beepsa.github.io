@@ -1,0 +1,2891 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Electric Fencing Course | Part 09 | Testing, Fault Finding &amp; Troubleshooting
+    </title>
+
+    <meta
+        name="description"
+        content="Nexpak Security Academy Electric Fencing Course Part 09 - Testing, Fault Finding and Troubleshooting"
+    >
+
+    <meta
+        name="keywords"
+        content="electric fence fault finding, electric fence troubleshooting, fence voltmeter testing, earth system testing, energizer diagnostics, electric fence repair verification, fault-finding documentation, electric fence testing procedure, Nexpak Security Academy, electric fencing course South Africa"
+    >
+
+    <meta
+        name="author"
+        content="Nexpak Security Academy"
+    >
+
+    <meta
+        name="robots"
+        content="index, follow"
+    >
+
+    <link
+        rel="canonical"
+        href="https://www.nexpaksolutions.co.za/academy/part-09.html"
+    >
+
+
+    <!-- =====================================================
+         OPEN GRAPH
+    ====================================================== -->
+
+    <meta
+        property="og:type"
+        content="website"
+    >
+
+    <meta
+        property="og:title"
+        content="Electric Fencing Course | Part 09 | Testing, Fault Finding &amp; Troubleshooting"
+    >
+
+    <meta
+        property="og:description"
+        content="Learn how professional technicians test, diagnose and troubleshoot electric-fence systems using a structured, safe fault-finding process."
+    >
+
+    <meta
+        property="og:url"
+        content="https://www.nexpaksolutions.co.za/academy/part-09.html"
+    >
+
+    <meta
+        property="og:site_name"
+        content="Nexpak Security Academy"
+    >
+
+
+    <!-- =====================================================
+         SOCIAL SHARING
+    ====================================================== -->
+
+    <meta
+        name="twitter:card"
+        content="summary"
+    >
+
+    <meta
+        name="twitter:title"
+        content="Electric Fencing Course | Part 09 | Testing, Fault Finding &amp; Troubleshooting"
+    >
+
+    <meta
+        name="twitter:description"
+        content="Structured, safe fault-finding methodology for professional electric-fence testing and diagnostics."
+    >
+
+    <style>
+
+        /* =====================================================
+           PART 09 COMPLETE PAGE STYLESHEET — TESTING, FAULT FINDING & TROUBLESHOOTING
+           Complete, self-contained page stylesheet — no
+           external academy.css dependency.
+        ===================================================== */
+
+        :root {
+
+            --m09-accent: #22c55e;
+            --m09-accent-dark: #0f7a37;
+            --m09-accent-soft: rgba(34,197,94,.12);
+            --m09-bg: #0b140f;
+            --m09-bg-deep: #060a08;
+            --m09-panel: #0a1712;
+            --m09-panel-light: #10221a;
+            --m09-border: rgba(34,197,94,.28);
+            --m09-border-strong: rgba(34,197,94,.45);
+            --m09-text: #e8f6ee;
+            --m09-text-soft: #a9c9b8;
+            --m09-text-muted: #6f9483;
+            --m09-info: #38bdf8;
+            --m09-warning: #facc15;
+            --m09-danger: #f87171;
+            --m09-success: #7bc47f;
+            --m09-radius: 18px;
+            --m09-radius-small: 12px;
+            --m09-shadow: 0 25px 65px rgba(0,0,0,.4);
+            --m09-transition: .25s ease;
+
+        }
+
+        /* ---------------- RESET ---------------- */
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 8% 6%, rgba(34,197,94,.14), transparent 32%),
+                radial-gradient(circle at 92% 18%, rgba(56,189,248,.08), transparent 30%),
+                linear-gradient(180deg, var(--m09-bg), var(--m09-bg-deep));
+            color: var(--m09-text);
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.7;
+        }
+
+        a { color: inherit; text-decoration: none; }
+        img { max-width: 100%; height: auto; }
+
+        .container, main, .course-layout {
+            width: min(1180px, calc(100% - 40px));
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ---------------- HEADER ---------------- */
+
+        .academy-header {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--m09-border);
+            background: rgba(0,0,0,.35);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .header-content {
+            width: min(1180px, calc(100% - 40px));
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .academy-logo {
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: .04em;
+            color: var(--m09-text);
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .academy-logo span {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .12em;
+            color: var(--m09-accent);
+            background: var(--m09-accent-soft);
+            border: 1px solid var(--m09-border);
+            padding: 4px 10px;
+            border-radius: 999px;
+        }
+
+        .course-label {
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--m09-text-muted);
+            border: 1px solid var(--m09-border);
+            padding: 6px 14px;
+            border-radius: 999px;
+        }
+
+        /* ---------------- HERO ---------------- */
+
+        .course-hero {
+            padding: 70px 0 50px;
+            border-bottom: 1px solid var(--m09-border);
+        }
+
+        .hero-content {
+            width: min(880px, calc(100% - 40px));
+            margin: auto;
+        }
+
+        .course-badge {
+            display: inline-block;
+            padding: 7px 16px;
+            border-radius: 999px;
+            background: var(--m09-accent-soft);
+            color: var(--m09-accent);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            border: 1px solid var(--m09-border);
+            margin-bottom: 18px;
+        }
+
+        .course-hero h1 {
+            font-size: clamp(34px, 5vw, 52px);
+            font-weight: 900;
+            color: var(--m09-text);
+            margin-bottom: 8px;
+        }
+
+        .course-hero h2 {
+            font-size: clamp(19px, 2.6vw, 26px);
+            font-weight: 700;
+            color: var(--m09-accent);
+            margin-bottom: 18px;
+        }
+
+        .course-hero p {
+            color: var(--m09-text-soft);
+            font-size: 16px;
+            max-width: 720px;
+        }
+
+        /* ---------------- LAYOUT ---------------- */
+
+        .course-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 40px;
+            align-items: start;
+            padding: 50px 0 20px;
+        }
+
+        /* ---------------- SIDEBAR ---------------- */
+
+        .sidebar { position: sticky; top: 24px; }
+
+        .sidebar-box {
+            background: linear-gradient(160deg, var(--m09-panel), var(--m09-panel-light));
+            border: 1px solid var(--m09-border);
+            border-radius: var(--m09-radius);
+            padding: 24px 20px;
+            box-shadow: var(--m09-shadow);
+        }
+
+        .sidebar-title {
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--m09-accent);
+            margin-bottom: 16px;
+        }
+
+        .lesson-nav { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+
+        .lesson-nav li a {
+            display: block;
+            padding: 10px 12px;
+            border-radius: var(--m09-radius-small);
+            font-size: 14px;
+            color: var(--m09-text-soft);
+            transition: var(--m09-transition);
+            border: 1px solid transparent;
+        }
+
+        .lesson-nav li a:hover {
+            background: var(--m09-accent-soft);
+            border-color: var(--m09-border);
+            color: var(--m09-text);
+        }
+
+        /* ---------------- MAIN LESSON CONTENT ---------------- */
+
+        .lesson-content { display: flex; flex-direction: column; }
+
+        .lesson-section {
+            position: relative;
+            padding: 36px 38px;
+            margin-bottom: 30px;
+            background: linear-gradient(160deg, var(--m09-panel), var(--m09-panel-light));
+            border: 1px solid var(--m09-border);
+            border-radius: var(--m09-radius);
+            box-shadow: var(--m09-shadow);
+        }
+
+        .section-number {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: .1em;
+            color: var(--m09-accent);
+            background: var(--m09-accent-soft);
+            border: 1px solid var(--m09-border);
+            padding: 5px 12px;
+            border-radius: 999px;
+            margin-bottom: 14px;
+        }
+
+        .lesson-section h2 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--m09-text);
+            margin-bottom: 18px;
+        }
+
+        .lesson-section h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--m09-accent);
+            margin: 24px 0 10px;
+        }
+
+        .lesson-section p, .lesson-section li {
+            color: var(--m09-text-soft);
+            font-size: 15.5px;
+            line-height: 1.8;
+        }
+
+        .lesson-section ul, .lesson-section ol { padding-left: 22px; margin: 10px 0; }
+        .lesson-section li { margin-bottom: 6px; }
+
+        .lesson-section strong { color: var(--m09-text); }
+
+        /* ---------------- CALLOUT CARDS ---------------- */
+
+        .info-card, .warning-card, .success-card {
+            margin: 22px 0;
+            padding: 20px 22px;
+            border-radius: var(--m09-radius-small);
+            border: 1px solid;
+            background: rgba(0,0,0,.22);
+        }
+
+        .info-card { border-color: rgba(56,189,248,.32); }
+        .info-card h3 { color: var(--m09-info); margin-top: 0 !important; }
+
+        .warning-card { border-color: rgba(250,204,21,.32); }
+        .warning-card h3 { color: var(--m09-warning); margin-top: 0 !important; }
+
+        .success-card { border-color: rgba(123,196,127,.32); }
+        .success-card h3 { color: var(--m09-success); margin-top: 0 !important; }
+
+        /* ---------------- PART NAVIGATION ---------------- */
+
+        .part-navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-button {
+            padding: 14px 26px;
+            border-radius: 999px;
+            font-weight: 800;
+            font-size: 14px;
+            border: 1px solid var(--m09-border);
+            color: var(--m09-text);
+            background: var(--m09-panel-light);
+            transition: var(--m09-transition);
+        }
+
+        .nav-button.next {
+            background: linear-gradient(135deg, var(--m09-accent), var(--m09-accent-dark));
+            color: #05170d;
+            border: none;
+        }
+
+        .nav-button:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,.35); }
+
+        /* ---------------- FOOTER ---------------- */
+
+        .academy-footer {
+            margin-top: 60px;
+            padding: 40px 0 50px;
+            border-top: 1px solid var(--m09-border);
+            text-align: center;
+        }
+
+        .footer-content h3 {
+            font-size: 15px;
+            font-weight: 900;
+            letter-spacing: .1em;
+            color: var(--m09-accent);
+            margin-bottom: 10px;
+        }
+
+        .footer-content p { color: var(--m09-text-soft); font-size: 14px; }
+        .footer-copy { margin-top: 10px; color: var(--m09-text-muted) !important; font-size: 13px; }
+
+        /* ---------------- RESPONSIVE ---------------- */
+
+        @media (max-width: 880px) {
+
+            .course-layout { grid-template-columns: 1fr; }
+            .sidebar { position: static; }
+            .lesson-section { padding: 26px 22px; }
+
+        }
+
+
+        /* =====================================================
+           PART 09 MODULE THEME — TESTING, FAULT FINDING &
+           TROUBLESHOOTING. Individual professional styling for
+           the advanced module and knowledge-check quiz below.
+        ===================================================== */
+
+
+        .advanced-module {
+            margin-top: 46px;
+            padding: 38px 34px;
+            border-radius: var(--m09-radius);
+            background: linear-gradient(160deg, var(--m09-panel), var(--m09-panel-light));
+            border: 1px solid var(--m09-border);
+            box-shadow: 0 20px 55px rgba(0,0,0,.35);
+            color: var(--m09-text);
+        }
+
+        .advanced-module .module-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: var(--m09-accent-soft);
+            color: var(--m09-accent);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+            border: 1px solid var(--m09-border);
+        }
+
+        .advanced-module h2 { color: var(--m09-text); margin-bottom: 6px; }
+        .advanced-module h3 { color: var(--m09-accent); margin-top: 26px; margin-bottom: 10px; }
+        .advanced-module p, .advanced-module li { color: var(--m09-text-soft); line-height: 1.75; }
+
+        .formula-box {
+            background: rgba(0,0,0,.28);
+            border-left: 4px solid var(--m09-accent);
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin: 16px 0;
+            font-family: "Courier New", monospace;
+            color: var(--m09-text);
+            overflow-x: auto;
+        }
+
+        .standards-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 18px 0;
+            font-size: 14.5px;
+        }
+        .standards-table th, .standards-table td {
+            border: 1px solid var(--m09-border);
+            padding: 10px 12px;
+            text-align: left;
+            color: var(--m09-text-soft);
+        }
+        .standards-table th { background: var(--m09-accent-soft); color: var(--m09-accent); }
+
+        /* ---------------- QUIZ ---------------- */
+
+        .quiz-block {
+            margin-top: 46px;
+            padding: 38px 34px;
+            border-radius: var(--m09-radius);
+            background: linear-gradient(160deg, var(--m09-panel-light), var(--m09-panel));
+            border: 1px solid var(--m09-border);
+            box-shadow: 0 20px 55px rgba(0,0,0,.35);
+        }
+
+        .quiz-block h2 { color: var(--m09-text); }
+
+        .quiz-question {
+            margin-top: 26px;
+            padding: 18px 20px;
+            border-radius: 12px;
+            background: rgba(0,0,0,.22);
+            border: 1px solid var(--m09-border);
+        }
+
+        .quiz-question p.q-text { font-weight: 700; color: var(--m09-text); margin-bottom: 12px; }
+
+        .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            background: rgba(255,255,255,.03);
+            border: 1px solid transparent;
+            cursor: pointer;
+            color: var(--m09-text-soft);
+            transition: .2s ease;
+        }
+        .quiz-option:hover { border-color: var(--m09-border); }
+        .quiz-option.correct { background: rgba(123,196,127,.15); border-color: var(--m09-success); color: var(--m09-text); }
+        .quiz-option.incorrect { background: rgba(248,113,113,.15); border-color: var(--m09-danger); color: var(--m09-text); }
+
+        .quiz-submit-btn {
+            margin-top: 24px;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--m09-accent), var(--m09-accent-dark));
+            color: #05170d;
+            font-weight: 800;
+            font-size: 15px;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+        .quiz-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(34,197,94,.35); }
+
+        .quiz-result {
+            margin-top: 20px;
+            padding: 16px 20px;
+            border-radius: 10px;
+            background: rgba(0,0,0,.25);
+            color: var(--m09-text);
+            font-weight: 700;
+            display: none;
+        }
+
+        .quiz-explain { margin-top: 8px; font-size: 13.5px; font-weight: 400; color: var(--m09-text-soft); display: none; }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         ACADEMY HEADER
+    ========================================== -->
+
+    <header class="academy-header">
+
+        <div class="header-content">
+
+            <div class="academy-logo">
+
+                NEXPAK
+
+                <span>
+                    SECURITY ACADEMY
+                </span>
+
+            </div>
+
+
+            <div class="course-label">
+
+                ELECTRIC FENCING
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         COURSE HERO
+    ========================================== -->
+
+    <section class="course-hero">
+
+        <div class="hero-content">
+
+            <span class="course-badge">
+                ELECTRIC FENCING COURSE
+            </span>
+
+            <h1>
+                Part 09
+            </h1>
+
+            <h2>
+                Testing, Fault Finding &amp; Troubleshooting
+            </h2>
+
+            <p>
+                Learn how professional technicians test,
+                diagnose and troubleshoot electric-fence systems
+                using a structured and safe fault-finding process.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         COURSE LAYOUT
+    ========================================== -->
+
+    <div class="course-layout">
+
+
+        <!-- =====================================
+             SIDEBAR
+        ====================================== -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-box">
+
+                <div class="sidebar-title">
+                    PART 09 CURRICULUM
+                </div>
+
+
+                <ul class="lesson-nav">
+
+                    <li>
+                        <a href="#testing">
+                            01. Testing Fundamentals
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#safety">
+                            02. Safe Testing Procedures
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#test-equipment">
+                            03. Test Equipment
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#baseline">
+                            04. Establishing A Baseline
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#energizer">
+                            05. Energizer Testing
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#fence-voltage">
+                            06. Fence Voltage Testing
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#earth-testing">
+                            07. Earth System Testing
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#fault-process">
+                            08. Systematic Fault Finding
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#common-faults">
+                            09. Common Fence Faults
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#isolation">
+                            10. Fault Isolation
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#repairs">
+                            11. Repair Verification
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#documentation">
+                            12. Fault-Finding Documentation
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#advanced-diagnostics">
+                            13. Advanced Module: Diagnostic Reasoning
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#part-09-quiz">
+                            14. Knowledge Check Quiz
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =====================================
+             MAIN CONTENT
+        ====================================== -->
+
+        <main class="lesson-content">
+
+
+            <!-- =================================
+                 01. TESTING FUNDAMENTALS
+            ================================== -->
+
+            <section
+                id="testing"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    01
+                </div>
+
+                <h2>
+                    Testing Fundamentals
+                </h2>
+
+                <p>
+                    Testing is the process of measuring and
+                    evaluating the condition and performance of an
+                    electric-fence system.
+                </p>
+
+                <p>
+                    Professional fault finding begins with
+                    measurements and observations rather than
+                    assumptions.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        What Testing Should Establish
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Whether the energizer is operating
+                        </li>
+
+                        <li>
+                            Whether the fence is receiving the
+                            expected electrical performance
+                        </li>
+
+                        <li>
+                            Whether the earth system is functioning
+                            appropriately
+                        </li>
+
+                        <li>
+                            Whether unwanted leakage is present
+                        </li>
+
+                        <li>
+                            Whether individual sections are
+                            performing correctly
+                        </li>
+
+                        <li>
+                            Whether an alarm or monitoring system
+                            is responding correctly
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Test Before Replacing
+                </h3>
+
+                <p>
+                    One of the most important troubleshooting
+                    principles is to test the system before
+                    replacing components.
+                </p>
+
+                <p>
+                    Replacing an energizer, insulator or conductor
+                    without identifying the actual cause of the
+                    problem can waste time and money.
+                </p>
+
+
+                <h3>
+                    Symptoms Are Not Always The Cause
+                </h3>
+
+                <p>
+                    A low fence voltage reading does not
+                    automatically mean that the energizer is
+                    defective.
+                </p>
+
+                <p>
+                    The problem could be caused by vegetation,
+                    damaged insulation, poor connections, a fence
+                    fault, an earth problem or another condition.
+                </p>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Professional Principle
+                    </h3>
+
+                    <p>
+                        Measure first. Identify the fault. Repair
+                        the cause. Then test again.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 02. SAFE TESTING PROCEDURES
+            ================================== -->
+
+            <section
+                id="safety"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    02
+                </div>
+
+                <h2>
+                    Safe Testing Procedures
+                </h2>
+
+                <p>
+                    Electric fences use high-voltage pulses and
+                    must be treated as potentially hazardous
+                    electrical systems.
+                </p>
+
+                <p>
+                    Testing must therefore be carried out using
+                    appropriate instruments and safe working
+                    procedures.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        High Voltage — Use Appropriate Equipment
+                    </h3>
+
+                    <p>
+                        Never use ordinary test equipment that is
+                        not rated and designed for the electrical
+                        conditions being measured.
+                    </p>
+
+                </div>
+
+
+                <h3>
+                    Before Testing
+                </h3>
+
+                <ul>
+
+                    <li>
+                        Understand the system being tested
+                    </li>
+
+                    <li>
+                        Identify the relevant equipment
+                    </li>
+
+                    <li>
+                        Follow manufacturer instructions
+                    </li>
+
+                    <li>
+                        Use appropriate personal protective
+                        equipment where required
+                    </li>
+
+                    <li>
+                        Keep unauthorised people away from the work
+                        area
+                    </li>
+
+                    <li>
+                        Follow the applicable safe isolation
+                        procedure
+                    </li>
+
+                </ul>
+
+
+                <h3>
+                    During Testing
+                </h3>
+
+                <p>
+                    Follow the instrument manufacturer's procedure
+                    and avoid unnecessary contact with energised
+                    components.
+                </p>
+
+                <p>
+                    Do not improvise test methods using unsuitable
+                    tools or equipment.
+                </p>
+
+
+                <h3>
+                    After Testing
+                </h3>
+
+                <p>
+                    Return the system to its intended operating
+                    condition and verify that all relevant security
+                    functions are restored.
+                </p>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Safety Comes Before Diagnosis
+                    </h3>
+
+                    <p>
+                        A fault is never so urgent that appropriate
+                        electrical safety procedures should be
+                        ignored.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 03. TEST EQUIPMENT
+            ================================== -->
+
+            <section
+                id="test-equipment"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    03
+                </div>
+
+                <h2>
+                    Test Equipment
+                </h2>
+
+                <p>
+                    Professional fault finding depends on using
+                    the correct instrument for the measurement
+                    being performed.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Common Diagnostic Equipment
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Electric-fence voltage tester
+                        </li>
+
+                        <li>
+                            Earth-system tester where appropriate
+                        </li>
+
+                        <li>
+                            Suitable continuity-testing equipment
+                        </li>
+
+                        <li>
+                            Insulation-testing equipment where
+                            appropriate for the application
+                        </li>
+
+                        <li>
+                            Manufacturer-approved diagnostic tools
+                        </li>
+
+                        <li>
+                            Basic inspection tools
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Use The Correct Instrument
+                </h3>
+
+                <p>
+                    An instrument designed for ordinary low-voltage
+                    electrical circuits may not be suitable for
+                    measuring the pulses produced by an electric
+                    fence.
+                </p>
+
+
+                <h3>
+                    Instrument Condition
+                </h3>
+
+                <p>
+                    Test equipment should be maintained in good
+                    condition and used according to the
+                    manufacturer's instructions.
+                </p>
+
+
+                <h3>
+                    Test Equipment Limitations
+                </h3>
+
+                <p>
+                    Every instrument has limitations. The technician
+                    should understand what the instrument measures,
+                    what it does not measure and the conditions
+                    under which its readings are valid.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Never Guess From An Instrument Reading
+                    </h3>
+
+                    <p>
+                        A measurement is evidence, not an automatic
+                        diagnosis. Interpret readings in the context
+                        of the complete fence system.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 04. ESTABLISHING A BASELINE
+            ================================== -->
+
+            <section
+                id="baseline"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    04
+                </div>
+
+                <h2>
+                    Establishing A Baseline
+                </h2>
+
+                <p>
+                    A baseline provides a reference point against
+                    which future measurements can be compared.
+                </p>
+
+                <p>
+                    Recording the condition of a correctly
+                    functioning system makes future fault finding
+                    considerably easier.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Useful Baseline Information
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Energizer operating condition
+                        </li>
+
+                        <li>
+                            Fence voltage measurements
+                        </li>
+
+                        <li>
+                            Earth-system measurements where
+                            applicable
+                        </li>
+
+                        <li>
+                            Zone condition
+                        </li>
+
+                        <li>
+                            Alarm and monitoring status
+                        </li>
+
+                        <li>
+                            Relevant environmental conditions
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Why Baselines Matter
+                </h3>
+
+                <p>
+                    Suppose a system normally operates within an
+                    established range and a later inspection shows
+                    a significant change.
+                </p>
+
+                <p>
+                    That change provides useful evidence that
+                    something in the system may require
+                    investigation.
+                </p>
+
+
+                <h3>
+                    Record More Than Numbers
+                </h3>
+
+                <p>
+                    Record the date, location, zone, equipment
+                    condition and relevant site observations along
+                    with measurements.
+                </p>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Professional Principle
+                    </h3>
+
+                    <p>
+                        Good records turn future troubleshooting
+                        from guesswork into comparison.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 05. ENERGIZER TESTING
+            ================================== -->
+
+            <section
+                id="energizer"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    05
+                </div>
+
+                <h2>
+                    Energizer Testing
+                </h2>
+
+                <p>
+                    The energizer is the source of the electric
+                    fence's high-voltage pulses, so it is one of
+                    the first areas to consider when troubleshooting
+                    a system.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Initial Energizer Checks
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Confirm the unit has the required power
+                            supply
+                        </li>
+
+                        <li>
+                            Check visible indicators
+                        </li>
+
+                        <li>
+                            Inspect connections
+                        </li>
+
+                        <li>
+                            Check for obvious physical damage
+                        </li>
+
+                        <li>
+                            Follow the manufacturer's diagnostic
+                            procedure
+                        </li>
+
+                        <li>
+                            Perform appropriate output testing
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Energizer Output
+                </h3>
+
+                <p>
+                    The output should be evaluated using equipment
+                    suitable for electric-fence testing and
+                    according to the manufacturer's requirements.
+                </p>
+
+
+                <h3>
+                    Power Supply Problems
+                </h3>
+
+                <p>
+                    A system may appear to have a fence fault when
+                    the underlying problem is actually associated
+                    with the energizer's power supply.
+                </p>
+
+
+                <h3>
+                    Battery Backup
+                </h3>
+
+                <p>
+                    Where backup power is installed, the condition
+                    of the battery and associated equipment should
+                    also be considered during diagnosis.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Do Not Immediately Replace The Energizer
+                    </h3>
+
+                    <p>
+                        Confirm the input conditions, output
+                        performance and surrounding system
+                        conditions before concluding that the
+                        energizer itself has failed.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 06. FENCE VOLTAGE TESTING
+            ================================== -->
+
+            <section
+                id="fence-voltage"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    06
+                </div>
+
+                <h2>
+                    Fence Voltage Testing
+                </h2>
+
+                <p>
+                    Fence-voltage testing is one of the most
+                    important diagnostic procedures performed on
+                    an electric-fence system.
+                </p>
+
+                <p>
+                    Measurements should be taken using an
+                    appropriate electric-fence tester and
+                    interpreted according to the system design,
+                    equipment specifications and applicable
+                    requirements.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        What Voltage Testing Can Reveal
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Whether the fence is receiving an
+                            appropriate pulse
+                        </li>
+
+                        <li>
+                            Whether performance changes along the
+                            perimeter
+                        </li>
+
+                        <li>
+                            Whether a particular zone requires
+                            investigation
+                        </li>
+
+                        <li>
+                            Whether a fault may be causing excessive
+                            loading
+                        </li>
+
+                        <li>
+                            Whether further testing is required
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Test At Multiple Points
+                </h3>
+
+                <p>
+                    Testing only at the energizer may not reveal a
+                    fault further along the fence.
+                </p>
+
+                <p>
+                    Where appropriate, measurements should be
+                    compared at different points and zones so that
+                    changes in performance can be identified.
+                </p>
+
+
+                <h3>
+                    Compare Readings
+                </h3>
+
+                <p>
+                    A significant difference between readings at
+                    different points can provide valuable
+                    information about where further investigation
+                    should take place.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Never Use An Ordinary Multimeter
+                    </h3>
+
+                    <p>
+                        Electric-fence pulses require appropriate
+                        test equipment. Use an instrument specifically
+                        suitable for the measurements being performed.
+                    </p>
+
+                </div>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Diagnostic Principle
+                    </h3>
+
+                    <p>
+                        Follow the voltage through the system.
+                        Comparing measurements can help narrow down
+                        the location of a problem.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 07. EARTH SYSTEM TESTING
+            ================================== -->
+
+            <section
+                id="earth-testing"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    07
+                </div>
+
+                <h2>
+                    Earth System Testing
+                </h2>
+
+                <p>
+                    The earth system is an essential part of an
+                    electric-fence installation and must be
+                    considered whenever system performance is being
+                    investigated.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Earth System Factors
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Earth electrode condition
+                        </li>
+
+                        <li>
+                            Connections
+                        </li>
+
+                        <li>
+                            Soil conditions
+                        </li>
+
+                        <li>
+                            Corrosion
+                        </li>
+
+                        <li>
+                            Mechanical damage
+                        </li>
+
+                        <li>
+                            Conductor integrity
+                        </li>
+
+                        <li>
+                            Compliance with the system design
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Why Earth Problems Matter
+                </h3>
+
+                <p>
+                    An inadequate or damaged earth system can affect
+                    the performance of the complete electric-fence
+                    circuit.
+                </p>
+
+                <p>
+                    Earth-related problems should therefore be
+                    investigated whenever measurements or system
+                    behaviour indicate that further diagnosis is
+                    necessary.
+                </p>
+
+
+                <h3>
+                    Inspect Connections
+                </h3>
+
+                <p>
+                    Earth connections should be inspected for
+                    looseness, corrosion, physical damage and other
+                    conditions that could affect reliability.
+                </p>
+
+
+                <h3>
+                    Soil Conditions
+                </h3>
+
+                <p>
+                    Soil characteristics and environmental
+                    conditions can influence the performance of an
+                    earth system.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Do Not Assume The Earth Is Good
+                    </h3>
+
+                    <p>
+                        A recently installed system may still have
+                        an earth-related problem. Test and inspect
+                        the earth system rather than assuming it is
+                        functioning correctly.
+                    </p>
+
+                </div>
+
+
+                <h3>
+                    Earth Testing Equipment
+                </h3>
+
+                <p>
+                    Where a specific earth-resistance measurement
+                    is required, use appropriate test equipment and
+                    the procedure specified for the system and
+                    installation.
+                </p>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Professional Principle
+                    </h3>
+
+                    <p>
+                        A complete electric-fence diagnosis considers
+                        both the energised conductor system and the
+                        earth-return system.
+                    </p>
+
+                </div>
+
+                    </section>
+
+                        <!-- =================================
+                 08. SYSTEMATIC FAULT FINDING
+            ================================== -->
+
+            <section
+                id="fault-process"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    08
+                </div>
+
+                <h2>
+                    Systematic Fault Finding
+                </h2>
+
+                <p>
+                    Professional fault finding follows a logical
+                    process. The objective is to identify the
+                    actual cause of a fault rather than replacing
+                    components until the system starts working.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        The Six-Step Diagnostic Process
+                    </h3>
+
+                    <ol>
+
+                        <li>
+                            <strong>Understand the symptom.</strong>
+                            Determine exactly what the customer,
+                            monitoring system or technician has
+                            reported.
+                        </li>
+
+                        <li>
+                            <strong>Inspect the installation.</strong>
+                            Look for visible damage, vegetation,
+                            loose connections and other obvious
+                            conditions.
+                        </li>
+
+                        <li>
+                            <strong>Test the system.</strong>
+                            Take appropriate measurements using
+                            suitable test equipment.
+                        </li>
+
+                        <li>
+                            <strong>Divide the problem.</strong>
+                            Isolate sections or zones where the
+                            system design permits this.
+                        </li>
+
+                        <li>
+                            <strong>Identify the cause.</strong>
+                            Determine what condition is producing
+                            the abnormal result.
+                        </li>
+
+                        <li>
+                            <strong>Repair and verify.</strong>
+                            Correct the fault and repeat the
+                            relevant tests.
+                        </li>
+
+                    </ol>
+
+                </div>
+
+
+                <h3>
+                    Start With The Simplest Explanation
+                </h3>
+
+                <p>
+                    Begin with basic observations before moving
+                    into more complex diagnosis.
+                </p>
+
+                <p>
+                    For example, inspect for visible vegetation,
+                    broken conductors, damaged insulators and loose
+                    connections before assuming that expensive
+                    equipment has failed.
+                </p>
+
+
+                <h3>
+                    Divide The System
+                </h3>
+
+                <p>
+                    Where the installation has multiple zones or
+                    suitable isolation points, the technician can
+                    use the system layout to narrow down the
+                    location of the fault.
+                </p>
+
+                <p>
+                    This is one of the most effective principles in
+                    electrical fault finding: reduce a large
+                    problem into smaller sections.
+                </p>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Think Like A Detective
+                    </h3>
+
+                    <p>
+                        Every measurement should answer a question.
+                        If a test does not help narrow down the
+                        possible causes, reconsider what you are
+                        testing and why.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 09. COMMON FENCE FAULTS
+            ================================== -->
+
+            <section
+                id="common-faults"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    09
+                </div>
+
+                <h2>
+                    Common Fence Faults
+                </h2>
+
+                <p>
+                    Electric-fence faults can originate from many
+                    different parts of the installation. Correct
+                    diagnosis requires understanding how each fault
+                    affects the system.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Common Fault Categories
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Vegetation contact
+                        </li>
+
+                        <li>
+                            Broken conductors
+                        </li>
+
+                        <li>
+                            Poor conductor joins
+                        </li>
+
+                        <li>
+                            Damaged insulators
+                        </li>
+
+                        <li>
+                            Incorrect conductor contact
+                        </li>
+
+                        <li>
+                            Loose connections
+                        </li>
+
+                        <li>
+                            Corrosion
+                        </li>
+
+                        <li>
+                            Cable damage
+                        </li>
+
+                        <li>
+                            Earth-system problems
+                        </li>
+
+                        <li>
+                            Energizer or power-supply problems
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Vegetation Faults
+                </h3>
+
+                <p>
+                    Vegetation touching an energised fence can
+                    create leakage and reduce system performance.
+                </p>
+
+                <p>
+                    Vegetation should be managed in accordance with
+                    the fence design and the required maintenance
+                    practices.
+                </p>
+
+
+                <h3>
+                    Broken Conductors
+                </h3>
+
+                <p>
+                    A broken conductor can interrupt the intended
+                    electrical path and may also create a mechanical
+                    problem in the fence.
+                </p>
+
+                <p>
+                    Inspect the entire affected section rather than
+                    assuming that the visible break is the only
+                    problem.
+                </p>
+
+
+                <h3>
+                    Poor Connections
+                </h3>
+
+                <p>
+                    Connections can deteriorate because of poor
+                    installation, corrosion, mechanical movement or
+                    environmental exposure.
+                </p>
+
+
+                <h3>
+                    Damaged Insulators
+                </h3>
+
+                <p>
+                    Cracked, broken or contaminated insulators can
+                    create unwanted leakage paths.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Don't Repair The Symptom
+                    </h3>
+
+                    <p>
+                        If a connection has failed because of
+                        corrosion, simply reconnecting the wire
+                        without addressing the underlying condition
+                        may result in another failure.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 10. FAULT ISOLATION
+            ================================== -->
+
+            <section
+                id="isolation"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    10
+                </div>
+
+                <h2>
+                    Fault Isolation
+                </h2>
+
+                <p>
+                    Fault isolation is the process of determining
+                    which section of the system contains the
+                    problem.
+                </p>
+
+                <p>
+                    Properly designed zones and isolation points
+                    make this process significantly easier.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Isolation Strategy
+                    </h3>
+
+                    <ol>
+
+                        <li>
+                            Review the system layout.
+                        </li>
+
+                        <li>
+                            Identify the affected zone.
+                        </li>
+
+                        <li>
+                            Perform appropriate measurements.
+                        </li>
+
+                        <li>
+                            Isolate sections according to the
+                            system design.
+                        </li>
+
+                        <li>
+                            Compare measurements.
+                        </li>
+
+                        <li>
+                            Narrow the search area.
+                        </li>
+
+                        <li>
+                            Inspect the suspected section.
+                        </li>
+
+                    </ol>
+
+                </div>
+
+
+                <h3>
+                    Zone-Based Diagnosis
+                </h3>
+
+                <p>
+                    A large perimeter can contain multiple
+                    independently monitored or isolated sections.
+                </p>
+
+                <p>
+                    If one section behaves differently from the
+                    others, that difference can provide an
+                    important diagnostic clue.
+                </p>
+
+
+                <h3>
+                    Work From Known Good To Suspected Fault
+                </h3>
+
+                <p>
+                    When the system design permits it, begin with a
+                    known functioning section and progressively
+                    investigate the affected area.
+                </p>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Reduce The Search Area
+                    </h3>
+
+                    <p>
+                        The purpose of isolation is not to disconnect
+                        the system randomly. It is to use controlled
+                        testing to reduce the number of possible
+                        fault locations.
+                    </p>
+
+                </div>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Isolation Must Be Safe
+                    </h3>
+
+                    <p>
+                        Only perform isolation or testing procedures
+                        that are appropriate for the equipment and
+                        system design. Follow the manufacturer's
+                        instructions and established safe working
+                        procedures.
+                    </p>
+
+                </div>
+
+    </section>
+
+                        <!-- =================================
+                 11. REPAIR VERIFICATION
+            ================================== -->
+
+            <section
+                id="repairs"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    11
+                </div>
+
+                <h2>
+                    Repair Verification
+                </h2>
+
+                <p>
+                    Finding and repairing a fault is only part of
+                    the troubleshooting process. The technician
+                    must also verify that the repair has restored
+                    the system to the required operating condition.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        After A Repair
+                    </h3>
+
+                    <ol>
+
+                        <li>
+                            Inspect the completed repair.
+                        </li>
+
+                        <li>
+                            Confirm that connections are secure.
+                        </li>
+
+                        <li>
+                            Confirm that the repaired section is
+                            correctly insulated.
+                        </li>
+
+                        <li>
+                            Perform the appropriate electrical
+                            measurements.
+                        </li>
+
+                        <li>
+                            Compare the results with expected
+                            operating conditions.
+                        </li>
+
+                        <li>
+                            Check the relevant alarm or monitoring
+                            functions.
+                        </li>
+
+                        <li>
+                            Record the work completed.
+                        </li>
+
+                    </ol>
+
+                </div>
+
+
+                <h3>
+                    Never Assume The Repair Worked
+                </h3>
+
+                <p>
+                    A repaired connection may look correct while
+                    still having an electrical or mechanical
+                    problem.
+                </p>
+
+                <p>
+                    Verification provides evidence that the fault
+                    has actually been corrected.
+                </p>
+
+
+                <h3>
+                    Test The Complete System
+                </h3>
+
+                <p>
+                    Where appropriate, testing should extend beyond
+                    the repaired component to confirm that the
+                    complete affected zone is operating correctly.
+                </p>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Professional Principle
+                    </h3>
+
+                    <p>
+                        A repair is not complete until the system
+                        has been tested and the result has been
+                        confirmed.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 12. FAULT-FINDING DOCUMENTATION
+            ================================== -->
+
+            <section
+                id="documentation"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    12
+                </div>
+
+                <h2>
+                    Fault-Finding Documentation
+                </h2>
+
+                <p>
+                    Professional technicians should document
+                    significant faults, measurements, repairs and
+                    recommendations.
+                </p>
+
+                <p>
+                    Good documentation creates a useful history of
+                    the system and can make future maintenance
+                    significantly easier.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Record The Following
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Date of inspection
+                        </li>
+
+                        <li>
+                            Customer or site identification
+                        </li>
+
+                        <li>
+                            Affected zone
+                        </li>
+
+                        <li>
+                            Reported symptom
+                        </li>
+
+                        <li>
+                            Initial observations
+                        </li>
+
+                        <li>
+                            Measurements taken
+                        </li>
+
+                        <li>
+                            Fault identified
+                        </li>
+
+                        <li>
+                            Corrective action
+                        </li>
+
+                        <li>
+                            Replacement components
+                        </li>
+
+                        <li>
+                            Final test results
+                        </li>
+
+                        <li>
+                            Additional recommendations
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Before And After
+                </h3>
+
+                <p>
+                    Where practical, record relevant measurements
+                    before the repair and again after the repair.
+                </p>
+
+                <p>
+                    This provides a clear indication of whether the
+                    corrective action produced the expected result.
+                </p>
+
+
+                <h3>
+                    Photographic Records
+                </h3>
+
+                <p>
+                    Photographs can be useful for documenting
+                    damaged components, unusual conditions,
+                    installation defects and completed repairs.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Protect Customer Information
+                    </h3>
+
+                    <p>
+                        Site photographs and documentation should be
+                        handled appropriately and should not expose
+                        sensitive security information unnecessarily.
+                    </p>
+
+                </div>
+
+
+                <!-- =================================
+                     TROUBLESHOOTING CHECKLIST
+                ================================== -->
+
+                <div class="success-card">
+
+                    <h3>
+                        Professional Troubleshooting Checklist
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            ☐ Understand the reported problem
+                        </li>
+
+                        <li>
+                            ☐ Review the system design
+                        </li>
+
+                        <li>
+                            ☐ Inspect the installation
+                        </li>
+
+                        <li>
+                            ☐ Check the energizer and power supply
+                        </li>
+
+                        <li>
+                            ☐ Perform appropriate fence testing
+                        </li>
+
+                        <li>
+                            ☐ Investigate the earth system
+                        </li>
+
+                        <li>
+                            ☐ Check conductors and connections
+                        </li>
+
+                        <li>
+                            ☐ Check insulators and insulation
+                        </li>
+
+                        <li>
+                            ☐ Check vegetation and environmental
+                            conditions
+                        </li>
+
+                        <li>
+                            ☐ Isolate the affected section where
+                            appropriate
+                        </li>
+
+                        <li>
+                            ☐ Identify the actual cause
+                        </li>
+
+                        <li>
+                            ☐ Complete the repair
+                        </li>
+
+                        <li>
+                            ☐ Retest the system
+                        </li>
+
+                        <li>
+                            ☐ Verify alarm and monitoring functions
+                        </li>
+
+                        <li>
+                            ☐ Document the completed work
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 ADVANCED DIAGNOSTIC THINKING
+            ================================== -->
+
+            <section
+                id="diagnostic-thinking"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    13
+                </div>
+
+                <h2>
+                    Advanced Diagnostic Thinking
+                </h2>
+
+                <p>
+                    Experienced technicians develop the ability to
+                    recognise patterns in system behaviour.
+                    However, experience should support testing, not
+                    replace it.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Ask The Right Questions
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            When did the problem begin?
+                        </li>
+
+                        <li>
+                            Is the problem permanent or intermittent?
+                        </li>
+
+                        <li>
+                            Does it affect the entire system or one
+                            zone?
+                        </li>
+
+                        <li>
+                            Has any work recently been performed?
+                        </li>
+
+                        <li>
+                            Have there been storms, heavy rain or
+                            other environmental changes?
+                        </li>
+
+                        <li>
+                            Has vegetation changed?
+                        </li>
+
+                        <li>
+                            Has the property been modified?
+                        </li>
+
+                        <li>
+                            Are there any new electrical or
+                            security systems nearby?
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Intermittent Faults
+                </h3>
+
+                <p>
+                    Intermittent faults can be more difficult to
+                    diagnose because the system may appear normal
+                    when inspected.
+                </p>
+
+                <p>
+                    In these cases, investigate environmental,
+                    mechanical and electrical conditions that could
+                    cause the fault to appear only under certain
+                    circumstances.
+                </p>
+
+
+                <h3>
+                    Recent Changes Matter
+                </h3>
+
+                <p>
+                    If a system worked correctly for a long period
+                    and suddenly developed a problem, consider what
+                    changed immediately before the fault appeared.
+                </p>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Think In Evidence
+                    </h3>
+
+                    <p>
+                        Do not ask only, "What component could be
+                        broken?" Ask, "What evidence do I have, and
+                        what does that evidence eliminate?"
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 PART 09 COMPLETION
+            ================================== -->
+
+            <section
+                id="part-complete"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    ✓
+                </div>
+
+                <h2>
+                    Part 09 Complete
+                </h2>
+
+                <p>
+                    The learner has now been introduced to a
+                    structured professional approach to electric-
+                    fence testing and fault finding.
+                </p>
+
+                <p>
+                    The objective is not simply to locate a faulty
+                    component. The objective is to understand the
+                    system, collect evidence, isolate the problem,
+                    correct the underlying cause and verify the
+                    result.
+                </p>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Knowledge Check
+                    </h3>
+
+                    <p>
+                        Before progressing, the learner should be
+                        able to explain:
+                    </p>
+
+                    <ul>
+
+                        <li>
+                            Why testing should precede component
+                            replacement
+                        </li>
+
+                        <li>
+                            Why appropriate test equipment is
+                            essential
+                        </li>
+
+                        <li>
+                            How baseline measurements assist future
+                            troubleshooting
+                        </li>
+
+                        <li>
+                            Why the earth system must be considered
+                            during diagnosis
+                        </li>
+
+                        <li>
+                            How zones and isolation points can
+                            reduce the search area
+                        </li>
+
+                        <li>
+                            Common causes of fence performance
+                            problems
+                        </li>
+
+                        <li>
+                            Why repairs must be verified
+                        </li>
+
+                        <li>
+                            Why professional documentation matters
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        What Comes Next
+                    </h3>
+
+                    <p>
+                        Part 10 will move beyond basic troubleshooting
+                        into more advanced system performance,
+                        maintenance and professional servicing.
+                    </p>
+
+                    <p>
+                        The learner will begin developing a complete
+                        lifecycle approach to electric-fence systems:
+                        installation, commissioning, inspection,
+                        maintenance, fault diagnosis and ongoing
+                        performance management.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================================
+                 13. ADVANCED MODULE — DIAGNOSTIC
+                 REASONING (COLLEGE LEVEL)
+            ========================================== -->
+
+            <section
+                id="advanced-diagnostics"
+                class="advanced-module"
+            >
+
+                <span class="module-badge">
+                    Advanced Module &middot; College Level
+                </span>
+
+                <h2>
+                    13. Advanced Module: Diagnostic Reasoning
+                </h2>
+
+                <p>
+                    This module reframes fault finding as a formal
+                    diagnostic reasoning process rather than a list
+                    of steps to follow. Understanding the logic
+                    behind the process allows a technician to adapt
+                    when a fault does not match a textbook pattern.
+                </p>
+
+                <h3>13.1 Half-Split (Binary Search) Fault Localisation</h3>
+
+                <p>
+                    On a long fence line with a suspected short or
+                    leakage fault, checking every isolator
+                    sequentially from one end is inefficient. A
+                    half-split strategy tests the midpoint of the
+                    affected section first: if the fault is upstream
+                    of the midpoint, the downstream half is
+                    eliminated in a single test, and vice versa. This
+                    halves the remaining search area with each test.
+                </p>
+
+                <div class="formula-box">
+                    Tests required &asymp; log&#8322;(n)<br>
+                    where n = number of isolatable zones on the
+                    affected line
+                </div>
+
+                <p>
+                    For a line with 16 isolation zones, sequential
+                    testing could require up to 16 tests; a
+                    half-split approach typically resolves the fault
+                    zone in around 4 tests. This is the same
+                    principle used in binary search algorithms and
+                    in structured cable-fault location — it is a
+                    transferable diagnostic skill, not an
+                    electric-fence-specific trick.
+                </p>
+
+                <h3>13.2 Differential Diagnosis: Distinguishing Similar Symptoms</h3>
+
+                <p>
+                    Several distinct faults can present with the
+                    same surface symptom — low fence voltage. A
+                    structured differential approach tests
+                    discriminating measurements rather than guessing:
+                </p>
+
+                <table class="standards-table">
+                    <tr>
+                        <th>Symptom</th>
+                        <th>Discriminating Test</th>
+                        <th>Likely Cause If Test Fails</th>
+                    </tr>
+                    <tr>
+                        <td>Low voltage, energizer output normal</td>
+                        <td>Voltage measured progressively along the line</td>
+                        <td>Leakage or short between energizer and measurement point</td>
+                    </tr>
+                    <tr>
+                        <td>Low voltage, energizer output low</td>
+                        <td>Energizer tested with line disconnected</td>
+                        <td>Energizer fault, poor supply, or damaged battery/charging circuit</td>
+                    </tr>
+                    <tr>
+                        <td>Low voltage, energizer output normal, no obvious leakage</td>
+                        <td>Earth system resistance test</td>
+                        <td>Poor earth return reducing effective circuit performance</td>
+                    </tr>
+                </table>
+
+                <p>
+                    The principle is the same one used in clinical
+                    and mechanical diagnostics: a single symptom can
+                    have multiple causes, so the diagnostic value of
+                    a test is measured by how effectively it rules
+                    causes in or out, not simply whether it produces
+                    a reading.
+                </p>
+
+                <h3>13.3 Root Cause vs Symptomatic Repair</h3>
+
+                <p>
+                    Replacing a failed insulator without asking why
+                    it failed is a symptomatic repair. If the
+                    underlying cause was vegetation contact
+                    overheating the insulator, or incorrect conductor
+                    tension placing mechanical stress on the fitting,
+                    the replacement insulator will fail again. A
+                    root-cause approach asks: what changed, or what
+                    condition allowed this component to fail, before
+                    closing out the fault as resolved.
+                </p>
+
+                <div class="success-card">
+                    <h3>Applying This Module</h3>
+                    <p>
+                        On your next fault call, before testing
+                        sequentially from one end, identify the
+                        midpoint of the affected section and test
+                        there first. Track how many tests this saves
+                        compared to your usual approach.
+                    </p>
+                </div>
+
+            </section>
+
+
+            <!-- =========================================
+                 14. KNOWLEDGE CHECK QUIZ
+            ========================================== -->
+
+            <section
+                id="part-09-quiz"
+                class="quiz-block"
+            >
+
+                <span class="module-badge">
+                    Knowledge Check
+                </span>
+
+                <h2>14. Part 09 Quiz</h2>
+
+                <p>
+                    Answer the questions below, then click
+                    "Check My Answers" to see your score and
+                    explanations.
+                </p>
+
+                <form id="quiz-form-p09">
+
+                    <div class="quiz-question" data-correct="b">
+                        <p class="q-text">1. What is the main advantage of a half-split fault-finding strategy?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> It requires no test equipment</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> It eliminates half of the remaining search area with each test</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> It only works on short fence lines</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> It replaces the need for baseline measurements</label>
+                        </div>
+                        <p class="quiz-explain">Testing the midpoint of the affected section eliminates half the remaining zones per test, dramatically reducing the number of tests needed on long lines.</p>
+                    </div>
+
+                    <div class="quiz-question" data-correct="c">
+                        <p class="q-text">2. If fence voltage is low but energizer output tests normal when disconnected from the line, what does this suggest?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> The energizer battery is dead</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> The problem is definitely the earth system</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> The fault likely lies between the energizer and the measurement point on the line</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> No further testing is required</label>
+                        </div>
+                        <p class="quiz-explain">Normal output with the line disconnected rules out the energizer itself, pointing the fault toward leakage or a short somewhere along the line.</p>
+                    </div>
+
+                    <div class="quiz-question" data-correct="a">
+                        <p class="q-text">3. What distinguishes a root-cause repair from a symptomatic repair?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q3" value="a"> It addresses the underlying condition that caused the component to fail</label>
+                            <label class="quiz-option"><input type="radio" name="q3" value="b"> It is always faster to complete</label>
+                            <label class="quiz-option"><input type="radio" name="q3" value="c"> It never requires replacement parts</label>
+                            <label class="quiz-option"><input type="radio" name="q3" value="d"> It only applies to energizer faults</label>
+                        </div>
+                        <p class="quiz-explain">A root-cause repair asks why the component failed and corrects that underlying condition, preventing recurrence — unlike a symptomatic repair that simply replaces the part.</p>
+                    </div>
+
+                    <div class="quiz-question" data-correct="d">
+                        <p class="q-text">4. Why is a single symptom like "low voltage" not enough to diagnose a fault on its own?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q4" value="a"> Low voltage is always caused by the same fault</label>
+                            <label class="quiz-option"><input type="radio" name="q4" value="b"> Voltage cannot be measured accurately on fences</label>
+                            <label class="quiz-option"><input type="radio" name="q4" value="c"> Energizers do not report voltage</label>
+                            <label class="quiz-option"><input type="radio" name="q4" value="d"> Multiple distinct faults can present with the same surface symptom</label>
+                        </div>
+                        <p class="quiz-explain">Because several different faults can all produce low voltage, discriminating tests are needed to rule causes in or out rather than relying on the symptom alone.</p>
+                    </div>
+
+                    <div class="quiz-question" data-correct="b">
+                        <p class="q-text">5. For a line with 16 isolation zones, approximately how many tests does a half-split strategy typically require?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q5" value="a"> 16</label>
+                            <label class="quiz-option"><input type="radio" name="q5" value="b"> Around 4</label>
+                            <label class="quiz-option"><input type="radio" name="q5" value="c"> 1</label>
+                            <label class="quiz-option"><input type="radio" name="q5" value="d"> 32</label>
+                        </div>
+                        <p class="quiz-explain">Half-split testing reduces the search space logarithmically, so 16 zones typically resolve in around log₂(16) = 4 tests.</p>
+                    </div>
+
+                    <button type="button" class="quiz-submit-btn" onclick="gradeQuizP09()">Check My Answers</button>
+
+                    <div class="quiz-result" id="quiz-result-p09"></div>
+
+                </form>
+
+            </section>
+
+
+            <!-- =========================================
+                 PART NAVIGATION
+            ========================================== -->
+
+            <div class="part-navigation">
+
+                <a
+                    href="part-08.html"
+                    class="nav-button previous"
+                >
+                    ← Previous Part
+                </a>
+
+
+                <a
+                    href="part-10.html"
+                    class="nav-button next"
+                >
+                    Part 10 →
+                </a>
+
+            </div>
+
+
+        </main>
+
+
+    </div>
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer class="academy-footer">
+
+        <div class="footer-content">
+
+            <h3>
+                NEXPAK SECURITY ACADEMY
+            </h3>
+
+            <p>
+                Professional security training and
+                practical installation knowledge.
+            </p>
+
+            <p class="footer-copy">
+                © 2026 Nexpak Security Solutions.
+                All Rights Reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script>
+
+        function gradeQuizP09() {
+
+            var form = document.getElementById("quiz-form-p09");
+            var questions = form.querySelectorAll(".quiz-question");
+            var score = 0;
+
+            questions.forEach(function (q) {
+
+                var correct = q.getAttribute("data-correct");
+                var options = q.querySelectorAll(".quiz-option");
+                var explain = q.querySelector(".quiz-explain");
+                var selected = q.querySelector("input:checked");
+
+                options.forEach(function (opt) {
+                    opt.classList.remove("correct", "incorrect");
+                });
+
+                options.forEach(function (opt) {
+                    var input = opt.querySelector("input");
+                    if (input.value === correct) {
+                        opt.classList.add("correct");
+                    } else if (selected && input.value === selected.value) {
+                        opt.classList.add("incorrect");
+                    }
+                });
+
+                if (selected && selected.value === correct) {
+                    score++;
+                }
+
+                explain.style.display = "block";
+
+            });
+
+            var result = document.getElementById("quiz-result-p09");
+            result.style.display = "block";
+            result.textContent = "You scored " + score + " out of " + questions.length + ".";
+
+        }
+
+    </script>
+
+</body>
+
+    </html>

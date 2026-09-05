@@ -1,0 +1,4492 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Advanced Electric Fencing Course | Part 07 | Advanced System Design
+    </title>
+
+    <meta
+        name="description"
+        content="Nexpak Security Academy Electric Fencing Course Part 07 - Advanced System Design for professional electric-fencing installations."
+    >
+
+    <meta
+        name="keywords"
+        content="advanced electric fence system design, electric fencing course South Africa, security system design, electric fence planning, Nexpak Security Academy, fence zoning and segmentation, electric fence isolation switches, return path earthing design, electric fence security integration, system reliability engineering, electric fence design review, SANS 10222 electric fence design, perimeter risk assessment"
+    >
+
+    <meta
+        name="author"
+        content="Nexpak Security Academy"
+    >
+
+    <meta
+        name="robots"
+        content="index, follow"
+    >
+
+    <link
+        rel="canonical"
+        href="https://www.nexpak.co.za/academy/part-07.html"
+    >
+
+
+    <!-- =====================================================
+         OPEN GRAPH
+    ====================================================== -->
+
+    <meta
+        property="og:type"
+        content="website"
+    >
+
+    <meta
+        property="og:title"
+        content="Electric Fencing Course | Part 07 | Advanced System Design"
+    >
+
+    <meta
+        property="og:description"
+        content="Learn advanced electric-fence system design, planning, zoning, segmentation and professional security integration."
+    >
+
+    <meta
+        property="og:url"
+        content="https://www.nexpaksolutions.co.za/academy/part-07.html"
+    >
+
+    <meta
+        property="og:site_name"
+        content="Nexpak Security Academy"
+    >
+
+
+    <!-- =====================================================
+         SOCIAL SHARING
+    ====================================================== -->
+
+    <meta
+        name="twitter:card"
+        content="summary"
+    >
+
+    <meta
+        name="twitter:title"
+        content="Electric Fencing Course | Part 07"
+    >
+
+    <meta
+        name="twitter:description"
+        content="Advanced electric-fence system design and professional security planning."
+    >
+
+
+    <!-- =====================================================
+         STRUCTURED DATA
+    ====================================================== -->
+
+    <script type="application/ld+json">
+
+    {
+        "@context": "https://schema.org",
+        "@type": "Course",
+        "name": "Electric Fencing Course - Part 07: Advanced System Design",
+        "description": "Professional training covering advanced electric-fence system design, planning, zoning, segmentation and security integration.",
+        "provider": {
+            "@type": "Organization",
+            "name": "Nexpak Security Academy",
+            "url": "https://www.nexpaksolutions.co.za/"
+        },
+        "educationalLevel": "Professional",
+        "inLanguage": "en-ZA",
+        "isAccessibleForFree": true,
+        "courseCode": "NEXPAK-EF-P07"
+    }
+
+    </script>
+
+
+    <!-- =====================================================
+         NEXPAK ACADEMY
+         PART 07 — ADVANCED SYSTEM DESIGN
+         PAGE-SPECIFIC CSS
+    ====================================================== -->
+
+    <style>
+
+
+        /* =====================================================
+           GLOBAL VARIABLES
+        ===================================================== */
+
+        :root {
+
+            --design-bg:
+                #070b14;
+
+            --design-bg-deep:
+                #03050a;
+
+            --design-panel:
+                #0d1420;
+
+            --design-panel-light:
+                #131d2c;
+
+            --design-border:
+                rgba(255,255,255,.09);
+
+            --design-border-strong:
+                rgba(255,255,255,.17);
+
+            --design-text:
+                #edf3ff;
+
+            --design-text-soft:
+                #b7c3d4;
+
+            --design-text-muted:
+                #7f8da1;
+
+            --design-accent:
+                #8b5cf6;
+
+            --design-accent-light:
+                #a78bfa;
+
+            --design-accent-dark:
+                #6d28d9;
+
+            --design-blue:
+                #38bdf8;
+
+            --design-cyan:
+                #22d3ee;
+
+            --design-yellow:
+                #facc15;
+
+            --design-red:
+                #f87171;
+
+            --design-radius:
+                18px;
+
+            --design-radius-small:
+                12px;
+
+            --design-shadow:
+                0 25px 70px rgba(0,0,0,.42);
+
+            --design-transition:
+                .3s ease;
+
+        }
+
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+
+            box-sizing:
+                border-box;
+
+            margin:
+                0;
+
+            padding:
+                0;
+
+        }
+
+
+        html {
+
+            scroll-behavior:
+                smooth;
+
+        }
+
+
+        body {
+
+            min-height:
+                100vh;
+
+            background:
+
+                radial-gradient(
+                    circle at 10% 8%,
+                    rgba(139,92,246,.14),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(56,189,248,.08),
+                    transparent 28%
+                ),
+
+                linear-gradient(
+                    180deg,
+                    var(--design-bg),
+                    var(--design-bg-deep)
+                );
+
+            color:
+                var(--design-text);
+
+            font-family:
+                Inter,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            line-height:
+                1.7;
+
+        }
+
+
+        a {
+
+            color:
+                inherit;
+
+            text-decoration:
+                none;
+
+        }
+
+
+        img {
+
+            max-width:
+                100%;
+
+            height:
+                auto;
+
+        }
+
+
+        /* =====================================================
+           MAIN WIDTH
+        ===================================================== */
+
+        .container,
+        .section,
+        main {
+
+            width:
+                min(
+                    1180px,
+                    calc(100% - 40px)
+                );
+
+            margin-left:
+                auto;
+
+            margin-right:
+                auto;
+
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .academy-header {
+
+            position:
+                relative;
+
+            z-index:
+                50;
+
+            padding:
+                20px 0;
+
+            border-bottom:
+                1px solid
+                var(--design-border);
+
+            background:
+                rgba(3,5,10,.88);
+
+            backdrop-filter:
+                blur(18px);
+
+            -webkit-backdrop-filter:
+                blur(18px);
+
+        }
+
+
+        .academy-header-inner {
+
+            width:
+                min(
+                    1180px,
+                    calc(100% - 40px)
+                );
+
+            margin:
+                auto;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                20px;
+
+        }
+
+
+        .academy-brand {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                14px;
+
+        }
+
+
+        .academy-logo {
+
+            width:
+                46px;
+
+            height:
+                46px;
+
+            display:
+                grid;
+
+            place-items:
+                center;
+
+            border-radius:
+                14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--design-accent),
+                    var(--design-accent-dark)
+                );
+
+            color:
+                white;
+
+            font-size:
+                20px;
+
+            font-weight:
+                900;
+
+            box-shadow:
+                0 10px 35px
+                rgba(139,92,246,.25);
+
+        }
+
+
+        .academy-brand-text {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+        }
+
+
+        .academy-brand-text strong {
+
+            font-size:
+                15px;
+
+            letter-spacing:
+                .08em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .academy-brand-text span {
+
+            color:
+                var(--design-text-muted);
+
+            font-size:
+                12px;
+
+        }
+
+
+        /* =====================================================
+           MODULE BADGE
+        ===================================================== */
+
+        .module-badge {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            gap:
+                9px;
+
+            padding:
+                8px 15px;
+
+            border:
+                1px solid
+                rgba(139,92,246,.30);
+
+            border-radius:
+                999px;
+
+            background:
+                rgba(139,92,246,.09);
+
+            color:
+                var(--design-accent-light);
+
+            font-size:
+                11px;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                .13em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .module-badge::before {
+
+            content:
+                "";
+
+            width:
+                7px;
+
+            height:
+                7px;
+
+            border-radius:
+                50%;
+
+            background:
+                var(--design-accent);
+
+            box-shadow:
+                0 0 13px
+                var(--design-accent);
+
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .module-hero {
+
+            position:
+                relative;
+
+            overflow:
+                hidden;
+
+            padding:
+                95px 0 90px;
+
+            border-bottom:
+                1px solid
+                var(--design-border);
+
+        }
+
+
+        .module-hero::before {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            width:
+                650px;
+
+            height:
+                650px;
+
+            right:
+                -280px;
+
+            top:
+                -300px;
+
+            border-radius:
+                50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(139,92,246,.19),
+                    transparent 68%
+                );
+
+            pointer-events:
+                none;
+
+        }
+
+
+        .module-hero::after {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            width:
+                450px;
+
+            height:
+                450px;
+
+            left:
+                -230px;
+
+            bottom:
+                -270px;
+
+            border-radius:
+                50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(34,211,238,.07),
+                    transparent 68%
+                );
+
+            pointer-events:
+                none;
+
+        }
+
+
+        .module-hero-inner {
+
+            position:
+                relative;
+
+            z-index:
+                2;
+
+        }
+
+
+        .module-hero h1 {
+
+            max-width:
+                920px;
+
+            margin-top:
+                22px;
+
+            font-size:
+                clamp(
+                    40px,
+                    6vw,
+                    76px
+                );
+
+            line-height:
+                1.02;
+
+            letter-spacing:
+                -.045em;
+
+            font-weight:
+                900;
+
+        }
+
+
+        .module-hero h1 span {
+
+            color:
+                var(--design-accent-light);
+
+        }
+
+
+        .module-hero p {
+
+            max-width:
+                800px;
+
+            margin-top:
+                26px;
+
+            color:
+                var(--design-text-soft);
+
+            font-size:
+                clamp(
+                    16px,
+                    2vw,
+                    20px
+                );
+
+        }
+
+
+        /* =====================================================
+           MODULE META
+        ===================================================== */
+
+        .module-meta {
+
+            display:
+                flex;
+
+            flex-wrap:
+                wrap;
+
+            gap:
+                11px;
+
+            margin-top:
+                32px;
+
+        }
+
+
+        .meta-item {
+
+            padding:
+                9px 14px;
+
+            border:
+                1px solid
+                var(--design-border);
+
+            border-radius:
+                10px;
+
+            background:
+                rgba(255,255,255,.035);
+
+            color:
+                var(--design-text-soft);
+
+            font-size:
+                13px;
+
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .content-section {
+
+            padding:
+                82px 0;
+
+        }
+
+
+        .content-section
+        + .content-section {
+
+            border-top:
+                1px solid
+                var(--design-border);
+
+        }
+
+
+        .section-heading {
+
+            max-width:
+                820px;
+
+            margin-bottom:
+                42px;
+
+        }
+
+
+        .section-heading .eyebrow {
+
+            margin-bottom:
+                12px;
+
+            color:
+                var(--design-accent-light);
+
+            font-size:
+                11px;
+
+            font-weight:
+                900;
+
+            letter-spacing:
+                .16em;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        .section-heading h2 {
+
+            font-size:
+                clamp(
+                    29px,
+                    4vw,
+                    47px
+                );
+
+            line-height:
+                1.1;
+
+            letter-spacing:
+                -.025em;
+
+        }
+
+
+        .section-heading p {
+
+            margin-top:
+                16px;
+
+            color:
+                var(--design-text-soft);
+
+        }
+
+
+        /* =====================================================
+           BODY CONTENT
+        ===================================================== */
+
+        .content-section p {
+
+            max-width:
+                870px;
+
+            margin-bottom:
+                20px;
+
+            color:
+                var(--design-text-soft);
+
+        }
+
+
+        .content-section strong {
+
+            color:
+                var(--design-text);
+
+        }
+
+
+        .content-section ul,
+        .content-section ol {
+
+            max-width:
+                850px;
+
+            margin:
+                20px 0 25px 23px;
+
+            color:
+                var(--design-text-soft);
+
+        }
+
+
+        .content-section li {
+
+            margin-bottom:
+                10px;
+
+            padding-left:
+                5px;
+
+        }
+
+
+        .content-section li::marker {
+
+            color:
+                var(--design-accent-light);
+
+        }
+
+
+        /* =====================================================
+           DESIGN GRID
+        ===================================================== */
+
+        .design-grid {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(
+                    3,
+                    minmax(0,1fr)
+                );
+
+            gap:
+                20px;
+
+            margin-top:
+                35px;
+
+        }
+
+
+        .design-card {
+
+            position:
+                relative;
+
+            overflow:
+                hidden;
+
+            padding:
+                29px;
+
+            border:
+                1px solid
+                var(--design-border);
+
+            border-radius:
+                var(--design-radius);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(19,29,44,.96),
+                    rgba(7,11,20,.96)
+                );
+
+            box-shadow:
+                var(--design-shadow);
+
+            transition:
+                transform
+                var(--design-transition),
+
+                border-color
+                var(--design-transition),
+
+                box-shadow
+                var(--design-transition);
+
+        }
+
+
+        .design-card:hover {
+
+            transform:
+                translateY(-7px);
+
+            border-color:
+                rgba(139,92,246,.38);
+
+            box-shadow:
+                0 32px 80px
+                rgba(0,0,0,.48);
+
+        }
+
+
+        .design-card::before {
+
+            content:
+                "";
+
+            position:
+                absolute;
+
+            left:
+                0;
+
+            top:
+                0;
+
+            width:
+                100%;
+
+            height:
+                3px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    var(--design-accent),
+                    transparent
+                );
+
+        }
+
+
+        .design-icon {
+
+            width:
+                52px;
+
+            height:
+                52px;
+
+            display:
+                grid;
+
+            place-items:
+                center;
+
+            margin-bottom:
+                20px;
+
+            border:
+                1px solid
+                rgba(139,92,246,.25);
+
+            border-radius:
+                14px;
+
+            background:
+                rgba(139,92,246,.09);
+
+            color:
+                var(--design-accent-light);
+
+            font-size:
+                22px;
+
+        }
+
+
+        .design-card h3 {
+
+            margin-bottom:
+                10px;
+
+            font-size:
+                19px;
+
+        }
+
+
+        .design-card p {
+
+            margin:
+                0;
+
+            font-size:
+                14px;
+
+        }
+
+
+        /* =====================================================
+           ARCHITECTURE PANEL
+        ===================================================== */
+
+        .architecture-panel {
+
+            position:
+                relative;
+
+            margin:
+                35px 0;
+
+            padding:
+                32px;
+
+            border:
+                1px solid
+                rgba(56,189,248,.20);
+
+            border-radius:
+                var(--design-radius);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(56,189,248,.055),
+                    rgba(255,255,255,.015)
+                );
+
+        }
+
+
+        .architecture-panel h3 {
+
+            margin-bottom:
+                15px;
+
+            color:
+                var(--design-blue);
+
+        }
+
+
+        .architecture-flow {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(
+                    4,
+                    minmax(0,1fr)
+                );
+
+            gap:
+                12px;
+
+            margin-top:
+                25px;
+
+        }
+
+
+        .flow-step {
+
+            position:
+                relative;
+
+            padding:
+                19px;
+
+            text-align:
+                center;
+
+            border:
+                1px solid
+                var(--design-border);
+
+            border-radius:
+                12px;
+
+                                background:
+                        rgba(0,0,0,.17);
+
+                    color:
+                        var(--design-text-soft);
+
+                    font-size:
+                        13px;
+
+                    font-weight:
+                        700;
+
+                }
+
+
+                .flow-step:not(:last-child)::after {
+
+                    content:
+                        "→";
+
+                    position:
+                        absolute;
+
+                    right:
+                        -18px;
+
+                    top:
+                        50%;
+
+                    transform:
+                        translateY(-50%);
+
+                    color:
+                        var(--design-accent-light);
+
+                    font-size:
+                        18px;
+
+                    z-index:
+                        2;
+
+                }
+
+
+                /* =====================================================
+                   ZONING
+                ====================================================== */
+
+                .zone-list {
+
+                    display:
+                        grid;
+
+                    gap:
+                        13px;
+
+                    margin-top:
+                        28px;
+
+                }
+
+
+                .zone-item {
+
+                    display:
+                        grid;
+
+                    grid-template-columns:
+                        55px 1fr;
+
+                    gap:
+                        18px;
+
+                    align-items:
+                        center;
+
+                    padding:
+                        19px;
+
+                    border:
+                        1px solid
+                        var(--design-border);
+
+                    border-radius:
+                        13px;
+
+                    background:
+                        rgba(255,255,255,.025);
+
+                    transition:
+                        border-color
+                        var(--design-transition),
+
+                        background
+                        var(--design-transition);
+
+                }
+
+
+                .zone-item:hover {
+
+                    border-color:
+                        rgba(139,92,246,.28);
+
+                    background:
+                        rgba(139,92,246,.045);
+
+                }
+
+
+                .zone-number {
+
+                    width:
+                        45px;
+
+                    height:
+                        45px;
+
+                    display:
+                        grid;
+
+                    place-items:
+                        center;
+
+                    border-radius:
+                        12px;
+
+                    background:
+                        linear-gradient(
+                            135deg,
+                            var(--design-accent),
+                            var(--design-accent-dark)
+                        );
+
+                    color:
+                        white;
+
+                    font-weight:
+                        900;
+
+                }
+
+
+                .zone-item h3 {
+
+                    margin-bottom:
+                        4px;
+
+                    font-size:
+                        17px;
+
+                }
+
+
+                .zone-item p {
+
+                    margin:
+                        0;
+
+                    font-size:
+                        13px;
+
+                }
+
+
+                /* =====================================================
+                   DECISION PANEL
+                ====================================================== */
+
+                .decision-panel {
+
+                    margin:
+                        38px 0;
+
+                    padding:
+                        31px;
+
+                    border:
+                        1px solid
+                        rgba(250,204,21,.20);
+
+                    border-left:
+                        4px solid
+                        var(--design-yellow);
+
+                    border-radius:
+                        var(--design-radius-small);
+
+                    background:
+                        rgba(250,204,21,.04);
+
+                }
+
+
+                .decision-panel h3 {
+
+                    margin-bottom:
+                        10px;
+
+                    color:
+                        var(--design-yellow);
+
+                }
+
+
+                .decision-panel p {
+
+                    margin:
+                        0;
+
+                }
+
+
+                /* =====================================================
+                   DESIGN PRINCIPLE
+                ====================================================== */
+
+                .design-principle {
+
+                    margin:
+                        45px 0;
+
+                    padding:
+                        42px 35px;
+
+                    text-align:
+                        center;
+
+                    border:
+                        1px solid
+                        rgba(139,92,246,.25);
+
+                    border-radius:
+                        var(--design-radius);
+
+                    background:
+                        linear-gradient(
+                            135deg,
+                            rgba(139,92,246,.09),
+                            rgba(56,189,248,.035)
+                        );
+
+                }
+
+
+                .design-principle::before {
+
+                    content:
+                        "ADVANCED DESIGN PRINCIPLE";
+
+                    display:
+                        block;
+
+                    margin-bottom:
+                        15px;
+
+                    color:
+                        var(--design-accent-light);
+
+                    font-size:
+                        11px;
+
+                    font-weight:
+                        900;
+
+                    letter-spacing:
+                        .16em;
+
+                }
+
+
+                .design-principle p {
+
+                    max-width:
+                        850px;
+
+                    margin:
+                        auto;
+
+                    color:
+                        var(--design-text);
+
+                    font-size:
+                        clamp(
+                            19px,
+                            3vw,
+                            28px
+                        );
+
+                    line-height:
+                        1.38;
+
+                    font-weight:
+                        750;
+
+                }
+
+
+                /* =====================================================
+                   CHECKLIST
+                ====================================================== */
+
+                .design-checklist {
+
+                    display:
+                        grid;
+
+                    grid-template-columns:
+                        repeat(
+                            2,
+                            minmax(0,1fr)
+                        );
+
+                    gap:
+                        13px;
+
+                    margin-top:
+                        28px;
+
+                }
+
+
+                .design-check {
+
+                    display:
+                        flex;
+
+                    align-items:
+                        flex-start;
+
+                    gap:
+                        13px;
+
+                    padding:
+                        16px 18px;
+
+                    border:
+                        1px solid
+                        var(--design-border);
+
+                    border-radius:
+                        11px;
+
+                    background:
+                        rgba(255,255,255,.025);
+
+                    color:
+                        var(--design-text-soft);
+
+                    font-size:
+                        14px;
+
+                }
+
+
+                .design-check::before {
+
+                    content:
+                        "✓";
+
+                    flex:
+                        0 0 auto;
+
+                    width:
+                        23px;
+
+                    height:
+                        23px;
+
+                    display:
+                        grid;
+
+                    place-items:
+                        center;
+
+                    border-radius:
+                        50%;
+
+                    background:
+                        rgba(139,92,246,.13);
+
+                    color:
+                        var(--design-accent-light);
+
+                    font-size:
+                        12px;
+
+                    font-weight:
+                        900;
+
+                }
+
+
+                /* =====================================================
+                   NAVIGATION
+                ====================================================== */
+
+                .part-navigation {
+
+                    width:
+                        min(
+                            1180px,
+                            calc(100% - 40px)
+                        );
+
+                    margin:
+                        0 auto;
+
+                    padding:
+                        50px 0 70px;
+
+                    display:
+                        flex;
+
+                    align-items:
+                        center;
+
+                    justify-content:
+                        space-between;
+
+                    gap:
+                        20px;
+
+                    border-top:
+                        1px solid
+                        var(--design-border);
+
+                }
+
+
+                .nav-button {
+
+                    display:
+                        inline-flex;
+
+                    align-items:
+                        center;
+
+                    justify-content:
+                        center;
+
+                    min-width:
+                        175px;
+
+                    padding:
+                        14px 23px;
+
+                    border:
+                        1px solid
+                        var(--design-border-strong);
+
+                    border-radius:
+                        999px;
+
+                    background:
+                        rgba(255,255,255,.035);
+
+                    color:
+                        var(--design-text);
+
+                    font-size:
+                        14px;
+
+                    font-weight:
+                        800;
+
+                    transition:
+                        transform
+                        var(--design-transition),
+
+                        background
+                        var(--design-transition),
+
+                        border-color
+                        var(--design-transition);
+
+                }
+
+
+                .nav-button:hover {
+
+                    transform:
+                        translateY(-3px);
+
+                    border-color:
+                        var(--design-accent);
+
+                    background:
+                        rgba(139,92,246,.08);
+
+                }
+
+
+                .nav-button.next {
+
+                    background:
+                        linear-gradient(
+                            135deg,
+                            var(--design-accent),
+                            var(--design-accent-dark)
+                        );
+
+                    border-color:
+                        transparent;
+
+                    color:
+                        white;
+
+                }
+
+
+                .nav-button.next:hover {
+
+                    box-shadow:
+                        0 12px 35px
+                        rgba(139,92,246,.28);
+
+                }
+
+
+                /* =====================================================
+                   FOOTER
+                ====================================================== */
+
+                .academy-footer {
+
+                    padding:
+                        42px 0;
+
+                    border-top:
+                        1px solid
+                        var(--design-border);
+
+                    background:
+                        rgba(0,0,0,.25);
+
+                }
+
+
+                .academy-footer-inner {
+
+                    width:
+                        min(
+                            1180px,
+                            calc(100% - 40px)
+                        );
+
+                    margin:
+                        auto;
+
+                    display:
+                        flex;
+
+                    align-items:
+                        center;
+
+                    justify-content:
+                        space-between;
+
+                    gap:
+                        20px;
+
+                }
+
+
+                .academy-footer p {
+
+                    color:
+                        var(--design-text-muted);
+
+                    font-size:
+                        13px;
+
+                }
+
+
+                .academy-footer strong {
+
+                    color:
+                        var(--design-text);
+
+                }
+
+
+                /* =====================================================
+                   SCROLLBAR
+                ====================================================== */
+
+                ::-webkit-scrollbar {
+
+                    width:
+                        10px;
+
+                }
+
+
+                ::-webkit-scrollbar-track {
+
+                    background:
+                        var(--design-bg-deep);
+
+                }
+
+
+                ::-webkit-scrollbar-thumb {
+
+                    background:
+                        rgba(139,92,246,.38);
+
+                    border-radius:
+                        10px;
+
+                }
+
+
+                ::-webkit-scrollbar-thumb:hover {
+
+                    background:
+                        var(--design-accent);
+
+                }
+
+
+                /* =====================================================
+                   SELECTION
+                ====================================================== */
+
+                ::selection {
+
+                    background:
+                        rgba(139,92,246,.30);
+
+                    color:
+                        white;
+
+                }
+
+
+                /* =====================================================
+                   TABLET
+                ====================================================== */
+
+                @media (
+                    max-width: 900px
+                ) {
+
+                    .design-grid {
+
+                        grid-template-columns:
+                            repeat(
+                                2,
+                                minmax(0,1fr)
+                            );
+
+                    }
+
+
+                    .architecture-flow {
+
+                        grid-template-columns:
+                            repeat(
+                                2,
+                                minmax(0,1fr)
+                            );
+
+                    }
+
+
+                    .flow-step:nth-child(2)::after {
+
+                        display:
+                            none;
+
+                    }
+
+
+                    .flow-step:nth-child(4)::after {
+
+                        display:
+                            none;
+
+                    }
+
+
+                    .design-checklist {
+
+                        grid-template-columns:
+                            1fr;
+
+                    }
+
+
+                    .module-hero {
+
+                        padding:
+                            75px 0;
+
+                    }
+
+                }
+
+
+                /* =====================================================
+                   MOBILE
+                ====================================================== */
+
+                @media (
+                    max-width: 640px
+                ) {
+
+                    .container,
+                    .section,
+                    main {
+
+                        width:
+                            calc(100% - 28px);
+
+                    }
+
+
+                    .academy-header-inner {
+
+                        width:
+                            calc(100% - 28px);
+
+                    }
+
+
+                    .academy-header {
+
+                        padding:
+                            15px 0;
+
+                    }
+
+
+                    .academy-logo {
+
+                        width:
+                            40px;
+
+                        height:
+                            40px;
+
+                        font-size:
+                            17px;
+
+                    }
+
+
+                    .academy-brand-text strong {
+
+                        font-size:
+                            12px;
+
+                    }
+
+
+                    .academy-brand-text span {
+
+                        font-size:
+                            9px;
+
+                    }
+
+
+                    .module-hero {
+
+                        padding:
+                            58px 0;
+
+                    }
+
+
+                    .module-hero h1 {
+
+                        font-size:
+                            clamp(
+                                33px,
+                                10vw,
+                                52px
+                            );
+
+                    }
+
+
+                    .module-hero p {
+
+                        font-size:
+                            16px;
+
+                    }
+
+
+                    .content-section {
+
+                        padding:
+                            58px 0;
+
+                    }
+
+
+                    .design-grid {
+
+                        grid-template-columns:
+                            1fr;
+
+                    }
+
+
+                    .architecture-flow {
+
+                        grid-template-columns:
+                            1fr;
+
+                    }
+
+
+                    .flow-step::after {
+
+                        display:
+                            none !important;
+
+                    }
+
+
+                    .architecture-panel {
+
+                        padding:
+                            23px;
+
+                    }
+
+
+                    .zone-item {
+
+                        grid-template-columns:
+                            1fr;
+
+                    }
+
+
+                    .zone-number {
+
+                        width:
+                            43px;
+
+                        height:
+                            43px;
+
+                    }
+
+
+                    .decision-panel {
+
+                        padding:
+                            23px;
+
+                    }
+
+
+                    .design-principle {
+
+                        padding:
+                            29px 20px;
+
+                    }
+
+
+                    .design-principle p {
+
+                        font-size:
+                            20px;
+
+                    }
+
+
+                    .part-navigation {
+
+                        width:
+                            calc(100% - 28px);
+
+                        flex-direction:
+                            column;
+
+                        align-items:
+                            stretch;
+
+                        padding:
+                            35px 0 50px;
+
+                    }
+
+
+                    .nav-button {
+
+                        width:
+                            100%;
+
+                    }
+
+
+                    .academy-footer-inner {
+
+                        width:
+                            calc(100% - 28px);
+
+                        flex-direction:
+                            column;
+
+                        text-align:
+                            center;
+
+                    }
+
+                }
+
+
+                /* =====================================================
+                   SMALL PHONES
+                ====================================================== */
+
+                @media (
+                    max-width: 380px
+                ) {
+
+                    .module-badge {
+
+                        font-size:
+                            9px;
+
+                        padding:
+                            7px 11px;
+
+                    }
+
+
+                    .module-hero h1 {
+
+                        font-size:
+                            31px;
+
+                    }
+
+                    
+                    .section-heading h2 {
+
+                        font-size:
+                            27px;
+
+                    }
+
+                }
+
+
+                /* =====================================================
+                   PRINT
+                ====================================================== */
+
+                @media print {
+
+                    body {
+
+                        background:
+                            white;
+
+                        color:
+                            black;
+
+                    }
+
+
+                    .academy-header,
+                    .part-navigation,
+                    .academy-footer {
+
+                        display:
+                            none;
+
+                    }
+
+
+                    .module-hero,
+                    .content-section {
+
+                        padding:
+                            30px 0;
+
+                    }
+
+
+                    .design-card,
+                    .architecture-panel,
+                    .decision-panel,
+                    .design-principle,
+                    .zone-item {
+
+                        background:
+                            white;
+
+                        color:
+                            black;
+
+                        border:
+                            1px solid #ccc;
+
+                        box-shadow:
+                            none;
+
+                    }
+
+
+                    .module-hero h1,
+                    .section-heading h2,
+                    .design-card h3,
+                    .zone-item h3 {
+
+                        color:
+                            black;
+
+                    }
+
+
+                    p,
+                    li {
+
+                        color:
+                            #222;
+
+                    }
+
+                }
+
+
+                /* =====================================================
+                   PART 07 MODULE THEME — ADVANCED SYSTEM DESIGN
+                   Individual styling for the graduate-level module
+                   and knowledge-check quiz, using the cyan accent
+                   to distinguish it from the base violet palette.
+                ===================================================== */
+
+                .advanced-module {
+
+                    margin-top: 46px;
+                    padding: 38px 34px;
+                    border-radius: var(--design-radius);
+                    background: linear-gradient(160deg, var(--design-panel), var(--design-panel-light));
+                    border: 1px solid rgba(34,211,238,.28);
+                    box-shadow: var(--design-shadow);
+                    color: var(--design-text);
+
+                }
+
+                .advanced-module .module-badge {
+
+                    display: inline-block;
+                    padding: 6px 14px;
+                    border-radius: 999px;
+                    background: rgba(34,211,238,.12);
+                    color: var(--design-cyan);
+                    font-size: 12px;
+                    font-weight: 800;
+                    letter-spacing: .08em;
+                    text-transform: uppercase;
+                    margin-bottom: 14px;
+                    border: 1px solid rgba(34,211,238,.28);
+
+                }
+
+                .advanced-module h2 { color: var(--design-text); margin-bottom: 6px; }
+                .advanced-module h3 { color: var(--design-cyan); margin-top: 26px; margin-bottom: 10px; }
+                .advanced-module p, .advanced-module li { color: var(--design-text-soft); line-height: 1.75; }
+
+                .formula-box {
+
+                    background: rgba(0,0,0,.28);
+                    border-left: 4px solid var(--design-cyan);
+                    border-radius: 10px;
+                    padding: 16px 20px;
+                    margin: 16px 0;
+                    font-family: "Courier New", monospace;
+                    color: var(--design-text);
+                    overflow-x: auto;
+
+                }
+
+                .standards-table {
+
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin: 18px 0;
+                    font-size: 14.5px;
+
+                }
+                .standards-table th, .standards-table td {
+
+                    border: 1px solid rgba(34,211,238,.28);
+                    padding: 10px 12px;
+                    text-align: left;
+                    color: var(--design-text-soft);
+
+                }
+                .standards-table th { background: rgba(34,211,238,.12); color: var(--design-cyan); }
+
+                /* ---------------- QUIZ ---------------- */
+
+                .quiz-block {
+
+                    margin-top: 46px;
+                    padding: 38px 34px;
+                    border-radius: var(--design-radius);
+                    background: linear-gradient(160deg, var(--design-panel-light), var(--design-panel));
+                    border: 1px solid rgba(34,211,238,.28);
+                    box-shadow: var(--design-shadow);
+
+                }
+
+                .quiz-block h2 { color: var(--design-text); }
+
+                .quiz-question {
+
+                    margin-top: 26px;
+                    padding: 18px 20px;
+                    border-radius: 12px;
+                    background: rgba(0,0,0,.22);
+                    border: 1px solid rgba(34,211,238,.28);
+
+                }
+
+                .quiz-question p.q-text { font-weight: 700; color: var(--design-text); margin-bottom: 12px; }
+
+                .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+
+                .quiz-option {
+
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    padding: 10px 14px;
+                    border-radius: 8px;
+                    background: rgba(255,255,255,.03);
+                    border: 1px solid transparent;
+                    cursor: pointer;
+                    color: var(--design-text-soft);
+                    transition: var(--design-transition);
+
+                }
+                .quiz-option:hover { border-color: rgba(34,211,238,.28); }
+                .quiz-option.correct { background: rgba(34,211,238,.15); border-color: var(--design-cyan); color: var(--design-text); }
+                .quiz-option.incorrect { background: rgba(248,113,113,.15); border-color: var(--design-red); color: var(--design-text); }
+
+                .quiz-submit-btn {
+
+                    margin-top: 24px;
+                    padding: 14px 30px;
+                    border: none;
+                    border-radius: 999px;
+                    background: linear-gradient(135deg, var(--design-cyan), var(--design-blue));
+                    color: #03141a;
+                    font-weight: 800;
+                    font-size: 15px;
+                    cursor: pointer;
+                    transition: var(--design-transition);
+
+                }
+                .quiz-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(34,211,238,.35); }
+
+                .quiz-result {
+
+                    margin-top: 20px;
+                    padding: 16px 20px;
+                    border-radius: 10px;
+                    background: rgba(0,0,0,.25);
+                    color: var(--design-text);
+                    font-weight: 700;
+                    display: none;
+
+                }
+
+                .quiz-explain { margin-top: 8px; font-size: 13.5px; font-weight: 400; color: var(--design-text-soft); display: none; }
+
+
+                /* =====================================================
+                   END PART 07 CSS
+                ====================================================== */
+
+            </style>
+
+        </head>
+               
+
+
+<body>
+
+
+    <!-- =========================================
+         ACADEMY HEADER
+    ========================================== -->
+
+    <header class="academy-header">
+
+        <div class="header-content">
+
+            <div class="academy-logo">
+
+                NEXPAK
+
+                <span>
+                    SECURITY ACADEMY
+                </span>
+
+            </div>
+
+
+            <div class="course-label">
+
+                ELECTRIC FENCING
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         COURSE HERO
+    ========================================== -->
+
+    <section class="course-hero">
+
+        <div class="hero-content">
+
+            <span class="course-badge">
+                ELECTRIC FENCING COURSE
+            </span>
+
+            <h1>
+                Part 07
+            </h1>
+
+            <h2>
+                Advanced System Design
+            </h2>
+
+            <p>
+                Learn how professional electric-fence systems
+                are planned as complete security installations,
+                including zoning, perimeter sections, gates,
+                isolation, system architecture and integration
+                with other security technologies.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         COURSE LAYOUT
+    ========================================== -->
+
+    <div class="course-layout">
+
+
+        <!-- =====================================
+             SIDEBAR
+        ====================================== -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-box">
+
+                <div class="sidebar-title">
+                    PART 07 CURRICULUM
+                </div>
+
+
+                <ul class="lesson-nav">
+
+                    <li>
+                        <a href="#system-design">
+                            01. Professional System Design
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#perimeter">
+                            02. Perimeter Analysis
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#zoning">
+                            03. Fence Zoning
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#sections">
+                            04. Fence Sections
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#gates">
+                            05. Gates &amp; Access Points
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#isolation">
+                            06. Isolation &amp; Switching
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#return-paths">
+                            07. Return Paths
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#environment">
+                            08. Complex Environments
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#security-integration">
+                            09. Security Integration
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#system-reliability">
+                            10. System Reliability
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#design-review">
+                            11. Design Review
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#professional-design">
+                            12. Professional Design Checklist
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#advanced-reliability-engineering">
+                            13. Advanced Module: Reliability &amp; Risk Engineering
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#part-07-quiz">
+                            14. Knowledge Check Quiz
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =====================================
+             MAIN CONTENT
+        ====================================== -->
+
+        <main class="lesson-content">
+
+
+            <!-- =================================
+                 01. PROFESSIONAL SYSTEM DESIGN
+            ================================== -->
+
+            <section
+                id="system-design"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    01
+                </div>
+
+                <h2>
+                    Professional System Design
+                </h2>
+
+                <p>
+                    A professional electric fence should be
+                    designed as part of the property's overall
+                    security strategy.
+                </p>
+
+                <p>
+                    The objective is not simply to place
+                    conductors around the perimeter. The system
+                    should be planned so that its physical,
+                    electrical and security functions work
+                    together.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Design Objectives
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Protect the intended perimeter
+                        </li>
+
+                        <li>
+                            Provide reliable electrical operation
+                        </li>
+
+                        <li>
+                            Allow appropriate fault detection
+                        </li>
+
+                        <li>
+                            Provide practical maintenance access
+                        </li>
+
+                        <li>
+                            Integrate with the property's security
+                            system
+                        </li>
+
+                        <li>
+                            Consider future changes to the property
+                        </li>
+
+                        <li>
+                            Meet applicable safety and compliance
+                            requirements
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Security Before Hardware
+                </h3>
+
+                <p>
+                    Equipment should be selected after the
+                    security objective has been established.
+                </p>
+
+                <p>
+                    The designer should first understand what the
+                    fence is intended to protect, where an intruder
+                    could approach the property and what other
+                    security measures are available.
+                </p>
+
+
+                <h3>
+                    Layered Security
+                </h3>
+
+                <p>
+                    Electric fencing is most effective when
+                    integrated into a layered security strategy.
+                </p>
+
+                <p>
+                    Depending on the property, this may include
+                    access control, alarms, CCTV, lighting,
+                    physical barriers and security monitoring.
+                </p>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Design Principle
+                    </h3>
+
+                    <p>
+                        Design the security solution first, then
+                        select and configure the electric-fence
+                        equipment required to support that
+                        solution.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 02. PERIMETER ANALYSIS
+            ================================== -->
+
+            <section
+                id="perimeter"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    02
+                </div>
+
+                <h2>
+                    Perimeter Analysis
+                </h2>
+
+                <p>
+                    Before dividing a fence into electrical zones,
+                    the entire perimeter should be analysed.
+                </p>
+
+                <p>
+                    A perimeter may contain straight sections,
+                    corners, gates, buildings, slopes, vegetation,
+                    neighbouring structures and other features
+                    that affect the design.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Perimeter Analysis Points
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Total perimeter layout
+                        </li>
+
+                        <li>
+                            Corners and direction changes
+                        </li>
+
+                        <li>
+                            Gates and access points
+                        </li>
+
+                        <li>
+                            Changes in terrain
+                        </li>
+
+                        <li>
+                            Existing walls and fences
+                        </li>
+
+                        <li>
+                            Vegetation
+                        </li>
+
+                        <li>
+                            Building interfaces
+                        </li>
+
+                        <li>
+                            Potential climbing or bypass points
+                        </li>
+
+                        <li>
+                            Areas requiring additional security
+                        </li>
+
+                        <li>
+                            Areas requiring maintenance access
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Identify Vulnerable Areas
+                </h3>
+
+                <p>
+                    Not every part of a perimeter presents the
+                    same security risk.
+                </p>
+
+                <p>
+                    Areas near gates, concealed approaches,
+                    adjacent structures, low walls, vegetation or
+                    other access points may require additional
+                    consideration.
+                </p>
+
+
+                <h3>
+                    Site Conditions Can Change
+                </h3>
+
+                <p>
+                    The designer should consider future changes
+                    such as landscaping, building extensions,
+                    additional gates and changes to access routes.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Do Not Design From Measurements Alone
+                    </h3>
+
+                    <p>
+                        A perimeter measurement tells you the
+                        physical size of the property, but it does
+                        not tell you the complete security risk.
+                        Walk and analyse the site before finalising
+                        the design.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 03. FENCE ZONING
+            ================================== -->
+
+            <section
+                id="zoning"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    03
+                </div>
+
+                <h2>
+                    Fence Zoning
+                </h2>
+
+                <p>
+                    Zoning divides an electric-fence installation
+                    into logical sections for improved monitoring,
+                    fault identification and system management.
+                </p>
+
+                <p>
+                    The number and arrangement of zones should be
+                    determined by the design requirements of the
+                    property and the capabilities of the selected
+                    equipment.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Benefits Of Zoning
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Improved fault identification
+                        </li>
+
+                        <li>
+                            Better alarm information
+                        </li>
+
+                        <li>
+                            Easier maintenance
+                        </li>
+
+                        <li>
+                            More structured system management
+                        </li>
+
+                        <li>
+                            Separation of different perimeter areas
+                        </li>
+
+                        <li>
+                            Better integration with monitoring
+                            systems
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Logical Zone Planning
+                </h3>
+
+                <p>
+                    Zones should be planned around the property's
+                    actual security layout rather than simply
+                    dividing the perimeter into equal lengths.
+                </p>
+
+                <p>
+                    A zone may correspond to a particular side of
+                    a property, access area or other logical
+                    security section.
+                </p>
+
+
+                <h3>
+                    Fault Location
+                </h3>
+
+                <p>
+                    Smaller and logically arranged zones can make
+                    it easier to determine which part of a
+                    perimeter requires investigation when a fault
+                    occurs.
+                </p>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Professional Principle
+                    </h3>
+
+                    <p>
+                        Good zoning turns a large perimeter into a
+                        manageable security system.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 04. FENCE SECTIONS
+            ================================== -->
+
+            <section
+                id="sections"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    04
+                </div>
+
+                <h2>
+                    Fence Sections
+                </h2>
+
+                <p>
+                    Individual fence sections should be planned
+                    according to the physical layout and
+                    electrical requirements of the installation.
+                </p>
+
+                <p>
+                    Each section must maintain the required
+                    mechanical and electrical continuity while
+                    remaining compatible with the overall system
+                    architecture.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Section Planning
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Start and end points
+                        </li>
+
+                        <li>
+                            Corner locations
+                        </li>
+
+                        <li>
+                            Gate interfaces
+                        </li>
+
+                        <li>
+                            Isolation points
+                        </li>
+
+                        <li>
+                            High-voltage cable routes
+                        </li>
+
+                        <li>
+                            Earth arrangements
+                        </li>
+
+                        <li>
+                            Monitoring requirements
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Physical Continuity
+                </h3>
+
+                <p>
+                    A section should be physically supported
+                    throughout its route, with conductors
+                    maintained in their intended position.
+                </p>
+
+
+                <h3>
+                    Electrical Continuity
+                </h3>
+
+                <p>
+                    Electrical connections between sections must
+                    be designed and installed using appropriate
+                    components and methods.
+                </p>
+
+                <p>
+                    The technician should be able to identify
+                    where each section begins, ends and connects
+                    to the rest of the system.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Avoid Unplanned Connections
+                    </h3>
+
+                    <p>
+                        Additional links or modifications should
+                        not be added without understanding their
+                        effect on the complete electrical and
+                        monitoring system.
+                    </p>
+
+                </div>
+
+  </section>
+
+                        <!-- =================================
+                 05. GATES & ACCESS POINTS
+            ================================== -->
+
+            <section
+                id="gates"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    05
+                </div>
+
+                <h2>
+                    Gates &amp; Access Points
+                </h2>
+
+                <p>
+                    Gates are one of the most important areas to
+                    consider when designing an electric-fence
+                    perimeter.
+                </p>
+
+                <p>
+                    A gate creates a break in the physical
+                    perimeter and therefore requires careful
+                    consideration of electrical continuity,
+                    isolation, mechanical movement and security.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Gate Design Considerations
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Gate type and construction
+                        </li>
+
+                        <li>
+                            Gate movement
+                        </li>
+
+                        <li>
+                            Electrical isolation
+                        </li>
+
+                        <li>
+                            Flexible connections where appropriate
+                        </li>
+
+                        <li>
+                            Mechanical protection
+                        </li>
+
+                        <li>
+                            Access requirements
+                        </li>
+
+                        <li>
+                            Alarm and monitoring requirements
+                        </li>
+
+                        <li>
+                            Maintenance access
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Swing Gates
+                </h3>
+
+                <p>
+                    Swing gates require particular attention to
+                    movement. Electrical connections must be
+                    arranged so that normal gate operation does not
+                    damage the connection or create an unsafe
+                    condition.
+                </p>
+
+
+                <h3>
+                    Sliding Gates
+                </h3>
+
+                <p>
+                    Sliding gates introduce additional mechanical
+                    movement and may interact with gate motors,
+                    tracks and other security equipment.
+                </p>
+
+                <p>
+                    The electric-fence design must therefore be
+                    coordinated with the complete gate system.
+                </p>
+
+
+                <h3>
+                    Electrified Gate Sections
+                </h3>
+
+                <p>
+                    Where conductors are installed on or around a
+                    gate, the designer must ensure that the
+                    arrangement remains compatible with the
+                    electrical and mechanical requirements of the
+                    system.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Never Allow Moving Parts To Damage
+                        High-Voltage Connections
+                    </h3>
+
+                    <p>
+                        Gate movement, vibration and repeated
+                        opening and closing can place mechanical
+                        stress on electrical connections. Connections
+                        must be protected and installed using
+                        suitable methods and components.
+                    </p>
+
+                </div>
+
+
+                <h3>
+                    Pedestrian Access
+                </h3>
+
+                <p>
+                    Pedestrian gates and access points must be
+                    considered as part of the complete security
+                    design.
+                </p>
+
+                <p>
+                    The design should account for safe access,
+                    appropriate isolation arrangements and the
+                    requirements of any integrated access-control
+                    system.
+                </p>
+
+            </section>
+
+
+            <!-- =================================
+                 06. ISOLATION & SWITCHING
+            ================================== -->
+
+            <section
+                id="isolation"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    06
+                </div>
+
+                <h2>
+                    Isolation &amp; Switching
+                </h2>
+
+                <p>
+                    Isolation allows selected parts of a fence
+                    system to be separated from the energised
+                    circuit when required for maintenance,
+                    servicing or system management.
+                </p>
+
+                <p>
+                    Isolation arrangements must be deliberately
+                    designed and clearly understood by anyone
+                    responsible for maintaining the installation.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Isolation Objectives
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Support safe maintenance
+                        </li>
+
+                        <li>
+                            Allow controlled servicing
+                        </li>
+
+                        <li>
+                            Assist fault finding
+                        </li>
+
+                        <li>
+                            Separate appropriate fence sections
+                        </li>
+
+                        <li>
+                            Reduce unnecessary disruption to the
+                            remainder of the system
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Isolation Points
+                </h3>
+
+                <p>
+                    Isolation points should be positioned according
+                    to the system design and should be accessible
+                    to authorised personnel.
+                </p>
+
+                <p>
+                    Their location should be recorded on the
+                    installation documentation.
+                </p>
+
+
+                <h3>
+                    Identification
+                </h3>
+
+                <p>
+                    Each isolation point should be clearly
+                    identifiable where required by the installation
+                    design and applicable requirements.
+                </p>
+
+                <p>
+                    A technician arriving for maintenance should
+                    not have to guess which switch controls which
+                    section.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Isolation Does Not Mean "Safe" By Default
+                    </h3>
+
+                    <p>
+                        Switching or isolating a section does not
+                        remove the need for proper electrical safety
+                        procedures. Always verify the condition of
+                        the circuit using appropriate procedures
+                        before beginning work.
+                    </p>
+
+                </div>
+
+
+                <h3>
+                    Unauthorised Switching
+                </h3>
+
+                <p>
+                    Isolation equipment should be protected from
+                    unnecessary or unauthorised operation where
+                    appropriate.
+                </p>
+
+            </section>
+
+
+            <!-- =================================
+                 07. RETURN PATHS
+            ================================== -->
+
+            <section
+                id="return-paths"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    07
+                </div>
+
+                <h2>
+                    Return Paths
+                </h2>
+
+                <p>
+                    Understanding the intended electrical path of
+                    an electric-fence system is essential when
+                    designing and fault-finding an installation.
+                </p>
+
+                <p>
+                    The designer must understand how the energizer,
+                    fence circuit, earth system and associated
+                    connections interact.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Think In Complete Circuits
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Energizer output
+                        </li>
+
+                        <li>
+                            High-voltage connection
+                        </li>
+
+                        <li>
+                            Fence conductors
+                        </li>
+
+                        <li>
+                            Intended electrical path
+                        </li>
+
+                        <li>
+                            Earth system
+                        </li>
+
+                        <li>
+                            Energizer return connection
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Why The Complete Path Matters
+                </h3>
+
+                <p>
+                    A technician who only examines the fence wire
+                    may overlook problems elsewhere in the system.
+                </p>
+
+                <p>
+                    Faults can involve connections, insulation,
+                    earth arrangements or other parts of the
+                    electrical path.
+                </p>
+
+
+                <h3>
+                    Unwanted Leakage
+                </h3>
+
+                <p>
+                    Electrical leakage can reduce system
+                    performance and may result from vegetation,
+                    damaged insulation, contaminated components,
+                    poor installation practices or other
+                    conditions.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Never Create An Unintended Return Path
+                    </h3>
+
+                    <p>
+                        Connections between fence circuits, earth
+                        systems or other electrical systems must
+                        only be made where specifically permitted
+                        by the system design and applicable
+                        requirements.
+                    </p>
+
+                </div>
+
+
+                <h3>
+                    Fault-Finding Advantage
+                </h3>
+
+                <p>
+                    Understanding the intended circuit makes it
+                    easier to isolate sections and determine where
+                    electrical performance is being lost.
+                </p>
+
+            </section>
+
+
+            <!-- =================================
+                 08. COMPLEX ENVIRONMENTS
+            ================================== -->
+
+            <section
+                id="environment"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    08
+                </div>
+
+                <h2>
+                    Complex Environments
+                </h2>
+
+                <p>
+                    Not every property provides a simple,
+                    straight perimeter. Professional installers
+                    must be able to adapt the system design to
+                    difficult site conditions without compromising
+                    safety or system performance.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Common Complex Conditions
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Sloping ground
+                        </li>
+
+                        <li>
+                            Uneven terrain
+                        </li>
+
+                        <li>
+                            Retaining walls
+                        </li>
+
+                        <li>
+                            Existing masonry
+                        </li>
+
+                        <li>
+                            Trees and vegetation
+                        </li>
+
+                        <li>
+                            Building structures
+                        </li>
+
+                        <li>
+                            Narrow access areas
+                        </li>
+
+                        <li>
+                            Multiple gates
+                        </li>
+
+                        <li>
+                            Adjacent fences
+                        </li>
+
+                        <li>
+                            Difficult cable routes
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Sloping Ground
+                </h3>
+
+                <p>
+                    On sloping properties, conductor alignment,
+                    mechanical support and clearances must be
+                    considered carefully.
+                </p>
+
+                <p>
+                    The fence should follow the intended design
+                    without creating excessive gaps or mechanical
+                    stress.
+                </p>
+
+
+                <h3>
+                    Vegetation
+                </h3>
+
+                <p>
+                    Trees, branches, shrubs and rapidly growing
+                    vegetation can create ongoing maintenance
+                    problems.
+                </p>
+
+                <p>
+                    The designer should consider both current
+                    vegetation and expected future growth.
+                </p>
+
+
+                <h3>
+                    Existing Structures
+                </h3>
+
+                <p>
+                    Walls, buildings and other structures may
+                    influence where brackets, posts and conductors
+                    can be installed.
+                </p>
+
+                <p>
+                    The structure must be assessed before attaching
+                    security equipment to it.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Do Not Force A Standard Design Onto A
+                        Difficult Property
+                    </h3>
+
+                    <p>
+                        When site conditions change, the design
+                        should change with them. A professional
+                        installation adapts to the property while
+                        maintaining the required safety, security
+                        and technical objectives.
+                    </p>
+
+                </div>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Professional Design Principle
+                    </h3>
+
+                    <p>
+                        Difficult sites require more planning, not
+                        less. Identify the constraint, understand
+                        its effect on the system and design a
+                        controlled solution before installation
+                        begins.
+                    </p>
+
+                </div>
+
+    </section>
+
+                        <!-- =================================
+                 09. SECURITY INTEGRATION
+            ================================== -->
+
+            <section
+                id="security-integration"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    09
+                </div>
+
+                <h2>
+                    Security Integration
+                </h2>
+
+                <p>
+                    A modern electric fence should be considered
+                    as one layer of a complete security system.
+                    Integrating the fence with other technologies
+                    can improve detection, verification,
+                    response and overall situational awareness.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Common Security Integrations
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Intrusion alarm systems
+                        </li>
+
+                        <li>
+                            CCTV surveillance
+                        </li>
+
+                        <li>
+                            Access control
+                        </li>
+
+                        <li>
+                            Gate automation
+                        </li>
+
+                        <li>
+                            Security lighting
+                        </li>
+
+                        <li>
+                            Monitoring centres
+                        </li>
+
+                        <li>
+                            Remote notification systems
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Electric Fence + Alarm System
+                </h3>
+
+                <p>
+                    An electric fence can provide perimeter
+                    detection information to an alarm system where
+                    the equipment and design support that
+                    integration.
+                </p>
+
+                <p>
+                    The integration should be planned so that the
+                    correct fence condition is reported to the
+                    correct alarm input or monitoring channel.
+                </p>
+
+
+                <h3>
+                    Electric Fence + CCTV
+                </h3>
+
+                <p>
+                    CCTV can provide visual verification when an
+                    electric-fence event occurs.
+                </p>
+
+                <p>
+                    For example, an alarm event associated with a
+                    particular perimeter area can be used as a
+                    trigger for operators to investigate the
+                    corresponding camera view.
+                </p>
+
+
+                <h3>
+                    Electric Fence + Access Control
+                </h3>
+
+                <p>
+                    Gates often combine electric fencing with
+                    access-control and gate-automation equipment.
+                </p>
+
+                <p>
+                    These systems must be coordinated carefully so
+                    that their electrical, mechanical and security
+                    functions do not interfere with one another.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Integration Must Be Deliberate
+                    </h3>
+
+                    <p>
+                        Never connect security equipment together
+                        simply because the terminals appear
+                        compatible. Verify the electrical
+                        characteristics, interface requirements and
+                        manufacturer's instructions for the
+                        equipment involved.
+                    </p>
+
+                </div>
+
+
+                <h3>
+                    Monitoring Centre Integration
+                </h3>
+
+                <p>
+                    Where the system is connected to a monitoring
+                    service, alarm events should be clearly
+                    identified so that the responding operator can
+                    understand which part of the property has
+                    generated the event.
+                </p>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Design Principle
+                    </h3>
+
+                    <p>
+                        The best perimeter system does not merely
+                        detect an event. It helps the security team
+                        understand where the event occurred and
+                        provides information that supports an
+                        appropriate response.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 10. SYSTEM RELIABILITY
+            ================================== -->
+
+            <section
+                id="system-reliability"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    10
+                </div>
+
+                <h2>
+                    System Reliability
+                </h2>
+
+                <p>
+                    Reliability is a major consideration when
+                    designing a security perimeter.
+                </p>
+
+                <p>
+                    A system that constantly generates nuisance
+                    alarms, loses performance or requires repeated
+                    repairs does not provide the same level of
+                    security as a correctly designed and maintained
+                    system.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Reliability Factors
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Correct equipment selection
+                        </li>
+
+                        <li>
+                            Good mechanical construction
+                        </li>
+
+                        <li>
+                            Reliable electrical connections
+                        </li>
+
+                        <li>
+                            Appropriate insulation
+                        </li>
+
+                        <li>
+                            Effective earthing
+                        </li>
+
+                        <li>
+                            Environmental suitability
+                        </li>
+
+                        <li>
+                            Appropriate zoning
+                        </li>
+
+                        <li>
+                            Correct maintenance planning
+                        </li>
+
+                        <li>
+                            Backup power where required
+                        </li>
+
+                        <li>
+                            Proper documentation
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Nuisance Alarms
+                </h3>
+
+                <p>
+                    Repeated false or nuisance alarms can cause
+                    users and monitoring personnel to become less
+                    responsive to genuine security events.
+                </p>
+
+                <p>
+                    The system should therefore be designed and
+                    maintained to minimise avoidable nuisance
+                    conditions.
+                </p>
+
+
+                <h3>
+                    Environmental Reliability
+                </h3>
+
+                <p>
+                    Outdoor systems must be designed with the
+                    environment in mind.
+                </p>
+
+                <p>
+                    Rain, dust, vegetation, corrosion, temperature
+                    changes, animals and physical impact can all
+                    influence long-term performance.
+                </p>
+
+
+                <h3>
+                    Future Maintenance
+                </h3>
+
+                <p>
+                    A professional design should make maintenance
+                    practical.
+                </p>
+
+                <p>
+                    Components should be accessible where
+                    appropriate, isolation points should be
+                    identifiable and the system documentation
+                    should allow technicians to understand the
+                    installation.
+                </p>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Design For The Next Technician
+                    </h3>
+
+                    <p>
+                        The person who installs the system may not
+                        be the person who services it five years
+                        later. A professional installation should
+                        remain understandable long after the
+                        original installation team has left.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 11. DESIGN REVIEW
+            ================================== -->
+
+            <section
+                id="design-review"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    11
+                </div>
+
+                <h2>
+                    Design Review
+                </h2>
+
+                <p>
+                    Before installation begins, the proposed
+                    system should be reviewed against the
+                    requirements identified during the site
+                    assessment.
+                </p>
+
+                <p>
+                    A design review provides an opportunity to
+                    identify problems before materials are
+                    purchased or construction begins.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Design Review Questions
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            What is the security objective?
+                        </li>
+
+                        <li>
+                            What perimeter requires protection?
+                        </li>
+
+                        <li>
+                            Where are the vulnerable areas?
+                        </li>
+
+                        <li>
+                            How will the perimeter be divided into
+                            logical sections?
+                        </li>
+
+                        <li>
+                            Where are the gates and access points?
+                        </li>
+
+                        <li>
+                            Where are isolation points required?
+                        </li>
+
+                        <li>
+                            How will the energizer be positioned?
+                        </li>
+
+                        <li>
+                            How will the earth system be arranged?
+                        </li>
+
+                        <li>
+                            How will high-voltage cables be routed?
+                        </li>
+
+                        <li>
+                            How will alarms or monitoring be
+                            integrated?
+                        </li>
+
+                        <li>
+                            What maintenance issues could develop?
+                        </li>
+
+                        <li>
+                            What documentation will be required?
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Check Before You Build
+                </h3>
+
+                <p>
+                    A mistake discovered during design is usually
+                    easier and cheaper to correct than a mistake
+                    discovered after the fence has been
+                    constructed.
+                </p>
+
+
+                <h3>
+                    Material Planning
+                </h3>
+
+                <p>
+                    Once the design has been reviewed, prepare a
+                    material requirement based on the actual
+                    installation.
+                </p>
+
+                <p>
+                    Consider conductors, posts, brackets,
+                    insulators, high-voltage cable, connections,
+                    isolation equipment, warning signs, energizer
+                    equipment and other system components.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Avoid Under-Specifying The Installation
+                    </h3>
+
+                    <p>
+                        Cutting materials or selecting components
+                        purely to reduce the initial cost can
+                        compromise installation quality and
+                        long-term reliability.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 12. PROFESSIONAL DESIGN CHECKLIST
+            ================================== -->
+
+            <section
+                id="professional-design"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    12
+                </div>
+
+                <h2>
+                    Professional Design Checklist
+                </h2>
+
+                <p>
+                    Use the following checklist as a structured
+                    design review before beginning a major electric
+                    fence installation.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        System Design Checklist
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Security objective identified
+                        </li>
+
+                        <li>
+                            Property perimeter assessed
+                        </li>
+
+                        <li>
+                            Vulnerable areas identified
+                        </li>
+
+                        <li>
+                            Fence layout planned
+                        </li>
+
+                        <li>
+                            Logical zones established
+                        </li>
+
+                        <li>
+                            Fence sections identified
+                        </li>
+
+                        <li>
+                            Gates and access points considered
+                        </li>
+
+                        <li>
+                            Isolation requirements identified
+                        </li>
+
+                        <li>
+                            Electrical paths understood
+                        </li>
+
+                        <li>
+                            Earth system planned
+                        </li>
+
+                        <li>
+                            Energizer requirements confirmed
+                        </li>
+
+                        <li>
+                            High-voltage cable routes planned
+                        </li>
+
+                        <li>
+                            Environmental conditions considered
+                        </li>
+
+                        <li>
+                            Security integrations identified
+                        </li>
+
+                        <li>
+                            Maintenance requirements considered
+                        </li>
+
+                        <li>
+                            Applicable compliance requirements
+                            verified
+                        </li>
+
+                        <li>
+                            Materials identified
+                        </li>
+
+                        <li>
+                            Documentation requirements identified
+                        </li>
+
+                        <li>
+                            Final design reviewed before
+                            construction
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Part 07 Complete
+                    </h3>
+
+                    <p>
+                        Part 07 introduced advanced electric-fence
+                        system design, including perimeter
+                        analysis, zoning, fence sections, gates,
+                        isolation, electrical paths, difficult
+                        environments and security integration.
+                    </p>
+
+                    <p>
+                        The learner should now understand that
+                        professional electric-fence design is a
+                        planning exercise that combines physical
+                        security, electrical engineering principles,
+                        safety, reliability, maintenance and
+                        system integration.
+                    </p>
+
+                    <p>
+                        The next stage will move deeper into
+                        advanced installation practice, including
+                        complex perimeter construction,
+                        specialist components, installation
+                        techniques and professional troubleshooting.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================================
+                 13. ADVANCED MODULE — RELIABILITY &
+                 RISK ENGINEERING (COLLEGE LEVEL)
+            ========================================== -->
+
+            <section
+                id="advanced-reliability-engineering"
+                class="advanced-module"
+            >
+
+                <span class="module-badge">
+                    Advanced Module &middot; College Level
+                </span>
+
+                <h2>
+                    13. Advanced Module: Reliability &amp; Risk Engineering
+                </h2>
+
+                <p>
+                    This module introduces two formal engineering
+                    frameworks — reliability analysis and risk-based
+                    design — that separate a professionally
+                    engineered perimeter from one that simply "meets
+                    spec." These frameworks let a designer justify
+                    zoning, redundancy and component choices with
+                    reasoning rather than convention alone.
+                </p>
+
+                <h3>13.1 Series Reliability of a Perimeter System</h3>
+
+                <p>
+                    A single, unzoned perimeter behaves as a series
+                    reliability system: if any one segment fails
+                    (cut, shorted, or de-energised), the entire
+                    perimeter's protective function fails. For
+                    independent segments with individual reliability
+                    R&#8321;, R&#8322;, &hellip; R&#8345;, the system
+                    reliability is:
+                </p>
+
+                <div class="formula-box">
+                    R<sub>system</sub> = R&#8321; &times; R&#8322; &times; &hellip; &times; R&#8345;
+                </div>
+
+                <p>
+                    Because reliabilities multiply, a system with
+                    many series-dependent segments has lower overall
+                    reliability than any individual segment — this
+                    is the formal justification for zoning: dividing
+                    a perimeter into independently monitored,
+                    independently isolatable sections converts a
+                    single series system into multiple smaller
+                    systems, so a fault in one zone no longer
+                    silently defeats protection everywhere else.
+                </p>
+
+                <h3>13.2 Risk-Based Zoning</h3>
+
+                <p>
+                    Not all sections of a perimeter carry equal
+                    consequence if defeated. A risk-based approach
+                    scores each section on likelihood of attack or
+                    failure and consequence of a breach, then applies
+                    the highest monitoring, redundancy and
+                    response priority to the highest-scoring
+                    sections — rather than treating every metre of
+                    fence identically.
+                </p>
+
+                <table class="standards-table">
+                    <tr>
+                        <th>Factor</th>
+                        <th>Design Response If High</th>
+                    </tr>
+                    <tr>
+                        <td>Likelihood (concealment, access, prior incidents)</td>
+                        <td>Additional zoning, dedicated monitoring, lighting</td>
+                    </tr>
+                    <tr>
+                        <td>Consequence (asset value, safety exposure)</td>
+                        <td>Redundant energizer supply, faster response protocol</td>
+                    </tr>
+                    <tr>
+                        <td>Detectability</td>
+                        <td>Independent alarm zone rather than shared circuit</td>
+                    </tr>
+                </table>
+
+                <h3>13.3 Redundancy and Common-Cause Failure</h3>
+
+                <p>
+                    Adding a second energizer to a critical section
+                    only improves reliability if the two units do
+                    not share a single point of failure. A backup
+                    energizer sharing the same mains supply, the
+                    same earth system, or the same control panel as
+                    the primary unit is vulnerable to a
+                    <strong>common-cause failure</strong> — one event
+                    (a power outage, a lightning strike on a shared
+                    earth) that disables both units simultaneously.
+                    Genuine redundancy requires independent supply
+                    paths, independent earthing, or both, proportional
+                    to the assessed risk of the section being
+                    protected.
+                </p>
+
+                <div class="success-card">
+                    <h3>Applying This Module</h3>
+                    <p>
+                        For your next design, score each perimeter
+                        section on likelihood and consequence, and
+                        check whether any proposed "redundant"
+                        component actually shares a single point of
+                        failure with its primary — a supply, an
+                        earth, or a control point.
+                    </p>
+                </div>
+
+            </section>
+
+
+            <!-- =========================================
+                 14. KNOWLEDGE CHECK QUIZ
+            ========================================== -->
+
+            <section
+                id="part-07-quiz"
+                class="quiz-block"
+            >
+
+                <span class="module-badge">
+                    Knowledge Check
+                </span>
+
+                <h2>14. Part 07 Quiz</h2>
+
+                <p>
+                    Answer the questions below, then click
+                    "Check My Answers" to see your score and
+                    explanations.
+                </p>
+
+                <form id="quiz-form-p07">
+
+                    <div class="quiz-question" data-correct="c">
+                        <p class="q-text">1. Why does an unzoned perimeter behave as a series reliability system?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> Because all sections share the same energizer joule rating</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> Because reliability only applies to electrical components</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> Because a failure anywhere in the unzoned line defeats protection everywhere</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> Because series systems are always more reliable</label>
+                        </div>
+                        <p class="quiz-explain">In an unzoned perimeter, one segment failing (cut or shorted) removes protection along the entire line — the defining behaviour of a series reliability system.</p>
+                    </div>
+
+                    <div class="quiz-question" data-correct="b">
+                        <p class="q-text">2. What is the primary engineering justification for zoning a perimeter?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> It reduces the cost of insulators</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> It converts one series-dependent system into multiple independently isolatable systems</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> It increases the joule output of the energizer</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> It is required for aesthetic reasons only</label>
+                        </div>
+                        <p class="quiz-explain">Zoning divides the perimeter into independent sections so that a fault in one zone does not silently defeat protection in every other zone.</p>
+                    </div>
+
+                    <div class="quiz-question" data-correct="d">
+                        <p class="q-text">3. In risk-based zoning, which two factors are primarily used to prioritise sections?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q3" value="a"> Post colour and wire gauge</label>
+                            <label class="quiz-option"><input type="radio" name="q3" value="b"> Installation date and warranty period</label>
+                            <label class="quiz-option"><input type="radio" name="q3" value="c"> Distance from the energizer only</label>
+                            <label class="quiz-option"><input type="radio" name="q3" value="d"> Likelihood of attack or failure, and consequence of a breach</label>
+                        </div>
+                        <p class="quiz-explain">Risk-based zoning scores sections on likelihood and consequence, directing the highest monitoring and redundancy to the highest-scoring sections.</p>
+                    </div>
+
+                    <div class="quiz-question" data-correct="a">
+                        <p class="q-text">4. What is a common-cause failure in the context of a backup energizer?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q4" value="a"> A single event, such as a shared earth fault, disabling both primary and backup units simultaneously</label>
+                            <label class="quiz-option"><input type="radio" name="q4" value="b"> A fault that only ever affects the primary unit</label>
+                            <label class="quiz-option"><input type="radio" name="q4" value="c"> A scheduled maintenance event</label>
+                            <label class="quiz-option"><input type="radio" name="q4" value="d"> A manufacturing defect present in only one unit</label>
+                        </div>
+                        <p class="quiz-explain">If primary and backup units share a supply, earth, or control point, a single event can disable both — defeating the purpose of redundancy.</p>
+                    </div>
+
+                    <div class="quiz-question" data-correct="c">
+                        <p class="q-text">5. What must be true for a backup energizer to provide genuine redundancy?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q5" value="a"> It must be the same brand as the primary unit</label>
+                            <label class="quiz-option"><input type="radio" name="q5" value="b"> It must be installed in the same enclosure as the primary unit</label>
+                            <label class="quiz-option"><input type="radio" name="q5" value="c"> It must have independent supply and/or earthing so it does not share a single point of failure</label>
+                            <label class="quiz-option"><input type="radio" name="q5" value="d"> It must have a lower joule rating than the primary unit</label>
+                        </div>
+                        <p class="quiz-explain">Genuine redundancy requires independence from the primary unit's points of failure — typically separate supply paths, separate earthing, or both.</p>
+                    </div>
+
+                    <button type="button" class="quiz-submit-btn" onclick="gradeQuizP07()">Check My Answers</button>
+
+                    <div class="quiz-result" id="quiz-result-p07"></div>
+
+                </form>
+
+            </section>
+
+
+            <!-- =========================================
+                 PART NAVIGATION
+            ========================================== -->
+
+            <div class="part-navigation">
+
+                <a
+                    href="part-06.html"
+                    class="nav-button previous"
+                >
+                    ← Previous Part
+                </a>
+
+
+                <a
+                    href="part-08.html"
+                    class="nav-button next"
+                >
+                    Part 08 →
+                </a>
+
+            </div>
+
+
+        </main>
+
+
+    </div>
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer class="academy-footer">
+
+        <div class="footer-content">
+
+            <h3>
+                NEXPAK SECURITY ACADEMY
+            </h3>
+
+            <p>
+                Professional security training and
+                practical installation knowledge.
+            </p>
+
+            <p class="footer-copy">
+                © 2026 Nexpak Security Solutions.
+                All Rights Reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script>
+
+        function gradeQuizP07() {
+
+            var form = document.getElementById("quiz-form-p07");
+            var questions = form.querySelectorAll(".quiz-question");
+            var score = 0;
+
+            questions.forEach(function (q) {
+
+                var correct = q.getAttribute("data-correct");
+                var options = q.querySelectorAll(".quiz-option");
+                var explain = q.querySelector(".quiz-explain");
+                var selected = q.querySelector("input:checked");
+
+                options.forEach(function (opt) {
+                    opt.classList.remove("correct", "incorrect");
+                });
+
+                options.forEach(function (opt) {
+                    var input = opt.querySelector("input");
+                    if (input.value === correct) {
+                        opt.classList.add("correct");
+                    } else if (selected && input.value === selected.value) {
+                        opt.classList.add("incorrect");
+                    }
+                });
+
+                if (selected && selected.value === correct) {
+                    score++;
+                }
+
+                explain.style.display = "block";
+
+            });
+
+            var result = document.getElementById("quiz-result-p07");
+            result.style.display = "block";
+            result.textContent = "You scored " + score + " out of " + questions.length + ".";
+
+        }
+
+    </script>
+
+</body>
+
+    </html>

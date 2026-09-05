@@ -1,0 +1,2826 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Electric Fencing Course | Part 05 | Energizers &amp; Electrical Systems
+    </title>
+
+    <meta
+        name="description"
+        content="Nexpak Security Academy Electric Fencing Course Part 05 - Energizers, Electrical Systems, High-Voltage Circuits, Earthing and Electrical Safety"
+    >
+
+    <meta
+        name="keywords"
+        content="electric fence energizer, energizer types, high voltage circuit electric fence, electric fence earthing system, electric fence isolation safety, energizer joule rating, electric fence electrical testing, fault finding electric fence, electric fence commissioning, Nexpak Security Academy, electric fencing course South Africa, SANS 10222 electric fence, IEC 60335-2-76"
+    >
+
+    <meta
+        name="author"
+        content="Nexpak Security Academy"
+    >
+
+    <meta
+        name="robots"
+        content="index, follow"
+    >
+
+    <link
+        rel="canonical"
+        href="https://www.nexpaksolutions.co.za/academy/part-05.html"
+    >
+
+
+    <!-- =====================================================
+         OPEN GRAPH
+    ====================================================== -->
+
+    <meta
+        property="og:type"
+        content="website"
+    >
+
+    <meta
+        property="og:title"
+        content="Electric Fencing Course | Part 05 | Energizers &amp; Electrical Systems"
+    >
+
+    <meta
+        property="og:description"
+        content="Learn energizers, high-voltage circuits, earthing, isolation, electrical testing, fault finding and commissioning for professional electric-fence systems."
+    >
+
+    <meta
+        property="og:url"
+        content="https://www.nexpaksolutions.co.za/academy/part-05.html"
+    >
+
+    <meta
+        property="og:site_name"
+        content="Nexpak Security Academy"
+    >
+
+
+    <!-- =====================================================
+         SOCIAL SHARING
+    ====================================================== -->
+
+    <meta
+        name="twitter:card"
+        content="summary"
+    >
+
+    <meta
+        name="twitter:title"
+        content="Electric Fencing Course | Part 05 | Energizers &amp; Electrical Systems"
+    >
+
+    <meta
+        name="twitter:description"
+        content="Energizers, high-voltage circuits, earthing, isolation, testing, fault finding and commissioning explained for working technicians."
+    >
+
+    <style>
+
+        /* =====================================================
+           PART 05 COMPLETE PAGE STYLESHEET — ENERGIZERS & ELECTRICAL SYSTEMS
+           Complete, self-contained page stylesheet — no
+           external academy.css dependency.
+        ===================================================== */
+
+        :root {
+
+            --m05-accent: #f5b342;
+            --m05-accent-dark: #b8790a;
+            --m05-accent-soft: rgba(245,179,66,.12);
+            --m05-bg: #15120a;
+            --m05-bg-deep: #0a0805;
+            --m05-panel: #14110a;
+            --m05-panel-light: #1e1a10;
+            --m05-border: rgba(245,179,66,.28);
+            --m05-border-strong: rgba(245,179,66,.45);
+            --m05-text: #f4ecd9;
+            --m05-text-soft: #c9bfa4;
+            --m05-text-muted: #8f8368;
+            --m05-info: #38bdf8;
+            --m05-warning: #facc15;
+            --m05-danger: #e0563f;
+            --m05-success: #7bc47f;
+            --m05-radius: 18px;
+            --m05-radius-small: 12px;
+            --m05-shadow: 0 25px 65px rgba(0,0,0,.4);
+            --m05-transition: .25s ease;
+
+        }
+
+        /* ---------------- RESET ---------------- */
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 8% 6%, rgba(245,179,66,.14), transparent 32%),
+                radial-gradient(circle at 92% 18%, rgba(56,189,248,.08), transparent 30%),
+                linear-gradient(180deg, var(--m05-bg), var(--m05-bg-deep));
+            color: var(--m05-text);
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.7;
+        }
+
+        a { color: inherit; text-decoration: none; }
+        img { max-width: 100%; height: auto; }
+
+        .container, main, .course-layout {
+            width: min(1180px, calc(100% - 40px));
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ---------------- HEADER ---------------- */
+
+        .academy-header {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--m05-border);
+            background: rgba(0,0,0,.35);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .header-content {
+            width: min(1180px, calc(100% - 40px));
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .academy-logo {
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: .04em;
+            color: var(--m05-text);
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .academy-logo span {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .12em;
+            color: var(--m05-accent);
+            background: var(--m05-accent-soft);
+            border: 1px solid var(--m05-border);
+            padding: 4px 10px;
+            border-radius: 999px;
+        }
+
+        .course-label {
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--m05-text-muted);
+            border: 1px solid var(--m05-border);
+            padding: 6px 14px;
+            border-radius: 999px;
+        }
+
+        /* ---------------- HERO ---------------- */
+
+        .course-hero {
+            padding: 70px 0 50px;
+            border-bottom: 1px solid var(--m05-border);
+        }
+
+        .hero-content {
+            width: min(880px, calc(100% - 40px));
+            margin: auto;
+        }
+
+        .course-badge {
+            display: inline-block;
+            padding: 7px 16px;
+            border-radius: 999px;
+            background: var(--m05-accent-soft);
+            color: var(--m05-accent);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            border: 1px solid var(--m05-border);
+            margin-bottom: 18px;
+        }
+
+        .course-hero h1 {
+            font-size: clamp(34px, 5vw, 52px);
+            font-weight: 900;
+            color: var(--m05-text);
+            margin-bottom: 8px;
+        }
+
+        .course-hero h2 {
+            font-size: clamp(19px, 2.6vw, 26px);
+            font-weight: 700;
+            color: var(--m05-accent);
+            margin-bottom: 18px;
+        }
+
+        .course-hero p {
+            color: var(--m05-text-soft);
+            font-size: 16px;
+            max-width: 720px;
+        }
+
+        /* ---------------- LAYOUT ---------------- */
+
+        .course-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 40px;
+            align-items: start;
+            padding: 50px 0 20px;
+        }
+
+        /* ---------------- SIDEBAR ---------------- */
+
+        .sidebar { position: sticky; top: 24px; }
+
+        .sidebar-box {
+            background: linear-gradient(160deg, var(--m05-panel), var(--m05-panel-light));
+            border: 1px solid var(--m05-border);
+            border-radius: var(--m05-radius);
+            padding: 24px 20px;
+            box-shadow: var(--m05-shadow);
+        }
+
+        .sidebar-title {
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--m05-accent);
+            margin-bottom: 16px;
+        }
+
+        .lesson-nav { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+
+        .lesson-nav li a {
+            display: block;
+            padding: 10px 12px;
+            border-radius: var(--m05-radius-small);
+            font-size: 14px;
+            color: var(--m05-text-soft);
+            transition: var(--m05-transition);
+            border: 1px solid transparent;
+        }
+
+        .lesson-nav li a:hover {
+            background: var(--m05-accent-soft);
+            border-color: var(--m05-border);
+            color: var(--m05-text);
+        }
+
+        /* ---------------- MAIN LESSON CONTENT ---------------- */
+
+        .lesson-content { display: flex; flex-direction: column; }
+
+        .lesson-section {
+            position: relative;
+            padding: 36px 38px;
+            margin-bottom: 30px;
+            background: linear-gradient(160deg, var(--m05-panel), var(--m05-panel-light));
+            border: 1px solid var(--m05-border);
+            border-radius: var(--m05-radius);
+            box-shadow: var(--m05-shadow);
+        }
+
+        .section-number {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: .1em;
+            color: var(--m05-accent);
+            background: var(--m05-accent-soft);
+            border: 1px solid var(--m05-border);
+            padding: 5px 12px;
+            border-radius: 999px;
+            margin-bottom: 14px;
+        }
+
+        .lesson-section h2 {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--m05-text);
+            margin-bottom: 18px;
+        }
+
+        .lesson-section h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--m05-accent);
+            margin: 24px 0 10px;
+        }
+
+        .lesson-section p, .lesson-section li {
+            color: var(--m05-text-soft);
+            font-size: 15.5px;
+            line-height: 1.8;
+        }
+
+        .lesson-section ul, .lesson-section ol { padding-left: 22px; margin: 10px 0; }
+        .lesson-section li { margin-bottom: 6px; }
+
+        .lesson-section strong { color: var(--m05-text); }
+
+        /* ---------------- CALLOUT CARDS ---------------- */
+
+        .info-card, .warning-card, .success-card {
+            margin: 22px 0;
+            padding: 20px 22px;
+            border-radius: var(--m05-radius-small);
+            border: 1px solid;
+            background: rgba(0,0,0,.22);
+        }
+
+        .info-card { border-color: rgba(56,189,248,.32); }
+        .info-card h3 { color: var(--m05-info); margin-top: 0 !important; }
+
+        .warning-card { border-color: rgba(250,204,21,.32); }
+        .warning-card h3 { color: var(--m05-warning); margin-top: 0 !important; }
+
+        .success-card { border-color: rgba(123,196,127,.32); }
+        .success-card h3 { color: var(--m05-success); margin-top: 0 !important; }
+
+        /* ---------------- PART NAVIGATION ---------------- */
+
+        .part-navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .nav-button {
+            padding: 14px 26px;
+            border-radius: 999px;
+            font-weight: 800;
+            font-size: 14px;
+            border: 1px solid var(--m05-border);
+            color: var(--m05-text);
+            background: var(--m05-panel-light);
+            transition: var(--m05-transition);
+        }
+
+        .nav-button.next {
+            background: linear-gradient(135deg, var(--m05-accent), var(--m05-accent-dark));
+            color: #1c1406;
+            border: none;
+        }
+
+        .nav-button:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,.35); }
+
+        /* ---------------- FOOTER ---------------- */
+
+        .academy-footer {
+            margin-top: 60px;
+            padding: 40px 0 50px;
+            border-top: 1px solid var(--m05-border);
+            text-align: center;
+        }
+
+        .footer-content h3 {
+            font-size: 15px;
+            font-weight: 900;
+            letter-spacing: .1em;
+            color: var(--m05-accent);
+            margin-bottom: 10px;
+        }
+
+        .footer-content p { color: var(--m05-text-soft); font-size: 14px; }
+        .footer-copy { margin-top: 10px; color: var(--m05-text-muted) !important; font-size: 13px; }
+
+        /* ---------------- RESPONSIVE ---------------- */
+
+        @media (max-width: 880px) {
+
+            .course-layout { grid-template-columns: 1fr; }
+            .sidebar { position: static; }
+            .lesson-section { padding: 26px 22px; }
+
+        }
+
+
+        /* =====================================================
+           PART 05 MODULE THEME — ENERGIZERS & ELECTRICAL
+           SYSTEMS. Individual professional styling for the
+           advanced module and knowledge-check quiz below.
+        ===================================================== */
+
+
+        .advanced-module {
+            margin-top: 46px;
+            padding: 38px 34px;
+            border-radius: var(--m05-radius);
+            background: linear-gradient(160deg, var(--m05-panel), var(--m05-panel-light));
+            border: 1px solid var(--m05-border);
+            box-shadow: 0 20px 55px rgba(0,0,0,.35);
+            color: var(--m05-text);
+        }
+
+        .advanced-module .module-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: var(--m05-accent-soft);
+            color: var(--m05-accent);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+            border: 1px solid var(--m05-border);
+        }
+
+        .advanced-module h2 { color: var(--m05-text); margin-bottom: 6px; }
+        .advanced-module h3 { color: var(--m05-accent); margin-top: 26px; margin-bottom: 10px; }
+        .advanced-module p, .advanced-module li { color: var(--m05-text-soft); line-height: 1.75; }
+
+        .formula-box {
+            background: rgba(0,0,0,.28);
+            border-left: 4px solid var(--m05-accent);
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin: 16px 0;
+            font-family: "Courier New", monospace;
+            color: var(--m05-text);
+            overflow-x: auto;
+        }
+
+        .standards-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 18px 0;
+            font-size: 14.5px;
+        }
+        .standards-table th, .standards-table td {
+            border: 1px solid var(--m05-border);
+            padding: 10px 12px;
+            text-align: left;
+            color: var(--m05-text-soft);
+        }
+        .standards-table th { background: var(--m05-accent-soft); color: var(--m05-accent); }
+
+        /* ---------------- QUIZ ---------------- */
+
+        .quiz-block {
+            margin-top: 46px;
+            padding: 38px 34px;
+            border-radius: var(--m05-radius);
+            background: linear-gradient(160deg, var(--m05-panel-light), var(--m05-panel));
+            border: 1px solid var(--m05-border);
+            box-shadow: 0 20px 55px rgba(0,0,0,.35);
+        }
+
+        .quiz-block h2 { color: var(--m05-text); }
+
+        .quiz-question {
+            margin-top: 26px;
+            padding: 18px 20px;
+            border-radius: 12px;
+            background: rgba(0,0,0,.22);
+            border: 1px solid var(--m05-border);
+        }
+
+        .quiz-question p.q-text { font-weight: 700; color: var(--m05-text); margin-bottom: 12px; }
+
+        .quiz-options { display: flex; flex-direction: column; gap: 8px; }
+
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            background: rgba(255,255,255,.03);
+            border: 1px solid transparent;
+            cursor: pointer;
+            color: var(--m05-text-soft);
+            transition: .2s ease;
+        }
+        .quiz-option:hover { border-color: var(--m05-border); }
+        .quiz-option.correct { background: rgba(123,196,127,.15); border-color: var(--m05-success); color: var(--m05-text); }
+        .quiz-option.incorrect { background: rgba(224,86,63,.15); border-color: var(--m05-danger); color: var(--m05-text); }
+
+        .quiz-submit-btn {
+            margin-top: 24px;
+            padding: 14px 30px;
+            border: none;
+            border-radius: 999px;
+            background: linear-gradient(135deg, var(--m05-accent), var(--m05-accent-dark));
+            color: #1c1406;
+            font-weight: 800;
+            font-size: 15px;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+        .quiz-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(245,179,66,.35); }
+
+        .quiz-result {
+            margin-top: 20px;
+            padding: 16px 20px;
+            border-radius: 10px;
+            background: rgba(0,0,0,.25);
+            color: var(--m05-text);
+            font-weight: 700;
+            display: none;
+        }
+
+        .quiz-explain { margin-top: 8px; font-size: 13.5px; font-weight: 400; color: var(--m05-text-soft); display: none; }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         ACADEMY HEADER
+    ========================================== -->
+
+    <header class="academy-header">
+
+        <div class="header-content">
+
+            <div class="academy-logo">
+
+                NEXPAK
+
+                <span>
+                    SECURITY ACADEMY
+                </span>
+
+            </div>
+
+
+            <div class="course-label">
+
+                ELECTRIC FENCING
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         COURSE HERO
+    ========================================== -->
+
+    <section class="course-hero">
+
+        <div class="hero-content">
+
+            <span class="course-badge">
+                ELECTRIC FENCING COURSE
+            </span>
+
+            <h1>
+                Part 05
+            </h1>
+
+            <h2>
+                Energizers &amp; Electrical Systems
+            </h2>
+
+            <p>
+                Understanding the electrical heart of an
+                electric fence system — from the energizer
+                and high-voltage circuit to earthing,
+                isolation, testing, fault diagnosis and
+                commissioning.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         COURSE LAYOUT
+    ========================================== -->
+
+    <div class="course-layout">
+
+
+        <!-- =====================================
+             SIDEBAR
+        ====================================== -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-box">
+
+                <div class="sidebar-title">
+                    PART 05 CURRICULUM
+                </div>
+
+
+                <ul class="lesson-nav">
+
+                    <li>
+                        <a href="#electrical-system">
+                            01. The Electrical System
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#energizer">
+                            02. The Energizer
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#energizer-types">
+                            03. Energizer Types
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#selection">
+                            04. Selecting The Correct Energizer
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#high-voltage">
+                            05. High-Voltage Circuit
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#connections">
+                            06. High-Voltage Connections
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#isolation">
+                            07. Isolation &amp; Electrical Safety
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#earth">
+                            08. Earth Systems
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#testing">
+                            09. Electrical Testing
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#fault-finding">
+                            10. Electrical Fault Finding
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#maintenance">
+                            11. Electrical Maintenance
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#commissioning">
+                            12. Commissioning &amp; Handover
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#advanced-energy-engineering">
+                            13. Advanced Module: Energy System Engineering
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#part-05-quiz">
+                            14. Knowledge Check Quiz
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =====================================
+             MAIN CONTENT
+        ====================================== -->
+
+        <main class="lesson-content">
+
+
+            <!-- =================================
+                 01. THE ELECTRICAL SYSTEM
+            ================================== -->
+
+            <section
+                id="electrical-system"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    01
+                </div>
+
+                <h2>
+                    The Electrical System
+                </h2>
+
+                <p>
+                    The electrical system is the part of the
+                    electric fence that converts an available
+                    power source into controlled high-voltage
+                    pulses and delivers those pulses to the
+                    fence circuit.
+                </p>
+
+                <p>
+                    Understanding how the complete electrical
+                    system works is essential for professional
+                    installation, testing, maintenance and
+                    fault diagnosis.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Main System Elements
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Power supply
+                        </li>
+
+                        <li>
+                            Electric fence energizer
+                        </li>
+
+                        <li>
+                            High-voltage output circuit
+                        </li>
+
+                        <li>
+                            Fence conductors
+                        </li>
+
+                        <li>
+                            Earth system
+                        </li>
+
+                        <li>
+                            High-voltage connecting cables
+                        </li>
+
+                        <li>
+                            Isolation equipment
+                        </li>
+
+                        <li>
+                            Monitoring and alarm interfaces
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    The Basic Electrical Concept
+                </h3>
+
+                <p>
+                    An electric fence energizer periodically
+                    releases a controlled electrical pulse into
+                    the fence circuit.
+                </p>
+
+                <p>
+                    Under normal conditions, the fence conductor
+                    remains electrically isolated from the earth
+                    and surrounding structures.
+                </p>
+
+                <p>
+                    When the intended electrical path is affected,
+                    the system responds according to the design
+                    of the energizer and monitoring equipment.
+                </p>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Think In Systems
+                    </h3>
+
+                    <p>
+                        A professional technician does not look
+                        at the energizer, fence and earth system
+                        as separate items. They must be understood
+                        as one complete electrical system.
+                    </p>
+
+                </div>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Safety Boundary
+                    </h3>
+
+                    <p>
+                        Electric fence energizers and their
+                        associated circuits can produce hazardous
+                        electrical pulses. Electrical installation,
+                        high-voltage connection work and testing
+                        must be performed by appropriately trained,
+                        qualified or authorised personnel in
+                        accordance with applicable requirements
+                        and manufacturer instructions.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 02. THE ENERGIZER
+            ================================== -->
+
+            <section
+                id="energizer"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    02
+                </div>
+
+                <h2>
+                    The Energizer
+                </h2>
+
+                <p>
+                    The energizer is the central electrical
+                    component of an electric fence system.
+                    Its job is to generate controlled pulses
+                    and deliver them to the fence.
+                </p>
+
+                <p>
+                    The energizer also forms an important part
+                    of the system's safety and monitoring
+                    architecture.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        What The Energizer Does
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Receives energy from its power source
+                        </li>
+
+                        <li>
+                            Stores and releases electrical energy
+                        </li>
+
+                        <li>
+                            Produces controlled fence pulses
+                        </li>
+
+                        <li>
+                            Transfers the pulse to the fence
+                        </li>
+
+                        <li>
+                            Works with the earth system
+                        </li>
+
+                        <li>
+                            Monitors relevant system conditions
+                        </li>
+
+                        <li>
+                            Provides status or fault indications
+                            on compatible equipment
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Energizer Ratings
+                </h3>
+
+                <p>
+                    Energizers are manufactured with different
+                    electrical characteristics and ratings.
+                    These ratings must be understood before an
+                    energizer is selected for an installation.
+                </p>
+
+                <p>
+                    The technician should refer to the
+                    manufacturer's technical documentation for
+                    the actual specifications of the selected
+                    unit.
+                </p>
+
+
+                <h3>
+                    Output And Fence Load
+                </h3>
+
+                <p>
+                    The electrical performance of an energizer
+                    must be considered together with the fence
+                    circuit.
+                </p>
+
+                <p>
+                    Fence length, conductor arrangement,
+                    vegetation, insulation condition, leakage
+                    paths and other factors can influence the
+                    electrical load presented to the system.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Never Judge An Energizer By Size Alone
+                    </h3>
+
+                    <p>
+                        A physically larger energizer is not
+                        automatically the correct choice for a
+                        particular installation. Selection must
+                        be based on the manufacturer's rated
+                        performance and the requirements of the
+                        complete fence system.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 03. ENERGIZER TYPES
+            ================================== -->
+
+            <section
+                id="energizer-types"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    03
+                </div>
+
+                <h2>
+                    Energizer Types
+                </h2>
+
+                <p>
+                    Electric fence energizers are available in
+                    different configurations. The correct type
+                    depends on the application, available power,
+                    environmental conditions and system design.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Common Energizer Categories
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Mains-powered energizers
+                        </li>
+
+                        <li>
+                            Battery-powered energizers
+                        </li>
+
+                        <li>
+                            Solar-powered systems
+                        </li>
+
+                        <li>
+                            Systems with backup power
+                        </li>
+
+                        <li>
+                            Integrated security energizers
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Mains-Powered Energizers
+                </h3>
+
+                <p>
+                    Mains-powered units are commonly used at
+                    properties where a suitable electrical supply
+                    is available.
+                </p>
+
+                <p>
+                    The incoming electrical supply and associated
+                    electrical installation must meet the
+                    applicable requirements. Work on fixed mains
+                    electrical wiring must only be performed by
+                    appropriately qualified persons where required.
+                </p>
+
+
+                <h3>
+                    Battery-Powered Systems
+                </h3>
+
+                <p>
+                    Battery-powered energizers can be useful where
+                    mains power is unavailable or where a battery
+                    forms part of the backup strategy.
+                </p>
+
+                <p>
+                    Battery condition, charging arrangements,
+                    expected operating time and environmental
+                    conditions must all be considered.
+                </p>
+
+
+                <h3>
+                    Solar-Powered Systems
+                </h3>
+
+                <p>
+                    Solar systems combine an energizer with a
+                    solar charging system and battery storage.
+                </p>
+
+                <p>
+                    Proper system sizing is important because the
+                    available solar energy varies with location,
+                    season, weather and installation conditions.
+                </p>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Professional Selection
+                    </h3>
+
+                    <p>
+                        Select the energizer based on the complete
+                        system design — not simply on the length
+                        of the fence or the purchase price of the
+                        equipment.
+                    </p>
+
+                </div>
+
+  </section>
+
+                        <!-- =================================
+                 04. SELECTING THE CORRECT ENERGIZER
+            ================================== -->
+
+            <section
+                id="selection"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    04
+                </div>
+
+                <h2>
+                    Selecting The Correct Energizer
+                </h2>
+
+                <p>
+                    Selecting an energizer is a design decision,
+                    not simply a purchasing decision. The unit
+                    must be appropriate for the fence system,
+                    environmental conditions and intended
+                    security application.
+                </p>
+
+                <p>
+                    A professional installer considers the
+                    complete installation before selecting the
+                    energizer.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Selection Factors
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Total fence configuration
+                        </li>
+
+                        <li>
+                            Fence length and layout
+                        </li>
+
+                        <li>
+                            Number of fence sections
+                        </li>
+
+                        <li>
+                            Conductor arrangement
+                        </li>
+
+                        <li>
+                            Expected environmental exposure
+                        </li>
+
+                        <li>
+                            Vegetation conditions
+                        </li>
+
+                        <li>
+                            Required monitoring features
+                        </li>
+
+                        <li>
+                            Available power source
+                        </li>
+
+                        <li>
+                            Backup power requirements
+                        </li>
+
+                        <li>
+                            Manufacturer specifications
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Fence Length Is Not The Only Factor
+                </h3>
+
+                <p>
+                    Two installations with the same perimeter
+                    length may place very different demands on
+                    an energizer.
+                </p>
+
+                <p>
+                    The number of conductors, insulation
+                    condition, vegetation, leakage paths and
+                    overall fence configuration can all influence
+                    system performance.
+                </p>
+
+
+                <h3>
+                    Security Application
+                </h3>
+
+                <p>
+                    Residential, commercial, industrial,
+                    agricultural and high-security installations
+                    may have different requirements.
+                </p>
+
+                <p>
+                    The selected energizer should therefore be
+                    matched to the security design and the
+                    manufacturer's intended application.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Never Oversize Or Undersize Without A Design
+                    </h3>
+
+                    <p>
+                        An installer should not select equipment
+                        simply because it has the highest available
+                        output. Use the manufacturer's specifications
+                        and the applicable installation requirements
+                        to determine suitability.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 05. HIGH-VOLTAGE CIRCUIT
+            ================================== -->
+
+            <section
+                id="high-voltage"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    05
+                </div>
+
+                <h2>
+                    High-Voltage Circuit
+                </h2>
+
+                <p>
+                    The high-voltage circuit carries the electrical
+                    pulses from the energizer through the fence
+                    conductors and back through the appropriate
+                    system path.
+                </p>
+
+                <p>
+                    Every part of this circuit must be considered
+                    during design, installation and testing.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        High-Voltage Circuit Components
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Energizer output
+                        </li>
+
+                        <li>
+                            High-voltage connecting cable
+                        </li>
+
+                        <li>
+                            Fence conductors
+                        </li>
+
+                        <li>
+                            Insulators
+                        </li>
+
+                        <li>
+                            Connection points
+                        </li>
+
+                        <li>
+                            Isolation components
+                        </li>
+
+                        <li>
+                            Earth system
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Electrical Continuity
+                </h3>
+
+                <p>
+                    The fence circuit must provide a reliable
+                    electrical path throughout the designed
+                    perimeter.
+                </p>
+
+                <p>
+                    Unwanted breaks, poor connections, damaged
+                    components or unintended contact with earth
+                    can affect the performance of the system.
+                </p>
+
+
+                <h3>
+                    Electrical Leakage
+                </h3>
+
+                <p>
+                    Leakage occurs when electrical energy is lost
+                    through an unintended path.
+                </p>
+
+                <p>
+                    Common contributors can include vegetation,
+                    damaged insulation, contaminated insulators,
+                    unsuitable connections and contact between
+                    conductive components.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Leakage Is A Fault-Finding Clue
+                    </h3>
+
+                    <p>
+                        When an electric fence is underperforming,
+                        do not immediately assume that the
+                        energizer has failed. The fence circuit,
+                        insulation, earth system and surrounding
+                        environment must all be considered.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 06. HIGH-VOLTAGE CONNECTIONS
+            ================================== -->
+
+            <section
+                id="connections"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    06
+                </div>
+
+                <h2>
+                    High-Voltage Connections
+                </h2>
+
+                <p>
+                    Connections between the energizer, high-voltage
+                    cable and fence conductors are critical parts
+                    of the installation.
+                </p>
+
+                <p>
+                    A poor connection can create an unreliable
+                    system even when the individual components
+                    themselves are suitable.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Professional Connection Principles
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Use approved components
+                        </li>
+
+                        <li>
+                            Follow the manufacturer's connection
+                            method
+                        </li>
+
+                        <li>
+                            Maintain appropriate insulation
+                        </li>
+
+                        <li>
+                            Protect connections from environmental
+                            exposure where required
+                        </li>
+
+                        <li>
+                            Prevent accidental contact with
+                            conductive structures
+                        </li>
+
+                        <li>
+                            Keep connections mechanically secure
+                        </li>
+
+                        <li>
+                            Inspect connections during maintenance
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Connection Quality
+                </h3>
+
+                <p>
+                    Connections should be mechanically secure and
+                    electrically reliable. They should also be
+                    suitable for the environmental conditions in
+                    which they are installed.
+                </p>
+
+                <p>
+                    Outdoor installations are exposed to moisture,
+                    temperature changes, dust, UV exposure and
+                    corrosion. Component selection must account
+                    for these conditions.
+                </p>
+
+
+                <h3>
+                    Cable Entry And Routing
+                </h3>
+
+                <p>
+                    Where high-voltage cable enters equipment
+                    enclosures or passes through structures, the
+                    cable route should be planned to minimise
+                    mechanical damage and maintain the required
+                    separation from other services.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Never Make Improvised High-Voltage Joints
+                    </h3>
+
+                    <p>
+                        Do not use makeshift connection methods,
+                        unsuitable materials or improvised
+                        insulation on a high-voltage electric
+                        fence circuit. Use components and methods
+                        approved for the specific system.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 07. ISOLATION & ELECTRICAL SAFETY
+            ================================== -->
+
+            <section
+                id="isolation"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    07
+                </div>
+
+                <h2>
+                    Isolation &amp; Electrical Safety
+                </h2>
+
+                <p>
+                    Safe isolation is one of the most important
+                    procedures when working on an electric fence.
+                </p>
+
+                <p>
+                    Before maintenance, repair or modification,
+                    the system must be made safe using the
+                    appropriate isolation procedure for the
+                    equipment and installation.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Safety Procedure
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Identify the system to be worked on
+                        </li>
+
+                        <li>
+                            Isolate the appropriate power source
+                        </li>
+
+                        <li>
+                            Follow the energizer manufacturer's
+                            isolation procedure
+                        </li>
+
+                        <li>
+                            Prevent accidental re-energisation
+                        </li>
+
+                        <li>
+                            Verify the system is safe before work
+                            begins
+                        </li>
+
+                        <li>
+                            Use appropriate personal protective
+                            equipment and test equipment
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Do Not Assume The Fence Is Safe
+                </h3>
+
+                <p>
+                    Switching off an energizer does not mean that
+                    a technician should immediately touch every
+                    part of the installation.
+                </p>
+
+                <p>
+                    The correct isolation and verification
+                    procedure must be followed according to the
+                    equipment and applicable safety requirements.
+                </p>
+
+
+                <h3>
+                    Unauthorised Access
+                </h3>
+
+                <p>
+                    Energizer locations and electrical equipment
+                    should be protected against unauthorised
+                    access wherever required by the system design.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        High-Voltage Work
+                    </h3>
+
+                    <p>
+                        Never perform high-voltage electrical work
+                        beyond your training, authorisation or
+                        qualification. When in doubt, stop work
+                        and refer the installation to a suitably
+                        qualified professional.
+                    </p>
+
+                </div>
+
+    </section>
+
+                        <!-- =================================
+                 08. EARTH SYSTEMS
+            ================================== -->
+
+            <section
+                id="earth"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    08
+                </div>
+
+                <h2>
+                    Earth Systems
+                </h2>
+
+                <p>
+                    The earth system is a fundamental part of an
+                    electric fence installation. It provides the
+                    intended electrical return path required for
+                    the fence system to operate correctly.
+                </p>
+
+                <p>
+                    A fence can have a correctly installed
+                    energizer and conductors and still perform
+                    poorly if the earth system has been incorrectly
+                    designed, installed or maintained.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Earth System Components
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Earth electrodes
+                        </li>
+
+                        <li>
+                            Earth connecting conductors
+                        </li>
+
+                        <li>
+                            Appropriate clamps or connections
+                        </li>
+
+                        <li>
+                            Suitable soil contact
+                        </li>
+
+                        <li>
+                            Connections to the energizer earth
+                            terminal
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Why Earthing Matters
+                </h3>
+
+                <p>
+                    The electric fence circuit depends on the
+                    relationship between the fence conductors and
+                    the earth system.
+                </p>
+
+                <p>
+                    If the earth system is inadequate, damaged,
+                    disconnected or poorly maintained, the
+                    electrical performance of the complete system
+                    can be affected.
+                </p>
+
+
+                <h3>
+                    Soil Conditions
+                </h3>
+
+                <p>
+                    Soil characteristics can influence earth
+                    system performance. Soil moisture, composition,
+                    depth and local environmental conditions should
+                    be considered during system design.
+                </p>
+
+                <p>
+                    Different sites can therefore require
+                    different earth arrangements. The final
+                    installation must follow the energizer
+                    manufacturer's requirements and applicable
+                    standards.
+                </p>
+
+
+                <h3>
+                    Earth Electrode Placement
+                </h3>
+
+                <p>
+                    Earth electrodes should be installed in
+                    accordance with the approved design and
+                    manufacturer's requirements.
+                </p>
+
+                <p>
+                    Their location should also take into account
+                    the surrounding electrical environment and
+                    any requirements concerning separation from
+                    other electrical systems.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Never Guess An Earth System
+                    </h3>
+
+                    <p>
+                        Earth systems must not be designed from
+                        memory or based on a generic rule that
+                        ignores the equipment and site conditions.
+                        Always verify the requirements for the
+                        specific installation.
+                    </p>
+
+                </div>
+
+
+                <h3>
+                    Earth Connections
+                </h3>
+
+                <p>
+                    Earth connections must remain mechanically
+                    secure and electrically reliable.
+                </p>
+
+                <p>
+                    Corrosion, loose connections and physical
+                    damage can increase resistance and compromise
+                    the effectiveness of the earth system.
+                </p>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Professional Principle
+                    </h3>
+
+                    <p>
+                        Never assume that a fence has a good earth
+                        simply because an earth rod has been
+                        installed. The earth system must be
+                        inspected and tested using appropriate
+                        procedures.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 09. ELECTRICAL TESTING
+            ================================== -->
+
+            <section
+                id="testing"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    09
+                </div>
+
+                <h2>
+                    Electrical Testing
+                </h2>
+
+                <p>
+                    Testing verifies whether the electric fence
+                    system is operating within the expected
+                    parameters.
+                </p>
+
+                <p>
+                    Testing should form part of installation,
+                    commissioning, maintenance and fault-finding
+                    procedures.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Testing Objectives
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Verify system operation
+                        </li>
+
+                        <li>
+                            Identify abnormal voltage conditions
+                        </li>
+
+                        <li>
+                            Investigate electrical leakage
+                        </li>
+
+                        <li>
+                            Check the earth system
+                        </li>
+
+                        <li>
+                            Identify damaged sections
+                        </li>
+
+                        <li>
+                            Confirm monitoring functions
+                        </li>
+
+                        <li>
+                            Record commissioning results
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Use The Correct Test Equipment
+                </h3>
+
+                <p>
+                    Electric fence circuits require test equipment
+                    specifically suitable for the electrical
+                    characteristics of the system.
+                </p>
+
+                <p>
+                    Standard electrical test equipment must not
+                    automatically be assumed to be suitable for
+                    measuring an electric fence pulse.
+                </p>
+
+
+                <h3>
+                    What A Technician Should Observe
+                </h3>
+
+                <p>
+                    During testing, the technician should compare
+                    measured results with the manufacturer's
+                    specifications and the requirements of the
+                    particular installation.
+                </p>
+
+                <p>
+                    A single measurement should not be considered
+                    in isolation. The energizer, fence circuit,
+                    earth system, insulation and environmental
+                    conditions should be considered together.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Safety During Testing
+                    </h3>
+
+                    <p>
+                        Only use test procedures and instruments
+                        that are appropriate for electric fence
+                        systems. Follow the manufacturer's safety
+                        instructions and never place yourself in
+                        contact with an energised high-voltage
+                        circuit.
+                    </p>
+
+                </div>
+
+
+                <h3>
+                    Recording Test Results
+                </h3>
+
+                <p>
+                    Professional installations should have
+                    appropriate test records.
+                </p>
+
+                <p>
+                    Recording results creates a baseline that can
+                    be useful when diagnosing future faults or
+                    evaluating changes in system performance.
+                </p>
+
+            </section>
+
+
+            <!-- =================================
+                 10. ELECTRICAL FAULT FINDING
+            ================================== -->
+
+            <section
+                id="fault-finding"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    10
+                </div>
+
+                <h2>
+                    Electrical Fault Finding
+                </h2>
+
+                <p>
+                    Fault finding is one of the most valuable
+                    practical skills for an electric fence
+                    technician.
+                </p>
+
+                <p>
+                    A professional approach is systematic. The
+                    technician identifies the symptoms, gathers
+                    evidence, isolates possible causes and then
+                    tests each part of the system.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Common Fault Areas
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Energizer power supply
+                        </li>
+
+                        <li>
+                            Energizer output
+                        </li>
+
+                        <li>
+                            High-voltage connecting cable
+                        </li>
+
+                        <li>
+                            Fence conductors
+                        </li>
+
+                        <li>
+                            Insulators
+                        </li>
+
+                        <li>
+                            Fence connections
+                        </li>
+
+                        <li>
+                            Earth system
+                        </li>
+
+                        <li>
+                            Vegetation contact
+                        </li>
+
+                        <li>
+                            Physical damage
+                        </li>
+
+                        <li>
+                            Monitoring equipment
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Start With The Symptoms
+                </h3>
+
+                <p>
+                    Begin by identifying exactly what the customer
+                    or monitoring system has reported.
+                </p>
+
+                <p>
+                    Examples may include a fence alarm, reduced
+                    performance, repeated fault indications,
+                    intermittent alarms or a complete loss of
+                    system operation.
+                </p>
+
+
+                <h3>
+                    Work Systematically
+                </h3>
+
+                <p>
+                    Avoid randomly replacing components. Start
+                    with the simplest likely causes and use
+                    appropriate measurements to confirm or
+                    eliminate each possibility.
+                </p>
+
+                <p>
+                    A technician should work from the system
+                    architecture and available evidence rather
+                    than guessing.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Do Not Blame The Energizer First
+                    </h3>
+
+                    <p>
+                        An energizer fault is only one possible
+                        cause of poor fence performance. Vegetation,
+                        damaged insulators, poor connections,
+                        earth problems and other circuit faults
+                        must also be investigated.
+                    </p>
+
+                </div>
+
+
+                <h3>
+                    Fault-Finding Documentation
+                </h3>
+
+                <p>
+                    Record the fault reported, tests performed,
+                    findings, corrective action and final test
+                    results.
+                </p>
+
+                <p>
+                    Good records make future service calls faster
+                    and provide a useful history of the
+                    installation.
+                </p>
+
+                    </section>
+
+                        <!-- =================================
+                 11. ELECTRICAL MAINTENANCE
+            ================================== -->
+
+            <section
+                id="maintenance"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    11
+                </div>
+
+                <h2>
+                    Electrical Maintenance
+                </h2>
+
+                <p>
+                    An electric fence is an active security
+                    system and requires ongoing inspection and
+                    maintenance after installation.
+                </p>
+
+                <p>
+                    Environmental exposure, vegetation, corrosion,
+                    mechanical damage and component ageing can
+                    gradually affect system performance.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Maintenance Areas
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Energizer condition
+                        </li>
+
+                        <li>
+                            Power supply
+                        </li>
+
+                        <li>
+                            Backup battery where applicable
+                        </li>
+
+                        <li>
+                            Fence conductors
+                        </li>
+
+                        <li>
+                            High-voltage connections
+                        </li>
+
+                        <li>
+                            Insulators
+                        </li>
+
+                        <li>
+                            Earth connections
+                        </li>
+
+                        <li>
+                            Vegetation
+                        </li>
+
+                        <li>
+                            Warning signs
+                        </li>
+
+                        <li>
+                            Monitoring and alarm equipment
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Routine Inspection
+                </h3>
+
+                <p>
+                    A maintenance inspection should include a
+                    visual examination of the complete perimeter
+                    and an electrical assessment using suitable
+                    test procedures.
+                </p>
+
+                <p>
+                    Pay particular attention to areas exposed to
+                    weather, vegetation growth, mechanical impact,
+                    corrosion and unauthorised interference.
+                </p>
+
+
+                <h3>
+                    Battery Maintenance
+                </h3>
+
+                <p>
+                    Where an energizer uses a backup or battery
+                    power system, the battery and charging system
+                    should be inspected according to the
+                    manufacturer's maintenance requirements.
+                </p>
+
+                <p>
+                    A backup battery that appears physically
+                    present is not necessarily capable of
+                    providing reliable backup power.
+                </p>
+
+
+                <h3>
+                    Maintenance Records
+                </h3>
+
+                <p>
+                    Record maintenance work performed, faults
+                    discovered, components replaced and relevant
+                    test results.
+                </p>
+
+                <p>
+                    Maintaining a service history allows future
+                    technicians to identify recurring problems and
+                    understand changes in system performance.
+                </p>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Preventative Maintenance
+                    </h3>
+
+                    <p>
+                        Professional security maintenance aims to
+                        identify problems before they become system
+                        failures. Regular inspection is therefore
+                        more valuable than waiting for the customer
+                        to report a fault.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 12. COMMISSIONING & HANDOVER
+            ================================== -->
+
+            <section
+                id="commissioning"
+                class="lesson-section"
+            >
+
+                <div class="section-number">
+                    12
+                </div>
+
+                <h2>
+                    Commissioning &amp; Handover
+                </h2>
+
+                <p>
+                    Commissioning is the final verification stage
+                    before an electric fence system is placed
+                    into normal service.
+                </p>
+
+                <p>
+                    The purpose is to confirm that the installation
+                    has been completed correctly, the electrical
+                    system operates as intended, required safety
+                    measures are in place and the customer receives
+                    the appropriate system information.
+                </p>
+
+
+                <div class="info-card">
+
+                    <h3>
+                        Commissioning Checklist
+                    </h3>
+
+                    <ul>
+
+                        <li>
+                            Confirm the physical installation is
+                            complete
+                        </li>
+
+                        <li>
+                            Inspect posts, brackets and insulators
+                        </li>
+
+                        <li>
+                            Inspect conductor alignment and tension
+                        </li>
+
+                        <li>
+                            Check required clearances
+                        </li>
+
+                        <li>
+                            Inspect high-voltage connections
+                        </li>
+
+                        <li>
+                            Verify the energizer installation
+                        </li>
+
+                        <li>
+                            Verify the earth system
+                        </li>
+
+                        <li>
+                            Perform appropriate electrical tests
+                        </li>
+
+                        <li>
+                            Test monitoring and alarm functions
+                        </li>
+
+                        <li>
+                            Check warning signage
+                        </li>
+
+                        <li>
+                            Record relevant test results
+                        </li>
+
+                        <li>
+                            Complete customer handover
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <h3>
+                    Physical Inspection
+                </h3>
+
+                <p>
+                    Walk the complete perimeter before final
+                    handover.
+                </p>
+
+                <p>
+                    Look for damaged components, loose brackets,
+                    poor conductor alignment, vegetation contact,
+                    inadequate protection, damaged connections
+                    and any other visible defects.
+                </p>
+
+
+                <h3>
+                    Electrical Verification
+                </h3>
+
+                <p>
+                    Electrical testing must be performed using
+                    appropriate instruments and procedures.
+                </p>
+
+                <p>
+                    Test results should be compared with the
+                    manufacturer's specifications and the
+                    requirements applicable to the particular
+                    installation.
+                </p>
+
+
+                <h3>
+                    Alarm And Monitoring Verification
+                </h3>
+
+                <p>
+                    Where the electric fence is connected to an
+                    alarm, security management system or monitoring
+                    platform, the relevant functions should be
+                    verified during commissioning.
+                </p>
+
+                <p>
+                    The objective is to confirm that the security
+                    system correctly identifies the conditions it
+                    was designed to monitor.
+                </p>
+
+
+                <h3>
+                    Customer Handover
+                </h3>
+
+                <p>
+                    The customer should receive appropriate
+                    information about the completed installation,
+                    including operating instructions, relevant
+                    safety information and maintenance
+                    recommendations.
+                </p>
+
+                <p>
+                    The customer should also understand that the
+                    electric fence requires ongoing maintenance
+                    and that vegetation, physical damage and
+                    environmental conditions can affect system
+                    performance.
+                </p>
+
+
+                <div class="warning-card">
+
+                    <h3>
+                        Do Not Handover An Unverified System
+                    </h3>
+
+                    <p>
+                        If required inspection, testing or safety
+                        checks have not been completed, the system
+                        should not be represented as fully
+                        commissioned. Outstanding defects must be
+                        corrected or formally documented and
+                        escalated according to the applicable
+                        procedure.
+                    </p>
+
+                </div>
+
+
+                <div class="success-card">
+
+                    <h3>
+                        Part 05 Complete
+                    </h3>
+
+                    <p>
+                        Part 05 covered the electrical foundation
+                        of an electric fence system, including
+                        energizers, energizer selection,
+                        high-voltage circuits, connections,
+                        isolation, earth systems, electrical
+                        testing, fault finding, maintenance and
+                        commissioning.
+                    </p>
+
+                    <p>
+                        At this stage, the learner should understand
+                        that a professional electric fence is not
+                        simply a collection of wires and an
+                        energizer. It is an engineered security
+                        system that must be correctly designed,
+                        installed, tested, maintained and
+                        documented.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 13. ADVANCED MODULE — ENERGY
+                 SYSTEM ENGINEERING (COLLEGE LEVEL)
+            ================================== -->
+
+            <section
+                id="advanced-energy-engineering"
+                class="advanced-module"
+            >
+
+                <span class="module-badge">
+                    Advanced Module &middot; College Level
+                </span>
+
+                <h2>
+                    13. Advanced Module: Energy System Engineering
+                </h2>
+
+                <p>
+                    This module moves beyond product-level knowledge
+                    into the underlying electrical engineering that
+                    governs energizer performance. It is written for
+                    learners who want to understand and justify
+                    design decisions quantitatively, not only
+                    apply manufacturer defaults.
+                </p>
+
+                <h3>13.1 Stored Energy and the Joule Rating</h3>
+
+                <p>
+                    An energizer's rated output energy is the
+                    electrical energy delivered into a defined test
+                    load per pulse, expressed in joules. For a
+                    capacitor-discharge energizer this is derived
+                    from the capacitor's stored energy equation:
+                </p>
+
+                <div class="formula-box">
+                    E = &frac12; &times; C &times; V&sup2;<br>
+                    where E = stored energy (J), C = capacitance (F),
+                    V = charge voltage (V)
+                </div>
+
+                <p>
+                    The <strong>output joule rating</strong> quoted
+                    on a data sheet (commonly tested into a 500 &Omega;
+                    resistive load per IEC 60335-2-76) is always
+                    lower than the stored energy, because switching
+                    losses, transformer coupling losses and pulse
+                    shaping consume part of the stored energy before
+                    it reaches the fence line. A learner should be
+                    able to distinguish <em>stored</em> energy,
+                    <em>output</em> energy and <em>on-fence</em>
+                    energy as three separate quantities.
+                </p>
+
+                <h3>13.2 Fence Line as a Distributed RLC Network</h3>
+
+                <p>
+                    A long fence conductor should not be modelled as
+                    a simple resistor. It behaves as a distributed
+                    network with series resistance and inductance,
+                    and shunt capacitance to earth, particularly on
+                    long runs, in wet weather, or where vegetation
+                    encroachment adds parallel leakage paths. This
+                    is why pulse voltage measured at the energizer
+                    terminal is always higher than the voltage
+                    measured at the far end of a long line — the
+                    line itself attenuates and distorts the pulse.
+                </p>
+
+                <table class="standards-table">
+                    <tr>
+                        <th>Quantity</th>
+                        <th>Typical Effect</th>
+                        <th>Engineering Implication</th>
+                    </tr>
+                    <tr>
+                        <td>Line resistance</td>
+                        <td>Voltage drop along conductor length</td>
+                        <td>Sets a practical maximum fence perimeter per energizer</td>
+                    </tr>
+                    <tr>
+                        <td>Shunt leakage (vegetation, damp insulators)</td>
+                        <td>Bleeds charge before full pulse delivery</td>
+                        <td>Directly reduces on-fence joules; must be budgeted for</td>
+                    </tr>
+                    <tr>
+                        <td>Line inductance</td>
+                        <td>Slows pulse rise time</td>
+                        <td>Affects pain response and animal/intruder deterrent effect</td>
+                    </tr>
+                </table>
+
+                <h3>13.3 Energy Budgeting for System Design</h3>
+
+                <p>
+                    Professional design does not select an energizer
+                    from perimeter length alone. A defensible design
+                    calculates an <strong>energy budget</strong>:
+                    required on-fence energy at the far end of the
+                    line, plus an allowance for leakage, plus a
+                    safety margin, compared against the energizer's
+                    output rating and expected line losses. Where
+                    the calculated on-fence energy falls below the
+                    minimum effective threshold for the application
+                    (commonly cited around 1–2 joules for a reliable
+                    deterrent pulse, though this varies by
+                    application and standard), the design must be
+                    revised — by segmenting the fence with additional
+                    energizers, reducing leakage, or upsizing the
+                    conductor to lower series resistance.
+                </p>
+
+                <h3>13.4 Standards Context</h3>
+
+                <p>
+                    Two standards families are commonly referenced
+                    in professional practice: <strong>IEC 60335-2-76</strong>,
+                    which sets safety and output limits for
+                    electric fence energizers, and national
+                    installation guidance such as
+                    <strong>SANS 10222</strong> series documents used
+                    in the South African context for electric fence
+                    installation and security-fence specific
+                    requirements. A technician working at this level
+                    should be able to state, in their own words, why
+                    output energy limits exist (animal and human
+                    safety) rather than only quoting the limit.
+                </p>
+
+                <div class="success-card">
+                    <h3>Applying This Module</h3>
+                    <p>
+                        When you next commission a system, calculate
+                        an approximate energy budget for the longest
+                        fence run instead of relying only on the
+                        energizer's advertised perimeter capacity.
+                        This habit separates a technician from a
+                        systems-literate professional.
+                    </p>
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+                 14. KNOWLEDGE CHECK QUIZ
+            ================================== -->
+
+            <section
+                id="part-05-quiz"
+                class="quiz-block"
+            >
+
+                <span class="module-badge">
+                    Knowledge Check
+                </span>
+
+                <h2>14. Part 05 Quiz</h2>
+
+                <p>
+                    Answer the questions below, then click
+                    "Check My Answers" to see your score and
+                    explanations.
+                </p>
+
+                <form id="quiz-form-p05">
+
+                    <div class="quiz-question" data-correct="b">
+                        <p class="q-text">1. What does an energizer's joule rating primarily describe?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q1" value="a"> The voltage present on the fence at all times</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="b"> The electrical energy delivered per pulse into a defined test load</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="c"> The continuous current draw of the unit</label>
+                            <label class="quiz-option"><input type="radio" name="q1" value="d"> The number of pulses generated per hour</label>
+                        </div>
+                        <p class="quiz-explain">Joule rating is an energy-per-pulse figure, tested into a defined load such as 500 &Omega; under IEC 60335-2-76.</p>
+                    </div>
+
+                    <div class="quiz-question" data-correct="c">
+                        <p class="q-text">2. Why is on-fence energy at the far end of a long line lower than the energizer's rated output?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q2" value="a"> The energizer reduces output automatically at night</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="b"> Output rating already accounts for the full fence length</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="c"> Line resistance, leakage and inductance attenuate the pulse along the conductor</label>
+                            <label class="quiz-option"><input type="radio" name="q2" value="d"> Earthing has no effect on pulse strength</label>
+                        </div>
+                        <p class="quiz-explain">The fence line behaves as a distributed RLC network — resistance, leakage capacitance and inductance all reduce and reshape the pulse over distance.</p>
+                    </div>
+
+                    <div class="quiz-question" data-correct="a">
+                        <p class="q-text">3. What is the purpose of an energy budget in system design?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q3" value="a"> To confirm calculated on-fence energy meets a minimum effective threshold after losses</label>
+                            <label class="quiz-option"><input type="radio" name="q3" value="b"> To calculate the sale price of the installation</label>
+                            <label class="quiz-option"><input type="radio" name="q3" value="c"> To size the mounting brackets</label>
+                            <label class="quiz-option"><input type="radio" name="q3" value="d"> To determine the paint colour of the energizer housing</label>
+                        </div>
+                        <p class="quiz-explain">An energy budget checks that expected on-fence energy, after leakage and line losses, still clears the minimum threshold for a reliable deterrent pulse.</p>
+                    </div>
+
+                    <div class="quiz-question" data-correct="b">
+                        <p class="q-text">4. Which standard is commonly referenced for electric fence energizer safety and output limits?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q4" value="a"> ISO 9001</label>
+                            <label class="quiz-option"><input type="radio" name="q4" value="b"> IEC 60335-2-76</label>
+                            <label class="quiz-option"><input type="radio" name="q4" value="c"> IEC 62305</label>
+                            <label class="quiz-option"><input type="radio" name="q4" value="d"> ISO 14001</label>
+                        </div>
+                        <p class="quiz-explain">IEC 60335-2-76 covers safety requirements and output limits specific to electric fence energizers.</p>
+                    </div>
+
+                    <div class="quiz-question" data-correct="d">
+                        <p class="q-text">5. Vegetation encroachment on a fence line primarily causes which effect?</p>
+                        <div class="quiz-options">
+                            <label class="quiz-option"><input type="radio" name="q5" value="a"> Increased pulse voltage</label>
+                            <label class="quiz-option"><input type="radio" name="q5" value="b"> Reduced conductor resistance</label>
+                            <label class="quiz-option"><input type="radio" name="q5" value="c"> Improved earth return</label>
+                            <label class="quiz-option"><input type="radio" name="q5" value="d"> Shunt leakage that bleeds charge before full pulse delivery</label>
+                        </div>
+                        <p class="quiz-explain">Vegetation contact creates a parallel leakage path, bleeding energy from the pulse before it reaches the rest of the line.</p>
+                    </div>
+
+                    <button type="button" class="quiz-submit-btn" onclick="gradeQuizP05()">Check My Answers</button>
+
+                    <div class="quiz-result" id="quiz-result-p05"></div>
+
+                </form>
+
+            </section>
+
+
+            <!-- =================================
+                 PART NAVIGATION
+            ================================== -->
+
+            <div class="part-navigation">
+
+                <a
+                    href="part-04.html"
+                    class="nav-button previous"
+                >
+                    ← Previous Part
+                </a>
+
+
+                <a
+                    href="part-06.html"
+                    class="nav-button next"
+                >
+                    Part 06 →
+                </a>
+
+            </div>
+
+
+        </main>
+
+
+    </div>
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer class="academy-footer">
+
+        <div class="footer-content">
+
+            <h3>
+                NEXPAK SECURITY ACADEMY
+            </h3>
+
+            <p>
+                Professional security training and
+                practical installation knowledge.
+            </p>
+
+            <p class="footer-copy">
+                © 2026 Nexpak Security Solutions.
+                All Rights Reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <script>
+
+        function gradeQuizP05() {
+
+            var form = document.getElementById("quiz-form-p05");
+            var questions = form.querySelectorAll(".quiz-question");
+            var score = 0;
+
+            questions.forEach(function (q) {
+
+                var correct = q.getAttribute("data-correct");
+                var options = q.querySelectorAll(".quiz-option");
+                var explain = q.querySelector(".quiz-explain");
+                var selected = q.querySelector("input:checked");
+
+                options.forEach(function (opt) {
+                    opt.classList.remove("correct", "incorrect");
+                });
+
+                options.forEach(function (opt) {
+                    var input = opt.querySelector("input");
+                    if (input.value === correct) {
+                        opt.classList.add("correct");
+                    } else if (selected && input.value === selected.value) {
+                        opt.classList.add("incorrect");
+                    }
+                });
+
+                if (selected && selected.value === correct) {
+                    score++;
+                }
+
+                explain.style.display = "block";
+
+            });
+
+            var result = document.getElementById("quiz-result-p05");
+            result.style.display = "block";
+            result.textContent = "You scored " + score + " out of " + questions.length + ".";
+
+        }
+
+    </script>
+
+</body>
+
+                            </html>
