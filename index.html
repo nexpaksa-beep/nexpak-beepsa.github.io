@@ -1408,98 +1408,199 @@ WhatsApp Us
 </div>
 
 </section>
+/* =========================================
+   LOCAL SERVICE AREAS
+   HOMEPAGE ALIGNMENT FIX
+========================================= */
 
-<!-- =========================================
-     LOCAL SERVICE AREAS
-========================================== -->
+.service-areas {
+    width: 100%;
+    padding: 80px 0;
+    overflow: hidden;
+}
 
-<section class="service-areas" id="service-areas">
+.service-areas .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
 
-    <div class="container">
+.service-areas .section-title {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto 45px;
+    text-align: center;
+    box-sizing: border-box;
+}
 
-        <div class="section-title fade">
+.service-areas .section-title h5 {
+    margin-bottom: 12px;
+}
 
-            <h5>
-                LOCAL SECURITY EQUIPMENT SUPPLIERS
-            </h5>
+.service-areas .section-title h2 {
+    margin-bottom: 18px;
+}
 
-            <h2>
-                Security Equipment Suppliers Across Gauteng
-            </h2>
-
-            <p>
-                Nexpak Security Solutions supplies professional security
-                equipment to residential, commercial, industrial and
-                agricultural customers across Gauteng and surrounding areas.
-                Explore our local security pages to find CCTV, electric
-                fencing, gate motors, alarm systems, access control,
-                intercoms and perimeter security equipment for your area.
-            </p>
-
-        </div>
-
-
-        <div class="service-area-links">
-
-            <a href="location/benoni.html">
-                Security Equipment Suppliers in Benoni
-            </a>
-
-            <a href="location/boksburg.html">
-                Security Equipment Suppliers in Boksburg
-            </a>
-
-            <a href="location/kempton-park.html">
-                Security Equipment Suppliers in Kempton Park
-            </a>
-
-            <a href="location/germiston.html">
-                Security Equipment Suppliers in Germiston
-            </a>
-
-            <a href="location/edenvale.html">
-                Security Equipment Suppliers in Edenvale
-            </a>
-
-            <a href="location/brakpan.html">
-                Security Equipment Suppliers in Brakpan
-            </a>
-
-            <a href="location/springs.html">
-                Security Equipment Suppliers in Springs
-            </a>
-
-            <a href="location/johannesburg.html">
-                Security Equipment Suppliers in Johannesburg
-            </a>
-
-            <a href="location/midrand.html">
-                Security Equipment Suppliers in Midrand
-            </a>
-
-            <a href="location/pretoria.html">
-                Security Equipment Suppliers in Pretoria
-            </a>
-
-        </div>
+.service-areas .section-title p {
+    margin: 0 auto;
+    max-width: 850px;
+    line-height: 1.8;
+}
 
 
-        <div class="service-area-cta">
+/* =========================================
+   LOCATION LINKS
+========================================= */
 
-            <p>
-                Looking for security equipment outside these areas?
-            </p>
+.service-area-links {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
 
-            <a href="quote.html" class="primary-btn">
-                <i class="fas fa-file-signature"></i>
-                Request A Security Quote
-            </a>
+    display: grid;
 
-        </div>
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
 
-    </div>
+    gap: 16px;
 
-</section>
+    box-sizing: border-box;
+}
+
+
+.service-area-links a {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-height: 64px;
+
+    padding: 16px 20px;
+
+    box-sizing: border-box;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    border-radius: 12px;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+
+    overflow-wrap: break-word;
+}
+
+
+.service-area-links a:hover {
+    transform: translateY(-3px);
+}
+
+
+/* =========================================
+   CTA
+========================================= */
+
+.service-area-cta {
+    width: 100%;
+    margin-top: 45px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    box-sizing: border-box;
+}
+
+
+.service-area-cta p {
+    margin: 0 0 20px;
+}
+
+
+.service-area-cta .primary-btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 768px) {
+
+    .service-areas {
+        padding: 65px 0;
+    }
+
+    .service-areas .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .service-area-links {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .service-area-links a {
+        min-height: 58px;
+        padding: 14px 16px;
+    }
+
+}
+
+
+/* =========================================
+   SMALL MOBILE
+========================================= */
+
+@media (max-width: 480px) {
+
+    .service-areas {
+        padding: 55px 0;
+    }
+
+    .service-areas .container {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .service-areas .section-title h2 {
+        line-height: 1.25;
+    }
+
+    .service-areas .section-title p {
+        line-height: 1.7;
+    }
+
+    .service-area-links a {
+        min-height: 54px;
+        padding: 13px 14px;
+        font-size: 14px;
+    }
+
+}
 
 <!-- =========================================
      FOOTER
