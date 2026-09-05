@@ -32,6 +32,12 @@
         <loc>https://www.nexpaksolutions.co.za/academy/academy.html</loc>
     </url>
 
+    <url>
+    <loc>https://www.nexpaksolutions.co.za/equestrian-course/equestrian-course.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    </url>
+    
     <!-- Security Product Pages -->
     <url>
         <loc>https://www.nexpaksolutions.co.za/product/cctv.html</loc>
@@ -101,8 +107,3 @@
 
 </urlset>
 
-<url>
-    <loc>https://www.nexpaksolutions.co.za/equestrian-course/equestrian-course.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-</url>
