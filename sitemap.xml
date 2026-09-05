@@ -100,3 +100,9 @@
 </url>
 
 </urlset>
+
+<url>
+    <loc>https://www.nexpaksolutions.co.za/equestrian-course/equestrian-course.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+</url>
