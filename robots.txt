@@ -1,21 +1,4 @@
-# Robots.txt for Nexpak Solutions - Allow all search engines
 User-agent: *
 Allow: /
-Disallow: /admin/
-Disallow: /private/
-Disallow: /.git/
-Disallow: /.github/
 
-# Google Search Console
-User-agent: Googlebot
-Allow: /
-
-# Bing Search Engine
-User-agent: Bingbot
-Allow: /
-
-# Sitemap location
-Sitemap: https://nexpaksa-beep.github.io/sitemap.xml
-
-# Crawl delay (optional - in milliseconds, commented out for fastest crawling)
-# Crawl-delay: 1
+Sitemap: https://www.nexpaksolutions.co.za/sitemap.xml
