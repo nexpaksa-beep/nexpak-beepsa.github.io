@@ -1409,7 +1409,6 @@ WhatsApp Us
 
 </section>
 
-
 <!-- =========================================
      FOOTER
 ========================================== -->
@@ -1417,7 +1416,6 @@ WhatsApp Us
 <footer>
 
 <div class="container">
-
 
 <div class="footer-grid">
 
@@ -1427,19 +1425,19 @@ WhatsApp Us
 <div class="footer-column">
 
 <img src="images/logo.png"
-alt="Nexpak Security Solutions"
-class="footer-logo">
+     alt="Nexpak Security Solutions"
+     class="footer-logo">
 
 <h3>
 Nexpak Security Solutions
 </h3>
 
 <p>
-Professional suppliers of CCTV systems,
-electric fencing, alarm systems,
-gate automation, access control and
-perimeter security solutions
-throughout South Africa.
+Nexpak Security Solutions supplies professional
+security equipment including CCTV systems,
+electric fencing, gate motors, alarm systems,
+access control, intercoms and perimeter security
+solutions across Gauteng and South Africa.
 </p>
 
 </div>
@@ -1470,19 +1468,31 @@ About Us
 
 <li>
 <a href="shop.html">
-Build your system
+Build Your Security System
 </a>
 </li>
 
 <li>
 <a href="products.html">
-Products
+Security Products
+</a>
+</li>
+
+<li>
+<a href="online-store/online.html">
+Shop Online
+</a>
+</li>
+
+<li>
+<a href="quote.html">
+Request A Quote
 </a>
 </li>
 
 <li>
 <a href="contact.html">
-Contact
+Contact Us
 </a>
 </li>
 
@@ -1498,7 +1508,7 @@ Privacy Policy
 
 
 
-<!-- PRODUCTS -->
+<!-- SECURITY PRODUCTS -->
 
 <div class="footer-column">
 
@@ -1509,38 +1519,44 @@ Security Products
 <ul>
 
 <li>
-<a href="builder.html?id=hikvision-cctv-8ch">
-CCTV Systems
+<a href="product/cctv.html">
+CCTV Security Systems
 </a>
 </li>
 
 <li>
-<a href="builder.html?id=hikvision-ip-cctv">
-IP CCTV
+<a href="product/cctv.html">
+IP CCTV Systems
 </a>
 </li>
 
 <li>
-<a href="builder.html?id=electric-fence-builder">
-Electric Fencing
+<a href="product/electric-fencing.html">
+Electric Fencing Equipment
 </a>
 </li>
 
 <li>
-<a href="builder.html?id=centurion-d5-evo">
-Gate Automation
+<a href="product/gate-motors.html">
+Gate Motors &amp; Automation
 </a>
 </li>
 
 <li>
-<a href="builder.html?id=roboguard-beam-system">
+<a href="product/alarms.html">
 Alarm Systems
 </a>
 </li>
 
 <li>
-<a href="builder.html?id=biometric-access-control">
-Access Control
+<a href="product/access-control.html">
+Access Control Systems
+</a>
+</li>
+
+<li>
+<a href="product/roboguard.html">
+Roboguard Perimeter Security
 </a>
 </li>
 
@@ -1555,33 +1571,40 @@ Access Control
 <div class="footer-column">
 
 <h3>
-Contact Us
+Contact Nexpak Security Solutions
 </h3>
 
 
 <p>
 
-<i class="fas fa-phone"></i>
+<i class="fas fa-phone"
+   aria-hidden="true"></i>
 
+<a href="tel:+27836308249">
 +27 83 630 8249
+</a>
 
 </p>
 
 
 <p>
 
-<i class="fas fa-envelope"></i>
+<i class="fas fa-envelope"
+   aria-hidden="true"></i>
 
+<a href="mailto:info@nexpaksolutions.co.za">
 info@nexpaksolutions.co.za
+</a>
 
 </p>
 
 
 <p>
 
-<i class="fas fa-location-dot"></i>
+<i class="fas fa-location-dot"
+   aria-hidden="true"></i>
 
-Johannesburg, South Africa
+Johannesburg, Gauteng, South Africa
 
 </p>
 
@@ -1589,36 +1612,46 @@ Johannesburg, South Africa
 <div class="social-icons">
 
 
-<a href="#"
-aria-label="Facebook">
+<!-- Replace # with your real Facebook URL -->
 
-<i class="fab fa-facebook-f"></i>
+<a href="#"
+   aria-label="Facebook">
+
+<i class="fab fa-facebook-f"
+   aria-hidden="true"></i>
 
 </a>
 
 
-<a href="#"
-aria-label="LinkedIn">
+<!-- Replace # with your real LinkedIn URL -->
 
-<i class="fab fa-linkedin-in"></i>
+<a href="#"
+   aria-label="LinkedIn">
+
+<i class="fab fa-linkedin-in"
+   aria-hidden="true"></i>
 
 </a>
 
 
 <a href="https://wa.me/27836308249"
-target="_blank"
-rel="noopener noreferrer"
-aria-label="WhatsApp">
+   target="_blank"
+   rel="noopener noreferrer"
+   aria-label="WhatsApp Nexpak Security Solutions">
 
-<i class="fab fa-whatsapp"></i>
+<i class="fab fa-whatsapp"
+   aria-hidden="true"></i>
 
 </a>
 
 
-<a href="#"
-aria-label="Instagram">
+<!-- Replace # with your real Instagram URL -->
 
-<i class="fab fa-instagram"></i>
+<a href="#"
+   aria-label="Instagram">
+
+<i class="fab fa-instagram"
+   aria-hidden="true"></i>
 
 </a>
 
@@ -1664,17 +1697,22 @@ All Rights Reserved.
 
 <script src="js/background.js"></script>
 
+
+<!-- =========================================
+     SEO
+========================================== -->
+
 <script src="seo-schema-injector.js"></script>
 
 <script src="seo-schema.js"></script>
 
 <script src="seo.js"></script>
-  
+
 
 
 <!-- =========================================
      CHATBOT KNOWLEDGE BASE
-     
+
      IMPORTANT:
      Knowledge MUST load before chatbot.js.
 ========================================== -->
@@ -1717,7 +1755,8 @@ document.querySelectorAll(".counter").forEach(counter => {
 
     const target =
         parseInt(
-            counter.innerText.replace(/\D/g, "")
+            counter.innerText.replace(/\D/g, ""),
+            10
         ) || 0;
 
     let current = 0;
@@ -1746,8 +1785,11 @@ document.querySelectorAll(".counter").forEach(counter => {
             counter.innerText = target;
 
         }
+
     }
 
     updateCounter();
 
 });
+
+</script>
