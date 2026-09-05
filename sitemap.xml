@@ -1,16 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
+    <!-- Main Website -->
     <url>
-        <loc>https://www.nexpaksolutions.co.za/index.html</loc>
-    </url>
-
-    <url>
-        <loc>https://www.nexpaksolutions.co.za/online-store/online.html</loc>
-    </url>
-
-    <url>
-        <loc>https://www.nexpaksolutions.co.za/online-store/equestrian/equestrian.html</loc>
+        <loc>https://www.nexpaksolutions.co.za/</loc>
     </url>
 
     <url>
@@ -25,8 +18,43 @@
         <loc>https://www.nexpaksolutions.co.za/quote.html</loc>
     </url>
 
+    <!-- Online Store -->
+    <url>
+        <loc>https://www.nexpaksolutions.co.za/online-store/online.html</loc>
+    </url>
+
+    <url>
+        <loc>https://www.nexpaksolutions.co.za/online-store/equestrian/equestrian.html</loc>
+    </url>
+
+    <!-- Academy -->
     <url>
         <loc>https://www.nexpaksolutions.co.za/academy/academy.html</loc>
+    </url>
+
+    <!-- Security Product Pages -->
+    <url>
+        <loc>https://www.nexpaksolutions.co.za/product/cctv.html</loc>
+    </url>
+
+    <url>
+        <loc>https://www.nexpaksolutions.co.za/product/gate-motors.html</loc>
+    </url>
+
+    <url>
+        <loc>https://www.nexpaksolutions.co.za/product/electric-fencing.html</loc>
+    </url>
+
+    <url>
+        <loc>https://www.nexpaksolutions.co.za/product/roboguard.html</loc>
+    </url>
+
+    <url>
+        <loc>https://www.nexpaksolutions.co.za/product/alarms.html</loc>
+    </url>
+
+    <url>
+        <loc>https://www.nexpaksolutions.co.za/product/access-control.html</loc>
     </url>
 
 </urlset>
