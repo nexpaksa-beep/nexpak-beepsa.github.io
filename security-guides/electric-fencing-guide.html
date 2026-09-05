@@ -1788,6 +1788,33 @@ document.addEventListener("DOMContentLoaded", function(){
 
 });
 
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    const menuButton = document.querySelector(".menu-toggle");
+    const nav = document.querySelector("nav");
+
+    if(!menuButton || !nav){
+        return;
+    }
+
+    menuButton.addEventListener("click", function(){
+
+        nav.classList.toggle("mobile-open");
+
+        const isOpen =
+            nav.classList.contains("mobile-open");
+
+        menuButton.setAttribute(
+            "aria-expanded",
+            isOpen ? "true" : "false"
+        );
+
+    });
+
+});
+
 </script><style>
 
 @media(max-width:1050px){
@@ -1802,12 +1829,17 @@ document.addEventListener("DOMContentLoaded", function(){
         padding:20px;
         flex-direction:column;
         align-items:flex-start;
+        gap:16px;
         border-top:1px solid #242a31;
+        box-shadow:0 10px 25px rgba(0,0,0,.35);
+    }
+
+    nav.mobile-open a{
+        display:block;
+        width:100%;
+        padding:5px 0;
     }
 
 }
 
 </style></body></html>
-```Important: I changed the continuation slightly from the original version by adding the industrial section and security-integration section, and I kept the links relative to "/security-guides/".
-
-If the file was cut because of the chat message length, don't try to paste the entire thing again in one go. Your existing file is already intact up to "commercial, industrial..."; paste this continuation starting at the closing "</p>" after the sentence ending in “large commercial, i
