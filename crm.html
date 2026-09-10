@@ -1093,5 +1093,1181 @@ function createOrderCard(order) {
                     </div>
 
                     <div class="info-value">
+                     
+                                              ${escapeHtml(
+                            customer.name ||
+                            'Not supplied'
+                        )}
 
+                    </div>
+
+                </div>
+
+
+                <div class="info">
+
+                    <div class="info-label">
+                        Phone
+                    </div>
+
+                    <div class="info-value">
+
+                        ${escapeHtml(
+                            customer.phone ||
+                            'Not supplied'
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="info">
+
+                    <div class="info-label">
+                        Email
+                    </div>
+
+                    <div class="info-value">
+
+                        ${escapeHtml(
+                            customer.email ||
+                            'Not supplied'
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="info">
+
+                    <div class="info-label">
+                        Payment
+                    </div>
+
+                    <div class="info-value">
+
+                        ${escapeHtml(
+                            order.paymentMethod ||
+                            'Not supplied'
+                        )}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="info">
+
+                <div class="info-label">
+                    Delivery Address
+                </div>
+
+                <div class="info-value">
+
+                    ${escapeHtml(
+                        customer.shippingAddress ||
+                        'Not supplied'
+                    )}
+
+                </div>
+
+            </div>
+
+
+            <div class="products">
+
+                <div class="products-title">
+                    🛒 Products
+                </div>
+
+                ${productHtml}
+
+            </div>
+
+
+            <div class="totals">
+
+                <div class="total-line">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <span>
+                        ${money(
+                            totals.subtotal
+                        )}
+                    </span>
+
+                </div>
+
+
+                <div class="total-line">
+
+                    <span>
+                        Delivery
+                    </span>
+
+                    <span>
+                        ${money(
+                            totals.delivery
+                        )}
+                    </span>
+
+                </div>
+
+
+                <div class="total-line">
+
+                    <span>
+                        VAT
+                    </span>
+
+                    <span>
+                        ${money(
+                            totals.vat
+                        )}
+                    </span>
+
+                </div>
+
+
+                <div class="total-line grand-total">
+
+                    <span>
+                        GRAND TOTAL
+                    </span>
+
+                    <span>
+                        ${money(
+                            totals.grandTotal
+                        )}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="order-actions">
+
+                <button
+                    class="btn btn-blue"
+                    onclick="viewOrderEncoded('${orderJson}')"
+                >
+                    👁️ View
+                </button>
+
+                <button
+                    class="btn btn-green"
+                    onclick="copyOrderEncoded('${orderJson}')"
+                >
+                    📋 Copy
+                </button>
+
+                <button
+                    class="btn btn-orange"
+                    onclick="whatsappOrderEncoded('${orderJson}')"
+                >
+                    💬 WhatsApp
+                </button>
+
+                <button
+                    class="btn btn-red"
+                    onclick="deleteOrderEncoded('${refJson}')"
+                >
+                    🗑️ Delete
+                </button>
+
+            </div>
+
+        </article>
+
+    `;
+
+}
+
+
+/* ==========================================================
+   DECODE ORDER
+   ========================================================== */
+
+function decodeOrder(encoded) {
+
+    try {
+
+        return JSON.parse(
+            decodeURIComponent(encoded)
+        );
+
+    } catch (error) {
+
+        console.error(
+            'Could not decode order:',
+            error
+        );
+
+        return null;
+
+    }
+
+}
+
+
+/* ==========================================================
+   VIEW ORDER
+   ========================================================== */
+
+function viewOrderEncoded(encoded) {
+
+    const order =
+        decodeOrder(encoded);
+
+    if (!order) {
+
+        alert(
+            'Could not open this order.'
+        );
+
+        return;
+
+    }
+
+    viewOrder(order);
+
+}
+
+
+function viewOrder(order) {
+
+    const customer =
+        order.customer || {};
+
+    const totals =
+        order.totals || {};
+
+    const items =
+        Array.isArray(order.items)
+        ? order.items
+        : [];
+
+
+    let products = '';
+
+
+    items.forEach(function(item) {
+
+        const quantity =
+            Number(
+                item.quantity ??
+                item.qty
+            ) || 1;
+
+        const price =
+            Number(
+                item.price
+            ) || 0;
+
+        const name =
+            item.name ||
+            item.title ||
+            'Security Product';
+
+
+        products += `
+
+            <div
+                style="
+                    background:#0f172a;
+                    padding:10px;
+                    border-radius:7px;
+                    margin-bottom:7px;
+                "
+            >
+
+                <strong>
+                    ${escapeHtml(name)}
+                </strong>
+
+                ${
+                    item.variant
+                    ? '<br>Variant: ' +
+                      escapeHtml(
+                          item.variant
+                      )
+                    : ''
+                }
+
+                <br>
+
+                Quantity:
+                ${quantity}
+
+                <br>
+
+                Unit Price:
+                ${money(price)}
+
+                <br>
+
+                Line Total:
+                ${money(
+                    price * quantity
+                )}
+
+            </div>
+
+        `;
+
+    });
+
+
+    document.getElementById(
+        'modalTitle'
+    ).textContent =
+        'Order ' +
+        (
+            order.orderReference ||
+            ''
+        );
+
+
+    document.getElementById(
+        'modalBody'
+    ).innerHTML = `
+
+        <div class="detail-section">
+
+            <h3>
+                Customer
+            </h3>
+
+            <div class="detail-grid">
+
+                <div class="detail-box">
+
+                    <strong>
+                        Name
+                    </strong>
+
+                    <span>
+
+                        ${escapeHtml(
+                            customer.name ||
+                            'Not supplied'
+                        )}
+
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <strong>
+                        Phone
+                    </strong>
+
+                    <span>
+
+                        ${escapeHtml(
+                            customer.phone ||
+                            'Not supplied'
+                        )}
+
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <strong>
+                        Email
+                    </strong>
+
+                    <span>
+
+                        ${escapeHtml(
+                            customer.email ||
+                            'Not supplied'
+                        )}
+
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <strong>
+                        Order Date
+                    </strong>
+
+                    <span>
+
+                        ${formatDate(
+                            order.date
+                        )}
+
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <strong>
+                        Payment Method
+                    </strong>
+
+                    <span>
+
+                        ${escapeHtml(
+                            order.paymentMethod ||
+                            'Not supplied'
+                        )}
+
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <strong>
+                        Status
+                    </strong>
+
+                    <span>
+
+                        ${escapeHtml(
+                            order.status ||
+                            'Unknown'
+                        )}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="detail-section">
+
+            <h3>
+                Delivery Address
+            </h3>
+
+            <div class="detail-box">
+
+                ${escapeHtml(
+                    customer.shippingAddress ||
+                    'Not supplied'
+                )}
+
+            </div>
+
+        </div>
+
+
+        <div class="detail-section">
+
+            <h3>
+                Products
+            </h3>
+
+            ${
+                products ||
+                'No products recorded.'
+            }
+
+        </div>
+
+
+        <div class="detail-section">
+
+            <h3>
+                Financial Summary
+            </h3>
+
+            <div class="total-line">
+
+                <span>
+                    Subtotal
+                </span>
+
+                <span>
+                    ${money(
+                        totals.subtotal
+                    )}
+                </span>
+
+            </div>
+
+
+            <div class="total-line">
+
+                <span>
+                    Delivery
+                </span>
+
+                <span>
+                    ${money(
+                        totals.delivery
+                    )}
+                </span>
+
+            </div>
+
+
+            <div class="total-line">
+
+                <span>
+                    VAT
+                </span>
+
+                <span>
+                    ${money(
+                        totals.vat
+                    )}
+                </span>
+
+            </div>
+
+
+            <div class="total-line grand-total">
+
+                <span>
+                    GRAND TOTAL
+                </span>
+
+                <span>
+                    ${money(
+                        totals.grandTotal
+                    )}
+                </span>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    document.getElementById(
+        'orderModal'
+    ).classList.add('show');
+
+}
+
+
+/* ==========================================================
+   CLOSE MODAL
+   ========================================================== */
+
+function closeModal() {
+
+    document.getElementById(
+        'orderModal'
+    ).classList.remove('show');
+
+}
+
+
+function closeModalOutside(event) {
+
+    if (
+        event.target.id ===
+        'orderModal'
+    ) {
+
+        closeModal();
+
+    }
+
+}
+
+
+/* ==========================================================
+   ORDER TEXT
+   ========================================================== */
+
+function orderText(order) {
+
+    const customer =
+        order.customer || {};
+
+    const totals =
+        order.totals || {};
+
+    const items =
+        Array.isArray(order.items)
+        ? order.items
+        : [];
+
+
+    let text =
+        'NEXPAK SECURITY SOLUTIONS\n';
+
+    text +=
+        '==============================\n';
+
+    text +=
+        'ORDER: ' +
+        (
+            order.orderReference ||
+            ''
+        ) +
+        '\n';
+
+    text +=
+        'DATE: ' +
+        formatDate(order.date) +
+        '\n';
+
+    text +=
+        'STATUS: ' +
+        (
+            order.status ||
+            ''
+        ) +
+        '\n';
+
+    text +=
+        'PAYMENT: ' +
+        (
+            order.paymentMethod ||
+            ''
+        ) +
+        '\n\n';
+
+
+    text +=
+        'CUSTOMER\n';
+
+    text +=
+        'Name: ' +
+        (
+            customer.name ||
+            ''
+        ) +
+        '\n';
+
+    text +=
+        'Phone: ' +
+        (
+            customer.phone ||
+            ''
+        ) +
+        '\n';
+
+    text +=
+        'Email: ' +
+        (
+            customer.email ||
+            ''
+        ) +
+        '\n';
+
+    text +=
+        'Address: ' +
+        (
+            customer.shippingAddress ||
+            ''
+        ) +
+        '\n\n';
+
+
+    text +=
+        'PRODUCTS\n';
+
+
+    items.forEach(function(item) {
+
+        const quantity =
+            Number(
+                item.quantity ??
+                item.qty
+            ) || 1;
+
+        const price =
+            Number(
+                item.price
+            ) || 0;
+
+
+        text +=
+            '- ' +
+            (
+                item.name ||
+                item.title ||
+                'Product'
+            );
+
+
+        if (item.variant) {
+
+            text +=
+                ' (' +
+                item.variant +
+                ')';
+
+        }
+
+
+        text +=
+            ' | Qty: ' +
+            quantity +
+            ' | ' +
+            money(
+                price * quantity
+            ) +
+            '\n';
+
+    });
+
+
+    text += '\n';
+
+    text +=
+        'Subtotal: ' +
+        money(
+            totals.subtotal
+        ) +
+        '\n';
+
+    text +=
+        'Delivery: ' +
+        money(
+            totals.delivery
+        ) +
+        '\n';
+
+    text +=
+        'VAT: ' +
+        money(
+            totals.vat
+        ) +
+        '\n';
+
+    text +=
+        'GRAND TOTAL: ' +
+        money(
+            totals.grandTotal
+        ) +
+        '\n';
+
+
+    return text;
+
+}
+
+
+/* ==========================================================
+   COPY ORDER
+   ========================================================== */
+
+function copyOrderEncoded(encoded) {
+
+    const order =
+        decodeOrder(encoded);
+
+    if (!order) {
+
+        alert(
+            'Could not copy this order.'
+        );
+
+        return;
+
+    }
+
+    copyOrder(order);
+
+}
+
+
+function copyOrder(order) {
+
+    const text =
+        orderText(order);
+
+
+    if (
+        navigator.clipboard &&
+        navigator.clipboard.writeText
+    ) {
+
+        navigator.clipboard
+            .writeText(text)
+            .then(function() {
+
+                showToast(
+                    'Order copied to clipboard.'
+                );
+
+            })
+            .catch(function() {
+
+                fallbackCopy(text);
+
+            });
+
+    } else {
+
+        fallbackCopy(text);
+
+    }
+
+}
+
+
+/* ==========================================================
+   FALLBACK COPY
+   ========================================================== */
+
+function fallbackCopy(text) {
+
+    const area =
+        document.createElement(
+            'textarea'
+        );
+
+    area.value = text;
+
+    area.style.position =
+        'fixed';
+
+    area.style.opacity =
+        '0';
+
+    document.body.appendChild(
+        area
+    );
+
+    area.focus();
+
+    area.select();
+
+
+    try {
+
+        document.execCommand(
+            'copy'
+        );
+
+        showToast(
+            'Order copied to clipboard.'
+        );
+
+    } catch (error) {
+
+        alert(
+            'Copy failed. Open View and copy manually.'
+        );
+
+    }
+
+
+    area.remove();
+
+}
+
+
+/* ==========================================================
+   COPY ALL ORDERS
+   ========================================================== */
+
+function copyAllOrders() {
+
+    if (!allOrders.length) {
+
+        alert(
+            'There are no orders to copy.'
+        );
+
+        return;
+
+    }
+
+
+    const text =
+        allOrders
+            .map(function(order) {
+
+                return orderText(order);
+
+            })
+            .join(
+                '\n\n==============================\n\n'
+            );
+
+
+    if (
+        navigator.clipboard &&
+        navigator.clipboard.writeText
+    ) {
+
+        navigator.clipboard
+            .writeText(text)
+            .then(function() {
+
+                showToast(
+                    'All orders copied.'
+                );
+
+            })
+            .catch(function() {
+
+                fallbackCopy(text);
+
+            });
+
+    } else {
+
+        fallbackCopy(text);
+
+    }
+
+}
+
+
+/* ==========================================================
+   WHATSAPP CUSTOMER
+   ========================================================== */
+
+function whatsappOrderEncoded(encoded) {
+
+    const order =
+        decodeOrder(encoded);
+
+    if (!order) {
+
+        alert(
+            'Could not open WhatsApp for this order.'
+        );
+
+        return;
+
+    }
+
+    whatsappCustomer(order);
+
+}
+
+
+function whatsappCustomer(order) {
+
+    const customer =
+        order.customer || {};
+
+
+    let phone =
+        String(
+            customer.phone || ''
+        )
+        .replace(
+            /[^0-9]/g,
+            ''
+        );
+
+
+    if (
+        phone.startsWith('0')
+    ) {
+
+        phone =
+            '27' +
+            phone.substring(1);
+
+    }
+
+
+    if (!phone) {
+
+        alert(
+            'No customer phone number is available.'
+        );
+
+        return;
+
+    }
+
+
+    const message =
+        'Hi ' +
+        (
+            customer.name ||
+            'there'
+        ) +
+        ', this is NexPak Security Solutions regarding your order ' +
+        (
+            order.orderReference ||
+            ''
+        ) +
+        '.';
+
+
+    window.open(
+        'https://wa.me/' +
+        phone +
+        '?text=' +
+        encodeURIComponent(
+            message
+        ),
+        '_blank'
+    );
+
+}
+
+
+/* ==========================================================
+   DELETE ORDER
+   ========================================================== */
+
+function deleteOrderEncoded(encoded) {
+
+    let reference = '';
+
+
+    try {
+
+        reference =
+            decodeURIComponent(
+                encoded
+            );
+
+    } catch (error) {
+
+        reference = '';
+
+    }
+
+
+    deleteOrder(reference);
+
+}
+
+
+function deleteOrder(orderReference) {
+
+    if (!orderReference) {
+        return;
+    }
+
+
+    if (
+        !confirm(
+            'Delete order ' +
+            orderReference +
+            '?\n\nThis cannot be undone.'
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    allOrders =
+        allOrders.filter(
+            function(order) {
+
+                return (
+                    order.orderReference !==
+                    orderReference
+                );
+
+            }
+        );
+
+
+    localStorage.setItem(
+        'nexpak_orders',
+        JSON.stringify(
+            allOrders
+        )
+    );
+
+
+    refreshOrders();
+
+    showToast(
+        'Order deleted.'
+    );
+
+}
+
+
+/* ==========================================================
+   CLEAR ALL ORDERS
+   ========================================================== */
+
+function clearAllOrders() {
+
+    if (!allOrders.length) {
+
+        alert(
+            'There are no orders to clear.'
+        );
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            'WARNING!\n\n' +
+            'This will permanently delete ALL ' +
+            allOrders.length +
+            ' stored orders from this browser.\n\n' +
+            'Make sure you exported your orders first.\n\n' +
+            'Continue?'
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    localStorage.removeItem(
+        'nexpak_orders'
+    );
+
+
+    allOrders = [];
+
+
+    refreshOrders();
+
+
+    showToast(
+        'All orders cleared.'
+    );
+
+}
+
+
+/* ==========================================================
+   EXPORT ORDERS
+   ========================================================== */
+
+function exportOrders() {
+
+    if (!allOrders.length) {
+
+        alert(
+            'There are no orders to export.'
+        );
+
+        ret
          
