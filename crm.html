@@ -2269,5 +2269,151 @@ function exportOrders() {
             'There are no orders to export.'
         );
 
-        ret
+        return;
+
+    }
+
+
+    const data =
+        JSON.stringify(
+            allOrders,
+            null,
+            2
+        );
+
+
+    const blob =
+        new Blob(
+            [data],
+            {
+                type:
+                    'application/json'
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement(
+            'a'
+        );
+
+
+    link.href =
+        url;
+
+
+    link.download =
+        'nexpak-orders-' +
+        new Date()
+            .toISOString()
+            .slice(0, 10) +
+        '.json';
+
+
+    document.body.appendChild(
+        link
+    );
+
+
+    link.click();
+
+
+    link.remove();
+
+
+    URL.revokeObjectURL(
+        url
+    );
+
+
+    showToast(
+        'Orders exported successfully.'
+    );
+
+}
+
+
+/* ==========================================================
+   REFRESH ORDERS
+   ========================================================== */
+
+function refreshOrders() {
+
+    loadOrders();
+
+    updateStats();
+
+
+    const search =
+        document.getElementById(
+            'searchOrders'
+        ).value;
+
+
+    renderOrders(
+        search
+    );
+
+}
+
+
+/* ==========================================================
+   SEARCH ORDERS
+   ========================================================== */
+
+document
+    .getElementById(
+        'searchOrders'
+    )
+    .addEventListener(
+        'input',
+        function() {
+
+            renderOrders(
+                this.value
+            );
+
+        }
+    );
+
+
+/* ==========================================================
+   ESCAPE KEY
+   ========================================================== */
+
+document.addEventListener(
+    'keydown',
+    function(event) {
+
+        if (
+            event.key ===
+            'Escape'
+        ) {
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* ==========================================================
+   INITIALIZE CRM
+   ========================================================== */
+
+refreshOrders();
+
+
+</script>
+
+</body>
+
+</html>
          
