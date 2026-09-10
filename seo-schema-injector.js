@@ -980,4 +980,11 @@ window.NexpakSEOEngine = {
  13. AUTOMATIC INITIALIZATION
 =========================================================*/
 
-document.addEventLis
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        initializeSEOEngine();
+
+    }
+);
