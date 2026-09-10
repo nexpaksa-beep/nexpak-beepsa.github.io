@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Nexpak Security Solutions online store. Shop professional electric fencing kits, energizers, Dahua CCTV, Ajax alarms, gate automation and security hardware in South Africa.">
+<meta name="keywords" content="security suppliers South Africa, electric fencing kits, electric fence energizers, Dahua CCTV, Ajax alarms, gate motors, security products, Nexpak Security Solutions">
+<meta name="robots" content="index,follow">
+
+<!-- Google tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-KVFDVM94"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'GT-KVFDVM94');
+</script>
+
+<title>Nexpak Security Solutions | Online Security Store</title>
+
+<style>
+:root{
+    --primary-blue:#040e1b;
+    --accent-gold:#e2b114;
+    --gold-light:#ffd75a;
+    --text-dark:#222;
+    --border-color:#cbd5e1;
+    --wall-light:#b98962;
+    --wall-mid:#805538;
+    --wall-dark:#4a2d1d;
+}
+
+/* ==========================================================
+   REALISTIC BRICK WALL BACKGROUND
+========================================================== */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+body{
+    margin:0;
+    font-family:"Segoe UI",Arial,sans-serif;
+    color:var(--text-dark);
+    min-height:100vh;
+    background:
+        linear-gradient(rgba(54,31,19,.22),rgba(54,31,19,.22)),
+        repeating-linear-gradient(
+            0deg,
+            rgba(40,22,13,.55) 0px,
+            rgba(40,22,13,.55) 3px,
+            transparent 3px,
+            transparent 52px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            rgba(255,255,255,.08) 0px,
+            rgba(255,255,255,.08) 2px,
+            transparent 2px,
+            transparent 104px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            transparent 0px,
+            transparent 50px,
+            rgba(40,22,13,.55) 50px,
+            rgba(40,22,13,.55) 53px,
+            transparent 53px,
+            transparent 104px
+        ),
+        linear-gradient(145deg,var(--wall-light),var(--wall-mid) 48%,var(--wall-dark));
+    background-attachment:fixed;
+}
+
+/* ==========================================================
+   HEADER
+========================================================== */
+header{
+    background:rgba(4,14,27,.98);
+    color:#fff;
+    padding:15px 25px;
+    border-bottom:3px solid var(--accent-gold);
+    position:sticky;
+    top:0;
+    z-index:5000;
+    box-shadow:0 5px 20px rgba(0,0,0,.45);
+}
+
+.header-main{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.branding-sub{
+    font-size:11px;
+    letter-spacing:2px;
+    color:#94a3b8;
+    margin-top:3px;
+    text-transform:uppercase;
+}
+
+.meta-nav{
+    font-size:13px;
+    display:flex;
+    gap:20px;
+    align-items:center;
+    white-space:nowrap;
+}
+
+.meta-nav span{
+    font-weight:900;
+    color:var(--accent-gold);
+}
+
+/* ==========================================================
+   DROPDOWN
+========================================================== */
+.dropdown{
+    position:relative;
+    display:inline-block;
+}
+
+.dropdown-btn{
+    background:var(--accent-gold);
+    color:var(--primary-blue);
+    border:none;
+    padding:9px 15px;
+    font-weight:900;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:13px;
+    text-transform:uppercase;
+}
+
+.dropdown-btn:hover{background:var(--gold-light)}
+
+.dropdown-content{
+    display:none;
+    position:absolute;
+    top:calc(100% + 8px);
+    left:0;
+    min-width:220px;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 12px 30px rgba(0,0,0,.4);
+    z-index:99999;
+    overflow:hidden;
+}
+
+.dropdown.active .dropdown-content{display:block}
+
+.dropdown-content a{
+    display:block;
+    padding:13px 16px;
+    color:#111827;
+    text-decoration:none;
+    white-space:nowrap;
+    font-size:13px;
+    font-weight:700;
+}
+
+.dropdown-content a:hover{background:#f1f5f9}
+
+/* ==========================================================
+   HERO
+========================================================== */
+.hero-banner{
+    background:
+        linear-gradient(rgba(4,14,27,.90),rgba(4,14,27,.94)),
+        url("../images/hero-bg.jpg") no-repeat center/cover;
+    color:#fff;
+    padding:60px 20px;
+    text-align:center;
+    border-bottom:5px solid var(--accent-gold);
+    box-shadow:0 8px 20px rgba(0,0,0,.35);
+}
+
+.hero-banner h1{
+    margin:0 0 15px;
+    font-size:clamp(27px,5vw,40px);
+}
+
+.hero-banner p{
+    margin:0;
+    font-size:15px;
+    color:#cbd5e1;
+}
+
+/* ==========================================================
+   MAIN
+========================================================== */
+.container{
+    max-width:1250px;
+    margin:0 auto;
+    padding:30px 20px 60px;
+}
+
+.store-section-title{
+    color:#fff;
+    background:linear-gradient(90deg,#040e1b,#0c213a);
+    border-left:7px solid var(--accent-gold);
+    padding:13px 17px;
+    margin:45px 0 28px;
+    font-size:22px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    box-shadow:0 5px 14px rgba(0,0,0,.4);
+}
+
+/* ==========================================================
+   WOODEN WINDOW PRODUCT FRAMES
+========================================================== */
+.app-product-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+    gap:32px;
+}
+
+.app-product-card{
+    background:linear-gradient(145deg,#fdfdfd,#eef1f4);
+    border:12px solid #5b351e;
+    border-radius:5px;
+    padding:18px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    position:relative;
+    overflow:hidden;
+    box-shadow:
+        inset 0 0 0 3px #9b6338,
+        inset 0 0 0 6px #4b2816,
+        inset 0 0 28px rgba(0,0,0,.25),
+        0 14px 30px rgba(0,0,0,.45);
+}
+
+/* timber-grain edge */
+.app-product-card::before,
+.app-product-card::after{
+    content:"";
+    position:absolute;
+    pointer-events:none;
+    z-index:0;
+}
+
+.app-product-card::before{
+    inset:-12px;
+    border:3px solid rgba(213,158,92,.65);
+    box-shadow:inset 0 0 0 4px rgba(53,27,14,.65);
+}
+
+.app-product-card > *{position:relative;z-index:1}
+
+/* product sits inside a realistic wood-framed window */
+.app-product-card img{
+    width:100%;
+    height:190px;
+    object-fit:contain;
+    margin-bottom:14px;
+    background:
+        linear-gradient(rgba(255,255,255,.15),rgba(255,255,255,.15)),
+        #d8d0c5;
+    border:10px solid #70401f;
+    outline:3px solid #3e2111;
+    box-shadow:
+        inset 0 0 0 4px #b57945,
+        inset 0 0 22px rgba(0,0,0,.4),
+        0 6px 12px rgba(0,0,0,.3);
+    border-radius:2px;
+    padding:9px;
+}
+
+.app-product-card .tag{
+    font-size:11px;
+    text-transform:uppercase;
+    font-weight:900;
+    color:#64748b;
+    margin-bottom:4px;
+}
+
+.app-product-card h3{
+    margin:5px 0;
+    font-size:17px;
+    color:var(--primary-blue);
+}
+
+.app-product-card p{
+    font-size:13px;
+    color:#475569;
+    margin:0 0 12px;
+    line-height:1.45;
+}
+
+.variant-selector{
+    width:100%;
+    padding:10px;
+    margin-bottom:12px;
+    border:1px solid #a8b3c0;
+    border-radius:5px;
+    font-size:13px;
+    color:var(--text-dark);
+    background:#f8fafc;
+    font-weight:600;
+}
+
+.product-price-tag{
+    font-size:22px;
+    font-weight:900;
+    color:var(--primary-blue);
+    background:#f1f5f9;
+    border:1px solid var(--border-color);
+    padding:10px;
+    border-radius:5px;
+    text-align:center;
+    margin:10px 0 15px;
+    box-shadow:inset 0 2px 4px rgba(0,0,0,.08);
+}
+
+.button-group{
+    display:flex;
+    gap:7px;
+    margin-top:auto;
+}
+
+.custom-app-btn{
+    flex:1;
+    background:var(--accent-gold);
+    color:var(--primary-blue);
+    padding:11px 6px;
+    border:none;
+    font-weight:900;
+    border-radius:5px;
+    cursor:pointer;
+    text-transform:uppercase;
+    font-size:10px;
+    letter-spacing:.5px;
+    text-align:center;
+    text-decoration:none;
+    transition:.2s;
+}
+
+.custom-app-btn:hover{
+    background:var(--gold-light);
+    transform:translateY(-1px);
+}
+
+.btn-info{
+    background:#e2e8f0;
+    color:var(--primary-blue);
+    border:1px solid var(--border-color);
+}
+
+.btn-info:hover{background:#cbd5e1}
+
+/* ==========================================================
+   CART PANEL
+========================================================== */
+.cart-panel{
+    background:rgba(255,255,255,.97);
+    border:3px solid var(--accent-gold);
+    border-radius:12px;
+    padding:25px;
+    margin:50px auto 0;
+    max-width:850px;
+    box-shadow:0 15px 35px rgba(0,0,0,.4);
+}
+
+.cart-panel h2{
+    margin-top:0;
+    color:var(--primary-blue);
+}
+
+.cart-empty{
+    text-align:center;
+    color:#64748b;
+    padding:15px;
+}
+
+.cart-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.cart-row{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    align-items:center;
+    padding:13px;
+    border-bottom:1px solid #e2e8f0;
+    background:#f8fafc;
+    border-radius:7px;
+}
+
+.cart-row strong{color:var(--primary-blue)}
+.cart-row small{color:#64748b}
+
+.cart-summary{
+    margin-top:15px;
+    border-top:2px dashed #cbd5e1;
+    padding-top:12px;
+}
+
+.summary-line{
+    display:flex;
+    justify-content:space-between;
+    padding:5px 0;
+}
+
+.summary-total{
+    font-size:21px;
+    font-weight:900;
+    color:var(--primary-blue);
+    border-top:2px solid #cbd5e1;
+    margin-top:8px;
+    padding-top:10px;
+}
+
+.cart-actions{
+    display:flex;
+    gap:12px;
+    margin-top:20px;
+}
+
+.big-checkout{
+    flex:1;
+    padding:18px;
+    border:0;
+    border-radius:12px;
+    background:#354c3b;
+    color:#fff;
+    font-size:19px;
+    font-weight:900;
+    cursor:pointer;
+}
+
+.clear-cart{
+    padding:18px 22px;
+    border:0;
+    border-radius:12px;
+    background:#b91c1c;
+    color:#fff;
+    font-size:15px;
+    font-weight:900;
+    cursor:pointer;
+}
+
+.big-checkout:hover{background:#263a2c}
+.clear-cart:hover{background:#991b1b}
+
+/* ==========================================================
+   FOOTER / WHATSAPP
+========================================================== */
+footer{
+    background:#040e1b;
+    color:#94a3b8;
+    padding:40px 20px;
+    text-align:center;
+    font-size:13px;
+    margin-top:20px;
+    border-top:3px solid var(--accent-gold);
+}
+
+footer a{
+    color:#fff;
+    text-decoration:none;
+    margin:0 10px;
+}
+
+.whatsapp-float{
+    position:fixed;
+    width:60px;
+    height:60px;
+    bottom:25px;
+    right:25px;
+    background:#25d366;
+    color:#fff;
+    border-radius:50%;
+    text-align:center;
+    box-shadow:0 5px 18px rgba(0,0,0,.45);
+    z-index:4000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    font-size:29px;
+}
+
+.whatsapp-float:hover{transform:scale(1.08);background:#20ba5a}
+
+@media(max-width:700px){
+    header{padding:12px 14px}
+    .header-main{align-items:flex-start}
+    .header-main > div:last-child{display:none}
+    .branding-sub{letter-spacing:1px}
+    .app-product-grid{grid-template-columns:1fr}
+    .container{padding:20px 12px 45px}
+    .store-section-title{font-size:18px}
+    .cart-actions{flex-direction:column}
+    .big-checkout,.clear-cart{width:100%}
+    .app-product-card img{height:175px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-main">
+        <div style="display:flex;align-items:center;gap:20px;">
+            <div class="dropdown">
+                <button type="button" class="dropdown-btn" id="nexpakMenuButton">Menu ▾</button>
+                <div class="dropdown-content" id="nexpakMenu">
+                    <a href="../index.html">🏠 Home</a>
+                    <a href="#security-kits">Security Kits</a>
+                    <a href="#energizers">Energizers</a>
+                    <a href="#cctv">Dahua CCTV</a>
+                    <a href="#alarms">Ajax Alarms</a>
+                    <a href="#cart">🛒 Cart & Checkout</a>
+                </div>
+            </div>
+            <div>
+                <div style="font-weight:bold;font-size:22px;letter-spacing:.5px;">Nexpak Security Solutions</div>
+                <div class="branding-sub">Protecting What Matters Most</div>
+            </div>
+        </div>
+
+        <div class="meta-nav">
+            <div>Account</div>
+            <div>Wishlist <span id="wishlist-count">0</span></div>
+            <div>Cart <span id="cart-count-nav">0</span></div>
+        </div>
+    </div>
+</header>
+
+<section class="hero-banner">
+    <div style="font-size:13px;text-transform:uppercase;letter-spacing:2px;color:var(--accent-gold);margin-bottom:10px;font-weight:bold;">
+        Nexpak Security Store
+    </div>
+    <h1>Professional Security. <strong>Delivered To Your Door.</strong></h1>
+    <p>Complete security kits and hardware for homes, businesses, estates and farms.</p>
+</section>
+
+<div class="container">
+
+<h2 id="security-kits" class="store-section-title">Security Kits</h2>
+<div class="app-product-grid">
+
+<!-- 1 -->
+<div class="app-product-card" data-product-name="Electric Fencing 6 Square tube Kit">
+<img src="../images/ef6.png" alt="Electric Fencing Standard Kit">
+<div>
+<div class="tag">Electric Fencing</div>
+<h3>Electric Fencing 6 Square tube Kit</h3>
+<p>High-grade parameter fencing system for domestic properties.</p>
+<select class="variant-selector">
+<option data-price="8850.00" data-weight="45.0">100m Kit Selection - R8,850.00</option>
+<option data-price="12999.00" data-weight="90.0">200m Kit Selection - R12,999.00</option>
+</select>
+<div class="product-price-tag">R8,850.00</div>
+</div>
+<div class="button-group">
+<a href="../kits/electric-fence-6l.html" class="custom-app-btn btn-info">More Info</a>
+<button type="button" class="custom-app-btn btn-add-to-cart">Add to Cart</button>
+</div>
+</div>
+
+<!-- 2 -->
+<div class="app-product-card" data-product-name="Commercial Electric Fencing 8 Line Square Tube Kit">
+<img src="../images/ef.png" alt="Commercial Electric Fencing Kit">
+<div>
+<div class="tag">Electric Fencing</div>
+<h3>Commercial Electric Fencing 8 Line Square Tube Kit</h3>
+<p>Heavy duty high-voltage security protection for warehouses and complexes.</p>
+<select class="variant-selector">
+<option data-price="9999.00" data-weight="58.0">100m Kit Selection - R9,999.00</option>
+<option data-price="14999.00" data-weight="116.0">200m Kit Selection - R14,999.00</option>
+</select>
+<div class="product-price-tag">R9,999.00</div>
+</div>
+<div class="button-group">
+<a href="../kits/electric-fence-8l.html" class="custom-app-btn btn-info">More Info</a>
+<button type="button" class="custom-app-btn btn-add-to-cart">Add to Cart</button>
+</div>
+</div>
+
+<!-- 3 -->
+<div class="app-product-card" data-product-name="Electric Fence 10 Line Square Kit">
+<img src="../images/ef.png" alt="Agricultural Farm Fence Kit">
+<div>
+<div class="tag">Electric Fencing</div>
+<h3>Electric Fence 10 Line Square Kit</h3>
+<p>Long distance robust wire containment and perimeter security kit.</p>
+<select class="variant-selector">
+<option data-price="13999.00" data-weight="72.0">100m Kit Selection - R13,999.00</option>
+<option data-price="17999.00" data-weight="144.0">200m Kit Selection - R17,999.00</option>
+</select>
+<div class="product-price-tag">R13,999.00</div>
+</div>
+<div class="button-group">
+<a href="../kits/electric-fence-10l.html" class="custom-app-btn btn-info">More Info</a>
+<button type="button" class="custom-app-btn btn-add-to-cart">Add to Cart</button>
+</div>
+</div>
+
+<!-- 4 -->
+<div class="app-product-card" data-product-name="Roboguard Wireless Perimeter Kit">
+<img src="../images/robo1.png" alt="Roboguard Wireless Perimeter Kit">
+<div>
+<div class="tag">Outdoor Beams</div>
+<h3>Roboguard Wireless Perimeter Kit</h3>
+<p>Early warning sensor setup with HQ controller unit modules.</p>
+<select class="variant-selector">
+<option data-price="5999.00" data-weight="4.0">2 Beam Setup - R5,999.00</option>
+<option data-price="8999.00" data-weight="6.5">4 Beam Setup - R8,999.00</option>
+<option data-price="12999.00" data-weight="9.0">6 Beam Setup - R12,999.00</option>
+<option data-price="15999.00" data-weight="11.5">8 Beam Setup - R15,999.00</option>
+</select>
+<div class="product-price-tag">R5,999.00</div>
+</div>
+<div class="button-group">
+<a href="../kits/roboguard.html" class="custom-app-btn btn-info">More Info</a>
+<button type="button" class="custom-app-btn btn-add-to-cart">Add to Cart</button>
+</div>
+</div>
+
+<!-- 5 -->
+<div class="app-product-card" data-product-name="Nice ET Gate Motor Kit">
+<img src="../images/nice.png" alt="Nice ET Gate Motor Kit">
+<div>
+<div class="tag">Gate-Motors</div>
+<h3>Nice ET Gate Motor Kit</h3>
+<p>Residential and Business Gate Automation.</p>
+<select class="variant-selector">
+<option data-price="5999.00" data-weight="13.0">Nice ET500 Kit - R5,999.00</option>
+<option data-price="14999.00" data-weight="19.0">Drive 1000 Kit - R14,999.00</option>
+</select>
+<div class="product-price-tag">R5,999.00</div>
+</div>
+<div class="button-group">
+<a href="../kits/et-motors.html" class="custom-app-btn btn-info">More Info</a>
+<button type="button" class="custom-app-btn btn-add-to-cart">Add to Cart</button>
+</div>
+</div>
+
+<!-- 6 -->
+<div class="app-product-card" data-product-name="HD CCTV Dahua Analog Home Kit">
+<img src="../images/16ch.png" alt="HD CCTV Analog Home Kit">
+<div>
+<div class="tag">HD CCTV</div>
+<h3>HD CCTV Dahua Analog Home Kit</h3>
+<p>Crystal clear 1080p high definition cameras and recording station bundle.</p>
+<select class="variant-selector">
+<option data-price="7999.99" data-weight="8.5">8-Channel Setup - R7,999.99</option>
+<option data-price="14999.99" data-weight="14.0">16-Channel Setup - R14,999.99</option>
+<option data-price="29999.99" data-weight="26.0">32-Channel Setup - R29,999.99</option>
+</select>
+<div class="product-price-tag">R7,999.99</div>
+</div>
+<div class="button-group">
+<a href="../kits/cctv.html" class="custom-app-btn btn-info">More Info</a>
+<button type="button" class="custom-app-btn btn-add-to-cart">Add to Cart</button>
+</div>
+</div>
+
+<!-- 7 -->
+<div class="app-product-card" data-product-name="HD CCTV Dahua Pro Kit">
+<img src="../images/32ch.png" alt="HD CCTV Business Pro Kit">
+<div>
+<div class="tag">HD CCTV</div>
+<h3>HD CCTV Dahua Pro Kit</h3>
+<p>Expanded visual coverage arrays for corporate office sites and retail parks.</p>
+<select class="variant-selector">
+<option data-price="11999.99" data-weight="12.0">8-Channel Setup - R11,999.99</option>
+<option data-price="21999.99" data-weight="21.0">16-Channel Setup - R21,999.99</option>
+</select>
+<div class="product-price-tag">R11,999.99</div>
+</div>
+<div class="button-group">
+<a href="../kits/cctv.html" class="custom-app-btn btn-info">More Info</a>
+<button type="button" class="custom-app-btn btn-add-to-cart">Add to Cart</button>
+</div>
+</div>
+
+<!-- 8 -->
+<div class="app-product-card" data-product-name="IP CCTV Network Dahua Kit">
+<img src="../images/ip-cctv.png" alt="IP CCTV Network Smart Kit">
+<div>
+<div class="tag">IP CCTV</div>
+<h3>IP CCTV Network Dahua Kit</h3>
+<p>Ultra 4K network visual stream units featuring remote access and AI filters.</p>
+<select class="variant-selector">
+<option data-price="15999.99" data-weight="14.0">8-Camera POE System - R15,999.99</option>
+<option data-price="29999.99" data-weight="25.0">16-Camera POE System - R29,999.99</option>
+</select>
+<div class="product-price-tag">R15,999.99</div>
+</div>
+<div class="button-group">
+<a href="../kits/ip-cctv.html" class="custom-app-btn btn-info">More Info</a>
+<button type="button" class="custom-app-btn btn-add-to-cart">Add to Cart</button>
+</div>
+</div>
+
+<!-- 9 -->
+<div class="app-product-card" data-product-name="Centurion Slide Gate Kit">
+<img src="../images/d5.png" alt="Centurion Gate Kit" id="centurion-img">
+<div>
+<div class="tag">Gate & Garage door Automation</div>
+<h3>Centurion Slide Gate Kit</h3>
+<p>Centurion Smart high speed reliable automated motor and tracking package.</p>
+<select class="variant-selector" id="centurion-select">
+<option value="d3" data-price="4999.00" data-weight="10.0">D3 Smart Kit - R4,999.00</option>
+<option value="d5" data-price="5999.00" data-weight="13.0" selected>D5 Smart kit - R5,999.00</option>
+<option value="d6" data-price="7999.00" data-weight="15.0">D6 Smart kit - R7,999.00</option>
+<option value="d10" data-price="12999.00" data-weight="18.0">D10 Smart Kit - R12,999.00</option>
+<option value="d10-turbo" data-price="13200.00" data-weight="19.0">D10 Smart Turbo - R13,200.00</option>
+<option value="sdo" data-price="2999.00" data-weight="12.0">SDO Smart Garage door - R2,999.00</option>
+<option value="vantage" data-price="12999.00" data-weight="22.0">Vantage Smart Swing gate Kit - R12,999.00</option>
+</select>
+<div class="product-price-tag">R5,999.00</div>
+</div>
+<div class="button-group">
+<a href="../kits/centurion-motors.html" class="custom-app-btn btn-info">More Info</a>
+<button type="button" class="custom-app-btn btn-add-to-cart">Add to Cart</button>
+</div>
+</div>
+
+</div>
+
+<h2 id="energizers" class="store-section-title">High-Demand Fence Energizers</h2>
+<div class="app-product-grid">
+
+<!-- Nemtek -->
+<div class="app-product-card" data-product-name="Nemtek Security Energizer">
+<img src="../images/nem.png" alt="Nemtek Energizer">
+<div>
+<div class="tag">Nemtek</div>
+<h3>Nemtek Security Energizer</h3>
+<p>High-power reliable electric fence energizers from Nemtek.</p>
+<select class="variant-selector">
+<option data-price="2499.00" data-weight="5.3">Wizord 4 - R2,499.00</option>
+<option data-price="4499.00" data-weight="6.5">Druid 18 - R4,499.00</option>
+<option data-price="5599.00" data-weight="8.0">Druid 25 - R5,599.00</option>
+</select>
+<div class="product-price-tag">R2,499.00</div>
+</div>
+<div class="button-group">
+<a href="../kits/nemtek.html" class="custom-app-btn btn-info">More Info</a>
+<button type="button" class="custom-app-btn btn-add-to-cart">Add to Cart</button>
+</div>
+</div>
+
+<!-- JVA -->
+<div class="app-product-card" data-product-name="JVA Security Energizer">
+<img src="../images/jva-z14.jpg" alt="JVA Energizer">
+<div>
+<div class="tag">JVA</div>
+<h3>JVA Security Energizer</h3>
+<p>Advanced multi-zone high-voltage security fence systems.</p>
+<select class="variant-selector">
+<option data-price="2399.00" data-weight="3.5">Z11 - R2,399.00</option>
+<option data-price="2599.00" data-weight="3.8">Z13 - R2,599.00</option>
+<option data-price="2899.00" data-weight="4.2">Z14 - R2,899.00</option>
+<option data-price="3999.00" data-weight="5.0">Z18 - R3,999.00</option>
+<option data-price="7900.00" data-weight="6.0">Z28 - R4,999.00</option>
+<option data-price="6599.00" data-weight="7.5">Z114 - R6,599.00</option>
+</select>
+<div class="product-price-tag">R2,399.00</div>
+</div>
+<div class="button-group">
+<a href="../jva.html" class="custom-app-btn btn-info">More Info</a>
+<button type="button" class="custom-app-btn btn-add-to-cart">Add to Cart</button>
+</div>
+</div>
+
+<!-- Stafix -->
+<div class="app-product-card" data-product-name="Stafix Energizer">
+<img src="../images/stafix-x1.jpg" alt="Stafix Energizer">
+<div>
+<div class="tag">Stafix</div>
+<h3>Stafix Energizer</h3>
+<p>Stafix X1 Unidir/Bi-polar High Power Fence Energizer</p>
+<select class="variant-selector">
+<option data-price="3299.00" data-weight="4.0">X1 - R3,299.00</option>
+<option data-price="3899.00" data-weight="4.5">X2 - R3,899.00</option>
+<option data-price="4299.00" data-weight="5.2">X3 - R4,299.00</option>
+<option data-price="5999.00" data-weight="6.5">X6i - R5,999.00</option>
+<option data-price="10499.00" data-weight="8.0">X12i - R10,499.00</option>
+<option data-price="13999.00" data-weight="9.5">X18i - R13,999.00</option>
+</select>
+<div class="product-price-tag">R3,299.00</div>
+</div>
+<div class="button-group">
+<a href="../kits/stafix.html" class="custom-app-btn btn-info">More Info</a>
+<button type="button" class="custom-app-btn btn-add-to-cart">Add to Cart</button>
+</div>
+</div>
+
+</div>
+
+<h2 id="cctv" class="store-section-title">High-End Dahua CCTV Intelligence</h2>
+<div class="app-product-grid">
+
+<div class="app-product-card" data-product-name="Dahua TiOC Camera" data-single-price="3499.00" data-single-weight="1.2">
+<img src="../images/dahua-tioc.jpg" alt="Dahua TiOC Camera">
+<div><div class="tag">Dahua IP</div><h3>Dahua TiOC Camera</h3><p>Dahua 5MP TiOC 2.0 40m 3.6mm Active Deterrence Network Turret</p><div class="product-price-tag">R3,499.00</div></div>
+<div class="button-group"><a href="../kits/tioc.html" class="custom-app-btn btn-info">More Info</a><button type="button" class="custom-app-btn btn-add-to-cart">Add to Cart</button></div>
+</div>
+
+<div class="app-product-card" data-product-name="Dahua PTZ Camera" data-single-price="8500.00" data-single-weight="3.5">
+<img src="../images/dahua-ptz.jpg" alt="Dahua PTZ Camera">
+<div><div class="tag">Dahua PTZ</div><h3>Dahua PTZ Camera</h3><p>Dahua 4MP 25x Starlight Smart Tracking IP PTZ Camera</p><div class="product-price-tag">R8,500.00</div></div>
+<div class="button-group"><a href="../kits/ptz.html" class="custom-app-btn btn-info">More Info</a><button type="button" class="custom-app-btn btn-add-to-cart">Add to Cart</button></div>
+</div>
+
+<div class="app-product-card" data-product-name="Dahua NVR" data-single-price="5999.00" data-single-weight="2.5">
+<img src="../images/dahua-nvr.jpg" alt="Dahua NVR">
+<div><div class="tag">Dahua Storage</div><h3>Dahua NVR</h3><p>Dahua 8-Channel 4K AI Network Video Recorder (NVR)</p><div class="product-price-tag">R5,999.00</div></div>
+<div class="button-group"><a href="../kits/nvr-4k.html" class="custom-app-btn btn-info">More Info</a><button type="button" class="custom-app-btn btn-add-to-cart">Add to Cart</button></div>
+</div>
+
+</div>
+
+<h2 id="alarms" class="store-section-title">Ajax Wireless Smart Alarm Products</h2>
+<div class="app-product-grid">
+
+<div class="app-product-card" data-product-name="Ajax Hub 2 Plus" data-single-price="5999.00" data-single-weight="1.1">
+<img src="../images/ajax.png" alt="Ajax Hub 2 Plus">
+<div><div class="tag">Ajax Hub</div><h3>Ajax Hub 2 Plus</h3><p>Ajax Hub 2 Plus Intelligent Security Control Panel</p><div class="product-price-tag">R5,999.00</div></div>
+<div class="button-group"><a href="../kits/ajax.html" class="custom-app-btn btn-info">More Info</a><button type="button" class="custom-app-btn btn-add-to-cart">Add to Cart</button></div>
+</div>
+
+<div class="app-product-card" data-product-name="Ajax MotionCam" data-single-price="2899.00" data-single-weight="0.5">
+<img src="../images/ajax.png" alt="Ajax MotionCam">
+<div><div class="tag">Ajax Sensors</div><h3>Ajax MotionCam</h3><p>Ajax MotionCam Wireless indoor PIR Detector with Photo Verification</p><div class="product-price-tag">R2,899.00</div></div>
+<div class="button-group"><a href="../kits/ajax.html" class="custom-app-btn btn-info">More Info</a><button type="button" class="custom-app-btn btn-add-to-cart">Add to Cart</button></div>
+</div>
+
+<div class="app-product-card" data-product-name="Ajax StreetSiren" data-single-price="2200.00" data-single-weight="1.5">
+<img src="../images/ajax.png" alt="Ajax StreetSiren">
+<div><div class="tag">Ajax Output</div><h3>Ajax StreetSiren</h3><p>Ajax StreetSiren Wireless Outdoor High-Decibel Siren</p><div class="product-price-tag">R2,200.00</div></div>
+<div class="button-group"><a href="../kits/ajax.html" class="custom-app-btn btn-info">More Info</a><button type="button" class="custom-app-btn btn-add-to-cart">Add to Cart</button></div>
+</div>
+
+<div class="app-product-card" data-product-name="Ajax KeyPad Plus" data-single-price="1899.00" data-single-weight="0.4">
+<img src="../images/ajax.png" alt="Ajax KeyPad Plus">
+<div><div class="tag">Ajax Keypad</div><h3>Ajax KeyPad Plus</h3><p>Touch-sensitive wireless keypad with contactless card and tag support</p><div class="product-price-tag">R1,899.00</div></div>
+<div class="button-group"><a href="../kits/ajax.html" class="custom-app-btn btn-info">More Info</a><button type="button" class="custom-app-btn btn-add-to-cart">Add to Cart</button></div>
+</div>
+
+<div class="app-product-card" data-product-name="Ajax DoorProtect" data-single-price="799.00" data-single-weight="0.2">
+<img src="../images/ajax.png" alt="Ajax DoorProtect">
+<div><div class="tag">Ajax Detector</div><h3>Ajax DoorProtect</h3><p>Wireless opening detector for doors and windows protection</p><div class="product-price-tag">R799.00</div></div>
+<div class="button-group"><a href="../kits/ajax.html" class="custom-app-btn btn-info">More Info</a><button type="button" class="custom-app-btn btn-add-to-cart">Add to Cart</button></div>
+</div>
+
+<div class="app-product-card" data-product-name="Ajax SpaceControl" data-single-price="499.00" data-single-weight="0.1">
+<img src="../images/ajax.png" alt="Ajax SpaceControl">
+<div><div class="tag">Ajax Control</div><h3>Ajax SpaceControl</h3><p>Four-button security key fob with panic button feature</p><div class="product-price-tag">R499.00</div></div>
+<div class="button-group"><a href="../kits/ajax.html" class="custom-app-btn btn-info">More Info</a><button type="button" class="custom-app-btn btn-add-to-cart">Add to Cart</button></div>
+</div>
+
+</div>
+
+<!-- ==========================================================
+     CART
+========================================================== -->
+<section id="cart" class="cart-panel">
+<h2>🛒 Your Cart</h2>
+<div id="cartItemsDisplay" class="cart-list"></div>
+
+<div class="cart-summary">
+<div class="summary-line"><span>Items</span><strong id="cart-count-display">0</strong></div>
+<div class="summary-line"><span>Subtotal</span><strong id="cart-subtotal-display">R 0.00</strong></div>
+<div class="summary-line"><span>Total weight</span><strong id="cart-weight-display">0.0 kg</strong></div>
+<div class="summary-line"><span>Delivery</span><strong id="delivery-fee-display">Calculated at checkout</strong></div>
+<div class="summary-line summary-total"><span>Cart Subtotal</span><strong id="cart-total-display">R 0.00</strong></div>
+</div>
+
+<div class="cart-actions">
+<button type="button" class="big-checkout" id="proceedToCheckout">🛒 PROCEED TO CHECKOUT</button>
+<button type="button" class="clear-cart" id="clearCartButton">🗑️ CLEAR CART</button>
+</div>
+</section>
+
+</div>
+
+<a class="whatsapp-float" href="https://wa.me/27836308249" aria-label="Contact Nexpak on WhatsApp">💬</a>
+
+<footer>
+<strong>Nexpak Security Solutions</strong><br><br>
+Protecting What Matters Most.<br>
+Professional security products for homes, businesses, estates and farms.<br><br>
+<a href="../index.html">Home</a>
+<a href="#security-kits">Security Kits</a>
+<a href="#cctv">Dahua CCTV</a>
+<a href="#alarms">Ajax</a>
+<a href="#cart">Checkout</a>
+</footer>
+
+<!-- Existing site scripts -->
+<script src="../js/delivery-calculator.js"></script>
+<script src="../js/checkout.js"></script>
+<script src="../js/payments.js"></script>
+<script src="../js/chatbot-knowledge.js"></script>
+<script src="../js/chatbot.js"></script>
+<script src="../seo-schema.js"></script>
+<script src="../seo-schema-injector.js"></script>
+
+<!-- ==========================================================
+     NEXPAK STORE CART ENGINE
+     One clean cart system; no duplicate handlers.
+========================================================== -->
+<script>
+(function(){
+
+"use strict";
+
+const CART_KEYS = {
+    items:"nexpak_cart_items",
+    count:"nexpak_cart_count",
+    total:"nexpak_cart_total",
+    weight:"nexpak_cart_weight",
+    checkout:"nexpak_checkout_data",
+    deliveryFee:"nexpak_delivery_fee",
+    deliveryMethod:"nexpak_delivery_method",
+    deliverySize:"nexpak_delivery_size",
+    deliveryKm:"nexpak_delivery_km",
+    deliveryEta:"nexpak_delivery_eta"
+};
+
+let cartItems = loadItems();
+
+function loadItems(){
+    try{
+        const data = JSON.parse(localStorage.getItem(CART_KEYS.items) || "[]");
+        return Array.isArray(data) ? data : [];
+    }catch(e){
+        console.error("Nexpak cart read error:",e);
+        return [];
+    }
+}
+
+function money(value){
+    return "R " + Number(value || 0).toLocaleString("en-ZA",{
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+    });
+}
+
+function cartCount(){
+    return cartItems.reduce((sum,item)=>sum + Number(item.quantity || 1),0);
+}
+
+function cartSubtotal(){
+    return cartItems.reduce((sum,item)=>{
+        return sum + (Number(item.price)||0) * (Number(item.quantity)||1);
+    },0);
+}
+
+function cartWeight(){
+    return cartItems.reduce((sum,item)=>{
+        return sum + (Number(item.weight)||0) * (Number(item.quantity)||1);
+    },0);
+}
+
+function saveCart(){
+    const count = cartCount();
+    const subtotal = cartSubtotal();
+    const weight = cartWeight();
+
+    localStorage.setItem(CART_KEYS.items,JSON.stringify(cartItems));
+    localStorage.setItem(CART_KEYS.count,String(count));
+    localStorage.setItem(CART_KEYS.total,subtotal.toFixed(2));
+    localStorage.setItem(CART_KEYS.weight,weight.toFixed(2));
+
+    /* Compatibility keys used by the existing checkout/payment files */
+    localStorage.setItem("cartItems",JSON.stringify(cartItems));
+    localStorage.setItem("cartCount",String(count));
+    localStorage.setItem("cartSubtotal",subtotal.toFixed(2));
+    localStorage.setItem("totalWeight",weight.toFixed(2));
+
+    /* Do NOT calculate the old R80/R7 delivery model here. */
+    localStorage.removeItem("deliveryFee");
+    localStorage.removeItem("grandTotal");
+
+    return {count,subtotal,weight};
+}
+
+function updateUI(){
+    const totals = saveCart();
+
+    const nav = document.getElementById("cart-count-nav");
+    const count = document.getElementById("cart-count-display");
+    const subtotal = document.getElementById("cart-subtotal-display");
+    const weight = document.getElementById("cart-weight-display");
+    const total = document.getElementById("cart-total-display");
+    const delivery = document.getElementById("delivery-fee-display");
+    const list = document.getElementById("cartItemsDisplay");
+
+    if(nav) nav.textContent = totals.count;
+    if(count) count.textContent = totals.count;
+    if(subtotal) subtotal.textContent = money(totals.subtotal);
+    if(weight) weight.textContent = totals.weight.toFixed(1) + " kg";
+    if(total) total.textContent = money(totals.subtotal);
+
+    if(delivery){
+        const existingDelivery = Number(localStorage.getItem(CART_KEYS.deliveryFee));
+        delivery.textContent = existingDelivery > 0 ? money(existingDelivery) : "Calculated at checkout";
+    }
+
+    if(!list) return;
+
+    if(!cartItems.length){
+        list.innerHTML = '<div class="cart-empty">Your cart is empty. Add products above to begin.</div>';
+        return;
+    }
+
+    list.innerHTML = cartItems.map((item,index)=>`
+        <div class="cart-row">
+            <div>
+                <strong>${escapeHtml(item.name)}</strong><br>
+                <small>${money(item.price)} each${item.variant ? " • " + escapeHtml(item.variant) : ""}</small>
+            </div>
+            <div style="text-align:right;white-space:nowrap;">
+                <strong>Qty ${Number(item.quantity)||1}</strong><br>
+                <button type="button" onclick="NexpakStore.removeItem(${index})"
+                    style="margin-top:5px;border:0;background:#e2e8f0;color:#111827;border-radius:5px;padding:5px 9px;cursor:pointer;">
+                    Remove
+                </button>
+            </div>
+        </div>
+    `).join("");
+}
+
+function escapeHtml(value){
+    return String(value ?? "").replace(/[&<>"']/g,function(c){
+        return {
+            "&":"&amp;",
+            "<":"&lt;",
+            ">":"&gt;",
+            '"':"&quot;",
+            "'":"&#039;"
+        }[c];
+    });
+}
+
+function addFromCard(card){
+    const select = card.querySelector(".variant-selector");
+    const priceTag = card.querySelector(".product-price-tag");
+    const title = card.querySelector("h3");
+    const img = card.querySelector("img");
+
+    if(!title) return;
+
+    let price = 0;
+    let weight = 0.5;
+    let variant = "";
+
+    if(select){
+        const option = select.options[select.selectedIndex];
+
+        price = Number(option.getAttribute("data-price")) || 0;
+        weight = Number(option.getAttribute("data-weight")) || 0.5;
+        variant = option.textContent.split(" - ")[0].trim();
+
+        /* Centurion product image */
+        if(title.textContent.includes("Centurion Slide Gate Kit") && img){
+            const value = (select.value || "").toLowerCase();
+            if(value === "d3") img.src="../images/d3.png";
+            else if(value === "d5") img.src="../images/d5.png";
+            else if(value === "d6") img.src="../images/d6.png";
+            else if(value === "d10" || value === "d10-turbo") img.src="../images/d10.png";
+            else if(value === "sdo") img.src="../images/sdo.png";
+            else if(value === "vantage") img.src="../images/van.png";
+        }
+    }else{
+        price = Number(card.getAttribute("data-single-price")) || 0;
+        weight = Number(card.getAttribute("data-single-weight")) || 0.5;
+    }
+
+    if(price <= 0){
+        alert("This product price could not be read.");
+        return;
+    }
+
+    const item = {
+        name:title.textContent.trim(),
+        variant:variant,
+        price:Number(price.toFixed(2)),
+        weight:Number(weight.toFixed(2)),
+        quantity:1
+    };
+
+    /* Same product + same variant = increase quantity */
+    const existing = cartItems.find(x =>
+        x.name === item.name &&
+        x.variant === item.variant &&
+        Number(x.price) === Number(item.price)
+    );
+
+    if(existing){
+        existing.quantity = Number(existing.quantity || 1) + 1;
+    }else{
+        cartItems.push(item);
+    }
+
+    updateUI();
+
+    const oldText = eventTargetText(this);
+    const button = card.querySelector(".btn-add-to-cart");
+    if(button){
+        const original = button.textContent;
+        button.textContent = "✓ ADDED";
+        button.disabled = true;
+        setTimeout(()=>{
+            button.textContent = original;
+            button.disabled = false;
+        },900);
+    }
+
+    console.log("Nexpak cart updated:",cartItems);
+}
+
+function eventTargetText(){ return ""; }
+
+function removeItem(index){
+    if(index < 0 || index >= cartItems.length) return;
+    cartItems.splice(index,1);
+    updateUI();
+}
+
+function clearCart(){
+    if(!cartItems.length){
+        alert("Your cart is already empty.");
+        return;
+    }
+
+    if(!confirm("Are you sure you want to clear your cart?")) return;
+
+    cartItems = [];
+
+    Object.values(CART_KEYS).forEach(key=>localStorage.removeItem(key));
+
+    /* Compatibility cleanup */
+    [
+        "cartItems","cartCount","cartSubtotal","totalWeight",
+        "deliveryFee","grandTotal"
+    ].forEach(key=>localStorage.removeItem(key));
+
+    updateUI();
+}
+
+function proceedCheckout(){
+    if(!cartItems.length){
+        alert("Your cart is empty. Please add a product before proceeding to checkout.");
+        return;
+    }
+
+    const totals = saveCart();
+
+    /*
+      IMPORTANT:
+      Prices stored here are the product prices already displayed
+      by this store. No extra VAT is added here. checkout.js handles
+      the VAT calculation so VAT is not charged twice.
+    */
+    const checkoutData = {
+        cartCount:totals.count,
+        cartItems:cartItems,
+        subtotal:Number(totals.subtotal.toFixed(2)),
+        weight:Number(totals.weight.toFixed(2)),
+        deliveryFee:Number(localStorage.getItem(CART_KEYS.deliveryFee) || 0),
+        currency:"ZAR",
+        createdAt:new Date().toISOString()
+    };
+
+    localStorage.setItem(CART_KEYS.checkout,JSON.stringify(checkoutData));
+
+    console.log("NEXPAK CHECKOUT DATA:",checkoutData);
+
+    window.location.href="../checkout.html";
+}
+
+window.NexpakStore = {
+    removeItem:removeItem,
+    clearCart:clearCart,
+    proceedCheckout:proceedCheckout
+};
+
+document.addEventListener("DOMContentLoaded",function(){
+
+    /* Menu button — prevents accidental navigation */
+    const menuButton = document.getElementById("nexpakMenuButton");
+    const dropdown = document.querySelector(".dropdown");
+
+    if(menuButton && dropdown){
+        menuButton.addEventListener("click",function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            dropdown.classList.toggle("active");
+        });
+
+        document.addEventListener("click",function(e){
+            if(!dropdown.contains(e.target)){
+                dropdown.classList.remove("active");
+            }
+        });
+
+        dropdown.querySelectorAll("a").forEach(link=>{
+            link.addEventListener("click",()=>dropdown.classList.remove("active"));
+        });
+    }
+
+    /* Product variants */
+    document.querySelectorAll(".app-product-card").forEach(card=>{
+        const select = card.querySelector(".variant-selector");
+        const priceTag = card.querySelector(".product-price-tag");
+        const img = card.querySelector("img");
+        const title = card.querySelector("h3");
+
+        if(select && priceTag){
+            select.addEventListener("change",function(){
+                const option = select.options[select.selectedIndex];
+                const price = Number(option.getAttribute("data-price")) || 0;
+                if(price){
+                    priceTag.textContent = "R" + price.toLocaleString("en-ZA",{
+                        minimumFractionDigits:2,
+                        maximumFractionDigits:2
+                    });
+                }
+
+                if(title && title.textContent.includes("Centurion Slide Gate Kit") && img){
+                    const value = (select.value || "").toLowerCase();
+                    if(value==="d3") img.src="../images/d3.png";
+                    else if(value==="d5") img.src="../images/d5.png";
+                    else if(value==="d6") img.src="../images/d6.png";
+                    else if(value==="d10" || value==="d10-turbo") img.src="../images/d10.png";
+                    else if(value==="sdo") img.src="../images/sdo.png";
+                    else if(value==="vantage") img.src="../images/van.png";
+                }
+            });
+        }
+
+        const addButton = card.querySelector(".btn-add-to-cart");
+        if(addButton){
+            addButton.addEventListener("click",function(){
+                addFromCard.call(this,card);
+            });
+        }
+    });
+
+    const checkoutButton = document.getElementById("proceedToCheckout");
+    if(checkoutButton){
+        checkoutButton.addEventListener("click",proceedCheckout);
+    }
+
+    const clearButton = document.getElementById("clearCartButton");
+    if(clearButton){
+        clearButton.addEventListener("click",clearCart);
+    }
+
+    updateUI();
+});
+
+})();
+</script>
+
+</body>
+</html>
