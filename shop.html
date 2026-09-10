@@ -3285,7 +3285,9 @@ function proceedToCheckout() {
     const checkoutItems = cart.map(item => {
 
         const quantity =
-            parseInt(item.qty, 10) || 1;
+    parseInt( item.quantity ?? item.qty,
+        10
+    ) || 1;
 
         const price =
             Number(item.price) || 0;
