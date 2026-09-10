@@ -1,58 +1,1097 @@
+<!DOCTYPE html><html lang="en">
+<head><meta charset="UTF-8"><meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CRM System</title>
+«»
 
-<style>
+<title>NexPak CRM | Order Capture</title><style>
+
+/* ==========================================================
+   NEXPAK CRM
+   TEMPORARY ORDER CAPTURE SYSTEM
+   ========================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 body {
-    font-family:Arial;
-    background:#0f172a;
-    color:white;
-    padding:20px;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(
+            circle at top,
+            #1e293b 0%,
+            #0f172a 45%,
+            #020617 100%
+        );
+    color: #ffffff;
+    min-height: 100vh;
 }
 
-.box {
-    background:#1f2937;
-    padding:15px;
-    border-radius:10px;
+
+/* ==========================================================
+   HEADER
+   ========================================================== */
+
+.header {
+    background: rgba(15, 23, 42, 0.96);
+    border-bottom: 2px solid #f59e0b;
+    padding: 18px 15px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.35);
 }
-</style>
-</head>
 
-<body>
+.header-inner {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+}
 
-<h1>🧠 CRM SYSTEM</h1>
+.logo-area h1 {
+    margin: 0;
+    font-size: 22px;
+    color: #f59e0b;
+}
 
-<div class="box">
-    <h3>Latest Quote from Catalogue</h3>
-    <div id="deal"></div>
+.logo-area p {
+    margin: 4px 0 0;
+    font-size: 12px;
+    color: #cbd5e1;
+}
+
+.home-btn {
+    display: inline-block;
+    text-decoration: none;
+    background: #2563eb;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+
+/* ==========================================================
+   MAIN
+   ========================================================== */
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px 15px 50px;
+}
+
+
+/* ==========================================================
+   WARNING
+   ========================================================== */
+
+.warning {
+    background: rgba(245,158,11,0.12);
+    border: 1px solid #f59e0b;
+    color: #fde68a;
+    padding: 14px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+/* ==========================================================
+   DASHBOARD STATS
+   ========================================================== */
+
+.stats {
+    display: grid;
+    grid-template-columns:
+        repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.stat {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.stat-label {
+    color: #94a3b8;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.stat-value {
+    color: #f59e0b;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+
+/* ==========================================================
+   TOOLBAR
+   ========================================================== */
+
+.toolbar {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.search-row {
+    display: flex;
+    gap: 10px;
+}
+
+.search {
+    flex: 1;
+    min-width: 0;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #475569;
+    background: #0f172a;
+    color: white;
+    outline: none;
+}
+
+.search:focus {
+    border-color: #f59e0b;
+}
+
+.btn {
+    border: none;
+    border-radius: 8px;
+    padding: 11px 14px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+    font-size: 13px;
+}
+
+.btn-blue {
+    background: #2563eb;
+}
+
+.btn-green {
+    background: #16a34a;
+}
+
+.btn-orange {
+    background: #d97706;
+}
+
+.btn-red {
+    background: #dc2626;
+}
+
+.btn-dark {
+    background: #475569;
+}
+
+.btn:hover {
+    opacity: 0.88;
+}
+
+
+/* ==========================================================
+   ORDER LIST
+   ========================================================== */
+
+.orders {
+    display: grid;
+    gap: 14px;
+}
+
+.order-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-left: 4px solid #f59e0b;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.2);
+}
+
+.order-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.order-number {
+    color: #f59e0b;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.order-date {
+    color: #94a3b8;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.status {
+    display: inline-block;
+    background: #92400e;
+    color: #fde68a;
+    padding: 6px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.customer {
+    display: grid;
+    grid-template-columns:
+        repeat(2, 1fr);
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.info {
+    background: #0f172a;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.info-label {
+    color: #64748b;
+    font-size: 10px;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+}
+
+.info-value {
+    color: #e2e8f0;
+    font-size: 13px;
+    word-break: break-word;
+}
+
+.products {
+    margin-top: 10px;
+}
+
+.products-title {
+    color: #f59e0b;
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.product-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    background: #0f172a;
+    border-bottom: 1px solid #1e293b;
+    padding: 9px;
+    font-size: 13px;
+}
+
+.product-name {
+    flex: 1;
+}
+
+.product-price {
+    color: #fbbf24;
+    white-space: nowrap;
+}
+
+.totals {
+    margin-top: 14px;
+    border-top: 1px solid #475569;
+    padding-top: 12px;
+}
+
+.total-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 0;
+    color: #cbd5e1;
+    font-size: 13px;
+}
+
+.grand-total {
+    color: #f59e0b;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.order-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+
+/* ==========================================================
+   EMPTY STATE
+   ========================================================== */
+
+.empty {
+    background: #1e293b;
+    border: 1px dashed #475569;
+    border-radius: 12px;
+    padding: 40px 20px;
+    text-align: center;
+    color: #94a3b8;
+}
+
+.empty-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+
+/* ==========================================================
+   MODAL
+   ========================================================== */
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 5000;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.modal.show {
+    display: block;
+}
+
+.modal-box {
+    width: 100%;
+    max-width: 800px;
+    margin: 30px auto;
+    background: #1e293b;
+    border: 1px solid #f59e0b;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.modal-header {
+    background: #0f172a;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal-header h2 {
+    margin: 0;
+    color: #f59e0b;
+    font-size: 18px;
+}
+
+.close {
+    background: #dc2626;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 11px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.modal-body {
+    padding: 18px;
+}
+
+.detail-section {
+    margin-bottom: 20px;
+}
+
+.detail-section h3 {
+    color: #f59e0b;
+    border-bottom: 1px solid #475569;
+    padding-bottom: 7px;
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(2, 1fr);
+    gap: 8px;
+}
+
+.detail-box {
+    background: #0f172a;
+    padding: 10px;
+    border-radius: 7px;
+}
+
+.detail-box strong {
+    display: block;
+    color: #64748b;
+    font-size: 10px;
+    margin-bottom: 3px;
+}
+
+.detail-box span {
+    color: #e2e8f0;
+    font-size: 13px;
+    word-break: break-word;
+}
+
+
+/* ==========================================================
+   MOBILE
+   ========================================================== */
+
+@media (max-width: 700px) {
+
+    .header-inner {
+        align-items: flex-start;
+    }
+
+    .stats {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .search-row {
+        flex-direction: column;
+    }
+
+    .customer {
+        grid-template-columns: 1fr;
+    }
+
+    .order-top {
+        flex-direction: column;
+    }
+
+    .detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .home-btn {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+}
+
+</style></head><body><!-- ==========================================================
+     HEADER
+     ========================================================== --><header class="header"><div class="header-inner">
+
+    <div class="logo-area">
+
+        <h1>
+            🛡️ Nexpak Order Capture
+        </h1>
+
+        <p>
+            Temporary Sales & Order Dashboard
+        </p>
+
+    </div>
+
+    <a
+        href="index.html"
+        class="home-btn"
+    >
+        🏠 Website
+    </a>
+
 </div>
 
-<script>
+</header><main class="container"><!-- ==========================================================
+     WARNING
+     ========================================================== --><div class="warning">⚠️ <strong>Temporary Browser System:</strong>
+Orders are currently stored in this browser's local storage.
+Export your orders regularly as a backup.
+This is a temporary order-capture tool, not a secure production CRM.
 
-let deal = JSON.parse(localStorage.getItem("latestDeal"));
+</div><!-- ==========================================================
+     STATISTICS
+     ========================================================== --><section class="stats"><div class="stat">
 
-if(deal && deal.items.length > 0){
+    <div class="stat-label">
+        TOTAL ORDERS
+    </div>
 
-    let html = "";
-    deal.items.forEach(i=>{
-        html += "• " + i.name + " - R" + i.price + "<br>";
-    });
+    <div
+        class="stat-value"
+        id="totalOrders"
+    >
+        0
+    </div>
 
-    document.getElementById("deal").innerHTML = `
-        <p><b>Date:</b> ${deal.date}</p>
-        <p><b>Items:</b><br>${html}</p>
-        <p style="color:#25D366;">Status: NEW LEAD</p>
-    `;
+</div>
 
-} else {
-    document.getElementById("deal").innerHTML =
-    "No recent quotes found.";
+
+<div class="stat">
+
+    <div class="stat-label">
+        PAYMENT PENDING
+    </div>
+
+    <div
+        class="stat-value"
+        id="pendingOrders"
+    >
+        0
+    </div>
+
+</div>
+
+
+<div class="stat">
+
+    <div class="stat-label">
+        ORDERS TODAY
+    </div>
+
+    <div
+        class="stat-value"
+        id="todayOrders"
+    >
+        0
+    </div>
+
+</div>
+
+
+<div class="stat">
+
+    <div class="stat-label">
+        ORDER VALUE
+    </div>
+
+    <div
+        class="stat-value"
+        id="orderValue"
+    >
+        R0.00
+    </div>
+
+</div>
+
+</section><!-- ==========================================================
+     TOOLBAR
+     ========================================================== --><section class="toolbar"><div class="search-row">
+
+    <input
+        type="search"
+        id="searchOrders"
+        class="search"
+        placeholder="🔎 Search order number, customer, phone or email..."
+    >
+
+    <button
+        class="btn btn-green"
+        onclick="exportOrders()"
+    >
+        📥 Export
+    </button>
+
+    <button
+        class="btn btn-blue"
+        onclick="refreshOrders()"
+    >
+        🔄 Refresh
+    </button>
+
+</div>
+
+<div
+    style="
+        margin-top:10px;
+        display:flex;
+        gap:8px;
+        flex-wrap:wrap;
+    "
+>
+
+    <button
+        class="btn btn-orange"
+        onclick="copyAllOrders()"
+    >
+        📋 Copy All
+    </button>
+
+    <button
+        class="btn btn-red"
+        onclick="clearAllOrders()"
+    >
+        🗑️ Clear All
+    </button>
+
+</div>
+
+</section><!-- ==========================================================
+     ORDERS
+     ========================================================== --><section id="ordersContainer" class="orders"></section></main><!-- ==========================================================
+     ORDER MODAL
+     ========================================================== --><div
+    id="orderModal"
+    class="modal"
+    onclick="closeModalOutside(event)"
+><div class="modal-box">
+
+    <div class="modal-header">
+
+        <h2 id="modalTitle">
+            Order Details
+        </h2>
+
+        <button
+            class="close"
+            onclick="closeModal()"
+        >
+            ✕
+        </button>
+
+    </div>
+
+    <div
+        id="modalBody"
+        class="modal-body"
+    ></div>
+
+</div>
+
+</div><script>
+
+/* ==========================================================
+   NEXPAK ORDER CAPTURE
+   ========================================================== */
+
+let allOrders = [];
+
+
+/* ==========================================================
+   LOAD ORDERS
+   ========================================================== */
+
+function loadOrders() {
+
+    try {
+
+        const stored =
+            JSON.parse(
+                localStorage.getItem(
+                    'nexpak_orders'
+                ) || '[]'
+            );
+
+        allOrders =
+            Array.isArray(stored)
+                ? stored
+                : [];
+
+    } catch (error) {
+
+        console.error(
+            'NexPak order loading error:',
+            error
+        );
+
+        allOrders = [];
+
+    }
+
 }
 
-</script>
 
-</body>
-</html>
+/* ==========================================================
+   FORMAT MONEY
+   ========================================================== */
+
+function money(value) {
+
+    const number =
+        Number(value) || 0;
+
+    return 'R' +
+        number.toLocaleString(
+            'en-ZA',
+            {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }
+        );
+
+}
+
+
+/* ==========================================================
+   FORMAT DATE
+   ========================================================== */
+
+function formatDate(dateValue) {
+
+    if (!dateValue) {
+        return 'Unknown date';
+    }
+
+    const date =
+        new Date(dateValue);
+
+    if (isNaN(date.getTime())) {
+        return dateValue;
+    }
+
+    return date.toLocaleString(
+        'en-ZA',
+        {
+            dateStyle: 'medium',
+            timeStyle: 'short'
+        }
+    );
+
+}
+
+
+/* ==========================================================
+   ESCAPE HTML
+   ========================================================== */
+
+function escapeHtml(value) {
+
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+
+}
+
+
+/* ==========================================================
+   UPDATE STATISTICS
+   ========================================================== */
+
+function updateStats() {
+
+    const today =
+        new Date()
+            .toISOString()
+            .slice(0, 10);
+
+    let pending = 0;
+    let todayCount = 0;
+    let value = 0;
+
+    allOrders.forEach(order => {
+
+        if (
+            String(order.status)
+                .toLowerCase()
+                .includes('pending')
+        ) {
+
+            pending++;
+
+        }
+
+        if (
+            String(order.date || '')
+                .slice(0, 10) === today
+        ) {
+
+            todayCount++;
+
+        }
+
+        value +=
+            Number(
+                order.totals?.grandTotal
+            ) || 0;
+
+    });
+
+
+    document.getElementById(
+        'totalOrders'
+    ).textContent =
+        allOrders.length;
+
+
+    document.getElementById(
+        'pendingOrders'
+    ).textContent =
+        pending;
+
+
+    document.getElementById(
+        'todayOrders'
+    ).textContent =
+        todayCount;
+
+
+    document.getElementById(
+        'orderValue'
+    ).textContent =
+        money(value);
+
+}
+
+
+/* ==========================================================
+   RENDER ORDERS
+   ========================================================== */
+
+function renderOrders(
+    searchTerm = ''
+) {
+
+    const container =
+        document.getElementById(
+            'ordersContainer'
+        );
+
+    const term =
+        String(searchTerm)
+            .trim()
+            .toLowerCase();
+
+
+    const filtered =
+        allOrders.filter(order => {
+
+            if (!term) {
+                return true;
+            }
+
+            const customer =
+                order.customer || {};
+
+            const searchable = [
+
+                order.orderReference,
+
+                order.status,
+
+                order.paymentMethod,
+
+                customer.name,
+
+                customer.email,
+
+                customer.phone,
+
+                customer.shippingAddress
+
+            ]
+            .join(' ')
+            .toLowerCase();
+
+            return searchable.includes(term);
+
+        });
+
+
+    if (!filtered.length) {
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    📦
+                </div>
+
+                <h2>
+                    No Orders Found
+                </h2>
+
+                <p>
+                    ${
+                        allOrders.length
+                            ? 'Try another search.'
+                            : 'Completed website orders will appear here.'
+                    }
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        filtered
+            .map(
+                order =>
+                    createOrderCard(
+                        order
+                    )
+            )
+            .join('');
+
+}
+
+
+/* ==========================================================
+   CREATE ORDER CARD
+   ========================================================== */
+
+function createOrderCard(order) {
+
+    const customer =
+        order.customer || {};
+
+    const totals =
+        order.totals || {};
+
+    const items =
+        Array.isArray(order.items)
+            ? order.items
+            : [];
+
+
+    const productHtml =
+        items.length
+
+            ? items.map(item => {
+
+                const quantity =
+                    Number(
+                        item.quantity ??
+                        item.qty
+                    ) || 1;
+
+                const price =
+                    Number(
+                        item.price
+                    ) || 0;
+
+                const lineTotal =
+                    price * quantity;
+
+                const variant =
+                    item.variant
+                        ? ' — ' +
+                          escapeHtml(
+                              item.variant
+                          )
+                        : '';
+
+                return `
+
+                    <div class="product-row">
+
+                        <div class="product-name">
+
+                            <strong>
+                                ${escapeHtml(
+                                    item.name ||
+                                    item.title ||
+                                    'Product'
+                                )}
+                            </strong>
+
+                            ${variant}
+
+                            <br>
+
+                            <small>
+                                Qty: ${quantity}
+                                × ${money(price)}
+                            </small>
+
+                        </div>
+
+                        <div class="product-price">
+
+                            ${money(lineTotal)}
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }).join('')
+
+            : `
+
+                <div class="product-row">
+                    No product information found.
+                </div>
+
+            `;
+
+
+    return `
+
+        <article class="order-card">
+
+            <div class="order-top">
+
+                <div>
+
+                    <div class="order-number">
+
+                        ${escapeHtml(
+                            order.orderReference ||
+                            'NEX-UNKNOWN'
+                        )}
+
+                    </div>
+
+                    <div class="order-date">
+
+                        ${formatDate(
+                            order.date
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <span class="status">
+
+                    ${escapeHtml(
+                        order.status ||
+                        'Unknown'
+                    )}
+
+                </span>
+
+            </div>
+
+
+            <div class="customer">
+
+                <div class="info">
+
+                    <div class="info-label">
+                        Customer
+                    </div>
+
+                    <div class="info-value">
+
+         
