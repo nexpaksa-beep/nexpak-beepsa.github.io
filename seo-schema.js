@@ -1041,5 +1041,28 @@ function initializeSEOEngine() {
 
 window.NexpakSEOEngine = {
 
-    load:
-        initi
+    load: initializeSEOEngine,
+
+    product: createProductSchema,
+
+    faq: createFAQSchema,
+
+    service: createServiceSchema,
+
+    breadcrumb: createBreadcrumbSchema
+
+};
+
+
+/*=========================================================
+ 16. AUTOMATIC INITIALIZATION
+=========================================================*/
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        initializeSEOEngine();
+
+    }
+);
