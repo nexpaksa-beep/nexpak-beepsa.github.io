@@ -659,76 +659,124 @@ const CART_TOTAL_KEYS = [
 
 
     // =========================================================================
-    // 17. SAVE ORDER RECORD
-    // =========================================================================
-    // A copy of the order is stored locally before the cart is cleared.
-    // This is useful for future order confirmation / admin integration.
-    // =========================================================================
+// 17. SAVE ORDER RECORD
+// =========================================================================
+// Stores the completed order locally for the temporary NexPak
+// Order Capture / CRM page.
+// =========================================================================
 
-    function saveOrderRecord(
-        customer,
-        totals
-    ) {
+function saveOrderRecord(
+    customer,
+    totals
+) {
 
-        const order = {
+    const order = {
 
-            orderReference:
-                generatedOrderRef,
+        orderReference:
+            generatedOrderRef,
 
-            date:
-                new Date().toISOString(),
+        date:
+            new Date().toISOString(),
 
-            status:
-                'Payment Pending',
+        status:
+            'Payment Pending',
 
-            paymentMethod:
-                'Capitec QR / EFT',
+        paymentMethod:
+            'Capitec QR / EFT',
 
-            customer: {
-                name:
-                    customer.name,
+        customer: {
 
-                email:
-                    customer.email,
+            name:
+                customer.name,
 
-                phone:
-                    customer.phone,
+            email:
+                customer.email,
 
-                shippingAddress:
-                    customer.address
-            },
+            phone:
+                customer.phone,
 
-            items:
-                cartItems,
+            shippingAddress:
+                customer.address
 
-            totals: {
+        },
 
-                subtotal:
-                    totals.subtotal,
+        items:
+            cartItems,
 
-                delivery:
-                    totals.delivery,
+        totals: {
 
-                vat:
-                    totals.vat,
+            subtotal:
+                totals.subtotal,
 
-                grandTotal:
-                    totals.grandTotal
+            delivery:
+                totals.delivery,
 
-            }
+            vat:
+                totals.vat,
 
-        };
+            grandTotal:
+                totals.grandTotal
+
+        }
+
+    };
 
 
-        localStorage.setItem(
-            'nexpak_last_order',
-            JSON.stringify(order)
+    // =====================================================================
+    // SAVE ALL ORDERS
+    // =====================================================================
+
+    let existingOrders = [];
+
+    try {
+
+        const storedOrders = JSON.parse(
+            localStorage.getItem('nexpak_orders') || '[]'
         );
 
+        if (Array.isArray(storedOrders)) {
 
-        return order;
+            existingOrders = storedOrders;
+
+        }
+
+    } catch (error) {
+
+        console.warn(
+            'Could not read existing NexPak orders:',
+            error
+        );
 
     }
+
+
+    // Put newest order at the top
+
+    existingOrders.unshift(order);
+
+
+    // Save complete order history
+
+    localStorage.setItem(
+        'nexpak_orders',
+        JSON.stringify(existingOrders)
+    );
+
+
+    // =====================================================================
+    // SAVE LAST ORDER
+    // =====================================================================
+    // Kept for compatibility with the existing NexPak system.
+
+    localStorage.setItem(
+        'nexpak_last_order',
+        JSON.stringify(order)
+    );
+
+
+    return order;
+
+}
 
 
     // =========================================================================
