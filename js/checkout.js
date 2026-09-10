@@ -86,24 +86,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
+// =========================================================================
+// 4. CART STORAGE KEYS
+// =========================================================================
 
-    // =========================================================================
-    // 4. CART STORAGE KEYS
-    // =========================================================================
+const CART_ITEM_KEYS = [
+    'nexpak_cart_items',
+    'cart_items',
+    'cartItems',
+    'nexpak_cart',
+    'cart'
+];
 
-    const CART_ITEM_KEYS = [
-        'nexpak_cart_items',
-        'cart_items',
-        'cartItems',
-        'cart'
-    ];
-
-    const CART_TOTAL_KEYS = [
-        'nexpak_cart_total',
-        'cart_total',
-        'cartTotal',
-        'cartSubtotal'
-    ];
+const CART_TOTAL_KEYS = [
+    'nexpak_cart_total',
+    'cart_total',
+    'cartTotal',
+    'cartSubtotal'
+];
 
 
     // =========================================================================
