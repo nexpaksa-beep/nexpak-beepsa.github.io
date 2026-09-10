@@ -2685,17 +2685,123 @@
         ],
 
         cctv: [
-            { id: 'cctv_sys', name: 'System Type', variants: ['IP System', 'HD System'], price: 0, weight: 0 },
-            { id: 'cctv_dvr', name: 'DVR', variants: ['8 Channel', '16 Channel', '32 Channel'], price: 1500, weight: 2 },
-            { id: 'cctv_nvr', name: 'NVR', variants: ['8 Channel', '16 Channel'], price: 2000, weight: 2 },
-            { id: 'cctv_hdd', name: 'Hard Drive', variants: ['1TB', '2TB', '4TB'], price: 1000, weight: 0.5 },
-            { id: 'cctv_poe', name: 'Power/PoE', variants: ['8 Way', '16 Way', '9 Way PSU'], price: 600, weight: 1 },
-            { id: 'cctv_connector', name: 'Connectors', variants: ['RJ45', 'BNC'], price: 5, weight: 0.01 },
-            { id: 'cctv_boots', name: 'Accessories', variants: ['DC Leads', 'RJ45 Boots'], price: 10, weight: 0.05 },
-            { id: 'cctv_cam', name: 'Cameras', variants: ['IP Camera', 'HD Camera'], price: 600, weight: 0.4 },
-            { id: 'cctv_cable', name: 'Cable (100m)', variants: ['Cat 5', 'Poax'], price: 450, weight: 3 },
-            { id: 'cctv_enclosure', name: '100x100 Enclosure', price: 45, weight: 0.1 }
-        ],
+            { 
+    id: 'cctv_sys', 
+    name: 'System Type', 
+    variants: ['IP System', 'HD System'], 
+    variantPrices: {
+        'IP System': 0,
+        'HD System': 0
+    },
+    price: 0, 
+    weight: 0 
+},
+
+{ 
+    id: 'cctv_dvr', 
+    name: 'DVR', 
+    variants: ['8 Channel', '16 Channel', '32 Channel'], 
+    variantPrices: {
+        '8 Channel': 1500,
+        '16 Channel': 2000,
+        '32 Channel': 2500
+    },
+    price: 1500, 
+    weight: 2 
+},
+
+{ 
+    id: 'cctv_nvr', 
+    name: 'NVR', 
+    variants: ['8 Channel', '16 Channel'], 
+    variantPrices: {
+        '8 Channel': 2000,
+        '16 Channel': 2800
+    },
+    price: 2000, 
+    weight: 2 
+},
+
+{ 
+    id: 'cctv_hdd', 
+    name: 'Hard Drive', 
+    variants: ['1TB', '2TB', '4TB'], 
+    variantPrices: {
+        '1TB': 1000,
+        '2TB': 1400,
+        '4TB': 2200
+    },
+    price: 1000, 
+    weight: 0.5 
+},
+
+{ 
+    id: 'cctv_poe', 
+    name: 'Power/PoE', 
+    variants: ['8 Way', '16 Way', '9 Way PSU'], 
+    variantPrices: {
+        '8 Way': 600,
+        '16 Way': 900,
+        '9 Way PSU': 750
+    },
+    price: 600, 
+    weight: 1 
+},
+
+{ 
+    id: 'cctv_connector', 
+    name: 'Connectors', 
+    variants: ['RJ45', 'BNC'], 
+    variantPrices: {
+        'RJ45': 5,
+        'BNC': 7
+    },
+    price: 5, 
+    weight: 0.01 
+},
+
+{ 
+    id: 'cctv_boots', 
+    name: 'Accessories', 
+    variants: ['DC Leads', 'RJ45 Boots'], 
+    variantPrices: {
+        'DC Leads': 10,
+        'RJ45 Boots': 5
+    },
+    price: 10, 
+    weight: 0.05 
+},
+
+{ 
+    id: 'cctv_cam', 
+    name: 'Cameras', 
+    variants: ['IP Camera', 'HD Camera'], 
+    variantPrices: {
+        'IP Camera': 800,
+        'HD Camera': 500
+    },
+    price: 600, 
+    weight: 0.4 
+},
+
+{ 
+    id: 'cctv_cable', 
+    name: 'Cable (100m)', 
+    variants: ['Cat 5', 'Poax'], 
+    variantPrices: {
+        'Cat 5': 450,
+        'Poax': 500
+    },
+    price: 450, 
+    weight: 3 
+},
+
+{ 
+    id: 'cctv_enclosure', 
+    name: '100x100 Enclosure', 
+    price: 45, 
+    weight: 0.1 
+        }
 
         ajaxAlarms: [
             { id: 'ax_hub2', name: 'Hub 2 (4G) Jeweller', sku: 'HUB2-4G', specs: '100 devices, 4G/LTE + Ethernet, photo verification support', price: 4950, weight: 0.4, verified: false },
@@ -2748,7 +2854,7 @@
         centurionGateAccessories: [
             { id: 'cg_battery', name: 'Gate Motor Battery', variants: ['12V 7Ah', '12V 9Ah'], specs: 'Centurion SLA backup battery for D-Series motors', price: 375, weight: 2.5, verified: true },
             { id: 'cg_solarpanel', name: 'Solar Panel (Gate Charging)', variants: ['10W', '20W', '40W', '85W', '100W'], specs: 'Panel for solar gate-motor battery charging', price: 650, weight: 4, verified: false },
-            { id: 'cg_solarbattery', name: 'Solar Battery Range', variants: ['12V 7Ah', '12V 9Ah', '12V 18Ah', '12V 40Ah'], specs: 'Deep-cycle battery sized for solar gate setups', price: 375, weight: 2.5, verified: false },
+            { id: 'cg_solarbattery', name: 'Solar Battery Range', variants: ['12V 7Ah', '12V 9Ah', '12V 18Ah', '12V 50Ah'], specs: 'Deep-cycle battery sized for solar gate setups', price: 375, weight: 2.5, verified: false },
             { id: 'cg_solarcable', name: 'Solar Cable', variants: ['4mm² 10m', '4mm² 25m', '6mm² 10m'], specs: 'UV-stabilised DC cable, panel to regulator', price: 180, weight: 1, verified: false },
             { id: 'cg_reg', name: 'Solar Charge Regulator 10A', specs: 'PWM charge controller for gate solar kits', price: 450, weight: 0.3, verified: false },
             { id: 'cg_irbeams', name: 'Infrared Wireless Beams (Safety)', specs: 'Gate safety photocells, wireless', price: 650, weight: 0.5, verified: true },
