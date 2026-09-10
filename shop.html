@@ -2619,10 +2619,10 @@
     const productDb = {
 
         electricFence: [
-            { id: 'ef_tube', name: 'Square Tube', variants: ['6 line', '8 line', '10 line', '12 line'], price: 150, weight: 2 },
+            {id: 'ef_tube',name: 'Square Tube',variants: ['6 line','8 line','10 line','12 line'],variantPrices: {'6 line': 66,'8 line': 88,'10 line': 110,'12 line': 160},price: 66,weight: 2},
             { id: 'ef_bracket', name: 'Bracket Style', variants: ['Straight', 'Angled'], price: 0, weight: 0 },
             { id: 'ef_color', name: 'Color', variants: ['Black', 'White'], price: 0, weight: 0 },
-            { id: 'ef_anchors', name: 'Nail in anchors (8x80mm 100s)', price: 80, weight: 0.5 },
+            { id: 'ef_anchors', name: 'Nail in anchors (8x80mm 100s)', price: 240, weight: 0.5 },
             { id: 'ef_stays', name: 'Stays 750mm', price: 60, weight: 1 },
             { id: 'ef_sleeve', name: 'Stay sleeve', price: 10, weight: 0.1 },
             { id: 'ef_tensioner', name: 'Tensioners', price: 15, weight: 0.1 },
@@ -2635,8 +2635,8 @@
             { id: 'ef_nitelight', name: 'Nite light', variants: ['Red', 'Blue', 'Green'], price: 120, weight: 0.2 },
             { id: 'ef_gatecontact', name: 'Gate contact', variants: ['Single', 'Double'], price: 180, weight: 0.5 },
             { id: 'ef_lugs', name: 'Lugs 6 x 35mm', price: 5, weight: 0.05 },
-            { id: 'ef_energizer', name: 'Energizer', variants: ['4 Joule', '8 Joule'], price: 1500, weight: 3 },
-            { id: 'ef_z11', name: 'JVA Z11 — 1 Zone Security Energizer 1.8J', sku: 'Z11', specs: '1.8 Joule, LCD display, 12V 7Ah battery included, 16V 1.5A PSU', price: 3399, weight: 3, verified: true },
+            { id: 'ef_energizer', name: 'Energizer', variants: ['1 Joule', '3 Joule'], price: 1900, weight: 3 },
+            { id: 'ef_z11', name: 'JVA Z11 — 1 Zone Security Energizer 1.8J', sku: 'Z11', specs: '1.0 Joule, LCD display, 12V 7Ah battery included, 16V 1.5A PSU', price: 3399, weight: 3, verified: true },
             { id: 'ef_z13', name: 'JVA Z13 — 1 Zone Security Energizer 2.8J', sku: 'Z13', specs: '2.8 Joule, LCD display, battery & PSU included', price: 3760, weight: 3, verified: true },
             { id: 'ef_z14', name: 'JVA Z14 — 1 Zone Security Energizer 4J', sku: 'Z14', specs: '4 Joule, LCD display, fence voltage monitoring', price: 3950, weight: 3.2, verified: false },
             { id: 'ef_z18', name: 'JVA Z18 — 1 Zone Security Energizer 8J', sku: 'Z18', specs: '8 Joule, LCD display, programmable zones', price: 4200, weight: 3.5, verified: true },
@@ -2644,9 +2644,9 @@
             { id: 'ef_jva_keypad', name: 'JVA Z-Range 4-Line LCD Keypad', sku: 'JVA-KEYPAD', specs: 'Controls individual energizers, monitors or the entire site', price: 802, weight: 0.4, verified: true },
             { id: 'ef_jva_enclosure', name: 'Energizer Enclosure (Weatherproof)', specs: 'UV-stabilised outdoor enclosure for energizer + battery', price: 450, weight: 1.5, verified: false },
             { id: 'ef_jva_wifi', name: 'JVA WiFi Module', sku: 'JVA-WIFI', specs: 'Plug-in WiFi module — app control & monitoring of energizer', price: 1250, weight: 0.2, verified: false },
-            { id: 'ef_solarpanel', name: 'Solar Panel (Fence/Gate Charging)', variants: ['20W', '40W', '80W', '100W'], specs: 'Monocrystalline panel for energizer/gate battery charging', price: 750, weight: 4, verified: false },
-            { id: 'ef_solarcable', name: 'Solar Cable', variants: ['4mm² 10m', '4mm² 25m', '6mm² 10m', '6mm² 25m'], specs: 'UV-stabilised DC solar cable with MC4-ready ends', price: 180, weight: 1, verified: false },
-            { id: 'ef_solarbattery', name: 'Solar / Backup Battery', variants: ['12V 7Ah', '12V 9Ah', '12V 18Ah', '12V 40Ah', '12V 100Ah'], specs: 'Deep-cycle / gel battery for solar fence & gate systems', price: 375, weight: 2.5, verified: false },
+            { id: 'ef_solarpanel', name: 'Solar Panel (Fence/Gate Charging)', variants: ['20W', '40W', '80W', '100W','150W'],variantPrices: {'20W': 466,'40W': 688,'80W': 810,'100W': 1400,'150W': 1899}, specs: 'Monocrystalline panel for energizer/gate battery charging', price: 380, weight: 4, verified: false },
+            { id: 'ef_solarcable', name: 'Solar Cable', variants: ['4mm² 10m', '4mm² 15m'], specs: 'UV-stabilised DC solar cable with MC4-ready ends', price: 180, weight: 1, verified: false },
+            { id: 'ef_solarbattery', name: 'Solar / Backup Battery', variants: ['12V 7Ah', '12V 9Ah', '12V 18Ah', '12V 50Ah', '12V 102Ah'],variantPrices: {'12V 7A': 306,'12V 9A': 388,'12V 18A': 510,'12V 50A': 1100,'12V 102A': 2100}, specs: 'Deep-cycle / gel battery for solar fence & gate systems', price: 375, weight: 2.5, verified: false },
             { id: 'ef_siren', name: 'Siren', price: 150, weight: 0.8 },
             { id: 'ef_strobe', name: 'Strobe', price: 85, weight: 0.3 },
             { id: 'ef_divertor', name: 'Lightning divertor', price: 110, weight: 0.4 }
@@ -2670,8 +2670,8 @@
             { id: 'd5_motor', name: 'Centurion D5 Smart Motor (500kg)', sku: 'D5-SMART', specs: 'Sliding gates up to 500kg, battery backup, MyCentsys app control', price: 6999, weight: 10, verified: true },
             { id: 'd5_battery', name: 'Battery', variants: ['12V 7Ah', '12V 9Ah'], specs: 'Centurion gate motor backup battery (SLA)', price: 375, weight: 2.5, verified: true },
             { id: 'd5_rack', name: '2m Nylon Rack', price: 250, weight: 1.5 },
-            { id: 'd5_remote', name: '4 Button Remotes', price: 150, weight: 0.1 },
-            { id: 'd5_antitheft', name: 'Anti-Theft Bracket', price: 450, weight: 2 },
+            { id: 'd5_remote', name: '4 Button Remotes', price: 350, weight: 0.1 },
+            { id: 'd5_antitheft', name: 'Anti-Theft Bracket', price: 950, weight: 2 },
             { id: 'd5_beams', name: 'Infrared Wireless Beams (Safety)', price: 650, weight: 0.5 }
         ],
 
@@ -2680,7 +2680,7 @@
             { id: 'd10_turbo', name: 'Centurion D10 Turbo Smart Motor (1000kg High-Speed)', sku: 'D10-TURBO-SMART', specs: 'High-speed 45m/min, 1000kg industrial, motor & base plate', price: 14089, weight: 14, verified: true },
             { id: 'd10_battery', name: 'Battery', variants: ['12V 7Ah (x2)', '12V 9Ah (x2)'], specs: '24V system — sold as matched pairs', price: 750, weight: 5, verified: true },
             { id: 'd10_rack', name: 'Steel 2m Rack', price: 350, weight: 3 },
-            { id: 'd10_antitheft', name: 'Anti-Theft Bracket', price: 550, weight: 2 },
+            { id: 'd10_antitheft', name: 'Anti-Theft Bracket', price: 1050, weight: 2 },
             { id: 'd10_beams', name: 'Infrared Beams (Safety)', price: 650, weight: 0.5 }
         ],
 
