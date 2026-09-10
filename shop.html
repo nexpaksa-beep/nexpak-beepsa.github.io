@@ -3259,21 +3259,229 @@
         updateVisualizer();
     }
 
+/* ==========================================================
+   PROCEED TO CHECKOUT
+   ========================================================== */
+function proceedToCheckout() {
 
-    /* ==========================================================
-       PROCEED TO CHECKOUT
-       ========================================================== */
+    if (!Array.isArray(cart) || cart.length === 0) {
 
-    function proceedToCheckout() {
-        if (!Array.isArray(cart) || cart.length === 0) {
-            alert('Your cart is empty.');
-            return;
-        }
+        alert('Your cart is empty.');
 
-        localStorage.setItem('nexpak_cart', JSON.stringify(cart));
-        window.location.href = 'checkout.html';
+        return;
+
     }
 
+
+    /*
+     * Convert Build Your System cart format
+     * into the same format used by online.html.
+     *
+     * IMPORTANT:
+     * This does NOT change the products.
+     * It only prepares the checkout hand-off.
+     */
+
+    const checkoutItems = cart.map(item => {
+
+        const quantity =
+            parseInt(item.qty, 10) || 1;
+
+        const price =
+            Number(item.price) || 0;
+
+        const weight =
+            Number(item.weight) || 0;
+
+        return {
+
+            id:
+                item.id || '',
+
+            name:
+                item.name || item.title || 'Security Product',
+
+            title:
+                item.title || item.name || 'Security Product',
+
+            variant:
+                item.variant || '',
+
+            price:
+                price,
+
+            quantity:
+                quantity,
+
+            qty:
+                quantity,
+
+            weight:
+                weight,
+
+            category:
+                item.category || ''
+
+        };
+
+    });
+
+
+    /*
+     * Calculate subtotal.
+     *
+     * NOTE:
+     * This is the product subtotal only.
+     * checkout.js adds VAT and delivery.
+     */
+
+    const subtotal =
+        checkoutItems.reduce(
+            (total, item) => {
+
+                return total +
+                    (
+                        Number(item.price) *
+                        Number(item.quantity)
+                    );
+
+            },
+            0
+        );
+
+
+    /*
+     * Calculate total weight.
+     */
+
+    const weight =
+        checkoutItems.reduce(
+            (total, item) => {
+
+                return total +
+                    (
+                        Number(item.weight) *
+                        Number(item.quantity)
+                    );
+
+            },
+            0
+        );
+
+
+    /*
+     * Save using the SAME checkout structure
+     * already used by online.html.
+     */
+
+    const checkoutData = {
+
+        cartCount:
+            checkoutItems.reduce(
+                (total, item) =>
+                    total + Number(item.quantity),
+                0
+            ),
+
+        cartItems:
+            checkoutItems,
+
+        subtotal:
+            Number(subtotal.toFixed(2)),
+
+        weight:
+            Number(weight.toFixed(2)),
+
+        deliveryFee:
+            0,
+
+        currency:
+            'ZAR',
+
+        source:
+            'build-your-system',
+
+        createdAt:
+            new Date().toISOString()
+
+    };
+
+
+    /*
+     * Primary checkout data
+     */
+
+    localStorage.setItem(
+        'nexpak_checkout_data',
+        JSON.stringify(checkoutData)
+    );
+
+
+    /*
+     * Compatibility keys used by
+     * checkout.js / delivery-calculator.js.
+     */
+
+    localStorage.setItem(
+        'nexpak_cart_items',
+        JSON.stringify(checkoutItems)
+    );
+
+    localStorage.setItem(
+        'nexpak_cart_count',
+        String(checkoutData.cartCount)
+    );
+
+    localStorage.setItem(
+        'nexpak_cart_total',
+        subtotal.toFixed(2)
+    );
+
+    localStorage.setItem(
+        'nexpak_cart_weight',
+        weight.toFixed(2)
+    );
+
+
+    /*
+     * Compatibility with the older checkout system.
+     */
+
+    localStorage.setItem(
+        'cartItems',
+        JSON.stringify(checkoutItems)
+    );
+
+    localStorage.setItem(
+        'cartCount',
+        String(checkoutData.cartCount)
+    );
+
+    localStorage.setItem(
+        'cartSubtotal',
+        subtotal.toFixed(2)
+    );
+
+    localStorage.setItem(
+        'totalWeight',
+        weight.toFixed(2)
+    );
+
+
+    console.log(
+        'NEXPAK BUILD YOUR SYSTEM CHECKOUT DATA:',
+        checkoutData
+    );
+
+
+    /*
+     * Go to the existing checkout page.
+     */
+
+    window.location.href =
+        'checkout.html';
+
+        }
 
     /* ==========================================================
        PROPERTY VISUALIZER
