@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Insert your approved Payfast credentials below
     // =========================================================================
     const PAYFAST_CONFIG = {
-        merchant_id: 'YOUR_MERCHANT_ID',   // Replace with your Live Merchant ID
-        merchant_key: 'YOUR_MERCHANT_KEY', // Replace with your Live Merchant Key
+        merchant_id: '36692313',   // Replace with your Live Merchant ID
+        merchant_key: 'cmvr2h6hmum6e', // Replace with your Live Merchant Key
         sandboxMode: false,               // Set to true if testing with sandbox.payfast.co.za
         return_url: window.location.origin + '/index.html', // Redirect after successful payment
         cancel_url: window.location.origin + '/checkout.html'  // Redirect if payment cancelled
