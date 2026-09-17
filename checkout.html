@@ -56,7 +56,6 @@
             margin-bottom: 20px;
         }
 
-        /* CALCULATOR ROW LAYOUT WITH ICONS */
         .calc-row {
             display: flex;
             align-items: flex-start;
@@ -130,7 +129,6 @@
 
         .btn:hover { background-color: var(--primary-dark); }
 
-        /* CALCULATED DELIVERY FEE DISPLAY ROW */
         .delivery-result-box {
             background: #f0fdf4;
             border-color: #bbf7d0;
@@ -148,101 +146,12 @@
             margin-top: 2px;
         }
 
-        /* DARK CSS CAPITEC EFT LAYOUT */
-        .dark-eft-card {
-            background: var(--dark-card);
-            color: #f8fafc;
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid var(--dark-card-border);
-            margin-top: 15px;
-        }
-
-        .qr-bank-grid {
-            display: grid;
-            grid-template-columns: 180px 1fr;
-            gap: 20px;
-            align-items: center;
-        }
-
-        .capitec-qr-img {
-            width: 100%;
-            border-radius: 8px;
-            border: 2px solid #334155;
-            background: #ffffff;
-            padding: 4px;
-        }
-
-        .qr-caption {
-            font-size: 11px;
-            color: #94a3b8;
-            text-align: center;
-            margin-top: 6px;
-        }
-
-        .bank-details-dark {
-            background: #1e293b;
-            padding: 16px;
-            border-radius: 8px;
-            border: 1px solid #334155;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .bank-details-dark h4 {
-            margin: 0 0 10px 0;
-            color: #38bdf8;
-            font-size: 16px;
-            border-bottom: 1px solid #334155;
-            padding-bottom: 6px;
-        }
-
-        .bank-details-dark p { margin: 4px 0; color: #cbd5e1; }
-        .highlight-ref-dark { color: #facc15; font-weight: bold; font-family: monospace; font-size: 15px; }
-
-        .bank-action-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 14px;
-        }
-
-        .btn-copy-dark {
-            background: #334155;
-            color: #ffffff;
-            border: none;
-            padding: 9px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .btn-copy-dark:hover { background: #475569; }
-
-        .btn-whatsapp {
-            background-color: #25d366;
-            color: #fff;
-            text-decoration: none;
-            padding: 9px 12px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: bold;
-            text-align: center;
-        }
-
-        .btn-whatsapp:hover { background-color: #1eb857; }
-
-        /* PAYMENT SELECTION BADGES */
         .payment-option { border: 2px solid var(--border-color); border-radius: 8px; padding: 16px; margin-bottom: 14px; }
-        .payment-option.active { border-color: var(--primary); }
-        .payment-option.disabled-option { opacity: 0.65; background: #f8fafc; cursor: not-allowed; }
+        .payment-option.active { border-color: var(--primary); background: #f8fafc; }
         
         .badge { font-size: 11px; padding: 4px 8px; border-radius: 12px; font-weight: bold; text-transform: uppercase; }
         .badge-instant { background: #dcfce7; color: #15803d; }
-        .badge-maintenance { background: #fee2e2; color: #b91c1c; }
 
-        /* LOGO & PARTNER BADGES FOOTER */
         .trust-footer {
             grid-column: 1 / -1;
             background: #ffffff;
@@ -294,7 +203,6 @@
 
         @media (max-width: 900px) {
             .checkout-container { grid-template-columns: 1fr; }
-            .qr-bank-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -309,7 +217,6 @@
         <div class="checkout-card">
             <h2><i class="fa-solid fa-truck-ramp-box" style="color: var(--primary);"></i> Express Courier & Delivery Calculator</h2>
 
-            <!-- ROW 1: WAREHOUSE ADDRESS (SECURITY SHOP ICON) -->
             <div class="calc-row">
                 <div class="calc-icon-box">
                     <i class="fa-solid fa-shield-halved"></i>
@@ -322,7 +229,6 @@
                 </div>
             </div>
 
-            <!-- ROW 2: DESTINATION ADDRESS (HOME ICON) -->
             <div class="calc-row">
                 <div class="calc-icon-box">
                     <i class="fa-solid fa-house-chimney"></i>
@@ -333,7 +239,6 @@
                 </div>
             </div>
 
-            <!-- ROW 3: CALCULATE DISTANCE (CALCULATOR ICON) -->
             <div class="calc-row">
                 <div class="calc-icon-box">
                     <i class="fa-solid fa-calculator"></i>
@@ -349,7 +254,6 @@
                 </div>
             </div>
 
-            <!-- ROW 4: CALCULATED FEE RESULT (DELIVERY VEHICLE ICON) -->
             <div class="calc-row delivery-result-box">
                 <div class="calc-icon-box">
                     <i class="fa-solid fa-truck-fast"></i>
@@ -387,56 +291,32 @@
         <div class="checkout-card">
             <h2><i class="fa-solid fa-credit-card" style="color: var(--primary);"></i> Payment Method</h2>
 
-            <!-- CAPITEC QR & INSTANT EFT (DARK CARD LAYOUT) -->
+            <!-- PAYFAST GATEWAY -->
             <div class="payment-option active">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <label style="font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px;">
-                        <input type="radio" name="paymentMethod" value="eft" checked> Capitec QR / Instant EFT
+                        <input type="radio" name="paymentMethod" value="payfast" checked> PayFast Online Gateway (Cards & Instant EFT)
                     </label>
-                    <span class="badge badge-instant">Instant Approval</span>
+                    <span class="badge badge-instant">Instant & Secure</span>
                 </div>
-
-                <!-- DARK CSS CAPITEC CARD -->
-                <div class="dark-eft-card">
-                    <div class="qr-bank-grid">
-                        <div style="text-align: center;">
-                            <img src="assets/09-09-2026_1788947924157.jpeg" 
-                                 onerror="this.onerror=null; this.src='https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=CapitecPay-NexPak-2517857594';" 
-                                 alt="Capitec Scan to Pay" 
-                                 class="capitec-qr-img">
-                            <div class="qr-caption">Scan with Capitec App</div>
-                        </div>
-
-                        <!-- BANK DETAILS FORMAT -->
-                        <div class="bank-details-dark">
-                            <h4>Capitec Business Bank</h4>
-                            <p><strong>Account Name:</strong> Nexpak Solutions PTY Ltd</p>
-                            <p><strong>Account Number:</strong> 2517857594</p>
-                            <p><strong>Branch Code:</strong> 470010</p>
-                            <p><strong>Reference:</strong> <span id="payment-reference-display" class="highlight-ref-dark">NEX-ORDER</span></p>
-                            
-                            <div class="bank-action-buttons">
-                                <button type="button" id="btnCopyBankDetails" class="btn-copy-dark">
-                                    <i class="fa-regular fa-copy"></i> Copy Banking Details
-                                </button>
-                                <a id="btnWhatsappPop" href="https://wa.me/27836308249" target="_blank" class="btn-whatsapp">
-                                    <i class="fa-brands fa-whatsapp"></i> Send POP via WhatsApp
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <p style="font-size: 13px; color: var(--text-muted); margin: 10px 0 0 24px;">
+                    Pay securely using Credit/Debit Card, Instant EFT, Masterpass, or Zapper via Payfast.
+                </p>
             </div>
 
-            <!-- PAYFAST (UNDER MAINTENANCE) -->
-            <div class="payment-option disabled-option">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <label style="font-weight: 700; color: #64748b; display: flex; align-items: center; gap: 8px;">
-                        <input type="radio" name="paymentMethod" value="payfast" disabled> PayFast Card Gateway
-                    </label>
-                    <span class="badge badge-maintenance">Under Maintenance</span>
-                </div>
-            </div>
+            <!-- HIDDEN PAYFAST SUBMISSION FORM -->
+            <form id="payfastCheckoutForm" action="https://www.payfast.co.za/eng/process" method="post" style="display:none;">
+                <input type="hidden" name="merchant_id" id="pf_merchant_id" value="">
+                <input type="hidden" name="merchant_key" id="pf_merchant_key" value="">
+                <input type="hidden" name="return_url" id="pf_return_url" value="">
+                <input type="hidden" name="cancel_url" id="pf_cancel_url" value="">
+                <input type="hidden" name="m_payment_id" id="pf_m_payment_id" value="">
+                <input type="hidden" name="amount" id="pf_amount" value="">
+                <input type="hidden" name="item_name" id="pf_item_name" value="">
+                <input type="hidden" name="name_first" id="pf_name_first" value="">
+                <input type="hidden" name="email_address" id="pf_email" value="">
+                <input type="hidden" name="cell_number" id="pf_cell" value="">
+            </form>
         </div>
     </div>
 
@@ -465,7 +345,7 @@
             </div>
 
             <button type="button" id="btnCompleteCheckout" class="btn" style="background-color: var(--accent-green); margin-top: 20px; font-size: 16px;">
-                <i class="fa-solid fa-lock"></i> Complete Order
+                <i class="fa-solid fa-lock"></i> Proceed to PayFast
             </button>
         </div>
     </div>
@@ -474,46 +354,40 @@
     <div class="trust-footer">
         <h4>Guaranteed Secure Payments & Trusted Express Logistics</h4>
         <div class="logo-badge-grid">
-            
-            <!-- PayFast Logo -->
             <div class="logo-card" title="PayFast Gateway">
                 <img src="https://www.payfast.co.za/wp-content/uploads/2020/09/PayFast-Logo.png" 
                      onerror="this.onerror=null; this.src='https://placehold.co/110x28/f8fafc/0284c7?text=PayFast';" 
                      alt="PayFast">
             </div>
 
-            <!-- Professional Instant EFT -->
             <div class="logo-card instant-eft" title="Instant EFT">
                 <i class="fa-solid fa-bolt" style="color: #facc15; margin-right: 6px;"></i> Instant EFT
             </div>
 
-            <!-- Visa Logo -->
             <div class="logo-card" title="Visa">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" 
-                     alt="Visa">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa">
             </div>
 
-            <!-- MasterCard Logo -->
             <div class="logo-card" title="MasterCard">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" 
-                     alt="MasterCard">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="MasterCard">
             </div>
 
-            <!-- The Courier Guy -->
             <div class="logo-card courier-guy" title="The Courier Guy">
                 <i class="fa-solid fa-truck-fast" style="color: #38bdf8; margin-right: 6px;"></i> COURIER GUY
             </div>
 
-            <!-- KT Couriers -->
             <div class="logo-card kt-couriers" title="KT Couriers">
                 <i class="fa-solid fa-box" style="color: #ffffff; margin-right: 6px;"></i> KT COURIERS
             </div>
+        </div>
+    </div>
 
 </div>
 
 <script src="js/delivery-calculator.js"></script>
-<script src="js/checkout.js"></script>
 <script src="js/payments.js"></script>
+<script src="js/checkout.js"></script>
 
 </body>
-    </html>
+                        </html>
+                    
