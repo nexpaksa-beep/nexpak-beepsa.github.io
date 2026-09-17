@@ -1469,4 +1469,230 @@ function updateUI(){
         </div>
     `).join("");
 }
+  function escapeHtml(value){
+    return String(value ?? "").replace(/[&<>"']/g,function(c){
+        return {
+            "&":"&amp;",
+            "<":"&lt;",
+            ">":"&gt;",
+            '"':"&quot;",
+            "'":"&#039;"
+        }[c];
+    });
+}
+
+function addFromCard(card){
+    const select = card.querySelector(".variant-selector");
+    const priceTag = card.querySelector(".product-price-tag");
+    const title = card.querySelector("h3");
+    const img = card.querySelector("img");
+
+    if(!title) return;
+
+    let price = 0;
+    let weight = 0.5;
+    let variant = "";
+
+    if(select){
+        const option = select.options[select.selectedIndex];
+
+        price = Number(option.getAttribute("data-price")) || 0;
+        weight = Number(option.getAttribute("data-weight")) || 0.5;
+        variant = option.textContent.split(" - ")[0].trim();
+
+        /* Centurion product image */
+        if(title.textContent.includes("Centurion Slide Gate Kit") && img){
+            const value = (select.value || "").toLowerCase();
+            if(value === "d3") img.src="../images/d3.png";
+            else if(value === "d5") img.src="../images/d5.png";
+            else if(value === "d6") img.src="../images/d6.png";
+            else if(value === "d10" || value === "d10-turbo") img.src="../images/d10.png";
+            else if(value === "sdo") img.src="../images/sdo.png";
+            else if(value === "vantage") img.src="../images/van.png";
+        }
+    }else{
+        price = Number(card.getAttribute("data-single-price")) || 0;
+        weight = Number(card.getAttribute("data-single-weight")) || 0.5;
+    }
+
+    if(price <= 0){
+        alert("This product price could not be read.");
+        return;
+    }
+
+    const item = {
+        name:title.textContent.trim(),
+        variant:variant,
+        price:Number(price.toFixed(2)),
+        weight:Number(weight.toFixed(2)),
+        quantity:1
+    };
+
+    /* Same product + same variant = increase quantity */
+    const existing = cartItems.find(x =>
+        x.name === item.name &&
+        x.variant === item.variant &&
+        Number(x.price) === Number(item.price)
+    );
+
+    if(existing){
+        existing.quantity = Number(existing.quantity || 1) + 1;
+    }else{
+        cartItems.push(item);
+    }
+
+    updateUI();
+
+    const button = card.querySelector(".btn-add-to-cart");
+    if(button){
+        const original = button.textContent;
+        button.textContent = "✓ ADDED";
+        button.disabled = true;
+        setTimeout(()=>{
+            button.textContent = original;
+            button.disabled = false;
+        },900);
+    }
+
+    console.log("Nexpak cart updated:",cartItems);
+}
+
+function removeItem(index){
+    if(index < 0 || index >= cartItems.length) return;
+    cartItems.splice(index,1);
+    updateUI();
+}
+
+function clearCart(){
+    if(!cartItems.length){
+        alert("Your cart is already empty.");
+        return;
+    }
+
+    if(!confirm("Are you sure you want to clear your cart?")) return;
+
+    cartItems = [];
+
+    Object.values(CART_KEYS).forEach(key=>localStorage.removeItem(key));
+
+    /* Compatibility cleanup */
+    [
+        "cartItems","cartCount","cartSubtotal","totalWeight",
+        "deliveryFee","grandTotal"
+    ].forEach(key=>localStorage.removeItem(key));
+
+    updateUI();
+}
+
+function proceedCheckout(){
+    if(!cartItems.length){
+        alert("Your cart is empty. Please add a product before proceeding to checkout.");
+        return;
+    }
+
+    const totals = saveCart();
+
+    const checkoutData = {
+        cartCount:totals.count,
+        cartItems:cartItems,
+        subtotal:Number(totals.subtotal.toFixed(2)),
+        weight:Number(totals.weight.toFixed(2)),
+        deliveryFee:Number(localStorage.getItem(CART_KEYS.deliveryFee) || 0),
+        currency:"ZAR",
+        createdAt:new Date().toISOString()
+    };
+
+    localStorage.setItem(CART_KEYS.checkout,JSON.stringify(checkoutData));
+
+    console.log("NEXPAK CHECKOUT DATA:",checkoutData);
+
+    window.location.href="../checkout.html";
+}
+
+window.NexpakStore = {
+    removeItem:removeItem,
+    clearCart:clearCart,
+    proceedCheckout:proceedCheckout
+};
+
+document.addEventListener("DOMContentLoaded",function(){
+
+    /* Menu button — prevents accidental navigation */
+    const menuButton = document.getElementById("nexpakMenuButton");
+    const dropdown = document.querySelector(".dropdown");
+
+    if(menuButton && dropdown){
+        menuButton.addEventListener("click",function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            dropdown.classList.toggle("active");
+        });
+
+        document.addEventListener("click",function(e){
+            if(!dropdown.contains(e.target)){
+                dropdown.classList.remove("active");
+            }
+        });
+
+        dropdown.querySelectorAll("a").forEach(link=>{
+            link.addEventListener("click",()=>dropdown.classList.remove("active"));
+        });
+    }
+
+    /* Product variants */
+    document.querySelectorAll(".app-product-card").forEach(card=>{
+        const select = card.querySelector(".variant-selector");
+        const priceTag = card.querySelector(".product-price-tag");
+        const img = card.querySelector("img");
+        const title = card.querySelector("h3");
+
+        if(select && priceTag){
+            select.addEventListener("change",function(){
+                const option = select.options[select.selectedIndex];
+                const price = Number(option.getAttribute("data-price")) || 0;
+                if(price){
+                    priceTag.textContent = "R" + price.toLocaleString("en-ZA",{
+                        minimumFractionDigits:2,
+                        maximumFractionDigits:2
+                    });
+                }
+
+                if(title && title.textContent.includes("Centurion Slide Gate Kit") && img){
+                    const value = (select.value || "").toLowerCase();
+                    if(value==="d3") img.src="../images/d3.png";
+                    else if(value==="d5") img.src="../images/d5.png";
+                    else if(value==="d6") img.src="../images/d6.png";
+                    else if(value==="d10" || value==="d10-turbo") img.src="../images/d10.png";
+                    else if(value==="sdo") img.src="../images/sdo.png";
+                    else if(value==="vantage") img.src="../images/van.png";
+                }
+            });
+        }
+
+        const addButton = card.querySelector(".btn-add-to-cart");
+        if(addButton){
+            addButton.addEventListener("click",function(){
+                addFromCard.call(this,card);
+            });
+        }
+    });
+
+    const checkoutButton = document.getElementById("proceedToCheckout");
+    if(checkoutButton){
+        checkoutButton.addEventListener("click",proceedCheckout);
+    }
+
+    const clearButton = document.getElementById("clearCartButton");
+    if(clearButton){
+        clearButton.addEventListener("click",clearCart);
+    }
+
+    updateUI();
+});
+
+})();
+</script>
+
+</body>
+</html>
   
