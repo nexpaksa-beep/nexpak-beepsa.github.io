@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Nexpak Security Solutions online store. Shop essential DVR kits, wireless CCTV, electric fencing, Nova & Sentry remotes, gel batteries, and security hardware in South Africa.">
+<meta name="keywords" content="security suppliers South Africa, electric fencing kits, 4 channel dvr kit south africa, 8 channel wireless cctv kit, electric fence 20m kit, centurion nova remote 2 button, sentry learning remote, 12v 7ah gel battery for alarm, 102ah deep cycle solar battery, jva pet kit electric fence, Dahua CCTV, Ajax alarms, gate motors">
+<meta name="robots" content="index,follow">
+
+<!-- Google tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-KVFDVM94"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'GT-KVFDVM94');
+</script>
+
+<!-- Structured Data (JSON-LD) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Store",
+  "name": "Nexpak Security Solutions",
+  "image": "images/logo.png",
+  "telephone": "+27836308249",
+  "priceRange": "ZAR",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "ZA"
+  },
+  "url": "https://nexpak.co.za/online.html"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://nexpak.co.za/index.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Essential Security Store",
+      "item": "https://nexpak.co.za/online.html"
+    }
+  ]
+}
+</script>
+
+<title>Nexpak Security Solutions | Essential Security & Online Store</title>
+
+<style>
+:root{
+    --primary-blue:#040e1b;
+    --accent-gold:#e2b114;
+    --gold-light:#ffd75a;
+    --text-dark:#222;
+    --border-color:#cbd5e1;
+    --wall-light:#b98962;
+    --wall-mid:#805538;
+    --wall-dark:#4a2d1d;
+}
+
+/* ==========================================================
+   REALISTIC BRICK WALL BACKGROUND
+========================================================== */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+body{
+    margin:0;
+    font-family:"Segoe UI",Arial,sans-serif;
+    color:var(--text-dark);
+    min-height:100vh;
+    background:
+        linear-gradient(rgba(54,31,19,.22),rgba(54,31,19,.22)),
+        repeating-linear-gradient(
+            0deg,
+            rgba(40,22,13,.55) 0px,
+            rgba(40,22,13,.55) 3px,
+            transparent 3px,
+            transparent 52px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            rgba(255,255,255,.08) 0px,
+            rgba(255,255,255,.08) 2px,
+            transparent 2px,
+            transparent 104px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            transparent 0px,
+            transparent 50px,
+            rgba(40,22,13,.55) 50px,
+            rgba(40,22,13,.55) 53px,
+            transparent 53px,
+            transparent 104px
+        ),
+        linear-gradient(145deg,var(--wall-light),var(--wall-mid) 48%,var(--wall-dark));
+    background-attachment:fixed;
+}
+
+/* ==========================================================
+   HEADER
+========================================================== */
+header{
+    background:rgba(4,14,27,.98);
+    color:#fff;
+    padding:15px 25px;
+    border-bottom:3px solid var(--accent-gold);
+    position:sticky;
+    top:0;
+    z-index:5000;
+    box-shadow:0 5px 20px rgba(0,0,0,.45);
+}
+
+.header-main{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.branding-container{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.branding-logo{
+    height:45px;
+    width:auto;
+    object-fit:contain;
+}
+
+.branding-sub{
+    font-size:11px;
+    letter-spacing:2px;
+    color:#94a3b8;
+    margin-top:3px;
+    text-transform:uppercase;
+}
+
+.meta-nav{
+    font-size:13px;
+    display:flex;
+    gap:20px;
+    align-items:center;
+    white-space:nowrap;
+}
+
+.meta-nav span{
+    font-weight:900;
+    color:var(--accent-gold);
+}
+
+/* Breadcrumbs Styling */
+.breadcrumbs{
+    background:rgba(4, 14, 27, 0.6);
+    padding:10px 20px;
+    font-size:12px;
+    color:#cbd5e1;
+    border-bottom:1px solid rgba(226, 177, 20, 0.3);
+}
+
+.breadcrumbs a{
+    color:var(--accent-gold);
+    text-decoration:none;
+    font-weight:600;
+}
+
+.breadcrumbs a:hover{
+    text-decoration:underline;
+}
+
+.breadcrumbs span{
+    color:#fff;
+}
+
+/* ==========================================================
+   DROPDOWN
+========================================================== */
+.dropdown{
+    position:relative;
+    display:inline-block;
+}
+
+.dropdown-btn{
+    background:var(--accent-gold);
+    color:var(--primary-blue);
+    border:none;
+    padding:9px 15px;
+    font-weight:900;
+    border-radius:5px;
+    cursor:pointer;
+    font-size:13px;
+    text-transform:uppercase;
+}
+
+.dropdown-btn:hover{background:var(--gold-light)}
+
+.dropdown-content{
+    display:none;
+    position:absolute;
+    top:calc(100% + 8px);
+    left:0;
+    min-width:220px;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:0 12px 30px rgba(0,0,0,.4);
+    z-index:99999;
+    overflow:hidden;
+}
+
+.dropdown.active .dropdown-content{display:block}
+
+.dropdown-content a{
+    display:block;
+    padding:13px 16px;
+    color:#111827;
+    text-decoration:none;
+    white-space:nowrap;
+    font-size:13px;
+    font-weight:700;
+}
+
+.dropdown-content a:hover{background:#f1f5f9}
+
+/* ==========================================================
+   HERO
+========================================================== */
+.hero-banner{
+    background:
+        linear-gradient(rgba(4,14,27,.90),rgba(4,14,27,.94)),
+        url("../images/hero-bg.jpg") no-repeat center/cover;
+    color:#fff;
+    padding:60px 20px;
+    text-align:center;
+    border-bottom:5px solid var(--accent-gold);
+    box-shadow:0 8px 20px rgba(0,0,0,.35);
+}
+
+.hero-banner h1{
+    margin:0 0 15px;
+    font-size:clamp(27px,5vw,40px);
+}
+
+.hero-banner p{
+    margin:0;
+    font-size:15px;
+    color:#cbd5e1;
+}
+
+/* ==========================================================
+   MAIN
+========================================================== */
+.container{
+    max-width:1250px;
+    margin:0 auto;
+    padding:30px 20px 60px;
+}
+
+.store-section-title{
+    color:#fff;
+    background:linear-gradient(90deg,#040e1b,#0c213a);
+    border-left:7px solid var(--accent-gold);
+    padding:13px 17px;
+    margin:45px 0 28px;
+    font-size:22px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    box-shadow:0 5px 14px rgba(0,0,0,.4);
+}
+
+.store-subsection-title{
+    color:#fff;
+    background:rgba(4,14,27,0.85);
+    border-left:4px solid var(--accent-gold);
+    padding:8px 14px;
+    margin:25px 0 18px;
+    font-size:18px;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+}
+
+/* ==========================================================
+   WOODEN WINDOW PRODUCT FRAMES
+========================================================== */
+.app-product-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+    gap:32px;
+}
+
+.app-product-card{
+    background:linear-gradient(145deg,#fdfdfd,#eef1f4);
+    border:12px solid #5b351e;
+    border-radius:5px;
+    padding:18px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    position:relative;
+    overflow:hidden;
+    box-shadow:
+        inset 0 0 0 3px #9b6338,
+        inset 0 0 0 6px #4b2816,
+        inset 0 0 28px rgba(0,0,0,.25),
+        0 14px 30px rgba(0,0,0,.45);
+}
+
+/* timber-grain edge */
+.app-product-card::before,
+.app-product-card::after{
+    content:"";
+    position:absolute;
+    pointer-events:none;
+    z-index:0;
+}
+
+.app-product-card::before{
+    inset:-12px;
+    border:3px solid rgba(213,158,92,.65);
+    box-shadow:inset 0 0 0 4px rgba(53,27,14,.65);
+}
+
+.app-product-card > *{position:relative;z-index:1}
+
+/* product sits inside a realistic wood-framed window */
+.app-product-card img{
+    width:100%;
+    height:190px;
+    object-fit:contain;
+    margin-bottom:14px;
+    background:
+        linear-gradient(rgba(255,255,255,.15),rgba(255,255,255,.15)),
+        #d8d0c5;
+    border:10px solid #70401f;
+    outline:3px solid #3e2111;
+    box-shadow:
+        inset 0 0 0 4px #b57945,
+        inset 0 0 22px rgba(0,0,0,.4),
+        0 6px 12px rgba(0,0,0,.3);
+    border-radius:2px;
+    padding:9px;
+}
+
+.app-product-card .tag{
+    font-size:11px;
+    text-transform:uppercase;
+    font-weight:900;
+    color:#64748b;
+    margin-bottom:4px;
+}
+
+.app-product-card h3{
+    margin:5px 0;
+    font-size:17px;
+    color:var(--primary-blue);
+}
+
+.app-product-card p{
+    font-size:13px;
+    color:#475569;
+    margin:0 0 12px;
+    line-height:1.45;
+}
+
+.variant-selector{
+    width:100%;
+    padding:10px;
+    margin-bottom:12px;
+    border:1px solid #a8b3c0;
+    border-radius:5px;
+    font-size:13px;
+    color:var(--text-dark);
+    background:#f8fafc;
+    font-weight:600;
+}
+
+.product-price-tag{
+    font-size:22px;
+    font-weight:900;
+    color:var(--primary-blue);
+    background:#f1f5f9;
+    border:1px solid var(--border-color);
+    padding:10px;
+    border-radius:5px;
+    text-align:center;
+    margin:10px 0 15px;
+    box-shadow:inset 0 2px 4px rgba(0,0,0,.08);
+}
+
+.button-group{
+    display:flex;
+    gap:7px;
+    margin-top:auto;
+}
+
+.custom-app-btn{
+    flex:1;
+    background:var(--accent-gold);
+    color:var(--primary-blue);
+    padding:11px 6px;
+    border:none;
+    font-weight:900;
+    border-radius:5px;
+    cursor:pointer;
+    text-transform:uppercase;
+    font-size:10px;
+    letter-spacing:.5px;
+    text-align:center;
+    text-decoration:none;
+    transition:.2s;
+}
+
+.custom-app-btn:hover{
+    background:var(--gold-light);
+    transform:translateY(-1px);
+}
+
+.btn-info{
+    background:#e2e8f0;
+    color:var(--primary-blue);
+    border:1px solid var(--border-color);
+}
+
+.btn-info:hover{background:#cbd5e1}
+
+/* Realistic WhatsApp Button for Essential Range */
+.btn-wa-info{
+    background:#25d366;
+    color:#fff;
+    border:none;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+}
+
+.btn-wa-info:hover{
+    background:#20ba5a;
+    color:#fff;
+}
+
+.btn-wa-info svg{
+    fill:currentColor;
+    width:15px;
+    height:15px;
+}
+
+/* ==========================================================
+   CART PANEL
+========================================================== */
+.cart-panel{
+    background:rgba(255,255,255,.97);
+    border:3px solid var(--accent-gold);
+    border-radius:12px;
+    padding:25px;
+    margin:50px auto 0;
+    max-width:850px;
+    box-shadow:0 15px 35px rgba(0,0,0,.4);
+}
+
+.cart-panel h2{
+    margin-top:0;
+    color:var(--primary-blue);
+}
+
+.cart-empty{
+    text-align:center;
+    color:#64748b;
+    padding:15px;
+}
+
+.cart-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.cart-row{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    align-items:center;
+    padding:13px;
+    border-bottom:1px solid #e2e8f0;
+    background:#f8fafc;
+    border-radius:7px;
+}
+
+.cart-row strong{color:var(--primary-blue)}
+.cart-row small{color:#64748b}
+
+.cart-summary{
+    margin-top:15px;
+    border-top:2px dashed #cbd5e1;
+    padding-top:12px;
+}
+
+.summary-line{
+    display:flex;
+    justify-content:space-between;
+    padding:5px 0;
+}
+
+.summary-total{
+    font-size:21px;
+    font-weight:900;
+    color:var(--primary-blue);
+    border-top:2px solid #cbd5e1;
+    margin-top:8px;
+    padding-top:10px;
+}
+
+.cart-actions{
+    display:flex;
+    gap:12px;
+    margin-top:20px;
+}
+
+.big-checkout{
+    flex:1;
+    padding:18px;
+    border:0;
+    border-radius:12px;
+    background:#354c3b;
+    color:#fff;
+    font-size:19px;
+    font-weight:900;
+    cursor:pointer;
+}
+
+.clear-cart{
+    padding:18px 22px;
+    border:0;
+    border-radius:12px;
+    background:#b91c1c;
+    color:#fff;
+    font-size:15px;
+    font-weight:900;
+    cursor:pointer;
+}
+
+.big-checkout:hover{background:#263a2c}
+.clear-cart:hover{background:#991b1b}
+
+/* ==========================================================
+   FOOTER / WHATSAPP / PARTNER LOGOS
+========================================================== */
+footer{
+    background:#040e1b;
+    color:#94a3b8;
+    padding:40px 20px;
+    text-align:center;
+    font-size:13px;
+    margin-top:20px;
+    border-top:3px solid var(--accent-gold);
+}
+
+footer a{
+    color:#fff;
+    text-decoration:none;
+    margin:0 10px;
+}
+
+.footer-trust-badges{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:25px;
+    flex-wrap:wrap;
+    margin:25px 0 15px;
+    padding-top:20px;
+    border-top:1px solid rgba(255,255,255,0.1);
+}
+
+.footer-trust-badges img{
+    height:32px;
+    width:auto;
+    object-fit:contain;
+    filter:brightness(0.9);
+    transition:filter 0.2s;
+}
+
+.footer-trust-badges img:hover{
+    filter:brightness(1);
+}
+
+.whatsapp-float{
+    position:fixed;
+    width:60px;
+    height:60px;
+    bottom:25px;
+    right:25px;
+    background:#25d366;
+    color:#fff;
+    border-radius:50%;
+    text-align:center;
+    box-shadow:0 5px 18px rgba(0,0,0,.45);
+    z-index:4000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-decoration:none;
+    font-size:29px;
+}
+
+.whatsapp-float:hover{transform:scale(1.08);background:#20ba5a}
+
+@media(max-width:700px){
+    header{padding:12px 14px}
+    .header-main{align-items:flex-start}
+    .header-main > div:last-child{display:none}
+    .branding-sub{letter-spacing:1px}
+    .app-product-grid{grid-template-columns:1fr}
+    .container{padding:20px 12px 45px}
+    .store-section-title{font-size:18px}
+    .cart-actions{flex-direction:column}
+    .big-checkout,.clear-cart{width:100%}
+    .app-product-card img{height:175px}
+    .footer-trust-badges{gap:15px}
+    .footer-trust-badges img{height:25px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-main">
+        <div style="display:flex;align-items:center;gap:20px;">
+            <div class="dropdown">
+                <button type="button" class="dropdown-btn" id="nexpakMenuButton">Menu ▾</button>
+                <div class="dropdown-content" id="nexpakMenu">
+                    <a href="../index.html">🏠 Home</a>
+                    <a href="#essential-range">⭐ Essential Range</a>
+                    <a href="#security-kits">Security Kits</a>
+                    <a href="#energizers">Energizers</a>
+                    <a href="#cctv">Dahua CCTV</a>
+                    <a href="#alarms">Ajax Alarms</a>
+                    <a href="#cart">🛒 Cart & Checkout</a>
+                </div>
+            </div>
+            <div class="branding-container">
+                <img src="images/logo.png" alt="Nexpak Logo" class="branding-logo">
+                <div>
+                    <div style="font-weight:bold;font-size:22px;letter-spacing:.5px;">Nexpak Security Solutions</div>
+                    <div class="branding-sub">Protecting What Matters Most</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="meta-nav">
+            <div>Account</div>
+            <div>Wishlist <span id="wishlist-count">0</span></div>
+            <div>Cart <span id="cart-count-nav">0</span></div>
+        </div>
+    </div>
+</header>
+
+<nav class="breadcrumbs" aria-label="Breadcrumbs">
+    <a href="../index.html">Home</a> &gt; <span>Essential Security Store</span>
+</nav>
+
+<section class="hero-banner">
+    <div style="font-size:13px;text-transform:uppercase;letter-spacing:2px;color:var(--accent-gold);margin-bottom:10px;font-weight:bold;">
+        Nexpak Security Store
+    </div>
+    <h1>Professional Security. <strong>Delivered To Your Door.</strong></h1>
+    <p>Complete security kits and hardware for homes, businesses, estates and farms.</p>
+</section>
+
+<div class="container">
+
+<!-- ==========================================================
+     1. ESSENTIAL RANGE (FIRST SECTION VISIBLE TO CLIENTS)
+========================================================== -->
+<h2 id="essential-range" class="store-section-title">Essential Security Range</h2>
+<div class="app-product-grid">
+
+<!-- Window 1: 4 Channel DVR Kit -->
+<div class="app-product-card" data-product-name="4 Channel DVR Kit" data-single-price="1850.00" data-single-weight="3.2">
+<img src="images.png" alt="4 Channel DVR Kit">
+<div>
+<div class="tag">Essential CCTV</div>
+<h3>4 Channel DVR Kit</h3>
+<p>4-Channel high-definition digital video recorder kit with power supply & accessories.</p>
+<div class="product-price-tag">R1,850.00</div>
+</div>
+<div class="button-group">
+<a href="https://wa.me/27836308249?text=Hi%20Nexpak,%20I'm%20interested%20in%20the%204%20Channel%20DVR%20Kit" class="custom-app-btn btn-wa-info" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.842-1.001z"/></svg>
+    INFO
+</a>
+<button type="button" class="custom-app-btn btn-add-to-cart">Add to Cart</button>
+</div>
+</div>
+
+<!-- Window 2: 8 Channel DVR Kit -->
+<div class="app-product-card" data-product-name="8 Channel DVR Kit" data-single-price="2950.00" data-single-weight="4.5">
+<img src="images.png" alt="8 Channel DVR Kit">
+<div>
+<div class="tag">Essential CCTV</div>
+<h3>8 Channel DVR Kit</h3>
+<p>Complete 8-Channel DVR setup for expanded home and commercial surveillance.</p>
+<div class="product-price-tag">R2,950.00</div>
+</div>
+<div class="button-group">
+<a href="https://wa.me/27836308249?text=Hi%20Nexpak,%20I'm%20interested%20in%20the%208%20Channel%20DVR%20Kit" class="custom-app-btn btn-wa-info" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.842-1.001z"/></svg>
+    INFO
+</a>
+<button type="button" class="custom-app-btn btn-add-to-cart">Add to Cart</button>
+</div>
+</div>
+
+<!-- Window 3: 4 Channel Wireless Kit -->
+<div class="app-product-card" data-product-name="4 Channel Wireless Kit" data-single-price="2450.00" data-single-weight="2.8">
+<img src="images.png" alt="4 Channel Wireless Kit">
+<div>
+<div class="tag">Wireless CCTV</div>
+<h3>4 Channel Wireless Kit</h3>
+<p>Easy plug-and-play 4-channel wireless IP camera kit with automatic pairing.</p>
+<div class="product-price-tag">R2,450.00</div>
+</div>
+<div class="button-group">
+<a href="https://wa.me/27836308249?text=Hi%20Nexpak,%20I'm%20interested%20in%20the%204%20Channel%20Wireless%20Kit" class="custom-app-btn btn-wa-info" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.842-1.001z"/></svg>
+    INFO
+</a>
+<button type="button" class="custom-app-btn btn-add-to-cart">Add to Cart</button>
+</div>
+</div>
+
+<!-- Window 4: 8 Channel Wireless Kit -->
+<div class="app-product-card"
