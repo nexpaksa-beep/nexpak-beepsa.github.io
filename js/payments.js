@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         merchant_id: '36692313',   // Replace with your Live Merchant ID
         merchant_key: 'cmvr2h6hmum6e', // Replace with your Live Merchant Key
         sandboxMode: false,               // Set to true if testing with sandbox.payfast.co.za
-        return_url: window.location.origin + '/index.html', // Redirect after successful payment
+        return_url: window.location.origin + '/success.html', // Redirect after successful payment
         cancel_url: window.location.origin + '/checkout.html'  // Redirect if payment cancelled
     };
 
