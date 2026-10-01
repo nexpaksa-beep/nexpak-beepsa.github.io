@@ -2570,7 +2570,7 @@ function submitLead() {
 // =========================================================
 
 if (
-  document.readyState === 'loading  
+  document.readyState === 'loading ) {
   
   document.addEventListener('DOMContentLoaded', init);
 } else {
