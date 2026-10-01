@@ -2570,4 +2570,74 @@ function submitLead() {
 // =========================================================
 
 if (
-  document.readyState === 'loading
+  document.readyState === 'loading  
+  
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+
+// =========================================================
+// PUBLIC API
+// =========================================================
+
+window.NexpakChatbot = {
+  open: function() {
+    const toggleBtn = document.getElementById('chat-toggle');
+
+    if (toggleBtn && !chatOpen) {
+      toggleBtn.click();
+    }
+  },
+
+  close: function() {
+    const toggleBtn = document.getElementById('chat-toggle');
+
+    if (toggleBtn && chatOpen) {
+      toggleBtn.click();
+    }
+  },
+
+  toggle: function() {
+    const toggleBtn = document.getElementById('chat-toggle');
+
+    if (toggleBtn) {
+      toggleBtn.click();
+    }
+  },
+
+  sendMessage: function(message) {
+    if (!message || typeof message !== 'string') {
+      return;
+    }
+
+    const input = document.getElementById('chat-input');
+    const sendBtn = document.getElementById('chat-send');
+
+    if (!input) {
+      return;
+    }
+
+    input.value = message.trim();
+
+    if (sendBtn) {
+      sendBtn.click();
+    } else {
+      input.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'Enter',
+          code: 'Enter',
+          keyCode: 13,
+          which: 13,
+          bubbles: true
+        })
+      );
+    }
+  }
+};
+
+// =========================================================
+// END OF NEXPAK AI CHATBOT
+// =========================================================
+
+})();
