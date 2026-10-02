@@ -3557,3 +3557,772 @@ footer img{
       {
         minimumFractionDigits: 2,
         maximumFractionDig
+
+          its: 2
+      }
+    );
+
+  }
+
+
+  function safeParse(value, fallback) {
+
+    try {
+
+      return JSON.parse(value);
+
+    } catch (error) {
+
+      return fallback;
+
+    }
+
+  }
+
+
+  function loadCart() {
+
+    const stored =
+      localStorage.getItem(CART_ITEMS_KEY);
+
+    const compatibility =
+      localStorage.getItem(COMPAT_ITEMS_KEY);
+
+
+    cartItems =
+      safeParse(
+        stored || compatibility || "[]",
+        []
+      );
+
+
+    if (!Array.isArray(cartItems)) {
+
+      cartItems = [];
+
+    }
+
+  }
+
+
+  function saveCart() {
+
+    const subtotal =
+      cartItems.reduce(
+        function (sum, item) {
+
+          return sum +
+            (
+              Number(item.price || 0) *
+              Number(item.quantity || 1)
+            );
+
+        },
+        0
+      );
+
+
+    const count =
+      cartItems.reduce(
+        function (sum, item) {
+
+          return sum +
+            Number(item.quantity || 1);
+
+        },
+        0
+      );
+
+
+    const weight =
+      cartItems.reduce(
+        function (sum, item) {
+
+          return sum +
+            (
+              Number(item.weight || 0) *
+              Number(item.quantity || 1)
+            );
+
+        },
+        0
+      );
+
+
+    localStorage.setItem(
+      CART_ITEMS_KEY,
+      JSON.stringify(cartItems)
+    );
+
+    localStorage.setItem(
+      CART_COUNT_KEY,
+      String(count)
+    );
+
+    localStorage.setItem(
+      CART_TOTAL_KEY,
+      String(subtotal)
+    );
+
+    localStorage.setItem(
+      CART_WEIGHT_KEY,
+      String(weight)
+    );
+
+
+    localStorage.setItem(
+      COMPAT_ITEMS_KEY,
+      JSON.stringify(cartItems)
+    );
+
+    localStorage.setItem(
+      COMPAT_COUNT_KEY,
+      String(count)
+    );
+
+    localStorage.setItem(
+      COMPAT_TOTAL_KEY,
+      String(subtotal)
+    );
+
+    localStorage.setItem(
+      COMPAT_WEIGHT_KEY,
+      String(weight)
+    );
+
+
+    renderCart();
+
+  }
+
+
+  function renderCart() {
+
+    const container =
+      document.getElementById(
+        "cartItemsDisplay"
+      );
+
+    const countElement =
+      document.getElementById(
+        "cartCount"
+      );
+
+    const subtotalElement =
+      document.getElementById(
+        "cartSubtotal"
+      );
+
+    const totalElement =
+      document.getElementById(
+        "cartTotal"
+      );
+
+
+    if (!container) {
+
+      return;
+
+    }
+
+
+    if (!cartItems.length) {
+
+      container.innerHTML =
+        "<p>Your cart is currently empty.</p>";
+
+    } else {
+
+      container.innerHTML =
+        cartItems.map(
+          function (item, index) {
+
+            const quantity =
+              Number(item.quantity || 1);
+
+            const price =
+              Number(item.price || 0);
+
+            return `
+              <div class="cart-item">
+
+                <div class="cart-item-info">
+
+                  <strong>
+                    ${item.name || "Security Product"}
+                  </strong>
+
+                  ${
+                    item.variant
+                      ? `<small>${item.variant}</small>`
+                      : ""
+                  }
+
+                  <span>
+                    ${money(price)}
+                    ×
+                    ${quantity}
+                  </span>
+
+                </div>
+
+                <button
+                  type="button"
+                  class="remove-cart-item"
+                  data-index="${index}"
+                >
+                  REMOVE
+                </button>
+
+              </div>
+            `;
+
+          }
+        ).join("");
+
+    }
+
+
+    const count =
+      cartItems.reduce(
+        function (sum, item) {
+
+          return sum +
+            Number(item.quantity || 1);
+
+        },
+        0
+      );
+
+
+    const subtotal =
+      cartItems.reduce(
+        function (sum, item) {
+
+          return sum +
+            (
+              Number(item.price || 0) *
+              Number(item.quantity || 1)
+            );
+
+        },
+        0
+      );
+
+
+    if (countElement) {
+
+      countElement.textContent =
+        String(count);
+
+    }
+
+
+    if (subtotalElement) {
+
+      subtotalElement.textContent =
+        money(subtotal);
+
+    }
+
+
+    if (totalElement) {
+
+      totalElement.textContent =
+        money(subtotal);
+
+    }
+
+
+    updateHeaderCart(count);
+
+  }
+
+
+  function updateHeaderCart(count) {
+
+    const navCart =
+      document.querySelector(
+        ".cart-count"
+      );
+
+
+    if (navCart) {
+
+      navCart.textContent =
+        String(count);
+
+    }
+
+
+    const metaCart =
+      document.querySelector(
+        ".cart-meta-count"
+      );
+
+
+    if (metaCart) {
+
+      metaCart.textContent =
+        String(count);
+
+    }
+
+  }
+
+
+  function addToCart(card) {
+
+    if (!card) {
+
+      return;
+
+    }
+
+
+    const titleElement =
+      card.querySelector("h3");
+
+
+    const name =
+      titleElement
+        ? titleElement.textContent.trim()
+        : "Security Product";
+
+
+    const image =
+      card.querySelector("img");
+
+
+    const imageUrl =
+      image
+        ? image.getAttribute("src")
+        : "";
+
+
+    const variantSelect =
+      card.querySelector(
+        ".variant-select"
+      );
+
+
+    let variant = "";
+    let price = 0;
+
+
+    if (variantSelect) {
+
+      const selected =
+        variantSelect.options[
+          variantSelect.selectedIndex
+        ];
+
+
+      if (selected) {
+
+        variant =
+          selected.value || "";
+
+        price =
+          Number(
+            selected.dataset.price || 0
+          );
+
+      }
+
+    }
+
+
+    if (!variantSelect) {
+
+      const priceElement =
+        card.querySelector(".price");
+
+
+      if (priceElement) {
+
+        price =
+          Number(
+            priceElement.textContent
+              .replace(/[^\d.]/g, "")
+          );
+
+        if (!Number.isFinite(price)) {
+
+          price = 0;
+
+        }
+
+      }
+
+    }
+
+
+    const weight =
+      Number(
+        card.dataset.weight || 2
+      );
+
+
+    if (!price) {
+
+      alert(
+        "Please contact Nexpak for the current price of this product."
+      );
+
+      return;
+
+    }
+
+
+    const existing =
+      cartItems.find(
+        function (item) {
+
+          return item.name === name &&
+            item.variant === variant;
+
+        }
+      );
+
+
+    if (existing) {
+
+      existing.quantity =
+        Number(existing.quantity || 1) + 1;
+
+    } else {
+
+      cartItems.push({
+
+        name: name,
+
+        variant: variant,
+
+        price: price,
+
+        quantity: 1,
+
+        weight: weight,
+
+        image: imageUrl
+
+      });
+
+    }
+
+
+    saveCart();
+
+
+    alert(
+      name +
+      (variant ? " - " + variant : "") +
+      " added to your cart."
+    );
+
+  }
+
+
+  function removeCartItem(index) {
+
+    if (
+      index < 0 ||
+      index >= cartItems.length
+    ) {
+
+      return;
+
+    }
+
+
+    cartItems.splice(index, 1);
+
+    saveCart();
+
+  }
+
+
+  function clearCart() {
+
+    if (!cartItems.length) {
+
+      return;
+
+    }
+
+
+    if (
+      !confirm(
+        "Are you sure you want to clear your cart?"
+      )
+    ) {
+
+      return;
+
+    }
+
+
+    cartItems = [];
+
+
+    localStorage.removeItem(
+      CHECKOUT_DATA_KEY
+    );
+
+    localStorage.removeItem(
+      DELIVERY_FEE_KEY
+    );
+
+    localStorage.removeItem(
+      DELIVERY_METHOD_KEY
+    );
+
+    localStorage.removeItem(
+      DELIVERY_SIZE_KEY
+    );
+
+    localStorage.removeItem(
+      DELIVERY_KM_KEY
+    );
+
+    localStorage.removeItem(
+      DELIVERY_ETA_KEY
+    );
+
+
+    saveCart();
+
+  }
+
+
+  function goToCheckout() {
+
+    if (!cartItems.length) {
+
+      alert(
+        "Your cart is empty. Please add a product before checkout."
+      );
+
+      return;
+
+    }
+
+
+    window.location.href =
+      "../checkout.html";
+
+  }
+
+
+  document.addEventListener(
+    "click",
+    function (event) {
+
+
+      const addButton =
+        event.target.closest(
+          ".add-to-cart"
+        );
+
+
+      if (addButton) {
+
+        const card =
+          addButton.closest(
+            ".app-product-card"
+          );
+
+        addToCart(card);
+
+        return;
+
+      }
+
+
+      const removeButton =
+        event.target.closest(
+          ".remove-cart-item"
+        );
+
+
+      if (removeButton) {
+
+        removeCartItem(
+          Number(
+            removeButton.dataset.index
+          )
+        );
+
+        return;
+
+      }
+
+    }
+  );
+
+
+  const checkoutButton =
+    document.getElementById(
+      "checkoutBtn"
+    );
+
+
+  if (checkoutButton) {
+
+    checkoutButton.addEventListener(
+      "click",
+      goToCheckout
+    );
+
+  }
+
+
+  const clearButton =
+    document.getElementById(
+      "clearCartBtn"
+    );
+
+
+  if (clearButton) {
+
+    clearButton.addEventListener(
+      "click",
+      clearCart
+    );
+
+  }
+
+
+  document.addEventListener(
+    "change",
+    function (event) {
+
+      if (
+        !event.target.classList.contains(
+          "variant-select"
+        )
+      ) {
+
+        return;
+
+      }
+
+
+      const card =
+        event.target.closest(
+          ".app-product-card"
+        );
+
+
+      if (!card) {
+
+        return;
+
+      }
+
+
+      const selected =
+        event.target.options[
+          event.target.selectedIndex
+        ];
+
+
+      if (!selected) {
+
+        return;
+
+      }
+
+
+      const price =
+        Number(
+          selected.dataset.price || 0
+        );
+
+
+      const priceElement =
+        card.querySelector(
+          ".price"
+        );
+
+
+      if (
+        priceElement &&
+        price > 0
+      ) {
+
+        priceElement.textContent =
+          money(price);
+
+      }
+
+
+      /*
+       * Centurion dynamic image support.
+       */
+
+      const imageMap = {
+
+        "D3":
+          "../images/d3.png",
+
+        "D5":
+          "../images/d5.png",
+
+        "D6":
+          "../images/d6.png",
+
+        "D10":
+          "../images/d10.png",
+
+        "D10 Turbo":
+          "../images/d10.png",
+
+        "SDO":
+          "../images/sdo.png",
+
+        "Vantage":
+          "../images/vantage.png"
+
+      };
+
+
+      if (
+        imageMap[selected.value]
+      ) {
+
+        const image =
+          card.querySelector(
+            ".product-window img"
+          );
+
+
+        if (image) {
+
+          image.src =
+            imageMap[selected.value];
+
+        }
+
+      }
+
+    }
+  );
+
+
+  /*
+   * Load existing cart.
+   */
+
+  loadCart();
+
+  renderCart();
+
+
+})();
+</script>
+
+
+</body>
+</html>
