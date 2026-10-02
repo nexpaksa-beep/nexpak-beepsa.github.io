@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="Nexpak Security Solutions online store. Shop essential DVR kits, wireless CCTV, electric fencing, Nova & Sentry remotes, gel batteries, and security hardware in South Africa.">
+
+<meta name="keywords" content="security suppliers South Africa, electric fencing kits, 4 channel dvr kit, 8 channel wireless cctv, electric fence 20m, Centurion Nova remote, Sentry remote, 12V 7Ah gel battery, 102Ah deep cycle, JVA pet kit, Dahua CCTV, Ajax alarms, gate motors">
+
+<meta name="robots" content="index, follow">
+
+<title>Nexpak Security Solutions | Essential Security & Online Store</title>
+
+<link rel="canonical" href="https://www.nexpaksolutions.co.za/online.html">
+
+<!-- GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GT-KVFDVM94"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'GT-KVFDVM94');
+</script>
+
+<!-- Store Schema -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Store",
+  "name":"Nexpak Security Solutions",
+  "image":"images/logo.png",
+  "telephone":"+27836308249",
+  "priceRange":"ZAR",
+  "address":{
+    "@type":"PostalAddress",
+    "addressCountry":"ZA"
+  },
+  "url":"https://nexpak.co.za/online.html"
+}
+</script>
+
+<!-- Breadcrumb Schema -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BreadcrumbList",
+  "itemListElement":[
+    {
+      "@type":"ListItem",
+      "position":1,
+      "name":"Home",
+      "item":"https://nexpak.co.za/index.html"
+    },
+    {
+      "@type":"ListItem",
+      "position":2,
+      "name":"Essential Security Store",
+      "item":"https://nexpak.co.za/online.html"
+    }
+  ]
+}
+</script>
+
+<style>
+
+/* =========================================================
+   NEXPAK ONLINE STORE
+   REALISTIC NAVY FACEBRICK + ALUMINIUM DISPLAY WINDOWS
+   ========================================================= */
+
+:root{
+  --primary-blue:#040e1b;
+  --primary-blue-2:#071728;
+  --navy-light:#0c2035;
+  --accent-gold:#e2b114;
+  --gold-light:#ffd75a;
+
+  --text-dark:#111827;
+  --text-light:#f8fafc;
+
+  --border-color:#b7c1cc;
+
+  --glass-white:rgba(255,255,255,.16);
+  --glass-highlight:rgba(255,255,255,.48);
+
+  --wall-dark:#050b12;
+  --wall-mid:#0b1724;
+  --wall-light:#102335;
+
+  --silver-dark:#59636e;
+  --silver:#aeb7c0;
+  --silver-light:#e7ebef;
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  color:var(--text-dark);
+
+  /*
+     DARK NAVY FACEBRICK WALL
+  */
+  background-color:var(--wall-dark);
+
+  background-image:
+
+    /* mortar */
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,.025) 0px,
+      rgba(255,255,255,.025) 2px,
+      transparent 2px,
+      transparent 48px
+    ),
+
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,.018) 0px,
+      rgba(255,255,255,.018) 2px,
+      transparent 2px,
+      transparent 96px
+    ),
+
+    /* brick faces */
+    linear-gradient(
+      90deg,
+      transparent 0 48px,
+      rgba(0,0,0,.28) 49px,
+      transparent 50px 96px
+    ),
+
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.025),
+      rgba(0,0,0,.15)
+    );
+
+  background-size:
+    100% 48px,
+    192px 48px,
+    192px 48px,
+    100% 100%;
+
+  background-attachment:fixed;
+}
+
+
+/* Subtle wall vignette */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-1;
+
+  background:
+    radial-gradient(
+      circle at 50% 20%,
+      rgba(20,55,85,.20),
+      transparent 55%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,.30),
+      transparent 18%,
+      transparent 82%,
+      rgba(0,0,0,.35)
+    );
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+
+  background:
+    linear-gradient(
+      180deg,
+      #071522,
+      #020810
+    );
+
+  border-bottom:2px solid var(--accent-gold);
+
+  box-shadow:
+    0 5px 25px rgba(0,0,0,.55);
+}
+
+.header-inner{
+  max-width:1250px;
+  margin:auto;
+  padding:12px 18px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.logo-wrap{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.logo-wrap img{
+  width:58px;
+  height:58px;
+  object-fit:contain;
+}
+
+.brand-title{
+  color:white;
+  font-size:20px;
+  font-weight:800;
+}
+
+.brand-subtitle{
+  color:var(--gold-light);
+  font-size:12px;
+  margin-top:2px;
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+nav{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+nav a{
+  color:#fff;
+  text-decoration:none;
+  font-size:14px;
+  font-weight:600;
+}
+
+nav a:hover{
+  color:var(--gold-light);
+}
+
+.dropdown{
+  position:relative;
+}
+
+.dropdown-btn{
+  background:var(--accent-gold);
+  color:#080d13;
+  border:none;
+  padding:10px 15px;
+  border-radius:5px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.dropdown-content{
+  display:none;
+  position:absolute;
+  right:0;
+  top:100%;
+  min-width:230px;
+
+  background:#fff;
+
+  border:1px solid #cbd5e1;
+  border-top:3px solid var(--accent-gold);
+
+  box-shadow:0 15px 35px rgba(0,0,0,.45);
+
+  z-index:2000;
+}
+
+.dropdown-content a{
+  display:block;
+  color:#111827;
+  padding:12px 15px;
+  border-bottom:1px solid #e5e7eb;
+}
+
+.dropdown-content a:hover{
+  background:#f1f5f9;
+  color:#000;
+}
+
+.dropdown:hover .dropdown-content{
+  display:block;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero{
+  position:relative;
+
+  min-height:310px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  text-align:center;
+
+  background:
+    linear-gradient(
+      rgba(2,10,18,.78),
+      rgba(2,10,18,.90)
+    ),
+    url("../images/hero-bg.jpg") center/cover no-repeat;
+
+  border-bottom:1px solid rgba(226,177,20,.35);
+
+  box-shadow:
+    inset 0 -40px 80px rgba(0,0,0,.55);
+}
+
+.hero-content{
+  max-width:900px;
+  padding:55px 20px;
+}
+
+.hero h1{
+  margin:0 0 14px;
+
+  color:white;
+
+  font-size:clamp(30px,5vw,52px);
+
+  text-shadow:
+    0 3px 10px rgba(0,0,0,.8);
+}
+
+.hero p{
+  margin:8px 0;
+
+  color:#e5e7eb;
+
+  font-size:18px;
+  line-height:1.6;
+}
+
+.hero .hero-gold{
+  color:var(--gold-light);
+  font-weight:800;
+}
+
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+.container{
+  width:min(1250px,94%);
+  margin:auto;
+}
+
+main{
+  padding:30px 0 60px;
+}
+
+
+/* =========================================================
+   BREADCRUMB
+   ========================================================= */
+
+.breadcrumb{
+  margin:0 auto 25px;
+
+  color:#dbe5ee;
+
+  font-size:13px;
+
+  background:rgba(0,0,0,.38);
+
+  border-left:3px solid var(--accent-gold);
+
+  padding:10px 14px;
+
+  border-radius:4px;
+
+  backdrop-filter:blur(4px);
+}
+
+.breadcrumb a{
+  color:var(--gold-light);
+  text-decoration:none;
+}
+
+
+/* =========================================================
+   SECTION HEADINGS
+   ========================================================= */
+
+.section-title{
+  margin:38px 0 20px;
+
+  padding:13px 18px;
+
+  color:white;
+
+  font-size:25px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(4,14,27,.96),
+      rgba(4,14,27,.78),
+      rgba(4,14,27,.35)
+    );
+
+  border-left:5px solid var(--accent-gold);
+
+  box-shadow:
+    0 8px 20px rgba(0,0,0,.35);
+}
+
+.section-subtitle{
+  margin:25px 0 18px;
+
+  color:var(--gold-light);
+
+  font-size:19px;
+  font-weight:800;
+}
+
+
+/* =========================================================
+   PRODUCT GRID
+   ========================================================= */
+
+.app-product-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(auto-fit,minmax(290px,1fr));
+
+  gap:32px;
+
+  align-items:stretch;
+}
+
+
+/* =========================================================
+   REALISTIC DISPLAY WINDOW
+   ========================================================= */
+
+.app-product-card{
+
+  position:relative;
+
+  overflow:hidden;
+
+  min-height:510px;
+
+  display:flex;
+  flex-direction:column;
+
+  /*
+     ALUMINIUM OUTER FRAME
+  */
+  padding:18px;
+
+  border:
+    10px solid
+    var(--silver);
+
+  border-radius:3px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #dfe4e8 0%,
+      #8c969f 18%,
+      #e9edf0 35%,
+      #747e88 55%,
+      #d9dee2 75%,
+      #6d7781 100%
+    );
+
+  box-shadow:
+
+    /* deep window shadow */
+    0 22px 40px rgba(0,0,0,.65),
+
+    /* silver frame */
+    inset 0 0 0 2px #4d5660,
+
+    /* internal depth */
+    inset 0 0 0 6px #dfe4e8,
+
+    /* outer glow */
+    0 0 0 1px rgba(255,255,255,.22);
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease;
+}
+
+
+/* Top aluminium rail */
+.app-product-card::before{
+
+  content:"";
+
+  position:absolute;
+
+  top:0;
+  left:0;
+  right:0;
+
+  height:8px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #68737d,
+      #f4f6f8,
+      #929ca5,
+      #f8fafc,
+      #5f6973
+    );
+
+  box-shadow:
+    0 2px 5px rgba(0,0,0,.35);
+
+  z-index:8;
+}
+
+
+/* Bottom rail */
+.app-product-card::after{
+
+  content:"";
+
+  position:absolute;
+
+  bottom:0;
+  left:0;
+  right:0;
+
+  height:9px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #5e6872,
+      #e9edf0,
+      #8b959e,
+      #f4f6f8,
+      #5d6670
+    );
+
+  z-index:8;
+}
+
+
+.app-product-card:hover{
+
+  transform:translateY(-7px);
+
+  box-shadow:
+
+    0 30px 55px rgba(0,0,0,.75),
+
+    0 0 0 1px rgba(226,177,20,.7),
+
+    0 0 25px rgba(226,177,20,.18),
+
+    inset 0 0 0 2px #4d5660,
+
+    inset 0 0 0 6px #e9edf0;
+}
+
+
+/* =========================================================
+   DARK WINDOW INTERIOR
+   ========================================================= */
+
+.app-product-card .product-window{
+
+  position:relative;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      #24384a 0%,
+      #0a1622 52%,
+      #02070d 100%
+    );
+
+  border:
+    3px solid #424c56;
+
+  box-shadow:
+    inset 0 0 35px rgba(0,0,0,.95),
+    inset 0 0 8px rgba(255,255,255,.08);
+
+  overflow:hidden;
+}
+
+
+/*
+  This pseudo-layer creates the glass reflection.
+*/
+.app-product-card .product-window::before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:-30%;
+
+  background:
+    linear-gradient(
+      115deg,
+      transparent 0%,
+      transparent 35%,
+      rgba(255,255,255,.08) 40%,
+      rgba(255,255,255,.22) 43%,
+      rgba(255,255,255,.05) 47%,
+      transparent 52%
+    );
+
+  transform:translateX(-15%);
+
+  pointer-events:none;
+
+  z-index:4;
+}
+
+
+/* =========================================================
+   IMAGE DISPLAY AREA
+   ========================================================= */
+
+.app-product-card img{
+
+  display:block;
+
+  width:100%;
+
+  height:220px;
+
+  object-fit:contain;
+
+  padding:20px;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      rgba(48,72,92,.75),
+      rgba(4,13,21,.95) 75%
+    );
+
+  border:
+    3px solid #77818a;
+
+  box-shadow:
+
+    inset 0 0 25px rgba(0,0,0,.9),
+
+    inset 0 0 4px rgba(255,255,255,.35);
+
+  position:relative;
+
+  z-index:2;
+
+  transition:
+    transform .3s ease,
+    filter .3s ease;
+}
+
+
+.app-product-card:hover img{
+
+  transform:scale(1.035);
+
+  filter:
+    brightness(1.06)
+    contrast(1.04);
+}
+
+
+/* =========================================================
+   GLASS OVERLAY
+   ========================================================= */
+
+.app-product-card .glass-effect{
+
+  position:absolute;
+
+  top:18px;
+  left:18px;
+  right:18px;
+
+  height:220px;
+
+  pointer-events:none;
+
+  z-index:5;
+
+  background:
+    linear-gradient(
+      125deg,
+      rgba(255,255,255,.14),
+      transparent 25%,
+      transparent 65%,
+      rgba(255,255,255,.07)
+    );
+
+  border:
+    1px solid rgba(255,255,255,.18);
+
+  box-shadow:
+    inset 0 0 18px rgba(255,255,255,.04);
+}
+
+
+/* =========================================================
+   PRODUCT CONTENT
+   ========================================================= */
+
+.app-product-card h3{
+
+  margin:18px 4px 8px;
+
+  color:#fff;
+
+  font-size:20px;
+
+  line-height:1.25;
+
+  text-shadow:
+    0 2px 5px rgba(0,0,0,.8);
+}
+
+.app-product-card p{
+
+  margin:5px 4px;
+
+  color:#d7e0e8;
+
+  font-size:14px;
+
+  line-height:1.5;
+}
+
+.app-product-card .price{
+
+  margin:10px 4px;
+
+  color:var(--gold-light);
+
+  font-size:24px;
+
+  font-weight:900;
+
+  text-shadow:
+    0 2px 5px rgba(0,0,0,.8);
+}
+
+
+/* =========================================================
+   WINDOW HANDLE
+   ========================================================= */
+
+.window-handle{
+
+  position:absolute;
+
+  right:8px;
+
+  top:50%;
+
+  transform:translateY(-50%);
+
+  width:8px;
+
+  height:44px;
+
+  border-radius:4px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #56616b,
+      #e7ebee,
+      #7a858e,
+      #dfe4e7
+    );
+
+  box-shadow:
+    2px 2px 4px rgba(0,0,0,.6);
+
+  z-index:10;
+}
+
+
+/* Handle base */
+.window-handle::before{
+
+  content:"";
+
+  position:absolute;
+
+  top:12px;
+  right:7px;
+
+  width:13px;
+  height:18px;
+
+  border-radius:3px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #555f68,
+      #eef1f3,
+      #6b757e
+    );
+
+  box-shadow:
+    1px 2px 3px rgba(0,0,0,.5);
+}
+
+
+/* =========================================================
+   GOLD PRODUCT ACCENT
+   ========================================================= */
+
+.product-accent{
+
+  height:3px;
+
+  margin:10px 4px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--accent-gold),
+      transparent
+    );
+}
+
+
+/* =========================================================
+   VARIANT SELECTS
+   ========================================================= */
+
+.app-product-card select{
+
+  width:100%;
+
+  margin:10px 0;
+
+  padding:11px 12px;
+
+  border:
+    1px solid #8d99a5;
+
+  border-radius:4px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f8fafc,
+      #dfe5ea
+    );
+
+  color:#111827;
+
+  font-weight:700;
+
+  outline:none;
+
+  cursor:pointer;
+}
+
+.app-product-card select:focus{
+
+  border-color:var(--accent-gold);
+
+  box-shadow:
+    0 0 0 2px rgba(226,177,20,.22);
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.custom-app-btn{
+
+  display:inline-flex;
+
+  align-items:center;
+  justify-content:center;
+
+  width:100%;
+
+  padding:12px 14px;
+
+  margin-top:8px;
+
+  border:none;
+
+  border-radius:4px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #f5c52c,
+      #d49f00
+    );
+
+  color:#111;
+
+  font-weight:900;
+
+  cursor:pointer;
+
+  text-decoration:none;
+
+  box-shadow:
+    0 4px 8px rgba(0,0,0,.4);
+
+  transition:
+    transform .15s ease,
+    filter .15s ease;
+}
+
+.custom-app-btn:hover{
+
+  transform:translateY(-1px);
+
+  filter:brightness(1.08);
+}
+
+
+.btn-info{
+
+  display:inline-flex;
+
+  align-items:center;
+  justify-content:center;
+
+  width:100%;
+
+  padding:11px 14px;
+
+  margin-top:8px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #475569,
+      #263241
+    );
+
+  color:#fff;
+
+  border:1px solid #73808d;
+
+  border-radius:4px;
+
+  font-weight:800;
+
+  text-decoration:none;
+
+  cursor:pointer;
+}
+
+
+.btn-wa-info{
+
+  display:inline-flex;
+
+  align-items:center;
+  justify-content:center;
+
+  width:100%;
+
+  padding:11px 14px;
+
+  margin-top:8px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #28d463,
+      #119447
+    );
+
+  color:white;
+
+  border-radius:4px;
+
+  font-weight:800;
+
+  text-decoration:none;
+
+  box-shadow:
+    0 3px 7px rgba(0,0,0,.35);
+}
+
+
+/* =========================================================
+   CART
+   ========================================================= */
+
+#cart{
+
+  margin-top:45px;
+
+  padding:25px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(4,14,27,.97),
+      rgba(8,25,40,.96)
+    );
+
+  border:
+    2px solid var(--accent-gold);
+
+  border-radius:7px;
+
+  box-shadow:
+    0 20px 40px rgba(0,0,0,.55);
+}
+
+#cart h2{
+
+  margin-top:0;
+
+  color:white;
+}
+
+#cartItemsDisplay{
+
+  color:#e5e7eb;
+}
+
+.cart-summary{
+
+  color:white;
+
+  font-size:18px;
+
+  font-weight:800;
+}
+
+.cart-actions{
+
+  display:flex;
+
+  gap:12px;
+
+  flex-wrap:wrap;
+
+  margin-top:18px;
+}
+
+
+/* =========================================================
+   FLOATING WHATSAPP
+   ========================================================= */
+
+.whatsapp-float{
+
+  position:fixed;
+
+  right:20px;
+  bottom:20px;
+
+  width:58px;
+  height:58px;
+
+  display:flex;
+
+  align-items:center;
+  justify-content:center;
+
+  border-radius:50%;
+
+  background:#25d366;
+
+  color:white;
+
+  font-size:28px;
+
+  text-decoration:none;
+
+  box-shadow:
+    0 8px 22px rgba(0,0,0,.5);
+
+  z-index:1500;
+
+  transition:
+    transform .2s ease;
+}
+
+.whatsapp-float:hover{
+
+  transform:scale(1.08);
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer{
+
+  margin-top:50px;
+
+  padding:35px 20px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #071522,
+      #02070d
+    );
+
+  border-top:
+    2px solid var(--accent-gold);
+
+  color:#cbd5e1;
+
+  text-align:center;
+}
+
+footer a{
+
+  color:var(--gold-light);
+
+  text-decoration:none;
+}
+
+footer img{
+
+  max-height:42px;
+
+  max-width:120px;
+
+  object-fit:contain;
+
+  margin:8px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media(max-width:700px){
+
+  .header-inner{
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+  }
+
+  .logo-wrap{
+
+    width:100%;
+
+    justify-content:center;
+
+    text-align:center;
+  }
+
+  nav{
+
+    width:100%;
+
+    justify-content:center;
+  }
+
+  .hero{
+
+    min-height:260px;
+  }
+
+  .hero-content{
+
+    padding:40px 15px;
+  }
+
+  .hero h1{
+
+    font-size:30px;
+  }
+
+  .hero p{
+
+    font-size:15px;
+  }
+
+  .section-title{
+
+    font-size:20px;
+  }
+
+  .app-product-grid{
+
+    grid-template-columns:1fr;
+
+    gap:25px;
+  }
+
+  .app-product-card{
+
+    min-height:auto;
+
+    padding:14px;
+
+    border-width:8px;
+  }
+
+  .app-product-card img{
+
+    height:190px;
+
+    padding:15px;
+  }
+
+  .app-product-card .glass-effect{
+
+    top:14px;
+    left:14px;
+    right:14px;
+
+    height:190px;
+  }
+
+  .cart-actions{
+
+    flex-direction:column;
+  }
+
+  .dropdown-content{
+
+    right:auto;
+    left:50%;
+
+    transform:translateX(-50%);
+  }
+
+  .whatsapp-float{
+
+    width:52px;
+    height:52px;
+
+    right:15px;
+    bottom:15px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media(max-width:400px){
+
+  .brand-title{
+
+    font-size:17px;
+  }
+
+  .brand-subtitle{
+
+    font-size:11px;
+  }
+
+  .app-product-card img{
+
+    height:175px;
+  }
+
+  .app-product-card .glass-effect{
+
+    height:175px;
+  }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+     ===================================================== -->
+
+<header>
+
+  <div class="header-inner">
+
+    <div class="logo-wrap">
+
+      <img
+        src="../images/logo.png"
+        alt="Nexpak Security Solutions"
+      >
+
+      <div>
+        <div class="brand-title">
+          Nexpak Security Solutions
+        </div>
+
+        <div class="brand-subtitle">
+          Protecting What Matters Most
+        </div>
+      </div>
+
+    </div>
+
+
+    <nav>
+
+      <div class="dropdown">
+
+        <button class="dropdown-btn">
+          Menu ▾
+        </button>
+
+        <div class="dropdown-content">
+
+          <a href="../index.html">
+            Home
+          </a>
+
+          <a href="#essential">
+            Essential Range
+          </a>
+
+          <a href="#kits">
+            Security Kits
+          </a>
+
+          <a href
