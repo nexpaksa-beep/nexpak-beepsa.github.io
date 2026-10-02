@@ -1,25 +1,19 @@
 /*=========================================================
  NEXPAK SECURITY SOLUTIONS V16
- OPTIMIZED & CORRECTED SEO SCHEMA ENGINE
+ UNIFIED SEO SCHEMA ENGINE (CONSOLIDATED)
 
- File:
- seo-schema.js
+ File: seo-schema.js
+ 
+ CONSOLIDATION SUMMARY:
+ - Merged seo-schema.js and seo-schema-injector.js
+ - Eliminated duplicate definitions
+ - Preserved all functionality:
+   * Organization, LocalBusiness, WebSite, BreadcrumbList
+   * Product, FAQ, Service, Course
+   * WebApplication schemas
+ - Added duplicate prevention at all levels
+ - Maintains backward compatibility
 
- VERSION 16 FIXES:
- ----------------------------------------------------------
- - Fixed BreadcrumbList homepage error
- - Prevents unnamed breadcrumb items
- - Corrected NexpakSecuritySEO typo
- - Removed duplicate initialization blocks
- - Removed duplicate NexpakSEOEngine declarations
- - Prevents invalid empty breadcrumb names
- - Removes .html from breadcrumb names
- - Preserves Product schema
- - Preserves FAQ schema
- - Preserves Service schema
- - Preserves Organization schema
- - Preserves LocalBusiness schema
- - Preserves WebSite/SearchAction schema
 =========================================================*/
 
 
@@ -29,87 +23,37 @@
 
 const NexpakSEO = {
 
-    companyName:
-        "Nexpak Security Solutions",
+    companyName: "Nexpak Security Solutions",
 
-    website:
-        window.location.origin,
+    website: window.location.origin,
 
-    logo:
-        "images/logo.png",
+    logo: "images/logo.png",
 
     description:
-        "Security equipment supplier and solutions provider offering CCTV systems, electric fencing, gate automation, alarm systems, access control, and equestrian fencing products in Benoni, East Rand, and Johannesburg.",
+        "Security equipment supplier and solutions provider offering CCTV systems, electric fencing, gate automation, alarm systems, access control, online security store, and equestrian fencing products in South Africa.",
 
-    keywords: [
+    phone: "083 630 8249",
 
-        "cctv systems benoni",
-
-        "centurion gate motors benoni",
-
-        "electric fencing east rand",
-
-        "dahua cameras johannesburg",
-
-        "ajax alarm systems south africa",
-
-        "jva energizers benoni",
-
-        "security equipment supplier boksburg",
-
-        "kempton park security solutions",
-
-        "springs electric fencing",
-
-        "edenvale cctv installation",
-
-        "germiston gate automation",
-
-        "ds smart gate motor",
-
-        "vantage smart swing gate",
-
-        "ids alarms",
-
-        "roboguard wireless beams",
-
-        "equestrian horse tape benoni",
-
-        "solar energizers south africa"
-    ],
-
-    phone:
-        "083 630 8249",
-
-    email:
-        "info@nexpaksolutions.co.za",
+    email: "info@nexpaksolutions.co.za",
 
     serviceAreas: [
-
         "Benoni",
-
         "Boksburg",
-
         "Kempton Park",
-
         "Springs",
-
         "Edenvale",
-
         "Germiston",
-
         "Johannesburg",
-
         "Gauteng"
     ],
 
-    country:
-        "South Africa"
+    country: "South Africa"
 };
 
 
 /*=========================================================
  2. SCHEMA INJECTION ENGINE
+    Duplicate Protection Built-In
 =========================================================*/
 
 const loadedSchemas = [];
@@ -118,64 +62,37 @@ const loadedSchemas = [];
 function injectSchema(schema) {
 
     /*
-     * Do nothing if schema is invalid/null
+     * Safety check
      */
     if (!schema) {
-
         return;
     }
 
+    const schemaString = JSON.stringify(schema);
 
     /*
-     * Convert schema to a string for
-     * duplicate detection.
+     * Prevent duplicate schema injection
      */
-    const schemaString =
-        JSON.stringify(schema);
-
-
-    /*
-     * Prevent duplicate schema injection.
-     */
-    if (
-        loadedSchemas.includes(
-            schemaString
-        )
-    ) {
-
+    if (loadedSchemas.includes(schemaString)) {
         return;
     }
 
-
-    loadedSchemas.push(
-        schemaString
-    );
-
+    loadedSchemas.push(schemaString);
 
     /*
-     * Create JSON-LD script.
+     * Create JSON-LD script
      */
-    const script =
-        document.createElement(
-            "script"
-        );
+    const script = document.createElement("script");
 
+    script.type = "application/ld+json";
 
-    script.type =
-        "application/ld+json";
-
-
-    script.textContent =
-        JSON.stringify(
-            schema,
-            null,
-            2
-        );
-
-
-    document.head.appendChild(
-        script
+    script.textContent = JSON.stringify(
+        schema,
+        null,
+        2
     );
+
+    document.head.appendChild(script);
 }
 
 
@@ -187,37 +104,27 @@ function createOrganizationSchema() {
 
     return {
 
-        "@context":
-            "https://schema.org",
+        "@context": "https://schema.org",
 
-        "@type":
-            "Organization",
+        "@type": "Organization",
 
-        "name":
-            NexpakSEO.companyName,
+        "name": NexpakSEO.companyName,
 
-        "url":
-            NexpakSEO.website,
+        "url": NexpakSEO.website,
 
-        "logo":
-            NexpakSEO.logo,
+        "logo": NexpakSEO.logo,
 
-        "description":
-            NexpakSEO.description,
+        "description": NexpakSEO.description,
 
         "contactPoint": {
 
-            "@type":
-                "ContactPoint",
+            "@type": "ContactPoint",
 
-            "telephone":
-                NexpakSEO.phone,
+            "telephone": NexpakSEO.phone,
 
-            "contactType":
-                "customer service",
+            "contactType": "customer service",
 
-            "email":
-                NexpakSEO.email
+            "email": NexpakSEO.email
         }
     };
 }
@@ -231,50 +138,38 @@ function createLocalBusinessSchema() {
 
     return {
 
-        "@context":
-            "https://schema.org",
+        "@context": "https://schema.org",
 
         "@type": [
-
             "LocalBusiness",
-
             "SecuritySystemSupplier"
         ],
 
-        "name":
-            NexpakSEO.companyName,
+        "name": NexpakSEO.companyName,
 
-        "description":
-            NexpakSEO.description,
+        "description": NexpakSEO.description,
 
-        "url":
-            NexpakSEO.website,
+        "url": NexpakSEO.website,
 
-        "telephone":
-            NexpakSEO.phone,
+        "telephone": NexpakSEO.phone,
 
-        "email":
-            NexpakSEO.email,
+        "email": NexpakSEO.email,
 
-        "areaServed":
+        "areaServed": NexpakSEO.serviceAreas.map(
+            area => ({
 
-            NexpakSEO.serviceAreas.map(
+                "@type": "AdministrativeArea",
 
-                area => ({
-
-                    "@type":
-                        "AdministrativeArea",
-
-                    "name":
-                        area
-                })
-            )
+                "name": area
+            })
+        )
     };
 }
 
 
 /*=========================================================
  5. PRODUCT SCHEMA ENGINE
+    Brand / MPN / Price / Availability
 =========================================================*/
 
 function createProductSchema(product) {
@@ -287,28 +182,23 @@ function createProductSchema(product) {
 
     return {
 
-        "@context":
-            "https://schema.org",
+        "@context": "https://schema.org",
 
-        "@type":
-            "Product",
+        "@type": "Product",
 
-        "name":
-            product.name,
+        "name": product.name,
 
-        "description":
-            product.description,
+        "description": product.description,
 
-        "image":
-            product.image,
+        "image": product.image,
 
-        "category":
-            product.category,
+        "mpn": product.mpn || "NEX-SKU",
+
+        "category": product.category,
 
         "brand": {
 
-            "@type":
-                "Brand",
+            "@type": "Brand",
 
             "name":
                 product.brand ||
@@ -317,14 +207,12 @@ function createProductSchema(product) {
 
         "offers": {
 
-            "@type":
-                "Offer",
+            "@type": "Offer",
 
             "url":
-                `${window.location.origin}/online.html?id=${product.id}`,
+                `${window.location.origin}/online-store/online.html?id=${product.id}`,
 
-            "priceCurrency":
-                "ZAR",
+            "priceCurrency": "ZAR",
 
             "price":
                 Number(
@@ -349,55 +237,34 @@ function loadProductSchema() {
             window.location.search
         );
 
-
     const productID =
         params.get("id");
 
 
     /*
-     * Stop if no product ID.
+     * Products database must exist
      */
     if (
-        !productID
+        !productID ||
+        typeof products === "undefined"
     ) {
-
         return;
     }
 
 
-    /*
-     * Stop if product database
-     * is not available.
-     */
-    if (
-        typeof products ===
-        "undefined"
-    ) {
-
-        return;
-    }
-
-
-    /*
-     * Find product.
-     */
     const product =
         products.find(
-            item =>
-                item.id == productID
+            item => item.id == productID
         );
 
 
     if (!product) {
-
         return;
     }
 
 
     injectSchema(
-        createProductSchema(
-            product
-        )
+        createProductSchema(product)
     );
 }
 
@@ -409,28 +276,18 @@ function loadProductSchema() {
 function loadShopProductSchemas() {
 
     if (
-
-        typeof products ===
-            "undefined" ||
-
-        !Array.isArray(
-            products
-        )
-
+        typeof products === "undefined" ||
+        !Array.isArray(products)
     ) {
-
         return;
     }
 
 
     products.forEach(
-
         product => {
 
             injectSchema(
-                createProductSchema(
-                    product
-                )
+                createProductSchema(product)
             );
 
         }
@@ -450,7 +307,7 @@ const nexpakFAQs = [
             "What security solutions does Nexpak Security Solutions provide?",
 
         answer:
-            "Nexpak Security Solutions supplies CCTV systems, electric fencing, alarms, gate automation, access control, intercom systems, security accessories, and equestrian fencing products in Benoni and the East Rand."
+            "Nexpak Security Solutions supplies CCTV systems, electric fencing, alarms, gate automation, access control, intercom systems, security accessories, and equestrian fencing products in South Africa."
     },
 
     {
@@ -468,7 +325,7 @@ const nexpakFAQs = [
             "Do you supply electric fencing systems?",
 
         answer:
-            "Yes. We supply electric fencing solutions including energizers, brackets, fencing accessories, complete security perimeter kits using JVA or Nemtek energizers, and a full range of equestrian horse paddock products."
+            "Yes. We supply electric fencing solutions including energizers, brackets, fencing accessories, complete security perimeter kits using JVA or Nemtek energizers, and a full range of equestrian fencing products."
     },
 
     {
@@ -490,31 +347,24 @@ function createFAQSchema() {
 
     return {
 
-        "@context":
-            "https://schema.org",
+        "@context": "https://schema.org",
 
-        "@type":
-            "FAQPage",
+        "@type": "FAQPage",
 
         "mainEntity":
 
             nexpakFAQs.map(
-
                 faq => ({
 
-                    "@type":
-                        "Question",
+                    "@type": "Question",
 
-                    "name":
-                        faq.question,
+                    "name": faq.question,
 
                     "acceptedAnswer": {
 
-                        "@type":
-                            "Answer",
+                        "@type": "Answer",
 
-                        "text":
-                            faq.answer
+                        "text": faq.answer
                     }
                 })
             )
@@ -530,28 +380,16 @@ function createServiceSchema() {
 
     return {
 
-        "@context":
-            "https://schema.org",
+        "@context": "https://schema.org",
 
-        "@type":
-            "Service",
+        "@type": "Service",
 
-        "name":
-            "Security Solutions",
+        "name": "Security Solutions",
 
         "provider": {
 
-            "@type":
-                "Organization",
+            "@type": "Organization",
 
-            /*
-             * FIXED:
-             * Was incorrectly:
-             *
-             * NexpakSecuritySEO.companyName
-             *
-             * Correct:
-             */
             "name":
                 NexpakSEO.companyName
         },
@@ -594,7 +432,109 @@ function loadFAQAndServiceSchema() {
 
 
 /*=========================================================
- 12. BREADCRUMB SCHEMA ENGINE
+ 12. COURSE SCHEMA
+=========================================================*/
+
+function createCourseSchema() {
+
+    return {
+
+        "@context": "https://schema.org",
+
+        "@type": "Course",
+
+        "name":
+            "Online Electric Fencing Training Course",
+
+        "description":
+            "Advanced online training covering 6-line to 12-line electric fencing kits, energizer configuration, and perimeter security installations.",
+
+        "provider": {
+
+            "@type": "Organization",
+
+            "name":
+                NexpakSEO.companyName,
+
+            "sameAs":
+                NexpakSEO.website
+        }
+    };
+}
+
+
+/*=========================================================
+ 13. WEB APPLICATION SCHEMA
+=========================================================*/
+
+function createWebApplicationSchema() {
+
+    return {
+
+        "@context": "https://schema.org",
+
+        "@type": "WebApplication",
+
+        "name":
+            "Nexpak Interactive Security System Builder",
+
+        "url":
+            `${window.location.origin}/online-store/online.html`,
+
+        "applicationCategory":
+            "BusinessApplication",
+
+        "operatingSystem":
+            "All",
+
+        "description":
+            "Interactive web tool to build custom security, CCTV, and electric fencing layouts with automated PDF quotation generation."
+    };
+}
+
+
+/*=========================================================
+ 14. LOAD CUSTOM PAGE SCHEMAS
+=========================================================*/
+
+function loadCustomPageSchemas() {
+
+    const path =
+        window.location.pathname;
+
+
+    /*
+     * Course schema
+     */
+    if (
+        path.includes("training.html") ||
+        path.includes("equestrian-course")
+    ) {
+
+        injectSchema(
+            createCourseSchema()
+        );
+    }
+
+
+    /*
+     * Web Application schema
+     */
+    if (
+        path.includes("online.html") ||
+        path.includes("builder.html") ||
+        path.includes("shop.html")
+    ) {
+
+        injectSchema(
+            createWebApplicationSchema()
+        );
+    }
+}
+
+
+/*=========================================================
+ 15. BREADCRUMB SCHEMA ENGINE
 =========================================================*/
 
 function createBreadcrumbSchema() {
@@ -604,25 +544,8 @@ function createBreadcrumbSchema() {
 
 
     /*-------------------------------------------------------
-      HOMEPAGE
+      HOMEPAGE CHECK
     -------------------------------------------------------*/
-
-    /*
-     * DO NOT generate BreadcrumbList for:
-     *
-     * /
-     *
-     * /index.html
-     *
-     * /folder/index.html
-     *
-     * This prevents:
-     *
-     * Home
-     * [unnamed item]
-     *
-     * from being sent to Google.
-     */
 
     if (
 
@@ -630,9 +553,7 @@ function createBreadcrumbSchema() {
 
         path === "/index.html" ||
 
-        path.endsWith(
-            "/index.html"
-        )
+        path.endsWith("/index.html")
 
     ) {
 
@@ -641,16 +562,17 @@ function createBreadcrumbSchema() {
 
 
     /*-------------------------------------------------------
-      CLEAN PATH
+      CLEAN URL PATH
     -------------------------------------------------------*/
 
     const cleanPath =
-        path.replace(
-            /^\/+|\/+$/g,
-            ""
-        );
+        path
+            .replace(/^\/+|\/+$/g, "");
 
 
+    /*
+     * No usable path
+     */
     if (!cleanPath) {
 
         return null;
@@ -658,33 +580,27 @@ function createBreadcrumbSchema() {
 
 
     /*-------------------------------------------------------
-      SPLIT URL
+      SPLIT PATH
     -------------------------------------------------------*/
 
     const parts =
         cleanPath
             .split("/")
-            .filter(
-                Boolean
-            );
+            .filter(Boolean);
 
 
-    /*-------------------------------------------------------
-      START WITH HOME
-    -------------------------------------------------------*/
-
+    /*
+     * Start with Home
+     */
     const breadcrumbs = [
 
         {
 
-            "@type":
-                "ListItem",
+            "@type": "ListItem",
 
-            "position":
-                1,
+            "position": 1,
 
-            "name":
-                "Home",
+            "name": "Home",
 
             "item":
                 window.location.origin + "/"
@@ -693,30 +609,24 @@ function createBreadcrumbSchema() {
 
 
     /*-------------------------------------------------------
-      BUILD CURRENT URL
+      BUILD BREADCRUMBS
     -------------------------------------------------------*/
 
     let currentURL =
         window.location.origin;
 
 
-    /*-------------------------------------------------------
-      PROCESS EACH PATH SEGMENT
-    -------------------------------------------------------*/
-
     parts.forEach(
 
-        part => {
+        (part, index) => {
+
 
             /*
-             * Never add index.html
-             * as a breadcrumb.
+             * Ignore index.html
              */
             if (
-
                 part.toLowerCase() ===
                 "index.html"
-
             ) {
 
                 return;
@@ -724,28 +634,21 @@ function createBreadcrumbSchema() {
 
 
             /*
-             * Build URL.
+             * Add URL segment
              */
             currentURL +=
                 "/" + part;
 
 
             /*
-             * Remove .html
+             * Convert filename to readable name
              */
             let cleanName =
-                part.replace(
-                    /\.html$/i,
-                    ""
-                );
-
-
-            /*
-             * Replace hyphens and
-             * underscores with spaces.
-             */
-            cleanName =
-                cleanName
+                part
+                    .replace(
+                        /\.html$/i,
+                        ""
+                    )
                     .replace(
                         /[-_]+/g,
                         " "
@@ -758,7 +661,7 @@ function createBreadcrumbSchema() {
 
 
             /*
-             * Never add empty item.
+             * Safety check
              */
             if (!cleanName) {
 
@@ -767,7 +670,7 @@ function createBreadcrumbSchema() {
 
 
             /*
-             * Capitalize words.
+             * Capitalize words
              */
             cleanName =
                 cleanName.replace(
@@ -778,7 +681,7 @@ function createBreadcrumbSchema() {
 
 
             /*-------------------------------------------------
-              NEXPAK TERMINOLOGY
+              NEXPAK TERMINOLOGY CLEANUP
             -------------------------------------------------*/
 
             cleanName =
@@ -805,8 +708,18 @@ function createBreadcrumbSchema() {
                     )
 
                     .replace(
-                        /\bFaq\b/gi,
-                        "FAQ"
+                        /\bDahua\b/gi,
+                        "Dahua"
+                    )
+
+                    .replace(
+                        /\bHikvision\b/gi,
+                        "Hikvision"
+                    )
+
+                    .replace(
+                        /\bNexpak\b/gi,
+                        "Nexpak"
                     )
 
                     .replace(
@@ -815,13 +728,13 @@ function createBreadcrumbSchema() {
                     )
 
                     .replace(
-                        /\bNexpak\b/gi,
-                        "Nexpak"
+                        /\bFaq\b/gi,
+                        "FAQ"
                     );
-
+            
 
             /*
-             * Final safety check.
+             * NEVER create an unnamed item
              */
             if (!cleanName) {
 
@@ -829,14 +742,12 @@ function createBreadcrumbSchema() {
             }
 
 
-            /*-------------------------------------------------
-              ADD BREADCRUMB
-            -------------------------------------------------*/
-
+            /*
+             * Add breadcrumb
+             */
             breadcrumbs.push({
 
-                "@type":
-                    "ListItem",
+                "@type": "ListItem",
 
                 "position":
                     breadcrumbs.length + 1,
@@ -852,14 +763,13 @@ function createBreadcrumbSchema() {
 
 
     /*-------------------------------------------------------
-      GOOGLE SAFETY CHECK
+      GOOGLE ELIGIBILITY SAFETY CHECK
     -------------------------------------------------------*/
 
     /*
-     * If there is only Home,
-     * there is no meaningful breadcrumb.
+     * A breadcrumb list containing only Home
+     * is not useful.
      */
-
     if (
         breadcrumbs.length < 2
     ) {
@@ -887,18 +797,17 @@ function createBreadcrumbSchema() {
 
 
 /*=========================================================
- 13. WEBSITE SCHEMA
+ 16. WEBSITE SCHEMA
+      SearchAction
 =========================================================*/
 
 function createWebsiteSchema() {
 
     return {
 
-        "@context":
-            "https://schema.org",
+        "@context": "https://schema.org",
 
-        "@type":
-            "WebSite",
+        "@type": "WebSite",
 
         "name":
             NexpakSEO.companyName,
@@ -923,18 +832,18 @@ function createWebsiteSchema() {
 
 
 /*=========================================================
- 14. GLOBAL SEO CONTROLLER
+ 17. GLOBAL CONTROLLER
 =========================================================*/
 
 function initializeSEOEngine() {
 
     console.log(
-        "Nexpak SEO Schema V16 Loaded Successfully"
+        "Nexpak SEO Schema V16 Consolidated - Loaded Successfully"
     );
 
 
     /*-------------------------------------------------------
-      ORGANIZATION
+      BASE GLOBAL SCHEMAS
     -------------------------------------------------------*/
 
     injectSchema(
@@ -942,18 +851,10 @@ function initializeSEOEngine() {
     );
 
 
-    /*-------------------------------------------------------
-      LOCAL BUSINESS
-    -------------------------------------------------------*/
-
     injectSchema(
         createLocalBusinessSchema()
     );
 
-
-    /*-------------------------------------------------------
-      WEBSITE
-    -------------------------------------------------------*/
 
     injectSchema(
         createWebsiteSchema()
@@ -961,7 +862,7 @@ function initializeSEOEngine() {
 
 
     /*-------------------------------------------------------
-      BREADCRUMB
+      BREADCRUMB SCHEMA
     -------------------------------------------------------*/
 
     const breadcrumbSchema =
@@ -969,13 +870,11 @@ function initializeSEOEngine() {
 
 
     /*
+     * Only inject if valid.
+     *
      * Homepage returns null.
-     * Internal pages get valid breadcrumbs.
      */
-
-    if (
-        breadcrumbSchema
-    ) {
+    if (breadcrumbSchema) {
 
         injectSchema(
             breadcrumbSchema
@@ -984,7 +883,14 @@ function initializeSEOEngine() {
 
 
     /*-------------------------------------------------------
-      CURRENT PAGE
+      CUSTOM PAGE SCHEMAS
+    -------------------------------------------------------*/
+
+    loadCustomPageSchemas();
+
+
+    /*-------------------------------------------------------
+      PAGE DETECTION
     -------------------------------------------------------*/
 
     const page =
@@ -992,18 +898,14 @@ function initializeSEOEngine() {
 
 
     /*-------------------------------------------------------
-      PRODUCT SCHEMA
+      SINGLE PRODUCT / ONLINE STORE
     -------------------------------------------------------*/
 
     if (
 
-        page.includes(
-            "product.html"
-        ) ||
+        page.includes("product.html") ||
 
-        page.includes(
-            "online.html"
-        )
+        page.includes("online.html")
 
     ) {
 
@@ -1016,11 +918,7 @@ function initializeSEOEngine() {
     -------------------------------------------------------*/
 
     if (
-
-        page.includes(
-            "shop.html"
-        )
-
+        page.includes("shop.html")
     ) {
 
         loadShopProductSchemas();
@@ -1036,31 +934,41 @@ function initializeSEOEngine() {
 
 
 /*=========================================================
- 15. PUBLIC NEXPAK SEO ENGINE
+ 18. PUBLIC NEXPAK SEO ENGINE
 =========================================================*/
 
 window.NexpakSEOEngine = {
 
-    load: initializeSEOEngine,
+    load:
+        initializeSEOEngine,
 
-    product: createProductSchema,
+    product:
+        createProductSchema,
 
-    faq: createFAQSchema,
+    faq:
+        createFAQSchema,
 
-    service: createServiceSchema,
+    service:
+        createServiceSchema,
 
-    breadcrumb: createBreadcrumbSchema
+    breadcrumb:
+        createBreadcrumbSchema,
 
+    course:
+        createCourseSchema,
+
+    webApp:
+        createWebApplicationSchema
 };
 
 
 /*=========================================================
- 16. AUTOMATIC INITIALIZATION
+ 19. AUTOMATIC INITIALIZATION
 =========================================================*/
 
 document.addEventListener(
     "DOMContentLoaded",
-    function () {
+    () => {
 
         initializeSEOEngine();
 
