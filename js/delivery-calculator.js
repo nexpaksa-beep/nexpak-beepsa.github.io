@@ -2031,4 +2031,95 @@
         rates:
             KT_RATES
 
+           ,
+
+
+        getFee:
+            function () {
+
+                return (
+                    parseFloat(
+                        localStorage.getItem(
+                            STORAGE.fee
+                        )
+                    ) || 0
+                );
+
+            }
+
+    };
+
+
+    /* =====================================================
+       INITIALISE DELIVERY CALCULATOR
+    ===================================================== */
+
+    function init() {
+
+        console.log(
+            "[Nexpak Delivery] Delivery calculator loading..."
+        );
+
+
+        /*
+         * Create delivery controls.
+         */
+
+        createDeliveryControls();
+
+
+        /*
+         * Attach Calculate button.
+         */
+
+        attachCalculateHandler();
+
+
+        /*
+         * Initial UI state.
+         */
+
+        updateMethodAvailability();
+
+        updateSizeVisibility();
+
+        updateRateDisplay();
+
+
+        /*
+         * Restore previous calculation.
+         */
+
+        restoreDelivery();
+
+
+        console.log(
+            "[Nexpak Delivery] ✓ Delivery calculator ready."
+        );
+
+    }
+
+
+    /* =====================================================
+       DOM READY
+    ===================================================== */
+
+    if (
+        document.readyState ===
+        "loading"
+    ) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            init
+        );
+
+    } else {
+
+        init();
+
+    }
+
+
+})();
     
