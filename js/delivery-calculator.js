@@ -63,32 +63,6 @@
             description: "Same-day delivery",
             perKm: 6.00
         }
-
-        durban: {
-    economy: {
-        small: 259,
-        medium: 349,
-        large: 399
-    },
-    standard: {
-        small: 299,
-        medium: 399,
-        large: 449
-    }
-},
-
-capetown: {
-    economy: {
-        small: 349,
-        medium: 399,
-        large: 499
-    },
-    standard: {
-        small: 399,
-        medium: 499,
-        large: 599
-    }
-
     };
 
 
