@@ -708,4 +708,671 @@ const products = [
 
   makeProduct({
     id: "dahua-pro-8ch",
-    title: "Dahua HD CC
+        title: "Dahua HD CCTV Pro Kit - 8 Channel",
+    description:
+      "Dahua professional HD CCTV kit providing expanded visual coverage for corporate, retail and residential security.",
+    price: 11999.99,
+    image: "images/32ch.png",
+    weight: 12,
+    brand: "Dahua",
+    productType: "CCTV > Dahua Professional CCTV Kits",
+    link: "kits/cctv.html"
+  }),
+
+  makeProduct({
+    id: "dahua-pro-16ch",
+    title: "Dahua HD CCTV Pro Kit - 16 Channel",
+    description:
+      "Dahua professional HD CCTV kit providing expanded visual coverage for larger corporate, retail and residential security installations.",
+    price: 21999.99,
+    image: "images/32ch.png",
+    weight: 21,
+    brand: "Dahua",
+    productType: "CCTV > Dahua Professional CCTV Kits",
+    link: "kits/cctv.html"
+  }),
+
+  /* ==========================================================
+     DAHUA IP CCTV
+     ========================================================== */
+
+  makeProduct({
+    id: "dahua-ip-cctv-8-camera",
+    title: "Dahua IP CCTV Network Kit - 8 Camera POE",
+    description:
+      "Dahua IP CCTV network kit with eight POE cameras, remote access and advanced network video security.",
+    price: 15999.99,
+    image: "images/ip-cctv.png",
+    weight: 14,
+    brand: "Dahua",
+    productType: "CCTV > Dahua IP CCTV Kits",
+    link: "kits/ip-cctv.html"
+  }),
+
+  makeProduct({
+    id: "dahua-ip-cctv-16-camera",
+    title: "Dahua IP CCTV Network Kit - 16 Camera POE",
+    description:
+      "Dahua IP CCTV network kit with sixteen POE cameras, remote access and advanced network video security.",
+    price: 29999.99,
+    image: "images/ip-cctv.png",
+    weight: 25,
+    brand: "Dahua",
+    productType: "CCTV > Dahua IP CCTV Kits",
+    link: "kits/ip-cctv.html"
+  }),
+
+  /* ==========================================================
+     CENTURION GATE MOTORS
+     ========================================================== */
+
+  makeProduct({
+    id: "centurion-d3-smart",
+    title: "Centurion D3 Smart Gate Motor Kit",
+    description:
+      "Centurion D3 Smart automated sliding gate motor kit.",
+    price: 4999,
+    image: "images/d5.png",
+    weight: 10,
+    brand: "Centurion",
+    productType: "Gate Automation > Gate Motors",
+    link: "kits/centurion-motors.html"
+  }),
+
+  makeProduct({
+    id: "centurion-d5-smart",
+    title: "Centurion D5 Smart Gate Motor Kit",
+    description:
+      "Centurion D5 Smart automated sliding gate motor kit.",
+    price: 5999,
+    image: "images/d5.png",
+    weight: 13,
+    brand: "Centurion",
+    productType: "Gate Automation > Gate Motors",
+    link: "kits/centurion-motors.html"
+  }),
+
+  makeProduct({
+    id: "centurion-d6-smart",
+    title: "Centurion D6 Smart Gate Motor Kit",
+    description:
+      "Centurion D6 Smart automated sliding gate motor kit.",
+    price: 7999,
+    image: "images/d5.png",
+    weight: 15,
+    brand: "Centurion",
+    productType: "Gate Automation > Gate Motors",
+    link: "kits/centurion-motors.html"
+  }),
+
+  makeProduct({
+    id: "centurion-d10-smart",
+    title: "Centurion D10 Smart Gate Motor Kit",
+    description:
+      "Centurion D10 Smart automated sliding gate motor kit.",
+    price: 12999,
+    image: "images/d5.png",
+    weight: 18,
+    brand: "Centurion",
+    productType: "Gate Automation > Gate Motors",
+    link: "kits/centurion-motors.html"
+  }),
+
+  makeProduct({
+    id: "centurion-d10-smart-turbo",
+    title: "Centurion D10 Smart Turbo Gate Motor Kit",
+    description:
+      "Centurion D10 Smart Turbo automated sliding gate motor kit.",
+    price: 13200,
+    image: "images/d5.png",
+    weight: 19,
+    brand: "Centurion",
+    productType: "Gate Automation > Gate Motors",
+    link: "kits/centurion-motors.html"
+  }),
+
+  makeProduct({
+    id: "centurion-sdo-smart",
+    title: "Centurion SDO Smart Garage Door Kit",
+    description:
+      "Centurion SDO Smart automated garage door motor kit.",
+    price: 2999,
+    image: "images/d5.png",
+    weight: 12,
+    brand: "Centurion",
+    productType: "Gate Automation > Garage Door Motors",
+    link: "kits/centurion-motors.html"
+  }),
+
+  makeProduct({
+    id: "centurion-vantage-smart",
+    title: "Centurion Vantage Smart Swing Gate Kit",
+    description:
+      "Centurion Vantage Smart swing gate automation kit.",
+    price: 12999,
+    image: "images/d5.png",
+    weight: 22,
+    brand: "Centurion",
+    productType: "Gate Automation > Swing Gate Motors",
+    link: "kits/centurion-motors.html"
+  }),
+
+  /* ==========================================================
+     NEMTEK ENERGIZERS
+     ========================================================== */
+
+  makeProduct({
+    id: "nemtek-wizord-4",
+    title: "Nemtek Wizord 4 Security Energizer",
+    description:
+      "Nemtek Wizord 4 high-power electric fence security energizer.",
+    price: 2499,
+    image: "images/nem.png",
+    weight: 5.3,
+    brand: "Nemtek",
+    productType: "Electric Fencing > Energizers",
+    link: "kits/nemtek.html"
+  }),
+
+  makeProduct({
+    id: "nemtek-druid-18",
+    title: "Nemtek Druid 18 Security Energizer",
+    description:
+      "Nemtek Druid 18 high-power electric fence security energizer.",
+    price: 4499,
+    image: "images/nem.png",
+    weight: 6.5,
+    brand: "Nemtek",
+    productType: "Electric Fencing > Energizers",
+    link: "kits/nemtek.html"
+  }),
+
+  makeProduct({
+    id: "nemtek-druid-25",
+    title: "Nemtek Druid 25 Security Energizer",
+    description:
+      "Nemtek Druid 25 high-power electric fence security energizer.",
+    price: 5599,
+    image: "images/nem.png",
+    weight: 8,
+    brand: "Nemtek",
+    productType: "Electric Fencing > Energizers",
+    link: "kits/nemtek.html"
+  }),
+
+  /* ==========================================================
+     JVA ENERGIZERS
+     ========================================================== */
+
+  makeProduct({
+    id: "jva-z11",
+    title: "JVA Z11 Security Energizer",
+    description:
+      "JVA Z11 electric fence security energizer for perimeter protection.",
+    price: 2399,
+    image: "images/jva-z14.jpg",
+    weight: 3.5,
+    brand: "JVA",
+    productType: "Electric Fencing > Energizers",
+    link: "jva.html"
+  }),
+
+  makeProduct({
+    id: "jva-z13",
+    title: "JVA Z13 Security Energizer",
+    description:
+      "JVA Z13 electric fence security energizer for perimeter protection.",
+    price: 2599,
+    image: "images/jva-z14.jpg",
+    weight: 3.8,
+    brand: "JVA",
+    productType: "Electric Fencing > Energizers",
+    link: "jva.html"
+  }),
+
+  makeProduct({
+    id: "jva-z14",
+    title: "JVA Z14 Security Energizer",
+    description:
+      "JVA Z14 electric fence security energizer for perimeter protection.",
+    price: 2899,
+    image: "images/jva-z14.jpg",
+    weight: 4.2,
+    brand: "JVA",
+    productType: "Electric Fencing > Energizers",
+    link: "jva.html"
+  }),
+
+  makeProduct({
+    id: "jva-z18",
+    title: "JVA Z18 Security Energizer",
+    description:
+      "JVA Z18 electric fence security energizer for perimeter protection.",
+    price: 3999,
+    image: "images/jva-z14.jpg",
+    weight: 5,
+    brand: "JVA",
+    productType: "Electric Fencing > Energizers",
+    link: "jva.html"
+  }),
+
+  makeProduct({
+    id: "jva-z28",
+    title: "JVA Z28 Security Energizer",
+    description:
+      "JVA Z28 electric fence security energizer for advanced perimeter protection.",
+    price: 4999,
+    image: "images/jva-z14.jpg",
+    weight: 6,
+    brand: "JVA",
+    productType: "Electric Fencing > Energizers",
+    link: "jva.html"
+  }),
+
+  makeProduct({
+    id: "jva-z114",
+    title: "JVA Z114 Security Energizer",
+    description:
+      "JVA Z114 advanced electric fence security energizer for high-security perimeter protection.",
+    price: 6599,
+    image: "images/jva-z14.jpg",
+    weight: 7.5,
+    brand: "JVA",
+    productType: "Electric Fencing > Energizers",
+    link: "jva.html"
+  }),
+
+  /* ==========================================================
+     STAFIX ENERGIZERS
+     ========================================================== */
+
+  makeProduct({
+    id: "stafix-x1",
+    title: "Stafix X1 Energizer",
+    description:
+      "Stafix X1 electric fence energizer for perimeter security.",
+    price: 3299,
+    image: "images/stafix-x1.jpg",
+    weight: 4,
+    brand: "Stafix",
+    productType: "Electric Fencing > Energizers",
+    link: "kits/stafix.html"
+  }),
+
+  makeProduct({
+    id: "stafix-x2",
+    title: "Stafix X2 Energizer",
+    description:
+      "Stafix X2 electric fence energizer for perimeter security.",
+    price: 3899,
+    image: "images/stafix-x1.jpg",
+    weight: 4.5,
+    brand: "Stafix",
+    productType: "Electric Fencing > Energizers",
+    link: "kits/stafix.html"
+  }),
+
+  makeProduct({
+    id: "stafix-x3",
+    title: "Stafix X3 Energizer",
+    description:
+      "Stafix X3 electric fence energizer for perimeter security.",
+    price: 4299,
+    image: "images/stafix-x1.jpg",
+    weight: 5.2,
+    brand: "Stafix",
+    productType: "Electric Fencing > Energizers",
+    link: "kits/stafix.html"
+  }),
+
+  makeProduct({
+    id: "stafix-x6i",
+    title: "Stafix X6i Energizer",
+    description:
+      "Stafix X6i high-power electric fence energizer for perimeter security.",
+    price: 5999,
+    image: "images/stafix-x1.jpg",
+    weight: 6.5,
+    brand: "Stafix",
+    productType: "Electric Fencing > Energizers",
+    link: "kits/stafix.html"
+  }),
+
+  makeProduct({
+    id: "stafix-x12i",
+    title: "Stafix X12i Energizer",
+    description:
+      "Stafix X12i high-power electric fence energizer for perimeter security.",
+    price: 10499,
+    image: "images/stafix-x1.jpg",
+    weight: 8,
+    brand: "Stafix",
+    productType: "Electric Fencing > Energizers",
+    link: "kits/stafix.html"
+  }),
+
+  makeProduct({
+    id: "stafix-x18i",
+    title: "Stafix X18i Energizer",
+    description:
+      "Stafix X18i high-power electric fence energizer for perimeter security.",
+    price: 13999,
+    image: "images/stafix-x1.jpg",
+    weight: 9.5,
+    brand: "Stafix",
+    productType: "Electric Fencing > Energizers",
+    link: "kits/stafix.html"
+  }),
+
+  /* ==========================================================
+     DAHUA HIGH-END CCTV
+     ========================================================== */
+
+  makeProduct({
+    id: "dahua-tioc-5mp",
+    title: "Dahua 5MP TiOC 2.0 Active Deterrence Network Turret",
+    description:
+      "Dahua 5MP TiOC 2.0 40m 3.6mm active deterrence network turret camera.",
+    price: 3499,
+    image: "images/dahua-tioc.jpg",
+    weight: 1.2,
+    brand: "Dahua",
+    productType: "CCTV > Dahua IP Cameras",
+    link: "kits/tioc.html"
+  }),
+
+  makeProduct({
+    id: "dahua-ptz-4mp-25x",
+    title: "Dahua 4MP 25x Starlight Smart Tracking IP PTZ Camera",
+    description:
+      "Dahua 4MP 25x Starlight smart tracking IP PTZ camera for advanced surveillance.",
+    price: 8500,
+    image: "images/dahua-ptz.jpg",
+    weight: 3.5,
+    brand: "Dahua",
+    productType: "CCTV > Dahua PTZ Cameras",
+    link: "kits/ptz.html"
+  }),
+
+  makeProduct({
+    id: "dahua-8ch-4k-ai-nvr",
+    title: "Dahua 8 Channel 4K AI Network Video Recorder",
+    description:
+      "Dahua 8-channel 4K AI network video recorder for advanced CCTV surveillance systems.",
+    price: 5999,
+    image: "images/dahua-nvr.jpg",
+    weight: 2.5,
+    brand: "Dahua",
+    productType: "CCTV > Dahua NVRs",
+    link: "kits/nvr-4k.html"
+  }),
+
+  /* ==========================================================
+     AJAX WIRELESS SMART ALARM
+     ========================================================== */
+
+  makeProduct({
+    id: "ajax-hub-2-plus",
+    title: "Ajax Hub 2 Plus",
+    description:
+      "Ajax Hub 2 Plus intelligent wireless security control panel.",
+    price: 5999,
+    image: "images/ajax.png",
+    weight: 1.1,
+    brand: "Ajax",
+    productType: "Alarms > Ajax Wireless Alarm Systems",
+    link: "kits/ajax.html"
+  }),
+
+  makeProduct({
+    id: "ajax-motioncam",
+    title: "Ajax MotionCam",
+    description:
+      "Ajax MotionCam wireless indoor PIR detector with photo verification.",
+    price: 2899,
+    image: "images/ajax.png",
+    weight: 0.5,
+    brand: "Ajax",
+    productType: "Alarms > Ajax Wireless Alarm Systems",
+    link: "kits/ajax.html"
+  }),
+
+  makeProduct({
+    id: "ajax-streetsiren",
+    title: "Ajax StreetSiren",
+    description:
+      "Ajax StreetSiren wireless outdoor high-decibel security siren.",
+    price: 2200,
+    image: "images/ajax.png",
+    weight: 1.5,
+    brand: "Ajax",
+    productType: "Alarms > Ajax Wireless Alarm Systems",
+    link: "kits/ajax.html"
+  }),
+
+  makeProduct({
+    id: "ajax-keypad-plus",
+    title: "Ajax KeyPad Plus",
+    description:
+      "Ajax KeyPad Plus touch-sensitive wireless keypad with contactless card and tag support.",
+    price: 1899,
+    image: "images/ajax.png",
+    weight: 0.4,
+    brand: "Ajax",
+    productType: "Alarms > Ajax Wireless Alarm Systems",
+    link: "kits/ajax.html"
+  }),
+
+  makeProduct({
+    id: "ajax-doorprotect",
+    title: "Ajax DoorProtect",
+    description:
+      "Ajax DoorProtect wireless opening detector for doors and windows.",
+    price: 799,
+    image: "images/ajax.png",
+    weight: 0.2,
+    brand: "Ajax",
+    productType: "Alarms > Ajax Wireless Alarm Systems",
+    link: "kits/ajax.html"
+  }),
+
+  makeProduct({
+    id: "ajax-spacecontrol",
+    title: "Ajax SpaceControl",
+    description:
+      "Ajax SpaceControl four-button wireless key fob with panic button.",
+    price: 499,
+    image: "images/ajax.png",
+    weight: 0.1,
+    brand: "Ajax",
+    productType: "Alarms > Ajax Wireless Alarm Systems",
+    link: "kits/ajax.html"
+  })
+
+];
+
+/**
+ * ============================================================
+ * VALIDATION
+ * ============================================================
+ */
+
+const requiredFields = [
+  "id",
+  "title",
+  "description",
+  "link",
+  "image_link",
+  "price",
+  "availability",
+  "condition",
+  "shipping_weight"
+];
+
+const errors = [];
+
+const ids = new Set();
+
+products.forEach((product, index) => {
+
+  requiredFields.forEach(field => {
+
+    if (!product[field]) {
+
+      errors.push(
+        `Product ${index + 1} is missing required field: ${field}`
+      );
+
+    }
+
+  });
+
+  if (ids.has(product.id)) {
+
+    errors.push(
+      `Duplicate product ID: ${product.id}`
+    );
+
+  }
+
+  ids.add(product.id);
+
+  if (!product.link.startsWith("https://")) {
+
+    errors.push(
+      `${product.id}: invalid product link`
+    );
+
+  }
+
+  if (!product.image_link.startsWith("https://")) {
+
+    errors.push(
+      `${product.id}: invalid image URL`
+    );
+
+  }
+
+  if (!product.price.endsWith(" ZAR")) {
+
+    errors.push(
+      `${product.id}: invalid price format`
+    );
+
+  }
+
+  if (product.availability !== "in_stock") {
+
+    errors.push(
+      `${product.id}: unexpected availability value`
+    );
+
+  }
+
+  if (product.condition !== "new") {
+
+    errors.push(
+      `${product.id}: unexpected condition value`
+    );
+
+  }
+
+});
+
+/**
+ * ============================================================
+ * STOP IF VALIDATION FAILS
+ * ============================================================
+ */
+
+if (errors.length > 0) {
+
+  console.error("\n❌ FEED VALIDATION FAILED\n");
+
+  errors.forEach(error => {
+
+    console.error(`- ${error}`);
+
+  });
+
+  console.error(
+    `\nTotal errors: ${errors.length}\n`
+  );
+
+  process.exit(1);
+
+}
+
+/**
+ * ============================================================
+ * MERCHANT CENTER TSV
+ * ============================================================
+ */
+
+const headers = [
+  "id",
+  "title",
+  "description",
+  "link",
+  "image_link",
+  "price",
+  "availability",
+  "condition",
+  "shipping_weight",
+  "brand",
+  "product_type"
+];
+
+const rows = products.map(product => {
+
+  return headers
+    .map(field => cleanText(product[field]))
+    .join("\t");
+
+});
+
+const feed = [
+  headers.join("\t"),
+  ...rows
+].join("\n");
+
+/**
+ * ============================================================
+ * WRITE FEED FILE
+ * ============================================================
+ */
+
+fs.writeFileSync(
+  "feed.txt",
+  feed,
+  {
+    encoding: "utf8"
+  }
+);
+
+/**
+ * ============================================================
+ * REPORT
+ * ============================================================
+ */
+
+console.log("\n==============================================");
+console.log(" NEXPAK MERCHANT CENTER FEED GENERATED");
+console.log("==============================================");
+
+console.log(`Products generated: ${products.length}`);
+console.log(`Output file: feed.txt`);
+console.log(`Store URL: ${STORE_URL}`);
+
+console.log("----------------------------------------------");
+
+console.log("Feed validation: PASSED");
+console.log("Format: TSV");
+console.log("Currency: ZAR");
+console.log("Availability: in_stock");
+console.log("Condition: new");
+
+console.log("----------------------------------------------");
+
+console.log("Google Merchant Center ready.");
+console.log("==============================================\n");
