@@ -1001,4 +1001,1034 @@
                             checked
                         >
 
+                                                <span>
+
+                            <strong>
+                                Standard
+                            </strong>
+
+                            <small
+                                id="standardDescription"
+                            >
+                                1–2 business days
+                            </small>
+
+                            <em
+                                id="standardStartingPrice"
+                            >
+                                From R179
+                            </em>
+
+                        </span>
+
+                    </label>
+
+
+                    <label
+                        class="nexpak-delivery-option"
+                        id="expressDeliveryOption"
+                    >
+
+                        <input
+                            type="radio"
+                            name="deliveryMethod"
+                            value="express"
+                        >
+
+                        <span>
+
+                            <strong>
+                                Same Day
+                            </strong>
+
+                            <small>
+                                Gauteng / Johannesburg Metro
+                            </small>
+
+                            <em>
+                                R6.00/km
+                            </em>
+
+                        </span>
+
+                    </label>
+
+                </div>
+
+
+                <div
+                    id="parcelSizeContainer"
+                    class="nexpak-parcel-size"
+                >
+
+                    <label
+                        for="parcelSize"
+                    >
+                        Parcel Size
+                    </label>
+
+
+                    <select
+                        id="parcelSize"
+                        class="form-control"
+                    >
+
+                        <option
+                            value="small"
+                        >
+                            Small
+                        </option>
+
+
+                        <option
+                            value="medium"
+                            selected
+                        >
+                            Medium
+                        </option>
+
+
+                        <option
+                            value="large"
+                        >
+                            Large
+                        </option>
+
+                    </select>
+
+
+                    <div
+                        id="parcelRateDisplay"
+                        style="
+                            margin-top:8px;
+                            font-size:12px;
+                            color:#64748b;
+                        "
+                    >
+                        Economy / Standard rates shown after destination selection.
+                    </div>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        /*
+         * Insert before calculate button.
+         */
+
+        calculateButton.parentNode.insertBefore(
+            container,
+            calculateButton
+        );
+
+
+        /* -------------------------------------------------
+           Destination change
+        ------------------------------------------------- */
+
+        const destinationSelect =
+            getElement(
+                "deliveryDestination"
+            );
+
+
+        if (destinationSelect) {
+
+            destinationSelect.addEventListener(
+                "change",
+                function () {
+
+                    const destination =
+                        this.value;
+
+
+                    localStorage.setItem(
+                        STORAGE.destination,
+                        destination
+                    );
+
+
+                    /*
+                     * Durban and Cape Town do not
+                     * offer Same Day.
+                     */
+
+                    updateMethodAvailability();
+
+                    updateRateDisplay();
+
+                    clearDeliveryResult();
+
+                }
+            );
+
+        }
+
+
+        /* -------------------------------------------------
+           Method change
+        ------------------------------------------------- */
+
+        document
+            .querySelectorAll(
+                'input[name="deliveryMethod"]'
+            )
+            .forEach(
+                function (radio) {
+
+                    radio.addEventListener(
+                        "change",
+                        function () {
+
+                            updateSizeVisibility();
+
+                            updateRateDisplay();
+
+                            clearDeliveryResult();
+
+                        }
+                    );
+
+                }
+            );
+
+
+        /* -------------------------------------------------
+           Parcel size change
+        ------------------------------------------------- */
+
+        const parcelSize =
+            getElement(
+                "parcelSize"
+            );
+
+
+        if (parcelSize) {
+
+            parcelSize.addEventListener(
+                "change",
+                function () {
+
+                    updateRateDisplay();
+
+                    clearDeliveryResult();
+
+                }
+            );
+
+        }
+
+
+        /*
+         * Restore previous destination.
+         */
+
+        restoreDestination();
+
+        updateMethodAvailability();
+
+        updateRateDisplay();
+
+        updateSizeVisibility();
+
+    }
+
+
+    /* =====================================================
+       RESTORE DESTINATION
+    ===================================================== */
+
+    function restoreDestination() {
+
+        const select =
+            getElement(
+                "deliveryDestination"
+            );
+
+
+        if (!select) return;
+
+
+        const saved =
+            localStorage.getItem(
+                STORAGE.destination
+            );
+
+
+        if (
+            saved &&
+            select.querySelector(
+                `option[value="${saved}"]`
+            )
+        ) {
+
+            select.value =
+                saved;
+
+        } else {
+
+            select.value =
+                "gauteng";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       UPDATE METHOD AVAILABILITY
+    ===================================================== */
+
+    function updateMethodAvailability() {
+
+        const destination =
+            getSelectedDestination();
+
+
+        const expressOption =
+            getElement(
+                "expressDeliveryOption"
+            );
+
+
+        const expressRadio =
+            document.querySelector(
+                'input[name="deliveryMethod"][value="express"]'
+            );
+
+
+        if (!expressOption || !expressRadio) {
+
+            return;
+
+        }
+
+
+        if (destination === "gauteng") {
+
+            expressOption.style.display =
+                "block";
+
+            expressRadio.disabled =
+                false;
+
+        } else {
+
+            expressOption.style.display =
+                "none";
+
+            expressRadio.disabled =
+                true;
+
+
+            /*
+             * If Express was previously selected,
+             * automatically switch to Standard.
+             */
+
+            if (
+                expressRadio.checked
+            ) {
+
+                const standardRadio =
+                    document.querySelector(
+                        'input[name="deliveryMethod"][value="standard"]'
+                    );
+
+
+                if (standardRadio) {
+
+                    standardRadio.checked =
+                        true;
+
+                }
+
+            }
+
+        }
+
+    }
+
+
+    /* =====================================================
+       UPDATE RATE DISPLAY
+    ===================================================== */
+
+    function updateRateDisplay() {
+
+        const destination =
+            getSelectedDestination();
+
+
+        const config =
+            getDestinationConfig();
+
+
+        const economyDescription =
+            getElement(
+                "economyDescription"
+            );
+
+
+        const standardDescription =
+            getElement(
+                "standardDescription"
+            );
+
+
+        const economyStartingPrice =
+            getElement(
+                "economyStartingPrice"
+            );
+
+
+        const standardStartingPrice =
+            getElement(
+                "standardStartingPrice"
+            );
+
+
+        const parcelRateDisplay =
+            getElement(
+                "parcelRateDisplay"
+            );
+
+
+        if (economyDescription) {
+
+            economyDescription.textContent =
+                config.economy.description;
+
+        }
+
+
+        if (standardDescription) {
+
+            standardDescription.textContent =
+                config.standard.description;
+
+        }
+
+
+        if (economyStartingPrice) {
+
+            economyStartingPrice.textContent =
+                "From " +
+                money(config.economy.small);
+
+        }
+
+
+        if (standardStartingPrice) {
+
+            standardStartingPrice.textContent =
+                "From " +
+                money(config.standard.small);
+
+        }
+
+
+        const size =
+            getSelectedSize();
+
+
+        const economyRate =
+            config.economy[size];
+
+
+        const standardRate =
+            config.standard[size];
+
+
+        if (parcelRateDisplay) {
+
+            parcelRateDisplay.innerHTML =
+                `
+                <strong>
+                    ${capitalize(size)} parcel:
+                </strong>
+                Economy ${money(economyRate)}
+                &nbsp;•&nbsp;
+                Standard ${money(standardRate)}
+                `;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       SHOW / HIDE PARCEL SIZE
+    ===================================================== */
+
+    function updateSizeVisibility() {
+
+        const method =
+            getSelectedMethod();
+
+
+        const container =
+            getElement(
+                "parcelSizeContainer"
+            );
+
+
+        if (!container) return;
+
+
+        if (
+            method === "express"
+        ) {
+
+            container.style.display =
+                "none";
+
+        } else {
+
+            container.style.display =
+                "block";
+
+        }
+
+
+        /*
+         * Same-day distance is required
+         * only for Gauteng.
+         */
+
+        const distanceField =
+            getElement(
+                "distance-km"
+            );
+
+
+        if (distanceField) {
+
+            if (
+                method === "express"
+            ) {
+
+                distanceField.disabled =
+                    false;
+
+                distanceField.placeholder =
+                    "Enter same-day delivery distance in KM";
+
+            } else {
+
+                distanceField.disabled =
+                    true;
+
+                distanceField.placeholder =
+                    "Distance not required for this service";
+
+                distanceField.value =
+                    "";
+
+            }
+
+        }
+
+    }
+
+
+    /* =====================================================
+       CLEAR DELIVERY RESULT
+    ===================================================== */
+
+    function clearDeliveryResult() {
+
+        localStorage.removeItem(
+            STORAGE.fee
+        );
+
+
+        localStorage.removeItem(
+            STORAGE.eta
+        );
+
+
+        localStorage.removeItem(
+            STORAGE.km
+        );
+
+
+        const amount =
+            getElement(
+                "chkDelivery"
+            );
+
+
+        if (amount) {
+
+            amount.textContent =
+                "R0.00";
+
+        }
+
+
+        const summary =
+            getElement(
+                "chkDeliverySummary"
+            );
+
+
+        if (summary) {
+
+            summary.textContent =
+                "Select delivery method";
+
+        }
+
+
+        const status =
+            getElement(
+                "deliveryStatus"
+            );
+
+
+        if (status) {
+
+            status.textContent =
+                "Select your destination, delivery method and parcel size.";
+
+            status.classList.remove(
+                "success"
+            );
+
+        }
+
+
+        if (
+            window.NexpakCheckout &&
+            typeof
+            window.NexpakCheckout.updateSummary ===
+            "function"
+        ) {
+
+            window.NexpakCheckout.updateSummary();
+
+        }
+
+    }
+
+
+    /* =====================================================
+       CALCULATE BUTTON
+    ===================================================== */
+
+    function attachCalculateHandler() {
+
+        const button =
+            getElement(
+                "btnCalculateDelivery"
+            );
+
+
+        if (!button) {
+
+            console.warn(
+                "[Nexpak Delivery] Calculate button not found."
+            );
+
+            return;
+
+        }
+
+
+        /*
+         * Prevent duplicate listeners.
+         */
+
+        if (
+            button.dataset
+                .nexpakDeliveryBound ===
+            "true"
+        ) {
+
+            return;
+
+        }
+
+
+        button.dataset
+            .nexpakDeliveryBound =
+            "true";
+
+
+        button.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+
+                /*
+                 * Make sure the current method
+                 * is still valid for destination.
+                 */
+
+                updateMethodAvailability();
+
+
+                const result =
+                    calculateDelivery();
+
+
+                if (!result.success) {
+
+                    const status =
+                        getElement(
+                            "deliveryStatus"
+                        );
+
+
+                    if (status) {
+
+                        status.textContent =
+                            result.message;
+
+                        status.classList.remove(
+                            "success"
+                        );
+
+                    }
+
+
+                    alert(
+                        result.message
+                    );
+
+
+                    return;
+
+                }
+
+
+                saveDelivery(
+                    result
+                );
+
+
+                updateCheckoutDisplay(
+                    result
+                );
+
+
+                console.log(
+                    "[Nexpak Delivery] Calculated:",
+                    result
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       RESTORE PREVIOUS DELIVERY
+    ===================================================== */
+
+    function restoreDelivery() {
+
+        const savedFee =
+            parseFloat(
+                localStorage.getItem(
+                    STORAGE.fee
+                )
+            ) || 0;
+
+
+        const savedMethod =
+            localStorage.getItem(
+                STORAGE.method
+            );
+
+
+        const savedDestination =
+            localStorage.getItem(
+                STORAGE.destination
+            );
+
+
+        const savedSize =
+            localStorage.getItem(
+                STORAGE.size
+            );
+
+
+        /*
+         * Restore destination.
+         */
+
+        const destinationSelect =
+            getElement(
+                "deliveryDestination"
+            );
+
+
+        if (
+            destinationSelect &&
+            savedDestination &&
+            destinationSelect.querySelector(
+                `option[value="${savedDestination}"]`
+            )
+        ) {
+
+            destinationSelect.value =
+                savedDestination;
+
+        }
+
+
+        /*
+         * Restore method.
+         */
+
+        if (savedMethod) {
+
+            const radio =
+                document.querySelector(
+                    `input[name="deliveryMethod"][value="${savedMethod}"]`
+                );
+
+
+            if (
+                radio &&
+                !radio.disabled
+            ) {
+
+                radio.checked =
+                    true;
+
+            }
+
+        }
+
+
+        /*
+         * Restore parcel size.
+         */
+
+        const parcelSize =
+            getElement(
+                "parcelSize"
+            );
+
+
+        if (
+            parcelSize &&
+            savedSize &&
+            parcelSize.querySelector(
+                `option[value="${savedSize}"]`
+            )
+        ) {
+
+            parcelSize.value =
+                savedSize;
+
+        }
+
+
+        updateMethodAvailability();
+
+        updateSizeVisibility();
+
+        updateRateDisplay();
+
+
+        /*
+         * Restore calculated display.
+         */
+
+        if (savedFee > 0) {
+
+            const method =
+                getSelectedMethod();
+
+
+            const destination =
+                getSelectedDestination();
+
+
+            const config =
+                getDestinationConfig();
+
+
+            const size =
+                getSelectedSize();
+
+
+            const savedKm =
+                parseFloat(
+                    localStorage.getItem(
+                        STORAGE.km
+                    )
+                ) || 0;
+
+
+            const eta =
+                localStorage.getItem(
+                    STORAGE.eta
+                ) || "";
+
+
+            const result = {
+
+                success: true,
+
+                destination:
+                    destination,
+
+                destinationName:
+                    config.name,
+
+                method:
+                    method,
+
+                methodName:
+                    method === "express"
+                        ? "Same Day"
+                        : capitalize(method),
+
+                size:
+                    method === "express"
+                        ? "any"
+                        : size,
+
+                km:
+                    savedKm,
+
+                fee:
+                    savedFee,
+
+                eta:
+                    eta
+
+            };
+
+
+            updateCheckoutDisplay(
+                result
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       PUBLIC API
+    ===================================================== */
+
+    window.NexpakDelivery = {
+
+        calculate:
+            calculateDelivery,
+
+
+        getDestination:
+            function () {
+
+                return (
+                    localStorage.getItem(
+                        STORAGE.destination
+                    ) || "gauteng"
+                );
+
+            },
+
+
+        getMethod:
+            function () {
+
+                return (
+                    localStorage.getItem(
+                        STORAGE.method
+                    ) || ""
+                );
+
+            },
+
+
+        getSize:
+            function () {
+
+                return (
+                    localStorage.getItem(
+                        STORAGE.size
+                    ) || ""
+                );
+
+            },
+
+
+        getKm:
+            function () {
+
+                return (
+                    parseFloat(
+                        localStorage.getItem(
+                            STORAGE.km
+                        )
+                    ) || 0
+                );
+
+            },
+
+
+        getFee:
+            function () {
+
+                return (
+                    parseFloat(
+                        localStorage.getItem(
+                            STORAGE.fee
+                        )
+                    ) || 0
+                );
+
+            },
+
+
+        getEta:
+            function () {
+
+                return (
+                    localStorage.getItem(
+                        STORAGE.eta
+                    ) || ""
+                );
+
+            },
+
+
+        clear:
+            clearDeliveryResult
+
+    };
+
+
+    /* =====================================================
+       BACKWARD COMPATIBILITY
+       Keeps older checkout code working
+    ===================================================== */
+
+    window.NexpakDeliveryCalculator = {
+
+        calculate:
+            calculateDelivery,
+
+
+        getCart:
+            getCart,
+
+
+        rates:
+            KT_RATES
+
     
