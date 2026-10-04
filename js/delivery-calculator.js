@@ -1,29 +1,68 @@
 /* =========================================================
    NEXPAK SECURITY SOLUTIONS
-   KT COURIERS DELIVERY CALCULATOR
+   DELIVERY CALCULATOR
    =========================================================
 
    DELIVERY PROVIDER:
-   KT Couriers
+   KT COURIERS
+
+   =========================================================
+   GAUTENG / JOHANNESBURG METRO
+   =========================================================
 
    ECONOMY:
-   Small  = R89
-   Medium = R129
-   Large  = R179
-   ETA    = 3–4 days
+   Small  = R120
+   Medium = R179
+   Large  = R210
+   ETA    = 3–4 business days
 
    STANDARD:
-   Small  = R129
-   Medium = R179
-   Large  = R239
-   ETA    = 1–2 days
+   Small  = R179
+   Medium = R220
+   Large  = R299
+   ETA    = 1–2 business days
 
-   EXPRESS:
-   R4.50 per KM
-   ETA = Same Day
+   SAME DAY:
+   R6.00 per KM
+   Gauteng / Johannesburg Metro only
+
+   =========================================================
+   DURBAN / KZN
+   =========================================================
+
+   ECONOMY:
+   Small  = R199
+   Medium = R249
+   Large  = R299
+   ETA    = 3–5 business days
+
+   STANDARD:
+   Small  = R249
+   Medium = R299
+   Large  = R379
+   ETA    = 2–3 business days
+
+   =========================================================
+   CAPE TOWN / WESTERN CAPE
+   =========================================================
+
+   ECONOMY:
+   Small  = R229
+   Medium = R279
+   Large  = R339
+   ETA    = 3–5 business days
+
+   STANDARD:
+   Small  = R279
+   Medium = R339
+   Large  = R429
+   ETA    = 2–3 business days
+
+   =========================================================
 
    IMPORTANT:
    This file handles DELIVERY ONLY.
+
    It does NOT handle:
    - Checkout submission
    - Payments
@@ -36,33 +75,103 @@
 
     "use strict";
 
+
     /* =====================================================
-       KT COURIERS CONFIGURATION
+       NEXPAK DELIVERY CONFIGURATION
+    ===================================================== */
+
+    const DELIVERY_RATES = {
+
+        gauteng: {
+
+            name: "Gauteng / Johannesburg Metro",
+
+            economy: {
+                name: "Economy",
+                description: "3–4 business days",
+                small: 120,
+                medium: 179,
+                large: 210
+            },
+
+            standard: {
+                name: "Standard",
+                description: "1–2 business days",
+                small: 179,
+                medium: 220,
+                large: 299
+            },
+
+            express: {
+                name: "Same Day",
+                description: "Same-day delivery",
+                perKm: 6.00
+            }
+
+        },
+
+
+        durban: {
+
+            name: "Durban / KwaZulu-Natal",
+
+            economy: {
+                name: "Economy",
+                description: "3–5 business days",
+                small: 199,
+                medium: 249,
+                large: 299
+            },
+
+            standard: {
+                name: "Standard",
+                description: "2–3 business days",
+                small: 249,
+                medium: 299,
+                large: 379
+            }
+
+        },
+
+
+        capetown: {
+
+            name: "Cape Town / Western Cape",
+
+            economy: {
+                name: "Economy",
+                description: "3–5 business days",
+                small: 229,
+                medium: 279,
+                large: 339
+            },
+
+            standard: {
+                name: "Standard",
+                description: "2–3 business days",
+                small: 279,
+                medium: 339,
+                large: 429
+            }
+
+        }
+
+    };
+
+
+    /* =====================================================
+       BACKWARD COMPATIBILITY
+       Existing KT_RATES name retained
     ===================================================== */
 
     const KT_RATES = {
 
-        economy: {
-            name: "Economy-JHB",
-            description: "3–4 business days",
-            small: 120,
-            medium: 159,
-            large: 199
-        },
+        economy: DELIVERY_RATES.gauteng.economy,
 
-        standard: {
-            name: "Standard-JHB",
-            description: "1–2 business days",
-            small: 159,
-            medium: 199,
-            large: 299
-        },
+        standard: DELIVERY_RATES.gauteng.standard,
 
-        express: {
-            name: "Express-JHB",
-            description: "Same-day delivery",
-            perKm: 6.00
-        }
+        express: DELIVERY_RATES.gauteng.express
+
     };
 
 
@@ -72,10 +181,16 @@
 
     const STORAGE = {
 
+        destination: "nexpak_delivery_destination",
+
         method: "nexpak_delivery_method",
+
         size: "nexpak_delivery_size",
+
         km: "nexpak_delivery_km",
+
         fee: "nexpak_delivery_fee",
+
         eta: "nexpak_delivery_eta"
 
     };
@@ -88,31 +203,52 @@
     function getCart() {
 
         const possibleKeys = [
+
             "nexpak_cart_items",
+
             "cart_items",
+
             "cartItems",
+
             "cart"
+
         ];
+
 
         for (const key of possibleKeys) {
 
             try {
 
-                const stored = localStorage.getItem(key);
+                const stored =
+                    localStorage.getItem(key);
+
 
                 if (!stored) continue;
 
-                const parsed = JSON.parse(stored);
+
+                const parsed =
+                    JSON.parse(stored);
+
 
                 if (Array.isArray(parsed)) {
+
                     return parsed;
+
                 }
 
-                if (parsed && Array.isArray(parsed.items)) {
+
+                if (
+                    parsed &&
+                    Array.isArray(parsed.items)
+                ) {
+
                     return parsed.items;
+
                 }
 
-            } catch (error) {
+            }
+
+            catch (error) {
 
                 console.warn(
                     "[Nexpak Delivery] Could not read cart:",
@@ -124,6 +260,7 @@
 
         }
 
+
         return [];
 
     }
@@ -134,13 +271,54 @@
     ===================================================== */
 
     function getElement(id) {
+
         return document.getElementById(id);
+
     }
 
 
+    /* =====================================================
+       MONEY FORMAT
+    ===================================================== */
+
     function money(value) {
 
-        return "R" + Number(value || 0).toFixed(2);
+        return "R" +
+            Number(value || 0).toLocaleString(
+                "en-ZA",
+                {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }
+            );
+
+    }
+
+
+    /* =====================================================
+       DESTINATION
+    ===================================================== */
+
+    function getSelectedDestination() {
+
+        const select =
+            getElement("deliveryDestination");
+
+
+        if (select) {
+
+            return String(
+                select.value || "gauteng"
+            ).toLowerCase();
+
+        }
+
+
+        return (
+            localStorage.getItem(
+                STORAGE.destination
+            ) || "gauteng"
+        ).toLowerCase();
 
     }
 
@@ -151,18 +329,24 @@
 
     function getSelectedMethod() {
 
-        const select = getElement("deliveryMethod");
+        const select =
+            getElement("deliveryMethod");
+
 
         if (select) {
 
-            return String(select.value || "standard").toLowerCase();
+            return String(
+                select.value || "standard"
+            ).toLowerCase();
 
         }
 
 
-        const checked = document.querySelector(
-            'input[name="deliveryMethod"]:checked'
-        );
+        const checked =
+            document.querySelector(
+                'input[name="deliveryMethod"]:checked'
+            );
+
 
         if (checked) {
 
@@ -173,7 +357,11 @@
         }
 
 
-        return localStorage.getItem(STORAGE.method) || "standard";
+        return (
+            localStorage.getItem(
+                STORAGE.method
+            ) || "standard"
+        ).toLowerCase();
 
     }
 
@@ -184,18 +372,24 @@
 
     function getSelectedSize() {
 
-        const select = getElement("parcelSize");
+        const select =
+            getElement("parcelSize");
+
 
         if (select) {
 
-            return String(select.value || "medium").toLowerCase();
+            return String(
+                select.value || "medium"
+            ).toLowerCase();
 
         }
 
 
-        const checked = document.querySelector(
-            'input[name="parcelSize"]:checked'
-        );
+        const checked =
+            document.querySelector(
+                'input[name="parcelSize"]:checked'
+            );
+
 
         if (checked) {
 
@@ -206,7 +400,11 @@
         }
 
 
-        return localStorage.getItem(STORAGE.size) || "medium";
+        return (
+            localStorage.getItem(
+                STORAGE.size
+            ) || "medium"
+        ).toLowerCase();
 
     }
 
@@ -217,21 +415,51 @@
 
     function getDistance() {
 
-        const distanceField = getElement("distance-km");
+        const distanceField =
+            getElement("distance-km");
+
 
         if (!distanceField) {
+
             return 0;
+
         }
 
-        const distance = parseFloat(
-            String(distanceField.value || "")
+
+        const distance =
+            parseFloat(
+                String(
+                    distanceField.value || ""
+                )
                 .replace(",", ".")
                 .replace(/[^\d.]/g, "")
-        );
+            );
 
-        return Number.isFinite(distance) && distance > 0
+
+        return (
+            Number.isFinite(distance) &&
+            distance > 0
+        )
             ? distance
             : 0;
+
+    }
+
+
+    /* =====================================================
+       GET DESTINATION CONFIG
+    ===================================================== */
+
+    function getDestinationConfig() {
+
+        const destination =
+            getSelectedDestination();
+
+
+        return (
+            DELIVERY_RATES[destination] ||
+            DELIVERY_RATES.gauteng
+        );
 
     }
 
@@ -242,9 +470,93 @@
 
     function calculateDelivery() {
 
-        const method = getSelectedMethod();
-        const size = getSelectedSize();
-        const km = getDistance();
+        const destination =
+            getSelectedDestination();
+
+
+        const destinationConfig =
+            getDestinationConfig();
+
+
+        const method =
+            getSelectedMethod();
+
+
+        const size =
+            getSelectedSize();
+
+
+        const km =
+            getDistance();
+
+
+        /* -------------------------------------------------
+           EXPRESS / SAME DAY
+           Gauteng ONLY
+        ------------------------------------------------- */
+
+        if (method === "express") {
+
+            if (destination !== "gauteng") {
+
+                return {
+
+                    success: false,
+
+                    message:
+                        "Same-day delivery is currently available only within Gauteng / Johannesburg Metro. Please select Economy or Standard for this destination."
+
+                };
+
+            }
+
+
+            if (!km || km <= 0) {
+
+                return {
+
+                    success: false,
+
+                    message:
+                        "Please enter the delivery distance in kilometres for Same Day delivery."
+
+                };
+
+            }
+
+
+            const fee =
+                km *
+                DELIVERY_RATES.gauteng.express.perKm;
+
+
+            return {
+
+                success: true,
+
+                destination: destination,
+
+                destinationName:
+                    destinationConfig.name,
+
+                method: "express",
+
+                methodName: "Same Day",
+
+                size: "any",
+
+                km: km,
+
+                fee:
+                    Number(
+                        fee.toFixed(2)
+                    ),
+
+                eta: "Same day"
+
+            };
+
+        }
 
 
         /* -------------------------------------------------
@@ -253,20 +565,32 @@
 
         if (method === "economy") {
 
-            const rate = KT_RATES.economy[size];
+            const rate =
+                destinationConfig.economy[size];
+
 
             if (!rate) {
 
                 return {
+
                     success: false,
-                    message: "Please select a valid parcel size."
+
+                    message:
+                        "Please select a valid parcel size."
+
                 };
 
             }
 
+
             return {
 
                 success: true,
+
+                destination: destination,
+
+                destinationName:
+                    destinationConfig.name,
 
                 method: "economy",
 
@@ -278,7 +602,10 @@
 
                 fee: rate,
 
-                eta: "3–4 business days"
+                eta:
+                    destinationConfig
+                        .economy
+                        .description
 
             };
 
@@ -291,20 +618,32 @@
 
         if (method === "standard") {
 
-            const rate = KT_RATES.standard[size];
+            const rate =
+                destinationConfig.standard[size];
+
 
             if (!rate) {
 
                 return {
+
                     success: false,
-                    message: "Please select a valid parcel size."
+
+                    message:
+                        "Please select a valid parcel size."
+
                 };
 
             }
 
+
             return {
 
                 success: true,
+
+                destination: destination,
+
+                destinationName:
+                    destinationConfig.name,
 
                 method: "standard",
 
@@ -316,51 +655,10 @@
 
                 fee: rate,
 
-                eta: "1–2 business days"
-
-            };
-
-        }
-
-
-        /* -------------------------------------------------
-           EXPRESS
-        ------------------------------------------------- */
-
-        if (method === "express") {
-
-            if (!km || km <= 0) {
-
-                return {
-
-                    success: false,
-
-                    message:
-                        "Please enter the delivery distance in kilometres for Express delivery."
-
-                };
-
-            }
-
-
-            const fee = km * KT_RATES.express.perKm;
-
-
-            return {
-
-                success: true,
-
-                method: "express",
-
-                methodName: "Express",
-
-                size: "any",
-
-                km: km,
-
-                fee: Number(fee.toFixed(2)),
-
-                eta: "Same day"
+                eta:
+                    destinationConfig
+                        .standard
+                        .description
 
             };
 
@@ -371,7 +669,8 @@
 
             success: false,
 
-            message: "Please select a delivery method."
+            message:
+                "Please select a delivery method."
 
         };
 
@@ -385,24 +684,34 @@
     function saveDelivery(result) {
 
         localStorage.setItem(
+            STORAGE.destination,
+            result.destination || "gauteng"
+        );
+
+
+        localStorage.setItem(
             STORAGE.method,
             result.method
         );
+
 
         localStorage.setItem(
             STORAGE.size,
             result.size
         );
 
+
         localStorage.setItem(
             STORAGE.km,
             String(result.km || 0)
         );
 
+
         localStorage.setItem(
             STORAGE.fee,
             String(result.fee)
         );
+
 
         localStorage.setItem(
             STORAGE.eta,
@@ -418,7 +727,9 @@
 
     function updateCheckoutDisplay(result) {
 
-        const deliveryAmount = getElement("chkDelivery");
+        const deliveryAmount =
+            getElement("chkDelivery");
+
 
         if (deliveryAmount) {
 
@@ -431,6 +742,7 @@
         const deliverySummary =
             getElement("chkDeliverySummary");
 
+
         if (deliverySummary) {
 
             deliverySummary.textContent =
@@ -442,33 +754,36 @@
         const deliveryInfo =
             getElement("deliveryInfo");
 
+
         if (deliveryInfo) {
 
             let text =
-                `${result.methodName} delivery`;
+                `${result.destinationName} • ${result.methodName} delivery`;
 
-            if (result.method === "economy") {
+
+            if (
+                result.method === "economy" ||
+                result.method === "standard"
+            ) {
 
                 text +=
-                    ` • ${capitalize(result.size)} parcel • 3–4 business days`;
+                    ` • ${capitalize(result.size)} parcel • ${result.eta}`;
 
             }
 
-            if (result.method === "standard") {
+
+            if (
+                result.method === "express"
+            ) {
 
                 text +=
-                    ` • ${capitalize(result.size)} parcel • 1–2 business days`;
+                    ` • ${result.km.toFixed(1)} km × R6.00/km • Same day`;
 
             }
 
-            if (result.method === "express") {
 
-                text +=
-                    ` • ${result.km.toFixed(1)} km × R4.50/km • Same day`;
-
-            }
-
-            deliveryInfo.textContent = text;
+            deliveryInfo.textContent =
+                text;
 
         }
 
@@ -476,12 +791,15 @@
         const status =
             getElement("deliveryStatus");
 
+
         if (status) {
 
             status.textContent =
-                `✓ ${result.methodName} delivery calculated: ${money(result.fee)}`;
+                `✓ ${result.destinationName} — ${result.methodName} delivery calculated: ${money(result.fee)}`;
 
-            status.classList.add("success");
+            status.classList.add(
+                "success"
+            );
 
         }
 
@@ -492,7 +810,9 @@
 
         if (
             window.NexpakCheckout &&
-            typeof window.NexpakCheckout.updateSummary === "function"
+            typeof
+            window.NexpakCheckout.updateSummary ===
+            "function"
         ) {
 
             window.NexpakCheckout.updateSummary();
@@ -508,16 +828,23 @@
 
     function capitalize(value) {
 
-        if (!value) return "";
+        if (!value) {
 
-        return value.charAt(0).toUpperCase() +
-               value.slice(1);
+            return "";
+
+        }
+
+
+        return (
+            value.charAt(0).toUpperCase() +
+            value.slice(1)
+        );
 
     }
 
 
     /* =====================================================
-       CREATE DELIVERY UI IF NEEDED
+       CREATE DELIVERY CONTROLS
     ===================================================== */
 
     function createDeliveryControls() {
@@ -527,7 +854,7 @@
 
 
         /*
-         * If your HTML already has delivery controls,
+         * If the HTML already has delivery controls,
          * don't create duplicates.
          */
 
@@ -543,12 +870,10 @@
         }
 
 
-        /*
-         * Find a sensible location.
-         */
-
         const calculateButton =
-            getElement("btnCalculateDelivery");
+            getElement(
+                "btnCalculateDelivery"
+            );
 
 
         if (!calculateButton) {
@@ -566,6 +891,7 @@
             container ||
             document.createElement("div");
 
+
         if (!container.id) {
 
             container.id =
@@ -579,12 +905,61 @@
             <div class="nexpak-delivery-selector">
 
                 <h3>
+                    Delivery Destination
+                </h3>
+
+
+                <div class="nexpak-delivery-destination">
+
+                    <label
+                        for="deliveryDestination"
+                    >
+                        Where should we deliver?
+                    </label>
+
+
+                    <select
+                        id="deliveryDestination"
+                        class="form-control"
+                    >
+
+                        <option
+                            value="gauteng"
+                        >
+                            Gauteng / Johannesburg Metro
+                        </option>
+
+
+                        <option
+                            value="durban"
+                        >
+                            Durban / KwaZulu-Natal
+                        </option>
+
+
+                        <option
+                            value="capetown"
+                        >
+                            Cape Town / Western Cape
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <h3
+                    style="margin-top:20px;"
+                >
                     Delivery Method
                 </h3>
 
+
                 <div class="nexpak-delivery-methods">
 
-                    <label class="nexpak-delivery-option">
+                    <label
+                        class="nexpak-delivery-option"
+                    >
 
                         <input
                             type="radio"
@@ -598,12 +973,16 @@
                                 Economy
                             </strong>
 
-                            <small>
+                            <small
+                                id="economyDescription"
+                            >
                                 3–4 business days
                             </small>
 
-                            <em>
-                                From R89
+                            <em
+                                id="economyStartingPrice"
+                            >
+                                From R120
                             </em>
 
                         </span>
@@ -611,7 +990,9 @@
                     </label>
 
 
-                    <label class="nexpak-delivery-option">
+                    <label
+                        class="nexpak-delivery-option"
+                    >
 
                         <input
                             type="radio"
@@ -620,621 +1001,4 @@
                             checked
                         >
 
-                        <span>
-
-                            <strong>
-                                Standard
-                            </strong>
-
-                            <small>
-                                1–2 business days
-                            </small>
-
-                            <em>
-                                From R129
-                            </em>
-
-                        </span>
-
-                    </label>
-
-
-                    <label class="nexpak-delivery-option">
-
-                        <input
-                            type="radio"
-                            name="deliveryMethod"
-                            value="express"
-                        >
-
-                        <span>
-
-                            <strong>
-                                Express
-                            </strong>
-
-                            <small>
-                                Same-day delivery
-                            </small>
-
-                            <em>
-                                R4.50/km
-                            </em>
-
-                        </span>
-
-                    </label>
-
-                </div>
-
-
-                <div
-                    id="parcelSizeContainer"
-                    class="nexpak-parcel-size"
-                >
-
-                    <label for="parcelSize">
-                        Parcel Size
-                    </label>
-
-                    <select id="parcelSize">
-
-                        <option value="small">
-                            Small — R89 Economy / R129 Standard
-                        </option>
-
-                        <option
-                            value="medium"
-                            selected
-                        >
-                            Medium — R129 Economy / R179 Standard
-                        </option>
-
-                        <option value="large">
-                            Large — R179 Economy / R239 Standard
-                        </option>
-
-                    </select>
-
-                </div>
-
-            </div>
-
-        `;
-
-
-        /*
-         * Insert before the calculate button.
-         */
-
-        calculateButton.parentNode.insertBefore(
-            container,
-            calculateButton
-        );
-
-
-        /*
-         * Method change
-         */
-
-        document
-            .querySelectorAll(
-                'input[name="deliveryMethod"]'
-            )
-            .forEach(function (radio) {
-
-                radio.addEventListener(
-                    "change",
-                    function () {
-
-                        updateSizeVisibility();
-
-                        clearDeliveryResult();
-
-                    }
-                );
-
-            });
-
-
-        const parcelSize =
-            getElement("parcelSize");
-
-
-        if (parcelSize) {
-
-            parcelSize.addEventListener(
-                "change",
-                clearDeliveryResult
-            );
-
-        }
-
-
-        updateSizeVisibility();
-
-    }
-
-
-    /* =====================================================
-       SHOW/HIDE PARCEL SIZE
-    ===================================================== */
-
-    function updateSizeVisibility() {
-
-        const method =
-            getSelectedMethod();
-
-        const container =
-            getElement("parcelSizeContainer");
-
-        if (!container) return;
-
-
-        if (method === "express") {
-
-            container.style.display =
-                "none";
-
-        } else {
-
-            container.style.display =
-                "block";
-
-        }
-
-
-        /*
-         * Express needs distance.
-         */
-
-        const distanceField =
-            getElement("distance-km");
-
-        if (distanceField) {
-
-            if (method === "express") {
-
-                distanceField.disabled = false;
-
-                distanceField.placeholder =
-                    "Enter delivery distance in KM";
-
-            } else {
-
-                distanceField.disabled = true;
-
-                distanceField.placeholder =
-                    "Distance not required for this service";
-
-            }
-
-        }
-
-    }
-
-
-    /* =====================================================
-       CLEAR DELIVERY RESULT
-    ===================================================== */
-
-    function clearDeliveryResult() {
-
-        localStorage.removeItem(
-            STORAGE.fee
-        );
-
-        localStorage.removeItem(
-            STORAGE.eta
-        );
-
-        const amount =
-            getElement("chkDelivery");
-
-        if (amount) {
-
-            amount.textContent =
-                "R0.00";
-
-        }
-
-
-        const summary =
-            getElement("chkDeliverySummary");
-
-        if (summary) {
-
-            summary.textContent =
-                "Select delivery method";
-
-        }
-
-
-        const status =
-            getElement("deliveryStatus");
-
-        if (status) {
-
-            status.textContent =
-                "Select your delivery method and calculate delivery.";
-
-            status.classList.remove("success");
-
-        }
-
-
-        if (
-            window.NexpakCheckout &&
-            typeof window.NexpakCheckout.updateSummary === "function"
-        ) {
-
-            window.NexpakCheckout.updateSummary();
-
-        }
-
-    }
-
-
-    /* =====================================================
-       CALCULATE BUTTON
-    ===================================================== */
-
-    function attachCalculateHandler() {
-
-        const button =
-            getElement("btnCalculateDelivery");
-
-
-        if (!button) {
-
-            console.warn(
-                "[Nexpak Delivery] Calculate button not found."
-            );
-
-            return;
-
-        }
-
-
-        /*
-         * Prevent duplicate listeners.
-         */
-
-        if (
-            button.dataset.nexpakDeliveryBound === "true"
-        ) {
-
-            return;
-
-        }
-
-
-        button.dataset.nexpakDeliveryBound =
-            "true";
-
-
-        button.addEventListener(
-            "click",
-            function (event) {
-
-                event.preventDefault();
-
-
-                const result =
-                    calculateDelivery();
-
-
-                if (!result.success) {
-
-                    const status =
-                        getElement("deliveryStatus");
-
-                    if (status) {
-
-                        status.textContent =
-                            result.message;
-
-                        status.classList.remove(
-                            "success"
-                        );
-
-                    }
-
-                    alert(
-                        result.message
-                    );
-
-                    return;
-
-                }
-
-
-                saveDelivery(result);
-
-                updateCheckoutDisplay(result);
-
-                console.log(
-                    "[Nexpak Delivery] Calculated:",
-                    result
-                );
-
-            }
-        );
-
-    }
-
-    /* =====================================================
-       RESTORE SAVED DELIVERY
-    ===================================================== */
-
-    function restoreDelivery() {
-
-        const fee =
-            parseFloat(
-                localStorage.getItem(
-                    STORAGE.fee
-                )
-            );
-
-
-        if (!fee || fee <= 0) {
-            return;
-        }
-
-
-        const method =
-            localStorage.getItem(
-                STORAGE.method
-            ) || "standard";
-
-
-        const size =
-            localStorage.getItem(
-                STORAGE.size
-            ) || "medium";
-
-
-        const km =
-            parseFloat(
-                localStorage.getItem(
-                    STORAGE.km
-                )
-            ) || 0;
-
-
-        const eta =
-            localStorage.getItem(
-                STORAGE.eta
-            ) || "";
-
-
-        const result = {
-
-            success: true,
-
-            method: method,
-
-            methodName:
-                method.charAt(0).toUpperCase() +
-                method.slice(1),
-
-            size: size,
-
-            km: km,
-
-            fee: fee,
-
-            eta: eta
-
-        };
-
-
-        /* -------------------------------------------------
-           RESTORE DELIVERY METHOD
-        ------------------------------------------------- */
-
-        const methodRadio =
-            document.querySelector(
-                `input[name="deliveryMethod"][value="${method}"]`
-            );
-
-
-        if (methodRadio) {
-
-            methodRadio.checked = true;
-
-        }
-
-
-        /* -------------------------------------------------
-           RESTORE PARCEL SIZE
-        ------------------------------------------------- */
-
-        const parcelSize =
-            document.getElementById(
-                "parcelSize"
-            );
-
-
-        if (
-            parcelSize &&
-            size !== "any"
-        ) {
-
-            parcelSize.value = size;
-
-        }
-
-
-        /* -------------------------------------------------
-           UPDATE EXPRESS / SIZE VISIBILITY
-        ------------------------------------------------- */
-
-        updateSizeVisibility();
-
-
-        /* -------------------------------------------------
-           UPDATE CHECKOUT DISPLAY
-        ------------------------------------------------- */
-
-        updateCheckoutDisplay(
-            result
-        );
-
-    }
-
-
-    /* =====================================================
-       PUBLIC NEXPAK DELIVERY API
-    ===================================================== */
-
-    window.NexpakDelivery = {
-
-        rates: KT_RATES,
-
-
-        calculate: calculateDelivery,
-
-
-        getFee: function () {
-
-            return parseFloat(
-                localStorage.getItem(
-                    STORAGE.fee
-                )
-            ) || 0;
-
-        },
-
-
-        getMethod: function () {
-
-            return localStorage.getItem(
-                STORAGE.method
-            ) || "";
-
-        },
-
-
-        getSize: function () {
-
-            return localStorage.getItem(
-                STORAGE.size
-            ) || "";
-
-        },
-
-
-        getKm: function () {
-
-            return parseFloat(
-                localStorage.getItem(
-                    STORAGE.km
-                )
-            ) || 0;
-
-        },
-
-
-        getEta: function () {
-
-            return localStorage.getItem(
-                STORAGE.eta
-            ) || "";
-
-        },
-
-
-        clear: clearDeliveryResult
-
-    };
-
-
-    /* =====================================================
-       BACKWARD COMPATIBILITY
-       Keeps older checkout code working
-    ===================================================== */
-
-    window.NexpakDeliveryCalculator = {
-
-        calculate:
-            calculateDelivery,
-
-        getCart:
-            getCart,
-
-        rates:
-            KT_RATES,
-
-        getFee: function () {
-
-            return parseFloat(
-                localStorage.getItem(
-                    STORAGE.fee
-                )
-            ) || 0;
-
-        }
-
-    };
-
-
-    /* =====================================================
-       INITIALISE DELIVERY CALCULATOR
-    ===================================================== */
-
-    function init() {
-
-        console.log(
-            "[Nexpak Delivery] KT Couriers calculator loading..."
-        );
-
-
-        /* Create delivery controls if needed */
-
-        createDeliveryControls();
-
-
-        /* Attach calculate button */
-
-        attachCalculateHandler();
-
-
-        /* Set initial UI state */
-
-        updateSizeVisibility();
-
-
-        /* Restore previous calculation */
-
-        restoreDelivery();
-
-
-        console.log(
-            "[Nexpak Delivery] ✓ KT Couriers calculator ready."
-        );
-
-    }
-
-
-    /* =====================================================
-       DOM READY
-    ===================================================== */
-
-    if (
-        document.readyState === "loading"
-    ) {
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            init
-        );
-
-    } else {
-
-        init();
-
-    }
-
-
-})();
+    
