@@ -43,26 +43,51 @@
     const KT_RATES = {
 
         economy: {
-            name: "Economy",
+            name: "Economy-JHB",
             description: "3–4 business days",
-            small: 89,
-            medium: 129,
-            large: 179
+            small: 120,
+            medium: 159,
+            large: 199
         },
 
         standard: {
-            name: "Standard",
+            name: "Standard-JHB",
             description: "1–2 business days",
-            small: 129,
-            medium: 179,
-            large: 239
+            small: 159,
+            medium: 199,
+            large: 299
         },
 
         express: {
-            name: "Express",
+            name: "Express-JHB",
             description: "Same-day delivery",
-            perKm: 4.50
+            perKm: 6.00
         }
+
+        durban: {
+    economy: {
+        small: 259,
+        medium: 349,
+        large: 399
+    },
+    standard: {
+        small: 299,
+        medium: 399,
+        large: 449
+    }
+},
+
+capetown: {
+    economy: {
+        small: 349,
+        medium: 399,
+        large: 499
+    },
+    standard: {
+        small: 399,
+        medium: 499,
+        large: 599
+    }
 
     };
 
